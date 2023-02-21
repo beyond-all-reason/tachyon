@@ -1,0 +1,6 @@
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+.tool-versions
+
+/zignore
