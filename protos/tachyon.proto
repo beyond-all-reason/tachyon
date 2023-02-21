@@ -13,11 +13,11 @@ service WsMessaging {
 // These are not used directly but are wrapped in the websocket
 // Authentication
 service Authentication {
-  rpc GetToken (TokenRequest) returns (TokenReply) {}
-  rpc Login (LoginRequest) returns (LoginReply) {}
-  rpc Verify (VerifyRequest) returns (VerifyReply) {}
-  rpc Registration (RegistrationReply) returns (RegistrationReply) {}
-  rpc AccountMigration (AccountMigrationRequest) returns (AccountMigrationReply) {}
+  rpc GetToken (TokenRequest) returns (TokenResponse) {}
+  rpc Login (LoginRequest) returns (LoginResponse) {}
+  rpc Verify (VerifyRequest) returns (VerifyResponse) {}
+  rpc Registration (RegistrationResponse) returns (RegistrationResponse) {}
+  rpc AccountMigration (AccountMigrationRequest) returns (AccountMigrationResponse) {}
   rpc Disconnect (DisconnectRequest) returns (Empty) {}
 }
 
@@ -30,7 +30,7 @@ message ClientMessage {
     TokenRequest token_request = 100;
     LoginRequest login_request = 101;
     VerifyRequest verify_request = 102;
-    RegistrationReply registration_request = 103;
+    RegistrationResponse registration_request = 103;
     AccountMigrationRequest account_migration_request = 104;
     
     DisconnectRequest disconnect_request = 120;
@@ -41,11 +41,11 @@ message ServerMessage {
   int64 id = 1;
   oneof object {
     // Auth
-    TokenReply token_reply = 100;
-    LoginReply login_reply = 101;
-    VerifyReply verify_reply = 102;
-    RegistrationReply registration_reply = 103;
-    AccountMigrationReply account_migration_reply = 104;
+    TokenResponse token_Response = 100;
+    LoginResponse login_Response = 101;
+    VerifyResponse verify_Response = 102;
+    RegistrationResponse registration_Response = 103;
+    AccountMigrationResponse account_migration_Response = 104;
   }
 }
 
@@ -66,8 +66,11 @@ message TokenRequest {
   string password = 2;
 }
 
-message TokenReply {
-  string token = 1;
+message TokenResponse {
+  oneof result {
+    string token = 1;
+    Failure failure = 2;
+  }
 }
 
 message LoginRequest {
@@ -77,7 +80,7 @@ message LoginRequest {
   string app_hash = 4;
 }
 
-message LoginReply {
+message LoginResponse {
   oneof result {
     User user = 1;
     Failure failure = 2;
@@ -89,7 +92,7 @@ message VerifyRequest {
   string code = 2;
 }
 
-message VerifyReply {
+message VerifyResponse {
   oneof result {
     User user = 1;
     Failure failure = 2;
@@ -106,7 +109,7 @@ message RegistrationRequest {
   string password = 3;
 }
 
-message RegistrationReply {
+message RegistrationResponse {
   oneof result {
     string token = 1;
     Failure failure = 2;
@@ -119,7 +122,7 @@ message AccountMigrationRequest {
   string desired_email = 3;
 }
 
-message AccountMigrationReply {
+message AccountMigrationResponse {
   oneof result {
     string token = 1;
     Failure failure = 2;
