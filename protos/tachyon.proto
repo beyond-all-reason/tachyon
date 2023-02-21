@@ -40,12 +40,16 @@ message ClientMessage {
 message ServerMessage {
   int64 id = 1;
   oneof object {
+    // Generics
+    Empty empty = 80;
+    Failure failure = 81;
+    
     // Auth
-    TokenResponse token_Response = 100;
-    LoginResponse login_Response = 101;
-    VerifyResponse verify_Response = 102;
-    RegistrationResponse registration_Response = 103;
-    AccountMigrationResponse account_migration_Response = 104;
+    TokenResponse token_response = 100;
+    LoginResponse login_response = 101;
+    VerifyResponse verify_response = 102;
+    RegistrationResponse registration_response = 103;
+    AccountMigrationResponse account_migration_response = 104;
   }
 }
 
@@ -67,10 +71,7 @@ message TokenRequest {
 }
 
 message TokenResponse {
-  oneof result {
-    string token = 1;
-    Failure failure = 2;
-  }
+  string token = 1;
 }
 
 message LoginRequest {
@@ -81,10 +82,7 @@ message LoginRequest {
 }
 
 message LoginResponse {
-  oneof result {
-    User user = 1;
-    Failure failure = 2;
-  }
+  User user = 1;
 }
 
 message VerifyRequest {
@@ -93,10 +91,7 @@ message VerifyRequest {
 }
 
 message VerifyResponse {
-  oneof result {
-    User user = 1;
-    Failure failure = 2;
-  }
+  User user = 1;
 }
 
 message DisconnectRequest {
@@ -110,10 +105,7 @@ message RegistrationRequest {
 }
 
 message RegistrationResponse {
-  oneof result {
-    string token = 1;
-    Failure failure = 2;
-  }
+  string token = 1;
 }
 
 message AccountMigrationRequest {
@@ -123,10 +115,7 @@ message AccountMigrationRequest {
 }
 
 message AccountMigrationResponse {
-  oneof result {
-    string token = 1;
-    Failure failure = 2;
-  }
+  string token = 1;
 }
 
 
