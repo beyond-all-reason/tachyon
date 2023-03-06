@@ -10,20 +10,55 @@ service WsMessaging {
   rpc Server (ServerMessage) returns (ClientMessage) {}
 }
 
-
 service AccountService {
   rpc AccountMigration (AccountMigrationRequest) returns (AccountMigrationResponse) {}
   rpc WhoisMyself (MyselfRequest) returns (MyselfResponse) {}
-  rpc ListUsers (UserListRequest) returns (UserListResponse) {}
+  rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {}
+  
+  // list_friend_users_and_clients
+  // add_friend
+  // rescind_friend_request
+  // accept_friend_request
+  // reject_friend_request
+  // remove_friend
+}
+
+service ClientService {
+  // Client -> Server requests
+  rpc ListClients (ListClientsRequest) returns (ListClientsResponse) {}
+  
+  // Server -> Client requests
+  rpc UpdatedStatus (Client) returns (Empty) {}
+}
+
+service PartyService {
+  rpc ListClients (ClientListRequest) returns (ClientListResponse) {}
 }
 
 service LobbyService {
-  rpc ListLobbies (LobbyListRequest) returns (LobbyListResponse) {}
+  rpc ListLobbies (ListLobbiesRequest) returns (ListLobbiesResponse) {}
+  rpc JoinLobby (JoinLobbyRequest) returns (JoinLobbyResponse) {}
+  rpc LeaveLobby (LeaveLobbyRequest) returns (Result) {}
+  rpc UpdateLobbyStatus (LobbyUpdateLobbyStatus) returns (Result) {}
+  rpc MessageLobby (MessageLobbyRequest) returns (Result) {}
+  
+  rpc AddBot (AddLobbyBotRequest) returns (Result) {}
+  rpc UpdateBot (UpdateLobbyBotRequest) returns (Result) {}
+  rpc RemoveBot (RemoveLobbyBotRequest) returns (Result) {}
 }
 
-// service LobbyHostService {
+service HostService {
   
-// }
+}
+
+service ConfigService {
+  
+}
+
+service SystemService {
+  rpc Watch (WatchRequest) returns (Result) {}
+  rpc Unwatch (UnwatchRequest) returns (Result) {}
+}
 
 // WS encoding messages
 // Client requesting something from the server
@@ -32,14 +67,23 @@ message ClientMessage {
   oneof object {
     // Generics
     Empty empty = 80;
-    Failure failure = 81;
+    Result result = 81;
     
     // Auth
     AccountMigrationRequest account_migration_request = 100;
     MyselfRequest myself_request = 101;
-    UserListRequest user_list_request = 102;
+    ListUsersRequest user_list_request = 102;
     
+    // Account
     LobbyListRequest lobby_list_request = 120;
+    
+    // Client
+    
+    // Party
+    
+    // Lobby
+    
+    // Host
   }
 }
 
@@ -48,21 +92,25 @@ message ServerMessage {
   oneof object {
     // Generics
     Empty empty = 80;
-    Failure failure = 81;
+    Result result = 81;
     
     // Auth
     AccountMigrationResponse account_migration_response = 100;
     MyselfResponse myself_response = 101;
-    UserListResponse user_list_response = 102;
+    ListUsersResponse user_list_response = 102;
     
     LobbyListResponse lobby_list_response = 120;
   }
 }
 
-// Generic response messages
-message Failure {
+// Generic "Result"
+// action will refer to the action being performed
+// outcome will typically be success/failure/error
+// reason will be information that can be passed onto the user
+message Result {
   string action = 1;
-  string reason = 2;
+  string outcome = 2;
+  string reason = 3;
 }
 
 // Empty response
@@ -131,6 +179,7 @@ message User {
   bool bot = 3;
   int32 clan_id = 4;
   map<string, string> icons = 5;
+  repeated string roles = 6;
 }
 
 // Same as a user but contains privilaged information
@@ -140,6 +189,7 @@ message PrivateUser {
   bool bot = 3;
   int32 clan_id = 4;
   map<string, string> icons = 5;
+  repeated string roles = 6;
   
   repeated string permissions = 9;
   repeated int32 friends = 10;
@@ -156,11 +206,11 @@ message MyselfResponse {
   PrivateUser user = 2;
 }
 
-message UserListRequest {
+message ListUsersRequest {
   repeated int32 id_list = 1;
 }
 
-message UserListResponse {
+message ListUsersResponse {
   repeated User user_list = 1;
 }
 
@@ -175,28 +225,41 @@ message LobbyListResponse {
   repeated Lobby lobby_list = 1;
 }
 
-// // This represents a user who is logged in. A user who is logged out will not have a client object.
-// message Client {
-//   int32 id = 1;
-//   bool in_game = 2;
-//   bool away = 3;
-  
-//   // Game lobby related attributes
-//   bool ready = 4;
-//   int32 player_number = 5;
-//   string team_colour = 6;
-//   bool player = 7;
-//   sint32 bonus = 8;
-//   map<string, int32> sync = 9;// key represents the item with a value between 0-100 showing the percentage downloaded
-  
-//   string faction = 10;
-//   int32 lobby_id = 11;
-  
-//   // Other
-//   int32 party_id = 12;
-//   string clan_tag = 13;
-//   bool muted = 14;
-// }
+// Client stuff
+message ClientListRequest {
+  repeated int32 id_list = 1;
+}
+
+message ClientListResponse {
+  repeated Client client_list = 1;
+}
+
+message ClientUpdate {
+  repeated Lobby lobby_list = 1;
+}
+
+// This represents a user who is logged in. A user who is logged out will not have a client object.
+message Client {
+  int32 id = 1;
+  bool in_game = 2;
+  bool away = 3;// TODO: Should this become "idle" instead?
+
+  // Game lobby related attributes
+  bool ready = 4;
+  int32 player_number = 5;
+  string team_colour = 6;
+  bool player = 7;
+  sint32 bonus = 8;
+  map<string, int32> sync = 9;// key represents the item with a value between 0-100 showing the percentage downloaded
+
+  string faction = 10;
+  int32 lobby_id = 11;
+
+  // Other
+  int32 party_id = 12;
+  string clan_tag = 13;
+  bool muted = 14;
+}
 
 enum LobbyStatus {
   LOBBY_UNLOCKED = 0;
