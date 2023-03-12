@@ -269,8 +269,16 @@ enum LobbyStatus {
 }
 
 message StartArea {
-  string type = 1;
-  map<string, sint32> values = 2;
+  message Rect {
+    uint32 x = 1;
+    uint32 y = 2;
+    uint32 w = 3;
+    uint32 h = 4;
+  }
+
+  oneof shape {
+    Rect rect = 1;
+  }
 }
 
 message Lobby {
