@@ -262,10 +262,11 @@ message Client {
 }
 
 enum LobbyStatus {
-  LOBBY_UNLOCKED = 0;
-  LOBBY_FRIENDS = 1;
-  LOBBY_WHITELIST = 2;
-  LOBBY_LOCKED = 3;
+  LOBBY_UNSPECIFIED = 0;
+  LOBBY_UNLOCKED = 1;
+  LOBBY_FRIENDS = 2;
+  LOBBY_WHITELIST = 3;
+  LOBBY_LOCKED = 4;
 }
 
 message StartArea {
