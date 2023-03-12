@@ -182,15 +182,7 @@ message User {
   repeated string roles = 6;
 }
 
-// Same as a user but contains privilaged information
-message PrivateUser {
-  int32 id = 1;
-  string name = 2;
-  bool bot = 3;
-  int32 clan_id = 4;
-  map<string, string> icons = 5;
-  repeated string roles = 6;
-  
+message UserPrivateInfo {  
   repeated string permissions = 9;
   repeated int32 friends = 10;
   repeated int32 friend_requests = 11;// Users requesting this user to be their friend
@@ -203,39 +195,40 @@ message MyselfRequest {
 
 message MyselfResponse {
   // Client client = 1;
-  PrivateUser user = 2;
+  User user = 2;
+  UserPrivateInfo private_info = 3;
 }
 
 message ListUsersRequest {
-  repeated int32 id_list = 1;
+  repeated int32 ids = 1;
 }
 
 message ListUsersResponse {
-  repeated User user_list = 1;
+  repeated User users = 1;
 }
 
 
 message LobbyListRequest {
-  repeated int32 id_list = 1;
+  repeated int32 ids = 1;
   LobbyStatus locked = 2;
   bool passworded = 3;
 }
 
 message LobbyListResponse {
-  repeated Lobby lobby_list = 1;
+  repeated Lobby lobbies = 1;
 }
 
 // Client stuff
 message ClientListRequest {
-  repeated int32 id_list = 1;
+  repeated int32 ids = 1;
 }
 
 message ClientListResponse {
-  repeated Client client_list = 1;
+  repeated Client clients = 1;
 }
 
 message ClientUpdate {
-  repeated Lobby lobby_list = 1;
+  repeated Lobby lobbies = 1;
 }
 
 // This represents a user who is logged in. A user who is logged out will not have a client object.
@@ -262,15 +255,24 @@ message Client {
 }
 
 enum LobbyStatus {
-  LOBBY_UNLOCKED = 0;
-  LOBBY_FRIENDS = 1;
-  LOBBY_WHITELIST = 2;
-  LOBBY_LOCKED = 3;
+  LOBBY_UNSPECIFIED = 0;
+  LOBBY_UNLOCKED = 1;
+  LOBBY_FRIENDS = 2;
+  LOBBY_WHITELIST = 3;
+  LOBBY_LOCKED = 4;
 }
 
 message StartArea {
-  string type = 1;
-  map<string, sint32> values = 2;
+  message Rect {
+    uint32 x = 1;
+    uint32 y = 2;
+    uint32 w = 3;
+    uint32 h = 4;
+  }
+
+  oneof shape {
+    Rect rect = 1;
+  }
 }
 
 message Lobby {
