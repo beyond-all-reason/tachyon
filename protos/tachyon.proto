@@ -11,16 +11,16 @@ service WsMessaging {
 }
 
 service AccountService {
-  rpc AccountMigration (AccountMigrationRequest) returns (AccountMigrationResponse) {}
-  rpc WhoisMyself (MyselfRequest) returns (MyselfResponse) {}
+  rpc Whoami (WhoamiRequest) returns (WhoamiResponse) {}
   rpc ListUsers (ListUsersRequest) returns (ListUsersResponse) {}
+  rpc ListUsersAndClients (ListUsersAndClientsRequest) returns (ListUsersAndClientsResponse) {}
+  rpc ListFriends (ListFriendsRequest) returns (ListUsersAndClientsResponse) {}
   
-  // list_friend_users_and_clients
-  // add_friend
-  // rescind_friend_request
-  // accept_friend_request
-  // reject_friend_request
-  // remove_friend
+  rpc MakeFriendRequest (MakeFriendRequest) returns (Result) {}
+  rpc RescindFriendRequest (RescindFriendRequest) returns (Result) {}
+  rpc AcceptFriendRequest (AcceptFriendRequest) returns (Result) {}
+  rpc RejectFriendRequest (RejectFriendRequest) returns (Result) {}
+  rpc Unfriend (UnfriendRequest) returns (Result) {}
 }
 
 service ClientService {
@@ -28,18 +28,13 @@ service ClientService {
   rpc ListClients (ListClientsRequest) returns (ListClientsResponse) {}
   
   // Server -> Client requests
-  rpc UpdatedStatus (Client) returns (Empty) {}
-}
-
-service PartyService {
-  rpc ListClients (ClientListRequest) returns (ClientListResponse) {}
+  rpc UpdateClient (UpdateClientRequest) returns (Result) {}
 }
 
 service LobbyService {
   rpc ListLobbies (ListLobbiesRequest) returns (ListLobbiesResponse) {}
   rpc JoinLobby (JoinLobbyRequest) returns (JoinLobbyResponse) {}
   rpc LeaveLobby (LeaveLobbyRequest) returns (Result) {}
-  rpc UpdateLobbyStatus (LobbyUpdateLobbyStatus) returns (Result) {}
   rpc MessageLobby (MessageLobbyRequest) returns (Result) {}
   
   rpc AddBot (AddLobbyBotRequest) returns (Result) {}
@@ -71,7 +66,7 @@ message ClientMessage {
     
     // Auth
     AccountMigrationRequest account_migration_request = 100;
-    MyselfRequest myself_request = 101;
+    WhoamiRequest whoami_request = 101;
     ListUsersRequest user_list_request = 102;
     
     // Account
@@ -96,7 +91,7 @@ message ServerMessage {
     
     // Auth
     AccountMigrationResponse account_migration_response = 100;
-    MyselfResponse myself_response = 101;
+    WhoamiResponse whoami_response = 101;
     ListUsersResponse user_list_response = 102;
     
     LobbyListResponse lobby_list_response = 120;
@@ -152,26 +147,6 @@ message DisconnectRequest {
   string reason = 1;
 }
 
-message RegistrationRequest {
-  string username = 1;
-  string email = 2;
-  string password = 3;
-}
-
-message RegistrationResponse {
-  string token = 1;
-}
-
-message AccountMigrationRequest {
-  string username = 1;
-  string password = 2;
-  string desired_email = 3;
-}
-
-message AccountMigrationResponse {
-  string token = 1;
-}
-
 
 message User {
   int32 id = 1;
@@ -189,11 +164,11 @@ message UserPrivateInfo {
   repeated int32 ignores = 12;
 }
 
-message MyselfRequest {
+message WhoamiRequest {
   
 }
 
-message MyselfResponse {
+message WhoamiResponse {
   // Client client = 1;
   User user = 2;
   UserPrivateInfo private_info = 3;
