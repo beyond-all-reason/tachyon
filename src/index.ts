@@ -1,4 +1,4 @@
-import { TSchema } from "@sinclair/typebox";
+import { TSchema, Type } from "@sinclair/typebox";
 import * as fs from "fs";
 
 import { Services } from "./helpers";
@@ -23,17 +23,25 @@ const services: Services = {
             const requestResponse = endpoint[endpointKey];
             if ("request" in requestResponse) {
                 const request = requestResponse.request;
-                allSchemas.push({
-                    $id: `${serviceKey}/${endpointKey}/request`,
-                    ...request
-                });
+                const id = `${serviceKey}/${endpointKey}/request`;
+                request.$id = id;
+                allSchemas.push(Type.Object({
+                    id: Type.Literal(id),
+                    data: Type.Object({
+                        ...request.properties
+                    })
+                }, { $id: id }));
             }
             if ("response" in requestResponse) {
                 const response = requestResponse.response;
-                allSchemas.push({
-                    $id: `${serviceKey}/${endpointKey}/response`,
-                    ...response
-                });
+                const id = `${serviceKey}/${endpointKey}/response`;
+                response.id = id;
+                allSchemas.push(Type.Object({
+                    id: Type.Literal(id),
+                    data: Type.Object({
+                        ...response.properties
+                    })
+                }, { $id: id }));
             }
         }
     }
