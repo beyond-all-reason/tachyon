@@ -6,19 +6,17 @@ import { accountEndpoints } from "./schema/account";
 import { authEndpoints } from "./schema/auth";
 import { privateUser, user, userIds } from "./schema/types";
 
-const defs = {
-    userIds,
-    user,
-    privateUser
-};
-
 const services: Services = {
     auth: authEndpoints,
     account: accountEndpoints
 };
 
 (async () => {
-    const allSchemas: TSchema[] = [];
+    const allSchemas: TSchema[] = [
+        userIds,
+        user,
+        privateUser
+    ];
 
     for (const serviceKey in services) {
         const endpoint = services[serviceKey];

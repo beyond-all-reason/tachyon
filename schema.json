@@ -1,5 +1,172 @@
 [
     {
+        "$id": "userIds",
+        "type": "array",
+        "items": {
+            "minimum": 0,
+            "type": "integer"
+        }
+    },
+    {
+        "$id": "user",
+        "type": "object",
+        "properties": {
+            "id": {
+                "minimum": 0,
+                "description": "Unique Identifier for this user",
+                "examples": [
+                    1234
+                ],
+                "type": "integer"
+            },
+            "name": {
+                "minLength": 2,
+                "maxLength": 20,
+                "pattern": "^[A-Za-z0-9_]+$",
+                "type": "string"
+            },
+            "is_bot": {
+                "default": false,
+                "type": "boolean"
+            },
+            "clan_id": {
+                "minimum": 0,
+                "type": "integer"
+            },
+            "icons": {
+                "type": "object",
+                "patternProperties": {
+                    "^.*$": {
+                        "type": "string"
+                    }
+                },
+                "additionalProperties": false
+            },
+            "roles": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "battle_status": {
+                "default": null,
+                "anyOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "in_game": {
+                                "type": "boolean"
+                            },
+                            "away": {
+                                "type": "boolean"
+                            },
+                            "ready": {
+                                "type": "boolean"
+                            },
+                            "player_number": {
+                                "type": "integer"
+                            },
+                            "team_colour": {
+                                "type": "string"
+                            },
+                            "is_player": {
+                                "type": "boolean"
+                            },
+                            "bonus": {
+                                "type": "number"
+                            },
+                            "sync": {
+                                "type": "object",
+                                "patternProperties": {
+                                    "^.*$": {
+                                        "type": "number"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "faction": {
+                                "type": "string"
+                            },
+                            "lobby_id": {
+                                "type": "integer"
+                            },
+                            "party_id": {
+                                "type": "integer"
+                            },
+                            "clan_tag": {
+                                "type": "string"
+                            },
+                            "muted": {
+                                "type": "boolean"
+                            }
+                        },
+                        "required": [
+                            "in_game",
+                            "away",
+                            "ready",
+                            "player_number",
+                            "team_colour",
+                            "is_player",
+                            "bonus",
+                            "sync",
+                            "faction",
+                            "lobby_id",
+                            "party_id",
+                            "clan_tag",
+                            "muted"
+                        ]
+                    },
+                    {
+                        "type": "null"
+                    }
+                ]
+            }
+        },
+        "required": [
+            "id",
+            "name",
+            "is_bot",
+            "clan_id",
+            "icons",
+            "roles",
+            "battle_status"
+        ]
+    },
+    {
+        "$id": "privateUser",
+        "allOf": [
+            {
+                "$ref": "user"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "permissions": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "friends": {
+                        "$ref": "userIds"
+                    },
+                    "friend_requests": {
+                        "$ref": "userIds"
+                    },
+                    "ignores": {
+                        "$ref": "userIds"
+                    }
+                },
+                "required": [
+                    "permissions",
+                    "friends",
+                    "friend_requests",
+                    "ignores"
+                ]
+            }
+        ]
+    },
+    {
         "type": "object",
         "properties": {
             "email": {
