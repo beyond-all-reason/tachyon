@@ -1,0 +1,15 @@
+{
+    "type": "object",
+    "properties": {
+        "users": {
+            "type": "array",
+            "items": {
+                "$ref": "user"
+            }
+        }
+    },
+    "required": [
+        "users"
+    ],
+    "$id": "account/list_users/response"
+}

@@ -1,0 +1,4 @@
+{
+    "$ref": "privateUser",
+    "$id": "auth/verify/response"
+}

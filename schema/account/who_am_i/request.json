@@ -1,0 +1,5 @@
+{
+    "type": "object",
+    "properties": {},
+    "$id": "account/who_am_i/request"
+}

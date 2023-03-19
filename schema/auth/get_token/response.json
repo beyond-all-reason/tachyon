@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "token": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "token"
+    ],
+    "$id": "auth/get_token/response"
+}

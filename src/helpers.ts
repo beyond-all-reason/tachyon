@@ -11,7 +11,13 @@ export const IntersectAllOf = <T extends TSchema[]>(allOf: [...T], options: Inte
 
 export type Endpoint = { request: TSchema } | { response: TSchema };
 
-export type Schema = {
-  types: Record<string, TSchema>;
-  endpoints: Record<string, Record<string, Endpoint>>;
-}
+export type Service = Record<string, Endpoint>;
+
+export type Services = Record<string, Service>;
+
+export const objectMap = (obj: any, fn: (value: any, key: any, i: number) => any) =>
+  Object.fromEntries(
+    Object.entries(obj).map(
+      ([k, v], i) => [k, fn(v, k, i)]
+    )
+  )

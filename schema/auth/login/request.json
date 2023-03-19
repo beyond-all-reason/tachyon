@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "properties": {
+        "token": {
+            "type": "string"
+        },
+        "app_name": {
+            "type": "string"
+        },
+        "app_version": {
+            "type": "string"
+        },
+        "app_hash": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "token",
+        "app_name",
+        "app_version",
+        "app_hash"
+    ],
+    "$id": "auth/login/request"
+}
