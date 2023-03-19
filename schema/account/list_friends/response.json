@@ -1,7 +1,0 @@
-{
-    "type": "array",
-    "items": {
-        "$ref": "user"
-    },
-    "$id": "account/list_friends/response"
-}

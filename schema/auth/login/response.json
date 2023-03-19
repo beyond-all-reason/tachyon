@@ -1,4 +1,0 @@
-{
-    "$ref": "privateUser",
-    "$id": "auth/login/response"
-}

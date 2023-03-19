@@ -1,0 +1,127 @@
+[
+    {
+        "type": "object",
+        "properties": {
+            "email": {
+                "type": "string"
+            },
+            "password": {
+                "minLength": 6,
+                "type": "string"
+            }
+        },
+        "required": [
+            "email",
+            "password"
+        ],
+        "$id": "auth/get_token/request"
+    },
+    {
+        "type": "object",
+        "properties": {
+            "token": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "token"
+        ],
+        "$id": "auth/get_token/response"
+    },
+    {
+        "type": "object",
+        "properties": {
+            "token": {
+                "type": "string"
+            },
+            "app_name": {
+                "type": "string"
+            },
+            "app_version": {
+                "type": "string"
+            },
+            "app_hash": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "token",
+            "app_name",
+            "app_version",
+            "app_hash"
+        ],
+        "$id": "auth/login/request"
+    },
+    {
+        "$ref": "privateUser",
+        "$id": "auth/login/response"
+    },
+    {
+        "type": "object",
+        "properties": {
+            "token": {
+                "type": "string"
+            },
+            "code": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "token",
+            "code"
+        ],
+        "$id": "auth/verify/request"
+    },
+    {
+        "$ref": "privateUser",
+        "$id": "auth/verify/response"
+    },
+    {
+        "type": "object",
+        "properties": {},
+        "$id": "account/who_am_i/request"
+    },
+    {
+        "$ref": "privateUser",
+        "$id": "account/who_am_i/response"
+    },
+    {
+        "type": "object",
+        "properties": {
+            "ids": {
+                "$ref": "userIds"
+            }
+        },
+        "required": [
+            "ids"
+        ],
+        "$id": "account/list_users/request"
+    },
+    {
+        "type": "object",
+        "properties": {
+            "users": {
+                "type": "array",
+                "items": {
+                    "$ref": "user"
+                }
+            }
+        },
+        "required": [
+            "users"
+        ],
+        "$id": "account/list_users/response"
+    },
+    {
+        "type": "object",
+        "properties": {},
+        "$id": "account/list_friends/request"
+    },
+    {
+        "type": "array",
+        "items": {
+            "$ref": "user"
+        },
+        "$id": "account/list_friends/response"
+    }
+]

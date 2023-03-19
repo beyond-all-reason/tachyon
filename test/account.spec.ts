@@ -1,16 +1,13 @@
-import { Type } from "@sinclair/typebox";
 import Ajv from "ajv";
 
-import schema from "../schema/full_1.json";
+import schema from "../schema.json";
 
 const ajv = new Ajv({
-    schemas: {
-        schema["$defs"]
-    }
+    schemas: schema
 });
 
 test("who_am_i:request", () => {
-    const requestValidator = ajv.compile(accountEndpoints.who_am_i.properties.request);
+    const requestValidator = ajv.getSchema("auth/get_token/request")!;
     const valid = requestValidator({});
     if (!valid) {
         console.log(requestValidator.errors);
@@ -19,7 +16,7 @@ test("who_am_i:request", () => {
 });
 
 test("who_am_i:response", () => {
-    const responseValidator = ajv.compile(accountEndpoints.who_am_i.properties.response);
+    const responseValidator = ajv.getSchema("auth/get_token/response")!;
     const valid = responseValidator({
         name: "bob"
     });
