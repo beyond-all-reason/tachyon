@@ -8,7 +8,10 @@ const ajv = new Ajv({
 
 test("who_am_i:request", () => {
     const requestValidator = ajv.getSchema("auth/get_token/request")!;
-    const valid = requestValidator({});
+    const valid = requestValidator({
+        email: "bob@thing.com",
+        password: "yep121231"
+    });
     if (!valid) {
         console.log(requestValidator.errors);
     }
@@ -18,7 +21,7 @@ test("who_am_i:request", () => {
 test("who_am_i:response", () => {
     const responseValidator = ajv.getSchema("auth/get_token/response")!;
     const valid = responseValidator({
-        name: "bob"
+        token: "12345"
     });
     if (!valid) {
         console.log(responseValidator.errors);
