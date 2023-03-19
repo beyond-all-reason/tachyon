@@ -3,7 +3,7 @@
         "$id": "auth/get_token/request",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "auth/get_token/request",
                 "type": "string"
             },
@@ -25,7 +25,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -33,7 +33,7 @@
         "$id": "auth/get_token/response",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "auth/get_token/response",
                 "type": "string"
             },
@@ -50,7 +50,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -58,7 +58,7 @@
         "$id": "auth/login/request",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "auth/login/request",
                 "type": "string"
             },
@@ -87,7 +87,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -95,7 +95,7 @@
         "$id": "auth/login/response",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "auth/login/response",
                 "type": "string"
             },
@@ -105,7 +105,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -113,7 +113,7 @@
         "$id": "auth/verify/request",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "auth/verify/request",
                 "type": "string"
             },
@@ -134,7 +134,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -142,7 +142,7 @@
         "$id": "auth/verify/response",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "auth/verify/response",
                 "type": "string"
             },
@@ -152,7 +152,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -160,7 +160,7 @@
         "$id": "account/who_am_i/request",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "account/who_am_i/request",
                 "type": "string"
             },
@@ -170,7 +170,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -178,7 +178,7 @@
         "$id": "account/who_am_i/response",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "account/who_am_i/response",
                 "type": "string"
             },
@@ -188,7 +188,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -196,7 +196,7 @@
         "$id": "account/list_users/request",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "account/list_users/request",
                 "type": "string"
             },
@@ -217,7 +217,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -225,7 +225,7 @@
         "$id": "account/list_users/response",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "account/list_users/response",
                 "type": "string"
             },
@@ -367,7 +367,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -375,7 +375,7 @@
         "$id": "account/list_friends/request",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "account/list_friends/request",
                 "type": "string"
             },
@@ -385,7 +385,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     },
@@ -393,7 +393,7 @@
         "$id": "account/list_friends/response",
         "type": "object",
         "properties": {
-            "id": {
+            "cmd": {
                 "const": "account/list_friends/response",
                 "type": "string"
             },
@@ -523,7 +523,7 @@
             }
         },
         "required": [
-            "id",
+            "cmd",
             "data"
         ]
     }

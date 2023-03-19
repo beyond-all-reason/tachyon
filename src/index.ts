@@ -26,7 +26,7 @@ const services: Services = {
                 const id = `${serviceKey}/${endpointKey}/request`;
                 request.$id = id;
                 allSchemas.push(Type.Object({
-                    id: Type.Literal(id),
+                    cmd: Type.Literal(id),
                     data: Type.Object({
                         ...request.properties
                     })
@@ -37,7 +37,7 @@ const services: Services = {
                 const id = `${serviceKey}/${endpointKey}/response`;
                 response.id = id;
                 allSchemas.push(Type.Object({
-                    id: Type.Literal(id),
+                    cmd: Type.Literal(id),
                     data: Type.Object({
                         ...response.properties
                     })
