@@ -4,7 +4,6 @@ import * as fs from "fs";
 import { Services } from "./helpers";
 import { accountEndpoints } from "./schema/account";
 import { authEndpoints } from "./schema/auth";
-import { privateUser, user, userIds } from "./schema/types";
 
 const services: Services = {
     auth: authEndpoints,
@@ -13,9 +12,9 @@ const services: Services = {
 
 (async () => {
     const allSchemas: TSchema[] = [
-        userIds,
-        user,
-        privateUser
+        // userIds,
+        // user,
+        // privateUser
     ];
 
     for (const serviceKey in services) {
@@ -24,13 +23,17 @@ const services: Services = {
             const requestResponse = endpoint[endpointKey];
             if ("request" in requestResponse) {
                 const request = requestResponse.request;
-                request.$id = `${serviceKey}/${endpointKey}/request`;
-                allSchemas.push(request);
+                allSchemas.push({
+                    $id: `${serviceKey}/${endpointKey}/request`,
+                    ...request
+                });
             }
             if ("response" in requestResponse) {
                 const response = requestResponse.response;
-                response.$id = `${serviceKey}/${endpointKey}/response`;
-                allSchemas.push(response);
+                allSchemas.push({
+                    $id: `${serviceKey}/${endpointKey}/response`,
+                    ...response
+                });
             }
         }
     }
