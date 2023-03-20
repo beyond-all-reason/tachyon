@@ -23,7 +23,7 @@ export const user = Type.Object({
             sync: Type.Record(Type.String(), Type.Number()),
             faction: Type.String(),
             lobby_id: Type.Integer(),
-            party_id: Type.Integer(),
+            party_id: Type.String(),
             clan_tag: Type.String(),
             muted: Type.Boolean()
         }),
