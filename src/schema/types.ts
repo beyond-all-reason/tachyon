@@ -2,7 +2,7 @@ import { Type } from "@sinclair/typebox";
 
 import { IntersectAllOf } from "../helpers";
 
-export const userIds = Type.Array(Type.Integer({ minimum: 0 }));
+export const userIds = Type.Array(Type.Integer({ minimum: 0 }), { $id: "userIds" });
 
 export const user = Type.Object({
     id: Type.Integer({ minimum: 0, description: "Unique Identifier for this user", examples: [1234] }),
@@ -29,17 +29,17 @@ export const user = Type.Object({
         }),
         Type.Null()
     ], { default: null })
-});
+}, { $id: "user" });
 
 export const privateUser = IntersectAllOf([
-    user,
+    Type.Ref(user),
     Type.Object({
         permissions: Type.Array(Type.String()),
-        friends: userIds,
-        friend_requests: userIds,
-        ignores: userIds
+        friends: Type.Ref(userIds),
+        friend_requests: Type.Ref(userIds),
+        ignores: Type.Ref(userIds)
     })
-]);
+], { $id: "privateUser" });
 
 export enum LobbyStatus {
     UNSPECIFIED,
@@ -57,7 +57,7 @@ export const rect = Type.Object({
 }, { $id: "rect" });
 
 export const startArea = Type.Union([
-    rect
+    Type.Ref(rect)
 ], { $id: "startArea" });
 
 export const lobby = Type.Object({
@@ -69,12 +69,12 @@ export const lobby = Type.Object({
     engine_name: Type.String(),
     engine_version: Type.String(),
     
-    players: userIds,
-    spectators: userIds,
+    players: Type.Ref(userIds),
+    spectators: Type.Ref(userIds),
 
     ip: Type.String(),
     settings: Type.Record(Type.String(), Type.String()),
-    start_areas: Type.Record(Type.Integer(), startArea),
+    start_areas: Type.Record(Type.Integer(), Type.Ref(startArea)),
     map_name: Type.String(),
     map_hash: Type.String(),
     public: Type.Boolean()

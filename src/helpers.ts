@@ -1,4 +1,4 @@
-import { IntersectEvaluate, IntersectReduce, Kind,SchemaOptions, TSchema, Type } from "@sinclair/typebox";
+import { IntersectEvaluate, IntersectReduce, Kind, SchemaOptions, TSchema, Type } from "@sinclair/typebox";
 
 export type IntersectSchemaArray<T extends TSchema[]> = IntersectReduce<unknown, IntersectEvaluate<T, []>>
 
@@ -14,10 +14,3 @@ export type Endpoint = { request: TSchema } | { response: TSchema };
 export type Service = Record<string, Endpoint>;
 
 export type Services = Record<string, Service>;
-
-export const objectMap = (obj: any, fn: (value: any, key: any, i: number) => any) =>
-  Object.fromEntries(
-    Object.entries(obj).map(
-      ([k, v], i) => [k, fn(v, k, i)]
-    )
-  )

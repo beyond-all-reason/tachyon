@@ -1,24 +1,23 @@
 import { Type } from "@sinclair/typebox";
 
-import { Endpoint } from "../helpers";
+import { Service } from "../helpers";
 import { privateUser, user, userIds } from "./types";
 
-export const accountEndpoints: Record<string, Endpoint> = {
+export const accountEndpoints = ({
     who_am_i: {
         request: Type.Object({}),
-        response: privateUser
+        response: Type.Ref(privateUser)
     },
     list_users: {
         request: Type.Object({
-            ids: userIds
+            ids: Type.Ref(userIds)
         }),
         response: Type.Object({
-            users: Type.Array(user)
+            users: Type.Array(Type.Ref(user))
         })
     },
     list_friends: {
         request: Type.Object({}),
-        response: user
+        response: Type.Array(Type.Ref(user))
     }
-};
-
+} as const) satisfies Service;

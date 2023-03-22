@@ -20,13 +20,13 @@ export const authEndpoints: Record<string, Endpoint> = {
             app_version: Type.String(),
             app_hash: Type.String()
         }),
-        response: privateUser
+        response: Type.Ref(privateUser)
     },
     verify: {
         request: Type.Object({
             token: Type.String(),
             code: Type.String()
         }),
-        response: privateUser
+        response: Type.Ref(privateUser)
     }
 };
