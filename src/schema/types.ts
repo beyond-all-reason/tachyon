@@ -1,8 +1,10 @@
 import { Type } from "@sinclair/typebox";
 
-import { IntersectAllOf } from "../helpers";
+import { enableRefs, IntersectAllOf, schemaRef } from "../helpers";
 
-export const userIds = Type.Array(Type.Integer({ minimum: 0 }), { $id: "userIds" });
+export const userIds = Type.Array(Type.Integer({ minimum: 0 }), {
+    ...(enableRefs ? { $id: "userIds"} : {})
+});
 
 export const user = Type.Object({
     id: Type.Integer({ minimum: 0, description: "Unique Identifier for this user", examples: [1234] }),
@@ -29,17 +31,21 @@ export const user = Type.Object({
         }),
         Type.Null()
     ], { default: null })
-}, { $id: "user" });
+}, {
+    ...(enableRefs ? { $id: "user"} : {})
+});
 
 export const privateUser = IntersectAllOf([
-    Type.Ref(user),
+    schemaRef(user),
     Type.Object({
         permissions: Type.Array(Type.String()),
-        friends: Type.Ref(userIds),
-        friend_requests: Type.Ref(userIds),
-        ignores: Type.Ref(userIds)
+        friends: schemaRef(userIds),
+        friend_requests: schemaRef(userIds),
+        ignores: schemaRef(userIds)
     })
-], { $id: "privateUser" });
+], {
+    ...(enableRefs ? { $id: "privateUser"} : {})
+});
 
 export enum LobbyStatus {
     UNSPECIFIED,
@@ -54,11 +60,15 @@ export const rect = Type.Object({
     y: Type.Number(),
     w: Type.Number(),
     h: Type.Number(),
-}, { $id: "rect" });
+}, {
+    ...(enableRefs ? { $id: "rect"} : {})
+});
 
 export const startArea = Type.Union([
-    Type.Ref(rect)
-], { $id: "startArea" });
+    schemaRef(rect)
+], {
+    ...(enableRefs ? { $id: "startArea"} : {})
+});
 
 export const lobby = Type.Object({
     id: Type.Integer(),
@@ -68,14 +78,14 @@ export const lobby = Type.Object({
     locked: Type.Boolean(),
     engine_name: Type.String(),
     engine_version: Type.String(),
-    
-    players: Type.Ref(userIds),
-    spectators: Type.Ref(userIds),
-
+    players: schemaRef(userIds),
+    spectators: schemaRef(userIds),
     ip: Type.String(),
     settings: Type.Record(Type.String(), Type.String()),
-    start_areas: Type.Record(Type.Integer(), Type.Ref(startArea)),
+    start_areas: Type.Record(Type.Integer(), schemaRef(startArea)),
     map_name: Type.String(),
     map_hash: Type.String(),
     public: Type.Boolean()
-}, { "$id": "lobby" });
+}, {
+    ...(enableRefs ? { $id: "lobby"} : {})
+});

@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { Endpoint } from "../helpers";
+import { Endpoint, schemaRef } from "../helpers";
 import { privateUser } from "./types";
 
 export const authEndpoints: Record<string, Endpoint> = {
@@ -20,13 +20,13 @@ export const authEndpoints: Record<string, Endpoint> = {
             app_version: Type.String(),
             app_hash: Type.String()
         }),
-        response: Type.Ref(privateUser)
+        response: schemaRef(privateUser)
     },
     verify: {
         request: Type.Object({
             token: Type.String(),
             code: Type.String()
         }),
-        response: Type.Ref(privateUser)
+        response: schemaRef(privateUser)
     }
 };
