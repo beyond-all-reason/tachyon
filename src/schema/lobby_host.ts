@@ -3,56 +3,50 @@ import { Type } from "@sinclair/typebox";
 import { Endpoint, schemaRef } from "../helpers";
 import { lobby } from "./types";
 
-export const lobbyEndpoints: Record<string, Endpoint> = {
-    list_lobbies: {
-        request: Type.Object({}),
-        response: Type.Array(schemaRef(lobby))
-    },
-    get: {
+export const lobbyHostEndpoints: Record<string, Endpoint> = {
+    create: {
         request: Type.Object({}),
         response: Type.Object({})
     },
-    join: {
+    close: {
         request: Type.Object({}),
         response: Type.Object({})
     },
-    leave: {
+    join_request: {// Server messages first, how do we define request/response for this?
         request: Type.Object({}),
         response: Type.Object({})
     },
-    update_status: {
+
+    // In lobby actions
+    update_player_status: {
+        request: Type.Object({}),
+        response: Type.Object({})
+    },
+    add_bot: {
+        request: Type.Object({}),
+        response: Type.Object({})
+    },
+    update_bot: {
+        request: Type.Object({}),
+        response: Type.Object({})
+    },
+    remove_bot: {
         request: Type.Object({}),
         response: Type.Object({})
     },
     
-    // Server updates not behind a listener
-    updated: {
+    // Battle stuff
+    start_battle: {
+        request: Type.Object({}),
         response: Type.Object({})
     },
-    joined: {
+    end_battle: {
+        request: Type.Object({}),
         response: Type.Object({})
     },
-    add_user: {
-        response: Type.Object({})
-    },
-    remove_user: {
-        response: Type.Object({})
-    },
-    bot_added: {
-        response: Type.Object({})
-    },
-    bot_updated: {
-        response: Type.Object({})
-    },
-    bot_removed: {
-        response: Type.Object({})
-    },
-
-    // Server updates, should be behind a listener
-    opened: {
-        response: Type.Object({})
-    },
-    closed: {
+    
+    // Server updates
+    updated_status: {
         response: Type.Object({})
     }
 };

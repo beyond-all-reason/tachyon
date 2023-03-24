@@ -12,7 +12,7 @@ test("auth/get_token/request", () => {
     const requestValidator = ajv.getSchema("auth.get_token.request")!;
     console.log(requestValidator);
     const valid = requestValidator({
-        cmd: "auth/get_token/request",
+        command: "auth/get_token/request",
         data: {
             email: "bob@thing.com",
             password: "yep121231"
