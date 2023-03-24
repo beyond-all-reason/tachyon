@@ -5,6 +5,6 @@ import { privateUser, user, userIds } from "./types";
 
 export const systemEndpoints = ({
   server_event: {
-    response: Type.Object({})
+    response: Type.Object({}, { additionalProperties: true })
   }
 } as const) satisfies Service;

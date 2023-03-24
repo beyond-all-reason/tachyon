@@ -5,18 +5,18 @@ import { lobby } from "./types";
 
 export const lobbyChatEndpoints: Record<string, Endpoint> = {
     say: {
-        request: Type.Object({}),
-        response: Type.Object({})
+        request: Type.Object({}, { additionalProperties: true }),
+        response: Type.Object({}, { additionalProperties: true })
     },
     announce: {
-        request: Type.Object({}),
-        response: Type.Object({})
+        request: Type.Object({}, { additionalProperties: true }),
+        response: Type.Object({}, { additionalProperties: true })
     },
 
     said: {
-        response: Type.Object({})
+        response: Type.Object({}, { additionalProperties: true })
     },
     announced: {
-        response: Type.Object({})
+        response: Type.Object({}, { additionalProperties: true })
     }
 };

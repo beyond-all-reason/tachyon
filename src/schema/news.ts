@@ -5,7 +5,7 @@ import { privateUser, user, userIds } from "./types";
 
 export const newsEndpoints = ({
   list_news_items: {
-    request: Type.Object({}),
-    response: Type.Object({}),
+    request: Type.Object({}, { additionalProperties: true }),
+    response: Type.Object({}, { additionalProperties: true }),
   }
 } as const) satisfies Service;

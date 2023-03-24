@@ -5,6 +5,6 @@ import { privateUser } from "./types";
 
 export const authEndpoints: Record<string, Endpoint> = {
     disconnect: {
-        request: Type.Object({})
+        request: Type.Object({}, { additionalProperties: true })
     }
 };
