@@ -25,7 +25,7 @@ export function endpointsToSchema<T extends Record<string, Service>>(services: T
             for (const endpointTypeId in endpoint) {
                 const endpointType = endpoint[endpointTypeId] as TSchema;
                 (endpoint[endpointTypeId] as TSchema) = Type.Object({
-                    cmd: Type.Literal(`${serviceId}/${endpointId}/${endpointTypeId}`),
+                    command: Type.Literal(`${serviceId}/${endpointId}/${endpointTypeId}`),
                     data: endpointType
                 }, { $id: `${serviceId}.${endpointId}.${endpointTypeId}` });
             }
