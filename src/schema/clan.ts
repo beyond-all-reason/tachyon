@@ -1,23 +1,22 @@
 import { Type } from "@sinclair/typebox";
 
-import { Endpoint, schemaRef } from "../helpers";
-import { lobby } from "./types";
+import { Service } from "../helpers";
 
-export const clanEndpoints: Record<string, Endpoint> = {
-  list_clans: {
-    request: Type.Object({}, { additionalProperties: true }),
-    response: Type.Object({}, { additionalProperties: true })
-  },
-  get_clan: {
-    request: Type.Object({}, { additionalProperties: true }),
-    response: Type.Object({}, { additionalProperties: true })
-  },
-  create_invite: {
-    request: Type.Object({}, { additionalProperties: true }),
-    response: Type.Object({}, { additionalProperties: true })
-  },
-  respond_to_invite: {
-    request: Type.Object({}, { additionalProperties: true }),
-    response: Type.Object({}, { additionalProperties: true })
-  }
-};
+export const clanEndpoints = {
+    list_clans: {
+        request: Type.Object({}, { additionalProperties: true }),
+        response: Type.Object({}, { additionalProperties: true }),
+    },
+    get_clan: {
+        request: Type.Object({}, { additionalProperties: true }),
+        response: Type.Object({}, { additionalProperties: true }),
+    },
+    create_invite: {
+        request: Type.Object({}, { additionalProperties: true }),
+        response: Type.Object({}, { additionalProperties: true }),
+    },
+    respond_to_invite: {
+        request: Type.Object({}, { additionalProperties: true }),
+        response: Type.Object({}, { additionalProperties: true }),
+    },
+} as const satisfies Service;

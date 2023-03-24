@@ -1,10 +1,9 @@
 import { Type } from "@sinclair/typebox";
 
-import { Endpoint, schemaRef } from "../helpers";
-import { privateUser } from "./types";
+import { Service } from "../helpers";
 
-export const authEndpoints: Record<string, Endpoint> = {
+export const authEndpoints = {
     disconnect: {
-        request: Type.Object({}, { additionalProperties: true })
-    }
-};
+        request: Type.Object({}, { additionalProperties: true }),
+    },
+} as const satisfies Service;

@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { IntersectEvaluate, IntersectReduce, Kind, SchemaOptions, TSchema, Type } from "@sinclair/typebox";
 
+export type IntersectSchemaArray<T extends TSchema[]> = IntersectReduce<unknown, IntersectEvaluate<T, []>>;
 
-export type IntersectSchemaArray<T extends TSchema[]> = IntersectReduce<unknown, IntersectEvaluate<T, []>>
+export type TIntersectAllOf<T extends TSchema[]> = ReturnType<typeof IntersectAllOf<T>>;
 
-export type TIntersectAllOf<T extends TSchema[]> = ReturnType<typeof IntersectAllOf<T>>
+export interface IntersectAllOfOptions extends SchemaOptions {
+    unevaluatedProperties?: boolean;
+}
 
-export interface IntersectAllOfOptions extends SchemaOptions { unevaluatedProperties?: boolean }
-
-export const IntersectAllOf = <T extends TSchema[]>(allOf: [...T], options: IntersectAllOfOptions = {}) =>
-    Type.Unsafe<IntersectSchemaArray<T>>({ ...options, [Kind]: 'IntersectAllOf', allOf })
+export const IntersectAllOf = <T extends TSchema[]>(allOf: [...T], options: IntersectAllOfOptions = {}) => Type.Unsafe<IntersectSchemaArray<T>>({ ...options, [Kind]: "IntersectAllOf", allOf });
 
 export type Endpoint = { request: TSchema } | { response: TSchema };
 
@@ -24,10 +26,13 @@ export function endpointsToSchema<T extends Record<string, Service>>(services: T
             const endpoint = service[endpointId];
             for (const endpointTypeId in endpoint) {
                 const endpointType = endpoint[endpointTypeId] as TSchema;
-                (endpoint[endpointTypeId] as TSchema) = Type.Object({
-                    command: Type.Literal(`${serviceId}/${endpointId}/${endpointTypeId}`),
-                    data: endpointType
-                }, { $id: `${serviceId}.${endpointId}.${endpointTypeId}` });
+                (endpoint[endpointTypeId] as TSchema) = Type.Object(
+                    {
+                        command: Type.Literal(`${serviceId}/${endpointId}/${endpointTypeId}`),
+                        data: endpointType,
+                    },
+                    { $id: `${serviceId}.${endpointId}.${endpointTypeId}` }
+                );
             }
             serviceSchema[serviceId][endpointId] = Type.Object(endpoint, { $id: `${serviceId}.${endpointId}` });
         }

@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "ts-node src/index",
+    "tidy": "npm run lint && npm run format",
+    "lint": "eslint . --ext .ts --fix",
+    "format": "prettier --write src/**/*.ts",
     "test": "jest"
   },
   "repository": {
