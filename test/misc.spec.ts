@@ -6,16 +6,13 @@ const ajv = new Ajv();
 
 ajv.addSchema(allSchemas);
 
-console.log(allSchemas);
-
-test("auth/get_token/request", () => {
-    const requestValidator = ajv.getSchema("auth.get_token.request")!;
+test("account/list_users/request", () => {
+    const requestValidator = ajv.getSchema("account.list_users.request")!;
     console.log(requestValidator);
     const valid = requestValidator({
-        command: "auth/get_token/request",
+        command: "account/list_users/request",
         data: {
-            email: "bob@thing.com",
-            password: "yep121231"
+            ids: [1, 2]
         }
     });
     if (!valid) {
