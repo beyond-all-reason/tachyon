@@ -61,8 +61,15 @@
                                                     "type": "boolean"
                                                 },
                                                 "clan_id": {
-                                                    "minimum": 0,
-                                                    "type": "integer"
+                                                    "anyOf": [
+                                                        {
+                                                            "minimum": 0,
+                                                            "type": "integer"
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
                                                 },
                                                 "icons": {
                                                     "type": "object",
@@ -142,6 +149,7 @@
                                                                 "lobby_id": {
                                                                     "anyOf": [
                                                                         {
+                                                                            "minimum": 0,
                                                                             "type": "integer"
                                                                         },
                                                                         {
@@ -373,8 +381,15 @@
                                                         "type": "boolean"
                                                     },
                                                     "clan_id": {
-                                                        "minimum": 0,
-                                                        "type": "integer"
+                                                        "anyOf": [
+                                                            {
+                                                                "minimum": 0,
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
                                                     },
                                                     "icons": {
                                                         "type": "object",
@@ -454,6 +469,7 @@
                                                                     "lobby_id": {
                                                                         "anyOf": [
                                                                             {
+                                                                                "minimum": 0,
                                                                                 "type": "integer"
                                                                             },
                                                                             {
@@ -590,8 +606,15 @@
                                                 "type": "boolean"
                                             },
                                             "clan_id": {
-                                                "minimum": 0,
-                                                "type": "integer"
+                                                "anyOf": [
+                                                    {
+                                                        "minimum": 0,
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
                                             },
                                             "icons": {
                                                 "type": "object",
@@ -671,6 +694,7 @@
                                                             "lobby_id": {
                                                                 "anyOf": [
                                                                     {
+                                                                        "minimum": 0,
                                                                         "type": "integer"
                                                                     },
                                                                     {
