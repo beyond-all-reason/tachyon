@@ -11,7 +11,7 @@ export const user = Type.Object(
         id: Type.Integer({ minimum: 0, description: "Unique Identifier for this user", examples: [1234] }),
         name: Type.String({ minLength: 2, maxLength: 20, pattern: "^[A-Za-z0-9_]+$" }),
         is_bot: Type.Boolean({ default: false }),
-        clan_id: Type.Integer({ minimum: 0 }),
+        clan_id: Type.Union([Type.Integer({minimum: 0}), Type.Null()]),
         icons: Type.Record(Type.String(), Type.String()),
         roles: Type.Array(Type.String()),
         battle_status: Type.Union(
@@ -26,7 +26,7 @@ export const user = Type.Object(
                     bonus: Type.Number(),
                     sync: Type.Record(Type.String(), Type.Number()),
                     faction: Type.Union([Type.String(), Type.Null()]),
-                    lobby_id: Type.Union([Type.Integer(), Type.Null()]),
+                    lobby_id: Type.Union([Type.Integer({ minimum: 0 }), Type.Null()]),
                     party_id: Type.Union([Type.String(), Type.Null()]),
                     clan_tag: Type.Union([Type.String(), Type.Null()]),
                     muted: Type.Boolean(),
