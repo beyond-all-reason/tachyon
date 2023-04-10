@@ -97,6 +97,10 @@ export const lobby = Type.Object(
         map_name: Type.String(),
         map_hash: Type.String(),
         public: Type.Boolean(),
+        
+        type: Type.String(), // normal, replay
+        nattype: Type.String(), // none, holepunch, fixed
+        port: Type.Integer()
     },
     {
         ...(enableRefs ? { $id: "lobby" } : {}),
