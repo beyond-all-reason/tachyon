@@ -2,13 +2,13 @@ import { Type } from "@sinclair/typebox";
 
 import { enableRefs, IntersectAllOf, schemaRef } from "../helpers";
 
-export const userIds = Type.Array(Type.Integer({ minimum: 0 }), {
-    ...(enableRefs ? { $id: "userIds" } : {}),
+export const userClientIds = Type.Array(Type.Integer({ minimum: 0 }), {
+    ...(enableRefs ? { $id: "userClientIds" } : {}),
 });
 
-export const user = Type.Object(
+export const userClient = Type.Object(
     {
-        id: Type.Integer({ minimum: 0, description: "Unique Identifier for this user", examples: [1234] }),
+        id: Type.Integer({ minimum: 0, description: "Unique Identifier for this account", examples: [1234] }),
         name: Type.String({ minLength: 2, maxLength: 20, pattern: "^[A-Za-z0-9_]+$" }),
         is_bot: Type.Boolean({ default: false }),
         clan_id: Type.Union([Type.Integer({minimum: 0}), Type.Null()]),
@@ -37,22 +37,22 @@ export const user = Type.Object(
         ),
     },
     {
-        ...(enableRefs ? { $id: "user" } : {}),
+        ...(enableRefs ? { $id: "userClient" } : {}),
     }
 );
 
-export const privateUser = IntersectAllOf(
+export const privateUserClient = IntersectAllOf(
     [
-        schemaRef(user),
+        schemaRef(userClient),
         Type.Object({
             permissions: Type.Array(Type.String()),
-            friends: schemaRef(userIds),
-            friend_requests: schemaRef(userIds),
-            ignores: schemaRef(userIds),
+            friends: schemaRef(userClientIds),
+            friend_requests: schemaRef(userClientIds),
+            ignores: schemaRef(userClientIds),
         }),
     ],
     {
-        ...(enableRefs ? { $id: "privateUser" } : {}),
+        ...(enableRefs ? { $id: "privateUserClient" } : {}),
     }
 );
 
@@ -89,8 +89,8 @@ export const lobby = Type.Object(
         locked: Type.Boolean(),
         engine_name: Type.String(),
         engine_version: Type.String(),
-        players: schemaRef(userIds),
-        spectators: schemaRef(userIds),
+        players: schemaRef(userClientIds),
+        spectators: schemaRef(userClientIds),
         ip: Type.String(),
         settings: Type.Record(Type.String(), Type.String()),
         start_areas: Type.Record(Type.Integer(), schemaRef(startArea)),

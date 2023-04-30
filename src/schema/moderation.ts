@@ -10,7 +10,7 @@ export const moderationEndpoints = {
     request: Type.Object({}, { additionalProperties: true }),
     response: Type.Object({}, { additionalProperties: true }),
   },
-  report_user: {
+  report_userclient: {
     request: Type.Object({}, { additionalProperties: true }),
     response: Type.Object({}, { additionalProperties: true }),
   }

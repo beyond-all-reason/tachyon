@@ -22,17 +22,17 @@ export const configEndpoints = {
     },
 
     /*
-  User configs are tied to the Teiserver structured configs that can be accessed on the site itself. These are constrained by data type (though will where possible convert inputs to that data type) and come with defaults.
+  UserClient configs are tied to the Teiserver structured configs that can be accessed on the site itself. These are constrained by data type (though will where possible convert inputs to that data type) and come with defaults.
   */
-    list_user_types: {
+    list_userclient_types: {
         request: Type.Object({}, { additionalProperties: true }),
         response: Type.Object({}, { additionalProperties: true }),
     },
-    set_user: {
+    set_userclient: {
         request: Type.Object({}, { additionalProperties: true }),
         response: Type.Object({}, { additionalProperties: true }),
     },
-    get_user: {
+    get_userclient: {
         request: Type.Object({}, { additionalProperties: true }),
         response: Type.Object({}, { additionalProperties: true }),
     },

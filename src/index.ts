@@ -4,7 +4,7 @@ import * as fs from "fs";
 import { enableRefs, endpointsToSchema } from "./helpers";
 import { accountEndpoints } from "./schema/account";
 import { authEndpoints } from "./schema/auth";
-import { privateUser, user, userIds } from "./schema/types";
+import { privateUserClient, userClient, userClientIds } from "./schema/types";
 
 export const allSchemas = Type.Object(
     endpointsToSchema({
@@ -18,9 +18,9 @@ export const allSchemas = Type.Object(
 
 if (enableRefs) {
     allSchemas.$defs = {
-        userIds,
-        user,
-        privateUser,
+        userClientIds,
+        userClient,
+        privateUserClient,
     };
 }
 
