@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { Service } from "../helpers";
+import { ServiceSchema } from "../helpers";
 
 export const lobbyHostEndpoints = {
     create: {
@@ -49,4 +49,4 @@ export const lobbyHostEndpoints = {
     updated_status: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;

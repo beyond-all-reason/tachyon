@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { Service } from "../helpers";
+import { ServiceSchema } from "../helpers";
 
 export const matchmakingEndpoints = {
     list_queues: {
@@ -40,4 +40,4 @@ export const matchmakingEndpoints = {
     match_cancelled: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;

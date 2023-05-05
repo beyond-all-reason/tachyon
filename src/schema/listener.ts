@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { Service } from "../helpers";
+import { ServiceSchema } from "../helpers";
 
 export const listenerEndpoints = {
     /*
@@ -18,4 +18,4 @@ export const listenerEndpoints = {
         request: Type.Object({}, { additionalProperties: true }),
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;

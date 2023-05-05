@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { schemaRef, Service } from "../helpers";
+import { schemaRef, ServiceSchema } from "../helpers";
 import { lobby } from "./types";
 
 export const lobbyEndpoints = {
@@ -55,4 +55,4 @@ export const lobbyEndpoints = {
     closed: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;

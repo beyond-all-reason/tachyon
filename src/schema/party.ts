@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { Service } from "../helpers";
+import { ServiceSchema } from "../helpers";
 
 export const partyEndpoints = {
     create: {
@@ -39,4 +39,4 @@ export const partyEndpoints = {
     see_message: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;
