@@ -1,27 +1,22 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { IntersectEvaluate, IntersectReduce, Kind, SchemaOptions, TSchema, Type } from "@sinclair/typebox";
+import { IntersectEvaluate, IntersectReduce, Kind, ObjectOptions, SchemaOptions, TProperties, TSchema, Type } from "@sinclair/typebox";
+import { clone } from "jaz-ts-utils";
 
 export type IntersectSchemaArray<T extends TSchema[]> = IntersectReduce<unknown, IntersectEvaluate<T, []>>;
-
 export type TIntersectAllOf<T extends TSchema[]> = ReturnType<typeof IntersectAllOf<T>>;
-
 export interface IntersectAllOfOptions extends SchemaOptions {
     unevaluatedProperties?: boolean;
 }
-
 export const IntersectAllOf = <T extends TSchema[]>(allOf: [...T], options: IntersectAllOfOptions = {}) => Type.Unsafe<IntersectSchemaArray<T>>({ ...options, [Kind]: "IntersectAllOf", allOf });
+export type EndpointSchema = { request: TSchema } | { response: TSchema };
+export type ServiceSchema = Record<string, EndpointSchema>;
+export type ServicesSchema = Record<string, ServiceSchema>;
 
-export type Endpoint = { request: TSchema } | { response: TSchema };
-
-export type Service = Record<string, Endpoint>;
-
-export type Services = Record<string, Service>;
-
-export function endpointsToSchema<T extends Record<string, Service>>(services: T) {
-    const serviceSchema: any = services;
-    for (const serviceId in services) {
-        const service = services[serviceId];
+export function endpointsToSchema<T extends Record<string, ServiceSchema>>(services: T) {
+    const serviceSchema: any = clone(services);
+    for (const serviceId in serviceSchema) {
+        const service = serviceSchema[serviceId];
         for (const endpointId in service) {
             const endpoint = service[endpointId];
             for (const endpointTypeId in endpoint) {
@@ -42,6 +37,21 @@ export function endpointsToSchema<T extends Record<string, Service>>(services: T
 }
 
 export const enableRefs = false; // should remove this eventually and enable refs by default eventually, when Tei can get it working on server end
-export function schemaRef(schema: TSchema) {
+export function schemaRef<T extends TSchema>(schema: T) {
     return enableRefs ? Type.Ref(schema) : schema;
+}
+
+export function success<T extends TProperties>(properties?: T, options?: ObjectOptions) {
+    return Type.Object({
+        status: Type.Literal("success"),
+        ...properties
+    }, options);
+}
+
+export function failed<R extends string, T extends TProperties>(reason: R, properties?: T, options?: ObjectOptions) {
+    return Type.Object({
+        status: Type.Literal("failed"),
+        reason: Type.Literal(reason),
+        ...properties
+    }, options);
 }

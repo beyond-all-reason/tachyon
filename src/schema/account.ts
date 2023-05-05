@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { schemaRef, Service } from "../helpers";
+import { schemaRef, ServiceSchema } from "../helpers";
 import { privateUserClient, userClient, userClientIds } from "./types";
 
 export const accountEndpoints = {
@@ -50,4 +50,4 @@ export const accountEndpoints = {
     received_friend_request: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;

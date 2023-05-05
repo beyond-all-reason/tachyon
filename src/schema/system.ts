@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { Service } from "../helpers";
+import { ServiceSchema } from "../helpers";
 
 export const systemEndpoints = {
     server_event: {
@@ -9,4 +9,4 @@ export const systemEndpoints = {
     error: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-} as const satisfies Service;
+} as const satisfies ServiceSchema;
