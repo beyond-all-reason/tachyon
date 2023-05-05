@@ -32,10 +32,10 @@ export const lobbyEndpoints = {
     joined: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-    add_user: {
+    add_userclient: {
         response: Type.Object({}, { additionalProperties: true }),
     },
-    remove_user: {
+    remove_userclient: {
         response: Type.Object({}, { additionalProperties: true }),
     },
     bot_added: {

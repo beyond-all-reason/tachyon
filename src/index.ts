@@ -17,8 +17,7 @@ import { newsEndpoints } from "./schema/news";
 import { partyEndpoints } from "./schema/party";
 import { systemEndpoints } from "./schema/system";
 import { telemetryEndpoints } from "./schema/telemetry";
-import { privateUser, user, userIds } from "./schema/types";
-import { unauthEndpoints } from "./schema/unauth";
+import { privateUserClient, userClient, userClientIds } from "./schema/types";
 
 export type Services = typeof allSchemas;
 export type Service<S extends keyof Services> = Services[S];
@@ -53,9 +52,9 @@ const outputSchema = Type.Object(endpointsToSchema(allSchemas), {
 
 if (enableRefs) {
     outputSchema.$defs = {
-        userIds,
-        user,
-        privateUser,
+        userClientIds,
+        userClient,
+        privateUserClient,
     };
 }
 

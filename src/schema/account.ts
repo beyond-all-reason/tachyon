@@ -1,28 +1,28 @@
 import { Type } from "@sinclair/typebox";
 
 import { schemaRef, ServiceSchema } from "../helpers";
-import { privateUser, user, userIds } from "./types";
+import { privateUserClient, userClient, userClientIds } from "./types";
 
 export const accountEndpoints = {
     who_am_i: {
         request: Type.Object({}, { additionalProperties: true }),
-        response: schemaRef(privateUser),
+        response: schemaRef(privateUserClient),
     },
     update_account: {
         request: Type.Object({}, { additionalProperties: true }),
         response: Type.Object({}, { additionalProperties: true }),
     },
-    list_users: {
+    list_userClients: {
         request: Type.Object({
-            ids: schemaRef(userIds),
+            ids: schemaRef(userClientIds),
         }),
         response: Type.Object({
-            users: Type.Array(schemaRef(user)),
+            userClients: Type.Array(schemaRef(userClient)),
         }),
     },
     list_friends: {
         request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Array(schemaRef(user)),
+        response: Type.Array(schemaRef(userClient)),
     },
 
     // Friends
