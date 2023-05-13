@@ -1,12 +1,12 @@
-import { Type } from "@sinclair/typebox";
+import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
-import { ServiceSchema } from "../helpers";
-
-export const telemetryEndpoints = {
+export type TelemetryService = DefineServiceSchema<{
     property: {
-        request: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
     event: {
-        request: Type.Object({}, { additionalProperties: true }),
-    },
-} as const satisfies ServiceSchema;
+        request: Request;
+        response: SuccessResponse;
+    };
+}>;

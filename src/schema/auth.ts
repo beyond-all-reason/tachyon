@@ -1,24 +1,28 @@
-import { Type } from "@sinclair/typebox";
+import { DefineServiceSchema, FailedResponse, Request, SuccessResponse } from "../helpers";
 
-import { failed, ServiceSchema, success } from "../helpers";
-
-export const authEndpoints = {
+export type AuthService = DefineServiceSchema<{
     register: {
-        request: Type.Object({
-            email: Type.String({ format: "email" }),
-            username: Type.String(),
-            password: Type.String(),
-        }),
-        response: Type.Union([
-            success(),
-            failed("email_taken"),
-            failed("username_taken"),
-            failed("invalid_email"),
-            failed("weak_password"),
-            failed("username_profanity")
-        ])
-    },
-    disconnect: {
-        request: Type.Object({}),
-    },
-} as const satisfies ServiceSchema;
+        request: Request<{
+            email: string;
+            username: string;
+            password: string;
+        }>;
+        response:
+            | SuccessResponse
+            | FailedResponse<"email_taken">
+            | FailedResponse<"username_taken">
+            | FailedResponse<"invalid_email">
+            | FailedResponse<"weak_password">
+            | FailedResponse<"username_profanity">;
+    };
+    getToken: {
+        request: Request<({ email: string } | { username: string }) & { password: string }>;
+        response:
+            | SuccessResponse
+            | FailedResponse<"no_account_with_email">
+            | FailedResponse<"no_account_with_username">
+            | FailedResponse<"invalid_password">
+            | FailedResponse<"max_attempts_reached">
+            | FailedResponse<"account_banned">;
+    };
+}>;

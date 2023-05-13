@@ -1,53 +1,51 @@
-import { Type } from "@sinclair/typebox";
+import { UserClient } from "schema/types";
 
-import { schemaRef, ServiceSchema } from "../helpers";
-import { privateUserClient, userClient, userClientIds } from "./types";
+import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
-export const accountEndpoints = {
-    who_am_i: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: schemaRef(privateUserClient),
-    },
-    update_account: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    list_userClients: {
-        request: Type.Object({
-            ids: schemaRef(userClientIds),
-        }),
-        response: Type.Object({
-            userClients: Type.Array(schemaRef(userClient)),
-        }),
-    },
-    list_friends: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Array(schemaRef(userClient)),
-    },
-
-    // Friends
-    add_friend: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    rescind_friend_request: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    accept_friend_request: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    reject_friend_request: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    remove_friend: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-
-    received_friend_request: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-} as const satisfies ServiceSchema;
+export type AccountService = DefineServiceSchema<{
+    whoAmI: {
+        request: Request;
+        response: SuccessResponse<{
+            todo: string;
+        }>;
+    };
+    updateAccount: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    getUserClients: {
+        request: Request<{ ids: number[] }>;
+        response: SuccessResponse<{
+            userClients: UserClient[];
+        }>;
+    };
+    getFriends: {
+        request: Request;
+        response: SuccessResponse<{
+            userClients: UserClient[];
+        }>;
+    };
+    addFriend: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    rescindFriendRequest: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    acceptFriendRequest: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    rejectFriendRequest: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    removeFriend: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    receivedFriendRequest: {
+        response: SuccessResponse;
+    };
+}>;

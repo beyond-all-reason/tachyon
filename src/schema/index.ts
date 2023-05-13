@@ -1,0 +1,34 @@
+import { DefineTachyonSchema } from "helpers";
+import { AccountService } from "schema/account";
+import { AuthService } from "schema/auth";
+import { ClanService } from "schema/clan";
+import { CommunicationService } from "schema/communication";
+import { ConfigService } from "schema/config";
+import { ListenerService } from "schema/listener";
+import { LobbyService } from "schema/lobby";
+import { LobbyChatService } from "schema/lobby-chat";
+import { LobbyHostService } from "schema/lobby-host";
+import { MatchmakingService } from "schema/matchmaking";
+import { ModerationService } from "schema/moderation";
+import { NewsService } from "schema/news";
+import { PartyService } from "schema/party";
+import { SystemService } from "schema/system";
+import { TelemetryService } from "schema/telemetry";
+
+export type Tachyon = DefineTachyonSchema<{
+    account: AccountService;
+    auth: AuthService;
+    clan: ClanService;
+    communication: CommunicationService;
+    config: ConfigService;
+    listener: ListenerService;
+    lobbyChat: LobbyChatService;
+    lobbyHost: LobbyHostService;
+    lobby: LobbyService;
+    matchmaking: MatchmakingService;
+    moderation: ModerationService;
+    news: NewsService;
+    party: PartyService;
+    system: SystemService;
+    telemetry: TelemetryService;
+}>;

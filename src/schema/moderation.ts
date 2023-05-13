@@ -1,17 +1,12 @@
-import { Type } from "@sinclair/typebox";
+import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
-import { ServiceSchema } from "../helpers";
-
-export const moderationEndpoints = {
-    /*
-  This will pull back a list of reasons you can report someone
-  */
-  get_reporting_configs: {
-    request: Type.Object({}, { additionalProperties: true }),
-    response: Type.Object({}, { additionalProperties: true }),
-  },
-  report_userclient: {
-    request: Type.Object({}, { additionalProperties: true }),
-    response: Type.Object({}, { additionalProperties: true }),
-  }
-} as const satisfies ServiceSchema;
+export type ModerationService = DefineServiceSchema<{
+    getReportingConfigs: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    reportUserClient: {
+        request: Request;
+        response: SuccessResponse;
+    };
+}>;

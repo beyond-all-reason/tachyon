@@ -1,58 +1,60 @@
-import { Type } from "@sinclair/typebox";
+import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
-import { schemaRef, ServiceSchema } from "../helpers";
-import { lobby } from "./types";
-
-export const lobbyEndpoints = {
-    list_lobbies: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Array(schemaRef(lobby)),
-    },
+export type LobbyService = DefineServiceSchema<{
+    getLobbies: {
+        request: Request;
+        response: SuccessResponse;
+    };
     get: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
     join: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
     leave: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    update_status: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-
-    // Server updates not behind a listener
+        request: Request;
+        response: SuccessResponse;
+    };
+    updateStatus: {
+        request: Request;
+        response: SuccessResponse;
+    };
     updated: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
     joined: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    add_userclient: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    remove_userclient: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    bot_added: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    bot_updated: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    bot_removed: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-
-    // Server updates, should be behind a listener
+        request: Request;
+        response: SuccessResponse;
+    };
+    addUserClient: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    removeUserClient: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    botAdded: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    botUpdated: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    botRemoved: {
+        request: Request;
+        response: SuccessResponse;
+    };
     opened: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
     closed: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-} as const satisfies ServiceSchema;
+        request: Request;
+        response: SuccessResponse;
+    };
+}>;

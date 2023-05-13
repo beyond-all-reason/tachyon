@@ -1,42 +1,42 @@
-import { Type } from "@sinclair/typebox";
+import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
-import { ServiceSchema } from "../helpers";
-
-export const partyEndpoints = {
+export type PartyService = DefineServiceSchema<{
     create: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    get_party: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
+    getParty: {
+        request: Request;
+        response: SuccessResponse;
+    };
     invite: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    accept_invite: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    decline_invite: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
+    rescindInvite: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    acceptInvite: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    declineInvite: {
+        request: Request;
+        response: SuccessResponse;
+    };
     kick: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    send_message: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-
-    // Server updates
+        request: Request;
+        response: SuccessResponse;
+    };
+    sendMessage: {
+        request: Request;
+        response: SuccessResponse;
+    };
     updated: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    see_message: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-} as const satisfies ServiceSchema;
+        response: SuccessResponse;
+    };
+    seeMessage: {
+        response: SuccessResponse;
+    };
+}>;

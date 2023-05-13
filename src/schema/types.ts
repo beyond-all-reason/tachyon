@@ -1,60 +1,38 @@
-import { Type } from "@sinclair/typebox";
+export type UserClient = {
+    id: number;
+    name: string;
+    isBot: boolean;
+    clanId: number | null;
+    icons: Record<string, string>;
+    roles: string[];
+    battleStatus: BattleStatus | null;
+};
 
-import { enableRefs, IntersectAllOf, schemaRef } from "../helpers";
+export type BattleStatus = {
+    lobbyId: number | null;
+    inGame: boolean;
+    away: boolean;
+    ready: boolean;
+    playerNumber: number | null;
+    teamColour: string | null;
+    isPlayer: boolean;
+    bonus: number;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+    partyId: string | null;
+    clanTag: string | null;
+    muted: boolean;
+};
 
-export const userClientIds = Type.Array(Type.Integer({ minimum: 0 }), {
-    ...(enableRefs ? { $id: "userClientIds" } : {}),
-});
-
-export const userClient = Type.Object(
-    {
-        id: Type.Integer({ minimum: 0, description: "Unique Identifier for this account", examples: [1234] }),
-        name: Type.String({ minLength: 2, maxLength: 20, pattern: "^[A-Za-z0-9_]+$" }),
-        is_bot: Type.Boolean({ default: false }),
-        clan_id: Type.Union([Type.Integer({minimum: 0}), Type.Null()]),
-        icons: Type.Record(Type.String(), Type.String()),
-        roles: Type.Array(Type.String()),
-        battle_status: Type.Union(
-            [
-                Type.Object({
-                    in_game: Type.Boolean(),
-                    away: Type.Boolean(),
-                    ready: Type.Boolean(),
-                    player_number: Type.Union([Type.Integer(), Type.Null()]),
-                    team_colour: Type.Union([Type.String(), Type.Null()]),
-                    is_player: Type.Boolean(),
-                    bonus: Type.Number(),
-                    sync: Type.Record(Type.String(), Type.Number()),
-                    faction: Type.Union([Type.String(), Type.Null()]),
-                    lobby_id: Type.Union([Type.Integer({ minimum: 0 }), Type.Null()]),
-                    party_id: Type.Union([Type.String(), Type.Null()]),
-                    clan_tag: Type.Union([Type.String(), Type.Null()]),
-                    muted: Type.Boolean(),
-                }),
-                Type.Null(),
-            ],
-            { default: null }
-        ),
-    },
-    {
-        ...(enableRefs ? { $id: "userClient" } : {}),
-    }
-);
-
-export const privateUserClient = IntersectAllOf(
-    [
-        schemaRef(userClient),
-        Type.Object({
-            permissions: Type.Array(Type.String()),
-            friends: schemaRef(userClientIds),
-            friend_requests: schemaRef(userClientIds),
-            ignores: schemaRef(userClientIds),
-        }),
-    ],
-    {
-        ...(enableRefs ? { $id: "privateUserClient" } : {}),
-    }
-);
+export type PrivateUserClient = UserClient & {
+    permissions: string[];
+    friends: number[];
+    friend_requests: number[];
+    ignores: number[];
+};
 
 export enum LobbyStatus {
     UNSPECIFIED,
@@ -64,45 +42,30 @@ export enum LobbyStatus {
     LOCKED,
 }
 
-export const rect = Type.Object(
-    {
-        x: Type.Number(),
-        y: Type.Number(),
-        w: Type.Number(),
-        h: Type.Number(),
-    },
-    {
-        ...(enableRefs ? { $id: "rect" } : {}),
-    }
-);
+export type Rect = {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+};
 
-export const startArea = Type.Union([schemaRef(rect)], {
-    ...(enableRefs ? { $id: "startArea" } : {}),
-});
-
-export const lobby = Type.Object(
-    {
-        id: Type.Integer(),
-        name: Type.String(),
-        founder_id: Type.Number(),
-        passworded: Type.Boolean(),
-        locked: Type.Boolean(),
-        engine_name: Type.String(),
-        engine_version: Type.String(),
-        players: schemaRef(userClientIds),
-        spectators: schemaRef(userClientIds),
-        ip: Type.String(),
-        settings: Type.Record(Type.String(), Type.String()),
-        start_areas: Type.Record(Type.Integer(), schemaRef(startArea)),
-        map_name: Type.String(),
-        map_hash: Type.String(),
-        public: Type.Boolean(),
-        
-        type: Type.String(), // normal, replay
-        nattype: Type.String(), // none, holepunch, fixed
-        port: Type.Integer()
-    },
-    {
-        ...(enableRefs ? { $id: "lobby" } : {}),
-    }
-);
+export type Lobby = {
+    id: number;
+    name: string;
+    founderId: number;
+    passworded: boolean;
+    locked: boolean;
+    engineName: string;
+    engineVersion: string;
+    playerIds: number[];
+    spectatorIds: number;
+    ip: string;
+    settings: Record<string, string>;
+    startAreas: Record<number, Rect>;
+    mapName: string;
+    mapHash: string;
+    public: boolean;
+    type: "normal" | "replay";
+    natType: "none" | "holepunched" | "fixed";
+    port: number;
+};

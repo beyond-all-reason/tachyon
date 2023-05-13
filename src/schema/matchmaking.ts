@@ -1,43 +1,42 @@
-import { Type } from "@sinclair/typebox";
+import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
-import { ServiceSchema } from "../helpers";
-
-export const matchmakingEndpoints = {
-    list_queues: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    list_joined_queues: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    get_queue: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    join_queue: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    leave_queue: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-    leave_all_queues: {
-        request: Type.Object({}, { additionalProperties: true }),
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-
-    match_ready: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
+export type MatchmakingService = DefineServiceSchema<{
+    getQueues: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    getJoinedQueues: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    getQueue: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    joinQueue: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    leaveQueue: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    leaveAllQueues: {
+        request: Request;
+        response: SuccessResponse;
+    };
+    matchReady: {
+        response: SuccessResponse;
+    };
     accept: {
-        request: Type.Object({}, { additionalProperties: true }),
-    },
+        request: Request;
+        response: SuccessResponse;
+    };
     decline: {
-        request: Type.Object({}, { additionalProperties: true }),
-    },
-    match_cancelled: {
-        response: Type.Object({}, { additionalProperties: true }),
-    },
-} as const satisfies ServiceSchema;
+        request: Request;
+        response: SuccessResponse;
+    };
+    matchCancelled: {
+        response: SuccessResponse;
+    };
+}>;
