@@ -1,6 +1,5 @@
-import { UserClient } from "schema/types";
-
 import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { UserClient } from "./types";
 
 export type AccountService = DefineServiceSchema<{
     whoAmI: {

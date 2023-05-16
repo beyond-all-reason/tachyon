@@ -5,18 +5,18 @@
         "data": {
             "type": "object",
             "properties": {
-                "message": {
+                "name": {
                     "type": "string"
                 }
             },
             "required": [
-                "message"
+                "name"
             ],
             "additionalProperties": false
         },
         "command": {
             "type": "string",
-            "const": "lobbyChat/say/request"
+            "const": "init/test/request"
         }
     },
     "required": [

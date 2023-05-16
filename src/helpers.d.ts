@@ -14,14 +14,14 @@ export type ServiceSchema = {
     [endpointId: string]:
         | {
               request: {
-                  data: any;
+                  data: object;
               };
           }
         | {
               response:
                   | {
                         status: "success";
-                        data?: any;
+                        data?: object;
                     }
                   | {
                         status: "failed";

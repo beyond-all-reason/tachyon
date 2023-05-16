@@ -2,7 +2,9 @@ import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
 
 export type LobbyChatService = DefineServiceSchema<{
     say: {
-        request: Request;
+        request: Request<{
+            message: string;
+        }>;
         response: SuccessResponse;
     };
     announce: {

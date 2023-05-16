@@ -2,25 +2,30 @@
     "type": "object",
     "additionalProperties": false,
     "properties": {
+        "status": {
+            "type": "string",
+            "const": "success"
+        },
         "data": {
             "type": "object",
             "properties": {
-                "message": {
+                "tachyonVersion": {
                     "type": "string"
                 }
             },
             "required": [
-                "message"
+                "tachyonVersion"
             ],
             "additionalProperties": false
         },
         "command": {
             "type": "string",
-            "const": "lobbyChat/say/request"
+            "const": "init/init/response"
         }
     },
     "required": [
         "command",
-        "data"
+        "data",
+        "status"
     ]
 }

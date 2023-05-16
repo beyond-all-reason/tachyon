@@ -4,8 +4,9 @@ import path from "path";
 import { Config, createGenerator } from "ts-json-schema-generator";
 
 const config: Config = {
-    path: "src/schema/**/*.ts",
+    path: "src/schema/**/*.d.ts",
     tsconfig: "tsconfig.json",
+    skipTypeCheck: true,
     expose: "none",
     encodeRefs: false,
     topRef: false,
@@ -15,6 +16,8 @@ const config: Config = {
 const schema = createGenerator(config).createSchema(config.type);
 
 fs.mkdirSync("schema", { recursive: true });
+
+// fs.writeFileSync(path.join("dist/combined.json"), JSON.stringify(schema, null, 4));
 
 for (const serviceId in schema.properties) {
     const service = schema.properties[serviceId] as JSONSchema7;
