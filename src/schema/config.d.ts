@@ -1,4 +1,4 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type ConfigService = DefineServiceSchema<{
     /*
@@ -6,28 +6,28 @@ export type ConfigService = DefineServiceSchema<{
      * Note this is not designed to be a large data store, please don't store large blobs of data in it.
      */
     getGameTypes: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     setGame: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
     getGame: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     /*
      * UserClient configs are tied to the Teiserver structured configs that can be accessed on the site itself. These are constrained by data type (though will where possible convert inputs to that data type) and come with defaults.
      */
     getUserClientTypes: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     setUserClient: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
     getUserClient: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 }>;

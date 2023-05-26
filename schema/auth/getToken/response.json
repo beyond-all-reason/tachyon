@@ -28,30 +28,7 @@
                 },
                 "reason": {
                     "type": "string",
-                    "const": "no_account_with_email"
-                },
-                "command": {
-                    "type": "string",
-                    "const": "auth/getToken/response"
-                }
-            },
-            "required": [
-                "command",
-                "reason",
-                "status"
-            ]
-        },
-        {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "status": {
-                    "type": "string",
-                    "const": "failed"
-                },
-                "reason": {
-                    "type": "string",
-                    "const": "no_account_with_username"
+                    "const": "no_user_found"
                 },
                 "command": {
                     "type": "string",
@@ -97,7 +74,7 @@
                 },
                 "reason": {
                     "type": "string",
-                    "const": "max_attempts_reached"
+                    "const": "max_attempts"
                 },
                 "command": {
                     "type": "string",
@@ -120,7 +97,7 @@
                 },
                 "reason": {
                     "type": "string",
-                    "const": "account_banned"
+                    "const": "banned"
                 },
                 "command": {
                     "type": "string",

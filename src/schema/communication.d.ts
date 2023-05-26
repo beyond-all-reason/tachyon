@@ -1,15 +1,15 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type CommunicationService = DefineServiceSchema<{
     sendDirectMessage: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     receivedDirectMessage: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
     getNotifications: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 }>;

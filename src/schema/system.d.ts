@@ -1,10 +1,10 @@
-import { DefineServiceSchema, SuccessResponse } from "../helpers";
+import { DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type SystemService = DefineServiceSchema<{
     serverEvent: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
     error: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
 }>;

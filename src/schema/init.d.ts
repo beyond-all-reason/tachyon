@@ -1,14 +1,9 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type InitService = DefineServiceSchema<{
     init: {
-        response: SuccessResponse<{
+        response: DefineSuccessResponse<{
             tachyonVersion: string;
-        }>;
-    };
-    test: {
-        request: Request<{
-            name: string;
         }>;
     };
 }>;

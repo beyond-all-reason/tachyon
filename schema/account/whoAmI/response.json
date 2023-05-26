@@ -6,18 +6,6 @@
             "type": "string",
             "const": "success"
         },
-        "data": {
-            "type": "object",
-            "properties": {
-                "todo": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "todo"
-            ],
-            "additionalProperties": false
-        },
         "command": {
             "type": "string",
             "const": "account/whoAmI/response"
@@ -25,7 +13,6 @@
     },
     "required": [
         "command",
-        "data",
         "status"
     ]
 }
