@@ -1,60 +1,60 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type LobbyService = DefineServiceSchema<{
     getLobbies: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     get: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     join: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     leave: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     updateStatus: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     updated: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     joined: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     addUserClient: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     removeUserClient: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     botAdded: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     botUpdated: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     botRemoved: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     opened: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     closed: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 }>;

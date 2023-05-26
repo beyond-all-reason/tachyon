@@ -1,50 +1,50 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type LobbyHostService = DefineServiceSchema<{
     create: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     close: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     joinRequest: {
         // Server messages first, how do we define request/response for this?
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 
     // In lobby actions
     updatePlayerStatus: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     addBot: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     updateBot: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     removeBot: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 
     // Battle stuff
     startBattle: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     endBattle: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 
     // Server updates
     updatedStatus: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
 }>;

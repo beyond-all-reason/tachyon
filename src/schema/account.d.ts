@@ -1,50 +1,44 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 import { UserClient } from "./types";
 
 export type AccountService = DefineServiceSchema<{
     whoAmI: {
-        request: Request;
-        response: SuccessResponse<{
-            todo: string;
-        }>;
+        request: DefineRequest;
+        response: DefineSuccessResponse
     };
     updateAccount: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse
     };
     getUserClients: {
-        request: Request<{ ids: number[] }>;
-        response: SuccessResponse<{
-            userClients: UserClient[];
-        }>;
+        request: DefineRequest<{ ids: number[] }>;
+        response: DefineSuccessResponse<{ userClients: UserClient[] }>;
     };
     getFriends: {
-        request: Request;
-        response: SuccessResponse<{
-            userClients: UserClient[];
-        }>;
+        request: DefineRequest;
+        response: DefineSuccessResponse<{ userClients: UserClient[]; }>
     };
     addFriend: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     rescindFriendRequest: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     acceptFriendRequest: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     rejectFriendRequest: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     removeFriend: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     receivedFriendRequest: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
 }>;

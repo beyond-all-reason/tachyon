@@ -1,8 +1,8 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type NewsService = DefineServiceSchema<{
     getNewsItems: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
 }>;

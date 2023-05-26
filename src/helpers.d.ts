@@ -14,7 +14,7 @@ export type ServiceSchema = {
     [endpointId: string]:
         | {
               request: {
-                  data: object;
+                data?: object;
               };
           }
         | {
@@ -27,7 +27,7 @@ export type ServiceSchema = {
                         status: "failed";
                         reason: string;
                     };
-          };
+          }
 };
 
 /** @internal */
@@ -48,30 +48,27 @@ export type Tachyon<T extends TachyonSchema> = {
 };
 
 /** @internal */
-export type Request<T = undefined> = T extends undefined
-    ? object
-    : {
-          data: T;
-      };
+export type DefineRequest<T extends object | undefined = undefined> = T extends undefined ? Record<string, never> : { data: T };
+/** @internal */
+export type DefineSuccessResponse<T extends object | undefined = undefined> = T extends undefined ? { status: "success" } : { status: "success", data: T };
+/** @internal */
+export type DefineFailedResponse<T extends string> = { status: "failed", reason: T };
 
 /** @internal */
-export type FailedResponse<Reason extends string, T = undefined> = T extends undefined
-    ? {
-          status: "failed";
-          reason: Reason;
-      }
-    : {
-          status: "failed";
-          reason: Reason;
-          data: T;
-      };
-
+export type ServiceId<T extends TachyonSchema> = keyof T;
 /** @internal */
-export type SuccessResponse<T = undefined> = T extends undefined
-    ? {
-          status: "success";
-      }
-    : {
-          status: "success";
-          data: T;
-      };
+export type RequestEndpointId<T extends TachyonSchema, S extends ServiceId<T>> = keyof {
+    [key in keyof T[S] as T[S][key] extends { request: any } ? key : never]: T[S][key];
+};
+/** @internal */
+export type ResponseEndpointId<T extends TachyonSchema, S extends ServiceId<T>> = keyof {
+    [key in keyof T[S] as T[S][key] extends { response: any } ? key : never]: T[S][key];
+};
+/** @internal */
+export type RequestType<T extends TachyonSchema, S extends ServiceId<T>, E extends RequestEndpointId<T, S>> = T[S][E] extends { request: infer Req } ? Req : object;
+/** @internal */
+export type ResponseType<T extends TachyonSchema, S extends ServiceId<T>, E extends ResponseEndpointId<T, S>> = T[S][E] extends { response: infer Res } ? Res : object;
+/** @internal */
+export type RequestData<T extends TachyonSchema, S extends ServiceId<T>, E extends RequestEndpointId<T, S>> = T[S][E] extends { request: { data: infer Data } } ? Data : never;
+/** @internal */
+export type ResponseData<T extends TachyonSchema, S extends ServiceId<T>, E extends ResponseEndpointId<T, S>> = T[S][E] extends { response: { data: infer Data } } ? Data : never;

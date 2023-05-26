@@ -1,28 +1,27 @@
-import { DefineServiceSchema, FailedResponse, Request, SuccessResponse } from "../helpers";
+import { DefineFailedResponse, DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type AuthService = DefineServiceSchema<{
     register: {
-        request: Request<{
+        request: DefineRequest<{
             email: string;
             username: string;
             password: string;
         }>;
         response:
-            | SuccessResponse
-            | FailedResponse<"email_taken">
-            | FailedResponse<"username_taken">
-            | FailedResponse<"invalid_email">
-            | FailedResponse<"weak_password">
-            | FailedResponse<"username_profanity">;
+            | DefineSuccessResponse
+            | DefineFailedResponse<"email_taken">
+            | DefineFailedResponse<"username_taken">
+            | DefineFailedResponse<"invalid_email">
+            | DefineFailedResponse<"weak_password">
+            | DefineFailedResponse<"username_profanity">
     };
     getToken: {
-        request: Request<({ email: string } | { username: string }) & { password: string }>;
+        request: DefineRequest<({ email: string } | { username: string }) & { password: string }>;
         response:
-            | SuccessResponse
-            | FailedResponse<"no_account_with_email">
-            | FailedResponse<"no_account_with_username">
-            | FailedResponse<"invalid_password">
-            | FailedResponse<"max_attempts_reached">
-            | FailedResponse<"account_banned">;
+            | DefineSuccessResponse
+            | DefineFailedResponse<"no_user_found">
+            | DefineFailedResponse<"invalid_password">
+            | DefineFailedResponse<"max_attempts">
+            | DefineFailedResponse<"banned">
     };
 }>;

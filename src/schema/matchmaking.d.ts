@@ -1,42 +1,42 @@
-import { DefineServiceSchema, Request, SuccessResponse } from "../helpers";
+import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
 
 export type MatchmakingService = DefineServiceSchema<{
     getQueues: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     getJoinedQueues: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     getQueue: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     joinQueue: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     leaveQueue: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     leaveAllQueues: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     matchReady: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
     accept: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     decline: {
-        request: Request;
-        response: SuccessResponse;
+        request: DefineRequest;
+        response: DefineSuccessResponse;
     };
     matchCancelled: {
-        response: SuccessResponse;
+        response: DefineSuccessResponse;
     };
 }>;
