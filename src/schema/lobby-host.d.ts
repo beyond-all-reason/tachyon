@@ -1,50 +1,50 @@
-import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
+import { DefineServiceSchema, EmptyObject } from "../helpers";
 
 export type LobbyHostService = DefineServiceSchema<{
     create: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     close: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     joinRequest: {
         // Server messages first, how do we define request/response for this?
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
 
     // In lobby actions
     updatePlayerStatus: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     addBot: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     updateBot: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     removeBot: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
 
     // Battle stuff
     startBattle: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     endBattle: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
 
     // Server updates
     updatedStatus: {
-        response: DefineSuccessResponse;
+        response: { success: EmptyObject };
     };
 }>;

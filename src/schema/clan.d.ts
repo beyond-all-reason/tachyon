@@ -1,28 +1,28 @@
-import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
+import { DefineServiceSchema, EmptyObject } from "../helpers";
 
 export type ClanService = DefineServiceSchema<{
     getClans: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     getClan: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     invite: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     rescindInvite: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     acceptInvite: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     rejectInvite: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
 }>;

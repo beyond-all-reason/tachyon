@@ -1,8 +1,5 @@
 {
     "type": "object",
-    "additionalProperties": {
-        "not": {}
-    },
     "properties": {
         "command": {
             "type": "string",

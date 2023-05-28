@@ -1,18 +1,18 @@
-import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
+import { DefineServiceSchema, EmptyObject } from "../helpers";
 
 export type LobbyChatService = DefineServiceSchema<{
     say: {
-        request: DefineRequest<{ message: string }>;
-        response: DefineSuccessResponse;
+        request: { message: string };
+        response: { success: EmptyObject };
     };
     announce: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     said: {
-        response: DefineSuccessResponse;
+        response: { success: EmptyObject };
     };
     announced: {
-        response: DefineSuccessResponse;
+        response: { success: EmptyObject };
     };
 }>;

@@ -11,6 +11,7 @@ const config: Config = {
     encodeRefs: false,
     topRef: false,
     type: "Tachyon",
+    additionalProperties: true,
 };
 
 const schema = createGenerator(config).createSchema(config.type);
