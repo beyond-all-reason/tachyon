@@ -1,21 +1,26 @@
 {
     "compilerOptions": {
+        "composite": true,
         "baseUrl": ".",
+        "rootDir": "./src",
         "target": "ES2022",
         "module": "CommonJS",
         "lib": ["dom", "es6", "ES2022"],
-        "skipLibCheck": true,
+        "skipDefaultLibCheck": true,
         "sourceMap": true,
         "declaration": true,
-        "outDir": "dist",
+        "emitDeclarationOnly": true,
+        "outDir": "types",
         "moduleResolution": "Node",
         "removeComments": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
         "strict": true,
-        "paths": {
-            "*": ["src/*"]
-        }
+        "allowJs": true
     },
-    "include": ["src/**/*"]
+    "include": ["src/**/*"],
+    "exclude": ["node_modules"],
+    "ts-node": {
+        "swc": true
+    }
 }
