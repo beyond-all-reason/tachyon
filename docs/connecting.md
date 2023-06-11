@@ -47,3 +47,9 @@ params: {
   "application_name": "ExampleApplication"
 }
 ```
+
+Failure status responses:
+400 - You are missing one or more parameters
+401 - While you have a token, that token has not found a user
+403 - You have a token but for some reason that token has not yielded a valid login
+500 - Internal error, probably not your fault
