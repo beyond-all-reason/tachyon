@@ -1,44 +1,44 @@
-import { DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
+import { DefineServiceSchema, EmptyObject } from "../helpers";
 import { UserClient } from "./types";
 
 export type AccountService = DefineServiceSchema<{
     whoAmI: {
-        request: DefineRequest;
-        response: DefineSuccessResponse
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     updateAccount: {
-        request: DefineRequest;
-        response: DefineSuccessResponse
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     getUserClients: {
-        request: DefineRequest<{ ids: number[] }>;
-        response: DefineSuccessResponse<{ userClients: UserClient[] }>;
+        request: { ids: number[] };
+        response: { success: { userClients: UserClient[] } };
     };
     getFriends: {
-        request: DefineRequest;
-        response: DefineSuccessResponse<{ userClients: UserClient[]; }>
+        request: EmptyObject;
+        response: { success: { userClients: UserClient[] } };
     };
     addFriend: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     rescindFriendRequest: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     acceptFriendRequest: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     rejectFriendRequest: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     removeFriend: {
-        request: DefineRequest;
-        response: DefineSuccessResponse;
+        request: EmptyObject;
+        response: { success: EmptyObject };
     };
     receivedFriendRequest: {
-        response: DefineSuccessResponse;
+        response: { success: EmptyObject };
     };
 }>;

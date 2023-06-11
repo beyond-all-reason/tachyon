@@ -1,27 +1,25 @@
-import { DefineFailedResponse, DefineRequest, DefineServiceSchema, DefineSuccessResponse } from "../helpers";
+import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { PrivateUserClient } from "./types";
 
 export type AuthService = DefineServiceSchema<{
     register: {
-        request: DefineRequest<{
+        request: {
             email: string;
             username: string;
             password: string;
-        }>;
-        response:
-            | DefineSuccessResponse
-            | DefineFailedResponse<"email_taken">
-            | DefineFailedResponse<"username_taken">
-            | DefineFailedResponse<"invalid_email">
-            | DefineFailedResponse<"weak_password">
-            | DefineFailedResponse<"username_profanity">
+        };
+        response: {
+            success: EmptyObject;
+            failed: "email_taken" | "username_taken" | "invalid_email" | "weak_password" | "username_profanity";
+        };
     };
     getToken: {
-        request: DefineRequest<({ email: string } | { username: string }) & { password: string }>;
-        response:
-            | DefineSuccessResponse
-            | DefineFailedResponse<"no_user_found">
-            | DefineFailedResponse<"invalid_password">
-            | DefineFailedResponse<"max_attempts">
-            | DefineFailedResponse<"banned">
+        request: ({ email: string } | { username: string }) & { password: string };
+        response: {
+            success: {
+                user: PrivateUserClient;
+            };
+            failed: "no_user_found" | "invalid_password" | "max_attempts" | "banned";
+        };
     };
 }>;

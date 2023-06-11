@@ -1,5 +1,6 @@
+import { AccountService } from "src/schema/account";
+
 import { DefineTachyonSchema } from "../helpers";
-import { AccountService } from "./account";
 import { AuthService } from "./auth";
 import { ClanService } from "./clan";
 import { CommunicationService } from "./communication";
