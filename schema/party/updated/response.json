@@ -7,12 +7,6 @@
                     "type": "string",
                     "const": "success"
                 },
-                "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "not": {}
-                    }
-                },
                 "command": {
                     "type": "string",
                     "const": "party/updated/response"
@@ -20,7 +14,6 @@
             },
             "required": [
                 "command",
-                "data",
                 "status"
             ]
         },

@@ -3,14 +3,14 @@ import { DefineServiceSchema, EmptyObject } from "../helpers";
 export type ListenerService = DefineServiceSchema<{
     subscribe: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     unsubscribe: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     getSubscriptions: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
 }>;

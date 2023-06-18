@@ -1,10 +1,10 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema } from "../helpers";
 
 export type SystemService = DefineServiceSchema<{
     serverEvent: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     error: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
 }>;

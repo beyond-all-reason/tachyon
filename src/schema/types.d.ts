@@ -1,6 +1,6 @@
 export type UserClient = {
-    id: number;
-    name: string;
+    userId: number;
+    username: string;
     isBot: boolean;
     clanId: number | null;
     icons: Record<string, string>;
@@ -28,9 +28,9 @@ export type BattleStatus = {
 };
 
 export type PrivateUserClient = UserClient & {
-    permissions: string[];
+    email: string;
     friends: number[];
-    friend_requests: number[];
+    friendRequests: number[];
     ignores: number[];
 };
 

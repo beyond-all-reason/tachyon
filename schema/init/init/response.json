@@ -38,6 +38,28 @@
                 },
                 "reason": {
                     "type": "string",
+                    "const": "shit"
+                },
+                "command": {
+                    "type": "string",
+                    "const": "init/init/response"
+                }
+            },
+            "required": [
+                "command",
+                "reason",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "const": "failed"
+                },
+                "reason": {
+                    "type": "string",
                     "const": "internal_error"
                 },
                 "command": {

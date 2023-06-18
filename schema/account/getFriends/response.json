@@ -15,10 +15,10 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "id": {
+                                    "userId": {
                                         "type": "number"
                                     },
-                                    "name": {
+                                    "username": {
                                         "type": "string"
                                     },
                                     "isBot": {
@@ -137,8 +137,8 @@
                                     }
                                 },
                                 "required": [
-                                    "id",
-                                    "name",
+                                    "userId",
+                                    "username",
                                     "isBot",
                                     "clanId",
                                     "icons",

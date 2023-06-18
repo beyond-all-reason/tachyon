@@ -3,16 +3,16 @@ import { DefineServiceSchema, EmptyObject } from "../helpers";
 export type LobbyChatService = DefineServiceSchema<{
     say: {
         request: { message: string };
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     announce: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     said: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     announced: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
 }>;

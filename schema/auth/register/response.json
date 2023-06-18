@@ -7,12 +7,6 @@
                     "type": "string",
                     "const": "success"
                 },
-                "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "not": {}
-                    }
-                },
                 "command": {
                     "type": "string",
                     "const": "auth/register/response"
@@ -20,7 +14,6 @@
             },
             "required": [
                 "command",
-                "data",
                 "status"
             ]
         },
@@ -34,13 +27,34 @@
                 "reason": {
                     "type": "string",
                     "enum": [
-                        "internal_error",
                         "email_taken",
                         "username_taken",
                         "invalid_email",
                         "weak_password",
                         "username_profanity"
                     ]
+                },
+                "command": {
+                    "type": "string",
+                    "const": "auth/register/response"
+                }
+            },
+            "required": [
+                "command",
+                "reason",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string",
+                    "const": "failed"
+                },
+                "reason": {
+                    "type": "string",
+                    "const": "internal_error"
                 },
                 "command": {
                     "type": "string",

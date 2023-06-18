@@ -7,27 +7,27 @@ export type ConfigService = DefineServiceSchema<{
      */
     getGameTypes: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     setGame: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     getGame: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     /*
      * UserClient configs are tied to the Teiserver structured configs that can be accessed on the site itself. These are constrained by data type (though will where possible convert inputs to that data type) and come with defaults.
      */
     getUserClientTypes: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     setUserClient: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     getUserClient: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
 }>;

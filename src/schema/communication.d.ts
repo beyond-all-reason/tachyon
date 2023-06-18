@@ -3,13 +3,13 @@ import { DefineServiceSchema, EmptyObject } from "../helpers";
 export type CommunicationService = DefineServiceSchema<{
     sendDirectMessage: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     receivedDirectMessage: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     getNotifications: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
 }>;

@@ -4,41 +4,41 @@ import { UserClient } from "./types";
 export type AccountService = DefineServiceSchema<{
     whoAmI: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success"; data: object };
     };
     updateAccount: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     getUserClients: {
         request: { ids: number[] };
-        response: { success: { userClients: UserClient[] } };
+        response: { status: "success"; data: { userClients: UserClient[] } };
     };
     getFriends: {
         request: EmptyObject;
-        response: { success: { userClients: UserClient[] } };
+        response: { status: "success"; data: { userClients: UserClient[] } };
     };
     addFriend: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     rescindFriendRequest: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     acceptFriendRequest: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     rejectFriendRequest: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     removeFriend: {
         request: EmptyObject;
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
     receivedFriendRequest: {
-        response: { success: EmptyObject };
+        response: { status: "success" };
     };
 }>;

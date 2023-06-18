@@ -8,10 +8,7 @@
                     "const": "success"
                 },
                 "data": {
-                    "type": "object",
-                    "additionalProperties": {
-                        "not": {}
-                    }
+                    "type": "object"
                 },
                 "command": {
                     "type": "string",

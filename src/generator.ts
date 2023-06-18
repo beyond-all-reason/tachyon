@@ -11,14 +11,12 @@ const config: Config = {
     encodeRefs: false,
     topRef: false,
     type: "Tachyon",
-    additionalProperties: true,
+    additionalProperties: true, // TODO: eventually remove this when majority of protocol is defined
 };
 
 const schema = createGenerator(config).createSchema(config.type);
 
 fs.mkdirSync("schema", { recursive: true });
-
-// fs.writeFileSync(path.join("dist/combined.json"), JSON.stringify(schema, null, 4));
 
 for (const serviceId in schema.properties) {
     const service = schema.properties[serviceId] as JSONSchema7;
