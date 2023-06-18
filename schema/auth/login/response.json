@@ -16,12 +16,6 @@
                                 "email": {
                                     "type": "string"
                                 },
-                                "permissions": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                },
                                 "friends": {
                                     "type": "array",
                                     "items": {
@@ -170,7 +164,6 @@
                                 "icons",
                                 "ignores",
                                 "isBot",
-                                "permissions",
                                 "roles",
                                 "userId",
                                 "username"
