@@ -29,6 +29,7 @@ export type BattleStatus = {
 
 export type PrivateUserClient = UserClient & {
     email: string;
+    permissions: string[];
     friends: number[];
     friendRequests: number[];
     ignores: number[];
