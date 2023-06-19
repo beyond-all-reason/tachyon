@@ -1,12 +1,24 @@
 {
     "type": "object",
     "properties": {
+        "data": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "token"
+            ]
+        },
         "command": {
             "type": "string",
             "const": "auth/login/request"
         }
     },
     "required": [
-        "command"
+        "command",
+        "data"
     ]
 }

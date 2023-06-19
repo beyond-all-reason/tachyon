@@ -1,36 +1,36 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type PartyService = DefineServiceSchema<{
     create: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     getParty: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     invite: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     rescindInvite: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     acceptInvite: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     declineInvite: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     kick: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     sendMessage: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     updated: {

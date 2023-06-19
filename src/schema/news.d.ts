@@ -1,8 +1,8 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type NewsService = DefineServiceSchema<{
     getNewsItems: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 }>;

@@ -1,12 +1,12 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type ModerationService = DefineServiceSchema<{
     getReportingConfigs: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     reportUserClient: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 }>;

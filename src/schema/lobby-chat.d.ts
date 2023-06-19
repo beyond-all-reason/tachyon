@@ -1,4 +1,4 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type LobbyChatService = DefineServiceSchema<{
     say: {
@@ -6,7 +6,7 @@ export type LobbyChatService = DefineServiceSchema<{
         response: { status: "success" };
     };
     announce: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     said: {

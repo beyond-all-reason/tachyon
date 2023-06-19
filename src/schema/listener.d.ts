@@ -1,16 +1,16 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type ListenerService = DefineServiceSchema<{
     subscribe: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     unsubscribe: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     getSubscriptions: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 }>;

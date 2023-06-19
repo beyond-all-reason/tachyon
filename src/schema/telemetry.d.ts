@@ -1,12 +1,12 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type TelemetryService = DefineServiceSchema<{
     property: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     event: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 }>;

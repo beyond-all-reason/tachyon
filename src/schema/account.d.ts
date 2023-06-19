@@ -1,13 +1,13 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 import { UserClient } from "./types";
 
 export type AccountService = DefineServiceSchema<{
     whoAmI: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success"; data: object };
     };
     updateAccount: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     getUserClients: {
@@ -15,27 +15,27 @@ export type AccountService = DefineServiceSchema<{
         response: { status: "success"; data: { userClients: UserClient[] } };
     };
     getFriends: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success"; data: { userClients: UserClient[] } };
     };
     addFriend: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     rescindFriendRequest: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     acceptFriendRequest: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     rejectFriendRequest: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     removeFriend: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     receivedFriendRequest: {

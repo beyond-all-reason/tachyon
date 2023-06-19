@@ -29,3 +29,9 @@ for (const serviceId in schema.properties) {
         }
     }
 }
+
+console.log("Schema generated!");
+
+function generateAPIDocs() {
+    // TODO
+}

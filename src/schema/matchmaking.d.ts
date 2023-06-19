@@ -1,39 +1,39 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type MatchmakingService = DefineServiceSchema<{
     getQueues: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     getJoinedQueues: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     getQueue: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     joinQueue: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     leaveQueue: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     leaveAllQueues: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     matchReady: {
         response: { status: "success" };
     };
     accept: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     decline: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     matchCancelled: {

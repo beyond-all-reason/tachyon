@@ -1,60 +1,60 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type LobbyService = DefineServiceSchema<{
     getLobbies: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     get: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     join: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     leave: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     updateStatus: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     updated: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     joined: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     addUserClient: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     removeUserClient: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     botAdded: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     botUpdated: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     botRemoved: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     opened: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     closed: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 }>;

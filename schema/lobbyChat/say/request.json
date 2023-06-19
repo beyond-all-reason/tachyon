@@ -1,12 +1,24 @@
 {
     "type": "object",
     "properties": {
+        "data": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        },
         "command": {
             "type": "string",
             "const": "lobbyChat/say/request"
         }
     },
     "required": [
-        "command"
+        "command",
+        "data"
     ]
 }

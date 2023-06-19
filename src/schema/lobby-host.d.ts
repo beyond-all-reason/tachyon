@@ -1,45 +1,45 @@
-import { DefineServiceSchema, EmptyObject } from "../helpers";
+import { DefineServiceSchema, EmptyRequest } from "../helpers";
 
 export type LobbyHostService = DefineServiceSchema<{
     create: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     close: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     joinRequest: {
         // Server messages first, how do we define request/response for this?
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 
     // In lobby actions
     updatePlayerStatus: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     addBot: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     updateBot: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     removeBot: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 
     // Battle stuff
     startBattle: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
     endBattle: {
-        request: EmptyObject;
+        request: EmptyRequest;
         response: { status: "success" };
     };
 

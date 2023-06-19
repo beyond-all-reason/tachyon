@@ -31,7 +31,7 @@ type Tachyon<T extends TachyonSchema> = {
                         [requestType in keyof T[serviceId][endpointId] as requestType extends "request" | "response" ? requestType : never]: requestType extends "request"
                             ? {
                                   command: `${serviceId}/${endpointId}/${requestType}`;
-                              } & (T[serviceId][endpointId][requestType] extends EmptyObject ? unknown : { data: T[serviceId][endpointId][requestType] })
+                              } & (T[serviceId][endpointId][requestType] extends EmptyRequest ? unknown : { data: T[serviceId][endpointId][requestType] })
                             : requestType extends "response"
                             ? {
                                   command: `${serviceId}/${endpointId}/${requestType}`;
@@ -45,6 +45,9 @@ type Tachyon<T extends TachyonSchema> = {
 
 /** @internal */
 export type EmptyObject = Record<string, never>;
+
+/** @internal */
+export type EmptyRequest = "empty_request";
 
 /** @internal */
 export type Response =
