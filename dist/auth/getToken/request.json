@@ -1,0 +1,47 @@
+{
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "auth/getToken/request",
+            "type": "string"
+        },
+        "data": {
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "email",
+                        "password"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "username": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "username",
+                        "password"
+                    ]
+                }
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "auth/register/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "username",
+                "password"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
