@@ -20,5 +20,6 @@
     "required": [
         "command",
         "data"
-    ]
+    ],
+    "$id": "auth/login/request"
 }

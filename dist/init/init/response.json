@@ -1,55 +1,33 @@
 {
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "const": "init/init/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "tachyonVersion": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "tachyonVersion"
-                    ]
-                }
-            },
-            "required": [
-                "command",
-                "status",
-                "data"
-            ]
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "init/init/response",
+            "type": "string"
         },
-        {
+        "status": {
+            "const": "success",
+            "type": "string"
+        },
+        "data": {
             "type": "object",
             "properties": {
-                "command": {
-                    "const": "init/init/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
+                "tachyonVersion": {
+                    "examples": [
+                        "1.2.3"
+                    ],
                     "type": "string"
                 }
             },
             "required": [
-                "command",
-                "status",
-                "reason"
+                "tachyonVersion"
             ]
         }
-    ]
+    },
+    "required": [
+        "command",
+        "status",
+        "data"
+    ],
+    "$id": "init/init/response"
 }

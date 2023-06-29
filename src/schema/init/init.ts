@@ -1,13 +1,13 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineResponses, Endpoint, success } from "@/helpers";
+import { defineResponse, EndpointSchema, success } from "@/helpers";
 
 export default {
-    response: defineResponses([
+    response: defineResponse([
         success(
             Type.Object({
-                tachyonVersion: Type.String(),
+                tachyonVersion: Type.String({ examples: ["1.2.3"] }),
             })
         ),
     ]),
-} satisfies Endpoint;
+} satisfies EndpointSchema;

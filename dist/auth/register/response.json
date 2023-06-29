@@ -31,6 +31,10 @@
                 "reason": {
                     "anyOf": [
                         {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
                             "const": "email_taken",
                             "type": "string"
                         },
@@ -58,28 +62,7 @@
                 "status",
                 "reason"
             ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "const": "auth/register/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "command",
-                "status",
-                "reason"
-            ]
         }
-    ]
+    ],
+    "$id": "auth/register/response"
 }

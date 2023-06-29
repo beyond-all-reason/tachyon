@@ -12,6 +12,9 @@
                     "type": "string"
                 },
                 "username": {
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "minLength": 2,
+                    "maxLength": 20,
                     "type": "string"
                 },
                 "password": {
@@ -28,5 +31,6 @@
     "required": [
         "command",
         "data"
-    ]
+    ],
+    "$id": "auth/register/request"
 }

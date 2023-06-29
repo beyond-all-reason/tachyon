@@ -8,15 +8,16 @@ export interface Tachyon {
         getToken: {
             request: {
                 command: "auth/getToken/request";
-                data:
+                data: (
                     | {
                           email: string;
-                          password: string;
                       }
                     | {
                           username: string;
-                          password: string;
-                      };
+                      }
+                ) & {
+                    password: string;
+                };
             };
             response:
                 | {
@@ -29,12 +30,7 @@ export interface Tachyon {
                 | {
                       command: "auth/getToken/response";
                       status: "failed";
-                      reason: "no_user_found" | "invalid_password" | "max_attempts";
-                  }
-                | {
-                      command: "auth/getToken/response";
-                      status: "failed";
-                      reason: "internal_error";
+                      reason: "internal_error" | "no_user_found" | "invalid_password" | "max_attempts";
                   };
         };
         login: {
@@ -91,12 +87,7 @@ export interface Tachyon {
                 | {
                       command: "auth/login/response";
                       status: "failed";
-                      reason: "invalid_token" | "expired_token" | "banned";
-                  }
-                | {
-                      command: "auth/login/response";
-                      status: "failed";
-                      reason: "internal_error";
+                      reason: "internal_error" | "invalid_token" | "expired_token" | "banned";
                   };
         };
         register: {
@@ -117,34 +108,24 @@ export interface Tachyon {
                       command: "auth/register/response";
                       status: "failed";
                       reason:
+                          | "internal_error"
                           | "email_taken"
                           | "username_taken"
                           | "invalid_email"
                           | "weak_password"
                           | "username_profanity";
-                  }
-                | {
-                      command: "auth/register/response";
-                      status: "failed";
-                      reason: "internal_error";
                   };
         };
     };
     init: {
         init: {
-            response:
-                | {
-                      command: "init/init/response";
-                      status: "success";
-                      data: {
-                          tachyonVersion: string;
-                      };
-                  }
-                | {
-                      command: "init/init/response";
-                      status: "failed";
-                      reason: "internal_error";
-                  };
+            response: {
+                command: "init/init/response";
+                status: "success";
+                data: {
+                    tachyonVersion: string;
+                };
+            };
         };
     };
 }

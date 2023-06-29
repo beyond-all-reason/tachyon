@@ -21,7 +21,7 @@
                                     "type": "object",
                                     "properties": {
                                         "userId": {
-                                            "type": "number"
+                                            "type": "integer"
                                         },
                                         "username": {
                                             "type": "string"
@@ -32,7 +32,7 @@
                                         "clanId": {
                                             "anyOf": [
                                                 {
-                                                    "type": "number"
+                                                    "type": "integer"
                                                 },
                                                 {
                                                     "type": "null"
@@ -48,6 +48,13 @@
                                             }
                                         },
                                         "roles": {
+                                            "examples": [
+                                                [
+                                                    "admin",
+                                                    "moderator",
+                                                    "mentor"
+                                                ]
+                                            ],
                                             "type": "array",
                                             "items": {
                                                 "type": "string"
@@ -61,7 +68,7 @@
                                                         "lobbyId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "number"
+                                                                    "type": "integer"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -80,7 +87,7 @@
                                                         "playerNumber": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "number"
+                                                                    "type": "integer"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -181,24 +188,25 @@
                                     "type": "object",
                                     "properties": {
                                         "email": {
+                                            "format": "email",
                                             "type": "string"
                                         },
                                         "friends": {
                                             "type": "array",
                                             "items": {
-                                                "type": "number"
+                                                "type": "integer"
                                             }
                                         },
                                         "friendRequests": {
                                             "type": "array",
                                             "items": {
-                                                "type": "number"
+                                                "type": "integer"
                                             }
                                         },
                                         "ignores": {
                                             "type": "array",
                                             "items": {
-                                                "type": "number"
+                                                "type": "integer"
                                             }
                                         }
                                     },
@@ -237,6 +245,10 @@
                 "reason": {
                     "anyOf": [
                         {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
                             "const": "invalid_token",
                             "type": "string"
                         },
@@ -256,28 +268,7 @@
                 "status",
                 "reason"
             ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "const": "auth/login/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "command",
-                "status",
-                "reason"
-            ]
         }
-    ]
+    ],
+    "$id": "auth/login/response"
 }

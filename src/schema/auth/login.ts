@@ -1,15 +1,15 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineResponses, Endpoint, failed, success } from "@/helpers";
+import { defineRequest, defineResponse, EndpointSchema, failed, success } from "@/helpers";
 import { privateUserClient } from "@/schema/types";
 
 export default {
-    request: Type.Union([
+    request: defineRequest(
         Type.Object({
             token: Type.String(),
-        }),
-    ]),
-    response: defineResponses([
+        })
+    ),
+    response: defineResponse([
         success(
             Type.Object({
                 user: privateUserClient,
@@ -17,4 +17,4 @@ export default {
         ),
         failed(["invalid_token", "expired_token", "banned"]),
     ]),
-} satisfies Endpoint;
+} satisfies EndpointSchema;

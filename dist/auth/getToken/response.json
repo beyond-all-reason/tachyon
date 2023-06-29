@@ -43,6 +43,10 @@
                 "reason": {
                     "anyOf": [
                         {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
                             "const": "no_user_found",
                             "type": "string"
                         },
@@ -62,28 +66,7 @@
                 "status",
                 "reason"
             ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "command": {
-                    "const": "auth/getToken/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "command",
-                "status",
-                "reason"
-            ]
         }
-    ]
+    ],
+    "$id": "auth/getToken/response"
 }

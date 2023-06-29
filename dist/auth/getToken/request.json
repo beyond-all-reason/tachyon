@@ -1,4 +1,11 @@
 {
+    "examples": [
+        {
+            "email": "bob@test.com",
+            "username": "bob",
+            "password": "1234"
+        }
+    ],
     "type": "object",
     "properties": {
         "command": {
@@ -6,34 +13,41 @@
             "type": "string"
         },
         "data": {
-            "anyOf": [
+            "allOf": [
                 {
-                    "type": "object",
-                    "properties": {
-                        "email": {
-                            "type": "string"
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "email"
+                            ]
                         },
-                        "password": {
-                            "type": "string"
+                        {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "username"
+                            ]
                         }
-                    },
-                    "required": [
-                        "email",
-                        "password"
                     ]
                 },
                 {
                     "type": "object",
                     "properties": {
-                        "username": {
-                            "type": "string"
-                        },
                         "password": {
                             "type": "string"
                         }
                     },
                     "required": [
-                        "username",
                         "password"
                     ]
                 }
@@ -43,5 +57,6 @@
     "required": [
         "command",
         "data"
-    ]
+    ],
+    "$id": "auth/getToken/request"
 }

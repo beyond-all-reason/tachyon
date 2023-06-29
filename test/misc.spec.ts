@@ -1,15 +1,22 @@
-import Ajv from "ajv";
+import Ajv, { JSONSchemaType } from "ajv";
+import ajvFormats from "ajv-formats";
 
-import schema from "../schema/account/getUserClients/request.json";
+import registerRequestSchema from "../dist/auth/register/request.json";
+import { Tachyon } from "..";
+import { Static } from "@sinclair/typebox";
 
 const ajv = new Ajv();
 
-test(schema.properties.command.const, () => {
-    const validator = ajv.compile(schema);
+ajvFormats(ajv);
+
+test(registerRequestSchema.properties.command.const, () => {
+    const validator = ajv.compile(registerRequestSchema);
     const valid = validator({
-        command: "account/getUserClients/request",
+        command: "auth/register/request",
         data: {
-            ids: [1, 2],
+            email: "bob@test.com",
+            username: "bob",
+            password: "1234567",
         },
     });
     if (!valid) {

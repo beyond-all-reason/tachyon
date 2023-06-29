@@ -4,10 +4,11 @@ import { objectKeys } from "jaz-ts-utils";
 import { compile } from "json-schema-to-typescript";
 import path from "path";
 
-import { Endpoint } from "@/helpers";
+import { generateMarkdown } from "@/generate-markdown";
+import { EndpointSchema } from "@/helpers";
 
 (async () => {
-    let fullSchema: any = {};
+    const tachyonSchema: Record<string, Record<string, EndpointSchema>> = {};
     const serviceDirs = path.join(__dirname, "schema");
     const serviceHandlerDirs = await fs.promises.readdir(serviceDirs);
     for (const serviceId of serviceHandlerDirs) {
@@ -18,23 +19,25 @@ import { Endpoint } from "@/helpers";
         const endpointSchemaModules = await fs.promises.readdir(endpointDir, {
             withFileTypes: false,
         });
-        const serviceSchema: any = {};
+        const serviceSchema: Record<string, EndpointSchema> = {};
         for (const endpointSchemaPath of endpointSchemaModules) {
             const endpointId = path.parse(endpointSchemaPath).name;
             const endpoint = await import(path.join(endpointDir, endpointSchemaPath));
-            const endpointSchema = endpoint.default as Endpoint;
+            const endpointSchema = endpoint.default as EndpointSchema;
             await fs.promises.mkdir(path.join("dist", serviceId, endpointId), { recursive: true });
-            const endpointSchema2: any = {};
             if ("request" in endpointSchema) {
-                const schema = Type.Strict(
-                    Type.Object({
-                        command: Type.Literal(`${serviceId}/${endpointId}/request`),
-                        data: endpointSchema.request,
-                    })
-                );
+                if (endpointSchema.request.anyOf) {
+                    for (const obj of endpointSchema.request.anyOf) {
+                        obj.properties.command.const = `${serviceId}/${endpointId}/request`;
+                    }
+                } else {
+                    endpointSchema.request.properties.command.const = `${serviceId}/${endpointId}/request`;
+                    console.log(endpointSchema.request);
+                }
+                const schema = Type.Strict(endpointSchema.request);
+                schema.$id = `${serviceId}/${endpointId}/request`;
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/request.json`, schemaStr);
-                endpointSchema2.request = schema;
             }
             if ("response" in endpointSchema) {
                 if (endpointSchema.response.anyOf) {
@@ -45,17 +48,49 @@ import { Endpoint } from "@/helpers";
                     endpointSchema.response.properties.command.const = `${serviceId}/${endpointId}/response`;
                 }
                 const schema = Type.Strict(endpointSchema.response);
+                schema.$id = `${serviceId}/${endpointId}/response`;
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/response.json`, schemaStr);
-                endpointSchema2.response = schema;
             }
-            serviceSchema[endpointId] = Type.Object(endpointSchema2);
+            serviceSchema[endpointId] = endpointSchema;
         }
-        fullSchema[serviceId] = Type.Object(serviceSchema);
+        tachyonSchema[serviceId] = serviceSchema;
     }
 
-    fullSchema = Type.Strict(Type.Object(fullSchema));
-    let typings = await compile(Type.Strict(fullSchema), "Tachyon", {
+    for (const serviceId in tachyonSchema) {
+        const serviceSchema = tachyonSchema[serviceId] as Record<string, EndpointSchema>;
+
+        const orderedEndpointIds = Object.keys(serviceSchema).sort((a, b) => {
+            const orderA = serviceSchema[a]?.order ?? Infinity;
+            const orderB = serviceSchema[b]?.order ?? Infinity;
+
+            return orderA - orderB;
+        });
+
+        const orderedEndpoints = {} as Record<string, EndpointSchema>;
+        for (const id of orderedEndpointIds) {
+            orderedEndpoints[id] = serviceSchema[id];
+        }
+
+        let markdown = `# ${serviceId.toString()}\n\n`;
+        markdown += await generateMarkdown(orderedEndpoints, serviceId);
+        await fs.promises.mkdir(`docs`, { recursive: true });
+        await fs.promises.writeFile(`docs/${serviceId.toString()}.md`, markdown);
+    }
+
+    let fullSchema: any = {};
+    for (const serviceId in tachyonSchema) {
+        const serviceSchema = tachyonSchema[serviceId];
+        const serviceTSchema: any = {};
+        for (const endpointId in serviceSchema) {
+            const { order, ...endpointSchema } = serviceSchema[endpointId];
+            serviceTSchema[endpointId] = Type.Object(endpointSchema);
+        }
+        fullSchema[serviceId] = Type.Object(serviceTSchema);
+    }
+    fullSchema = Type.Object(fullSchema);
+
+    let typings = await compile(fullSchema, "Tachyon", {
         additionalProperties: false,
         bannerComment: `/**
         * This file was automatically generated, do not edit it manually.
@@ -70,7 +105,8 @@ import { Endpoint } from "@/helpers";
     const types = await import("./schema/types");
     for (const key of objectKeys(types)) {
         const thing = types[key];
-        const type = await compile(Type.Strict(thing as any), key, {
+        const fullType = Type.Strict(thing as any);
+        const type = await compile(fullType, key, {
             bannerComment: "",
             additionalProperties: false,
             style: {
@@ -108,4 +144,14 @@ export type RemoveField<T, K extends string> = T extends { [P in K]: any } ? Omi
 export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachyon[S][E];
 `;
     await fs.promises.writeFile(`dist/index.d.ts`, typings);
+
+    // const jsonSchemaStaticDocs = new JsonSchemaStaticDocs({
+    //     inputPath: path.join(__dirname, "../dist").replace(/\\/g, "/"),
+    //     inputFileGlob: "**/*.{yml,json}",
+    //     outputPath: path.join(__dirname, "../docs").replace(/\\/g, "/"),
+    //     ajvOptions: {
+    //         allowUnionTypes: true,
+    //     },
+    // });
+    // await jsonSchemaStaticDocs.generate();
 })();
