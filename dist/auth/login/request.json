@@ -1,4 +1,5 @@
 {
+    "$id": "auth/login/request",
     "type": "object",
     "properties": {
         "command": {
@@ -6,6 +7,11 @@
             "type": "string"
         },
         "data": {
+            "examples": [
+                {
+                    "token": "d2d5135930dacad758584b2586d03426"
+                }
+            ],
             "type": "object",
             "properties": {
                 "token": {
@@ -20,6 +26,5 @@
     "required": [
         "command",
         "data"
-    ],
-    "$id": "auth/login/request"
+    ]
 }

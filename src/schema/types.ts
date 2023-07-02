@@ -29,7 +29,7 @@ export const userClient = Type.Object({
     battleStatus: Type.Union([battleStatus, Type.Null()]),
 });
 
-export const privateUserClient = Type.Intersect([
+export const privateUserClient = Type.Composite([
     userClient,
     Type.Object({
         email: Type.String({ format: "email" }),

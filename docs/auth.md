@@ -1,14 +1,68 @@
 # auth
 
+- [register](#register)
+- [getToken](#getToken)
+- [login](#login)
+---
+
 ## register
 
 ### request
 
-[JSONSchema](../dist/auth/register/request.json)
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "auth/register/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "auth/register/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "email": "bob@test.com",
+                    "username": "bob",
+                    "password": "banana1234"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "minLength": 2,
+                    "maxLength": 20,
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "username",
+                "password"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
+```
+
+</details>
 
 #### TypeScript Definition
 ```ts
-{
+export interface AuthRegisterRequest {
     command: "auth/register/request";
     data: {
         email: string;
@@ -23,19 +77,93 @@
 {
     "command": "auth/register/request",
     "data": {
-        "email": "anim",
-        "username": "HH",
-        "password": "anim"
+        "email": "bob@test.com",
+        "username": "bob",
+        "password": "banana1234"
     }
 }
 ```
 ### response
 
-[JSONSchema](../dist/auth/register/response.json)
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "auth/register/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "auth/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "auth/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "email_taken",
+                            "type": "string"
+                        },
+                        {
+                            "const": "username_taken",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_email",
+                            "type": "string"
+                        },
+                        {
+                            "const": "weak_password",
+                            "type": "string"
+                        },
+                        {
+                            "const": "username_profanity",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
 
 #### TypeScript Definition
 ```ts
-export type A =
+export type AuthRegisterResponse =
     | {
           command: "auth/register/response";
           status: "success";
@@ -44,12 +172,12 @@ export type A =
           command: "auth/register/response";
           status: "failed";
           reason:
-              | "internal_error"
               | "email_taken"
               | "username_taken"
               | "invalid_email"
               | "weak_password"
-              | "username_profanity";
+              | "username_profanity"
+              | "internal_error";
       };
 
 ```
@@ -60,15 +188,84 @@ export type A =
     "status": "success"
 }
 ```
+---
+
 ## getToken
 
 ### request
 
-[JSONSchema](../dist/auth/getToken/request.json)
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "auth/getToken/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "auth/getToken/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "email": "bob@test.com",
+                    "password": "banana1234"
+                }
+            ],
+            "allOf": [
+                {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "email"
+                            ]
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "username"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "password": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "password"
+                    ]
+                }
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
+```
+
+</details>
 
 #### TypeScript Definition
 ```ts
-{
+export interface AuthGetTokenRequest {
     command: "auth/getToken/request";
     data: (
         | {
@@ -86,18 +283,103 @@ export type A =
 #### Example
 ```json
 {
-    "email": "bob@test.com",
-    "username": "bob",
-    "password": "1234"
+    "command": "auth/getToken/request",
+    "data": {
+        "email": "bob@test.com",
+        "password": "banana1234"
+    }
 }
 ```
 ### response
 
-[JSONSchema](../dist/auth/getToken/response.json)
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "auth/getToken/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "auth/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "token": "d2d5135930dacad758584b2586d03426"
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "token": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "token"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "auth/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "no_user_found",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_password",
+                            "type": "string"
+                        },
+                        {
+                            "const": "max_attempts",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
 
 #### TypeScript Definition
 ```ts
-export type A =
+export type AuthGetTokenResponse =
     | {
           command: "auth/getToken/response";
           status: "success";
@@ -108,7 +390,7 @@ export type A =
     | {
           command: "auth/getToken/response";
           status: "failed";
-          reason: "internal_error" | "no_user_found" | "invalid_password" | "max_attempts";
+          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
       };
 
 ```
@@ -118,19 +400,57 @@ export type A =
     "command": "auth/getToken/response",
     "status": "success",
     "data": {
-        "token": "anim"
+        "token": "d2d5135930dacad758584b2586d03426"
     }
 }
 ```
+---
+
 ## login
 
 ### request
 
-[JSONSchema](../dist/auth/login/request.json)
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "auth/login/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "auth/login/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "token": "d2d5135930dacad758584b2586d03426"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "token"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
+```
+
+</details>
 
 #### TypeScript Definition
 ```ts
-{
+export interface AuthLoginRequest {
     command: "auth/login/request";
     data: {
         token: string;
@@ -143,17 +463,311 @@ export type A =
 {
     "command": "auth/login/request",
     "data": {
-        "token": "anim"
+        "token": "d2d5135930dacad758584b2586d03426"
     }
 }
 ```
 ### response
 
-[JSONSchema](../dist/auth/login/response.json)
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "auth/login/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "auth/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "user": {
+                                "battleStatus": null,
+                                "userId": 123,
+                                "email": "bob@test.com",
+                                "username": "bob",
+                                "isBot": false,
+                                "clanId": null,
+                                "friends": [
+                                    12,
+                                    34
+                                ],
+                                "friendRequests": [
+                                    477
+                                ],
+                                "icons": {
+                                    "rank": "silver-5"
+                                },
+                                "ignores": [],
+                                "roles": [
+                                    "mentor"
+                                ]
+                            }
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "user": {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "integer"
+                                },
+                                "username": {
+                                    "type": "string"
+                                },
+                                "isBot": {
+                                    "type": "boolean"
+                                },
+                                "clanId": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "icons": {
+                                    "type": "object",
+                                    "patternProperties": {
+                                        "^(.*)$": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "roles": {
+                                    "examples": [
+                                        [
+                                            "admin",
+                                            "moderator",
+                                            "mentor"
+                                        ]
+                                    ],
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "battleStatus": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "lobbyId": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "integer"
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "inGame": {
+                                                    "type": "boolean"
+                                                },
+                                                "away": {
+                                                    "type": "boolean"
+                                                },
+                                                "ready": {
+                                                    "type": "boolean"
+                                                },
+                                                "playerNumber": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "integer"
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "teamColour": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "isPlayer": {
+                                                    "type": "boolean"
+                                                },
+                                                "bonus": {
+                                                    "type": "number"
+                                                },
+                                                "sync": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "engine": {
+                                                            "type": "number"
+                                                        },
+                                                        "game": {
+                                                            "type": "number"
+                                                        },
+                                                        "map": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "engine",
+                                                        "game",
+                                                        "map"
+                                                    ]
+                                                },
+                                                "partyId": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "clanTag": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "muted": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "lobbyId",
+                                                "inGame",
+                                                "away",
+                                                "ready",
+                                                "playerNumber",
+                                                "teamColour",
+                                                "isPlayer",
+                                                "bonus",
+                                                "sync",
+                                                "partyId",
+                                                "clanTag",
+                                                "muted"
+                                            ]
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "email": {
+                                    "format": "email",
+                                    "type": "string"
+                                },
+                                "friends": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "friendRequests": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "ignores": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "userId",
+                                "username",
+                                "isBot",
+                                "clanId",
+                                "icons",
+                                "roles",
+                                "battleStatus",
+                                "email",
+                                "friends",
+                                "friendRequests",
+                                "ignores"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "user"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "auth/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "invalid_token",
+                            "type": "string"
+                        },
+                        {
+                            "const": "expired_token",
+                            "type": "string"
+                        },
+                        {
+                            "const": "banned",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
 
 #### TypeScript Definition
 ```ts
-export type A =
+export type AuthLoginResponse =
     | {
           command: "auth/login/response";
           status: "success";
@@ -164,10 +778,6 @@ export type A =
                   isBot: boolean;
                   clanId: number | null;
                   icons: {
-                      /**
-                       * This interface was referenced by `undefined`'s JSON-Schema definition
-                       * via the `patternProperty` "^(.*)$".
-                       */
                       [k: string]: string;
                   };
                   roles: string[];
@@ -189,7 +799,6 @@ export type A =
                       clanTag: string | null;
                       muted: boolean;
                   } | null;
-              } & {
                   email: string;
                   friends: number[];
                   friendRequests: number[];
@@ -200,7 +809,7 @@ export type A =
     | {
           command: "auth/login/response";
           status: "failed";
-          reason: "internal_error" | "invalid_token" | "expired_token" | "banned";
+          reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
       };
 
 ```
@@ -211,45 +820,25 @@ export type A =
     "status": "success",
     "data": {
         "user": {
-            "userId": -75400000,
-            "username": "anim",
+            "battleStatus": null,
+            "userId": 123,
+            "email": "bob@test.com",
+            "username": "bob",
             "isBot": false,
-            "clanId": -75400000,
-            "icons": {
-                "+": "anim"
-            },
-            "roles": [
-                "admin",
-                "moderator",
-                "mentor"
-            ],
-            "battleStatus": {
-                "lobbyId": -75400000,
-                "inGame": false,
-                "away": false,
-                "ready": false,
-                "playerNumber": -75400000,
-                "teamColour": "anim",
-                "isPlayer": false,
-                "bonus": -75400000,
-                "sync": {
-                    "engine": -75400000,
-                    "game": -75400000,
-                    "map": -75400000
-                },
-                "partyId": "anim",
-                "clanTag": "anim",
-                "muted": false
-            },
-            "email": "hhhh@ggggg.dd",
+            "clanId": null,
             "friends": [
-                -75400000
+                12,
+                34
             ],
             "friendRequests": [
-                -75400000
+                477
             ],
-            "ignores": [
-                -75400000
+            "icons": {
+                "rank": "silver-5"
+            },
+            "ignores": [],
+            "roles": [
+                "mentor"
             ]
         }
     }

@@ -1,4 +1,5 @@
 {
+    "$id": "auth/register/response",
     "anyOf": [
         {
             "type": "object",
@@ -31,10 +32,6 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
                             "const": "email_taken",
                             "type": "string"
                         },
@@ -53,6 +50,10 @@
                         {
                             "const": "username_profanity",
                             "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
                         }
                     ]
                 }
@@ -63,6 +64,5 @@
                 "reason"
             ]
         }
-    ],
-    "$id": "auth/register/response"
+    ]
 }

@@ -1,11 +1,5 @@
 {
-    "examples": [
-        {
-            "email": "bob@test.com",
-            "username": "bob",
-            "password": "1234"
-        }
-    ],
+    "$id": "auth/getToken/request",
     "type": "object",
     "properties": {
         "command": {
@@ -13,6 +7,12 @@
             "type": "string"
         },
         "data": {
+            "examples": [
+                {
+                    "email": "bob@test.com",
+                    "password": "banana1234"
+                }
+            ],
             "allOf": [
                 {
                     "anyOf": [
@@ -57,6 +57,5 @@
     "required": [
         "command",
         "data"
-    ],
-    "$id": "auth/getToken/request"
+    ]
 }

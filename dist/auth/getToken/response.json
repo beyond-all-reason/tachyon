@@ -1,4 +1,5 @@
 {
+    "$id": "auth/getToken/response",
     "anyOf": [
         {
             "type": "object",
@@ -12,6 +13,11 @@
                     "type": "string"
                 },
                 "data": {
+                    "examples": [
+                        {
+                            "token": "d2d5135930dacad758584b2586d03426"
+                        }
+                    ],
                     "type": "object",
                     "properties": {
                         "token": {
@@ -43,10 +49,6 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
                             "const": "no_user_found",
                             "type": "string"
                         },
@@ -56,6 +58,10 @@
                         },
                         {
                             "const": "max_attempts",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
                             "type": "string"
                         }
                     ]
@@ -67,6 +73,5 @@
                 "reason"
             ]
         }
-    ],
-    "$id": "auth/getToken/response"
+    ]
 }

@@ -1,4 +1,5 @@
 {
+    "$id": "auth/register/request",
     "type": "object",
     "properties": {
         "command": {
@@ -6,6 +7,13 @@
             "type": "string"
         },
         "data": {
+            "examples": [
+                {
+                    "email": "bob@test.com",
+                    "username": "bob",
+                    "password": "banana1234"
+                }
+            ],
             "type": "object",
             "properties": {
                 "email": {
@@ -31,6 +39,5 @@
     "required": [
         "command",
         "data"
-    ],
-    "$id": "auth/register/request"
+    ]
 }

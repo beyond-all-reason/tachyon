@@ -1,9 +1,8 @@
-import Ajv, { JSONSchemaType } from "ajv";
+import Ajv from "ajv";
 import ajvFormats from "ajv-formats";
 
+// eslint-disable-next-line no-restricted-imports
 import registerRequestSchema from "../dist/auth/register/request.json";
-import { Tachyon } from "..";
-import { Static } from "@sinclair/typebox";
 
 const ajv = new Ajv();
 

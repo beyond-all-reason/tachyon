@@ -1,20 +1,54 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineRequest, defineResponse, EndpointSchema, failed, success } from "@/helpers";
+import { defineEndpoint } from "@/helpers";
 import { privateUserClient } from "@/schema/types";
 
-export default {
-    request: defineRequest(
-        Type.Object({
+export default defineEndpoint({
+    request: Type.Object(
+        {
             token: Type.String(),
-        })
+        },
+        {
+            examples: [
+                {
+                    token: "d2d5135930dacad758584b2586d03426",
+                },
+            ],
+        }
     ),
-    response: defineResponse([
-        success(
-            Type.Object({
-                user: privateUserClient,
-            })
-        ),
-        failed(["invalid_token", "expired_token", "banned"]),
-    ]),
-} satisfies EndpointSchema;
+    response: [
+        {
+            status: "success",
+            data: Type.Object(
+                {
+                    user: privateUserClient,
+                },
+                {
+                    examples: [
+                        {
+                            user: {
+                                battleStatus: null,
+                                userId: 123,
+                                email: "bob@test.com",
+                                username: "bob",
+                                isBot: false,
+                                clanId: null,
+                                friends: [12, 34],
+                                friendRequests: [477],
+                                icons: {
+                                    rank: "silver-5",
+                                },
+                                ignores: [],
+                                roles: ["mentor"],
+                            },
+                        },
+                    ],
+                }
+            ),
+        },
+        { status: "failed", reason: "invalid_token" },
+        { status: "failed", reason: "expired_token" },
+        { status: "failed", reason: "banned" },
+    ],
+    order: 3,
+});

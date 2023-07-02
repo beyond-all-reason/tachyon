@@ -1,56 +1,49 @@
-import { EndpointSchema, RequestSchema, ResponseSchema } from "@/helpers";
+import { TObject } from "@sinclair/typebox";
 import jsf from "json-schema-faker";
 import { compile } from "json-schema-to-typescript";
-import { Value } from "@sinclair/typebox/value";
 
 jsf.option("useExamplesValue", true);
-jsf.option("random", () => 0.123);
+jsf.option("random", () => 0.1234);
 
-export async function generateMarkdown<T extends Record<string, EndpointSchema>>(schema: T, serviceId: string): Promise<string> {
+export async function generateMarkdown<T extends Record<string, TObject>>(endpoints: T, serviceId: string): Promise<string> {
     let markdown = "";
 
-    for (const endpointId in schema) {
-        const endpointSchema = schema[endpointId] as EndpointSchema;
-        markdown += `## ${endpointId.toString()}\n\n`;
-        markdown += await generateEndpointMarkdown(endpointSchema, serviceId, endpointId);
+    for (const endpointId in endpoints) {
+        const endpointConfig = endpoints[endpointId];
+        markdown += `---\n\n## ${endpointId.toString()}\n\n`;
+        markdown += await generateEndpointMarkdown(endpointConfig, serviceId, endpointId);
     }
 
     return markdown;
 }
 
-async function generateEndpointMarkdown<T extends EndpointSchema>(schema: T, serviceId: string, endpointId: string): Promise<string> {
+async function generateEndpointMarkdown<T extends TObject>(schema: T, serviceId: string, endpointId: string): Promise<string> {
     let serviceMarkdown = "";
 
-    if ("request" in schema) {
+    if ("request" in schema.properties) {
         serviceMarkdown += `### request\n\n`;
-        serviceMarkdown += await generateCommandMarkdown(schema.request, serviceId, endpointId, "request");
+        serviceMarkdown += await generateCommandMarkdown(schema.properties.request as TObject, serviceId, endpointId, "request");
     }
 
-    if ("response" in schema) {
+    if ("response" in schema.properties) {
         serviceMarkdown += `### response\n\n`;
-        serviceMarkdown += await generateCommandMarkdown(schema.response, serviceId, endpointId, "response");
+        serviceMarkdown += await generateCommandMarkdown(schema.properties.response as TObject, serviceId, endpointId, "response");
     }
 
     return serviceMarkdown;
 }
 
-async function generateCommandMarkdown<C extends "request" | "response", T extends C extends "request" ? RequestSchema : ResponseSchema>(
-    schema: T,
-    serviceId: string,
-    endpointId: string,
-    commandType: C
-): Promise<string> {
+async function generateCommandMarkdown<C extends "request" | "response", T extends TObject>(schema: T, serviceId: string, endpointId: string, commandType: C): Promise<string> {
     let commandMarkdown = "";
 
-    //     commandMarkdown += `#### JSONSchema
-    // \`\`\`json
-    // ${JSON.stringify(schema, null, 4)}
-    // \`\`\`
-    // `;
+    commandMarkdown += `<details>
+<summary>JSONSchema</summary>\n
+\`\`\`json
+${JSON.stringify(schema, null, 4)}
+\`\`\`\n
+</details>\n\n`;
 
-    commandMarkdown += `[JSONSchema](../dist/${serviceId}/${endpointId}/${commandType}.json)\n\n`;
-
-    let typings = await compile(schema, "a", {
+    let typings = await compile(schema, "A", {
         additionalProperties: false,
         bannerComment: ``,
         style: {
@@ -59,7 +52,8 @@ async function generateCommandMarkdown<C extends "request" | "response", T exten
             semi: true,
         },
     });
-    typings = typings.replace("export interface A ", "");
+
+    typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
 
     commandMarkdown += `#### TypeScript Definition
 \`\`\`ts

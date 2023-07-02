@@ -1,33 +1,59 @@
 {
-    "type": "object",
-    "properties": {
-        "command": {
-            "const": "init/init/response",
-            "type": "string"
-        },
-        "status": {
-            "const": "success",
-            "type": "string"
-        },
-        "data": {
+    "$id": "init/init/response",
+    "anyOf": [
+        {
             "type": "object",
             "properties": {
-                "tachyonVersion": {
-                    "examples": [
-                        "1.2.3"
-                    ],
+                "command": {
+                    "const": "init/init/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "tachyonVersion": {
+                            "examples": [
+                                "1.2.3"
+                            ],
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "tachyonVersion"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "init/init/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
                     "type": "string"
                 }
             },
             "required": [
-                "tachyonVersion"
+                "command",
+                "status",
+                "reason"
             ]
         }
-    },
-    "required": [
-        "command",
-        "status",
-        "data"
-    ],
-    "$id": "init/init/response"
+    ]
 }

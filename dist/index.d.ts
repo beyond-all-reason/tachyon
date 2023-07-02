@@ -3,130 +3,143 @@
  * Instead modify the .ts files in src/schema and do npm run build
  */
 
+export type AuthGetTokenResponse =
+    | {
+          command: "auth/getToken/response";
+          status: "success";
+          data: {
+              token: string;
+          };
+      }
+    | {
+          command: "auth/getToken/response";
+          status: "failed";
+          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
+      };
+export type AuthLoginResponse =
+    | {
+          command: "auth/login/response";
+          status: "success";
+          data: {
+              user: {
+                  userId: number;
+                  username: string;
+                  isBot: boolean;
+                  clanId: number | null;
+                  icons: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(.*)$".
+                       */
+                      [k: string]: string;
+                  };
+                  roles: string[];
+                  battleStatus: {
+                      lobbyId: number | null;
+                      inGame: boolean;
+                      away: boolean;
+                      ready: boolean;
+                      playerNumber: number | null;
+                      teamColour: string | null;
+                      isPlayer: boolean;
+                      bonus: number;
+                      sync: {
+                          engine: number;
+                          game: number;
+                          map: number;
+                      };
+                      partyId: string | null;
+                      clanTag: string | null;
+                      muted: boolean;
+                  } | null;
+                  email: string;
+                  friends: number[];
+                  friendRequests: number[];
+                  ignores: number[];
+              };
+          };
+      }
+    | {
+          command: "auth/login/response";
+          status: "failed";
+          reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
+      };
+export type AuthRegisterResponse =
+    | {
+          command: "auth/register/response";
+          status: "success";
+      }
+    | {
+          command: "auth/register/response";
+          status: "failed";
+          reason:
+              | "email_taken"
+              | "username_taken"
+              | "invalid_email"
+              | "weak_password"
+              | "username_profanity"
+              | "internal_error";
+      };
+export type InitInitResponse =
+    | {
+          command: "init/init/response";
+          status: "success";
+          data: {
+              tachyonVersion: string;
+          };
+      }
+    | {
+          command: "init/init/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+
 export interface Tachyon {
     auth: {
         getToken: {
-            request: {
-                command: "auth/getToken/request";
-                data: (
-                    | {
-                          email: string;
-                      }
-                    | {
-                          username: string;
-                      }
-                ) & {
-                    password: string;
-                };
-            };
-            response:
-                | {
-                      command: "auth/getToken/response";
-                      status: "success";
-                      data: {
-                          token: string;
-                      };
-                  }
-                | {
-                      command: "auth/getToken/response";
-                      status: "failed";
-                      reason: "internal_error" | "no_user_found" | "invalid_password" | "max_attempts";
-                  };
+            request: AuthGetTokenRequest;
+            response: AuthGetTokenResponse;
         };
         login: {
-            request: {
-                command: "auth/login/request";
-                data: {
-                    token: string;
-                };
-            };
-            response:
-                | {
-                      command: "auth/login/response";
-                      status: "success";
-                      data: {
-                          user: {
-                              userId: number;
-                              username: string;
-                              isBot: boolean;
-                              clanId: number | null;
-                              icons: {
-                                  /**
-                                   * This interface was referenced by `undefined`'s JSON-Schema definition
-                                   * via the `patternProperty` "^(.*)$".
-                                   */
-                                  [k: string]: string;
-                              };
-                              roles: string[];
-                              battleStatus: {
-                                  lobbyId: number | null;
-                                  inGame: boolean;
-                                  away: boolean;
-                                  ready: boolean;
-                                  playerNumber: number | null;
-                                  teamColour: string | null;
-                                  isPlayer: boolean;
-                                  bonus: number;
-                                  sync: {
-                                      engine: number;
-                                      game: number;
-                                      map: number;
-                                  };
-                                  partyId: string | null;
-                                  clanTag: string | null;
-                                  muted: boolean;
-                              } | null;
-                          } & {
-                              email: string;
-                              friends: number[];
-                              friendRequests: number[];
-                              ignores: number[];
-                          };
-                      };
-                  }
-                | {
-                      command: "auth/login/response";
-                      status: "failed";
-                      reason: "internal_error" | "invalid_token" | "expired_token" | "banned";
-                  };
+            request: AuthLoginRequest;
+            response: AuthLoginResponse;
         };
         register: {
-            request: {
-                command: "auth/register/request";
-                data: {
-                    email: string;
-                    username: string;
-                    password: string;
-                };
-            };
-            response:
-                | {
-                      command: "auth/register/response";
-                      status: "success";
-                  }
-                | {
-                      command: "auth/register/response";
-                      status: "failed";
-                      reason:
-                          | "internal_error"
-                          | "email_taken"
-                          | "username_taken"
-                          | "invalid_email"
-                          | "weak_password"
-                          | "username_profanity";
-                  };
+            request: AuthRegisterRequest;
+            response: AuthRegisterResponse;
         };
     };
     init: {
         init: {
-            response: {
-                command: "init/init/response";
-                status: "success";
-                data: {
-                    tachyonVersion: string;
-                };
-            };
+            response: InitInitResponse;
         };
+    };
+}
+export interface AuthGetTokenRequest {
+    command: "auth/getToken/request";
+    data: (
+        | {
+              email: string;
+          }
+        | {
+              username: string;
+          }
+    ) & {
+        password: string;
+    };
+}
+export interface AuthLoginRequest {
+    command: "auth/login/request";
+    data: {
+        token: string;
+    };
+}
+export interface AuthRegisterRequest {
+    command: "auth/register/request";
+    data: {
+        email: string;
+        username: string;
+        password: string;
     };
 }
 export interface BattleStatus {
@@ -181,7 +194,7 @@ export interface UserClient {
     } | null;
 }
 
-export type PrivateUserClient = {
+export interface PrivateUserClient {
     userId: number;
     username: string;
     isBot: boolean;
@@ -212,12 +225,11 @@ export type PrivateUserClient = {
         clanTag: string | null;
         muted: boolean;
     } | null;
-} & {
     email: string;
     friends: number[];
     friendRequests: number[];
     ignores: number[];
-};
+}
 
 export interface Rect {
     x: number;

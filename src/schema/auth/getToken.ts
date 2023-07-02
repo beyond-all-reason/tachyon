@@ -1,10 +1,10 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineRequest, defineResponse, EndpointSchema, failed, success } from "@/helpers";
+import { defineEndpoint } from "@/helpers";
 
-export default {
-    request: defineRequest(
-        Type.Intersect([
+export default defineEndpoint({
+    request: Type.Intersect(
+        [
             Type.Union([
                 Type.Object({
                     email: Type.String(),
@@ -16,21 +16,35 @@ export default {
             Type.Object({
                 password: Type.String(),
             }),
-        ]),
-        [
-            {
-                email: "bob@test.com",
-                username: "bob",
-                password: "1234",
-            },
-        ]
+        ],
+        {
+            examples: [
+                {
+                    email: "bob@test.com",
+                    password: "banana1234",
+                },
+            ],
+        }
     ),
-    response: defineResponse([
-        success(
-            Type.Object({
-                token: Type.String(),
-            })
-        ),
-        failed(["no_user_found", "invalid_password", "max_attempts"]),
-    ]),
-} satisfies EndpointSchema;
+    response: [
+        {
+            status: "success",
+            data: Type.Object(
+                {
+                    token: Type.String(),
+                },
+                {
+                    examples: [
+                        {
+                            token: "d2d5135930dacad758584b2586d03426",
+                        },
+                    ],
+                }
+            ),
+        },
+        { status: "failed", reason: "no_user_found" },
+        { status: "failed", reason: "invalid_password" },
+        { status: "failed", reason: "max_attempts" },
+    ],
+    order: 2,
+});
