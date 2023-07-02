@@ -9,11 +9,6 @@ export type LobbyHostService = DefineServiceSchema<{
         request: EmptyObject;
         response: { success: EmptyObject };
     };
-    joinRequest: {
-        // Server messages first, how do we define request/response for this?
-        request: EmptyObject;
-        response: { success: EmptyObject };
-    };
 
     // In lobby actions
     updatePlayerStatus: {
@@ -45,6 +40,15 @@ export type LobbyHostService = DefineServiceSchema<{
 
     // Server updates
     updatedStatus: {
+        response: { success: EmptyObject };
+    };
+    joinRequest: {
+        // A user requests to join the lobby
+        response: { success: EmptyObject };
+    };
+    respondToJoinRequest: {
+        // Us accepting/declining the user wanting to join
+        request: EmptyObject;
         response: { success: EmptyObject };
     };
 }>;

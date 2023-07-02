@@ -13,6 +13,9 @@ export type LobbyService = DefineServiceSchema<{
         request: EmptyObject;
         response: { success: EmptyObject };
     };
+    receivedJoinRequestResponse: {
+        response: { success: EmptyObject };
+    };
     leave: {
         request: EmptyObject;
         response: { success: EmptyObject };
