@@ -87,9 +87,6 @@ ${typings}
     if (commandType === "response") {
         schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
     }
-    if (commandType === "response") {
-        console.log(JSON.stringify(schema));
-    }
 
     const dummyData = await jsf.resolve(schema);
 

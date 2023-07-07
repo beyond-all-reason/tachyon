@@ -1,11 +1,11 @@
 {
-    "$id": "lobby/leave/response",
+    "$id": "lobby/sendMessage/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/sendMessage/response",
                     "type": "string"
                 },
                 "status": {
@@ -22,7 +22,7 @@
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/sendMessage/response",
                     "type": "string"
                 },
                 "status": {
@@ -32,7 +32,11 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "no_lobby",
+                            "const": "not_in_lobby",
+                            "type": "string"
+                        },
+                        {
+                            "const": "muted",
                             "type": "string"
                         },
                         {

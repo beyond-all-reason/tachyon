@@ -67,7 +67,7 @@ export type LobbyLeaveResponse =
     | {
           command: "lobby/leave/response";
           status: "failed";
-          reason: "not_in_lobby" | "internal_error";
+          reason: "no_lobby" | "internal_error";
       };
 export type LobbyLeftResponse =
     | {
@@ -118,6 +118,30 @@ export type LobbyListResponse =
           command: "lobby/list/response";
           status: "failed";
           reason: "internal_error";
+      };
+export type LobbyReceiveMessageResponse =
+    | {
+          command: "lobby/receiveMessage/response";
+          status: "success";
+          data: {
+              userId: number;
+              message: string;
+          };
+      }
+    | {
+          command: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type LobbySendMessageResponse =
+    | {
+          command: "lobby/sendMessage/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "not_in_lobby" | "muted" | "internal_error";
       };
 export type LobbyUpdatedResponse =
     | {
@@ -303,6 +327,19 @@ export interface Tachyon {
             response: LobbyListResponse;
         };
         /**
+         * Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.
+         */
+        receiveMessage: {
+            response: LobbyReceiveMessageResponse;
+        };
+        /**
+         * Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.
+         */
+        sendMessage: {
+            request: LobbySendMessageRequest;
+            response: LobbySendMessageResponse;
+        };
+        /**
          * Server sends this partial object whenever a lobby relevant to the client changes in some way.
          */
         updated: {
@@ -369,6 +406,12 @@ export interface LobbyLeaveRequest {
 }
 export interface LobbyListRequest {
     command: "lobby/list/request";
+}
+export interface LobbySendMessageRequest {
+    command: "lobby/sendMessage/request";
+    data: {
+        message: string;
+    };
 }
 export interface UserGetTokenRequest {
     command: "user/getToken/request";

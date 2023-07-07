@@ -5,6 +5,8 @@
 - [leave](#leave)
 - [left](#left)
 - [list](#list)
+- [receiveMessage](#receiveMessage)
+- [sendMessage](#sendMessage)
 - [updated](#updated)
 ---
 
@@ -606,7 +608,7 @@ export interface LobbyLeaveRequest {
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "not_in_lobby",
+                            "const": "no_lobby",
                             "type": "string"
                         },
                         {
@@ -638,7 +640,7 @@ export type LobbyLeaveResponse =
     | {
           command: "lobby/leave/response";
           status: "failed";
-          reason: "not_in_lobby" | "internal_error";
+          reason: "no_lobby" | "internal_error";
       };
 
 ```
@@ -1113,6 +1115,270 @@ export type LobbyListResponse =
             }
         ]
     }
+}
+```
+---
+
+## receiveMessage
+
+Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.
+
+### response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/receiveMessage/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/receiveMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "userId": 27,
+                            "message": "Hello lobby!"
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "userId": {
+                            "type": "integer"
+                        },
+                        "message": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "userId",
+                        "message"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/receiveMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type LobbyReceiveMessageResponse =
+    | {
+          command: "lobby/receiveMessage/response";
+          status: "success";
+          data: {
+              userId: number;
+              message: string;
+          };
+      }
+    | {
+          command: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+
+```
+#### Example
+```json
+{
+    "command": "lobby/receiveMessage/response",
+    "status": "success",
+    "data": {
+        "userId": 27,
+        "message": "Hello lobby!"
+    }
+}
+```
+---
+
+## sendMessage
+
+Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.
+
+### request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/sendMessage/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/sendMessage/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "message": "Hello lobby!"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "message": {
+                    "maxLength": 300,
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySendMessageRequest {
+    command: "lobby/sendMessage/request";
+    data: {
+        message: string;
+    };
+}
+
+```
+#### Example
+```json
+{
+    "command": "lobby/sendMessage/request",
+    "data": {
+        "message": "Hello lobby!"
+    }
+}
+```
+### response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/sendMessage/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "not_in_lobby",
+                            "type": "string"
+                        },
+                        {
+                            "const": "muted",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type LobbySendMessageResponse =
+    | {
+          command: "lobby/sendMessage/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "not_in_lobby" | "muted" | "internal_error";
+      };
+
+```
+#### Example
+```json
+{
+    "command": "lobby/sendMessage/response",
+    "status": "success"
 }
 ```
 ---

@@ -7,6 +7,6 @@ export default defineEndpoint({
         {
             status: "success",
         },
-        { status: "failed", reason: "not_in_lobby" },
+        { status: "failed", reason: "no_lobby" },
     ],
 });
