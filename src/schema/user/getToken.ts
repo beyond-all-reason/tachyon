@@ -1,31 +1,36 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/helpers";
+import { email, username } from "@/schema/types";
 
 export default defineEndpoint({
-    request: Type.Intersect(
-        [
-            Type.Union([
+    description: "Get an authentication token used for [login](#login).",
+    order: 2,
+    request: {
+        data: Type.Intersect(
+            [
+                Type.Union([
+                    Type.Object({
+                        email: email,
+                    }),
+                    Type.Object({
+                        username: username,
+                    }),
+                ]),
                 Type.Object({
-                    email: Type.String(),
+                    password: Type.String(),
                 }),
-                Type.Object({
-                    username: Type.String(),
-                }),
-            ]),
-            Type.Object({
-                password: Type.String(),
-            }),
-        ],
-        {
-            examples: [
-                {
-                    email: "bob@test.com",
-                    password: "banana1234",
-                },
             ],
-        }
-    ),
+            {
+                examples: [
+                    {
+                        email: "bob@test.com",
+                        password: "banana1234",
+                    },
+                ],
+            }
+        ),
+    },
     response: [
         {
             status: "success",
@@ -46,5 +51,4 @@ export default defineEndpoint({
         { status: "failed", reason: "invalid_password" },
         { status: "failed", reason: "max_attempts" },
     ],
-    order: 2,
 });

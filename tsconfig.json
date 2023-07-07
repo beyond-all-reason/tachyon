@@ -16,7 +16,7 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "package.json"],
     "ts-node": {
         "require": ["tsconfig-paths/register"],
         "swc": true

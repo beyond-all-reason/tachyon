@@ -1,0 +1,13 @@
+{
+    "$id": "lobby/leave/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/leave/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

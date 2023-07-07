@@ -1,0 +1,34 @@
+{
+    "$id": "lobby/join/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/join/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "lobbyId": 27,
+                    "password": "fish"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "lobbyId": {
+                    "type": "integer"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "lobbyId"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

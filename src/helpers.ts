@@ -1,6 +1,7 @@
-import { SchemaOptions, Static, TIntersect, TObject, TSchema, TUnion } from "@sinclair/typebox";
+import { SchemaOptions, Static, TIntersect, TObject, TSchema, TUnion, Type } from "@sinclair/typebox";
 
 export type EndpointConfig = {
+    description?: string;
     order?: number;
 } & (
     | {
@@ -32,7 +33,7 @@ export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {
     examples?: T extends TSchema ? Static<T>[] : never;
 }
 
-export function defineEndpoint<T extends EndpointConfig>(endpointConfig: T): T {
+export function defineEndpoint(endpointConfig: EndpointConfig) {
     if ("response" in endpointConfig) {
         endpointConfig.response.push({
             status: "failed",
@@ -42,21 +43,4 @@ export function defineEndpoint<T extends EndpointConfig>(endpointConfig: T): T {
     return endpointConfig;
 }
 
-// export function success(data?: TObject): SuccessResponseSchema {
-//     return data
-//         ? Type.Object({
-//               status: Type.Literal("success"),
-//               data,
-//           })
-//         : Type.Object({
-//               status: Type.Literal("success"),
-//           });
-// }
-
-// export function failed<T extends string[]>(reason: T): FailedResponseSchema {
-//     return Type.Object({
-//         command: Type.Literal(""),
-//         status: Type.Literal("failed"),
-//         reason: Type.Union([Type.Literal("internal_error"), ...reason.map((r) => Type.Literal(r))]),
-//     });
-// }
+export const Nullable = <T extends TSchema>(schema: T) => Type.Union([schema, Type.Null()]);

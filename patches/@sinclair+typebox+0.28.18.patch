@@ -1,5 +1,5 @@
 diff --git a/node_modules/@sinclair/typebox/typebox.d.ts b/node_modules/@sinclair/typebox/typebox.d.ts
-index cca279f..b96652d 100644
+index cca279f..0e50365 100644
 --- a/node_modules/@sinclair/typebox/typebox.d.ts
 +++ b/node_modules/@sinclair/typebox/typebox.d.ts
 @@ -183,8 +183,14 @@ export interface TInteger extends TSchema, NumericOptions<number> {
@@ -35,6 +35,15 @@ index cca279f..b96652d 100644
      [Kind]: 'Object';
      static: PropertiesReduce<T, this['params']>;
      additionalProperties?: TAdditionalProperties;
+@@ -343,7 +351,7 @@ export interface StringOptions extends SchemaOptions {
+     minLength?: number;
+     maxLength?: number;
+     pattern?: string;
+-    format?: string;
++    format?: StringFormatOption;
+     contentEncoding?: '7bit' | '8bit' | 'binary' | 'quoted-printable' | 'base64';
+     contentMediaType?: string;
+ }
 @@ -671,7 +679,7 @@ export declare class StandardTypeBuilder extends TypeBuilder {
      Intersect(allOf: [], options?: SchemaOptions): TNever;
      /** `[Standard]` Creates a Intersect type */

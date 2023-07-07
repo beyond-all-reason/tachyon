@@ -1,4 +1,4 @@
-import { TObject, TProperties, Type, TypeGuard } from "@sinclair/typebox";
+import { TObject, TProperties, Type } from "@sinclair/typebox";
 import fs from "fs";
 import { objectKeys } from "jaz-ts-utils";
 import { compile } from "json-schema-to-typescript";
@@ -36,8 +36,8 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
                 const props: TProperties = {
                     command: Type.Literal(`${serviceId}/${endpointId}/request`),
                 };
-                if (TypeGuard.TObject(endpointSchema.request) || TypeGuard.TIntersect(endpointSchema.request) || TypeGuard.TUnion(endpointSchema.request)) {
-                    props.data = endpointSchema.request;
+                if (endpointSchema.request.data) {
+                    props.data = endpointSchema.request.data;
                 }
                 const schema = Type.Object(props, {
                     $id: `${serviceId}/${endpointId}/request`,
@@ -93,7 +93,9 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
         const serviceSchema = fullSchemaProps[serviceId];
         for (const endpointId in serviceSchema) {
             const endpointSchema = serviceSchema[endpointId];
-            fullSchema[serviceId][endpointId] = Type.Object(endpointSchema);
+            fullSchema[serviceId][endpointId] = Type.Object(endpointSchema, {
+                description: tachyonSchema[serviceId][endpointId].description,
+            });
         }
         fullSchema[serviceId] = Type.Object(fullSchema[serviceId]);
     }

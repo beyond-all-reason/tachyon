@@ -4,18 +4,22 @@ import { defineEndpoint } from "@/helpers";
 import { privateUserClient } from "@/schema/types";
 
 export default defineEndpoint({
-    request: Type.Object(
-        {
-            token: Type.String(),
-        },
-        {
-            examples: [
-                {
-                    token: "d2d5135930dacad758584b2586d03426",
-                },
-            ],
-        }
-    ),
+    description: "Login using an authentication token from [getToken](#getToken).",
+    order: 3,
+    request: {
+        data: Type.Object(
+            {
+                token: Type.String(),
+            },
+            {
+                examples: [
+                    {
+                        token: "d2d5135930dacad758584b2586d03426",
+                    },
+                ],
+            }
+        ),
+    },
     response: [
         {
             status: "success",
@@ -50,5 +54,4 @@ export default defineEndpoint({
         { status: "failed", reason: "expired_token" },
         { status: "failed", reason: "banned" },
     ],
-    order: 3,
 });

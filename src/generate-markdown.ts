@@ -1,39 +1,62 @@
-import { TObject } from "@sinclair/typebox";
+import { TObject, TUnion } from "@sinclair/typebox";
 import jsf from "json-schema-faker";
 import { compile } from "json-schema-to-typescript";
 
 jsf.option("useExamplesValue", true);
 jsf.option("random", () => 0.1234);
 
-export async function generateMarkdown<T extends Record<string, TObject>>(endpoints: T, serviceId: string): Promise<string> {
+export async function generateMarkdown<T extends Record<string, TObject>>(
+    endpoints: T,
+    serviceId: string
+): Promise<string> {
     let markdown = "";
 
     for (const endpointId in endpoints) {
         const endpointConfig = endpoints[endpointId];
         markdown += `---\n\n## ${endpointId.toString()}\n\n`;
+        if (endpointConfig.description) {
+            markdown += `${endpointConfig.description}\n\n`;
+        }
         markdown += await generateEndpointMarkdown(endpointConfig, serviceId, endpointId);
     }
 
     return markdown;
 }
 
-async function generateEndpointMarkdown<T extends TObject>(schema: T, serviceId: string, endpointId: string): Promise<string> {
+async function generateEndpointMarkdown<T extends TObject>(
+    schema: T,
+    serviceId: string,
+    endpointId: string
+): Promise<string> {
     let serviceMarkdown = "";
 
     if ("request" in schema.properties) {
         serviceMarkdown += `### request\n\n`;
-        serviceMarkdown += await generateCommandMarkdown(schema.properties.request as TObject, serviceId, endpointId, "request");
+        serviceMarkdown += await generateCommandMarkdown(
+            schema.properties.request as TObject,
+            serviceId,
+            endpointId,
+            "request"
+        );
     }
 
     if ("response" in schema.properties) {
         serviceMarkdown += `### response\n\n`;
-        serviceMarkdown += await generateCommandMarkdown(schema.properties.response as TObject, serviceId, endpointId, "response");
+        serviceMarkdown += await generateCommandMarkdown(
+            schema.properties.response as TUnion,
+            serviceId,
+            endpointId,
+            "response"
+        );
     }
 
     return serviceMarkdown;
 }
 
-async function generateCommandMarkdown<C extends "request" | "response", T extends TObject>(schema: T, serviceId: string, endpointId: string, commandType: C): Promise<string> {
+async function generateCommandMarkdown<
+    C extends "request" | "response",
+    T extends C extends "request" ? TObject : TUnion
+>(schema: T, serviceId: string, endpointId: string, commandType: C): Promise<string> {
     let commandMarkdown = "";
 
     commandMarkdown += `<details>
@@ -60,6 +83,13 @@ ${JSON.stringify(schema, null, 4)}
 ${typings}
 \`\`\`
 `;
+
+    if (commandType === "response") {
+        schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
+    }
+    if (commandType === "response") {
+        console.log(JSON.stringify(schema));
+    }
 
     const dummyData = await jsf.resolve(schema);
 

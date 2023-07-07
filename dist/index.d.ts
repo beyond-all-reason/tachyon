@@ -3,22 +3,189 @@
  * Instead modify the .ts files in src/schema and do npm run build
  */
 
-export type AuthGetTokenResponse =
+export type LobbyJoinResponse =
     | {
-          command: "auth/getToken/response";
+          command: "lobby/join/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/join/response";
+          status: "failed";
+          reason:
+              | "locked"
+              | "requires_password"
+              | "invalid_password"
+              | "max_participants_reached"
+              | "rank_too_low"
+              | "rank_too_high"
+              | "banned"
+              | "internal_error";
+      };
+export type LobbyJoinedResponse =
+    | {
+          command: "lobby/joined/response";
+          status: "success";
+          data: {
+              id: number;
+              name: string;
+              founderId: number;
+              private: boolean;
+              replay: boolean;
+              playerIds: number[];
+              spectatorIds: number[];
+              engine: string;
+              game: string;
+              map: string;
+              startAreas: {
+                  /**
+                   * This interface was referenced by `undefined`'s JSON-Schema definition
+                   * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                   */
+                  [k: string]: {
+                      x: number;
+                      y: number;
+                      width: number;
+                      height: number;
+                  };
+              };
+              minTeamsize: number | null;
+              maxTeamsize: number | null;
+              minRating: number | null;
+              maxRating: number | null;
+          };
+      }
+    | {
+          command: "lobby/joined/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type LobbyLeaveResponse =
+    | {
+          command: "lobby/leave/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/leave/response";
+          status: "failed";
+          reason: "not_in_lobby" | "internal_error";
+      };
+export type LobbyLeftResponse =
+    | {
+          command: "lobby/left/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/left/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type LobbyListResponse =
+    | {
+          command: "lobby/list/response";
+          status: "success";
+          data: {
+              lobbies: {
+                  id: number;
+                  name: string;
+                  founderId: number;
+                  private: boolean;
+                  replay: boolean;
+                  playerIds: number[];
+                  spectatorIds: number[];
+                  engine: string;
+                  game: string;
+                  map: string;
+                  startAreas: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                       */
+                      [k: string]: {
+                          x: number;
+                          y: number;
+                          width: number;
+                          height: number;
+                      };
+                  };
+                  minTeamsize: number | null;
+                  maxTeamsize: number | null;
+                  minRating: number | null;
+                  maxRating: number | null;
+              }[];
+          };
+      }
+    | {
+          command: "lobby/list/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type LobbyUpdatedResponse =
+    | {
+          command: "lobby/updated/response";
+          status: "success";
+          data: {
+              id?: number;
+              name?: string;
+              founderId?: number;
+              private?: boolean;
+              replay?: boolean;
+              playerIds?: number[];
+              spectatorIds?: number[];
+              engine?: string;
+              game?: string;
+              map?: string;
+              startAreas?: {
+                  /**
+                   * This interface was referenced by `undefined`'s JSON-Schema definition
+                   * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                   */
+                  [k: string]: {
+                      x: number;
+                      y: number;
+                      width: number;
+                      height: number;
+                  };
+              };
+              minTeamsize?: number | null;
+              maxTeamsize?: number | null;
+              minRating?: number | null;
+              maxRating?: number | null;
+          };
+      }
+    | {
+          command: "lobby/updated/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type SystemVersionResponse =
+    | {
+          command: "system/version/response";
+          status: "success";
+          data: {
+              tachyonVersion: "0.1.0";
+          };
+      }
+    | {
+          command: "system/version/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type UserGetTokenResponse =
+    | {
+          command: "user/getToken/response";
           status: "success";
           data: {
               token: string;
           };
       }
     | {
-          command: "auth/getToken/response";
+          command: "user/getToken/response";
           status: "failed";
           reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
       };
-export type AuthLoginResponse =
+export type UserLoginResponse =
     | {
-          command: "auth/login/response";
+          command: "user/login/response";
           status: "success";
           data: {
               user: {
@@ -48,8 +215,7 @@ export type AuthLoginResponse =
                           game: number;
                           map: number;
                       };
-                      partyId: string | null;
-                      clanTag: string | null;
+                      partyId: number | null;
                       muted: boolean;
                   } | null;
                   email: string;
@@ -60,17 +226,27 @@ export type AuthLoginResponse =
           };
       }
     | {
-          command: "auth/login/response";
+          command: "user/login/response";
           status: "failed";
           reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
       };
-export type AuthRegisterResponse =
+export type UserRecoverResponse =
     | {
-          command: "auth/register/response";
+          command: "user/recover/response";
           status: "success";
       }
     | {
-          command: "auth/register/response";
+          command: "user/recover/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type UserRegisterResponse =
+    | {
+          command: "user/register/response";
+          status: "success";
+      }
+    | {
+          command: "user/register/response";
           status: "failed";
           reason:
               | "email_taken"
@@ -80,43 +256,122 @@ export type AuthRegisterResponse =
               | "username_profanity"
               | "internal_error";
       };
-export type InitInitResponse =
+export type UserRenameResponse =
     | {
-          command: "init/init/response";
+          command: "user/rename/response";
           status: "success";
-          data: {
-              tachyonVersion: string;
-          };
       }
     | {
-          command: "init/init/response";
+          command: "user/rename/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "username_taken" | "username_profanity" | "internal_error";
       };
 
 export interface Tachyon {
-    auth: {
-        getToken: {
-            request: AuthGetTokenRequest;
-            response: AuthGetTokenResponse;
+    lobby: {
+        /**
+         * Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
+         */
+        join: {
+            request: LobbyJoinRequest;
+            response: LobbyJoinResponse;
         };
-        login: {
-            request: AuthLoginRequest;
-            response: AuthLoginResponse;
+        /**
+         * Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
+         */
+        joined: {
+            response: LobbyJoinedResponse;
         };
-        register: {
-            request: AuthRegisterRequest;
-            response: AuthRegisterResponse;
+        /**
+         * Leave the current lobby.
+         */
+        leave: {
+            request: LobbyLeaveRequest;
+            response: LobbyLeaveResponse;
+        };
+        /**
+         * Sent when the server removes the client from a lobby.
+         */
+        left: {
+            response: LobbyLeftResponse;
+        };
+        /**
+         * Returns all custom lobbies.
+         */
+        list: {
+            request: LobbyListRequest;
+            response: LobbyListResponse;
+        };
+        /**
+         * Server sends this partial object whenever a lobby relevant to the client changes in some way.
+         */
+        updated: {
+            response: LobbyUpdatedResponse;
         };
     };
-    init: {
-        init: {
-            response: InitInitResponse;
+    system: {
+        /**
+         * Sends the current version of the protocol to new Websocket clients as soon as they connect.
+         */
+        version: {
+            response: SystemVersionResponse;
+        };
+    };
+    user: {
+        /**
+         * Get an authentication token used for [login](#login).
+         */
+        getToken: {
+            request: UserGetTokenRequest;
+            response: UserGetTokenResponse;
+        };
+        /**
+         * Login using an authentication token from [getToken](#getToken).
+         */
+        login: {
+            request: UserLoginRequest;
+            response: UserLoginResponse;
+        };
+        /**
+         * Should reset the password for the connected user and send it to the associated email address
+         */
+        recover: {
+            request: UserRecoverRequest;
+            response: UserRecoverResponse;
+        };
+        /**
+         * Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
+         *
+         * The server implementation may wish to verify the account by sending a verification link to the email address.
+         */
+        register: {
+            request: UserRegisterRequest;
+            response: UserRegisterResponse;
+        };
+        /**
+         * Change username for the current user.
+         */
+        rename: {
+            request: UserRenameRequest;
+            response: UserRenameResponse;
         };
     };
 }
-export interface AuthGetTokenRequest {
-    command: "auth/getToken/request";
+export interface LobbyJoinRequest {
+    command: "lobby/join/request";
+    data: {
+        lobbyId: number;
+        password?: string;
+    };
+}
+export interface LobbyLeaveRequest {
+    command: "lobby/leave/request";
+}
+export interface LobbyListRequest {
+    command: "lobby/list/request";
+}
+export interface UserGetTokenRequest {
+    command: "user/getToken/request";
     data: (
         | {
               email: string;
@@ -128,20 +383,33 @@ export interface AuthGetTokenRequest {
         password: string;
     };
 }
-export interface AuthLoginRequest {
-    command: "auth/login/request";
+export interface UserLoginRequest {
+    command: "user/login/request";
     data: {
         token: string;
     };
 }
-export interface AuthRegisterRequest {
-    command: "auth/register/request";
+export interface UserRecoverRequest {
+    command: "user/recover/request";
+}
+export interface UserRegisterRequest {
+    command: "user/register/request";
     data: {
         email: string;
         username: string;
-        password: string;
+        hashedPassword: string;
     };
 }
+export interface UserRenameRequest {
+    command: "user/rename/request";
+    data: {
+        newUsername: string;
+    };
+}
+export type Username = string;
+
+export type Email = string;
+
 export interface BattleStatus {
     lobbyId: number | null;
     inGame: boolean;
@@ -156,8 +424,7 @@ export interface BattleStatus {
         game: number;
         map: number;
     };
-    partyId: string | null;
-    clanTag: string | null;
+    partyId: number | null;
     muted: boolean;
 }
 
@@ -188,8 +455,7 @@ export interface UserClient {
             game: number;
             map: number;
         };
-        partyId: string | null;
-        clanTag: string | null;
+        partyId: number | null;
         muted: boolean;
     } | null;
 }
@@ -221,8 +487,7 @@ export interface PrivateUserClient {
             game: number;
             map: number;
         };
-        partyId: string | null;
-        clanTag: string | null;
+        partyId: number | null;
         muted: boolean;
     } | null;
     email: string;
@@ -242,20 +507,13 @@ export interface Lobby {
     id: number;
     name: string;
     founderId: number;
-    passworded: boolean;
-    locked: boolean;
-    engineName: string;
-    engineVersion: string;
+    private: boolean;
+    replay: boolean;
     playerIds: number[];
-    spectatorIds: number;
-    ip: string;
-    settings: {
-        /**
-         * This interface was referenced by `undefined`'s JSON-Schema definition
-         * via the `patternProperty` "^(.*)$".
-         */
-        [k: string]: string;
-    };
+    spectatorIds: number[];
+    engine: string;
+    game: string;
+    map: string;
     startAreas: {
         /**
          * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -268,12 +526,10 @@ export interface Lobby {
             height: number;
         };
     };
-    mapName: string;
-    mapHash: string;
-    public: boolean;
-    type: "normal" | "replay";
-    natType: "none" | "holepunched" | "fixed";
-    port: number;
+    minTeamsize: number | null;
+    maxTeamsize: number | null;
+    minRating: number | null;
+    maxRating: number | null;
 }
 
 

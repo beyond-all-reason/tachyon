@@ -1,0 +1,13 @@
+{
+    "$id": "lobby/list/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/list/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

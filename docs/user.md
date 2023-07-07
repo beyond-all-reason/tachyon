@@ -1,11 +1,17 @@
-# auth
+# user
 
 - [register](#register)
 - [getToken](#getToken)
 - [login](#login)
+- [recover](#recover)
+- [rename](#rename)
 ---
 
 ## register
+
+Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
+
+The server implementation may wish to verify the account by sending a verification link to the email address.
 
 ### request
 
@@ -14,11 +20,11 @@
 
 ```json
 {
-    "$id": "auth/register/request",
+    "$id": "user/register/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "auth/register/request",
+            "const": "user/register/request",
             "type": "string"
         },
         "data": {
@@ -26,7 +32,7 @@
                 {
                     "email": "bob@test.com",
                     "username": "bob",
-                    "password": "banana1234"
+                    "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
                 }
             ],
             "type": "object",
@@ -35,19 +41,22 @@
                     "type": "string"
                 },
                 "username": {
-                    "pattern": "^[A-Za-z0-9_-]+$",
-                    "minLength": 2,
+                    "minLength": 3,
                     "maxLength": 20,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "examples": [
+                        "Bob"
+                    ],
                     "type": "string"
                 },
-                "password": {
+                "hashedPassword": {
                     "type": "string"
                 }
             },
             "required": [
                 "email",
                 "username",
-                "password"
+                "hashedPassword"
             ]
         }
     },
@@ -62,12 +71,12 @@
 
 #### TypeScript Definition
 ```ts
-export interface AuthRegisterRequest {
-    command: "auth/register/request";
+export interface UserRegisterRequest {
+    command: "user/register/request";
     data: {
         email: string;
         username: string;
-        password: string;
+        hashedPassword: string;
     };
 }
 
@@ -75,11 +84,11 @@ export interface AuthRegisterRequest {
 #### Example
 ```json
 {
-    "command": "auth/register/request",
+    "command": "user/register/request",
     "data": {
         "email": "bob@test.com",
         "username": "bob",
-        "password": "banana1234"
+        "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
     }
 }
 ```
@@ -90,13 +99,13 @@ export interface AuthRegisterRequest {
 
 ```json
 {
-    "$id": "auth/register/response",
+    "$id": "user/register/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/register/response",
+                    "const": "user/register/response",
                     "type": "string"
                 },
                 "status": {
@@ -113,7 +122,7 @@ export interface AuthRegisterRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/register/response",
+                    "const": "user/register/response",
                     "type": "string"
                 },
                 "status": {
@@ -163,13 +172,13 @@ export interface AuthRegisterRequest {
 
 #### TypeScript Definition
 ```ts
-export type AuthRegisterResponse =
+export type UserRegisterResponse =
     | {
-          command: "auth/register/response";
+          command: "user/register/response";
           status: "success";
       }
     | {
-          command: "auth/register/response";
+          command: "user/register/response";
           status: "failed";
           reason:
               | "email_taken"
@@ -184,13 +193,15 @@ export type AuthRegisterResponse =
 #### Example
 ```json
 {
-    "command": "auth/register/response",
+    "command": "user/register/response",
     "status": "success"
 }
 ```
 ---
 
 ## getToken
+
+Get an authentication token used for [login](#login).
 
 ### request
 
@@ -199,11 +210,11 @@ export type AuthRegisterResponse =
 
 ```json
 {
-    "$id": "auth/getToken/request",
+    "$id": "user/getToken/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "auth/getToken/request",
+            "const": "user/getToken/request",
             "type": "string"
         },
         "data": {
@@ -220,6 +231,10 @@ export type AuthRegisterResponse =
                             "type": "object",
                             "properties": {
                                 "email": {
+                                    "format": "email",
+                                    "examples": [
+                                        "bob@test.com"
+                                    ],
                                     "type": "string"
                                 }
                             },
@@ -231,6 +246,12 @@ export type AuthRegisterResponse =
                             "type": "object",
                             "properties": {
                                 "username": {
+                                    "minLength": 3,
+                                    "maxLength": 20,
+                                    "pattern": "^[A-Za-z0-9_-]+$",
+                                    "examples": [
+                                        "Bob"
+                                    ],
                                     "type": "string"
                                 }
                             },
@@ -265,8 +286,8 @@ export type AuthRegisterResponse =
 
 #### TypeScript Definition
 ```ts
-export interface AuthGetTokenRequest {
-    command: "auth/getToken/request";
+export interface UserGetTokenRequest {
+    command: "user/getToken/request";
     data: (
         | {
               email: string;
@@ -283,7 +304,7 @@ export interface AuthGetTokenRequest {
 #### Example
 ```json
 {
-    "command": "auth/getToken/request",
+    "command": "user/getToken/request",
     "data": {
         "email": "bob@test.com",
         "password": "banana1234"
@@ -297,13 +318,13 @@ export interface AuthGetTokenRequest {
 
 ```json
 {
-    "$id": "auth/getToken/response",
+    "$id": "user/getToken/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/getToken/response",
+                    "const": "user/getToken/response",
                     "type": "string"
                 },
                 "status": {
@@ -337,7 +358,7 @@ export interface AuthGetTokenRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/getToken/response",
+                    "const": "user/getToken/response",
                     "type": "string"
                 },
                 "status": {
@@ -379,16 +400,16 @@ export interface AuthGetTokenRequest {
 
 #### TypeScript Definition
 ```ts
-export type AuthGetTokenResponse =
+export type UserGetTokenResponse =
     | {
-          command: "auth/getToken/response";
+          command: "user/getToken/response";
           status: "success";
           data: {
               token: string;
           };
       }
     | {
-          command: "auth/getToken/response";
+          command: "user/getToken/response";
           status: "failed";
           reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
       };
@@ -397,7 +418,7 @@ export type AuthGetTokenResponse =
 #### Example
 ```json
 {
-    "command": "auth/getToken/response",
+    "command": "user/getToken/response",
     "status": "success",
     "data": {
         "token": "d2d5135930dacad758584b2586d03426"
@@ -408,6 +429,8 @@ export type AuthGetTokenResponse =
 
 ## login
 
+Login using an authentication token from [getToken](#getToken).
+
 ### request
 
 <details>
@@ -415,11 +438,11 @@ export type AuthGetTokenResponse =
 
 ```json
 {
-    "$id": "auth/login/request",
+    "$id": "user/login/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "auth/login/request",
+            "const": "user/login/request",
             "type": "string"
         },
         "data": {
@@ -450,8 +473,8 @@ export type AuthGetTokenResponse =
 
 #### TypeScript Definition
 ```ts
-export interface AuthLoginRequest {
-    command: "auth/login/request";
+export interface UserLoginRequest {
+    command: "user/login/request";
     data: {
         token: string;
     };
@@ -461,7 +484,7 @@ export interface AuthLoginRequest {
 #### Example
 ```json
 {
-    "command": "auth/login/request",
+    "command": "user/login/request",
     "data": {
         "token": "d2d5135930dacad758584b2586d03426"
     }
@@ -474,13 +497,13 @@ export interface AuthLoginRequest {
 
 ```json
 {
-    "$id": "auth/login/response",
+    "$id": "user/login/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/login/response",
+                    "const": "user/login/response",
                     "type": "string"
                 },
                 "status": {
@@ -631,17 +654,7 @@ export interface AuthLoginRequest {
                                                 "partyId": {
                                                     "anyOf": [
                                                         {
-                                                            "type": "string"
-                                                        },
-                                                        {
-                                                            "type": "null"
-                                                        }
-                                                    ]
-                                                },
-                                                "clanTag": {
-                                                    "anyOf": [
-                                                        {
-                                                            "type": "string"
+                                                            "type": "integer"
                                                         },
                                                         {
                                                             "type": "null"
@@ -663,7 +676,6 @@ export interface AuthLoginRequest {
                                                 "bonus",
                                                 "sync",
                                                 "partyId",
-                                                "clanTag",
                                                 "muted"
                                             ]
                                         },
@@ -725,7 +737,7 @@ export interface AuthLoginRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/login/response",
+                    "const": "user/login/response",
                     "type": "string"
                 },
                 "status": {
@@ -767,9 +779,9 @@ export interface AuthLoginRequest {
 
 #### TypeScript Definition
 ```ts
-export type AuthLoginResponse =
+export type UserLoginResponse =
     | {
-          command: "auth/login/response";
+          command: "user/login/response";
           status: "success";
           data: {
               user: {
@@ -795,8 +807,7 @@ export type AuthLoginResponse =
                           game: number;
                           map: number;
                       };
-                      partyId: string | null;
-                      clanTag: string | null;
+                      partyId: number | null;
                       muted: boolean;
                   } | null;
                   email: string;
@@ -807,7 +818,7 @@ export type AuthLoginResponse =
           };
       }
     | {
-          command: "auth/login/response";
+          command: "user/login/response";
           status: "failed";
           reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
       };
@@ -816,7 +827,7 @@ export type AuthLoginResponse =
 #### Example
 ```json
 {
-    "command": "auth/login/response",
+    "command": "user/login/response",
     "status": "success",
     "data": {
         "user": {
@@ -842,5 +853,275 @@ export type AuthLoginResponse =
             ]
         }
     }
+}
+```
+---
+
+## recover
+
+Should reset the password for the connected user and send it to the associated email address
+
+### request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "user/recover/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "user/recover/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserRecoverRequest {
+    command: "user/recover/request";
+}
+
+```
+#### Example
+```json
+{
+    "command": "user/recover/request"
+}
+```
+### response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "user/recover/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "user/recover/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "user/recover/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserRecoverResponse =
+    | {
+          command: "user/recover/response";
+          status: "success";
+      }
+    | {
+          command: "user/recover/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+
+```
+#### Example
+```json
+{
+    "command": "user/recover/response",
+    "status": "success"
+}
+```
+---
+
+## rename
+
+Change username for the current user.
+
+### request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "user/rename/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "user/rename/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "newUsername": {
+                    "minLength": 3,
+                    "maxLength": 20,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "examples": [
+                        "Bob"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "newUsername"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserRenameRequest {
+    command: "user/rename/request";
+    data: {
+        newUsername: string;
+    };
+}
+
+```
+#### Example
+```json
+{
+    "command": "user/rename/request",
+    "data": {
+        "newUsername": "Bob"
+    }
+}
+```
+### response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "user/rename/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "user/rename/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "user/rename/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "username_taken",
+                            "type": "string"
+                        },
+                        {
+                            "const": "username_profanity",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserRenameResponse =
+    | {
+          command: "user/rename/response";
+          status: "success";
+      }
+    | {
+          command: "user/rename/response";
+          status: "failed";
+          reason: "username_taken" | "username_profanity" | "internal_error";
+      };
+
+```
+#### Example
+```json
+{
+    "command": "user/rename/response",
+    "status": "success"
 }
 ```

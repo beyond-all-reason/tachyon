@@ -1,24 +1,11 @@
-# init
-
-- [init](#init)
----
-
-## init
-
-### response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
 {
-    "$id": "init/init/response",
+    "$id": "user/getToken/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "init/init/response",
+                    "const": "user/getToken/response",
                     "type": "string"
                 },
                 "status": {
@@ -26,17 +13,19 @@
                     "type": "string"
                 },
                 "data": {
+                    "examples": [
+                        {
+                            "token": "d2d5135930dacad758584b2586d03426"
+                        }
+                    ],
                     "type": "object",
                     "properties": {
-                        "tachyonVersion": {
-                            "examples": [
-                                "1.2.3"
-                            ],
+                        "token": {
                             "type": "string"
                         }
                     },
                     "required": [
-                        "tachyonVersion"
+                        "token"
                     ]
                 }
             },
@@ -50,7 +39,7 @@
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "init/init/response",
+                    "const": "user/getToken/response",
                     "type": "string"
                 },
                 "status": {
@@ -58,8 +47,24 @@
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "no_user_found",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_password",
+                            "type": "string"
+                        },
+                        {
+                            "const": "max_attempts",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -70,34 +75,3 @@
         }
     ]
 }
-```
-
-</details>
-
-#### TypeScript Definition
-```ts
-export type InitInitResponse =
-    | {
-          command: "init/init/response";
-          status: "success";
-          data: {
-              tachyonVersion: string;
-          };
-      }
-    | {
-          command: "init/init/response";
-          status: "failed";
-          reason: "internal_error";
-      };
-
-```
-#### Example
-```json
-{
-    "command": "init/init/response",
-    "status": "success",
-    "data": {
-        "tachyonVersion": "1.2.3"
-    }
-}
-```
