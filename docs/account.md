@@ -1,5 +1,8 @@
-# User
+# Account
 
+These endpoints relate to the creation and management of user accounts.
+
+---
 - [register](#register)
 - [getToken](#gettoken)
 - [login](#login)
@@ -20,11 +23,11 @@ The server implementation may wish to verify the account by sending a verificati
 
 ```json
 {
-    "$id": "user/register/request",
+    "$id": "account/register/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "user/register/request",
+            "const": "account/register/request",
             "type": "string"
         },
         "data": {
@@ -71,8 +74,8 @@ The server implementation may wish to verify the account by sending a verificati
 
 #### TypeScript Definition
 ```ts
-export interface UserRegisterRequest {
-    command: "user/register/request";
+export interface AccountRegisterRequest {
+    command: "account/register/request";
     data: {
         email: string;
         username: string;
@@ -84,7 +87,7 @@ export interface UserRegisterRequest {
 #### Example
 ```json
 {
-    "command": "user/register/request",
+    "command": "account/register/request",
     "data": {
         "email": "bob@test.com",
         "username": "bob",
@@ -99,13 +102,13 @@ export interface UserRegisterRequest {
 
 ```json
 {
-    "$id": "user/register/response",
+    "$id": "account/register/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/register/response",
+                    "const": "account/register/response",
                     "type": "string"
                 },
                 "status": {
@@ -122,7 +125,7 @@ export interface UserRegisterRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/register/response",
+                    "const": "account/register/response",
                     "type": "string"
                 },
                 "status": {
@@ -172,13 +175,13 @@ export interface UserRegisterRequest {
 
 #### TypeScript Definition
 ```ts
-export type UserRegisterResponse =
+export type AccountRegisterResponse =
     | {
-          command: "user/register/response";
+          command: "account/register/response";
           status: "success";
       }
     | {
-          command: "user/register/response";
+          command: "account/register/response";
           status: "failed";
           reason:
               | "email_taken"
@@ -193,7 +196,7 @@ export type UserRegisterResponse =
 #### Example
 ```json
 {
-    "command": "user/register/response",
+    "command": "account/register/response",
     "status": "success"
 }
 ```
@@ -210,11 +213,11 @@ Get an authentication token used for [login](#login).
 
 ```json
 {
-    "$id": "user/getToken/request",
+    "$id": "account/getToken/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "user/getToken/request",
+            "const": "account/getToken/request",
             "type": "string"
         },
         "data": {
@@ -286,8 +289,8 @@ Get an authentication token used for [login](#login).
 
 #### TypeScript Definition
 ```ts
-export interface UserGetTokenRequest {
-    command: "user/getToken/request";
+export interface AccountGetTokenRequest {
+    command: "account/getToken/request";
     data: (
         | {
               email: string;
@@ -304,7 +307,7 @@ export interface UserGetTokenRequest {
 #### Example
 ```json
 {
-    "command": "user/getToken/request",
+    "command": "account/getToken/request",
     "data": {
         "email": "bob@test.com",
         "password": "banana1234"
@@ -318,13 +321,13 @@ export interface UserGetTokenRequest {
 
 ```json
 {
-    "$id": "user/getToken/response",
+    "$id": "account/getToken/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/getToken/response",
+                    "const": "account/getToken/response",
                     "type": "string"
                 },
                 "status": {
@@ -358,7 +361,7 @@ export interface UserGetTokenRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/getToken/response",
+                    "const": "account/getToken/response",
                     "type": "string"
                 },
                 "status": {
@@ -400,16 +403,16 @@ export interface UserGetTokenRequest {
 
 #### TypeScript Definition
 ```ts
-export type UserGetTokenResponse =
+export type AccountGetTokenResponse =
     | {
-          command: "user/getToken/response";
+          command: "account/getToken/response";
           status: "success";
           data: {
               token: string;
           };
       }
     | {
-          command: "user/getToken/response";
+          command: "account/getToken/response";
           status: "failed";
           reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
       };
@@ -418,7 +421,7 @@ export type UserGetTokenResponse =
 #### Example
 ```json
 {
-    "command": "user/getToken/response",
+    "command": "account/getToken/response",
     "status": "success",
     "data": {
         "token": "d2d5135930dacad758584b2586d03426"
@@ -438,11 +441,11 @@ Login using an authentication token from [getToken](#gettoken).
 
 ```json
 {
-    "$id": "user/login/request",
+    "$id": "account/login/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "user/login/request",
+            "const": "account/login/request",
             "type": "string"
         },
         "data": {
@@ -473,8 +476,8 @@ Login using an authentication token from [getToken](#gettoken).
 
 #### TypeScript Definition
 ```ts
-export interface UserLoginRequest {
-    command: "user/login/request";
+export interface AccountLoginRequest {
+    command: "account/login/request";
     data: {
         token: string;
     };
@@ -484,7 +487,7 @@ export interface UserLoginRequest {
 #### Example
 ```json
 {
-    "command": "user/login/request",
+    "command": "account/login/request",
     "data": {
         "token": "d2d5135930dacad758584b2586d03426"
     }
@@ -497,13 +500,13 @@ export interface UserLoginRequest {
 
 ```json
 {
-    "$id": "user/login/response",
+    "$id": "account/login/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/login/response",
+                    "const": "account/login/response",
                     "type": "string"
                 },
                 "status": {
@@ -737,7 +740,7 @@ export interface UserLoginRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/login/response",
+                    "const": "account/login/response",
                     "type": "string"
                 },
                 "status": {
@@ -779,9 +782,9 @@ export interface UserLoginRequest {
 
 #### TypeScript Definition
 ```ts
-export type UserLoginResponse =
+export type AccountLoginResponse =
     | {
-          command: "user/login/response";
+          command: "account/login/response";
           status: "success";
           data: {
               user: {
@@ -818,7 +821,7 @@ export type UserLoginResponse =
           };
       }
     | {
-          command: "user/login/response";
+          command: "account/login/response";
           status: "failed";
           reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
       };
@@ -827,7 +830,7 @@ export type UserLoginResponse =
 #### Example
 ```json
 {
-    "command": "user/login/response",
+    "command": "account/login/response",
     "status": "success",
     "data": {
         "user": {
@@ -868,11 +871,11 @@ Should reset the password for the connected user and send it to the associated e
 
 ```json
 {
-    "$id": "user/recover/request",
+    "$id": "account/recover/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "user/recover/request",
+            "const": "account/recover/request",
             "type": "string"
         }
     },
@@ -886,15 +889,15 @@ Should reset the password for the connected user and send it to the associated e
 
 #### TypeScript Definition
 ```ts
-export interface UserRecoverRequest {
-    command: "user/recover/request";
+export interface AccountRecoverRequest {
+    command: "account/recover/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "user/recover/request"
+    "command": "account/recover/request"
 }
 ```
 ### response
@@ -904,13 +907,13 @@ export interface UserRecoverRequest {
 
 ```json
 {
-    "$id": "user/recover/response",
+    "$id": "account/recover/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/recover/response",
+                    "const": "account/recover/response",
                     "type": "string"
                 },
                 "status": {
@@ -927,7 +930,7 @@ export interface UserRecoverRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/recover/response",
+                    "const": "account/recover/response",
                     "type": "string"
                 },
                 "status": {
@@ -953,13 +956,13 @@ export interface UserRecoverRequest {
 
 #### TypeScript Definition
 ```ts
-export type UserRecoverResponse =
+export type AccountRecoverResponse =
     | {
-          command: "user/recover/response";
+          command: "account/recover/response";
           status: "success";
       }
     | {
-          command: "user/recover/response";
+          command: "account/recover/response";
           status: "failed";
           reason: "internal_error";
       };
@@ -968,7 +971,7 @@ export type UserRecoverResponse =
 #### Example
 ```json
 {
-    "command": "user/recover/response",
+    "command": "account/recover/response",
     "status": "success"
 }
 ```
@@ -985,11 +988,11 @@ Change username for the current user.
 
 ```json
 {
-    "$id": "user/rename/request",
+    "$id": "account/rename/request",
     "type": "object",
     "properties": {
         "command": {
-            "const": "user/rename/request",
+            "const": "account/rename/request",
             "type": "string"
         },
         "data": {
@@ -1021,8 +1024,8 @@ Change username for the current user.
 
 #### TypeScript Definition
 ```ts
-export interface UserRenameRequest {
-    command: "user/rename/request";
+export interface AccountRenameRequest {
+    command: "account/rename/request";
     data: {
         newUsername: string;
     };
@@ -1032,7 +1035,7 @@ export interface UserRenameRequest {
 #### Example
 ```json
 {
-    "command": "user/rename/request",
+    "command": "account/rename/request",
     "data": {
         "newUsername": "Bob"
     }
@@ -1045,13 +1048,13 @@ export interface UserRenameRequest {
 
 ```json
 {
-    "$id": "user/rename/response",
+    "$id": "account/rename/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/rename/response",
+                    "const": "account/rename/response",
                     "type": "string"
                 },
                 "status": {
@@ -1068,7 +1071,7 @@ export interface UserRenameRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/rename/response",
+                    "const": "account/rename/response",
                     "type": "string"
                 },
                 "status": {
@@ -1106,13 +1109,13 @@ export interface UserRenameRequest {
 
 #### TypeScript Definition
 ```ts
-export type UserRenameResponse =
+export type AccountRenameResponse =
     | {
-          command: "user/rename/response";
+          command: "account/rename/response";
           status: "success";
       }
     | {
-          command: "user/rename/response";
+          command: "account/rename/response";
           status: "failed";
           reason: "username_taken" | "username_profanity" | "internal_error";
       };
@@ -1121,7 +1124,7 @@ export type UserRenameResponse =
 #### Example
 ```json
 {
-    "command": "user/rename/response",
+    "command": "account/rename/response",
     "status": "success"
 }
 ```

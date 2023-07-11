@@ -1,0 +1,31 @@
+{
+    "$id": "account/rename/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "account/rename/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "newUsername": {
+                    "minLength": 3,
+                    "maxLength": 20,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "examples": [
+                        "Bob"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "newUsername"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

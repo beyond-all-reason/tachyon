@@ -136,6 +136,13 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
         await fs.promises.writeFile(`docs/${serviceId.toString()}.md`, markdown);
     }
 
+    let mainReadme = "# Services\n\n";
+    for (const serviceId in tachyonSchema) {
+        mainReadme += `- [${serviceId}](#${serviceId})\n`;
+    }
+
+    await fs.promises.writeFile("docs/README.md", mainReadme);
+
     let typings = await compile(fullSchema, "Tachyon", {
         additionalProperties: false,
         bannerComment: `/**

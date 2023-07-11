@@ -1,0 +1,77 @@
+{
+    "$id": "account/getToken/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "token": "d2d5135930dacad758584b2586d03426"
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "token": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "token"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "no_user_found",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_password",
+                            "type": "string"
+                        },
+                        {
+                            "const": "max_attempts",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

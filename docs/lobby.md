@@ -1,5 +1,8 @@
 # Lobby
 
+These commands relate to custom lobbies.
+
+---
 - [close](#close)
 - [create](#create)
 - [join](#join)

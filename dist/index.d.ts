@@ -3,6 +3,102 @@
  * Instead modify the .ts files in src/schema and do npm run build
  */
 
+export type AccountGetTokenResponse =
+    | {
+          command: "account/getToken/response";
+          status: "success";
+          data: {
+              token: string;
+          };
+      }
+    | {
+          command: "account/getToken/response";
+          status: "failed";
+          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
+      };
+export type AccountLoginResponse =
+    | {
+          command: "account/login/response";
+          status: "success";
+          data: {
+              user: {
+                  userId: number;
+                  username: string;
+                  isBot: boolean;
+                  clanId: number | null;
+                  icons: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(.*)$".
+                       */
+                      [k: string]: string;
+                  };
+                  roles: string[];
+                  battleStatus: {
+                      lobbyId: number | null;
+                      inGame: boolean;
+                      away: boolean;
+                      ready: boolean;
+                      playerNumber: number | null;
+                      teamColour: string | null;
+                      isPlayer: boolean;
+                      bonus: number;
+                      sync: {
+                          engine: number;
+                          game: number;
+                          map: number;
+                      };
+                      partyId: number | null;
+                      muted: boolean;
+                  } | null;
+                  email: string;
+                  friends: number[];
+                  friendRequests: number[];
+                  ignores: number[];
+              };
+          };
+      }
+    | {
+          command: "account/login/response";
+          status: "failed";
+          reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
+      };
+export type AccountRecoverResponse =
+    | {
+          command: "account/recover/response";
+          status: "success";
+      }
+    | {
+          command: "account/recover/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type AccountRegisterResponse =
+    | {
+          command: "account/register/response";
+          status: "success";
+      }
+    | {
+          command: "account/register/response";
+          status: "failed";
+          reason:
+              | "email_taken"
+              | "username_taken"
+              | "invalid_email"
+              | "weak_password"
+              | "username_profanity"
+              | "internal_error";
+      };
+export type AccountRenameResponse =
+    | {
+          command: "account/rename/response";
+          status: "success";
+      }
+    | {
+          command: "account/rename/response";
+          status: "failed";
+          reason: "username_taken" | "username_profanity" | "internal_error";
+      };
 export type AutohostSlaveResponse =
     | {
           command: "autohost/slave/response";
@@ -331,104 +427,47 @@ export type SystemVersionResponse =
           status: "failed";
           reason: "internal_error";
       };
-export type UserGetTokenResponse =
-    | {
-          command: "user/getToken/response";
-          status: "success";
-          data: {
-              token: string;
-          };
-      }
-    | {
-          command: "user/getToken/response";
-          status: "failed";
-          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
-      };
-export type UserLoginResponse =
-    | {
-          command: "user/login/response";
-          status: "success";
-          data: {
-              user: {
-                  userId: number;
-                  username: string;
-                  isBot: boolean;
-                  clanId: number | null;
-                  icons: {
-                      /**
-                       * This interface was referenced by `undefined`'s JSON-Schema definition
-                       * via the `patternProperty` "^(.*)$".
-                       */
-                      [k: string]: string;
-                  };
-                  roles: string[];
-                  battleStatus: {
-                      lobbyId: number | null;
-                      inGame: boolean;
-                      away: boolean;
-                      ready: boolean;
-                      playerNumber: number | null;
-                      teamColour: string | null;
-                      isPlayer: boolean;
-                      bonus: number;
-                      sync: {
-                          engine: number;
-                          game: number;
-                          map: number;
-                      };
-                      partyId: number | null;
-                      muted: boolean;
-                  } | null;
-                  email: string;
-                  friends: number[];
-                  friendRequests: number[];
-                  ignores: number[];
-              };
-          };
-      }
-    | {
-          command: "user/login/response";
-          status: "failed";
-          reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
-      };
-export type UserRecoverResponse =
-    | {
-          command: "user/recover/response";
-          status: "success";
-      }
-    | {
-          command: "user/recover/response";
-          status: "failed";
-          reason: "internal_error";
-      };
-export type UserRegisterResponse =
-    | {
-          command: "user/register/response";
-          status: "success";
-      }
-    | {
-          command: "user/register/response";
-          status: "failed";
-          reason:
-              | "email_taken"
-              | "username_taken"
-              | "invalid_email"
-              | "weak_password"
-              | "username_profanity"
-              | "internal_error";
-      };
-export type UserRenameResponse =
-    | {
-          command: "user/rename/response";
-          status: "success";
-      }
-    | {
-          command: "user/rename/response";
-          status: "failed";
-          reason: "username_taken" | "username_profanity" | "internal_error";
-      };
 
 export interface Tachyon {
+    account: {
+        /**
+         * Get an authentication token used for [login](#login).
+         */
+        getToken: {
+            request: AccountGetTokenRequest;
+            response: AccountGetTokenResponse;
+        };
+        /**
+         * Login using an authentication token from [getToken](#gettoken).
+         */
+        login: {
+            request: AccountLoginRequest;
+            response: AccountLoginResponse;
+        };
+        /**
+         * Should reset the password for the connected user and send it to the associated email address
+         */
+        recover: {
+            request: AccountRecoverRequest;
+            response: AccountRecoverResponse;
+        };
+        /**
+         * Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
+         *
+         * The server implementation may wish to verify the account by sending a verification link to the email address.
+         */
+        register: {
+            request: AccountRegisterRequest;
+            response: AccountRegisterResponse;
+        };
+        /**
+         * Change username for the current user.
+         */
+        rename: {
+            request: AccountRenameRequest;
+            response: AccountRenameResponse;
+        };
+    };
     autohost: {
         /**
          * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
@@ -575,44 +614,41 @@ export interface Tachyon {
             response: SystemVersionResponse;
         };
     };
-    user: {
-        /**
-         * Get an authentication token used for [login](#login).
-         */
-        getToken: {
-            request: UserGetTokenRequest;
-            response: UserGetTokenResponse;
-        };
-        /**
-         * Login using an authentication token from [getToken](#gettoken).
-         */
-        login: {
-            request: UserLoginRequest;
-            response: UserLoginResponse;
-        };
-        /**
-         * Should reset the password for the connected user and send it to the associated email address
-         */
-        recover: {
-            request: UserRecoverRequest;
-            response: UserRecoverResponse;
-        };
-        /**
-         * Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
-         *
-         * The server implementation may wish to verify the account by sending a verification link to the email address.
-         */
-        register: {
-            request: UserRegisterRequest;
-            response: UserRegisterResponse;
-        };
-        /**
-         * Change username for the current user.
-         */
-        rename: {
-            request: UserRenameRequest;
-            response: UserRenameResponse;
-        };
+}
+export interface AccountGetTokenRequest {
+    command: "account/getToken/request";
+    data: (
+        | {
+              email: string;
+          }
+        | {
+              username: string;
+          }
+    ) & {
+        password: string;
+    };
+}
+export interface AccountLoginRequest {
+    command: "account/login/request";
+    data: {
+        token: string;
+    };
+}
+export interface AccountRecoverRequest {
+    command: "account/recover/request";
+}
+export interface AccountRegisterRequest {
+    command: "account/register/request";
+    data: {
+        email: string;
+        username: string;
+        hashedPassword: string;
+    };
+}
+export interface AccountRenameRequest {
+    command: "account/rename/request";
+    data: {
+        newUsername: string;
     };
 }
 export interface AutohostSlaveRequest {
@@ -669,42 +705,6 @@ export interface MatchmakingQueueRequest {
 }
 export interface MatchmakingReadyRequest {
     command: "matchmaking/ready/request";
-}
-export interface UserGetTokenRequest {
-    command: "user/getToken/request";
-    data: (
-        | {
-              email: string;
-          }
-        | {
-              username: string;
-          }
-    ) & {
-        password: string;
-    };
-}
-export interface UserLoginRequest {
-    command: "user/login/request";
-    data: {
-        token: string;
-    };
-}
-export interface UserRecoverRequest {
-    command: "user/recover/request";
-}
-export interface UserRegisterRequest {
-    command: "user/register/request";
-    data: {
-        email: string;
-        username: string;
-        hashedPassword: string;
-    };
-}
-export interface UserRenameRequest {
-    command: "user/rename/request";
-    data: {
-        newUsername: string;
-    };
 }
 export type Username = string;
 

@@ -1,0 +1,13 @@
+{
+    "$id": "account/recover/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "account/recover/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}
