@@ -1,0 +1,91 @@
+{
+    "$id": "matchmaking/list/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "matchmaking/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "queues": [
+                                {
+                                    "id": "1v1",
+                                    "name": "Duel",
+                                    "ranked": true
+                                },
+                                {
+                                    "id": "2v2",
+                                    "name": "2v2",
+                                    "ranked": true
+                                }
+                            ]
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "queues": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "ranked": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "name",
+                                    "ranked"
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "queues"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "matchmaking/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

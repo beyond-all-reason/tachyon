@@ -4,7 +4,8 @@ import { defineEndpoint } from "@/helpers";
 import { lobby } from "@/schema/types";
 
 export default defineEndpoint({
-    description: "Server sends this partial object whenever a lobby relevant to the client changes in some way.",
+    description:
+        "Server sends this partial object whenever a lobby relevant to the client changes in some way.",
     response: [
         {
             status: "success",

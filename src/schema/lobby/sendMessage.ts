@@ -3,7 +3,8 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/helpers";
 
 export default defineEndpoint({
-    description: "Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.",
+    description:
+        "Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.",
     request: {
         data: Type.Object(
             {

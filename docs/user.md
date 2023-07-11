@@ -1,7 +1,7 @@
-# user
+# User
 
 - [register](#register)
-- [getToken](#getToken)
+- [getToken](#gettoken)
 - [login](#login)
 - [recover](#recover)
 - [rename](#rename)
@@ -429,7 +429,7 @@ export type UserGetTokenResponse =
 
 ## login
 
-Login using an authentication token from [getToken](#getToken).
+Login using an authentication token from [getToken](#gettoken).
 
 ### request
 

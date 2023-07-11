@@ -4,7 +4,7 @@ import { defineEndpoint } from "@/helpers";
 import { privateUserClient } from "@/schema/types";
 
 export default defineEndpoint({
-    description: "Login using an authentication token from [getToken](#getToken).",
+    description: "Login using an authentication token from [getToken](#gettoken).",
     order: 3,
     request: {
         data: Type.Object(

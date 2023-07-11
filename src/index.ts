@@ -1,10 +1,10 @@
-import { TObject, TProperties, Type } from "@sinclair/typebox";
+import { TObject, TProperties, TUnion, Type } from "@sinclair/typebox";
 import fs from "fs";
-import { objectKeys } from "jaz-ts-utils";
+import { objectKeys, titleCase } from "jaz-ts-utils";
+import jsf from "json-schema-faker";
 import { compile } from "json-schema-to-typescript";
 import path from "path";
 
-import { generateMarkdown } from "@/generate-markdown";
 import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/helpers";
 
 (async () => {
@@ -19,18 +19,23 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
         }
         const endpointDir = path.join(serviceDirs, serviceId);
         const endpointSchemaModules = await fs.promises.readdir(endpointDir, {
-            withFileTypes: false,
+            withFileTypes: true,
         });
 
         const serviceSchema: Record<string, EndpointConfig> = {};
         fullSchemaProps[serviceId] = {};
 
         for (const endpointSchemaPath of endpointSchemaModules) {
-            const endpointId = path.parse(endpointSchemaPath).name;
-            const endpoint = await import(path.join(endpointDir, endpointSchemaPath));
+            if (endpointSchemaPath.name.endsWith(".md")) {
+                continue;
+            }
+            const endpointId = path.parse(endpointSchemaPath.name).name;
+            const endpoint = await import(path.join(endpointDir, endpointSchemaPath.name));
             const endpointSchema = endpoint.default as EndpointConfig;
             fullSchemaProps[serviceId][endpointId] = {};
-            await fs.promises.mkdir(path.join("dist", serviceId, endpointId), { recursive: true });
+            await fs.promises.mkdir(path.join("dist", serviceId, endpointId), {
+                recursive: true,
+            });
 
             if ("request" in endpointSchema) {
                 const props: TProperties = {
@@ -43,7 +48,10 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
                     $id: `${serviceId}/${endpointId}/request`,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/request.json`, schemaStr);
+                await fs.promises.writeFile(
+                    `dist/${serviceId}/${endpointId}/request.json`,
+                    schemaStr
+                );
                 fullSchemaProps[serviceId][endpointId].request = schema;
             }
             if ("response" in endpointSchema && endpointSchema.response.length) {
@@ -67,7 +75,10 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
                             status: Type.Literal("failed"),
                             reason: Type.Union(
                                 endpointSchema.response
-                                    .filter((res): res is FailedResponseSchema => res.status === "failed")
+                                    .filter(
+                                        (res): res is FailedResponseSchema =>
+                                            res.status === "failed"
+                                    )
                                     .map((res) => {
                                         return Type.Literal(res.reason);
                                     })
@@ -79,7 +90,10 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
                     }
                 );
                 const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/response.json`, schemaStr);
+                await fs.promises.writeFile(
+                    `dist/${serviceId}/${endpointId}/response.json`,
+                    schemaStr
+                );
                 fullSchemaProps[serviceId][endpointId].response = schema;
             }
             serviceSchema[endpointId] = endpointSchema;
@@ -116,11 +130,8 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
             orderedEndpoints[id] = fullSchema.properties[serviceId].properties[id];
         }
 
-        let markdown = `# ${serviceId.toString()}\n\n`;
-        for (const endpointId of orderedEndpointIds) {
-            markdown += `- [${endpointId}](#${endpointId})\n`;
-        }
-        markdown += await generateMarkdown(orderedEndpoints, serviceId);
+        const markdown = await generateServiceMarkdown(orderedEndpoints, serviceId);
+
         await fs.promises.mkdir(`docs`, { recursive: true });
         await fs.promises.writeFile(`docs/${serviceId.toString()}.md`, markdown);
     }
@@ -180,3 +191,112 @@ export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachy
 `;
     await fs.promises.writeFile(`dist/index.d.ts`, typings);
 })();
+
+jsf.option("useExamplesValue", true);
+jsf.option("random", () => 0.1234);
+
+async function generateServiceMarkdown<T extends Record<string, TObject>>(
+    endpoints: T,
+    serviceId: string
+): Promise<string> {
+    let markdown = `# ${titleCase(serviceId)}\n\n`;
+
+    if (fs.existsSync(`src/schema/${serviceId}/README.md`)) {
+        const serviceReadme = await fs.promises.readFile(`src/schema/${serviceId}/README.md`, {
+            encoding: "utf8",
+        });
+
+        markdown += `${serviceReadme}\n---\n`;
+    }
+
+    for (const endpointId in endpoints) {
+        markdown += `- [${endpointId}](#${endpointId.toLowerCase()})\n`;
+    }
+
+    for (const endpointId in endpoints) {
+        const endpointConfig = endpoints[endpointId];
+        markdown += `---\n\n## ${endpointId.toString()}\n\n`;
+        if (endpointConfig.description) {
+            markdown += `${endpointConfig.description}\n\n`;
+        }
+        markdown += await generateEndpointMarkdown(endpointConfig, serviceId, endpointId);
+    }
+
+    return markdown;
+}
+
+async function generateEndpointMarkdown<T extends TObject>(
+    schema: T,
+    serviceId: string,
+    endpointId: string
+): Promise<string> {
+    let serviceMarkdown = "";
+
+    if ("request" in schema.properties) {
+        serviceMarkdown += `### request\n\n`;
+        serviceMarkdown += await generateCommandMarkdown(
+            schema.properties.request as TObject,
+            serviceId,
+            endpointId,
+            "request"
+        );
+    }
+
+    if ("response" in schema.properties) {
+        serviceMarkdown += `### response\n\n`;
+        serviceMarkdown += await generateCommandMarkdown(
+            schema.properties.response as TUnion,
+            serviceId,
+            endpointId,
+            "response"
+        );
+    }
+
+    return serviceMarkdown;
+}
+
+async function generateCommandMarkdown<
+    C extends "request" | "response",
+    T extends C extends "request" ? TObject : TUnion
+>(schema: T, serviceId: string, endpointId: string, commandType: C): Promise<string> {
+    let commandMarkdown = "";
+
+    commandMarkdown += `<details>
+<summary>JSONSchema</summary>\n
+\`\`\`json
+${JSON.stringify(schema, null, 4)}
+\`\`\`\n
+</details>\n\n`;
+
+    let typings = await compile(schema, "A", {
+        additionalProperties: false,
+        bannerComment: ``,
+        style: {
+            bracketSpacing: true,
+            tabWidth: 4,
+            semi: true,
+        },
+    });
+
+    typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
+
+    commandMarkdown += `#### TypeScript Definition
+\`\`\`ts
+${typings}
+\`\`\`
+`;
+
+    if (commandType === "response") {
+        schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
+    }
+
+    const dummyData = await jsf.resolve(schema);
+
+    commandMarkdown += `#### Example
+\`\`\`json
+${JSON.stringify(dummyData, null, 4)}
+\`\`\`
+`;
+
+    return commandMarkdown;
+}

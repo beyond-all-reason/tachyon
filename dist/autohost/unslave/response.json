@@ -1,45 +1,28 @@
 {
-    "$id": "auth/getToken/response",
+    "$id": "autohost/unslave/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/getToken/response",
+                    "const": "autohost/unslave/response",
                     "type": "string"
                 },
                 "status": {
                     "const": "success",
                     "type": "string"
-                },
-                "data": {
-                    "examples": [
-                        {
-                            "token": "d2d5135930dacad758584b2586d03426"
-                        }
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "token": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "token"
-                    ]
                 }
             },
             "required": [
                 "command",
-                "status",
-                "data"
+                "status"
             ]
         },
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/getToken/response",
+                    "const": "autohost/unslave/response",
                     "type": "string"
                 },
                 "status": {
@@ -49,15 +32,11 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "no_user_found",
+                            "const": "botflag_required",
                             "type": "string"
                         },
                         {
-                            "const": "invalid_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "max_attempts",
+                            "const": "already_unslaved",
                             "type": "string"
                         },
                         {

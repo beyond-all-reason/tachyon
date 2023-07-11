@@ -38,7 +38,9 @@ export const userClient = Type.Object({
     isBot: Type.Boolean(),
     clanId: Nullable(Type.Integer()),
     icons: Type.Record(Type.String(), Type.String()),
-    roles: Type.Array(Type.String(), { examples: [["admin", "moderator", "mentor"]] }),
+    roles: Type.Array(Type.String(), {
+        examples: [["admin", "moderator", "mentor"]],
+    }),
     battleStatus: Nullable(battleStatus),
 });
 
@@ -76,8 +78,8 @@ export const lobby = Type.Object(
         id: Type.Integer(),
         name: Type.String(),
         founderId: Type.Integer(),
+        democracy: Type.Boolean({ default: true }),
         private: Type.Boolean({ default: false }),
-        replay: Type.Boolean({ default: false }),
         playerIds: Type.Array(Type.Integer()),
         spectatorIds: Type.Array(Type.Integer()),
         engine: Type.String(),
@@ -101,7 +103,7 @@ export const lobby = Type.Object(
                 name: "8v8 | All Welcome",
                 founderId: 822,
                 private: false,
-                replay: false,
+                democracy: true,
                 playerIds: [567, 232, 88, 119],
                 spectatorIds: [88],
                 engine: "105.1.1-1821-gaca6f20 BAR105",

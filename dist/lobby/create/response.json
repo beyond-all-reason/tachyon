@@ -1,43 +1,28 @@
 {
-    "$id": "init/init/response",
+    "$id": "lobby/create/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "init/init/response",
+                    "const": "lobby/create/response",
                     "type": "string"
                 },
                 "status": {
                     "const": "success",
                     "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "tachyonVersion": {
-                            "examples": [
-                                "1.2.3"
-                            ],
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "tachyonVersion"
-                    ]
                 }
             },
             "required": [
                 "command",
-                "status",
-                "data"
+                "status"
             ]
         },
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "init/init/response",
+                    "const": "lobby/create/response",
                     "type": "string"
                 },
                 "status": {
@@ -45,8 +30,20 @@
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "no_hosts_available",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_region",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [

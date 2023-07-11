@@ -1,11 +1,11 @@
 {
-    "$id": "auth/register/response",
+    "$id": "matchmaking/queue/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/register/response",
+                    "const": "matchmaking/queue/response",
                     "type": "string"
                 },
                 "status": {
@@ -22,7 +22,7 @@
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "auth/register/response",
+                    "const": "matchmaking/queue/response",
                     "type": "string"
                 },
                 "status": {
@@ -32,23 +32,11 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "email_taken",
+                            "const": "invalid_queue_specified",
                             "type": "string"
                         },
                         {
-                            "const": "username_taken",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_email",
-                            "type": "string"
-                        },
-                        {
-                            "const": "weak_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "username_profanity",
+                            "const": "already_ingame",
                             "type": "string"
                         },
                         {

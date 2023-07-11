@@ -1,0 +1,13 @@
+{
+    "$id": "matchmaking/ready/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "matchmaking/ready/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

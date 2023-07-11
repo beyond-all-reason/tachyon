@@ -6,7 +6,8 @@ import { defineEndpoint } from "@/helpers";
 import packageJson from "../../../package.json";
 
 export default defineEndpoint({
-    description: "Sends the current version of the protocol to new Websocket clients as soon as they connect.",
+    description:
+        "Sends the current version of the protocol to new Websocket clients as soon as they connect.",
     response: [
         {
             status: "success",

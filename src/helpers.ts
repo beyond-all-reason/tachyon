@@ -1,4 +1,12 @@
-import { SchemaOptions, Static, TIntersect, TObject, TSchema, TUnion, Type } from "@sinclair/typebox";
+import {
+    SchemaOptions,
+    Static,
+    TIntersect,
+    TObject,
+    TSchema,
+    TUnion,
+    Type,
+} from "@sinclair/typebox";
 
 export type EndpointConfig = {
     description?: string;

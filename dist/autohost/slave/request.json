@@ -1,0 +1,13 @@
+{
+    "$id": "autohost/slave/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "autohost/slave/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

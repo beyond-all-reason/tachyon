@@ -1,26 +1,11 @@
-# System
-
-- [version](#version)
----
-
-## version
-
-Sends the current version of the protocol to new Websocket clients as soon as they connect.
-
-### response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
 {
-    "$id": "system/version/response",
+    "$id": "matchmaking/readyUpdate/response",
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "system/version/response",
+                    "const": "matchmaking/readyUpdate/response",
                     "type": "string"
                 },
                 "status": {
@@ -30,13 +15,16 @@ Sends the current version of the protocol to new Websocket clients as soon as th
                 "data": {
                     "type": "object",
                     "properties": {
-                        "tachyonVersion": {
-                            "const": "0.1.0",
-                            "type": "string"
+                        "readyMax": {
+                            "type": "integer"
+                        },
+                        "readyCurrent": {
+                            "type": "integer"
                         }
                     },
                     "required": [
-                        "tachyonVersion"
+                        "readyMax",
+                        "readyCurrent"
                     ]
                 }
             },
@@ -50,7 +38,7 @@ Sends the current version of the protocol to new Websocket clients as soon as th
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "system/version/response",
+                    "const": "matchmaking/readyUpdate/response",
                     "type": "string"
                 },
                 "status": {
@@ -70,34 +58,3 @@ Sends the current version of the protocol to new Websocket clients as soon as th
         }
     ]
 }
-```
-
-</details>
-
-#### TypeScript Definition
-```ts
-export type SystemVersionResponse =
-    | {
-          command: "system/version/response";
-          status: "success";
-          data: {
-              tachyonVersion: "0.1.0";
-          };
-      }
-    | {
-          command: "system/version/response";
-          status: "failed";
-          reason: "internal_error";
-      };
-
-```
-#### Example
-```json
-{
-    "command": "system/version/response",
-    "status": "success",
-    "data": {
-        "tachyonVersion": "0.1.0"
-    }
-}
-```

@@ -3,6 +3,46 @@
  * Instead modify the .ts files in src/schema and do npm run build
  */
 
+export type AutohostSlaveResponse =
+    | {
+          command: "autohost/slave/response";
+          status: "success";
+      }
+    | {
+          command: "autohost/slave/response";
+          status: "failed";
+          reason: "botflag_required" | "internal_error";
+      };
+export type AutohostUnslaveResponse =
+    | {
+          command: "autohost/unslave/response";
+          status: "success";
+      }
+    | {
+          command: "autohost/unslave/response";
+          status: "failed";
+          reason: "botflag_required" | "already_unslaved" | "internal_error";
+      };
+export type LobbyCloseResponse =
+    | {
+          command: "lobby/close/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/close/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type LobbyCreateResponse =
+    | {
+          command: "lobby/create/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/create/response";
+          status: "failed";
+          reason: "no_hosts_available" | "invalid_region" | "internal_error";
+      };
 export type LobbyJoinResponse =
     | {
           command: "lobby/join/response";
@@ -29,8 +69,8 @@ export type LobbyJoinedResponse =
               id: number;
               name: string;
               founderId: number;
+              democracy: boolean;
               private: boolean;
-              replay: boolean;
               playerIds: number[];
               spectatorIds: number[];
               engine: string;
@@ -88,8 +128,8 @@ export type LobbyListResponse =
                   id: number;
                   name: string;
                   founderId: number;
+                  democracy: boolean;
                   private: boolean;
-                  replay: boolean;
                   playerIds: number[];
                   spectatorIds: number[];
                   engine: string;
@@ -151,8 +191,8 @@ export type LobbyUpdatedResponse =
               id?: number;
               name?: string;
               founderId?: number;
+              democracy?: boolean;
               private?: boolean;
-              replay?: boolean;
               playerIds?: number[];
               spectatorIds?: number[];
               engine?: string;
@@ -178,6 +218,103 @@ export type LobbyUpdatedResponse =
       }
     | {
           command: "lobby/updated/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type MatchmakingCancelResponse =
+    | {
+          command: "matchmaking/cancel/response";
+          status: "success";
+      }
+    | {
+          command: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "not_queued" | "internal_error";
+      };
+export type MatchmakingFoundResponse =
+    | {
+          command: "matchmaking/found/response";
+          status: "success";
+          data: {
+              queueId: string;
+          };
+      }
+    | {
+          command: "matchmaking/found/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type MatchmakingListResponse =
+    | {
+          command: "matchmaking/list/response";
+          status: "success";
+          data: {
+              queues: {
+                  id: string;
+                  name: string;
+                  ranked: boolean;
+              }[];
+          };
+      }
+    | {
+          command: "matchmaking/list/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type MatchmakingLostResponse =
+    | {
+          command: "matchmaking/lost/response";
+          status: "success";
+      }
+    | {
+          command: "matchmaking/lost/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type MatchmakingQueueResponse =
+    | {
+          command: "matchmaking/queue/response";
+          status: "success";
+      }
+    | {
+          command: "matchmaking/queue/response";
+          status: "failed";
+          reason: "invalid_queue_specified" | "already_ingame" | "internal_error";
+      };
+export type MatchmakingQueueUpdateResponse =
+    | {
+          command: "matchmaking/queueUpdate/response";
+          status: "success";
+          data: {
+              playersQueued: number;
+          };
+      }
+    | {
+          command: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+export type MatchmakingReadyResponse =
+    | {
+          command: "matchmaking/ready/response";
+          status: "success";
+      }
+    | {
+          command: "matchmaking/ready/response";
+          status: "failed";
+          reason: "no_match" | "internal_error";
+      };
+export type MatchmakingReadyUpdateResponse =
+    | {
+          command: "matchmaking/readyUpdate/response";
+          status: "success";
+          data: {
+              readyMax: number;
+              readyCurrent: number;
+          };
+      }
+    | {
+          command: "matchmaking/readyUpdate/response";
           status: "failed";
           reason: "internal_error";
       };
@@ -292,7 +429,37 @@ export type UserRenameResponse =
       };
 
 export interface Tachyon {
+    autohost: {
+        /**
+         * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
+         */
+        slave: {
+            request: AutohostSlaveRequest;
+            response: AutohostSlaveResponse;
+        };
+        /**
+         * Unregisters the client as slavable.
+         */
+        unslave: {
+            request: AutohostUnslaveRequest;
+            response: AutohostUnslaveResponse;
+        };
+    };
     lobby: {
+        /**
+         * Close an existing lobby.
+         */
+        close: {
+            request: LobbyCloseRequest;
+            response: LobbyCloseResponse;
+        };
+        /**
+         * Create a new lobby - intended for player clients to summon a dedicated host.
+         */
+        create: {
+            request: LobbyCreateRequest;
+            response: LobbyCreateResponse;
+        };
         /**
          * Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
          */
@@ -346,6 +513,60 @@ export interface Tachyon {
             response: LobbyUpdatedResponse;
         };
     };
+    matchmaking: {
+        /**
+         * Cancel queueing for matchmaking. Can also be sent during the ready phase to effectively decline the match.
+         */
+        cancel: {
+            request: MatchmakingCancelRequest;
+            response: MatchmakingCancelResponse;
+        };
+        /**
+         * Server should send this when there are enough queued players to form a valid game that meets their criteria. Clients should respond with [ready](#ready).
+         */
+        found: {
+            response: MatchmakingFoundResponse;
+        };
+        /**
+         * Returns all available matchmaking queues.
+         */
+        list: {
+            request: MatchmakingListRequest;
+            response: MatchmakingListResponse;
+        };
+        /**
+         * Sent when a found match gets disbanded because a client failed to ready up.
+         */
+        lost: {
+            response: MatchmakingLostResponse;
+        };
+        /**
+         * Queue up for matchmaking. Should cancel the previous queue if already in one.
+         */
+        queue: {
+            request: MatchmakingQueueRequest;
+            response: MatchmakingQueueResponse;
+        };
+        /**
+         * Contains some info about the state of the current queue.
+         */
+        queueUpdate: {
+            response: MatchmakingQueueUpdateResponse;
+        };
+        /**
+         * Clients should send this when they are ready to proceed with the found match. If not sent within 10s of the [found](#found) response then queue should be cancelled.
+         */
+        ready: {
+            request: MatchmakingReadyRequest;
+            response: MatchmakingReadyResponse;
+        };
+        /**
+         * Sent when a client in a found match readies up.
+         */
+        readyUpdate: {
+            response: MatchmakingReadyUpdateResponse;
+        };
+    };
     system: {
         /**
          * Sends the current version of the protocol to new Websocket clients as soon as they connect.
@@ -363,7 +584,7 @@ export interface Tachyon {
             response: UserGetTokenResponse;
         };
         /**
-         * Login using an authentication token from [getToken](#getToken).
+         * Login using an authentication token from [getToken](#gettoken).
          */
         login: {
             request: UserLoginRequest;
@@ -394,6 +615,24 @@ export interface Tachyon {
         };
     };
 }
+export interface AutohostSlaveRequest {
+    command: "autohost/slave/request";
+}
+export interface AutohostUnslaveRequest {
+    command: "autohost/unslave/request";
+}
+export interface LobbyCloseRequest {
+    command: "lobby/close/request";
+}
+export interface LobbyCreateRequest {
+    command: "lobby/create/request";
+    data: {
+        title: string;
+        private: boolean;
+        region: string;
+        maxPlayers: number;
+    };
+}
 export interface LobbyJoinRequest {
     command: "lobby/join/request";
     data: {
@@ -412,6 +651,24 @@ export interface LobbySendMessageRequest {
     data: {
         message: string;
     };
+}
+export interface MatchmakingCancelRequest {
+    command: "matchmaking/cancel/request";
+}
+export interface MatchmakingListRequest {
+    command: "matchmaking/list/request";
+}
+export interface MatchmakingQueueRequest {
+    command: "matchmaking/queue/request";
+    data: {
+        /**
+         * @minItems 1
+         */
+        queues: [string, ...string[]];
+    };
+}
+export interface MatchmakingReadyRequest {
+    command: "matchmaking/ready/request";
 }
 export interface UserGetTokenRequest {
     command: "user/getToken/request";
@@ -550,8 +807,8 @@ export interface Lobby {
     id: number;
     name: string;
     founderId: number;
+    democracy: boolean;
     private: boolean;
-    replay: boolean;
     playerIds: number[];
     spectatorIds: number[];
     engine: string;

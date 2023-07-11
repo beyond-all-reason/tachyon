@@ -1,13 +1,310 @@
-# lobby
+# Lobby
 
+- [close](#close)
+- [create](#create)
 - [join](#join)
 - [joined](#joined)
 - [leave](#leave)
 - [left](#left)
 - [list](#list)
-- [receiveMessage](#receiveMessage)
-- [sendMessage](#sendMessage)
+- [receiveMessage](#receivemessage)
+- [sendMessage](#sendmessage)
 - [updated](#updated)
+---
+
+## close
+
+Close an existing lobby.
+
+### request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/close/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/close/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyCloseRequest {
+    command: "lobby/close/request";
+}
+
+```
+#### Example
+```json
+{
+    "command": "lobby/close/request"
+}
+```
+### response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/close/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type LobbyCloseResponse =
+    | {
+          command: "lobby/close/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/close/response";
+          status: "failed";
+          reason: "internal_error";
+      };
+
+```
+#### Example
+```json
+{
+    "command": "lobby/close/response",
+    "status": "success"
+}
+```
+---
+
+## create
+
+Create a new lobby - intended for player clients to summon a dedicated host.
+
+### request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/create/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/create/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "title": "8v8 | All Welcome",
+                    "private": false,
+                    "region": "EU",
+                    "maxPlayers": 16
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "title": {
+                    "minLength": 2,
+                    "maxLength": 30,
+                    "type": "string"
+                },
+                "private": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "maxPlayers": {
+                    "minimum": 0,
+                    "default": 16,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "title",
+                "private",
+                "region",
+                "maxPlayers"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyCreateRequest {
+    command: "lobby/create/request";
+    data: {
+        title: string;
+        private: boolean;
+        region: string;
+        maxPlayers: number;
+    };
+}
+
+```
+#### Example
+```json
+{
+    "command": "lobby/create/request",
+    "data": {
+        "title": "8v8 | All Welcome",
+        "private": false,
+        "region": "EU",
+        "maxPlayers": 16
+    }
+}
+```
+### response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "lobby/create/response",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "no_hosts_available",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_region",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type LobbyCreateResponse =
+    | {
+          command: "lobby/create/response";
+          status: "success";
+      }
+    | {
+          command: "lobby/create/response";
+          status: "failed";
+          reason: "no_hosts_available" | "invalid_region" | "internal_error";
+      };
+
+```
+#### Example
+```json
+{
+    "command": "lobby/create/response",
+    "status": "success"
+}
+```
 ---
 
 ## join
@@ -227,7 +524,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                             "name": "8v8 | All Welcome",
                             "founderId": 822,
                             "private": false,
-                            "replay": false,
+                            "democracy": true,
                             "playerIds": [
                                 567,
                                 232,
@@ -271,11 +568,11 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                         "founderId": {
                             "type": "integer"
                         },
-                        "private": {
-                            "default": false,
+                        "democracy": {
+                            "default": true,
                             "type": "boolean"
                         },
-                        "replay": {
+                        "private": {
                             "default": false,
                             "type": "boolean"
                         },
@@ -395,8 +692,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                         "id",
                         "name",
                         "founderId",
+                        "democracy",
                         "private",
-                        "replay",
                         "playerIds",
                         "spectatorIds",
                         "engine",
@@ -454,8 +751,8 @@ export type LobbyJoinedResponse =
               id: number;
               name: string;
               founderId: number;
+              democracy: boolean;
               private: boolean;
-              replay: boolean;
               playerIds: number[];
               spectatorIds: number[];
               engine: string;
@@ -492,7 +789,7 @@ export type LobbyJoinedResponse =
         "name": "8v8 | All Welcome",
         "founderId": 822,
         "private": false,
-        "replay": false,
+        "democracy": true,
         "playerIds": [
             567,
             232,
@@ -806,7 +1103,7 @@ export interface LobbyListRequest {
                                         "name": "8v8 | All Welcome",
                                         "founderId": 822,
                                         "private": false,
-                                        "replay": false,
+                                        "democracy": true,
                                         "playerIds": [
                                             567,
                                             232,
@@ -850,11 +1147,11 @@ export interface LobbyListRequest {
                                     "founderId": {
                                         "type": "integer"
                                     },
-                                    "private": {
-                                        "default": false,
+                                    "democracy": {
+                                        "default": true,
                                         "type": "boolean"
                                     },
-                                    "replay": {
+                                    "private": {
                                         "default": false,
                                         "type": "boolean"
                                     },
@@ -974,8 +1271,8 @@ export interface LobbyListRequest {
                                     "id",
                                     "name",
                                     "founderId",
+                                    "democracy",
                                     "private",
-                                    "replay",
                                     "playerIds",
                                     "spectatorIds",
                                     "engine",
@@ -1040,8 +1337,8 @@ export type LobbyListResponse =
                   id: number;
                   name: string;
                   founderId: number;
+                  democracy: boolean;
                   private: boolean;
-                  replay: boolean;
                   playerIds: number[];
                   spectatorIds: number[];
                   engine: string;
@@ -1081,7 +1378,7 @@ export type LobbyListResponse =
                 "name": "8v8 | All Welcome",
                 "founderId": 822,
                 "private": false,
-                "replay": false,
+                "democracy": true,
                 "playerIds": [
                     567,
                     232,
@@ -1428,11 +1725,11 @@ Server sends this partial object whenever a lobby relevant to the client changes
                         "founderId": {
                             "type": "integer"
                         },
-                        "private": {
-                            "default": false,
+                        "democracy": {
+                            "default": true,
                             "type": "boolean"
                         },
-                        "replay": {
+                        "private": {
                             "default": false,
                             "type": "boolean"
                         },
@@ -1594,8 +1891,8 @@ export type LobbyUpdatedResponse =
               id?: number;
               name?: string;
               founderId?: number;
+              democracy?: boolean;
               private?: boolean;
-              replay?: boolean;
               playerIds?: number[];
               spectatorIds?: number[];
               engine?: string;

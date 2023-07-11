@@ -33,11 +33,11 @@
                         "founderId": {
                             "type": "integer"
                         },
-                        "private": {
-                            "default": false,
+                        "democracy": {
+                            "default": true,
                             "type": "boolean"
                         },
-                        "replay": {
+                        "private": {
                             "default": false,
                             "type": "boolean"
                         },
