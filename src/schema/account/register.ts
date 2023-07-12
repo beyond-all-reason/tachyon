@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/helpers";
-import { username } from "@/schema/types";
+import { email, username } from "@/schema/types";
 
 export default defineEndpoint({
     description: `Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.\n\nThe server implementation may wish to verify the account by sending a verification link to the email address.`,
@@ -10,7 +10,7 @@ export default defineEndpoint({
     request: {
         data: Type.Object(
             {
-                email: Type.String(),
+                email: email,
                 username: username,
                 hashedPassword: Type.String(),
             },

@@ -14,7 +14,13 @@ export type AccountGetTokenResponse =
     | {
           command: "account/getToken/response";
           status: "failed";
-          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error" | "unauthorized";
+          reason:
+              | "no_user_found"
+              | "invalid_password"
+              | "max_attempts"
+              | "internal_error"
+              | "unauthorized"
+              | "invalid_command";
       };
 export type AccountLoginResponse =
     | {
@@ -60,7 +66,7 @@ export type AccountLoginResponse =
     | {
           command: "account/login/response";
           status: "failed";
-          reason: "invalid_token" | "expired_token" | "banned" | "internal_error" | "unauthorized";
+          reason: "invalid_token" | "expired_token" | "banned" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type AccountRecoverResponse =
     | {
@@ -70,7 +76,7 @@ export type AccountRecoverResponse =
     | {
           command: "account/recover/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type AccountRegisterResponse =
     | {
@@ -87,7 +93,8 @@ export type AccountRegisterResponse =
               | "weak_password"
               | "username_profanity"
               | "internal_error"
-              | "unauthorized";
+              | "unauthorized"
+              | "invalid_command";
       };
 export type AccountRenameResponse =
     | {
@@ -97,7 +104,7 @@ export type AccountRenameResponse =
     | {
           command: "account/rename/response";
           status: "failed";
-          reason: "username_taken" | "username_profanity" | "internal_error" | "unauthorized";
+          reason: "username_taken" | "username_profanity" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type BotSlaveResponse =
     | {
@@ -107,7 +114,7 @@ export type BotSlaveResponse =
     | {
           command: "bot/slave/response";
           status: "failed";
-          reason: "botflag_required" | "internal_error" | "unauthorized";
+          reason: "botflag_required" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type BotUnslaveResponse =
     | {
@@ -117,7 +124,7 @@ export type BotUnslaveResponse =
     | {
           command: "bot/unslave/response";
           status: "failed";
-          reason: "botflag_required" | "already_unslaved" | "internal_error" | "unauthorized";
+          reason: "botflag_required" | "already_unslaved" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyCloseResponse =
     | {
@@ -127,7 +134,7 @@ export type LobbyCloseResponse =
     | {
           command: "lobby/close/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyCreateResponse =
     | {
@@ -137,7 +144,7 @@ export type LobbyCreateResponse =
     | {
           command: "lobby/create/response";
           status: "failed";
-          reason: "no_hosts_available" | "invalid_region" | "internal_error" | "unauthorized";
+          reason: "no_hosts_available" | "invalid_region" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyJoinResponse =
     | {
@@ -156,7 +163,8 @@ export type LobbyJoinResponse =
               | "rank_too_high"
               | "banned"
               | "internal_error"
-              | "unauthorized";
+              | "unauthorized"
+              | "invalid_command";
       };
 export type LobbyJoinedResponse =
     | {
@@ -194,7 +202,7 @@ export type LobbyJoinedResponse =
     | {
           command: "lobby/joined/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyLeaveResponse =
     | {
@@ -204,7 +212,7 @@ export type LobbyLeaveResponse =
     | {
           command: "lobby/leave/response";
           status: "failed";
-          reason: "no_lobby" | "internal_error" | "unauthorized";
+          reason: "no_lobby" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyLeftResponse =
     | {
@@ -214,7 +222,7 @@ export type LobbyLeftResponse =
     | {
           command: "lobby/left/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyListResponse =
     | {
@@ -254,7 +262,7 @@ export type LobbyListResponse =
     | {
           command: "lobby/list/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyReceiveMessageResponse =
     | {
@@ -268,7 +276,7 @@ export type LobbyReceiveMessageResponse =
     | {
           command: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbySendMessageResponse =
     | {
@@ -278,7 +286,7 @@ export type LobbySendMessageResponse =
     | {
           command: "lobby/sendMessage/response";
           status: "failed";
-          reason: "not_in_lobby" | "muted" | "internal_error" | "unauthorized";
+          reason: "not_in_lobby" | "muted" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyUpdatedResponse =
     | {
@@ -316,7 +324,7 @@ export type LobbyUpdatedResponse =
     | {
           command: "lobby/updated/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingCancelResponse =
     | {
@@ -326,7 +334,7 @@ export type MatchmakingCancelResponse =
     | {
           command: "matchmaking/cancel/response";
           status: "failed";
-          reason: "not_queued" | "internal_error" | "unauthorized";
+          reason: "not_queued" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingFoundResponse =
     | {
@@ -339,7 +347,7 @@ export type MatchmakingFoundResponse =
     | {
           command: "matchmaking/found/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingListResponse =
     | {
@@ -356,7 +364,7 @@ export type MatchmakingListResponse =
     | {
           command: "matchmaking/list/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingLostResponse =
     | {
@@ -366,7 +374,7 @@ export type MatchmakingLostResponse =
     | {
           command: "matchmaking/lost/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingQueueResponse =
     | {
@@ -376,7 +384,7 @@ export type MatchmakingQueueResponse =
     | {
           command: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_queue_specified" | "already_ingame" | "internal_error" | "unauthorized";
+          reason: "invalid_queue_specified" | "already_ingame" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingQueueUpdateResponse =
     | {
@@ -389,7 +397,7 @@ export type MatchmakingQueueUpdateResponse =
     | {
           command: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingReadyResponse =
     | {
@@ -399,7 +407,7 @@ export type MatchmakingReadyResponse =
     | {
           command: "matchmaking/ready/response";
           status: "failed";
-          reason: "no_match" | "internal_error" | "unauthorized";
+          reason: "no_match" | "internal_error" | "unauthorized" | "invalid_command";
       };
 export type MatchmakingReadyUpdateResponse =
     | {
@@ -413,7 +421,17 @@ export type MatchmakingReadyUpdateResponse =
     | {
           command: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
+      };
+export type SystemDisconnectedResponse =
+    | {
+          command: "system/disconnected/response";
+          status: "success";
+      }
+    | {
+          command: "system/disconnected/response";
+          status: "failed";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type SystemVersionResponse =
     | {
@@ -426,7 +444,7 @@ export type SystemVersionResponse =
     | {
           command: "system/version/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 
 export interface Tachyon {
@@ -609,6 +627,18 @@ export interface Tachyon {
     };
     system: {
         /**
+         * Ask the server to terminate the connection. The server will send a [disconnected](#disconnected) response.
+         */
+        disconnect: {
+            request: SystemDisconnectRequest;
+        };
+        /**
+         * Sent when the server terminates the WebSocket connection with the client for any reason. The only time the `success` response should be sent is if the client asked to be disconnected using a [disconnect](#disconnect) request.
+         */
+        disconnected: {
+            response: SystemDisconnectedResponse;
+        };
+        /**
          * Sends the current version of the protocol to new Websocket clients as soon as they connect.
          */
         version: {
@@ -706,6 +736,9 @@ export interface MatchmakingQueueRequest {
 }
 export interface MatchmakingReadyRequest {
     command: "matchmaking/ready/request";
+}
+export interface SystemDisconnectRequest {
+    command: "system/disconnect/request";
 }
 export type Username = string;
 

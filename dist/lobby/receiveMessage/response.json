@@ -62,6 +62,10 @@
                         {
                             "const": "unauthorized",
                             "type": "string"
+                        },
+                        {
+                            "const": "invalid_command",
+                            "type": "string"
                         }
                     ]
                 }

@@ -54,6 +54,10 @@ export function defineEndpoint(endpointConfig: EndpointConfig) {
             {
                 status: "failed",
                 reason: "unauthorized",
+            },
+            {
+                status: "failed",
+                reason: "invalid_command",
             }
         );
     }
