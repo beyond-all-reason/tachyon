@@ -174,8 +174,8 @@ export type LobbyJoinedResponse =
               id: number;
               name: string;
               founderId: number;
-              democracy: boolean;
-              private: boolean;
+              locked: boolean;
+              passworded: boolean;
               playerIds: number[];
               spectatorIds: number[];
               engine: string;
@@ -193,10 +193,12 @@ export type LobbyJoinedResponse =
                       height: number;
                   };
               };
-              minTeamsize: number | null;
-              maxTeamsize: number | null;
-              minRating: number | null;
-              maxRating: number | null;
+              limits: {
+                  minTeamsize: number | null;
+                  maxTeamsize: number | null;
+                  minRating: number | null;
+                  maxRating: number | null;
+              };
           };
       }
     | {
@@ -233,8 +235,8 @@ export type LobbyListResponse =
                   id: number;
                   name: string;
                   founderId: number;
-                  democracy: boolean;
-                  private: boolean;
+                  locked: boolean;
+                  passworded: boolean;
                   playerIds: number[];
                   spectatorIds: number[];
                   engine: string;
@@ -252,10 +254,12 @@ export type LobbyListResponse =
                           height: number;
                       };
                   };
-                  minTeamsize: number | null;
-                  maxTeamsize: number | null;
-                  minRating: number | null;
-                  maxRating: number | null;
+                  limits: {
+                      minTeamsize: number | null;
+                      maxTeamsize: number | null;
+                      minRating: number | null;
+                      maxRating: number | null;
+                  };
               }[];
           };
       }
@@ -296,8 +300,8 @@ export type LobbyUpdatedResponse =
               id?: number;
               name?: string;
               founderId?: number;
-              democracy?: boolean;
-              private?: boolean;
+              locked?: boolean;
+              passworded?: boolean;
               playerIds?: number[];
               spectatorIds?: number[];
               engine?: string;
@@ -315,10 +319,12 @@ export type LobbyUpdatedResponse =
                       height: number;
                   };
               };
-              minTeamsize?: number | null;
-              maxTeamsize?: number | null;
-              minRating?: number | null;
-              maxRating?: number | null;
+              limits?: {
+                  minTeamsize: number | null;
+                  maxTeamsize: number | null;
+                  minRating: number | null;
+                  maxRating: number | null;
+              };
           };
       }
     | {
@@ -839,8 +845,8 @@ export interface Lobby {
     id: number;
     name: string;
     founderId: number;
-    democracy: boolean;
-    private: boolean;
+    locked: boolean;
+    passworded: boolean;
     playerIds: number[];
     spectatorIds: number[];
     engine: string;
@@ -858,10 +864,12 @@ export interface Lobby {
             height: number;
         };
     };
-    minTeamsize: number | null;
-    maxTeamsize: number | null;
-    minRating: number | null;
-    maxRating: number | null;
+    limits: {
+        minTeamsize: number | null;
+        maxTeamsize: number | null;
+        minRating: number | null;
+        maxRating: number | null;
+    };
 }
 
 

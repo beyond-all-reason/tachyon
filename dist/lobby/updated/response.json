@@ -35,12 +35,10 @@
                         "founderId": {
                             "type": "integer"
                         },
-                        "democracy": {
-                            "default": true,
+                        "locked": {
                             "type": "boolean"
                         },
-                        "private": {
-                            "default": false,
+                        "passworded": {
                             "type": "boolean"
                         },
                         "playerIds": {
@@ -114,44 +112,55 @@
                                 }
                             }
                         },
-                        "minTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "minTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "maxTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "maxTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "minRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "minRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
+                                "maxRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 }
-                            ]
-                        },
-                        "maxRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
+                            },
+                            "required": [
+                                "minTeamsize",
+                                "maxTeamsize",
+                                "minRating",
+                                "maxRating"
                             ]
                         }
                     }

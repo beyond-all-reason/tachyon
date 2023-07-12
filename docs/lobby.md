@@ -580,8 +580,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                             "id": 27,
                             "name": "8v8 | All Welcome",
                             "founderId": 822,
-                            "private": false,
-                            "democracy": true,
+                            "locked": false,
+                            "passworded": false,
                             "playerIds": [
                                 567,
                                 232,
@@ -608,10 +608,12 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "height": 0.3
                                 }
                             },
-                            "minTeamsize": 3,
-                            "maxTeamsize": 3,
-                            "minRating": null,
-                            "maxRating": 25
+                            "limits": {
+                                "minTeamsize": 3,
+                                "maxTeamsize": 3,
+                                "minRating": null,
+                                "maxRating": 25
+                            }
                         }
                     ],
                     "type": "object",
@@ -625,12 +627,10 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                         "founderId": {
                             "type": "integer"
                         },
-                        "democracy": {
-                            "default": true,
+                        "locked": {
                             "type": "boolean"
                         },
-                        "private": {
-                            "default": false,
+                        "passworded": {
                             "type": "boolean"
                         },
                         "playerIds": {
@@ -704,44 +704,55 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                 }
                             }
                         },
-                        "minTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "minTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "maxTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "maxTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "minRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "minRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
+                                "maxRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 }
-                            ]
-                        },
-                        "maxRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
+                            },
+                            "required": [
+                                "minTeamsize",
+                                "maxTeamsize",
+                                "minRating",
+                                "maxRating"
                             ]
                         }
                     },
@@ -749,18 +760,15 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                         "id",
                         "name",
                         "founderId",
-                        "democracy",
-                        "private",
+                        "locked",
+                        "passworded",
                         "playerIds",
                         "spectatorIds",
                         "engine",
                         "game",
                         "map",
                         "startAreas",
-                        "minTeamsize",
-                        "maxTeamsize",
-                        "minRating",
-                        "maxRating"
+                        "limits"
                     ]
                 }
             },
@@ -820,8 +828,8 @@ export type LobbyJoinedResponse =
               id: number;
               name: string;
               founderId: number;
-              democracy: boolean;
-              private: boolean;
+              locked: boolean;
+              passworded: boolean;
               playerIds: number[];
               spectatorIds: number[];
               engine: string;
@@ -835,10 +843,12 @@ export type LobbyJoinedResponse =
                       height: number;
                   };
               };
-              minTeamsize: number | null;
-              maxTeamsize: number | null;
-              minRating: number | null;
-              maxRating: number | null;
+              limits: {
+                  minTeamsize: number | null;
+                  maxTeamsize: number | null;
+                  minRating: number | null;
+                  maxRating: number | null;
+              };
           };
       }
     | {
@@ -857,8 +867,8 @@ export type LobbyJoinedResponse =
         "id": 27,
         "name": "8v8 | All Welcome",
         "founderId": 822,
-        "private": false,
-        "democracy": true,
+        "locked": false,
+        "passworded": false,
         "playerIds": [
             567,
             232,
@@ -885,10 +895,12 @@ export type LobbyJoinedResponse =
                 "height": 0.3
             }
         },
-        "minTeamsize": 3,
-        "maxTeamsize": 3,
-        "minRating": null,
-        "maxRating": 25
+        "limits": {
+            "minTeamsize": 3,
+            "maxTeamsize": 3,
+            "minRating": null,
+            "maxRating": 25
+        }
     }
 }
 ```
@@ -1207,8 +1219,8 @@ export interface LobbyListRequest {
                                         "id": 27,
                                         "name": "8v8 | All Welcome",
                                         "founderId": 822,
-                                        "private": false,
-                                        "democracy": true,
+                                        "locked": false,
+                                        "passworded": false,
                                         "playerIds": [
                                             567,
                                             232,
@@ -1235,10 +1247,12 @@ export interface LobbyListRequest {
                                                 "height": 0.3
                                             }
                                         },
-                                        "minTeamsize": 3,
-                                        "maxTeamsize": 3,
-                                        "minRating": null,
-                                        "maxRating": 25
+                                        "limits": {
+                                            "minTeamsize": 3,
+                                            "maxTeamsize": 3,
+                                            "minRating": null,
+                                            "maxRating": 25
+                                        }
                                     }
                                 ],
                                 "type": "object",
@@ -1252,12 +1266,10 @@ export interface LobbyListRequest {
                                     "founderId": {
                                         "type": "integer"
                                     },
-                                    "democracy": {
-                                        "default": true,
+                                    "locked": {
                                         "type": "boolean"
                                     },
-                                    "private": {
-                                        "default": false,
+                                    "passworded": {
                                         "type": "boolean"
                                     },
                                     "playerIds": {
@@ -1331,44 +1343,55 @@ export interface LobbyListRequest {
                                             }
                                         }
                                     },
-                                    "minTeamsize": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
+                                    "limits": {
+                                        "type": "object",
+                                        "properties": {
+                                            "minTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "maxTeamsize": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
+                                            "maxTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "minRating": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
+                                            "minRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
                                             },
-                                            {
-                                                "type": "null"
+                                            "maxRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
                                             }
-                                        ]
-                                    },
-                                    "maxRating": {
-                                        "anyOf": [
-                                            {
-                                                "type": "integer"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
+                                        },
+                                        "required": [
+                                            "minTeamsize",
+                                            "maxTeamsize",
+                                            "minRating",
+                                            "maxRating"
                                         ]
                                     }
                                 },
@@ -1376,18 +1399,15 @@ export interface LobbyListRequest {
                                     "id",
                                     "name",
                                     "founderId",
-                                    "democracy",
-                                    "private",
+                                    "locked",
+                                    "passworded",
                                     "playerIds",
                                     "spectatorIds",
                                     "engine",
                                     "game",
                                     "map",
                                     "startAreas",
-                                    "minTeamsize",
-                                    "maxTeamsize",
-                                    "minRating",
-                                    "maxRating"
+                                    "limits"
                                 ]
                             }
                         }
@@ -1454,8 +1474,8 @@ export type LobbyListResponse =
                   id: number;
                   name: string;
                   founderId: number;
-                  democracy: boolean;
-                  private: boolean;
+                  locked: boolean;
+                  passworded: boolean;
                   playerIds: number[];
                   spectatorIds: number[];
                   engine: string;
@@ -1469,10 +1489,12 @@ export type LobbyListResponse =
                           height: number;
                       };
                   };
-                  minTeamsize: number | null;
-                  maxTeamsize: number | null;
-                  minRating: number | null;
-                  maxRating: number | null;
+                  limits: {
+                      minTeamsize: number | null;
+                      maxTeamsize: number | null;
+                      minRating: number | null;
+                      maxRating: number | null;
+                  };
               }[];
           };
       }
@@ -1494,8 +1516,8 @@ export type LobbyListResponse =
                 "id": 27,
                 "name": "8v8 | All Welcome",
                 "founderId": 822,
-                "private": false,
-                "democracy": true,
+                "locked": false,
+                "passworded": false,
                 "playerIds": [
                     567,
                     232,
@@ -1522,10 +1544,12 @@ export type LobbyListResponse =
                         "height": 0.3
                     }
                 },
-                "minTeamsize": 3,
-                "maxTeamsize": 3,
-                "minRating": null,
-                "maxRating": 25
+                "limits": {
+                    "minTeamsize": 3,
+                    "maxTeamsize": 3,
+                    "minRating": null,
+                    "maxRating": 25
+                }
             }
         ]
     }
@@ -1876,12 +1900,10 @@ Server sends this partial object whenever a lobby relevant to the client changes
                         "founderId": {
                             "type": "integer"
                         },
-                        "democracy": {
-                            "default": true,
+                        "locked": {
                             "type": "boolean"
                         },
-                        "private": {
-                            "default": false,
+                        "passworded": {
                             "type": "boolean"
                         },
                         "playerIds": {
@@ -1955,44 +1977,55 @@ Server sends this partial object whenever a lobby relevant to the client changes
                                 }
                             }
                         },
-                        "minTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "minTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "maxTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "maxTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "minRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "minRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
+                                "maxRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 }
-                            ]
-                        },
-                        "maxRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
+                            },
+                            "required": [
+                                "minTeamsize",
+                                "maxTeamsize",
+                                "minRating",
+                                "maxRating"
                             ]
                         }
                     }
@@ -2054,8 +2087,8 @@ export type LobbyUpdatedResponse =
               id?: number;
               name?: string;
               founderId?: number;
-              democracy?: boolean;
-              private?: boolean;
+              locked?: boolean;
+              passworded?: boolean;
               playerIds?: number[];
               spectatorIds?: number[];
               engine?: string;
@@ -2069,10 +2102,12 @@ export type LobbyUpdatedResponse =
                       height: number;
                   };
               };
-              minTeamsize?: number | null;
-              maxTeamsize?: number | null;
-              minRating?: number | null;
-              maxRating?: number | null;
+              limits?: {
+                  minTeamsize: number | null;
+                  maxTeamsize: number | null;
+                  minRating: number | null;
+                  maxRating: number | null;
+              };
           };
       }
     | {

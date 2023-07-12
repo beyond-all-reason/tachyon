@@ -20,8 +20,8 @@
                             "id": 27,
                             "name": "8v8 | All Welcome",
                             "founderId": 822,
-                            "private": false,
-                            "democracy": true,
+                            "locked": false,
+                            "passworded": false,
                             "playerIds": [
                                 567,
                                 232,
@@ -48,10 +48,12 @@
                                     "height": 0.3
                                 }
                             },
-                            "minTeamsize": 3,
-                            "maxTeamsize": 3,
-                            "minRating": null,
-                            "maxRating": 25
+                            "limits": {
+                                "minTeamsize": 3,
+                                "maxTeamsize": 3,
+                                "minRating": null,
+                                "maxRating": 25
+                            }
                         }
                     ],
                     "type": "object",
@@ -65,12 +67,10 @@
                         "founderId": {
                             "type": "integer"
                         },
-                        "democracy": {
-                            "default": true,
+                        "locked": {
                             "type": "boolean"
                         },
-                        "private": {
-                            "default": false,
+                        "passworded": {
                             "type": "boolean"
                         },
                         "playerIds": {
@@ -144,44 +144,55 @@
                                 }
                             }
                         },
-                        "minTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "minTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "maxTeamsize": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "maxTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "minRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
+                                "minRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 },
-                                {
-                                    "type": "null"
+                                "maxRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
                                 }
-                            ]
-                        },
-                        "maxRating": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
+                            },
+                            "required": [
+                                "minTeamsize",
+                                "maxTeamsize",
+                                "minRating",
+                                "maxRating"
                             ]
                         }
                     },
@@ -189,18 +200,15 @@
                         "id",
                         "name",
                         "founderId",
-                        "democracy",
-                        "private",
+                        "locked",
+                        "passworded",
                         "playerIds",
                         "spectatorIds",
                         "engine",
                         "game",
                         "map",
                         "startAreas",
-                        "minTeamsize",
-                        "maxTeamsize",
-                        "minRating",
-                        "maxRating"
+                        "limits"
                     ]
                 }
             },

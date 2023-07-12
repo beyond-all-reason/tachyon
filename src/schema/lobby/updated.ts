@@ -13,10 +13,12 @@ export default defineEndpoint({
                 examples: [
                     {
                         name: "3v3 | Newbies only",
-                        minTeamsize: 3,
-                        maxTeamsize: 3,
-                        minRating: null,
-                        maxRating: 25,
+                        limits: {
+                            minTeamsize: 3,
+                            maxTeamsize: 3,
+                            minRating: null,
+                            maxRating: 25,
+                        },
                     },
                 ],
             }),
