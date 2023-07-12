@@ -1,15 +1,21 @@
 import Ajv from "ajv";
+import ajvFormats from "ajv-formats";
 
-import schema from "../schema/account/getUserClients/request.json";
+// eslint-disable-next-line no-restricted-imports
+import registerRequestSchema from "../dist/auth/register/request.json";
 
 const ajv = new Ajv();
 
-test(schema.properties.command.const, () => {
-    const validator = ajv.compile(schema);
+ajvFormats(ajv);
+
+test(registerRequestSchema.properties.command.const, () => {
+    const validator = ajv.compile(registerRequestSchema);
     const valid = validator({
-        command: "account/getUserClients/request",
+        command: "auth/register/request",
         data: {
-            ids: [1, 2],
+            email: "bob@test.com",
+            username: "bob",
+            password: "1234567",
         },
     });
     if (!valid) {

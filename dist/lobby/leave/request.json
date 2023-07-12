@@ -1,0 +1,15 @@
+{
+    "$id": "lobby/leave/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/leave/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

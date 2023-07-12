@@ -1,0 +1,31 @@
+{
+    "$id": "matchmaking/queue/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "matchmaking/queue/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "queues": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "queues"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

@@ -1,0 +1,15 @@
+{
+    "$id": "account/recover/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "account/recover/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

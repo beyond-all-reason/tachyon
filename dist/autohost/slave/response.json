@@ -1,0 +1,58 @@
+{
+    "$id": "autohost/slave/response",
+    "requiresLogin": true,
+    "requiredRole": "bot",
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "autohost/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "autohost/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "botflag_required",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

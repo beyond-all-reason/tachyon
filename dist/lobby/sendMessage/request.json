@@ -1,0 +1,33 @@
+{
+    "$id": "lobby/sendMessage/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/sendMessage/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "message": "Hello lobby!"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "message": {
+                    "maxLength": 300,
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

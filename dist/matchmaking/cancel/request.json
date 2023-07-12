@@ -1,0 +1,15 @@
+{
+    "$id": "matchmaking/cancel/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "matchmaking/cancel/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

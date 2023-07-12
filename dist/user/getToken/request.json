@@ -1,0 +1,71 @@
+{
+    "$id": "user/getToken/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "user/getToken/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "email": "bob@test.com",
+                    "password": "banana1234"
+                }
+            ],
+            "allOf": [
+                {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "email": {
+                                    "format": "email",
+                                    "examples": [
+                                        "bob@test.com"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "email"
+                            ]
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "username": {
+                                    "minLength": 3,
+                                    "maxLength": 20,
+                                    "pattern": "^[A-Za-z0-9_-]+$",
+                                    "examples": [
+                                        "Bob"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "username"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "password": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "password"
+                    ]
+                }
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

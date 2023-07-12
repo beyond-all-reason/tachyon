@@ -1,26 +1,24 @@
 {
     "compilerOptions": {
         "composite": true,
-        "baseUrl": ".",
-        "rootDir": "./src",
-        "target": "ES2022",
         "module": "CommonJS",
-        "lib": ["dom", "es6", "ES2022"],
-        "skipDefaultLibCheck": true,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "lib": ["es2022"],
         "sourceMap": true,
         "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "types",
-        "moduleResolution": "Node",
         "removeComments": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
-        "strict": true,
-        "allowJs": true
+        "paths": {
+            "@/*": ["./src/*"]
+        }
     },
-    "include": ["src/**/*"],
-    "exclude": ["node_modules"],
+    "include": ["src/**/*", "package.json"],
     "ts-node": {
+        "require": ["tsconfig-paths/register"],
         "swc": true
     }
 }

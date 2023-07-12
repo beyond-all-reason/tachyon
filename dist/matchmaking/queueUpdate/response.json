@@ -1,0 +1,70 @@
+{
+    "$id": "matchmaking/queueUpdate/response",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "matchmaking/queueUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "playersQueued": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "playersQueued"
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "matchmaking/queueUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_command",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

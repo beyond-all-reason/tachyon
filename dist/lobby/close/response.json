@@ -1,0 +1,58 @@
+{
+    "$id": "lobby/close/response",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_command",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

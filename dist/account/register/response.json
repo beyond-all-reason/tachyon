@@ -1,0 +1,78 @@
+{
+    "$id": "account/register/response",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "command",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "command": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "anyOf": [
+                        {
+                            "const": "email_taken",
+                            "type": "string"
+                        },
+                        {
+                            "const": "username_taken",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_email",
+                            "type": "string"
+                        },
+                        {
+                            "const": "weak_password",
+                            "type": "string"
+                        },
+                        {
+                            "const": "username_profanity",
+                            "type": "string"
+                        },
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_command",
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "command",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

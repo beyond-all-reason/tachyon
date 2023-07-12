@@ -1,0 +1,46 @@
+{
+    "$id": "user/register/request",
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "user/register/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "email": "bob@test.com",
+                    "username": "bob",
+                    "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "username": {
+                    "minLength": 3,
+                    "maxLength": 20,
+                    "pattern": "^[A-Za-z0-9_-]+$",
+                    "examples": [
+                        "Bob"
+                    ],
+                    "type": "string"
+                },
+                "hashedPassword": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "email",
+                "username",
+                "hashedPassword"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}

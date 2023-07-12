@@ -1,0 +1,15 @@
+{
+    "$id": "lobby/close/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/close/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "command"
+    ]
+}

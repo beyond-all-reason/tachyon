@@ -1,0 +1,52 @@
+{
+    "$id": "lobby/create/request",
+    "requiresLogin": false,
+    "requiresRole": false,
+    "type": "object",
+    "properties": {
+        "command": {
+            "const": "lobby/create/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "title": "8v8 | All Welcome",
+                    "private": false,
+                    "region": "EU",
+                    "maxPlayers": 16
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "title": {
+                    "minLength": 2,
+                    "maxLength": 30,
+                    "type": "string"
+                },
+                "private": {
+                    "default": true,
+                    "type": "boolean"
+                },
+                "region": {
+                    "type": "string"
+                },
+                "maxPlayers": {
+                    "minimum": 0,
+                    "default": 16,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "title",
+                "private",
+                "region",
+                "maxPlayers"
+            ]
+        }
+    },
+    "required": [
+        "command",
+        "data"
+    ]
+}
