@@ -1,11 +1,11 @@
 {
-    "$id": "matchmaking/ready/request",
+    "$id": "bot/unslave/request",
     "requiresLogin": false,
-    "requiresRole": false,
+    "requiresRole": true,
     "type": "object",
     "properties": {
         "command": {
-            "const": "matchmaking/ready/request",
+            "const": "bot/unslave/request",
             "type": "string"
         }
     },

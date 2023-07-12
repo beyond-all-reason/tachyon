@@ -5,6 +5,7 @@ import { privateUserClient } from "@/schema/types";
 
 export default defineEndpoint({
     description: "Login using an authentication token from [getToken](#gettoken).",
+    requiresLogin: false,
     order: 3,
     request: {
         data: Type.Object(
@@ -35,7 +36,6 @@ export default defineEndpoint({
                                 userId: 123,
                                 email: "bob@test.com",
                                 username: "bob",
-                                isBot: false,
                                 clanId: null,
                                 friends: [12, 34],
                                 friendRequests: [477],

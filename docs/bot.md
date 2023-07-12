@@ -1,28 +1,34 @@
-# Autohost
+# Bot
 
-These commands should only be usable by client users with `bot: true`, otherwise the server should return a failed response with the reason `botflag_required`.
+These commands should only be usable by client users with the `bot` role.
 
 ---
 - [slave](#slave)
 - [unslave](#unslave)
 ---
 
-## slave
+## Slave
 
 Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+- Requires Role: `bot`
+
+### Request
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "autohost/slave/request",
+    "$id": "bot/slave/request",
+    "requiresLogin": false,
+    "requiresRole": true,
     "type": "object",
     "properties": {
         "command": {
-            "const": "autohost/slave/request",
+            "const": "bot/slave/request",
             "type": "string"
         }
     },
@@ -36,31 +42,33 @@ Registers the client as slavable by the master server to be used for hosting ded
 
 #### TypeScript Definition
 ```ts
-export interface AutohostSlaveRequest {
-    command: "autohost/slave/request";
+export interface BotSlaveRequest {
+    command: "bot/slave/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "autohost/slave/request"
+    "command": "bot/slave/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "autohost/slave/response",
+    "$id": "bot/slave/response",
+    "requiresLogin": false,
+    "requiresRole": true,
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "autohost/slave/response",
+                    "const": "bot/slave/response",
                     "type": "string"
                 },
                 "status": {
@@ -77,7 +85,7 @@ export interface AutohostSlaveRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "autohost/slave/response",
+                    "const": "bot/slave/response",
                     "type": "string"
                 },
                 "status": {
@@ -92,6 +100,10 @@ export interface AutohostSlaveRequest {
                         },
                         {
                             "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
                             "type": "string"
                         }
                     ]
@@ -111,43 +123,49 @@ export interface AutohostSlaveRequest {
 
 #### TypeScript Definition
 ```ts
-export type AutohostSlaveResponse =
+export type BotSlaveResponse =
     | {
-          command: "autohost/slave/response";
+          command: "bot/slave/response";
           status: "success";
       }
     | {
-          command: "autohost/slave/response";
+          command: "bot/slave/response";
           status: "failed";
-          reason: "botflag_required" | "internal_error";
+          reason: "botflag_required" | "internal_error" | "unauthorized";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "autohost/slave/response",
+    "command": "bot/slave/response",
     "status": "success"
 }
 ```
 ---
 
-## unslave
+## Unslave
 
 Unregisters the client as slavable.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+- Requires Role: `bot`
+
+### Request
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "autohost/unslave/request",
+    "$id": "bot/unslave/request",
+    "requiresLogin": false,
+    "requiresRole": true,
     "type": "object",
     "properties": {
         "command": {
-            "const": "autohost/unslave/request",
+            "const": "bot/unslave/request",
             "type": "string"
         }
     },
@@ -161,31 +179,33 @@ Unregisters the client as slavable.
 
 #### TypeScript Definition
 ```ts
-export interface AutohostUnslaveRequest {
-    command: "autohost/unslave/request";
+export interface BotUnslaveRequest {
+    command: "bot/unslave/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "autohost/unslave/request"
+    "command": "bot/unslave/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "autohost/unslave/response",
+    "$id": "bot/unslave/response",
+    "requiresLogin": false,
+    "requiresRole": true,
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "autohost/unslave/response",
+                    "const": "bot/unslave/response",
                     "type": "string"
                 },
                 "status": {
@@ -202,7 +222,7 @@ export interface AutohostUnslaveRequest {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "autohost/unslave/response",
+                    "const": "bot/unslave/response",
                     "type": "string"
                 },
                 "status": {
@@ -222,6 +242,10 @@ export interface AutohostUnslaveRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -240,22 +264,22 @@ export interface AutohostUnslaveRequest {
 
 #### TypeScript Definition
 ```ts
-export type AutohostUnslaveResponse =
+export type BotUnslaveResponse =
     | {
-          command: "autohost/unslave/response";
+          command: "bot/unslave/response";
           status: "success";
       }
     | {
-          command: "autohost/unslave/response";
+          command: "bot/unslave/response";
           status: "failed";
-          reason: "botflag_required" | "already_unslaved" | "internal_error";
+          reason: "botflag_required" | "already_unslaved" | "internal_error" | "unauthorized";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "autohost/unslave/response",
+    "command": "bot/unslave/response",
     "status": "success"
 }
 ```

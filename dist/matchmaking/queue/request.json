@@ -1,5 +1,7 @@
 {
     "$id": "matchmaking/queue/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {

@@ -1,5 +1,7 @@
 {
     "$id": "matchmaking/list/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -77,8 +79,16 @@
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [

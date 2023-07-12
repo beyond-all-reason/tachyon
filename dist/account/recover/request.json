@@ -1,5 +1,7 @@
 {
     "$id": "account/recover/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {

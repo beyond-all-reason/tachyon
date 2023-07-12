@@ -10,6 +10,9 @@ import {
 
 export type EndpointConfig = {
     description?: string;
+    /** @default true */
+    requiresLogin?: boolean;
+    requiresRole?: string;
     order?: number;
 } & (
     | {
@@ -43,10 +46,16 @@ export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {
 
 export function defineEndpoint(endpointConfig: EndpointConfig) {
     if ("response" in endpointConfig) {
-        endpointConfig.response.push({
-            status: "failed",
-            reason: "internal_error",
-        });
+        endpointConfig.response.push(
+            {
+                status: "failed",
+                reason: "internal_error",
+            },
+            {
+                status: "failed",
+                reason: "unauthorized",
+            }
+        );
     }
     return endpointConfig;
 }

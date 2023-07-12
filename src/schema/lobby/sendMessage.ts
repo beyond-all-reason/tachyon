@@ -4,7 +4,7 @@ import { defineEndpoint } from "@/helpers";
 
 export default defineEndpoint({
     description:
-        "Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.",
+        "Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.",
     request: {
         data: Type.Object(
             {

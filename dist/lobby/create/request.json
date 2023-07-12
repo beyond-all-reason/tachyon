@@ -1,5 +1,7 @@
 {
     "$id": "lobby/create/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {

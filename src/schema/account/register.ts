@@ -5,6 +5,7 @@ import { username } from "@/schema/types";
 
 export default defineEndpoint({
     description: `Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.\n\nThe server implementation may wish to verify the account by sending a verification link to the email address.`,
+    requiresLogin: false,
     order: 1,
     request: {
         data: Type.Object(

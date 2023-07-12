@@ -1,5 +1,7 @@
 {
     "$id": "autohost/slave/response",
+    "requiresLogin": true,
+    "requiredRole": "bot",
     "anyOf": [
         {
             "type": "object",
@@ -37,6 +39,10 @@
                         },
                         {
                             "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
                             "type": "string"
                         }
                     ]

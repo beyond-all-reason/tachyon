@@ -5,6 +5,7 @@ import { email, username } from "@/schema/types";
 
 export default defineEndpoint({
     description: "Get an authentication token used for [login](#login).",
+    requiresLogin: false,
     order: 2,
     request: {
         data: Type.Intersect(

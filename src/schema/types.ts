@@ -35,11 +35,10 @@ export const battleStatus = Type.Object({
 export const userClient = Type.Object({
     userId: Type.Integer(),
     username: Type.String(),
-    isBot: Type.Boolean(),
     clanId: Nullable(Type.Integer()),
     icons: Type.Record(Type.String(), Type.String()),
     roles: Type.Array(Type.String(), {
-        examples: [["admin", "moderator", "mentor"]],
+        examples: [["admin", "bot"]],
     }),
     battleStatus: Nullable(battleStatus),
 });

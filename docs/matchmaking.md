@@ -21,11 +21,13 @@ The matchmaking cycle works as follows:
 - [readyUpdate](#readyupdate)
 ---
 
-## cancel
+## Cancel
 
 Cancel queueing for matchmaking. Can also be sent during the ready phase to effectively decline the match.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -33,6 +35,8 @@ Cancel queueing for matchmaking. Can also be sent during the ready phase to effe
 ```json
 {
     "$id": "matchmaking/cancel/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -61,7 +65,7 @@ export interface MatchmakingCancelRequest {
     "command": "matchmaking/cancel/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -69,6 +73,8 @@ export interface MatchmakingCancelRequest {
 ```json
 {
     "$id": "matchmaking/cancel/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -107,6 +113,10 @@ export interface MatchmakingCancelRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -133,7 +143,7 @@ export type MatchmakingCancelResponse =
     | {
           command: "matchmaking/cancel/response";
           status: "failed";
-          reason: "not_queued" | "internal_error";
+          reason: "not_queued" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -146,11 +156,13 @@ export type MatchmakingCancelResponse =
 ```
 ---
 
-## found
+## Found
 
 Server should send this when there are enough queued players to form a valid game that meets their criteria. Clients should respond with [ready](#ready).
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -158,6 +170,8 @@ Server should send this when there are enough queued players to form a valid gam
 ```json
 {
     "$id": "matchmaking/found/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -200,8 +214,16 @@ Server should send this when there are enough queued players to form a valid gam
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -229,7 +251,7 @@ export type MatchmakingFoundResponse =
     | {
           command: "matchmaking/found/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -245,11 +267,13 @@ export type MatchmakingFoundResponse =
 ```
 ---
 
-## list
+## List
 
 Returns all available matchmaking queues.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -257,6 +281,8 @@ Returns all available matchmaking queues.
 ```json
 {
     "$id": "matchmaking/list/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -285,7 +311,7 @@ export interface MatchmakingListRequest {
     "command": "matchmaking/list/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -293,6 +319,8 @@ export interface MatchmakingListRequest {
 ```json
 {
     "$id": "matchmaking/list/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -370,8 +398,16 @@ export interface MatchmakingListRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -403,7 +439,7 @@ export type MatchmakingListResponse =
     | {
           command: "matchmaking/list/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -430,11 +466,13 @@ export type MatchmakingListResponse =
 ```
 ---
 
-## lost
+## Lost
 
 Sent when a found match gets disbanded because a client failed to ready up.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -442,6 +480,8 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```json
 {
     "$id": "matchmaking/lost/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -472,8 +512,16 @@ Sent when a found match gets disbanded because a client failed to ready up.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -498,7 +546,7 @@ export type MatchmakingLostResponse =
     | {
           command: "matchmaking/lost/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -511,11 +559,13 @@ export type MatchmakingLostResponse =
 ```
 ---
 
-## queue
+## Queue
 
 Queue up for matchmaking. Should cancel the previous queue if already in one.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -523,6 +573,8 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 ```json
 {
     "$id": "matchmaking/queue/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -575,7 +627,7 @@ export interface MatchmakingQueueRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -583,6 +635,8 @@ export interface MatchmakingQueueRequest {
 ```json
 {
     "$id": "matchmaking/queue/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -625,6 +679,10 @@ export interface MatchmakingQueueRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -651,7 +709,7 @@ export type MatchmakingQueueResponse =
     | {
           command: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_queue_specified" | "already_ingame" | "internal_error";
+          reason: "invalid_queue_specified" | "already_ingame" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -664,11 +722,13 @@ export type MatchmakingQueueResponse =
 ```
 ---
 
-## queueUpdate
+## QueueUpdate
 
 Contains some info about the state of the current queue.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -676,6 +736,8 @@ Contains some info about the state of the current queue.
 ```json
 {
     "$id": "matchmaking/queueUpdate/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -718,8 +780,16 @@ Contains some info about the state of the current queue.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -747,7 +817,7 @@ export type MatchmakingQueueUpdateResponse =
     | {
           command: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -763,11 +833,13 @@ export type MatchmakingQueueUpdateResponse =
 ```
 ---
 
-## ready
+## Ready
 
 Clients should send this when they are ready to proceed with the found match. If not sent within 10s of the [found](#found) response then queue should be cancelled.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -775,6 +847,8 @@ Clients should send this when they are ready to proceed with the found match. If
 ```json
 {
     "$id": "matchmaking/ready/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -803,7 +877,7 @@ export interface MatchmakingReadyRequest {
     "command": "matchmaking/ready/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -811,6 +885,8 @@ export interface MatchmakingReadyRequest {
 ```json
 {
     "$id": "matchmaking/ready/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -849,6 +925,10 @@ export interface MatchmakingReadyRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -875,7 +955,7 @@ export type MatchmakingReadyResponse =
     | {
           command: "matchmaking/ready/response";
           status: "failed";
-          reason: "no_match" | "internal_error";
+          reason: "no_match" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -888,11 +968,13 @@ export type MatchmakingReadyResponse =
 ```
 ---
 
-## readyUpdate
+## ReadyUpdate
 
 Sent when a client in a found match readies up.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -900,6 +982,8 @@ Sent when a client in a found match readies up.
 ```json
 {
     "$id": "matchmaking/readyUpdate/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -946,8 +1030,16 @@ Sent when a client in a found match readies up.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -976,7 +1068,7 @@ export type MatchmakingReadyUpdateResponse =
     | {
           command: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```

@@ -1,7 +1,7 @@
 # Services
 
 - [account](#account)
-- [autohost](#autohost)
+- [bot](#bot)
 - [lobby](#lobby)
 - [matchmaking](#matchmaking)
 - [system](#system)

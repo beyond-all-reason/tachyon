@@ -3,7 +3,7 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/helpers";
 
 export default defineEndpoint({
-    description: "Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.",
+    description: "Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.",
     response: [
         {
             status: "success",

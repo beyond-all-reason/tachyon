@@ -2,6 +2,7 @@ import { defineEndpoint } from "@/helpers";
 
 export default defineEndpoint({
     description: "Unregisters the client as slavable.",
+    requiresRole: "bot",
     request: {},
     response: [
         { status: "success" },

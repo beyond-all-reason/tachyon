@@ -14,7 +14,7 @@ export type AccountGetTokenResponse =
     | {
           command: "account/getToken/response";
           status: "failed";
-          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
+          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error" | "unauthorized";
       };
 export type AccountLoginResponse =
     | {
@@ -24,7 +24,6 @@ export type AccountLoginResponse =
               user: {
                   userId: number;
                   username: string;
-                  isBot: boolean;
                   clanId: number | null;
                   icons: {
                       /**
@@ -61,7 +60,7 @@ export type AccountLoginResponse =
     | {
           command: "account/login/response";
           status: "failed";
-          reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
+          reason: "invalid_token" | "expired_token" | "banned" | "internal_error" | "unauthorized";
       };
 export type AccountRecoverResponse =
     | {
@@ -71,7 +70,7 @@ export type AccountRecoverResponse =
     | {
           command: "account/recover/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type AccountRegisterResponse =
     | {
@@ -87,7 +86,8 @@ export type AccountRegisterResponse =
               | "invalid_email"
               | "weak_password"
               | "username_profanity"
-              | "internal_error";
+              | "internal_error"
+              | "unauthorized";
       };
 export type AccountRenameResponse =
     | {
@@ -97,27 +97,27 @@ export type AccountRenameResponse =
     | {
           command: "account/rename/response";
           status: "failed";
-          reason: "username_taken" | "username_profanity" | "internal_error";
+          reason: "username_taken" | "username_profanity" | "internal_error" | "unauthorized";
       };
-export type AutohostSlaveResponse =
+export type BotSlaveResponse =
     | {
-          command: "autohost/slave/response";
+          command: "bot/slave/response";
           status: "success";
       }
     | {
-          command: "autohost/slave/response";
+          command: "bot/slave/response";
           status: "failed";
-          reason: "botflag_required" | "internal_error";
+          reason: "botflag_required" | "internal_error" | "unauthorized";
       };
-export type AutohostUnslaveResponse =
+export type BotUnslaveResponse =
     | {
-          command: "autohost/unslave/response";
+          command: "bot/unslave/response";
           status: "success";
       }
     | {
-          command: "autohost/unslave/response";
+          command: "bot/unslave/response";
           status: "failed";
-          reason: "botflag_required" | "already_unslaved" | "internal_error";
+          reason: "botflag_required" | "already_unslaved" | "internal_error" | "unauthorized";
       };
 export type LobbyCloseResponse =
     | {
@@ -127,7 +127,7 @@ export type LobbyCloseResponse =
     | {
           command: "lobby/close/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type LobbyCreateResponse =
     | {
@@ -137,7 +137,7 @@ export type LobbyCreateResponse =
     | {
           command: "lobby/create/response";
           status: "failed";
-          reason: "no_hosts_available" | "invalid_region" | "internal_error";
+          reason: "no_hosts_available" | "invalid_region" | "internal_error" | "unauthorized";
       };
 export type LobbyJoinResponse =
     | {
@@ -155,7 +155,8 @@ export type LobbyJoinResponse =
               | "rank_too_low"
               | "rank_too_high"
               | "banned"
-              | "internal_error";
+              | "internal_error"
+              | "unauthorized";
       };
 export type LobbyJoinedResponse =
     | {
@@ -193,7 +194,7 @@ export type LobbyJoinedResponse =
     | {
           command: "lobby/joined/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type LobbyLeaveResponse =
     | {
@@ -203,7 +204,7 @@ export type LobbyLeaveResponse =
     | {
           command: "lobby/leave/response";
           status: "failed";
-          reason: "no_lobby" | "internal_error";
+          reason: "no_lobby" | "internal_error" | "unauthorized";
       };
 export type LobbyLeftResponse =
     | {
@@ -213,7 +214,7 @@ export type LobbyLeftResponse =
     | {
           command: "lobby/left/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type LobbyListResponse =
     | {
@@ -253,7 +254,7 @@ export type LobbyListResponse =
     | {
           command: "lobby/list/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type LobbyReceiveMessageResponse =
     | {
@@ -267,7 +268,7 @@ export type LobbyReceiveMessageResponse =
     | {
           command: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type LobbySendMessageResponse =
     | {
@@ -277,7 +278,7 @@ export type LobbySendMessageResponse =
     | {
           command: "lobby/sendMessage/response";
           status: "failed";
-          reason: "not_in_lobby" | "muted" | "internal_error";
+          reason: "not_in_lobby" | "muted" | "internal_error" | "unauthorized";
       };
 export type LobbyUpdatedResponse =
     | {
@@ -315,7 +316,7 @@ export type LobbyUpdatedResponse =
     | {
           command: "lobby/updated/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type MatchmakingCancelResponse =
     | {
@@ -325,7 +326,7 @@ export type MatchmakingCancelResponse =
     | {
           command: "matchmaking/cancel/response";
           status: "failed";
-          reason: "not_queued" | "internal_error";
+          reason: "not_queued" | "internal_error" | "unauthorized";
       };
 export type MatchmakingFoundResponse =
     | {
@@ -338,7 +339,7 @@ export type MatchmakingFoundResponse =
     | {
           command: "matchmaking/found/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type MatchmakingListResponse =
     | {
@@ -355,7 +356,7 @@ export type MatchmakingListResponse =
     | {
           command: "matchmaking/list/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type MatchmakingLostResponse =
     | {
@@ -365,7 +366,7 @@ export type MatchmakingLostResponse =
     | {
           command: "matchmaking/lost/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type MatchmakingQueueResponse =
     | {
@@ -375,7 +376,7 @@ export type MatchmakingQueueResponse =
     | {
           command: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_queue_specified" | "already_ingame" | "internal_error";
+          reason: "invalid_queue_specified" | "already_ingame" | "internal_error" | "unauthorized";
       };
 export type MatchmakingQueueUpdateResponse =
     | {
@@ -388,7 +389,7 @@ export type MatchmakingQueueUpdateResponse =
     | {
           command: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type MatchmakingReadyResponse =
     | {
@@ -398,7 +399,7 @@ export type MatchmakingReadyResponse =
     | {
           command: "matchmaking/ready/response";
           status: "failed";
-          reason: "no_match" | "internal_error";
+          reason: "no_match" | "internal_error" | "unauthorized";
       };
 export type MatchmakingReadyUpdateResponse =
     | {
@@ -412,7 +413,7 @@ export type MatchmakingReadyUpdateResponse =
     | {
           command: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 export type SystemVersionResponse =
     | {
@@ -425,7 +426,7 @@ export type SystemVersionResponse =
     | {
           command: "system/version/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 export interface Tachyon {
@@ -468,20 +469,20 @@ export interface Tachyon {
             response: AccountRenameResponse;
         };
     };
-    autohost: {
+    bot: {
         /**
          * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
          */
         slave: {
-            request: AutohostSlaveRequest;
-            response: AutohostSlaveResponse;
+            request: BotSlaveRequest;
+            response: BotSlaveResponse;
         };
         /**
          * Unregisters the client as slavable.
          */
         unslave: {
-            request: AutohostUnslaveRequest;
-            response: AutohostUnslaveResponse;
+            request: BotUnslaveRequest;
+            response: BotUnslaveResponse;
         };
     };
     lobby: {
@@ -533,13 +534,13 @@ export interface Tachyon {
             response: LobbyListResponse;
         };
         /**
-         * Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.
+         * Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
          */
         receiveMessage: {
             response: LobbyReceiveMessageResponse;
         };
         /**
-         * Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.
+         * Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
          */
         sendMessage: {
             request: LobbySendMessageRequest;
@@ -651,11 +652,11 @@ export interface AccountRenameRequest {
         newUsername: string;
     };
 }
-export interface AutohostSlaveRequest {
-    command: "autohost/slave/request";
+export interface BotSlaveRequest {
+    command: "bot/slave/request";
 }
-export interface AutohostUnslaveRequest {
-    command: "autohost/unslave/request";
+export interface BotUnslaveRequest {
+    command: "bot/unslave/request";
 }
 export interface LobbyCloseRequest {
     command: "lobby/close/request";
@@ -731,7 +732,6 @@ export interface BattleStatus {
 export interface UserClient {
     userId: number;
     username: string;
-    isBot: boolean;
     clanId: number | null;
     icons: {
         /**
@@ -763,7 +763,6 @@ export interface UserClient {
 export interface PrivateUserClient {
     userId: number;
     username: string;
-    isBot: boolean;
     clanId: number | null;
     icons: {
         /**

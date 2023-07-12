@@ -15,11 +15,13 @@ These commands relate to custom lobbies.
 - [updated](#updated)
 ---
 
-## close
+## Close
 
 Close an existing lobby.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -27,6 +29,8 @@ Close an existing lobby.
 ```json
 {
     "$id": "lobby/close/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -55,7 +59,7 @@ export interface LobbyCloseRequest {
     "command": "lobby/close/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -63,6 +67,8 @@ export interface LobbyCloseRequest {
 ```json
 {
     "$id": "lobby/close/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -93,8 +99,16 @@ export interface LobbyCloseRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -119,7 +133,7 @@ export type LobbyCloseResponse =
     | {
           command: "lobby/close/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -132,11 +146,13 @@ export type LobbyCloseResponse =
 ```
 ---
 
-## create
+## Create
 
 Create a new lobby - intended for player clients to summon a dedicated host.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -144,6 +160,8 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 ```json
 {
     "$id": "lobby/create/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -221,7 +239,7 @@ export interface LobbyCreateRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -229,6 +247,8 @@ export interface LobbyCreateRequest {
 ```json
 {
     "$id": "lobby/create/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -271,6 +291,10 @@ export interface LobbyCreateRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -297,7 +321,7 @@ export type LobbyCreateResponse =
     | {
           command: "lobby/create/response";
           status: "failed";
-          reason: "no_hosts_available" | "invalid_region" | "internal_error";
+          reason: "no_hosts_available" | "invalid_region" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -310,11 +334,13 @@ export type LobbyCreateResponse =
 ```
 ---
 
-## join
+## Join
 
 Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -322,6 +348,8 @@ Join a custom lobby. Server will send a [joined](#joined) response containing th
 ```json
 {
     "$id": "lobby/join/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -379,7 +407,7 @@ export interface LobbyJoinRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -387,6 +415,8 @@ export interface LobbyJoinRequest {
 ```json
 {
     "$id": "lobby/join/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -449,6 +479,10 @@ export interface LobbyJoinRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -483,7 +517,8 @@ export type LobbyJoinResponse =
               | "rank_too_low"
               | "rank_too_high"
               | "banned"
-              | "internal_error";
+              | "internal_error"
+              | "unauthorized";
       };
 
 ```
@@ -496,11 +531,13 @@ export type LobbyJoinResponse =
 ```
 ---
 
-## joined
+## Joined
 
 Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -508,6 +545,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
 ```json
 {
     "$id": "lobby/joined/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -728,8 +767,16 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -778,7 +825,7 @@ export type LobbyJoinedResponse =
     | {
           command: "lobby/joined/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -828,11 +875,13 @@ export type LobbyJoinedResponse =
 ```
 ---
 
-## leave
+## Leave
 
 Leave the current lobby.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -840,6 +889,8 @@ Leave the current lobby.
 ```json
 {
     "$id": "lobby/leave/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -868,7 +919,7 @@ export interface LobbyLeaveRequest {
     "command": "lobby/leave/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -876,6 +927,8 @@ export interface LobbyLeaveRequest {
 ```json
 {
     "$id": "lobby/leave/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -914,6 +967,10 @@ export interface LobbyLeaveRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -940,7 +997,7 @@ export type LobbyLeaveResponse =
     | {
           command: "lobby/leave/response";
           status: "failed";
-          reason: "no_lobby" | "internal_error";
+          reason: "no_lobby" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -953,11 +1010,13 @@ export type LobbyLeaveResponse =
 ```
 ---
 
-## left
+## Left
 
 Sent when the server removes the client from a lobby.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -965,6 +1024,8 @@ Sent when the server removes the client from a lobby.
 ```json
 {
     "$id": "lobby/left/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -995,8 +1056,16 @@ Sent when the server removes the client from a lobby.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -1021,7 +1090,7 @@ export type LobbyLeftResponse =
     | {
           command: "lobby/left/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -1034,11 +1103,13 @@ export type LobbyLeftResponse =
 ```
 ---
 
-## list
+## List
 
 Returns all custom lobbies.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -1046,6 +1117,8 @@ Returns all custom lobbies.
 ```json
 {
     "$id": "lobby/list/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -1074,7 +1147,7 @@ export interface LobbyListRequest {
     "command": "lobby/list/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -1082,6 +1155,8 @@ export interface LobbyListRequest {
 ```json
 {
     "$id": "lobby/list/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -1313,8 +1388,16 @@ export interface LobbyListRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -1365,7 +1448,7 @@ export type LobbyListResponse =
     | {
           command: "lobby/list/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -1419,11 +1502,13 @@ export type LobbyListResponse =
 ```
 ---
 
-## receiveMessage
+## ReceiveMessage
 
-Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.
+Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -1431,6 +1516,8 @@ Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.
 ```json
 {
     "$id": "lobby/receiveMessage/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -1483,8 +1570,16 @@ Receive a lobby message. See (sendMessage)[#sendMessage] for outgoing messages.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -1513,7 +1608,7 @@ export type LobbyReceiveMessageResponse =
     | {
           command: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -1530,11 +1625,13 @@ export type LobbyReceiveMessageResponse =
 ```
 ---
 
-## sendMessage
+## SendMessage
 
-Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming messages.
+Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -1542,6 +1639,8 @@ Send a lobby message. See (receiveMessage)[#receiveMessage] for incoming message
 ```json
 {
     "$id": "lobby/sendMessage/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -1594,7 +1693,7 @@ export interface LobbySendMessageRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -1602,6 +1701,8 @@ export interface LobbySendMessageRequest {
 ```json
 {
     "$id": "lobby/sendMessage/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -1644,6 +1745,10 @@ export interface LobbySendMessageRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -1670,7 +1775,7 @@ export type LobbySendMessageResponse =
     | {
           command: "lobby/sendMessage/response";
           status: "failed";
-          reason: "not_in_lobby" | "muted" | "internal_error";
+          reason: "not_in_lobby" | "muted" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -1683,11 +1788,13 @@ export type LobbySendMessageResponse =
 ```
 ---
 
-## updated
+## Updated
 
 Server sends this partial object whenever a lobby relevant to the client changes in some way.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -1695,6 +1802,8 @@ Server sends this partial object whenever a lobby relevant to the client changes
 ```json
 {
     "$id": "lobby/updated/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -1868,8 +1977,16 @@ Server sends this partial object whenever a lobby relevant to the client changes
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -1918,7 +2035,7 @@ export type LobbyUpdatedResponse =
     | {
           command: "lobby/updated/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```

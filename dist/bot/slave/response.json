@@ -1,13 +1,13 @@
 {
-    "$id": "lobby/close/response",
+    "$id": "bot/slave/response",
     "requiresLogin": false,
-    "requiresRole": false,
+    "requiresRole": true,
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "lobby/close/response",
+                    "const": "bot/slave/response",
                     "type": "string"
                 },
                 "status": {
@@ -24,7 +24,7 @@
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "lobby/close/response",
+                    "const": "bot/slave/response",
                     "type": "string"
                 },
                 "status": {
@@ -33,6 +33,10 @@
                 },
                 "reason": {
                     "anyOf": [
+                        {
+                            "const": "botflag_required",
+                            "type": "string"
+                        },
                         {
                             "const": "internal_error",
                             "type": "string"

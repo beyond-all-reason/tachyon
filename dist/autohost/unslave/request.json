@@ -1,5 +1,7 @@
 {
     "$id": "autohost/unslave/request",
+    "requiresLogin": true,
+    "requiredRole": "bot",
     "type": "object",
     "properties": {
         "command": {

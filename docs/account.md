@@ -1,6 +1,6 @@
 # Account
 
-These endpoints relate to the creation and management of user accounts.
+These endpoints relate to the creation and management of user accounts. referal
 
 ---
 - [register](#register)
@@ -10,13 +10,15 @@ These endpoints relate to the creation and management of user accounts.
 - [rename](#rename)
 ---
 
-## register
+## Register
 
 Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
 
 The server implementation may wish to verify the account by sending a verification link to the email address.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -24,6 +26,8 @@ The server implementation may wish to verify the account by sending a verificati
 ```json
 {
     "$id": "account/register/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -95,7 +99,7 @@ export interface AccountRegisterRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -103,6 +107,8 @@ export interface AccountRegisterRequest {
 ```json
 {
     "$id": "account/register/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -157,6 +163,10 @@ export interface AccountRegisterRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -189,7 +199,8 @@ export type AccountRegisterResponse =
               | "invalid_email"
               | "weak_password"
               | "username_profanity"
-              | "internal_error";
+              | "internal_error"
+              | "unauthorized";
       };
 
 ```
@@ -202,11 +213,13 @@ export type AccountRegisterResponse =
 ```
 ---
 
-## getToken
+## GetToken
 
 Get an authentication token used for [login](#login).
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -214,6 +227,8 @@ Get an authentication token used for [login](#login).
 ```json
 {
     "$id": "account/getToken/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -314,7 +329,7 @@ export interface AccountGetTokenRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -322,6 +337,8 @@ export interface AccountGetTokenRequest {
 ```json
 {
     "$id": "account/getToken/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -385,6 +402,10 @@ export interface AccountGetTokenRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -414,7 +435,7 @@ export type AccountGetTokenResponse =
     | {
           command: "account/getToken/response";
           status: "failed";
-          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error";
+          reason: "no_user_found" | "invalid_password" | "max_attempts" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -430,11 +451,13 @@ export type AccountGetTokenResponse =
 ```
 ---
 
-## login
+## Login
 
 Login using an authentication token from [getToken](#gettoken).
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -442,6 +465,8 @@ Login using an authentication token from [getToken](#gettoken).
 ```json
 {
     "$id": "account/login/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -493,7 +518,7 @@ export interface AccountLoginRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -501,6 +526,8 @@ export interface AccountLoginRequest {
 ```json
 {
     "$id": "account/login/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -521,7 +548,6 @@ export interface AccountLoginRequest {
                                 "userId": 123,
                                 "email": "bob@test.com",
                                 "username": "bob",
-                                "isBot": false,
                                 "clanId": null,
                                 "friends": [
                                     12,
@@ -551,9 +577,6 @@ export interface AccountLoginRequest {
                                 "username": {
                                     "type": "string"
                                 },
-                                "isBot": {
-                                    "type": "boolean"
-                                },
                                 "clanId": {
                                     "anyOf": [
                                         {
@@ -576,8 +599,7 @@ export interface AccountLoginRequest {
                                     "examples": [
                                         [
                                             "admin",
-                                            "moderator",
-                                            "mentor"
+                                            "bot"
                                         ]
                                     ],
                                     "type": "array",
@@ -713,7 +735,6 @@ export interface AccountLoginRequest {
                             "required": [
                                 "userId",
                                 "username",
-                                "isBot",
                                 "clanId",
                                 "icons",
                                 "roles",
@@ -764,6 +785,10 @@ export interface AccountLoginRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -790,7 +815,6 @@ export type AccountLoginResponse =
               user: {
                   userId: number;
                   username: string;
-                  isBot: boolean;
                   clanId: number | null;
                   icons: {
                       [k: string]: string;
@@ -823,7 +847,7 @@ export type AccountLoginResponse =
     | {
           command: "account/login/response";
           status: "failed";
-          reason: "invalid_token" | "expired_token" | "banned" | "internal_error";
+          reason: "invalid_token" | "expired_token" | "banned" | "internal_error" | "unauthorized";
       };
 
 ```
@@ -838,7 +862,6 @@ export type AccountLoginResponse =
             "userId": 123,
             "email": "bob@test.com",
             "username": "bob",
-            "isBot": false,
             "clanId": null,
             "friends": [
                 12,
@@ -860,11 +883,13 @@ export type AccountLoginResponse =
 ```
 ---
 
-## recover
+## Recover
 
 Should reset the password for the connected user and send it to the associated email address
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -872,6 +897,8 @@ Should reset the password for the connected user and send it to the associated e
 ```json
 {
     "$id": "account/recover/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -900,7 +927,7 @@ export interface AccountRecoverRequest {
     "command": "account/recover/request"
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -908,6 +935,8 @@ export interface AccountRecoverRequest {
 ```json
 {
     "$id": "account/recover/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -938,8 +967,16 @@ export interface AccountRecoverRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -964,7 +1001,7 @@ export type AccountRecoverResponse =
     | {
           command: "account/recover/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```
@@ -977,11 +1014,13 @@ export type AccountRecoverResponse =
 ```
 ---
 
-## rename
+## Rename
 
 Change username for the current user.
 
-### request
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
 
 <details>
 <summary>JSONSchema</summary>
@@ -989,6 +1028,8 @@ Change username for the current user.
 ```json
 {
     "$id": "account/rename/request",
+    "requiresLogin": false,
+    "requiresRole": false,
     "type": "object",
     "properties": {
         "command": {
@@ -1041,7 +1082,7 @@ export interface AccountRenameRequest {
     }
 }
 ```
-### response
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -1049,6 +1090,8 @@ export interface AccountRenameRequest {
 ```json
 {
     "$id": "account/rename/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -1091,6 +1134,10 @@ export interface AccountRenameRequest {
                         {
                             "const": "internal_error",
                             "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
                         }
                     ]
                 }
@@ -1117,7 +1164,7 @@ export type AccountRenameResponse =
     | {
           command: "account/rename/response";
           status: "failed";
-          reason: "username_taken" | "username_profanity" | "internal_error";
+          reason: "username_taken" | "username_profanity" | "internal_error" | "unauthorized";
       };
 
 ```

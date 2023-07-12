@@ -1,5 +1,7 @@
 {
     "$id": "account/login/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -20,7 +22,6 @@
                                 "userId": 123,
                                 "email": "bob@test.com",
                                 "username": "bob",
-                                "isBot": false,
                                 "clanId": null,
                                 "friends": [
                                     12,
@@ -50,9 +51,6 @@
                                 "username": {
                                     "type": "string"
                                 },
-                                "isBot": {
-                                    "type": "boolean"
-                                },
                                 "clanId": {
                                     "anyOf": [
                                         {
@@ -75,8 +73,7 @@
                                     "examples": [
                                         [
                                             "admin",
-                                            "moderator",
-                                            "mentor"
+                                            "bot"
                                         ]
                                     ],
                                     "type": "array",
@@ -212,7 +209,6 @@
                             "required": [
                                 "userId",
                                 "username",
-                                "isBot",
                                 "clanId",
                                 "icons",
                                 "roles",
@@ -262,6 +258,10 @@
                         },
                         {
                             "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
                             "type": "string"
                         }
                     ]

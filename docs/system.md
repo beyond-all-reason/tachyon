@@ -3,11 +3,13 @@
 - [version](#version)
 ---
 
-## version
+## Version
 
 Sends the current version of the protocol to new Websocket clients as soon as they connect.
 
-### response
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
 
 <details>
 <summary>JSONSchema</summary>
@@ -15,6 +17,8 @@ Sends the current version of the protocol to new Websocket clients as soon as th
 ```json
 {
     "$id": "system/version/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -58,8 +62,16 @@ Sends the current version of the protocol to new Websocket clients as soon as th
                     "type": "string"
                 },
                 "reason": {
-                    "const": "internal_error",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    ]
                 }
             },
             "required": [
@@ -87,7 +99,7 @@ export type SystemVersionResponse =
     | {
           command: "system/version/response";
           status: "failed";
-          reason: "internal_error";
+          reason: "internal_error" | "unauthorized";
       };
 
 ```

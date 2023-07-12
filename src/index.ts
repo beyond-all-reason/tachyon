@@ -7,10 +7,13 @@ import path from "path";
 
 import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/helpers";
 
-(async () => {
-    const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
-    const tachyonSchema: Record<string, Record<string, EndpointConfig>> = {};
+jsf.option("useExamplesValue", true);
+jsf.option("random", () => 0.1234);
 
+const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
+const tachyonSchema: Record<string, Record<string, EndpointConfig>> = {};
+
+(async () => {
     const serviceDirs = path.join(__dirname, "schema");
     const serviceHandlerDirs = await fs.promises.readdir(serviceDirs);
     for (const serviceId of serviceHandlerDirs) {
@@ -46,6 +49,8 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
                 }
                 const schema = Type.Object(props, {
                     $id: `${serviceId}/${endpointId}/request`,
+                    requiresLogin: Boolean(endpointSchema.requiresLogin),
+                    requiresRole: Boolean(endpointSchema.requiresRole),
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(
@@ -87,6 +92,8 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
                     ],
                     {
                         $id: `${serviceId}/${endpointId}/response`,
+                        requiresLogin: Boolean(endpointSchema.requiresLogin),
+                        requiresRole: Boolean(endpointSchema.requiresRole),
                     }
                 );
                 const schemaStr = JSON.stringify(schema, null, 4);
@@ -143,6 +150,137 @@ import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/h
 
     await fs.promises.writeFile("docs/README.md", mainReadme);
 
+    generateTypeScriptDefs(fullSchema);
+})();
+
+async function generateServiceMarkdown<T extends Record<string, TObject>>(
+    endpoints: T,
+    serviceId: string
+): Promise<string> {
+    let markdown = `# ${titleCase(serviceId)}\n\n`;
+
+    if (fs.existsSync(`src/schema/${serviceId}/README.md`)) {
+        const serviceReadme = await fs.promises.readFile(`src/schema/${serviceId}/README.md`, {
+            encoding: "utf8",
+        });
+
+        markdown += `${serviceReadme}\n---\n`;
+    }
+
+    for (const endpointId in endpoints) {
+        markdown += `- [${endpointId}](#${endpointId.toLowerCase()})\n`;
+    }
+
+    for (const endpointId in endpoints) {
+        const endpointSchema = endpoints[endpointId];
+        const endpointConfig = tachyonSchema[serviceId][endpointId];
+        markdown += await generateEndpointMarkdown(
+            endpointSchema,
+            endpointConfig,
+            serviceId,
+            endpointId
+        );
+    }
+
+    return markdown;
+}
+
+async function generateEndpointMarkdown<T extends TObject>(
+    schema: T,
+    endpointConfig: EndpointConfig,
+    serviceId: string,
+    endpointId: string
+): Promise<string> {
+    let markdown = `---\n\n## ${titleCase(endpointId)}\n\n`;
+
+    if (schema.description) {
+        markdown += `${schema.description}\n\n`;
+    }
+
+    markdown += `- Endpoint Type: `;
+
+    if ("request" in schema.properties && "response" in schema.properties) {
+        markdown += `**Request** -> **Response**\n`;
+    } else if ("request" in schema.properties) {
+        markdown += `**Request** only\n`;
+    } else if ("response" in schema.properties) {
+        markdown += `**Response** only\n`;
+    }
+
+    markdown += `- Requires Login: **${Boolean(endpointConfig.requiresLogin)}**\n`;
+
+    if (endpointConfig.requiresRole) {
+        markdown += `- Requires Role: \`${endpointConfig.requiresRole}\`\n\n`;
+    }
+
+    if ("request" in schema.properties) {
+        markdown += await generateCommandMarkdown(
+            schema.properties.request as TObject,
+            serviceId,
+            endpointId,
+            "request"
+        );
+    }
+
+    if ("response" in schema.properties) {
+        markdown += await generateCommandMarkdown(
+            schema.properties.response as TUnion,
+            serviceId,
+            endpointId,
+            "response"
+        );
+    }
+
+    return markdown;
+}
+
+async function generateCommandMarkdown<
+    C extends "request" | "response",
+    T extends C extends "request" ? TObject : TUnion
+>(schema: T, serviceId: string, endpointId: string, commandType: C): Promise<string> {
+    let markdown = `### ${titleCase(commandType)}\n\n`;
+
+    markdown += `<details>
+<summary>JSONSchema</summary>\n
+\`\`\`json
+${JSON.stringify(schema, null, 4)}
+\`\`\`\n
+</details>\n\n`;
+
+    let typings = await compile(schema, "A", {
+        additionalProperties: false,
+        bannerComment: ``,
+        style: {
+            bracketSpacing: true,
+            tabWidth: 4,
+            semi: true,
+        },
+    });
+
+    typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
+
+    markdown += `#### TypeScript Definition
+\`\`\`ts
+${typings}
+\`\`\`
+`;
+
+    if (commandType === "response") {
+        schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
+    }
+
+    const dummyData = await jsf.resolve(schema);
+
+    markdown += `#### Example
+\`\`\`json
+${JSON.stringify(dummyData, null, 4)}
+\`\`\`
+`;
+
+    return markdown;
+}
+
+async function generateTypeScriptDefs(fullSchema: TObject) {
     let typings = await compile(fullSchema, "Tachyon", {
         additionalProperties: false,
         bannerComment: `/**
@@ -197,113 +335,4 @@ export type RemoveField<T, K extends string> = T extends { [P in K]: any } ? Omi
 export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachyon[S][E];
 `;
     await fs.promises.writeFile(`dist/index.d.ts`, typings);
-})();
-
-jsf.option("useExamplesValue", true);
-jsf.option("random", () => 0.1234);
-
-async function generateServiceMarkdown<T extends Record<string, TObject>>(
-    endpoints: T,
-    serviceId: string
-): Promise<string> {
-    let markdown = `# ${titleCase(serviceId)}\n\n`;
-
-    if (fs.existsSync(`src/schema/${serviceId}/README.md`)) {
-        const serviceReadme = await fs.promises.readFile(`src/schema/${serviceId}/README.md`, {
-            encoding: "utf8",
-        });
-
-        markdown += `${serviceReadme}\n---\n`;
-    }
-
-    for (const endpointId in endpoints) {
-        markdown += `- [${endpointId}](#${endpointId.toLowerCase()})\n`;
-    }
-
-    for (const endpointId in endpoints) {
-        const endpointConfig = endpoints[endpointId];
-        markdown += `---\n\n## ${endpointId.toString()}\n\n`;
-        if (endpointConfig.description) {
-            markdown += `${endpointConfig.description}\n\n`;
-        }
-        markdown += await generateEndpointMarkdown(endpointConfig, serviceId, endpointId);
-    }
-
-    return markdown;
-}
-
-async function generateEndpointMarkdown<T extends TObject>(
-    schema: T,
-    serviceId: string,
-    endpointId: string
-): Promise<string> {
-    let serviceMarkdown = "";
-
-    if ("request" in schema.properties) {
-        serviceMarkdown += `### request\n\n`;
-        serviceMarkdown += await generateCommandMarkdown(
-            schema.properties.request as TObject,
-            serviceId,
-            endpointId,
-            "request"
-        );
-    }
-
-    if ("response" in schema.properties) {
-        serviceMarkdown += `### response\n\n`;
-        serviceMarkdown += await generateCommandMarkdown(
-            schema.properties.response as TUnion,
-            serviceId,
-            endpointId,
-            "response"
-        );
-    }
-
-    return serviceMarkdown;
-}
-
-async function generateCommandMarkdown<
-    C extends "request" | "response",
-    T extends C extends "request" ? TObject : TUnion
->(schema: T, serviceId: string, endpointId: string, commandType: C): Promise<string> {
-    let commandMarkdown = "";
-
-    commandMarkdown += `<details>
-<summary>JSONSchema</summary>\n
-\`\`\`json
-${JSON.stringify(schema, null, 4)}
-\`\`\`\n
-</details>\n\n`;
-
-    let typings = await compile(schema, "A", {
-        additionalProperties: false,
-        bannerComment: ``,
-        style: {
-            bracketSpacing: true,
-            tabWidth: 4,
-            semi: true,
-        },
-    });
-
-    typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
-
-    commandMarkdown += `#### TypeScript Definition
-\`\`\`ts
-${typings}
-\`\`\`
-`;
-
-    if (commandType === "response") {
-        schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
-    }
-
-    const dummyData = await jsf.resolve(schema);
-
-    commandMarkdown += `#### Example
-\`\`\`json
-${JSON.stringify(dummyData, null, 4)}
-\`\`\`
-`;
-
-    return commandMarkdown;
 }

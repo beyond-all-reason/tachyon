@@ -1,5 +1,7 @@
 {
     "$id": "lobby/leave/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
@@ -37,6 +39,10 @@
                         },
                         {
                             "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
                             "type": "string"
                         }
                     ]
