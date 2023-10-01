@@ -19,14 +19,14 @@ export default defineEndpoint({
                     }),
                 ]),
                 Type.Object({
-                    password: Type.String(),
+                    hashedPassword: Type.String(),
                 }),
             ],
             {
                 examples: [
                     {
                         email: "bob@test.com",
-                        password: "banana1234",
+                        hashedPassword: "1b311ff1a6af12fba8720bd2ce02c960",
                     },
                 ],
             }
@@ -49,6 +49,7 @@ export default defineEndpoint({
             ),
         },
         { status: "failed", reason: "no_user_found" },
+        { status: "failed", reason: "unverified" },
         { status: "failed", reason: "invalid_password" },
         { status: "failed", reason: "max_attempts" },
     ],

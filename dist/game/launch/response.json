@@ -1,11 +1,13 @@
 {
-    "$id": "user/getToken/response",
+    "$id": "game/launch/response",
+    "requiresLogin": false,
+    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/getToken/response",
+                    "const": "game/launch/response",
                     "type": "string"
                 },
                 "status": {
@@ -13,19 +15,14 @@
                     "type": "string"
                 },
                 "data": {
-                    "examples": [
-                        {
-                            "token": "d2d5135930dacad758584b2586d03426"
-                        }
-                    ],
                     "type": "object",
                     "properties": {
-                        "token": {
+                        "script": {
                             "type": "string"
                         }
                     },
                     "required": [
-                        "token"
+                        "script"
                     ]
                 }
             },
@@ -39,7 +36,7 @@
             "type": "object",
             "properties": {
                 "command": {
-                    "const": "user/getToken/response",
+                    "const": "game/launch/response",
                     "type": "string"
                 },
                 "status": {
@@ -49,19 +46,15 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "no_user_found",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "max_attempts",
-                            "type": "string"
-                        },
-                        {
                             "const": "internal_error",
+                            "type": "string"
+                        },
+                        {
+                            "const": "unauthorized",
+                            "type": "string"
+                        },
+                        {
+                            "const": "invalid_command",
                             "type": "string"
                         }
                     ]

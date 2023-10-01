@@ -16,6 +16,7 @@ export type AccountGetTokenResponse =
           status: "failed";
           reason:
               | "no_user_found"
+              | "unverified"
               | "invalid_password"
               | "max_attempts"
               | "internal_error"
@@ -38,7 +39,7 @@ export type AccountLoginResponse =
                        */
                       [k: string]: string;
                   };
-                  roles: string[];
+                  roles: ("admin" | "moderator" | "autohost" | "mentor" | "caster" | "tourney")[];
                   battleStatus: {
                       lobbyId: number | null;
                       inGame: boolean;
@@ -114,7 +115,7 @@ export type BotSlaveResponse =
     | {
           command: "bot/slave/response";
           status: "failed";
-          reason: "botflag_required" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type BotUnslaveResponse =
     | {
@@ -124,7 +125,20 @@ export type BotUnslaveResponse =
     | {
           command: "bot/unslave/response";
           status: "failed";
-          reason: "botflag_required" | "already_unslaved" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
+      };
+export type GameLaunchResponse =
+    | {
+          command: "game/launch/response";
+          status: "success";
+          data: {
+              script: string;
+          };
+      }
+    | {
+          command: "game/launch/response";
+          status: "failed";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 export type LobbyCloseResponse =
     | {
@@ -477,9 +491,9 @@ export interface Tachyon {
             response: AccountRecoverResponse;
         };
         /**
-         * Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
+         * Registers a new account. The user's password should be hashed twice, once on the client (md5), then again on the server (something stronger) before being stored.
          *
-         * The server implementation may wish to verify the account by sending a verification link to the email address.
+         * The server implementation may wish to verify the account by sending a verification link to the email address. `hashedPassword` implies that the user's password should be hashed twice, once on the client-side, and then again on the server. Doing this ensures even the server can never know the user's plaintext password.
          */
         register: {
             request: AccountRegisterRequest;
@@ -507,6 +521,14 @@ export interface Tachyon {
         unslave: {
             request: BotUnslaveRequest;
             response: BotUnslaveResponse;
+        };
+    };
+    game: {
+        /**
+         * When a client receives this response it should launch the game with the start script.
+         */
+        launch: {
+            response: GameLaunchResponse;
         };
     };
     lobby: {
@@ -662,7 +684,7 @@ export interface AccountGetTokenRequest {
               username: string;
           }
     ) & {
-        password: string;
+        hashedPassword: string;
     };
 }
 export interface AccountLoginRequest {
@@ -690,6 +712,9 @@ export interface AccountRenameRequest {
 }
 export interface BotSlaveRequest {
     command: "bot/slave/request";
+    data: {
+        maxBattles: number;
+    };
 }
 export interface BotUnslaveRequest {
     command: "bot/unslave/request";
@@ -779,7 +804,7 @@ export interface UserClient {
          */
         [k: string]: string;
     };
-    roles: string[];
+    roles: ("admin" | "moderator" | "autohost" | "mentor" | "caster" | "tourney")[];
     battleStatus: {
         lobbyId: number | null;
         inGame: boolean;
@@ -810,7 +835,7 @@ export interface PrivateUserClient {
          */
         [k: string]: string;
     };
-    roles: string[];
+    roles: ("admin" | "moderator" | "autohost" | "mentor" | "caster" | "tourney")[];
     battleStatus: {
         lobbyId: number | null;
         inGame: boolean;

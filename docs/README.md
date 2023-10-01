@@ -4,6 +4,7 @@
 
 - [account](account.md)
 - [bot](bot.md)
+- [game](game.md)
 - [lobby](lobby.md)
 - [matchmaking](matchmaking.md)
 - [system](system.md)

@@ -15,7 +15,7 @@ Registers the client as slavable by the master server to be used for hosting ded
 
 - Endpoint Type: **Request** -> **Response**
 - Requires Login: **false**
-- Requires Role: `bot`
+- Requires Role: `autohost`
 
 ### Request
 
@@ -32,10 +32,24 @@ Registers the client as slavable by the master server to be used for hosting ded
         "command": {
             "const": "bot/slave/request",
             "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "maxBattles": {
+                    "minimum": 1,
+                    "default": 4,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "maxBattles"
+            ]
         }
     },
     "required": [
-        "command"
+        "command",
+        "data"
     ]
 }
 ```
@@ -46,13 +60,19 @@ Registers the client as slavable by the master server to be used for hosting ded
 ```ts
 export interface BotSlaveRequest {
     command: "bot/slave/request";
+    data: {
+        maxBattles: number;
+    };
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "bot/slave/request"
+    "command": "bot/slave/request",
+    "data": {
+        "maxBattles": 12340001
+    }
 }
 ```
 ### Response
@@ -97,10 +117,6 @@ export interface BotSlaveRequest {
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "botflag_required",
-                            "type": "string"
-                        },
-                        {
                             "const": "internal_error",
                             "type": "string"
                         },
@@ -137,7 +153,7 @@ export type BotSlaveResponse =
     | {
           command: "bot/slave/response";
           status: "failed";
-          reason: "botflag_required" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 
 ```
@@ -156,7 +172,7 @@ Unregisters the client as slavable.
 
 - Endpoint Type: **Request** -> **Response**
 - Requires Login: **false**
-- Requires Role: `bot`
+- Requires Role: `autohost`
 
 ### Request
 
@@ -238,14 +254,6 @@ export interface BotUnslaveRequest {
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "botflag_required",
-                            "type": "string"
-                        },
-                        {
-                            "const": "already_unslaved",
-                            "type": "string"
-                        },
-                        {
                             "const": "internal_error",
                             "type": "string"
                         },
@@ -282,7 +290,7 @@ export type BotUnslaveResponse =
     | {
           command: "bot/unslave/response";
           status: "failed";
-          reason: "botflag_required" | "already_unslaved" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error" | "unauthorized" | "invalid_command";
       };
 
 ```

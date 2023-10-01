@@ -14,9 +14,9 @@ These endpoints relate to the creation and management of user accounts. referal
 
 ## Register
 
-Registers a new account. The user's password should be hashed twice, once on the client, then again on the server before being stored.
+Registers a new account. The user's password should be hashed twice, once on the client (md5), then again on the server (something stronger) before being stored.
 
-The server implementation may wish to verify the account by sending a verification link to the email address.
+The server implementation may wish to verify the account by sending a verification link to the email address. `hashedPassword` implies that the user's password should be hashed twice, once on the client-side, and then again on the server. Doing this ensures even the server can never know the user's plaintext password.
 
 - Endpoint Type: **Request** -> **Response**
 - Requires Login: **false**
@@ -250,7 +250,7 @@ Get an authentication token used for [login](#login).
             "examples": [
                 {
                     "email": "bob@test.com",
-                    "password": "banana1234"
+                    "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
                 }
             ],
             "allOf": [
@@ -293,12 +293,12 @@ Get an authentication token used for [login](#login).
                 {
                     "type": "object",
                     "properties": {
-                        "password": {
+                        "hashedPassword": {
                             "type": "string"
                         }
                     },
                     "required": [
-                        "password"
+                        "hashedPassword"
                     ]
                 }
             ]
@@ -325,7 +325,7 @@ export interface AccountGetTokenRequest {
               username: string;
           }
     ) & {
-        password: string;
+        hashedPassword: string;
     };
 }
 
@@ -336,7 +336,7 @@ export interface AccountGetTokenRequest {
     "command": "account/getToken/request",
     "data": {
         "email": "bob@test.com",
-        "password": "banana1234"
+        "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
     }
 }
 ```
@@ -403,6 +403,10 @@ export interface AccountGetTokenRequest {
                             "type": "string"
                         },
                         {
+                            "const": "unverified",
+                            "type": "string"
+                        },
+                        {
                             "const": "invalid_password",
                             "type": "string"
                         },
@@ -452,6 +456,7 @@ export type AccountGetTokenResponse =
           status: "failed";
           reason:
               | "no_user_found"
+              | "unverified"
               | "invalid_password"
               | "max_attempts"
               | "internal_error"
@@ -617,15 +622,34 @@ export interface AccountLoginRequest {
                                     }
                                 },
                                 "roles": {
-                                    "examples": [
-                                        [
-                                            "admin",
-                                            "bot"
-                                        ]
-                                    ],
                                     "type": "array",
                                     "items": {
-                                        "type": "string"
+                                        "anyOf": [
+                                            {
+                                                "const": "admin",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "moderator",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "autohost",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "mentor",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "caster",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "tourney",
+                                                "type": "string"
+                                            }
+                                        ]
                                     }
                                 },
                                 "battleStatus": {
@@ -844,7 +868,7 @@ export type AccountLoginResponse =
                   icons: {
                       [k: string]: string;
                   };
-                  roles: string[];
+                  roles: ("admin" | "moderator" | "autohost" | "mentor" | "caster" | "tourney")[];
                   battleStatus: {
                       lobbyId: number | null;
                       inGame: boolean;

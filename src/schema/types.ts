@@ -37,9 +37,16 @@ export const userClient = Type.Object({
     username: Type.String(),
     clanId: Nullable(Type.Integer()),
     icons: Type.Record(Type.String(), Type.String()),
-    roles: Type.Array(Type.String(), {
-        examples: [["admin", "bot"]],
-    }),
+    roles: Type.Array(
+        Type.Union([
+            Type.Literal("admin"),
+            Type.Literal("moderator"),
+            Type.Literal("autohost"),
+            Type.Literal("mentor"),
+            Type.Literal("caster"),
+            Type.Literal("tourney"),
+        ])
+    ),
     battleStatus: Nullable(battleStatus),
 });
 

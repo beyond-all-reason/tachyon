@@ -34,10 +34,6 @@
                 "reason": {
                     "anyOf": [
                         {
-                            "const": "botflag_required",
-                            "type": "string"
-                        },
-                        {
                             "const": "internal_error",
                             "type": "string"
                         },

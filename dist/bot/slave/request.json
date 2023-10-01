@@ -7,9 +7,23 @@
         "command": {
             "const": "bot/slave/request",
             "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "maxBattles": {
+                    "minimum": 1,
+                    "default": 4,
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "maxBattles"
+            ]
         }
     },
     "required": [
-        "command"
+        "command",
+        "data"
     ]
 }

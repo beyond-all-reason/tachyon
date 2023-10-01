@@ -70,15 +70,34 @@
                                     }
                                 },
                                 "roles": {
-                                    "examples": [
-                                        [
-                                            "admin",
-                                            "bot"
-                                        ]
-                                    ],
                                     "type": "array",
                                     "items": {
-                                        "type": "string"
+                                        "anyOf": [
+                                            {
+                                                "const": "admin",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "moderator",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "autohost",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "mentor",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "caster",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "tourney",
+                                                "type": "string"
+                                            }
+                                        ]
                                     }
                                 },
                                 "battleStatus": {
