@@ -1,5 +1,5 @@
 {
-  "name": "tachyon",
+  "name": "tachyon-protocol",
   "version": "0.1.0",
   "description": "",
   "types": "dist/index.d.ts",
@@ -12,6 +12,9 @@
     "test": "jest",
     "postinstall": "patch-package"
   },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/beyond-all-reason/tachyon.git"
