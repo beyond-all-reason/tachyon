@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .ts --fix",
     "format": "prettier --write src/**/*.ts",
     "test": "jest",
-    "prepare": "patch-package"
+    "prepublish": "patch-package"
   },
   "files": [
     "dist"
