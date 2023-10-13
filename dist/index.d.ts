@@ -458,7 +458,8 @@ export type SystemVersionResponse =
           command: "system/version/response";
           status: "success";
           data: {
-              tachyonVersion: "0.1.0";
+              tachyonVersion: "0.1.1";
+              versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
           };
       }
     | {
@@ -668,6 +669,8 @@ export interface Tachyon {
         };
         /**
          * Sends the current version of the protocol to new Websocket clients as soon as they connect.
+         *
+         *         Clients should send the version they're using in the WS connection URL, e.g. ?tachyonVersion=1.1.2.
          */
         version: {
             response: SystemVersionResponse;

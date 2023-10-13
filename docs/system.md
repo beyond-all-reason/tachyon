@@ -153,6 +153,8 @@ export type SystemDisconnectedResponse =
 ## Version
 
 Sends the current version of the protocol to new Websocket clients as soon as they connect.
+        
+        Clients should send the version they're using in the WS connection URL, e.g. ?tachyonVersion=1.1.2.
 
 - Endpoint Type: **Response** only
 - Requires Login: **false**
@@ -182,12 +184,37 @@ Sends the current version of the protocol to new Websocket clients as soon as th
                     "type": "object",
                     "properties": {
                         "tachyonVersion": {
-                            "const": "0.1.0",
+                            "const": "0.1.1",
                             "type": "string"
+                        },
+                        "versionParity": {
+                            "anyOf": [
+                                {
+                                    "const": "major_mismatch",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "minor_mismatch",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "patch_mismatch",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "match",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "unknown",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "required": [
-                        "tachyonVersion"
+                        "tachyonVersion",
+                        "versionParity"
                     ]
                 }
             },
@@ -244,7 +271,8 @@ export type SystemVersionResponse =
           command: "system/version/response";
           status: "success";
           data: {
-              tachyonVersion: "0.1.0";
+              tachyonVersion: "0.1.1";
+              versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
           };
       }
     | {
@@ -260,7 +288,8 @@ export type SystemVersionResponse =
     "command": "system/version/response",
     "status": "success",
     "data": {
-        "tachyonVersion": "0.1.0"
+        "tachyonVersion": "0.1.1",
+        "versionParity": "major_mismatch"
     }
 }
 ```

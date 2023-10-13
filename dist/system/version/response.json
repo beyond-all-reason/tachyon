@@ -18,12 +18,37 @@
                     "type": "object",
                     "properties": {
                         "tachyonVersion": {
-                            "const": "0.1.0",
+                            "const": "0.1.1",
                             "type": "string"
+                        },
+                        "versionParity": {
+                            "anyOf": [
+                                {
+                                    "const": "major_mismatch",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "minor_mismatch",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "patch_mismatch",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "match",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "unknown",
+                                    "type": "string"
+                                }
+                            ]
                         }
                     },
                     "required": [
-                        "tachyonVersion"
+                        "tachyonVersion",
+                        "versionParity"
                     ]
                 }
             },
