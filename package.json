@@ -11,7 +11,8 @@
     "format": "prettier --write src/**/*.ts",
     "test": "jest",
     "prepublish": "patch-package",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "postpublish": "git commit -a -m \"updated tachyonVersion const literal\" && git push"
   },
   "files": [
     "dist"
