@@ -1,0 +1,121 @@
+{
+    "version": "0.1.6",
+    "ids": {
+        "account": {
+            "register": [
+                "request",
+                "response"
+            ],
+            "getToken": [
+                "request",
+                "response"
+            ],
+            "login": [
+                "request",
+                "response"
+            ],
+            "recover": [
+                "request",
+                "response"
+            ],
+            "rename": [
+                "request",
+                "response"
+            ]
+        },
+        "bot": {
+            "slave": [
+                "request",
+                "response"
+            ],
+            "unslave": [
+                "request",
+                "response"
+            ]
+        },
+        "game": {
+            "launch": [
+                "response"
+            ]
+        },
+        "lobby": {
+            "close": [
+                "request",
+                "response"
+            ],
+            "create": [
+                "request",
+                "response"
+            ],
+            "join": [
+                "request",
+                "response"
+            ],
+            "joined": [
+                "response"
+            ],
+            "leave": [
+                "request",
+                "response"
+            ],
+            "left": [
+                "response"
+            ],
+            "list": [
+                "request",
+                "response"
+            ],
+            "receiveMessage": [
+                "response"
+            ],
+            "sendMessage": [
+                "request",
+                "response"
+            ],
+            "updated": [
+                "response"
+            ]
+        },
+        "matchmaking": {
+            "cancel": [
+                "request",
+                "response"
+            ],
+            "found": [
+                "response"
+            ],
+            "list": [
+                "request",
+                "response"
+            ],
+            "lost": [
+                "response"
+            ],
+            "queue": [
+                "request",
+                "response"
+            ],
+            "queueUpdate": [
+                "response"
+            ],
+            "ready": [
+                "request",
+                "response"
+            ],
+            "readyUpdate": [
+                "response"
+            ]
+        },
+        "system": {
+            "disconnect": [
+                "request"
+            ],
+            "disconnected": [
+                "response"
+            ],
+            "version": [
+                "response"
+            ]
+        }
+    }
+}
