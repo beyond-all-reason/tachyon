@@ -7,6 +7,8 @@ import path from "path";
 
 import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "@/helpers";
 
+console.log("Building Tachyon Protocol JSONSchema, Docs and TypeScript defs...");
+
 jsf.option("useExamplesValue", true);
 jsf.option("random", () => 0.1234);
 
@@ -341,3 +343,5 @@ export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachy
 `;
     await fs.promises.writeFile(`dist/index.d.ts`, typings);
 }
+
+console.log("Done!");

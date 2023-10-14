@@ -18,7 +18,7 @@
                     "type": "object",
                     "properties": {
                         "tachyonVersion": {
-                            "const": "0.1.2",
+                            "const": "0.1.4",
                             "type": "string"
                         },
                         "versionParity": {
