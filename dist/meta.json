@@ -2,10 +2,6 @@
     "version": "0.1.7",
     "ids": {
         "account": {
-            "register": [
-                "request",
-                "response"
-            ],
             "getToken": [
                 "request",
                 "response"
@@ -15,6 +11,10 @@
                 "response"
             ],
             "recover": [
+                "request",
+                "response"
+            ],
+            "register": [
                 "request",
                 "response"
             ],
