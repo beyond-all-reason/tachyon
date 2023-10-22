@@ -924,10 +924,10 @@ export type ResponseData<S extends ServiceId, E extends ResponseEndpointId<S>> =
 export type RemoveField<T, K extends string> = T extends { [P in K]: any } ? Omit<T, K> : never;
 
 export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachyon[S][E];
-import { ErrorObject } from 'ajv';
+import { ValidateFunction } from 'ajv';
 
-declare function validateCommand<T extends {
+declare function getValidator<T extends {
     command: string;
-}>(command: T): T | ErrorObject<string, Record<string, any>, unknown>[];
+}>(command: T): ValidateFunction<T>;
 
-export { validateCommand };
+export { getValidator };

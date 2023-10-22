@@ -7068,7 +7068,7 @@ var require_dist = __commonJS({
 // src/validator.ts
 var validator_exports = {};
 __export(validator_exports, {
-  validateCommand: () => validateCommand
+  getValidator: () => getValidator
 });
 module.exports = __toCommonJS(validator_exports);
 var import_ajv = __toESM(require_ajv());
@@ -7106,34 +7106,25 @@ function init() {
     }
   }
 }
-function validateCommand(command) {
+function getValidator(command) {
   if (!initialised) {
     init();
   }
-  try {
-    if (typeof command !== "object") {
-      throw new Error("Command not object type");
-    }
-    if (!command.command || typeof command.command !== "string") {
-      throw new Error("Command Id missing");
-    }
-    const validator = validators.get(command.command);
-    if (!validator) {
-      throw new Error(`Validator not found for: ${command.command}`);
-    }
-    const isValid = validator(command);
-    if (isValid) {
-      return command;
-    }
-    return validator.errors;
-  } catch (err) {
-    console.error(`Error validating command:`, err, command);
-    throw err;
+  if (typeof command !== "object") {
+    throw new Error("Command not object type");
   }
+  if (!command.command || typeof command.command !== "string") {
+    throw new Error("Command Id missing");
+  }
+  const validator = validators.get(command.command);
+  if (!validator) {
+    throw new Error(`Validator not found for: ${command.command}`);
+  }
+  return validator;
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  validateCommand
+  getValidator
 });
 /*! Bundled license information:
 

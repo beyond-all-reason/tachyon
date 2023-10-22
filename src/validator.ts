@@ -39,35 +39,23 @@ function init() {
     }
 }
 
-export function validateCommand<T extends { command: string }>(
-    command: T
-): T | ErrorObject<string, Record<string, any>, unknown>[] {
+export function getValidator<T extends { command: string }>(command: T): ValidateFunction<T> {
     if (!initialised) {
         init();
     }
 
-    try {
-        if (typeof command !== "object") {
-            throw new Error("Command not object type");
-        }
-
-        if (!command.command || typeof command.command !== "string") {
-            throw new Error("Command Id missing");
-        }
-
-        const validator = validators.get(command.command);
-        if (!validator) {
-            throw new Error(`Validator not found for: ${command.command}`);
-        }
-
-        const isValid = validator(command);
-        if (isValid) {
-            return command;
-        }
-
-        return validator.errors as ErrorObject<string, Record<string, any>, unknown>[];
-    } catch (err) {
-        console.error(`Error validating command:`, err, command);
-        throw err;
+    if (typeof command !== "object") {
+        throw new Error("Command not object type");
     }
+
+    if (!command.command || typeof command.command !== "string") {
+        throw new Error("Command Id missing");
+    }
+
+    const validator = validators.get(command.command) as ValidateFunction<T>;
+    if (!validator) {
+        throw new Error(`Validator not found for: ${command.command}`);
+    }
+
+    return validator;
 }
