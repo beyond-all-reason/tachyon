@@ -1,6 +1,6 @@
 {
   "name": "tachyon-protocol",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "scripts": {
     "dev": "nodemon --watch src/** --ext ts --exec npm run build",
