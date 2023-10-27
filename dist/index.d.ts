@@ -926,8 +926,12 @@ export type RemoveField<T, K extends string> = T extends { [P in K]: any } ? Omi
 export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachyon[S][E];
 import { ValidateFunction } from 'ajv';
 
+declare const tachyonMeta: {
+    version: string;
+    ids: Record<string, Record<string, string[]>>;
+};
 declare function getValidator<T extends {
     command: string;
 }>(command: T): ValidateFunction<T>;
 
-export { getValidator };
+export { getValidator, tachyonMeta };

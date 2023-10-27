@@ -3,10 +3,13 @@ import addFormats from "ajv-formats";
 import fs from "fs";
 import path from "path";
 
-let tachyonMeta: { version: string; ids: Record<string, Record<string, string[]>> } = {
-    version: "N/A",
-    ids: {},
-};
+export const tachyonMeta: { version: string; ids: Record<string, Record<string, string[]>> } =
+    JSON.parse(
+        fs.readFileSync(path.join(__dirname, `./meta.json`), {
+            encoding: "utf-8",
+        })
+    );
+
 const validators: Map<string, ValidateFunction> = new Map();
 const ajv = new Ajv({ coerceTypes: true });
 let initialised = false;
@@ -17,11 +20,6 @@ function init() {
     addFormats.default(ajv);
     ajv.addKeyword("requiresLogin");
     ajv.addKeyword("requiresRole");
-
-    const tachyonMetaStr = fs.readFileSync(path.join(__dirname, `./meta.json`), {
-        encoding: "utf-8",
-    });
-    tachyonMeta = JSON.parse(tachyonMetaStr);
 
     for (const serviceId in tachyonMeta.ids) {
         for (const endpointId in tachyonMeta.ids[serviceId]) {

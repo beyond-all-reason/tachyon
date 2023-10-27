@@ -7068,17 +7068,19 @@ var require_dist = __commonJS({
 // src/validator.ts
 var validator_exports = {};
 __export(validator_exports, {
-  getValidator: () => getValidator
+  getValidator: () => getValidator,
+  tachyonMeta: () => tachyonMeta
 });
 module.exports = __toCommonJS(validator_exports);
 var import_ajv = __toESM(require_ajv());
 var import_ajv_formats = __toESM(require_dist());
 var import_fs = __toESM(require("fs"));
 var import_path = __toESM(require("path"));
-var tachyonMeta = {
-  version: "N/A",
-  ids: {}
-};
+var tachyonMeta = JSON.parse(
+  import_fs.default.readFileSync(import_path.default.join(__dirname, `./meta.json`), {
+    encoding: "utf-8"
+  })
+);
 var validators = /* @__PURE__ */ new Map();
 var ajv = new import_ajv.default({ coerceTypes: true });
 var initialised = false;
@@ -7087,10 +7089,6 @@ function init() {
   import_ajv_formats.default.default(ajv);
   ajv.addKeyword("requiresLogin");
   ajv.addKeyword("requiresRole");
-  const tachyonMetaStr = import_fs.default.readFileSync(import_path.default.join(__dirname, `./meta.json`), {
-    encoding: "utf-8"
-  });
-  tachyonMeta = JSON.parse(tachyonMetaStr);
   for (const serviceId in tachyonMeta.ids) {
     for (const endpointId in tachyonMeta.ids[serviceId]) {
       for (const commandType of tachyonMeta.ids[serviceId][endpointId]) {
@@ -7124,7 +7122,8 @@ function getValidator(command) {
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {
-  getValidator
+  getValidator,
+  tachyonMeta
 });
 /*! Bundled license information:
 
