@@ -272,6 +272,10 @@
                             "type": "string"
                         },
                         {
+                            "const": "unvalidated",
+                            "type": "string"
+                        },
+                        {
                             "const": "banned",
                             "type": "string"
                         },

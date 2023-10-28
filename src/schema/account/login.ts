@@ -52,6 +52,7 @@ export default defineEndpoint({
         },
         { status: "failed", reason: "invalid_token" },
         { status: "failed", reason: "expired_token" },
+        { status: "failed", reason: "unvalidated" },
         { status: "failed", reason: "banned" },
     ],
 });

@@ -67,7 +67,14 @@ export type AccountLoginResponse =
     | {
           command: "account/login/response";
           status: "failed";
-          reason: "invalid_token" | "expired_token" | "banned" | "internal_error" | "unauthorized" | "invalid_command";
+          reason:
+              | "invalid_token"
+              | "expired_token"
+              | "unvalidated"
+              | "banned"
+              | "internal_error"
+              | "unauthorized"
+              | "invalid_command";
       };
 export type AccountRecoverResponse =
     | {
