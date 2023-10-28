@@ -35,6 +35,7 @@
                     "type": "string"
                 },
                 "hashedPassword": {
+                    "description": "md5 hash of the user's password input",
                     "type": "string"
                 }
             },

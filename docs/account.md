@@ -2,7 +2,7 @@
 
 # Account
 
-These endpoints relate to the creation and management of user accounts. referal
+These endpoints relate to the creation and management of user accounts.
 
 ---
 - [register](#register)
@@ -63,6 +63,7 @@ The server implementation may wish to verify the account by sending a verificati
                     "type": "string"
                 },
                 "hashedPassword": {
+                    "description": "md5 hash of the user's password input",
                     "type": "string"
                 }
             },
@@ -294,6 +295,7 @@ Get an authentication token used for [login](#login).
                     "type": "object",
                     "properties": {
                         "hashedPassword": {
+                            "description": "md5 hash of the user's password input",
                             "type": "string"
                         }
                     },

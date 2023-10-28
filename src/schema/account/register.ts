@@ -12,7 +12,9 @@ export default defineEndpoint({
             {
                 email: email,
                 username: username,
-                hashedPassword: Type.String(),
+                hashedPassword: Type.String({
+                    description: "md5 hash of the user's password input",
+                }),
             },
             {
                 examples: [

@@ -687,6 +687,9 @@ export interface AccountGetTokenRequest {
               username: string;
           }
     ) & {
+        /**
+         * md5 hash of the user's password input
+         */
         hashedPassword: string;
     };
 }
@@ -704,6 +707,9 @@ export interface AccountRegisterRequest {
     data: {
         email: string;
         username: string;
+        /**
+         * md5 hash of the user's password input
+         */
         hashedPassword: string;
     };
 }
