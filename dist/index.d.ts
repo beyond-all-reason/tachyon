@@ -458,7 +458,7 @@ export type SystemVersionResponse =
           command: "system/version/response";
           status: "success";
           data: {
-              tachyonVersion: "0.1.10";
+              tachyonVersion: "0.1.11";
               versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
           };
       }
