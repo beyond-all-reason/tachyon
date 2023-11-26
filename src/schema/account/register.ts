@@ -12,23 +12,29 @@ export default defineEndpoint({
             {
                 email: email,
                 username: username,
-                hashedPassword: Type.String({
-                    description: "md5 hash of the user's password input",
-                }),
+                password: Type.String(),
             },
             {
                 examples: [
                     {
                         email: "bob@test.com",
                         username: "bob",
-                        hashedPassword: "1b311ff1a6af12fba8720bd2ce02c960",
+                        password: "plsnerfconsuls",
                     },
                 ],
             }
         ),
     },
     response: [
-        { status: "success" },
+        {
+            status: "success",
+            data: Type.Object({
+                verificationRequired: Type.Boolean({
+                    description:
+                        "If enabled, the server should email users a one-time verification link.",
+                }),
+            }),
+        },
         { status: "failed", reason: "email_taken" },
         { status: "failed", reason: "username_taken" },
         { status: "failed", reason: "invalid_email" },

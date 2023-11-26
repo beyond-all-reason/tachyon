@@ -22,16 +22,19 @@ Ask the server to terminate the connection. The server will send a [disconnected
 {
     "$id": "system/disconnect/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "system/disconnect/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -41,21 +44,23 @@ Ask the server to terminate the connection. The server will send a [disconnected
 #### TypeScript Definition
 ```ts
 export interface SystemDisconnectRequest {
-    command: "system/disconnect/request";
+    messageId: string;
+    commandId: "system/disconnect/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "system/disconnect/request"
+    "messageId": "mollit",
+    "commandId": "system/disconnect/request"
 }
 ```
 ---
 
 ## Disconnected
 
-Sent when the server terminates the WebSocket connection with the client for any reason. The only time the `success` response should be sent is if the client asked to be disconnected using a [disconnect](#disconnect) request.
+Sent when the server terminates the WebSocket connection with the client.
 
 - Endpoint Type: **Response** only
 - Requires Login: **false**
@@ -68,12 +73,14 @@ Sent when the server terminates the WebSocket connection with the client for any
 {
     "$id": "system/disconnected/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "system/disconnected/response",
                     "type": "string"
                 },
@@ -83,14 +90,18 @@ Sent when the server terminates the WebSocket connection with the client for any
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "system/disconnected/response",
                     "type": "string"
                 },
@@ -99,24 +110,65 @@ Sent when the server terminates the WebSocket connection with the client for any
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -131,20 +183,35 @@ Sent when the server terminates the WebSocket connection with the client for any
 ```ts
 export type SystemDisconnectedResponse =
     | {
-          command: "system/disconnected/response";
+          messageId: string;
+          commandId: "system/disconnected/response";
           status: "success";
       }
     | {
-          command: "system/disconnected/response";
+          messageId: string;
+          commandId: "system/disconnected/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnected/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnected/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "system/disconnected/response",
+    "messageId": "mollit",
+    "commandId": "system/disconnected/response",
     "status": "success"
 }
 ```
@@ -167,12 +234,14 @@ Sends the current version of the protocol to new Websocket clients as soon as th
 {
     "$id": "system/version/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "system/version/response",
                     "type": "string"
                 },
@@ -219,7 +288,8 @@ Sends the current version of the protocol to new Websocket clients as soon as th
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -227,7 +297,10 @@ Sends the current version of the protocol to new Websocket clients as soon as th
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "system/version/response",
                     "type": "string"
                 },
@@ -236,24 +309,65 @@ Sends the current version of the protocol to new Websocket clients as soon as th
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/version/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/version/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -268,7 +382,8 @@ Sends the current version of the protocol to new Websocket clients as soon as th
 ```ts
 export type SystemVersionResponse =
     | {
-          command: "system/version/response";
+          messageId: string;
+          commandId: "system/version/response";
           status: "success";
           data: {
               tachyonVersion: "0.1.12";
@@ -276,16 +391,30 @@ export type SystemVersionResponse =
           };
       }
     | {
-          command: "system/version/response";
+          messageId: string;
+          commandId: "system/version/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/version/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/version/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "system/version/response",
+    "messageId": "mollit",
+    "commandId": "system/version/response",
     "status": "success",
     "data": {
         "tachyonVersion": "0.1.12",

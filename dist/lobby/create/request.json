@@ -1,10 +1,12 @@
 {
     "$id": "lobby/create/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/create/request",
             "type": "string"
         },
@@ -46,7 +48,8 @@
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }

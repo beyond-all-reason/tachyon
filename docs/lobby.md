@@ -32,16 +32,19 @@ Close an existing lobby.
 {
     "$id": "lobby/close/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/close/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -51,14 +54,16 @@ Close an existing lobby.
 #### TypeScript Definition
 ```ts
 export interface LobbyCloseRequest {
-    command: "lobby/close/request";
+    messageId: string;
+    commandId: "lobby/close/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/close/request"
+    "messageId": "mollit",
+    "commandId": "lobby/close/request"
 }
 ```
 ### Response
@@ -70,12 +75,14 @@ export interface LobbyCloseRequest {
 {
     "$id": "lobby/close/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/close/response",
                     "type": "string"
                 },
@@ -85,14 +92,18 @@ export interface LobbyCloseRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/close/response",
                     "type": "string"
                 },
@@ -101,24 +112,65 @@ export interface LobbyCloseRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -133,20 +185,35 @@ export interface LobbyCloseRequest {
 ```ts
 export type LobbyCloseResponse =
     | {
-          command: "lobby/close/response";
+          messageId: string;
+          commandId: "lobby/close/response";
           status: "success";
       }
     | {
-          command: "lobby/close/response";
+          messageId: string;
+          commandId: "lobby/close/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/close/response",
+    "messageId": "mollit",
+    "commandId": "lobby/close/response",
     "status": "success"
 }
 ```
@@ -167,10 +234,12 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 {
     "$id": "lobby/create/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/create/request",
             "type": "string"
         },
@@ -212,7 +281,8 @@ Create a new lobby - intended for player clients to summon a dedicated host.
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -223,7 +293,8 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 #### TypeScript Definition
 ```ts
 export interface LobbyCreateRequest {
-    command: "lobby/create/request";
+    messageId: string;
+    commandId: "lobby/create/request";
     data: {
         title: string;
         private: boolean;
@@ -236,7 +307,8 @@ export interface LobbyCreateRequest {
 #### Example
 ```json
 {
-    "command": "lobby/create/request",
+    "messageId": "mollit",
+    "commandId": "lobby/create/request",
     "data": {
         "title": "8v8 | All Welcome",
         "private": false,
@@ -254,12 +326,14 @@ export interface LobbyCreateRequest {
 {
     "$id": "lobby/create/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/create/response",
                     "type": "string"
                 },
@@ -269,14 +343,18 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/create/response",
                     "type": "string"
                 },
@@ -285,32 +363,117 @@ export interface LobbyCreateRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "no_hosts_available",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_region",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "no_hosts_available",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_region",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -325,20 +488,47 @@ export interface LobbyCreateRequest {
 ```ts
 export type LobbyCreateResponse =
     | {
-          command: "lobby/create/response";
+          messageId: string;
+          commandId: "lobby/create/response";
           status: "success";
       }
     | {
-          command: "lobby/create/response";
+          messageId: string;
+          commandId: "lobby/create/response";
           status: "failed";
-          reason: "no_hosts_available" | "invalid_region" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "no_hosts_available";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "invalid_region";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/create/response",
+    "messageId": "mollit",
+    "commandId": "lobby/create/response",
     "status": "success"
 }
 ```
@@ -359,10 +549,12 @@ Join a custom lobby. Server will send a [joined](#joined) response containing th
 {
     "$id": "lobby/join/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/join/request",
             "type": "string"
         },
@@ -388,7 +580,8 @@ Join a custom lobby. Server will send a [joined](#joined) response containing th
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -399,7 +592,8 @@ Join a custom lobby. Server will send a [joined](#joined) response containing th
 #### TypeScript Definition
 ```ts
 export interface LobbyJoinRequest {
-    command: "lobby/join/request";
+    messageId: string;
+    commandId: "lobby/join/request";
     data: {
         lobbyId: number;
         password?: string;
@@ -410,7 +604,8 @@ export interface LobbyJoinRequest {
 #### Example
 ```json
 {
-    "command": "lobby/join/request",
+    "messageId": "mollit",
+    "commandId": "lobby/join/request",
     "data": {
         "lobbyId": 27,
         "password": "fish"
@@ -426,12 +621,14 @@ export interface LobbyJoinRequest {
 {
     "$id": "lobby/join/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/join/response",
                     "type": "string"
                 },
@@ -441,14 +638,18 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/join/response",
                     "type": "string"
                 },
@@ -457,52 +658,247 @@ export interface LobbyJoinRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "locked",
-                            "type": "string"
-                        },
-                        {
-                            "const": "requires_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "max_participants_reached",
-                            "type": "string"
-                        },
-                        {
-                            "const": "rank_too_low",
-                            "type": "string"
-                        },
-                        {
-                            "const": "rank_too_high",
-                            "type": "string"
-                        },
-                        {
-                            "const": "banned",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "locked",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "requires_password",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_password",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "max_participants_reached",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "rank_too_low",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "rank_too_high",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "banned",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -517,30 +913,77 @@ export interface LobbyJoinRequest {
 ```ts
 export type LobbyJoinResponse =
     | {
-          command: "lobby/join/response";
+          messageId: string;
+          commandId: "lobby/join/response";
           status: "success";
       }
     | {
-          command: "lobby/join/response";
+          messageId: string;
+          commandId: "lobby/join/response";
           status: "failed";
-          reason:
-              | "locked"
-              | "requires_password"
-              | "invalid_password"
-              | "max_participants_reached"
-              | "rank_too_low"
-              | "rank_too_high"
-              | "banned"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "locked";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "requires_password";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "invalid_password";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "max_participants_reached";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "rank_too_low";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "rank_too_high";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "banned";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/join/response",
+    "messageId": "mollit",
+    "commandId": "lobby/join/response",
     "status": "success"
 }
 ```
@@ -561,12 +1004,14 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
 {
     "$id": "lobby/joined/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/joined/response",
                     "type": "string"
                 },
@@ -773,7 +1218,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -781,7 +1227,10 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/joined/response",
                     "type": "string"
                 },
@@ -790,24 +1239,65 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/joined/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/joined/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -822,7 +1312,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
 ```ts
 export type LobbyJoinedResponse =
     | {
-          command: "lobby/joined/response";
+          messageId: string;
+          commandId: "lobby/joined/response";
           status: "success";
           data: {
               id: number;
@@ -852,16 +1343,30 @@ export type LobbyJoinedResponse =
           };
       }
     | {
-          command: "lobby/joined/response";
+          messageId: string;
+          commandId: "lobby/joined/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/joined/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/joined/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/joined/response",
+    "messageId": "mollit",
+    "commandId": "lobby/joined/response",
     "status": "success",
     "data": {
         "id": 27,
@@ -921,16 +1426,19 @@ Leave the current lobby.
 {
     "$id": "lobby/leave/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/leave/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -940,14 +1448,16 @@ Leave the current lobby.
 #### TypeScript Definition
 ```ts
 export interface LobbyLeaveRequest {
-    command: "lobby/leave/request";
+    messageId: string;
+    commandId: "lobby/leave/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/leave/request"
+    "messageId": "mollit",
+    "commandId": "lobby/leave/request"
 }
 ```
 ### Response
@@ -959,12 +1469,14 @@ export interface LobbyLeaveRequest {
 {
     "$id": "lobby/leave/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/leave/response",
                     "type": "string"
                 },
@@ -974,14 +1486,18 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/leave/response",
                     "type": "string"
                 },
@@ -990,28 +1506,91 @@ export interface LobbyLeaveRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "no_lobby",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "no_lobby",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/leave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/leave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/leave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1026,20 +1605,41 @@ export interface LobbyLeaveRequest {
 ```ts
 export type LobbyLeaveResponse =
     | {
-          command: "lobby/leave/response";
+          messageId: string;
+          commandId: "lobby/leave/response";
           status: "success";
       }
     | {
-          command: "lobby/leave/response";
+          messageId: string;
+          commandId: "lobby/leave/response";
           status: "failed";
-          reason: "no_lobby" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "no_lobby";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/leave/response",
+    "messageId": "mollit",
+    "commandId": "lobby/leave/response",
     "status": "success"
 }
 ```
@@ -1060,12 +1660,14 @@ Sent when the server removes the client from a lobby.
 {
     "$id": "lobby/left/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/left/response",
                     "type": "string"
                 },
@@ -1075,14 +1677,18 @@ Sent when the server removes the client from a lobby.
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/left/response",
                     "type": "string"
                 },
@@ -1091,24 +1697,65 @@ Sent when the server removes the client from a lobby.
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/left/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/left/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1123,20 +1770,35 @@ Sent when the server removes the client from a lobby.
 ```ts
 export type LobbyLeftResponse =
     | {
-          command: "lobby/left/response";
+          messageId: string;
+          commandId: "lobby/left/response";
           status: "success";
       }
     | {
-          command: "lobby/left/response";
+          messageId: string;
+          commandId: "lobby/left/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/left/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/left/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/left/response",
+    "messageId": "mollit",
+    "commandId": "lobby/left/response",
     "status": "success"
 }
 ```
@@ -1157,16 +1819,19 @@ Returns all custom lobbies.
 {
     "$id": "lobby/list/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/list/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -1176,14 +1841,16 @@ Returns all custom lobbies.
 #### TypeScript Definition
 ```ts
 export interface LobbyListRequest {
-    command: "lobby/list/request";
+    messageId: string;
+    commandId: "lobby/list/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/list/request"
+    "messageId": "mollit",
+    "commandId": "lobby/list/request"
 }
 ```
 ### Response
@@ -1195,12 +1862,14 @@ export interface LobbyListRequest {
 {
     "$id": "lobby/list/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/list/response",
                     "type": "string"
                 },
@@ -1418,7 +2087,8 @@ export interface LobbyListRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -1426,7 +2096,10 @@ export interface LobbyListRequest {
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/list/response",
                     "type": "string"
                 },
@@ -1435,24 +2108,65 @@ export interface LobbyListRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1467,7 +2181,8 @@ export interface LobbyListRequest {
 ```ts
 export type LobbyListResponse =
     | {
-          command: "lobby/list/response";
+          messageId: string;
+          commandId: "lobby/list/response";
           status: "success";
           data: {
               lobbies: {
@@ -1499,16 +2214,30 @@ export type LobbyListResponse =
           };
       }
     | {
-          command: "lobby/list/response";
+          messageId: string;
+          commandId: "lobby/list/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/list/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/list/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/list/response",
+    "messageId": "mollit",
+    "commandId": "lobby/list/response",
     "status": "success",
     "data": {
         "lobbies": [
@@ -1572,12 +2301,14 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
 {
     "$id": "lobby/receiveMessage/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/receiveMessage/response",
                     "type": "string"
                 },
@@ -1608,7 +2339,8 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -1616,7 +2348,10 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/receiveMessage/response",
                     "type": "string"
                 },
@@ -1625,24 +2360,65 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/receiveMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/receiveMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1657,7 +2433,8 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
 ```ts
 export type LobbyReceiveMessageResponse =
     | {
-          command: "lobby/receiveMessage/response";
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
           status: "success";
           data: {
               userId: number;
@@ -1665,16 +2442,30 @@ export type LobbyReceiveMessageResponse =
           };
       }
     | {
-          command: "lobby/receiveMessage/response";
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/receiveMessage/response",
+    "messageId": "mollit",
+    "commandId": "lobby/receiveMessage/response",
     "status": "success",
     "data": {
         "userId": 27,
@@ -1699,10 +2490,12 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
 {
     "$id": "lobby/sendMessage/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/sendMessage/request",
             "type": "string"
         },
@@ -1725,7 +2518,8 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -1736,7 +2530,8 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
 #### TypeScript Definition
 ```ts
 export interface LobbySendMessageRequest {
-    command: "lobby/sendMessage/request";
+    messageId: string;
+    commandId: "lobby/sendMessage/request";
     data: {
         message: string;
     };
@@ -1746,7 +2541,8 @@ export interface LobbySendMessageRequest {
 #### Example
 ```json
 {
-    "command": "lobby/sendMessage/request",
+    "messageId": "mollit",
+    "commandId": "lobby/sendMessage/request",
     "data": {
         "message": "Hello lobby!"
     }
@@ -1761,12 +2557,14 @@ export interface LobbySendMessageRequest {
 {
     "$id": "lobby/sendMessage/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/sendMessage/response",
                     "type": "string"
                 },
@@ -1776,14 +2574,18 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/sendMessage/response",
                     "type": "string"
                 },
@@ -1792,32 +2594,117 @@ export interface LobbySendMessageRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "not_in_lobby",
-                            "type": "string"
-                        },
-                        {
-                            "const": "muted",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "not_in_lobby",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "muted",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1832,20 +2719,47 @@ export interface LobbySendMessageRequest {
 ```ts
 export type LobbySendMessageResponse =
     | {
-          command: "lobby/sendMessage/response";
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
           status: "success";
       }
     | {
-          command: "lobby/sendMessage/response";
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
           status: "failed";
-          reason: "not_in_lobby" | "muted" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "not_in_lobby";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "muted";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/sendMessage/response",
+    "messageId": "mollit",
+    "commandId": "lobby/sendMessage/response",
     "status": "success"
 }
 ```
@@ -1866,12 +2780,14 @@ Server sends this partial object whenever a lobby relevant to the client changes
 {
     "$id": "lobby/updated/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/updated/response",
                     "type": "string"
                 },
@@ -2034,7 +2950,8 @@ Server sends this partial object whenever a lobby relevant to the client changes
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -2042,7 +2959,10 @@ Server sends this partial object whenever a lobby relevant to the client changes
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "lobby/updated/response",
                     "type": "string"
                 },
@@ -2051,24 +2971,65 @@ Server sends this partial object whenever a lobby relevant to the client changes
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/updated/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/updated/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -2083,7 +3044,8 @@ Server sends this partial object whenever a lobby relevant to the client changes
 ```ts
 export type LobbyUpdatedResponse =
     | {
-          command: "lobby/updated/response";
+          messageId: string;
+          commandId: "lobby/updated/response";
           status: "success";
           data: {
               id?: number;
@@ -2113,16 +3075,30 @@ export type LobbyUpdatedResponse =
           };
       }
     | {
-          command: "lobby/updated/response";
+          messageId: string;
+          commandId: "lobby/updated/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/updated/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/updated/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "lobby/updated/response",
+    "messageId": "mollit",
+    "commandId": "lobby/updated/response",
     "status": "success",
     "data": {
         "name": "3v3 | Newbies only",

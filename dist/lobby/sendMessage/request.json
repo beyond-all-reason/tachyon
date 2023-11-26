@@ -1,10 +1,12 @@
 {
     "$id": "lobby/sendMessage/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "lobby/sendMessage/request",
             "type": "string"
         },
@@ -27,7 +29,8 @@
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }

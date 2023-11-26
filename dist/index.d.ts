@@ -5,27 +5,59 @@
 
 export type AccountGetTokenResponse =
     | {
-          command: "account/getToken/response";
+          messageId: string;
+          commandId: "account/getToken/response";
           status: "success";
           data: {
               token: string;
           };
       }
     | {
-          command: "account/getToken/response";
+          messageId: string;
+          commandId: "account/getToken/response";
           status: "failed";
-          reason:
-              | "no_user_found"
-              | "unverified"
-              | "invalid_password"
-              | "max_attempts"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "no_user_found";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "unverified";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "invalid_password";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "max_attempts";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type AccountLoginResponse =
     | {
-          command: "account/login/response";
+          messageId: string;
+          commandId: "account/login/response";
           status: "success";
           data: {
               user: {
@@ -65,131 +97,372 @@ export type AccountLoginResponse =
           };
       }
     | {
-          command: "account/login/response";
+          messageId: string;
+          commandId: "account/login/response";
           status: "failed";
-          reason:
-              | "invalid_token"
-              | "expired_token"
-              | "unvalidated"
-              | "banned"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "invalid_token";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "expired_token";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "unvalidated";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "banned";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type AccountRecoverResponse =
     | {
-          command: "account/recover/response";
+          messageId: string;
+          commandId: "account/recover/response";
           status: "success";
       }
     | {
-          command: "account/recover/response";
+          messageId: string;
+          commandId: "account/recover/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/recover/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/recover/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type AccountRegisterResponse =
     | {
-          command: "account/register/response";
+          messageId: string;
+          commandId: "account/register/response";
           status: "success";
+          data: {
+              /**
+               * If enabled, the server should email users a one-time verification link.
+               */
+              verificationRequired: boolean;
+          };
       }
     | {
-          command: "account/register/response";
+          messageId: string;
+          commandId: "account/register/response";
           status: "failed";
-          reason:
-              | "email_taken"
-              | "username_taken"
-              | "invalid_email"
-              | "weak_password"
-              | "username_profanity"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "email_taken";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "username_taken";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "invalid_email";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "weak_password";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "username_profanity";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type AccountRenameResponse =
     | {
-          command: "account/rename/response";
+          messageId: string;
+          commandId: "account/rename/response";
           status: "success";
       }
     | {
-          command: "account/rename/response";
+          messageId: string;
+          commandId: "account/rename/response";
           status: "failed";
-          reason: "username_taken" | "username_profanity" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "username_taken";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "username_profanity";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type BotSlaveResponse =
     | {
-          command: "bot/slave/response";
+          messageId: string;
+          commandId: "bot/slave/response";
           status: "success";
       }
     | {
-          command: "bot/slave/response";
+          messageId: string;
+          commandId: "bot/slave/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/slave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/slave/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type BotUnslaveResponse =
     | {
-          command: "bot/unslave/response";
+          messageId: string;
+          commandId: "bot/unslave/response";
           status: "success";
       }
     | {
-          command: "bot/unslave/response";
+          messageId: string;
+          commandId: "bot/unslave/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/unslave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/unslave/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type GameLaunchResponse =
     | {
-          command: "game/launch/response";
+          messageId: string;
+          commandId: "game/launch/response";
           status: "success";
           data: {
               script: string;
           };
       }
     | {
-          command: "game/launch/response";
+          messageId: string;
+          commandId: "game/launch/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "game/launch/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "game/launch/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyCloseResponse =
     | {
-          command: "lobby/close/response";
+          messageId: string;
+          commandId: "lobby/close/response";
           status: "success";
       }
     | {
-          command: "lobby/close/response";
+          messageId: string;
+          commandId: "lobby/close/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyCreateResponse =
     | {
-          command: "lobby/create/response";
+          messageId: string;
+          commandId: "lobby/create/response";
           status: "success";
       }
     | {
-          command: "lobby/create/response";
+          messageId: string;
+          commandId: "lobby/create/response";
           status: "failed";
-          reason: "no_hosts_available" | "invalid_region" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "no_hosts_available";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "invalid_region";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyJoinResponse =
     | {
-          command: "lobby/join/response";
+          messageId: string;
+          commandId: "lobby/join/response";
           status: "success";
       }
     | {
-          command: "lobby/join/response";
+          messageId: string;
+          commandId: "lobby/join/response";
           status: "failed";
-          reason:
-              | "locked"
-              | "requires_password"
-              | "invalid_password"
-              | "max_participants_reached"
-              | "rank_too_low"
-              | "rank_too_high"
-              | "banned"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "locked";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "requires_password";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "invalid_password";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "max_participants_reached";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "rank_too_low";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "rank_too_high";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "banned";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyJoinedResponse =
     | {
-          command: "lobby/joined/response";
+          messageId: string;
+          commandId: "lobby/joined/response";
           status: "success";
           data: {
               id: number;
@@ -223,33 +496,81 @@ export type LobbyJoinedResponse =
           };
       }
     | {
-          command: "lobby/joined/response";
+          messageId: string;
+          commandId: "lobby/joined/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/joined/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/joined/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyLeaveResponse =
     | {
-          command: "lobby/leave/response";
+          messageId: string;
+          commandId: "lobby/leave/response";
           status: "success";
       }
     | {
-          command: "lobby/leave/response";
+          messageId: string;
+          commandId: "lobby/leave/response";
           status: "failed";
-          reason: "no_lobby" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "no_lobby";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyLeftResponse =
     | {
-          command: "lobby/left/response";
+          messageId: string;
+          commandId: "lobby/left/response";
           status: "success";
       }
     | {
-          command: "lobby/left/response";
+          messageId: string;
+          commandId: "lobby/left/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/left/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/left/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyListResponse =
     | {
-          command: "lobby/list/response";
+          messageId: string;
+          commandId: "lobby/list/response";
           status: "success";
           data: {
               lobbies: {
@@ -285,13 +606,27 @@ export type LobbyListResponse =
           };
       }
     | {
-          command: "lobby/list/response";
+          messageId: string;
+          commandId: "lobby/list/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/list/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/list/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyReceiveMessageResponse =
     | {
-          command: "lobby/receiveMessage/response";
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
           status: "success";
           data: {
               userId: number;
@@ -299,23 +634,63 @@ export type LobbyReceiveMessageResponse =
           };
       }
     | {
-          command: "lobby/receiveMessage/response";
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbySendMessageResponse =
     | {
-          command: "lobby/sendMessage/response";
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
           status: "success";
       }
     | {
-          command: "lobby/sendMessage/response";
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
           status: "failed";
-          reason: "not_in_lobby" | "muted" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "not_in_lobby";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "muted";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type LobbyUpdatedResponse =
     | {
-          command: "lobby/updated/response";
+          messageId: string;
+          commandId: "lobby/updated/response";
           status: "success";
           data: {
               id?: number;
@@ -349,36 +724,84 @@ export type LobbyUpdatedResponse =
           };
       }
     | {
-          command: "lobby/updated/response";
+          messageId: string;
+          commandId: "lobby/updated/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/updated/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/updated/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingCancelResponse =
     | {
-          command: "matchmaking/cancel/response";
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
           status: "success";
       }
     | {
-          command: "matchmaking/cancel/response";
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
           status: "failed";
-          reason: "not_queued" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "not_queued";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingFoundResponse =
     | {
-          command: "matchmaking/found/response";
+          messageId: string;
+          commandId: "matchmaking/found/response";
           status: "success";
           data: {
               queueId: string;
           };
       }
     | {
-          command: "matchmaking/found/response";
+          messageId: string;
+          commandId: "matchmaking/found/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/found/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/found/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingListResponse =
     | {
-          command: "matchmaking/list/response";
+          messageId: string;
+          commandId: "matchmaking/list/response";
           status: "success";
           data: {
               queues: {
@@ -389,56 +812,144 @@ export type MatchmakingListResponse =
           };
       }
     | {
-          command: "matchmaking/list/response";
+          messageId: string;
+          commandId: "matchmaking/list/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/list/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/list/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingLostResponse =
     | {
-          command: "matchmaking/lost/response";
+          messageId: string;
+          commandId: "matchmaking/lost/response";
           status: "success";
       }
     | {
-          command: "matchmaking/lost/response";
+          messageId: string;
+          commandId: "matchmaking/lost/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/lost/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/lost/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingQueueResponse =
     | {
-          command: "matchmaking/queue/response";
+          messageId: string;
+          commandId: "matchmaking/queue/response";
           status: "success";
       }
     | {
-          command: "matchmaking/queue/response";
+          messageId: string;
+          commandId: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_queue_specified" | "already_ingame" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "invalid_queue_specified";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "already_ingame";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingQueueUpdateResponse =
     | {
-          command: "matchmaking/queueUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
           status: "success";
           data: {
               playersQueued: number;
           };
       }
     | {
-          command: "matchmaking/queueUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingReadyResponse =
     | {
-          command: "matchmaking/ready/response";
+          messageId: string;
+          commandId: "matchmaking/ready/response";
           status: "success";
       }
     | {
-          command: "matchmaking/ready/response";
+          messageId: string;
+          commandId: "matchmaking/ready/response";
           status: "failed";
-          reason: "no_match" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "no_match";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type MatchmakingReadyUpdateResponse =
     | {
-          command: "matchmaking/readyUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
           status: "success";
           data: {
               readyMax: number;
@@ -446,23 +957,51 @@ export type MatchmakingReadyUpdateResponse =
           };
       }
     | {
-          command: "matchmaking/readyUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type SystemDisconnectedResponse =
     | {
-          command: "system/disconnected/response";
+          messageId: string;
+          commandId: "system/disconnected/response";
           status: "success";
       }
     | {
-          command: "system/disconnected/response";
+          messageId: string;
+          commandId: "system/disconnected/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnected/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnected/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 export type SystemVersionResponse =
     | {
-          command: "system/version/response";
+          messageId: string;
+          commandId: "system/version/response";
           status: "success";
           data: {
               tachyonVersion: "0.1.12";
@@ -470,9 +1009,22 @@ export type SystemVersionResponse =
           };
       }
     | {
-          command: "system/version/response";
+          messageId: string;
+          commandId: "system/version/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/version/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/version/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 export interface Tachyon {
@@ -669,7 +1221,7 @@ export interface Tachyon {
             request: SystemDisconnectRequest;
         };
         /**
-         * Sent when the server terminates the WebSocket connection with the client for any reason. The only time the `success` response should be sent is if the client asked to be disconnected using a [disconnect](#disconnect) request.
+         * Sent when the server terminates the WebSocket connection with the client.
          */
         disconnected: {
             response: SystemDisconnectedResponse;
@@ -685,7 +1237,8 @@ export interface Tachyon {
     };
 }
 export interface AccountGetTokenRequest {
-    command: "account/getToken/request";
+    messageId: string;
+    commandId: "account/getToken/request";
     data: (
         | {
               email: string;
@@ -701,45 +1254,50 @@ export interface AccountGetTokenRequest {
     };
 }
 export interface AccountLoginRequest {
-    command: "account/login/request";
+    messageId: string;
+    commandId: "account/login/request";
     data: {
         token: string;
     };
 }
 export interface AccountRecoverRequest {
-    command: "account/recover/request";
+    messageId: string;
+    commandId: "account/recover/request";
 }
 export interface AccountRegisterRequest {
-    command: "account/register/request";
+    messageId: string;
+    commandId: "account/register/request";
     data: {
         email: string;
         username: string;
-        /**
-         * md5 hash of the user's password input
-         */
-        hashedPassword: string;
+        password: string;
     };
 }
 export interface AccountRenameRequest {
-    command: "account/rename/request";
+    messageId: string;
+    commandId: "account/rename/request";
     data: {
         newUsername: string;
     };
 }
 export interface BotSlaveRequest {
-    command: "bot/slave/request";
+    messageId: string;
+    commandId: "bot/slave/request";
     data: {
         maxBattles: number;
     };
 }
 export interface BotUnslaveRequest {
-    command: "bot/unslave/request";
+    messageId: string;
+    commandId: "bot/unslave/request";
 }
 export interface LobbyCloseRequest {
-    command: "lobby/close/request";
+    messageId: string;
+    commandId: "lobby/close/request";
 }
 export interface LobbyCreateRequest {
-    command: "lobby/create/request";
+    messageId: string;
+    commandId: "lobby/create/request";
     data: {
         title: string;
         private: boolean;
@@ -748,32 +1306,39 @@ export interface LobbyCreateRequest {
     };
 }
 export interface LobbyJoinRequest {
-    command: "lobby/join/request";
+    messageId: string;
+    commandId: "lobby/join/request";
     data: {
         lobbyId: number;
         password?: string;
     };
 }
 export interface LobbyLeaveRequest {
-    command: "lobby/leave/request";
+    messageId: string;
+    commandId: "lobby/leave/request";
 }
 export interface LobbyListRequest {
-    command: "lobby/list/request";
+    messageId: string;
+    commandId: "lobby/list/request";
 }
 export interface LobbySendMessageRequest {
-    command: "lobby/sendMessage/request";
+    messageId: string;
+    commandId: "lobby/sendMessage/request";
     data: {
         message: string;
     };
 }
 export interface MatchmakingCancelRequest {
-    command: "matchmaking/cancel/request";
+    messageId: string;
+    commandId: "matchmaking/cancel/request";
 }
 export interface MatchmakingListRequest {
-    command: "matchmaking/list/request";
+    messageId: string;
+    commandId: "matchmaking/list/request";
 }
 export interface MatchmakingQueueRequest {
-    command: "matchmaking/queue/request";
+    messageId: string;
+    commandId: "matchmaking/queue/request";
     data: {
         /**
          * @minItems 1
@@ -782,10 +1347,12 @@ export interface MatchmakingQueueRequest {
     };
 }
 export interface MatchmakingReadyRequest {
-    command: "matchmaking/ready/request";
+    messageId: string;
+    commandId: "matchmaking/ready/request";
 }
 export interface SystemDisconnectRequest {
-    command: "system/disconnect/request";
+    messageId: string;
+    commandId: "system/disconnect/request";
 }
 export type Username = string;
 

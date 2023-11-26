@@ -39,7 +39,8 @@ export async function generateJsonSchemas() {
 
             if ("request" in endpointSchema) {
                 const props: TProperties = {
-                    command: Type.Literal(`${serviceId}/${endpointId}/request`),
+                    messageId: Type.String(),
+                    commandId: Type.Literal(`${serviceId}/${endpointId}/request`),
                 };
                 if (endpointSchema.request.data) {
                     props.data = endpointSchema.request.data;
@@ -47,7 +48,7 @@ export async function generateJsonSchemas() {
                 const schema = Type.Object(props, {
                     $id: `${serviceId}/${endpointId}/request`,
                     requiresLogin: Boolean(endpointSchema.requiresLogin),
-                    requiresRole: Boolean(endpointSchema.requiresRole),
+                    requiresRole: endpointSchema.requiresRole,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(
@@ -57,40 +58,28 @@ export async function generateJsonSchemas() {
                 fullSchemaProps[serviceId][endpointId].request = schema;
             }
             if ("response" in endpointSchema && endpointSchema.response.length) {
-                const successResponses = endpointSchema.response
-                    .filter((res): res is SuccessResponseSchema => res.status === "success")
-                    .map((res) => {
-                        const props: TProperties = {
-                            command: Type.Literal(`${serviceId}/${endpointId}/response`),
-                            status: Type.Literal(res.status),
-                        };
-                        if (res.data) {
-                            props.data = res.data;
-                        }
-                        return Type.Object(props);
-                    });
                 const schema = Type.Union(
-                    [
-                        ...successResponses,
-                        Type.Object({
-                            command: Type.Literal(`${serviceId}/${endpointId}/response`),
-                            status: Type.Literal("failed"),
-                            reason: Type.Union(
-                                endpointSchema.response
-                                    .filter(
-                                        (res): res is FailedResponseSchema =>
-                                            res.status === "failed"
-                                    )
-                                    .map((res) => {
-                                        return Type.Literal(res.reason);
-                                    })
-                            ),
-                        }),
-                    ],
+                    endpointSchema.response.map((schema) => {
+                        const props: TProperties = {
+                            messageId: Type.String(),
+                            commandId: Type.Literal(`${serviceId}/${endpointId}/response`),
+                            status: Type.Literal(schema.status),
+                        };
+
+                        if (schema.status == "failed") {
+                            props.reason = Type.Literal(schema.reason);
+                        }
+
+                        if (schema.data) {
+                            props.data = schema.data;
+                        }
+
+                        return Type.Object(props);
+                    }),
                     {
                         $id: `${serviceId}/${endpointId}/response`,
                         requiresLogin: Boolean(endpointSchema.requiresLogin),
-                        requiresRole: Boolean(endpointSchema.requiresRole),
+                        requiresRole: endpointSchema.requiresRole,
                     }
                 );
                 const schemaStr = JSON.stringify(schema, null, 4);

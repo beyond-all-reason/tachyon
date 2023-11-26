@@ -1,12 +1,15 @@
 {
     "$id": "bot/slave/response",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "bot/slave/response",
                     "type": "string"
                 },
@@ -16,14 +19,18 @@
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "bot/slave/response",
                     "type": "string"
                 },
@@ -32,24 +39,65 @@
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "bot/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "bot/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]

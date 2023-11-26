@@ -1,10 +1,12 @@
 {
     "$id": "account/register/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/register/request",
             "type": "string"
         },
@@ -13,7 +15,7 @@
                 {
                     "email": "bob@test.com",
                     "username": "bob",
-                    "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
+                    "password": "plsnerfconsuls"
                 }
             ],
             "type": "object",
@@ -34,20 +36,20 @@
                     ],
                     "type": "string"
                 },
-                "hashedPassword": {
-                    "description": "md5 hash of the user's password input",
+                "password": {
                     "type": "string"
                 }
             },
             "required": [
                 "email",
                 "username",
-                "hashedPassword"
+                "password"
             ]
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }

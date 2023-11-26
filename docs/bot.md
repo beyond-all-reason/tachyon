@@ -26,10 +26,13 @@ Registers the client as slavable by the master server to be used for hosting ded
 {
     "$id": "bot/slave/request",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "bot/slave/request",
             "type": "string"
         },
@@ -48,7 +51,8 @@ Registers the client as slavable by the master server to be used for hosting ded
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -59,7 +63,8 @@ Registers the client as slavable by the master server to be used for hosting ded
 #### TypeScript Definition
 ```ts
 export interface BotSlaveRequest {
-    command: "bot/slave/request";
+    messageId: string;
+    commandId: "bot/slave/request";
     data: {
         maxBattles: number;
     };
@@ -69,7 +74,8 @@ export interface BotSlaveRequest {
 #### Example
 ```json
 {
-    "command": "bot/slave/request",
+    "messageId": "mollit",
+    "commandId": "bot/slave/request",
     "data": {
         "maxBattles": 12340001
     }
@@ -84,12 +90,15 @@ export interface BotSlaveRequest {
 {
     "$id": "bot/slave/response",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "bot/slave/response",
                     "type": "string"
                 },
@@ -99,14 +108,18 @@ export interface BotSlaveRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "bot/slave/response",
                     "type": "string"
                 },
@@ -115,24 +128,65 @@ export interface BotSlaveRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "bot/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "bot/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -147,20 +201,35 @@ export interface BotSlaveRequest {
 ```ts
 export type BotSlaveResponse =
     | {
-          command: "bot/slave/response";
+          messageId: string;
+          commandId: "bot/slave/response";
           status: "success";
       }
     | {
-          command: "bot/slave/response";
+          messageId: string;
+          commandId: "bot/slave/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/slave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/slave/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "bot/slave/response",
+    "messageId": "mollit",
+    "commandId": "bot/slave/response",
     "status": "success"
 }
 ```
@@ -183,16 +252,20 @@ Unregisters the client as slavable.
 {
     "$id": "bot/unslave/request",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "bot/unslave/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -202,14 +275,16 @@ Unregisters the client as slavable.
 #### TypeScript Definition
 ```ts
 export interface BotUnslaveRequest {
-    command: "bot/unslave/request";
+    messageId: string;
+    commandId: "bot/unslave/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "bot/unslave/request"
+    "messageId": "mollit",
+    "commandId": "bot/unslave/request"
 }
 ```
 ### Response
@@ -221,12 +296,15 @@ export interface BotUnslaveRequest {
 {
     "$id": "bot/unslave/response",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "bot/unslave/response",
                     "type": "string"
                 },
@@ -236,14 +314,18 @@ export interface BotUnslaveRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "bot/unslave/response",
                     "type": "string"
                 },
@@ -252,24 +334,65 @@ export interface BotUnslaveRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "bot/unslave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "bot/unslave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -284,20 +407,35 @@ export interface BotUnslaveRequest {
 ```ts
 export type BotUnslaveResponse =
     | {
-          command: "bot/unslave/response";
+          messageId: string;
+          commandId: "bot/unslave/response";
           status: "success";
       }
     | {
-          command: "bot/unslave/response";
+          messageId: string;
+          commandId: "bot/unslave/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/unslave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "bot/unslave/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "bot/unslave/response",
+    "messageId": "mollit",
+    "commandId": "bot/unslave/response",
     "status": "success"
 }
 ```

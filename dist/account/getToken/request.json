@@ -1,10 +1,12 @@
 {
     "$id": "account/getToken/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/getToken/request",
             "type": "string"
         },
@@ -68,7 +70,8 @@
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }

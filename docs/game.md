@@ -20,12 +20,14 @@ When a client receives this response it should launch the game with the start sc
 {
     "$id": "game/launch/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "game/launch/response",
                     "type": "string"
                 },
@@ -46,7 +48,8 @@ When a client receives this response it should launch the game with the start sc
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -54,7 +57,10 @@ When a client receives this response it should launch the game with the start sc
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "game/launch/response",
                     "type": "string"
                 },
@@ -63,24 +69,65 @@ When a client receives this response it should launch the game with the start sc
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "game/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "game/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -95,23 +142,38 @@ When a client receives this response it should launch the game with the start sc
 ```ts
 export type GameLaunchResponse =
     | {
-          command: "game/launch/response";
+          messageId: string;
+          commandId: "game/launch/response";
           status: "success";
           data: {
               script: string;
           };
       }
     | {
-          command: "game/launch/response";
+          messageId: string;
+          commandId: "game/launch/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "game/launch/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "game/launch/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "game/launch/response",
+    "messageId": "mollit",
+    "commandId": "game/launch/response",
     "status": "success",
     "data": {
         "script": "mollit"

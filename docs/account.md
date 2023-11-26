@@ -2,7 +2,13 @@
 
 # Account
 
-These endpoints relate to the creation and management of user accounts.
+These endpoints relate to the creation and management of user accounts. The process of creating and logging into an account goes as follows:
+
+1. Register an account via [register](#register)
+2. If the server requires verification, it should send a one-time verification link to the registered email
+3. Clients should then prompt the user for username/email and their password, which should be sent using the [getToken](#getToken) command with the password hashed using md5. Once received, the server should apply a secondary hash before storage, ideally salted
+4. The server should generate and return a JSON Web Token that the user can use to login, and the client should store locally for future automated logins
+5. Clients can then use the [login](#login) command to send the token. The server will return user data associated with the account, and the user is effectively logged-in
 
 ---
 - [register](#register)
@@ -29,10 +35,12 @@ The server implementation may wish to verify the account by sending a verificati
 {
     "$id": "account/register/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/register/request",
             "type": "string"
         },
@@ -41,7 +49,7 @@ The server implementation may wish to verify the account by sending a verificati
                 {
                     "email": "bob@test.com",
                     "username": "bob",
-                    "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
+                    "password": "plsnerfconsuls"
                 }
             ],
             "type": "object",
@@ -62,20 +70,20 @@ The server implementation may wish to verify the account by sending a verificati
                     ],
                     "type": "string"
                 },
-                "hashedPassword": {
-                    "description": "md5 hash of the user's password input",
+                "password": {
                     "type": "string"
                 }
             },
             "required": [
                 "email",
                 "username",
-                "hashedPassword"
+                "password"
             ]
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -86,11 +94,12 @@ The server implementation may wish to verify the account by sending a verificati
 #### TypeScript Definition
 ```ts
 export interface AccountRegisterRequest {
-    command: "account/register/request";
+    messageId: string;
+    commandId: "account/register/request";
     data: {
         email: string;
         username: string;
-        hashedPassword: string;
+        password: string;
     };
 }
 
@@ -98,11 +107,12 @@ export interface AccountRegisterRequest {
 #### Example
 ```json
 {
-    "command": "account/register/request",
+    "messageId": "mollit",
+    "commandId": "account/register/request",
     "data": {
         "email": "bob@test.com",
         "username": "bob",
-        "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
+        "password": "plsnerfconsuls"
     }
 }
 ```
@@ -115,29 +125,48 @@ export interface AccountRegisterRequest {
 {
     "$id": "account/register/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/register/response",
                     "type": "string"
                 },
                 "status": {
                     "const": "success",
                     "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "verificationRequired": {
+                            "description": "If enabled, the server should email users a one-time verification link.",
+                            "type": "boolean"
+                        }
+                    },
+                    "required": [
+                        "verificationRequired"
+                    ]
                 }
             },
             "required": [
-                "command",
-                "status"
+                "messageId",
+                "commandId",
+                "status",
+                "data"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/register/response",
                     "type": "string"
                 },
@@ -146,44 +175,195 @@ export interface AccountRegisterRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "email_taken",
-                            "type": "string"
-                        },
-                        {
-                            "const": "username_taken",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_email",
-                            "type": "string"
-                        },
-                        {
-                            "const": "weak_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "username_profanity",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "email_taken",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "username_taken",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_email",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "weak_password",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "username_profanity",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/register/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -198,29 +378,72 @@ export interface AccountRegisterRequest {
 ```ts
 export type AccountRegisterResponse =
     | {
-          command: "account/register/response";
+          messageId: string;
+          commandId: "account/register/response";
           status: "success";
+          data: {
+              verificationRequired: boolean;
+          };
       }
     | {
-          command: "account/register/response";
+          messageId: string;
+          commandId: "account/register/response";
           status: "failed";
-          reason:
-              | "email_taken"
-              | "username_taken"
-              | "invalid_email"
-              | "weak_password"
-              | "username_profanity"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "email_taken";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "username_taken";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "invalid_email";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "weak_password";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "username_profanity";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/register/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "account/register/response",
-    "status": "success"
+    "messageId": "mollit",
+    "commandId": "account/register/response",
+    "status": "success",
+    "data": {
+        "verificationRequired": false
+    }
 }
 ```
 ---
@@ -240,10 +463,12 @@ Get an authentication token used for [login](#login).
 {
     "$id": "account/getToken/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/getToken/request",
             "type": "string"
         },
@@ -307,7 +532,8 @@ Get an authentication token used for [login](#login).
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -318,7 +544,8 @@ Get an authentication token used for [login](#login).
 #### TypeScript Definition
 ```ts
 export interface AccountGetTokenRequest {
-    command: "account/getToken/request";
+    messageId: string;
+    commandId: "account/getToken/request";
     data: (
         | {
               email: string;
@@ -335,7 +562,8 @@ export interface AccountGetTokenRequest {
 #### Example
 ```json
 {
-    "command": "account/getToken/request",
+    "messageId": "mollit",
+    "commandId": "account/getToken/request",
     "data": {
         "email": "bob@test.com",
         "hashedPassword": "1b311ff1a6af12fba8720bd2ce02c960"
@@ -351,12 +579,14 @@ export interface AccountGetTokenRequest {
 {
     "$id": "account/getToken/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/getToken/response",
                     "type": "string"
                 },
@@ -382,7 +612,8 @@ export interface AccountGetTokenRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -390,7 +621,10 @@ export interface AccountGetTokenRequest {
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/getToken/response",
                     "type": "string"
                 },
@@ -399,40 +633,169 @@ export interface AccountGetTokenRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "no_user_found",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unverified",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_password",
-                            "type": "string"
-                        },
-                        {
-                            "const": "max_attempts",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "no_user_found",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unverified",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_password",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "max_attempts",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/getToken/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -447,30 +810,62 @@ export interface AccountGetTokenRequest {
 ```ts
 export type AccountGetTokenResponse =
     | {
-          command: "account/getToken/response";
+          messageId: string;
+          commandId: "account/getToken/response";
           status: "success";
           data: {
               token: string;
           };
       }
     | {
-          command: "account/getToken/response";
+          messageId: string;
+          commandId: "account/getToken/response";
           status: "failed";
-          reason:
-              | "no_user_found"
-              | "unverified"
-              | "invalid_password"
-              | "max_attempts"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "no_user_found";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "unverified";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "invalid_password";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "max_attempts";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/getToken/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "account/getToken/response",
+    "messageId": "mollit",
+    "commandId": "account/getToken/response",
     "status": "success",
     "data": {
         "token": "d2d5135930dacad758584b2586d03426"
@@ -494,10 +889,12 @@ Login using an authentication token from [getToken](#gettoken).
 {
     "$id": "account/login/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/login/request",
             "type": "string"
         },
@@ -519,7 +916,8 @@ Login using an authentication token from [getToken](#gettoken).
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -530,7 +928,8 @@ Login using an authentication token from [getToken](#gettoken).
 #### TypeScript Definition
 ```ts
 export interface AccountLoginRequest {
-    command: "account/login/request";
+    messageId: string;
+    commandId: "account/login/request";
     data: {
         token: string;
     };
@@ -540,7 +939,8 @@ export interface AccountLoginRequest {
 #### Example
 ```json
 {
-    "command": "account/login/request",
+    "messageId": "mollit",
+    "commandId": "account/login/request",
     "data": {
         "token": "d2d5135930dacad758584b2586d03426"
     }
@@ -555,12 +955,14 @@ export interface AccountLoginRequest {
 {
     "$id": "account/login/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/login/response",
                     "type": "string"
                 },
@@ -799,7 +1201,8 @@ export interface AccountLoginRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -807,7 +1210,10 @@ export interface AccountLoginRequest {
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/login/response",
                     "type": "string"
                 },
@@ -816,40 +1222,169 @@ export interface AccountLoginRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "invalid_token",
-                            "type": "string"
-                        },
-                        {
-                            "const": "expired_token",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unvalidated",
-                            "type": "string"
-                        },
-                        {
-                            "const": "banned",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "invalid_token",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "expired_token",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unvalidated",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "banned",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/login/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -864,7 +1399,8 @@ export interface AccountLoginRequest {
 ```ts
 export type AccountLoginResponse =
     | {
-          command: "account/login/response";
+          messageId: string;
+          commandId: "account/login/response";
           status: "success";
           data: {
               user: {
@@ -900,23 +1436,54 @@ export type AccountLoginResponse =
           };
       }
     | {
-          command: "account/login/response";
+          messageId: string;
+          commandId: "account/login/response";
           status: "failed";
-          reason:
-              | "invalid_token"
-              | "expired_token"
-              | "unvalidated"
-              | "banned"
-              | "internal_error"
-              | "unauthorized"
-              | "invalid_command";
+          reason: "invalid_token";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "expired_token";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "unvalidated";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "banned";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/login/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "account/login/response",
+    "messageId": "mollit",
+    "commandId": "account/login/response",
     "status": "success",
     "data": {
         "user": {
@@ -960,16 +1527,19 @@ Should reset the password for the connected user and send it to the associated e
 {
     "$id": "account/recover/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/recover/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -979,14 +1549,16 @@ Should reset the password for the connected user and send it to the associated e
 #### TypeScript Definition
 ```ts
 export interface AccountRecoverRequest {
-    command: "account/recover/request";
+    messageId: string;
+    commandId: "account/recover/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "account/recover/request"
+    "messageId": "mollit",
+    "commandId": "account/recover/request"
 }
 ```
 ### Response
@@ -998,12 +1570,14 @@ export interface AccountRecoverRequest {
 {
     "$id": "account/recover/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/recover/response",
                     "type": "string"
                 },
@@ -1013,14 +1587,18 @@ export interface AccountRecoverRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/recover/response",
                     "type": "string"
                 },
@@ -1029,24 +1607,65 @@ export interface AccountRecoverRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/recover/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/recover/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1061,20 +1680,35 @@ export interface AccountRecoverRequest {
 ```ts
 export type AccountRecoverResponse =
     | {
-          command: "account/recover/response";
+          messageId: string;
+          commandId: "account/recover/response";
           status: "success";
       }
     | {
-          command: "account/recover/response";
+          messageId: string;
+          commandId: "account/recover/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/recover/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/recover/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "account/recover/response",
+    "messageId": "mollit",
+    "commandId": "account/recover/response",
     "status": "success"
 }
 ```
@@ -1095,10 +1729,12 @@ Change username for the current user.
 {
     "$id": "account/rename/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "account/rename/request",
             "type": "string"
         },
@@ -1121,7 +1757,8 @@ Change username for the current user.
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -1132,7 +1769,8 @@ Change username for the current user.
 #### TypeScript Definition
 ```ts
 export interface AccountRenameRequest {
-    command: "account/rename/request";
+    messageId: string;
+    commandId: "account/rename/request";
     data: {
         newUsername: string;
     };
@@ -1142,7 +1780,8 @@ export interface AccountRenameRequest {
 #### Example
 ```json
 {
-    "command": "account/rename/request",
+    "messageId": "mollit",
+    "commandId": "account/rename/request",
     "data": {
         "newUsername": "Bob"
     }
@@ -1157,12 +1796,14 @@ export interface AccountRenameRequest {
 {
     "$id": "account/rename/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/rename/response",
                     "type": "string"
                 },
@@ -1172,14 +1813,18 @@ export interface AccountRenameRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "account/rename/response",
                     "type": "string"
                 },
@@ -1188,32 +1833,117 @@ export interface AccountRenameRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "username_taken",
-                            "type": "string"
-                        },
-                        {
-                            "const": "username_profanity",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "username_taken",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/rename/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "username_profanity",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/rename/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/rename/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "account/rename/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1228,20 +1958,47 @@ export interface AccountRenameRequest {
 ```ts
 export type AccountRenameResponse =
     | {
-          command: "account/rename/response";
+          messageId: string;
+          commandId: "account/rename/response";
           status: "success";
       }
     | {
-          command: "account/rename/response";
+          messageId: string;
+          commandId: "account/rename/response";
           status: "failed";
-          reason: "username_taken" | "username_profanity" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "username_taken";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "username_profanity";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "account/rename/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "account/rename/response",
+    "messageId": "mollit",
+    "commandId": "account/rename/response",
     "status": "success"
 }
 ```

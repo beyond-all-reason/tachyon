@@ -12,6 +12,7 @@ export type EndpointConfig = {
     description?: string;
     /** @default true */
     requiresLogin?: boolean;
+    /** @default "" */
     requiresRole?: string;
     order?: number;
 } & (
@@ -37,6 +38,7 @@ export type SuccessResponseSchema = {
 export type FailedResponseSchema = {
     status: "failed";
     reason: string;
+    data?: TObject | TUnion | TIntersect;
 };
 
 export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {

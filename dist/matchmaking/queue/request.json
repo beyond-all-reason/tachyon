@@ -1,10 +1,12 @@
 {
     "$id": "matchmaking/queue/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "matchmaking/queue/request",
             "type": "string"
         },
@@ -25,7 +27,8 @@
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }

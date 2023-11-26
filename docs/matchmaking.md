@@ -38,16 +38,19 @@ Cancel queueing for matchmaking. Can also be sent during the ready phase to effe
 {
     "$id": "matchmaking/cancel/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "matchmaking/cancel/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -57,14 +60,16 @@ Cancel queueing for matchmaking. Can also be sent during the ready phase to effe
 #### TypeScript Definition
 ```ts
 export interface MatchmakingCancelRequest {
-    command: "matchmaking/cancel/request";
+    messageId: string;
+    commandId: "matchmaking/cancel/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/cancel/request"
+    "messageId": "mollit",
+    "commandId": "matchmaking/cancel/request"
 }
 ```
 ### Response
@@ -76,12 +81,14 @@ export interface MatchmakingCancelRequest {
 {
     "$id": "matchmaking/cancel/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/cancel/response",
                     "type": "string"
                 },
@@ -91,14 +98,18 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/cancel/response",
                     "type": "string"
                 },
@@ -107,28 +118,91 @@ export interface MatchmakingCancelRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "not_queued",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "not_queued",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/cancel/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/cancel/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/cancel/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -143,20 +217,41 @@ export interface MatchmakingCancelRequest {
 ```ts
 export type MatchmakingCancelResponse =
     | {
-          command: "matchmaking/cancel/response";
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
           status: "success";
       }
     | {
-          command: "matchmaking/cancel/response";
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
           status: "failed";
-          reason: "not_queued" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "not_queued";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/cancel/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/cancel/response",
     "status": "success"
 }
 ```
@@ -177,12 +272,14 @@ Server should send this when there are enough queued players to form a valid gam
 {
     "$id": "matchmaking/found/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/found/response",
                     "type": "string"
                 },
@@ -203,7 +300,8 @@ Server should send this when there are enough queued players to form a valid gam
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -211,7 +309,10 @@ Server should send this when there are enough queued players to form a valid gam
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/found/response",
                     "type": "string"
                 },
@@ -220,24 +321,65 @@ Server should send this when there are enough queued players to form a valid gam
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/found/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/found/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -252,23 +394,38 @@ Server should send this when there are enough queued players to form a valid gam
 ```ts
 export type MatchmakingFoundResponse =
     | {
-          command: "matchmaking/found/response";
+          messageId: string;
+          commandId: "matchmaking/found/response";
           status: "success";
           data: {
               queueId: string;
           };
       }
     | {
-          command: "matchmaking/found/response";
+          messageId: string;
+          commandId: "matchmaking/found/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/found/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/found/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/found/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/found/response",
     "status": "success",
     "data": {
         "queueId": "mollit"
@@ -292,16 +449,19 @@ Returns all available matchmaking queues.
 {
     "$id": "matchmaking/list/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "matchmaking/list/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -311,14 +471,16 @@ Returns all available matchmaking queues.
 #### TypeScript Definition
 ```ts
 export interface MatchmakingListRequest {
-    command: "matchmaking/list/request";
+    messageId: string;
+    commandId: "matchmaking/list/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/list/request"
+    "messageId": "mollit",
+    "commandId": "matchmaking/list/request"
 }
 ```
 ### Response
@@ -330,12 +492,14 @@ export interface MatchmakingListRequest {
 {
     "$id": "matchmaking/list/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/list/response",
                     "type": "string"
                 },
@@ -391,7 +555,8 @@ export interface MatchmakingListRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -399,7 +564,10 @@ export interface MatchmakingListRequest {
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/list/response",
                     "type": "string"
                 },
@@ -408,24 +576,65 @@ export interface MatchmakingListRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -440,7 +649,8 @@ export interface MatchmakingListRequest {
 ```ts
 export type MatchmakingListResponse =
     | {
-          command: "matchmaking/list/response";
+          messageId: string;
+          commandId: "matchmaking/list/response";
           status: "success";
           data: {
               queues: {
@@ -451,16 +661,30 @@ export type MatchmakingListResponse =
           };
       }
     | {
-          command: "matchmaking/list/response";
+          messageId: string;
+          commandId: "matchmaking/list/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/list/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/list/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/list/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/list/response",
     "status": "success",
     "data": {
         "queues": [
@@ -495,12 +719,14 @@ Sent when a found match gets disbanded because a client failed to ready up.
 {
     "$id": "matchmaking/lost/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/lost/response",
                     "type": "string"
                 },
@@ -510,14 +736,18 @@ Sent when a found match gets disbanded because a client failed to ready up.
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/lost/response",
                     "type": "string"
                 },
@@ -526,24 +756,65 @@ Sent when a found match gets disbanded because a client failed to ready up.
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/lost/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/lost/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -558,20 +829,35 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```ts
 export type MatchmakingLostResponse =
     | {
-          command: "matchmaking/lost/response";
+          messageId: string;
+          commandId: "matchmaking/lost/response";
           status: "success";
       }
     | {
-          command: "matchmaking/lost/response";
+          messageId: string;
+          commandId: "matchmaking/lost/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/lost/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/lost/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/lost/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/lost/response",
     "status": "success"
 }
 ```
@@ -592,10 +878,12 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 {
     "$id": "matchmaking/queue/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "matchmaking/queue/request",
             "type": "string"
         },
@@ -616,7 +904,8 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }
@@ -627,7 +916,8 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 #### TypeScript Definition
 ```ts
 export interface MatchmakingQueueRequest {
-    command: "matchmaking/queue/request";
+    messageId: string;
+    commandId: "matchmaking/queue/request";
     data: {
         queues: [string, ...string[]];
     };
@@ -637,7 +927,8 @@ export interface MatchmakingQueueRequest {
 #### Example
 ```json
 {
-    "command": "matchmaking/queue/request",
+    "messageId": "mollit",
+    "commandId": "matchmaking/queue/request",
     "data": {
         "queues": [
             "mollit"
@@ -654,12 +945,14 @@ export interface MatchmakingQueueRequest {
 {
     "$id": "matchmaking/queue/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/queue/response",
                     "type": "string"
                 },
@@ -669,14 +962,18 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/queue/response",
                     "type": "string"
                 },
@@ -685,32 +982,117 @@ export interface MatchmakingQueueRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "invalid_queue_specified",
-                            "type": "string"
-                        },
-                        {
-                            "const": "already_ingame",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "invalid_queue_specified",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queue/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "already_ingame",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queue/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queue/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queue/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -725,20 +1107,47 @@ export interface MatchmakingQueueRequest {
 ```ts
 export type MatchmakingQueueResponse =
     | {
-          command: "matchmaking/queue/response";
+          messageId: string;
+          commandId: "matchmaking/queue/response";
           status: "success";
       }
     | {
-          command: "matchmaking/queue/response";
+          messageId: string;
+          commandId: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_queue_specified" | "already_ingame" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "invalid_queue_specified";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "already_ingame";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/queue/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/queue/response",
     "status": "success"
 }
 ```
@@ -759,12 +1168,14 @@ Contains some info about the state of the current queue.
 {
     "$id": "matchmaking/queueUpdate/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/queueUpdate/response",
                     "type": "string"
                 },
@@ -785,7 +1196,8 @@ Contains some info about the state of the current queue.
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -793,7 +1205,10 @@ Contains some info about the state of the current queue.
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/queueUpdate/response",
                     "type": "string"
                 },
@@ -802,24 +1217,65 @@ Contains some info about the state of the current queue.
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queueUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queueUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -834,23 +1290,38 @@ Contains some info about the state of the current queue.
 ```ts
 export type MatchmakingQueueUpdateResponse =
     | {
-          command: "matchmaking/queueUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
           status: "success";
           data: {
               playersQueued: number;
           };
       }
     | {
-          command: "matchmaking/queueUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/queueUpdate/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/queueUpdate/response",
     "status": "success",
     "data": {
         "playersQueued": -75320000
@@ -874,16 +1345,19 @@ Clients should send this when they are ready to proceed with the found match. If
 {
     "$id": "matchmaking/ready/request",
     "requiresLogin": false,
-    "requiresRole": false,
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "matchmaking/ready/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
 ```
@@ -893,14 +1367,16 @@ Clients should send this when they are ready to proceed with the found match. If
 #### TypeScript Definition
 ```ts
 export interface MatchmakingReadyRequest {
-    command: "matchmaking/ready/request";
+    messageId: string;
+    commandId: "matchmaking/ready/request";
 }
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/ready/request"
+    "messageId": "mollit",
+    "commandId": "matchmaking/ready/request"
 }
 ```
 ### Response
@@ -912,12 +1388,14 @@ export interface MatchmakingReadyRequest {
 {
     "$id": "matchmaking/ready/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/ready/response",
                     "type": "string"
                 },
@@ -927,14 +1405,18 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status"
             ]
         },
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/ready/response",
                     "type": "string"
                 },
@@ -943,28 +1425,91 @@ export interface MatchmakingReadyRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "no_match",
-                            "type": "string"
-                        },
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "no_match",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/ready/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/ready/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/ready/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -979,20 +1524,41 @@ export interface MatchmakingReadyRequest {
 ```ts
 export type MatchmakingReadyResponse =
     | {
-          command: "matchmaking/ready/response";
+          messageId: string;
+          commandId: "matchmaking/ready/response";
           status: "success";
       }
     | {
-          command: "matchmaking/ready/response";
+          messageId: string;
+          commandId: "matchmaking/ready/response";
           status: "failed";
-          reason: "no_match" | "internal_error" | "unauthorized" | "invalid_command";
+          reason: "no_match";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/ready/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/ready/response",
     "status": "success"
 }
 ```
@@ -1013,12 +1579,14 @@ Sent when a client in a found match readies up.
 {
     "$id": "matchmaking/readyUpdate/response",
     "requiresLogin": false,
-    "requiresRole": false,
     "anyOf": [
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/readyUpdate/response",
                     "type": "string"
                 },
@@ -1043,7 +1611,8 @@ Sent when a client in a found match readies up.
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
                 "status",
                 "data"
             ]
@@ -1051,7 +1620,10 @@ Sent when a client in a found match readies up.
         {
             "type": "object",
             "properties": {
-                "command": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
                     "const": "matchmaking/readyUpdate/response",
                     "type": "string"
                 },
@@ -1060,24 +1632,65 @@ Sent when a client in a found match readies up.
                     "type": "string"
                 },
                 "reason": {
-                    "anyOf": [
-                        {
-                            "const": "internal_error",
-                            "type": "string"
-                        },
-                        {
-                            "const": "unauthorized",
-                            "type": "string"
-                        },
-                        {
-                            "const": "invalid_command",
-                            "type": "string"
-                        }
-                    ]
+                    "const": "internal_error",
+                    "type": "string"
                 }
             },
             "required": [
-                "command",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/readyUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/readyUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
                 "status",
                 "reason"
             ]
@@ -1092,7 +1705,8 @@ Sent when a client in a found match readies up.
 ```ts
 export type MatchmakingReadyUpdateResponse =
     | {
-          command: "matchmaking/readyUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
           status: "success";
           data: {
               readyMax: number;
@@ -1100,16 +1714,30 @@ export type MatchmakingReadyUpdateResponse =
           };
       }
     | {
-          command: "matchmaking/readyUpdate/response";
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "internal_error" | "unauthorized" | "invalid_command";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
+          status: "failed";
+          reason: "invalid_command";
       };
 
 ```
 #### Example
 ```json
 {
-    "command": "matchmaking/readyUpdate/response",
+    "messageId": "mollit",
+    "commandId": "matchmaking/readyUpdate/response",
     "status": "success",
     "data": {
         "readyMax": -75320000,

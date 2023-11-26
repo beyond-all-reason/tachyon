@@ -1,10 +1,13 @@
 {
     "$id": "bot/slave/request",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "bot/slave/request",
             "type": "string"
         },
@@ -23,7 +26,8 @@
         }
     },
     "required": [
-        "command",
+        "messageId",
+        "commandId",
         "data"
     ]
 }

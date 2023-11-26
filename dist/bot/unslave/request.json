@@ -1,15 +1,19 @@
 {
     "$id": "bot/unslave/request",
     "requiresLogin": false,
-    "requiresRole": true,
+    "requiresRole": "autohost",
     "type": "object",
     "properties": {
-        "command": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
             "const": "bot/unslave/request",
             "type": "string"
         }
     },
     "required": [
-        "command"
+        "messageId",
+        "commandId"
     ]
 }
