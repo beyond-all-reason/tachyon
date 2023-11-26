@@ -253,7 +253,7 @@ Sends the current version of the protocol to new Websocket clients as soon as th
                     "type": "object",
                     "properties": {
                         "tachyonVersion": {
-                            "const": "0.1.12",
+                            "const": "0.2.0",
                             "type": "string"
                         },
                         "versionParity": {
@@ -386,7 +386,7 @@ export type SystemVersionResponse =
           commandId: "system/version/response";
           status: "success";
           data: {
-              tachyonVersion: "0.1.12";
+              tachyonVersion: "0.2.0";
               versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
           };
       }
@@ -417,7 +417,7 @@ export type SystemVersionResponse =
     "commandId": "system/version/response",
     "status": "success",
     "data": {
-        "tachyonVersion": "0.1.12",
+        "tachyonVersion": "0.2.0",
         "versionParity": "major_mismatch"
     }
 }

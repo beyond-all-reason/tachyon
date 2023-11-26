@@ -749,7 +749,7 @@ export type SystemVersionResponse =
           commandId: "system/version/response";
           status: "success";
           data: {
-              tachyonVersion: "0.1.12";
+              tachyonVersion: "0.2.0";
               versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
           };
       }
