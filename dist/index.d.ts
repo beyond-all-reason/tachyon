@@ -1016,8 +1016,6 @@ export interface SystemDisconnectRequest {
     messageId: string;
     commandId: "system/disconnect/request";
 }
-export type Username = string;
-
 export type Email = string;
 
 export interface BattleStatus {
@@ -1040,7 +1038,7 @@ export interface BattleStatus {
 
 export interface UserClient {
     userId: number;
-    username: string;
+    displayName: string;
     clanId: number | null;
     icons: {
         /**
@@ -1071,7 +1069,7 @@ export interface UserClient {
 
 export interface PrivateUserClient {
     userId: number;
-    username: string;
+    displayName: string;
     clanId: number | null;
     icons: {
         /**

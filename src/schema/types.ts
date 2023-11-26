@@ -2,13 +2,6 @@ import { Type } from "@sinclair/typebox";
 
 import { Nullable } from "@/helpers";
 
-export const username = Type.String({
-    minLength: 3,
-    maxLength: 20,
-    pattern: "^[A-Za-z0-9_-]+$",
-    examples: ["Bob"],
-});
-
 export const email = Type.String({
     format: "email",
     examples: ["bob@test.com"],
@@ -34,7 +27,7 @@ export const battleStatus = Type.Object({
 
 export const userClient = Type.Object({
     userId: Type.Integer(),
-    username: Type.String(),
+    displayName: Type.String(),
     clanId: Nullable(Type.Integer()),
     icons: Type.Record(Type.String(), Type.String()),
     roles: Type.Array(
