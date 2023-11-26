@@ -6,7 +6,9 @@ Tachyon is the name of the protocol designed to replace the old [Spring Lobby Pr
 
 ## Connecting
 
-To connect to a Tachyon WebSocket server, the client should add a `tachyonVersion` query parameter which specifies which version of Tachyon they're using, e.g. `wss://tachyon-server.com?tachyonVersion=1.2.3`. The server should send a [`system/version/response`](docs/system.md/#version) command containing the version of the Tachyon protocol that is being served and `versionParity` field stating how it differs to the client's version. Ideally, clients should ensure their implementation is using the same version of the protocol, which can be found in this repo's [`package.json`](package.json). However, it is up to the client to decide how to handle version mismatches, and the server should not terminate clients because of a version disparity. Once connected, follow the instructions in the [account](docs/account.md) service to register and login in order to gain authorization to the rest of the protocol.
+To connect to a Tachyon WebSocket server, the client should add a `tachyonVersion` query parameter which specifies which version of Tachyon they're using, e.g. `wss://tachyon-server.com?tachyonVersion=1.2.3`. The server should send a [`system/version/response`](docs/system.md/#version) command containing the version of the Tachyon protocol that is being served and `versionParity` field stating how it differs to the client's version. Ideally, clients should ensure their implementation is using the same version of the protocol, which can be found in this repo's [`package.json`](package.json). However, it is up to the client to decide how to handle version mismatches, and the server should not terminate clients because of a version disparity.
+
+TODO: document auth
 
 ## Terminology
 
@@ -41,7 +43,7 @@ Every command has the following properties:
 | Property   | Type   | Description                                                                           |
 | ---------- | ------ | ------------------------------------------------------------------------------------- |
 | messsageId | string | A unique identifier for a pair of request/response commands which links them together |
-| commandId  | string | The identifier of this command's type, e.g. `account/register/request`                |
+| commandId  | string | The identifier of this command's type, e.g. `lobby/create/request`                    |
 
 ### Requests
 
@@ -77,49 +79,43 @@ A schema file looks like this:
 
 ```ts
 import { Type } from "@sinclair/typebox";
+
 import { defineEndpoint } from "@/helpers";
 
 export default defineEndpoint({
-    description: "Registers a new account.",
-    requiresLogin: false, // if omitted, defaults to true
+    description: "Create a new lobby - intended for player clients to summon a dedicated host.",
     request: {
-        // data property is optional
         data: Type.Object(
             {
-                email: Type.String({ format: "email" }), // JSONSchema supports a number of options for each data type
-                username: Type.String(),
-                hashedPassword: Type.String(),
+                title: Type.String({ minLength: 2, maxLength: 30 }),
+                private: Type.Boolean({ default: true }),
+                region: Type.String(),
+                maxPlayers: Type.Integer({ minimum: 0, default: 16 }),
             },
             {
-                // examples will be shown in the generated documentation
                 examples: [
                     {
-                        email: "bob@test.com",
-                        username: "bob",
-                        hashedPassword: "1b311ff1a6af12fba8720bd2ce02c960",
+                        title: "8v8 | All Welcome",
+                        private: false,
+                        region: "EU",
+                        maxPlayers: 16,
                     },
                 ],
             }
         ),
     },
-    response: [
-        { status: "success" }, // can also add data here
-        { status: "failed", reason: "email_taken" },
-        { status: "failed", reason: "username_taken" },
-        { status: "failed", reason: "invalid_username" },
-    ],
+    response: [{ status: "success" }, { status: "failed", reason: "no_hosts_available" }, { status: "failed", reason: "invalid_region" }],
 });
 ```
 
 ### Endpoint Options
 
-| Option        | Type    | Description                                                  |
-| ------------- | ------- | ------------------------------------------------------------ |
-| request       | object  | The request schema for this endpoint                         |
-| response      | object  | The response schema for this endpoint                        |
-| description   | string  | A description of what this endpoint is for                   |
-| requiresLogin | boolean | Does the endpoint require the client to be logged in         |
-| requiresRole  | string  | If specified, only users with this role can use the endpoint |
-| order         | number  | Determines the order endpoint appears in the docs            |
+| Option        | Type    | Description                                          |
+| ------------- | ------- | ---------------------------------------------------- |
+| request       | object  | The request schema for this endpoint                 |
+| response      | object  | The response schema for this endpoint                |
+| description   | string  | A description of what this endpoint is for           |
+| requiresLogin | boolean | Does the endpoint require the client to be logged in |
+| order         | number  | Determines the order endpoint appears in the docs    |
 
 If `request` is omitted, then this describes an endpoint of which the server can send a `response` for at any time, and the client should be ready to handle it. Similarly, if `response` is omitted, this describes an endpoint of which the client should not expect a response, however, the server may still send one, typically for failed responses.

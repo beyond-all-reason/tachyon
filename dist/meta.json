@@ -1,28 +1,6 @@
 {
     "version": "0.1.12",
     "ids": {
-        "account": {
-            "getToken": [
-                "request",
-                "response"
-            ],
-            "login": [
-                "request",
-                "response"
-            ],
-            "recover": [
-                "request",
-                "response"
-            ],
-            "register": [
-                "request",
-                "response"
-            ],
-            "rename": [
-                "request",
-                "response"
-            ]
-        },
         "bot": {
             "slave": [
                 "request",

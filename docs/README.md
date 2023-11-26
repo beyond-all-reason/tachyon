@@ -2,7 +2,6 @@
 
 # Services
 
-- [account](account.md)
 - [bot](bot.md)
 - [game](game.md)
 - [lobby](lobby.md)
