@@ -4,11 +4,13 @@ Tachyon is the name of the protocol designed to replace the old [Spring Lobby Pr
 
 [Schema Reference](docs/README.md)
 
+## Authorization
+
+See [dedicated authorization documentation page](docs/authorization.md).
+
 ## Connecting
 
 To connect to a Tachyon WebSocket server, the client should add a `tachyonVersion` query parameter which specifies which version of Tachyon they're using, e.g. `wss://tachyon-server.com?tachyonVersion=1.2.3`. The server should send a [`system/version/response`](docs/system.md/#version) command containing the version of the Tachyon protocol that is being served and `versionParity` field stating how it differs to the client's version. Ideally, clients should ensure their implementation is using the same version of the protocol, which can be found in this repo's [`package.json`](package.json). However, it is up to the client to decide how to handle version mismatches, and the server should not terminate clients because of a version disparity.
-
-TODO: document auth
 
 ## Terminology
 
