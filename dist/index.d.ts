@@ -1016,8 +1016,6 @@ export interface SystemDisconnectRequest {
     messageId: string;
     commandId: "system/disconnect/request";
 }
-export type Email = string;
-
 export interface BattleStatus {
     lobbyId: number | null;
     inGame: boolean;
@@ -1096,7 +1094,6 @@ export interface PrivateUserClient {
         partyId: number | null;
         muted: boolean;
     } | null;
-    email: string;
     friends: number[];
     friendRequests: number[];
     ignores: number[];

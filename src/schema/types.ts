@@ -2,11 +2,6 @@ import { Type } from "@sinclair/typebox";
 
 import { Nullable } from "@/helpers";
 
-export const email = Type.String({
-    format: "email",
-    examples: ["bob@test.com"],
-});
-
 export const battleStatus = Type.Object({
     lobbyId: Nullable(Type.Integer()),
     inGame: Type.Boolean(),
@@ -46,7 +41,6 @@ export const userClient = Type.Object({
 export const privateUserClient = Type.Composite([
     userClient,
     Type.Object({
-        email: Type.String({ format: "email" }),
         friends: Type.Array(Type.Integer()),
         friendRequests: Type.Array(Type.Integer()),
         ignores: Type.Array(Type.Integer()),
