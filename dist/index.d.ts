@@ -749,6 +749,33 @@ export type SystemConnectedResponse =
           status: "failed";
           reason: "invalid_command";
       };
+export type SystemServerStatsResponse =
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "success";
+          data: {
+              userCount: number;
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
 
 export interface Tachyon {
     bot: {
@@ -910,6 +937,13 @@ export interface Tachyon {
         disconnect: {
             request: SystemDisconnectRequest;
         };
+        /**
+         * Get server stats such as user count.
+         */
+        serverStats: {
+            request: SystemServerStatsRequest;
+            response: SystemServerStatsResponse;
+        };
     };
 }
 export interface BotSlaveRequest {
@@ -985,6 +1019,10 @@ export interface MatchmakingReadyRequest {
 export interface SystemDisconnectRequest {
     messageId: string;
     commandId: "system/disconnect/request";
+}
+export interface SystemServerStatsRequest {
+    messageId: string;
+    commandId: "system/serverStats/request";
 }
 export interface BattleStatus {
     lobbyId: number | null;

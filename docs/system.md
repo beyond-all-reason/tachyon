@@ -4,6 +4,7 @@
 
 - [connected](#connected)
 - [disconnect](#disconnect)
+- [serverStats](#serverstats)
 ---
 
 ## Connected
@@ -246,5 +247,225 @@ export interface SystemDisconnectRequest {
 {
     "messageId": "mollit",
     "commandId": "system/disconnect/request"
+}
+```
+---
+
+## ServerStats
+
+Get server stats such as user count.
+
+- Endpoint Type: **Request** -> **Response**
+- Requires Login: **false**
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "system/serverStats/request",
+    "requiresLogin": false,
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "system/serverStats/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId"
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export interface SystemServerStatsRequest {
+    messageId: string;
+    commandId: "system/serverStats/request";
+}
+
+```
+#### Example
+```json
+{
+    "messageId": "mollit",
+    "commandId": "system/serverStats/request"
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "system/serverStats/response",
+    "requiresLogin": false,
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "userCount": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "userCount"
+                    ]
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type SystemServerStatsResponse =
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "success";
+          data: {
+              userCount: number;
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+
+```
+#### Example
+```json
+{
+    "messageId": "mollit",
+    "commandId": "system/serverStats/response",
+    "status": "success",
+    "data": {
+        "userCount": -75320000
+    }
 }
 ```

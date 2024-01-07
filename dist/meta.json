@@ -90,6 +90,10 @@
             ],
             "disconnect": [
                 "request"
+            ],
+            "serverStats": [
+                "request",
+                "response"
             ]
         }
     }
