@@ -32,6 +32,7 @@ export async function generateTSDefs(fullSchema: TObject) {
         typings += type + "\n";
     }
 
+    // 🤪
     typings += `
 export type ServiceId = keyof Tachyon;
 
@@ -51,7 +52,7 @@ export type ResponseType<S extends ServiceId, E extends ResponseEndpointId<S>> =
 
 export type RequestData<S extends ServiceId, E extends RequestEndpointId<S>> = Tachyon[S][E] extends { request: { data: infer Data } } ? Data : never;
 
-export type ResponseData<S extends ServiceId, E extends ResponseEndpointId<S>> = Tachyon[S][E] extends { response: { data: infer Data } } ? Data : never;
+export type SuccessResponseData<S extends ServiceId, E extends ResponseEndpointId<S>> = ResponseType<S, E> & { status: "success" } extends { data: infer Data } ? Data : never;
 
 export type RemoveField<T, K extends string> = T extends { [P in K]: any } ? Omit<T, K> : never;
 
