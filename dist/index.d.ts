@@ -719,55 +719,33 @@ export type MatchmakingReadyUpdateResponse =
           status: "failed";
           reason: "invalid_command";
       };
-export type SystemDisconnectedResponse =
+export type SystemConnectedResponse =
     | {
           messageId: string;
-          commandId: "system/disconnected/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type SystemVersionResponse =
-    | {
-          messageId: string;
-          commandId: "system/version/response";
+          commandId: "system/connected/response";
           status: "success";
           data: {
-              tachyonVersion: "0.2.1";
-              versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
+              accountId: number;
+              displayName: string;
+              avatarUrl: string;
+              countryCode?: string;
           };
       }
     | {
           messageId: string;
-          commandId: "system/version/response";
+          commandId: "system/connected/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "system/version/response";
+          commandId: "system/connected/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "system/version/response";
+          commandId: "system/connected/response";
           status: "failed";
           reason: "invalid_command";
       };
@@ -921,24 +899,16 @@ export interface Tachyon {
     };
     system: {
         /**
-         * Ask the server to terminate the connection. The server will send a [disconnected](#disconnected) response.
+         * Sent immediately by the server on connection.
+         */
+        connected: {
+            response: SystemConnectedResponse;
+        };
+        /**
+         * Ask the server to terminate the connection.
          */
         disconnect: {
             request: SystemDisconnectRequest;
-        };
-        /**
-         * Sent when the server terminates the WebSocket connection with the client.
-         */
-        disconnected: {
-            response: SystemDisconnectedResponse;
-        };
-        /**
-         * Sends the current version of the protocol to new Websocket clients as soon as they connect.
-         *
-         *         Clients should send the version they're using in the WS connection URL, e.g. ?tachyonVersion=1.1.2.
-         */
-        version: {
-            response: SystemVersionResponse;
         };
     };
 }

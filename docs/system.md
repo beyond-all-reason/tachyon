@@ -2,14 +2,206 @@
 
 # System
 
+- [connected](#connected)
 - [disconnect](#disconnect)
-- [disconnected](#disconnected)
-- [version](#version)
+---
+
+## Connected
+
+Sent immediately by the server on connection.
+
+- Endpoint Type: **Response** only
+- Requires Login: **false**
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "system/connected/response",
+    "requiresLogin": false,
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "accountId": {
+                            "type": "integer"
+                        },
+                        "displayName": {
+                            "type": "string"
+                        },
+                        "avatarUrl": {
+                            "type": "string"
+                        },
+                        "countryCode": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "accountId",
+                        "displayName",
+                        "avatarUrl"
+                    ]
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type SystemConnectedResponse =
+    | {
+          messageId: string;
+          commandId: "system/connected/response";
+          status: "success";
+          data: {
+              accountId: number;
+              displayName: string;
+              avatarUrl: string;
+              countryCode?: string;
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "system/connected/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/connected/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/connected/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+
+```
+#### Example
+```json
+{
+    "messageId": "mollit",
+    "commandId": "system/connected/response",
+    "status": "success",
+    "data": {
+        "accountId": -75320000,
+        "displayName": "mollit",
+        "avatarUrl": "mollit"
+    }
+}
+```
 ---
 
 ## Disconnect
 
-Ask the server to terminate the connection. The server will send a [disconnected](#disconnected) response.
+Ask the server to terminate the connection.
 
 - Endpoint Type: **Request** only
 - Requires Login: **false**
@@ -54,371 +246,5 @@ export interface SystemDisconnectRequest {
 {
     "messageId": "mollit",
     "commandId": "system/disconnect/request"
-}
-```
----
-
-## Disconnected
-
-Sent when the server terminates the WebSocket connection with the client.
-
-- Endpoint Type: **Response** only
-- Requires Login: **false**
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "system/disconnected/response",
-    "requiresLogin": false,
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_command",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        }
-    ]
-}
-```
-
-</details>
-
-#### TypeScript Definition
-```ts
-export type SystemDisconnectedResponse =
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnected/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "system/disconnected/response",
-    "status": "success"
-}
-```
----
-
-## Version
-
-Sends the current version of the protocol to new Websocket clients as soon as they connect.
-        
-        Clients should send the version they're using in the WS connection URL, e.g. ?tachyonVersion=1.1.2.
-
-- Endpoint Type: **Response** only
-- Requires Login: **false**
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "system/version/response",
-    "requiresLogin": false,
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/version/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "tachyonVersion": {
-                            "const": "0.2.1",
-                            "type": "string"
-                        },
-                        "versionParity": {
-                            "anyOf": [
-                                {
-                                    "const": "major_mismatch",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "minor_mismatch",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "patch_mismatch",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "match",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "unknown",
-                                    "type": "string"
-                                }
-                            ]
-                        }
-                    },
-                    "required": [
-                        "tachyonVersion",
-                        "versionParity"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/version/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/version/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/version/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_command",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        }
-    ]
-}
-```
-
-</details>
-
-#### TypeScript Definition
-```ts
-export type SystemVersionResponse =
-    | {
-          messageId: string;
-          commandId: "system/version/response";
-          status: "success";
-          data: {
-              tachyonVersion: "0.2.1";
-              versionParity: "major_mismatch" | "minor_mismatch" | "patch_mismatch" | "match" | "unknown";
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "system/version/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/version/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/version/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "system/version/response",
-    "status": "success",
-    "data": {
-        "tachyonVersion": "0.2.1",
-        "versionParity": "major_mismatch"
-    }
 }
 ```

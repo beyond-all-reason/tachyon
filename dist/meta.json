@@ -85,14 +85,11 @@
             ]
         },
         "system": {
+            "connected": [
+                "response"
+            ],
             "disconnect": [
                 "request"
-            ],
-            "disconnected": [
-                "response"
-            ],
-            "version": [
-                "response"
             ]
         }
     }
