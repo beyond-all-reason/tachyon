@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/schema-helpers";
+import { defineEndpoint } from "@/generator-helpers";
 
 export default defineEndpoint({
     description: `Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data. 

@@ -1,41 +1,6 @@
 import { EmptyObject } from 'type-fest';
 import { ValidateFunction } from 'ajv';
 
-type ServiceId = keyof Tachyon;
-type EndpointId<S extends ServiceId> = keyof Tachyon[S];
-type Command<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E];
-type RequestId<S extends ServiceId> = {
-    [K in EndpointId<S>]: Request<S, K> extends never ? never : K;
-}[EndpointId<S>];
-type ResponseId<S extends ServiceId> = {
-    [K in EndpointId<S>]: Response<S, K> extends never ? never : K;
-}[EndpointId<S>];
-type Request<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
-    request: infer Request;
-} ? Request : never;
-type Response<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
-    response: infer Response;
-} ? Response : never;
-type RequestData<S extends ServiceId, E extends EndpointId<S>> = Request<S, E> extends {
-    data: infer Data;
-} ? Data : never;
-type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = Response<S, E> & {
-    status: "success";
-} extends {
-    data: infer Data;
-} ? Data : never;
-type EmptyRequestId<S extends ServiceId> = {
-    [K in RequestId<S>]: RequestData<S, K> extends EmptyObject ? K : never;
-}[RequestId<S>];
-type DataRequestId<S extends ServiceId> = {
-    [K in RequestId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
-}[RequestId<S>];
-type GenericRequestCommand = {
-    messageId: string;
-    commandId: string;
-    data?: Record<string, unknown>;
-};
-
 declare const tachyonMeta: {
     readonly version: "0.3.1";
     readonly ids: {
@@ -78,11 +43,48 @@ declare const tachyonMeta: {
     };
 };
 
+type ServiceId = keyof Tachyon;
+type EndpointId<S extends ServiceId> = keyof Tachyon[S];
+type Command<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E];
+type Request<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+    request: infer Request;
+} ? Request : never;
+type Response<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+    response: infer Response;
+} ? Response : never;
+type RequestEndpointId<S extends ServiceId> = {
+    [K in EndpointId<S>]: Request<S, K> extends never ? never : K;
+}[EndpointId<S>];
+type ResponseEndpointId<S extends ServiceId> = {
+    [K in EndpointId<S>]: Response<S, K> extends never ? never : K;
+}[EndpointId<S>];
+type RequestOnlyEndpointId<S extends ServiceId> = Exclude<RequestEndpointId<S>, ResponseEndpointId<S>>;
+type ResponseOnlyEndpointId<S extends ServiceId> = Exclude<ResponseEndpointId<S>, RequestEndpointId<S>>;
+type RequestData<S extends ServiceId, E extends EndpointId<S>> = Request<S, E> extends {
+    data: infer Data;
+} ? Data : never;
+type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = Response<S, E> & {
+    status: "success";
+} extends {
+    data: infer Data;
+} ? Data : never;
+type EmptyRequestId<S extends ServiceId> = {
+    [K in RequestEndpointId<S>]: RequestData<S, K> extends EmptyObject ? K : never;
+}[RequestEndpointId<S>];
+type DataRequestId<S extends ServiceId> = {
+    [K in RequestEndpointId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
+}[RequestEndpointId<S>];
+type GenericRequestCommand = {
+    messageId: string;
+    commandId: string;
+    data?: Record<string, unknown>;
+};
+
 declare function getValidator<T extends {
     commandId: string;
 }>(command: T): ValidateFunction<T>;
 
-export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, Request, RequestData, RequestId, Response, ResponseId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
+export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, Request, RequestData, RequestEndpointId, RequestOnlyEndpointId, Response, ResponseEndpointId, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
 export type BotSlaveResponse =
     | {

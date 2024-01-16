@@ -1,4 +1,4 @@
-import { defineEndpoint } from "@/schema-helpers";
+import { defineEndpoint } from "@/generator-helpers";
 import { privateUser } from "@/schema/types";
 
 export default defineEndpoint({

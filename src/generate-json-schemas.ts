@@ -4,7 +4,7 @@ import fs from "fs";
 import jsf from "json-schema-faker";
 import path from "path";
 
-import { EndpointConfig } from "@/schema-helpers";
+import { EndpointConfig } from "@/generator-helpers";
 
 jsf.option("useExamplesValue", true);
 jsf.option("random", () => 0.1234);

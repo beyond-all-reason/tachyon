@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/schema-helpers";
+import { defineEndpoint } from "@/generator-helpers";
 
 export default defineEndpoint({
     description: "Contains some info about the state of the current queue.",

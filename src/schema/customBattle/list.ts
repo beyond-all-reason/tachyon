@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/schema-helpers";
+import { defineEndpoint } from "@/generator-helpers";
 import { customBattle } from "@/schema/types";
 
 export default defineEndpoint({
