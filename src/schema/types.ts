@@ -124,7 +124,7 @@ export const battle = Type.Object(
                     0: { x: 0, y: 0, width: 1, height: 0.3 },
                     1: { x: 0, y: 0.7, width: 1, height: 0.3 },
                 },
-                startTime: Date.now(),
+                startTime: 1705432698,
                 ip: "121.32.201.76",
                 port: 41403,
                 scriptPassword: "10sdfi90sid0sjkdf",

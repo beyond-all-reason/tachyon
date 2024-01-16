@@ -4,7 +4,7 @@ import { objectKeys, titleCase } from "jaz-ts-utils";
 import { compile } from "json-schema-to-typescript";
 
 export async function generateTSDefs(fullSchema: TObject) {
-    let typings = "";
+    let typings = "\n";
 
     typings += await compile(fullSchema, "Tachyon", {
         additionalProperties: false,
@@ -33,8 +33,5 @@ export async function generateTSDefs(fullSchema: TObject) {
         typings += type + "\n";
     }
 
-    const helpers = await fs.promises.readFile("src/generated-helpers.d.ts", { encoding: "utf-8" });
-    typings += helpers;
-
-    await fs.promises.appendFile(`dist/index.d.ts`, typings + "\n");
+    await fs.promises.appendFile(`dist/index.d.ts`, typings);
 }

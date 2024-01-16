@@ -1045,7 +1045,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "height": 0.3
                                 }
                             },
-                            "startTime": 1705366151472,
+                            "startTime": 1705432698,
                             "ip": "121.32.201.76",
                             "port": 41403,
                             "scriptPassword": "10sdfi90sid0sjkdf",
@@ -1662,7 +1662,7 @@ export type CustomBattleJoinedResponse =
                 "height": 0.3
             }
         },
-        "startTime": 1705366151472,
+        "startTime": 1705432698,
         "ip": "121.32.201.76",
         "port": 41403,
         "scriptPassword": "10sdfi90sid0sjkdf",
@@ -2170,7 +2170,7 @@ export interface CustomBattleListRequest {
                                                 "height": 0.3
                                             }
                                         },
-                                        "startTime": 1705366151472,
+                                        "startTime": 1705432698,
                                         "ip": "121.32.201.76",
                                         "port": 41403,
                                         "scriptPassword": "10sdfi90sid0sjkdf",
@@ -2222,7 +2222,7 @@ export interface CustomBattleListRequest {
                                                         "height": 0.3
                                                     }
                                                 },
-                                                "startTime": 1705366151472,
+                                                "startTime": 1705432698,
                                                 "ip": "121.32.201.76",
                                                 "port": 41403,
                                                 "scriptPassword": "10sdfi90sid0sjkdf",
@@ -2948,7 +2948,7 @@ export type CustomBattleListResponse =
                         "height": 0.3
                     }
                 },
-                "startTime": 1705366151472,
+                "startTime": 1705432698,
                 "ip": "121.32.201.76",
                 "port": 41403,
                 "scriptPassword": "10sdfi90sid0sjkdf",

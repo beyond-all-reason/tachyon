@@ -1,4 +1,4 @@
-import { EmptyObject } from "type-fest";
+import type { EmptyObject } from "type-fest";
 
 export type ServiceId = keyof Tachyon;
 export type EndpointId<S extends ServiceId> = keyof Tachyon[S];

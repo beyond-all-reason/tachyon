@@ -15,5 +15,3 @@ export const tachyonMeta = ${JSON.stringify(meta, null, 4)} as const;`;
 
     await fs.promises.writeFile("src/meta.ts", metaStr);
 }
-
-// TODO: generate meta as .ts file that exports a const in tmp dir and then compile it in generate-compiled?
