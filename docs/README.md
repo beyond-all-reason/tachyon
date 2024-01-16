@@ -3,7 +3,7 @@
 # Services
 
 - [bot](bot.md)
+- [customBattle](customBattle.md)
 - [game](game.md)
-- [lobby](lobby.md)
 - [matchmaking](matchmaking.md)
 - [system](system.md)

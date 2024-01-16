@@ -1,8 +1,52 @@
-/**
- * This file was automatically generated, do not edit it manually.
- * Instead modify the .ts files in src/schema and do npm run build
- */
+import { ValidateFunction } from 'ajv';
 
+declare const tachyonMeta: {
+    readonly version: "0.3.1";
+    readonly ids: {
+        readonly bot: {
+            readonly slave: readonly ["request", "response"];
+            readonly unslave: readonly ["request", "response"];
+        };
+        readonly customBattle: {
+            readonly close: readonly ["request", "response"];
+            readonly create: readonly ["request", "response"];
+            readonly join: readonly ["request", "response"];
+            readonly joined: readonly ["response"];
+            readonly leave: readonly ["request", "response"];
+            readonly left: readonly ["response"];
+            readonly list: readonly ["request", "response"];
+            readonly receiveMessage: readonly ["response"];
+            readonly sendMessage: readonly ["request", "response"];
+            readonly subscribe: readonly ["request", "response"];
+            readonly unsubscribe: readonly ["request", "response"];
+            readonly updated: readonly ["response"];
+        };
+        readonly game: {
+            readonly launch: readonly ["response"];
+        };
+        readonly matchmaking: {
+            readonly cancel: readonly ["request", "response"];
+            readonly found: readonly ["response"];
+            readonly list: readonly ["request", "response"];
+            readonly lost: readonly ["response"];
+            readonly queue: readonly ["request", "response"];
+            readonly queueUpdate: readonly ["response"];
+            readonly ready: readonly ["request", "response"];
+            readonly readyUpdate: readonly ["response"];
+        };
+        readonly system: {
+            readonly connected: readonly ["response"];
+            readonly disconnect: readonly ["request"];
+            readonly serverStats: readonly ["request", "response"];
+        };
+    };
+};
+
+declare function getValidator<T extends {
+    commandId: string;
+}>(command: T): ValidateFunction<T>;
+
+export { getValidator, tachyonMeta };
 export type BotSlaveResponse =
     | {
           messageId: string;
@@ -51,6 +95,659 @@ export type BotUnslaveResponse =
           status: "failed";
           reason: "invalid_command";
       };
+export type CustomBattleCloseResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/close/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/close/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/close/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/close/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleCreateResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/create/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/create/response";
+          status: "failed";
+          reason: "no_hosts_available";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/create/response";
+          status: "failed";
+          reason: "invalid_region";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/create/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/create/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/create/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleJoinResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "locked";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "requires_password";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "invalid_password";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "max_participants_reached";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "rank_too_low";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "rank_too_high";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "banned";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/join/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleJoinedResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/joined/response";
+          status: "success";
+          data: {
+              battleId: number;
+              hostId: number;
+              engine: string;
+              game: string;
+              map: string;
+              startPosType: 0 | 1 | 2;
+              startAreas: {
+                  /**
+                   * This interface was referenced by `undefined`'s JSON-Schema definition
+                   * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                   */
+                  [k: string]: {
+                      x: number;
+                      y: number;
+                      width: number;
+                      height: number;
+                  };
+              };
+              startTime: number | null;
+              ip: string | null;
+              port: number | null;
+              scriptPassword: string | null;
+              modOptions: {
+                  /**
+                   * This interface was referenced by `undefined`'s JSON-Schema definition
+                   * via the `patternProperty` "^(.*)$".
+                   */
+                  [k: string]: unknown;
+              };
+              bots: ({
+                  playerId: number;
+                  teamId: number;
+                  color: string;
+                  bonus: number;
+                  inGame: boolean;
+              } & {
+                  isSpectator: false;
+                  isBot: true;
+                  ownerId: number;
+                  aiShortName: string;
+                  name: string;
+                  aiOptions: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(.*)$".
+                       */
+                      [k: string]: unknown;
+                  };
+                  faction: string;
+              })[];
+              users: {
+                  userId: number;
+                  displayName: string;
+                  avatarUrl: string;
+                  clanId: number | null;
+                  partyId: number | null;
+                  roles: string[];
+                  countryCode?: string;
+                  battleStatus:
+                      | ({
+                            battleId: number;
+                        } & (
+                            | ({
+                                  playerId: number;
+                                  teamId: number;
+                                  color: string;
+                                  bonus: number;
+                                  inGame: boolean;
+                              } & {
+                                  isSpectator: false;
+                                  isBot: false;
+                                  ready: boolean;
+                                  sync: {
+                                      engine: number;
+                                      game: number;
+                                      map: number;
+                                  };
+                              })
+                            | {
+                                  isSpectator: true;
+                                  isBot: false;
+                              }
+                        ))
+                      | null;
+              }[];
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/joined/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/joined/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/joined/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleLeaveResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/leave/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/leave/response";
+          status: "failed";
+          reason: "no_lobby";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/leave/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/leave/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/leave/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleLeftResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/left/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/left/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/left/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/left/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleListResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/list/response";
+          status: "success";
+          data: {
+              battles: ({
+                  battleId: number;
+                  hostId: number;
+                  engine: string;
+                  game: string;
+                  map: string;
+                  startPosType: 0 | 1 | 2;
+                  startAreas: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                       */
+                      [k: string]: {
+                          x: number;
+                          y: number;
+                          width: number;
+                          height: number;
+                      };
+                  };
+                  startTime: number | null;
+                  ip: string | null;
+                  port: number | null;
+                  scriptPassword: string | null;
+                  modOptions: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(.*)$".
+                       */
+                      [k: string]: unknown;
+                  };
+                  bots: ({
+                      playerId: number;
+                      teamId: number;
+                      color: string;
+                      bonus: number;
+                      inGame: boolean;
+                  } & {
+                      isSpectator: false;
+                      isBot: true;
+                      ownerId: number;
+                      aiShortName: string;
+                      name: string;
+                      aiOptions: {
+                          /**
+                           * This interface was referenced by `undefined`'s JSON-Schema definition
+                           * via the `patternProperty` "^(.*)$".
+                           */
+                          [k: string]: unknown;
+                      };
+                      faction: string;
+                  })[];
+                  users: {
+                      userId: number;
+                      displayName: string;
+                      avatarUrl: string;
+                      clanId: number | null;
+                      partyId: number | null;
+                      roles: string[];
+                      countryCode?: string;
+                      battleStatus:
+                          | ({
+                                battleId: number;
+                            } & (
+                                | ({
+                                      playerId: number;
+                                      teamId: number;
+                                      color: string;
+                                      bonus: number;
+                                      inGame: boolean;
+                                  } & {
+                                      isSpectator: false;
+                                      isBot: false;
+                                      ready: boolean;
+                                      sync: {
+                                          engine: number;
+                                          game: number;
+                                          map: number;
+                                      };
+                                  })
+                                | {
+                                      isSpectator: true;
+                                      isBot: false;
+                                  }
+                            ))
+                          | null;
+                  }[];
+              } & {
+                  title: string;
+                  locked: boolean;
+                  passworded: boolean;
+                  bossIds: number[];
+                  joinQueueIds: number[];
+                  limits: {
+                      minTeamsize: number | null;
+                      maxTeamsize: number | null;
+                      minRating: number | null;
+                      maxRating: number | null;
+                  };
+              })[];
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/list/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/list/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/list/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleReceiveMessageResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/receiveMessage/response";
+          status: "success";
+          data: {
+              userId: number;
+              message: string;
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/receiveMessage/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/receiveMessage/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/receiveMessage/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleSendMessageResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/sendMessage/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/sendMessage/response";
+          status: "failed";
+          reason: "not_in_lobby";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/sendMessage/response";
+          status: "failed";
+          reason: "muted";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/sendMessage/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/sendMessage/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/sendMessage/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleSubscribeResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/subscribe/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/subscribe/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/subscribe/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/subscribe/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleUnsubscribeResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/unsubscribe/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/unsubscribe/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/unsubscribe/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/unsubscribe/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type CustomBattleUpdatedResponse =
+    | {
+          messageId: string;
+          commandId: "customBattle/updated/response";
+          status: "success";
+          data: {
+              battles: ({
+                  battleId?: number;
+                  hostId?: number;
+                  engine?: string;
+                  game?: string;
+                  map?: string;
+                  startPosType?: 0 | 1 | 2;
+                  startAreas?: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                       */
+                      [k: string]: {
+                          x: number;
+                          y: number;
+                          width: number;
+                          height: number;
+                      };
+                  };
+                  startTime?: number | null;
+                  ip?: string | null;
+                  port?: number | null;
+                  scriptPassword?: string | null;
+                  modOptions?: {
+                      /**
+                       * This interface was referenced by `undefined`'s JSON-Schema definition
+                       * via the `patternProperty` "^(.*)$".
+                       */
+                      [k: string]: unknown;
+                  };
+                  bots?: ({
+                      playerId: number;
+                      teamId: number;
+                      color: string;
+                      bonus: number;
+                      inGame: boolean;
+                  } & {
+                      isSpectator: false;
+                      isBot: true;
+                      ownerId: number;
+                      aiShortName: string;
+                      name: string;
+                      aiOptions: {
+                          /**
+                           * This interface was referenced by `undefined`'s JSON-Schema definition
+                           * via the `patternProperty` "^(.*)$".
+                           */
+                          [k: string]: unknown;
+                      };
+                      faction: string;
+                  })[];
+                  users?: {
+                      userId: number;
+                      displayName: string;
+                      avatarUrl: string;
+                      clanId: number | null;
+                      partyId: number | null;
+                      roles: string[];
+                      countryCode?: string;
+                      battleStatus:
+                          | ({
+                                battleId: number;
+                            } & (
+                                | ({
+                                      playerId: number;
+                                      teamId: number;
+                                      color: string;
+                                      bonus: number;
+                                      inGame: boolean;
+                                  } & {
+                                      isSpectator: false;
+                                      isBot: false;
+                                      ready: boolean;
+                                      sync: {
+                                          engine: number;
+                                          game: number;
+                                          map: number;
+                                      };
+                                  })
+                                | {
+                                      isSpectator: true;
+                                      isBot: false;
+                                  }
+                            ))
+                          | null;
+                  }[];
+              } & {
+                  title?: string;
+                  locked?: boolean;
+                  passworded?: boolean;
+                  bossIds?: number[];
+                  joinQueueIds?: number[];
+                  limits?: {
+                      minTeamsize: number | null;
+                      maxTeamsize: number | null;
+                      minRating: number | null;
+                      maxRating: number | null;
+                  };
+              })[];
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/updated/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/updated/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "customBattle/updated/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
 export type GameLaunchResponse =
     | {
           messageId: string;
@@ -75,414 +772,6 @@ export type GameLaunchResponse =
     | {
           messageId: string;
           commandId: "game/launch/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyCloseResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyCreateResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "no_hosts_available";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "invalid_region";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyJoinResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "locked";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "requires_password";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "invalid_password";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "max_participants_reached";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "rank_too_low";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "rank_too_high";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "banned";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyJoinedResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "success";
-          data: {
-              id: number;
-              name: string;
-              founderId: number;
-              locked: boolean;
-              passworded: boolean;
-              playerIds: number[];
-              spectatorIds: number[];
-              engine: string;
-              game: string;
-              map: string;
-              startAreas: {
-                  /**
-                   * This interface was referenced by `undefined`'s JSON-Schema definition
-                   * via the `patternProperty` "^(0|[1-9][0-9]*)$".
-                   */
-                  [k: string]: {
-                      x: number;
-                      y: number;
-                      width: number;
-                      height: number;
-                  };
-              };
-              limits: {
-                  minTeamsize: number | null;
-                  maxTeamsize: number | null;
-                  minRating: number | null;
-                  maxRating: number | null;
-              };
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyLeaveResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "no_lobby";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyLeftResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyListResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "success";
-          data: {
-              lobbies: {
-                  id: number;
-                  name: string;
-                  founderId: number;
-                  locked: boolean;
-                  passworded: boolean;
-                  playerIds: number[];
-                  spectatorIds: number[];
-                  engine: string;
-                  game: string;
-                  map: string;
-                  startAreas: {
-                      /**
-                       * This interface was referenced by `undefined`'s JSON-Schema definition
-                       * via the `patternProperty` "^(0|[1-9][0-9]*)$".
-                       */
-                      [k: string]: {
-                          x: number;
-                          y: number;
-                          width: number;
-                          height: number;
-                      };
-                  };
-                  limits: {
-                      minTeamsize: number | null;
-                      maxTeamsize: number | null;
-                      minRating: number | null;
-                      maxRating: number | null;
-                  };
-              }[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyReceiveMessageResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "success";
-          data: {
-              userId: number;
-              message: string;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbySendMessageResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "not_in_lobby";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "muted";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type LobbyUpdatedResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "success";
-          data: {
-              id?: number;
-              name?: string;
-              founderId?: number;
-              locked?: boolean;
-              passworded?: boolean;
-              playerIds?: number[];
-              spectatorIds?: number[];
-              engine?: string;
-              game?: string;
-              map?: string;
-              startAreas?: {
-                  /**
-                   * This interface was referenced by `undefined`'s JSON-Schema definition
-                   * via the `patternProperty` "^(0|[1-9][0-9]*)$".
-                   */
-                  [k: string]: {
-                      x: number;
-                      y: number;
-                      width: number;
-                      height: number;
-                  };
-              };
-              limits?: {
-                  minTeamsize: number | null;
-                  maxTeamsize: number | null;
-                  minRating: number | null;
-                  maxRating: number | null;
-              };
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
           status: "failed";
           reason: "invalid_command";
       };
@@ -549,10 +838,11 @@ export type MatchmakingListResponse =
           commandId: "matchmaking/list/response";
           status: "success";
           data: {
-              queues: {
+              playlists: {
                   id: string;
                   name: string;
                   ranked: boolean;
+                  teamSize: number;
               }[];
           };
       }
@@ -725,10 +1015,43 @@ export type SystemConnectedResponse =
           commandId: "system/connected/response";
           status: "success";
           data: {
-              accountId: number;
+              userId: number;
               displayName: string;
               avatarUrl: string;
+              clanId: number | null;
+              partyId: number | null;
+              roles: string[];
               countryCode?: string;
+              battleStatus:
+                  | ({
+                        battleId: number;
+                    } & (
+                        | ({
+                              playerId: number;
+                              teamId: number;
+                              color: string;
+                              bonus: number;
+                              inGame: boolean;
+                          } & {
+                              isSpectator: false;
+                              isBot: false;
+                              ready: boolean;
+                              sync: {
+                                  engine: number;
+                                  game: number;
+                                  map: number;
+                              };
+                          })
+                        | {
+                              isSpectator: true;
+                              isBot: false;
+                          }
+                    ))
+                  | null;
+              friendIds: number[];
+              outgoingFriendRequestIds: number[];
+              incomingFriendRequestIds: number[];
+              ignoreIds: number[];
           };
       }
     | {
@@ -794,80 +1117,95 @@ export interface Tachyon {
             response: BotUnslaveResponse;
         };
     };
+    customBattle: {
+        /**
+         * Close an existing lobby.
+         */
+        close: {
+            request: CustomBattleCloseRequest;
+            response: CustomBattleCloseResponse;
+        };
+        /**
+         * Create a new lobby - intended for player clients to summon a dedicated host.
+         */
+        create: {
+            request: CustomBattleCreateRequest;
+            response: CustomBattleCreateResponse;
+        };
+        /**
+         * Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
+         * These commands are split because the server may want to force the client to join a battle without them explicitly requesting it.
+         */
+        join: {
+            request: CustomBattleJoinRequest;
+            response: CustomBattleJoinResponse;
+        };
+        /**
+         * Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
+         */
+        joined: {
+            response: CustomBattleJoinedResponse;
+        };
+        /**
+         * Leave the current lobby.
+         */
+        leave: {
+            request: CustomBattleLeaveRequest;
+            response: CustomBattleLeaveResponse;
+        };
+        /**
+         * Sent when the server removes the client from a lobby.
+         */
+        left: {
+            response: CustomBattleLeftResponse;
+        };
+        /**
+         * Returns all custom lobbies.
+         */
+        list: {
+            request: CustomBattleListRequest;
+            response: CustomBattleListResponse;
+        };
+        /**
+         * Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
+         */
+        receiveMessage: {
+            response: CustomBattleReceiveMessageResponse;
+        };
+        /**
+         * Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
+         */
+        sendMessage: {
+            request: CustomBattleSendMessageRequest;
+            response: CustomBattleSendMessageResponse;
+        };
+        /**
+         * Subscribe to custom battle updates. If battleIds is passed only updates to those battles will be sent, otherwise updates for all battles will be sent.
+         */
+        subscribe: {
+            request: CustomBattleSubscribeRequest;
+            response: CustomBattleSubscribeResponse;
+        };
+        /**
+         * Unsubscribe from custom battle updates. If battleIds is passed only updates to those battles will be stopped, otherwise this will stop updates for all battles.
+         */
+        unsubscribe: {
+            request: CustomBattleUnsubscribeRequest;
+            response: CustomBattleUnsubscribeResponse;
+        };
+        /**
+         * Server sends an array of partial battle objects whenever a subscribed battle changes in some way.
+         */
+        updated: {
+            response: CustomBattleUpdatedResponse;
+        };
+    };
     game: {
         /**
          * When a client receives this response it should launch the game with the start script.
          */
         launch: {
             response: GameLaunchResponse;
-        };
-    };
-    lobby: {
-        /**
-         * Close an existing lobby.
-         */
-        close: {
-            request: LobbyCloseRequest;
-            response: LobbyCloseResponse;
-        };
-        /**
-         * Create a new lobby - intended for player clients to summon a dedicated host.
-         */
-        create: {
-            request: LobbyCreateRequest;
-            response: LobbyCreateResponse;
-        };
-        /**
-         * Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
-         */
-        join: {
-            request: LobbyJoinRequest;
-            response: LobbyJoinResponse;
-        };
-        /**
-         * Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
-         */
-        joined: {
-            response: LobbyJoinedResponse;
-        };
-        /**
-         * Leave the current lobby.
-         */
-        leave: {
-            request: LobbyLeaveRequest;
-            response: LobbyLeaveResponse;
-        };
-        /**
-         * Sent when the server removes the client from a lobby.
-         */
-        left: {
-            response: LobbyLeftResponse;
-        };
-        /**
-         * Returns all custom lobbies.
-         */
-        list: {
-            request: LobbyListRequest;
-            response: LobbyListResponse;
-        };
-        /**
-         * Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
-         */
-        receiveMessage: {
-            response: LobbyReceiveMessageResponse;
-        };
-        /**
-         * Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
-         */
-        sendMessage: {
-            request: LobbySendMessageRequest;
-            response: LobbySendMessageResponse;
-        };
-        /**
-         * Server sends this partial object whenever a lobby relevant to the client changes in some way.
-         */
-        updated: {
-            response: LobbyUpdatedResponse;
         };
     };
     matchmaking: {
@@ -885,7 +1223,7 @@ export interface Tachyon {
             response: MatchmakingFoundResponse;
         };
         /**
-         * Returns all available matchmaking queues.
+         * Returns all available matchmaking playlists.
          */
         list: {
             request: MatchmakingListRequest;
@@ -957,13 +1295,13 @@ export interface BotUnslaveRequest {
     messageId: string;
     commandId: "bot/unslave/request";
 }
-export interface LobbyCloseRequest {
+export interface CustomBattleCloseRequest {
     messageId: string;
-    commandId: "lobby/close/request";
+    commandId: "customBattle/close/request";
 }
-export interface LobbyCreateRequest {
+export interface CustomBattleCreateRequest {
     messageId: string;
-    commandId: "lobby/create/request";
+    commandId: "customBattle/create/request";
     data: {
         title: string;
         private: boolean;
@@ -971,27 +1309,41 @@ export interface LobbyCreateRequest {
         maxPlayers: number;
     };
 }
-export interface LobbyJoinRequest {
+export interface CustomBattleJoinRequest {
     messageId: string;
-    commandId: "lobby/join/request";
+    commandId: "customBattle/join/request";
     data: {
         lobbyId: number;
         password?: string;
     };
 }
-export interface LobbyLeaveRequest {
+export interface CustomBattleLeaveRequest {
     messageId: string;
-    commandId: "lobby/leave/request";
+    commandId: "customBattle/leave/request";
 }
-export interface LobbyListRequest {
+export interface CustomBattleListRequest {
     messageId: string;
-    commandId: "lobby/list/request";
+    commandId: "customBattle/list/request";
 }
-export interface LobbySendMessageRequest {
+export interface CustomBattleSendMessageRequest {
     messageId: string;
-    commandId: "lobby/sendMessage/request";
+    commandId: "customBattle/sendMessage/request";
     data: {
         message: string;
+    };
+}
+export interface CustomBattleSubscribeRequest {
+    messageId: string;
+    commandId: "customBattle/subscribe/request";
+    data: {
+        battleIds?: number[];
+    };
+}
+export interface CustomBattleUnsubscribeRequest {
+    messageId: string;
+    commandId: "customBattle/unsubscribe/request";
+    data: {
+        battleIds?: number[];
     };
 }
 export interface MatchmakingCancelRequest {
@@ -1024,107 +1376,175 @@ export interface SystemServerStatsRequest {
     messageId: string;
     commandId: "system/serverStats/request";
 }
-export interface BattleStatus {
-    lobbyId: number | null;
-    inGame: boolean;
-    away: boolean;
-    ready: boolean;
-    playerNumber: number | null;
-    teamColour: string | null;
-    isPlayer: boolean;
+export interface TachyonBattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
     bonus: number;
+    inGame: boolean;
+}
+
+export type TachyonBattlePlayer = {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+} & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
     sync: {
         engine: number;
         game: number;
         map: number;
     };
+};
+
+export interface TachyonBattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+
+export type TachyonBot = {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+} & {
+    isSpectator: false;
+    isBot: true;
+    ownerId: number;
+    aiShortName: string;
+    name: string;
+    aiOptions: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(.*)$".
+         */
+        [k: string]: unknown;
+    };
+    faction: string;
+};
+
+export type TachyonBattleStatus =
+    | ({
+          battleId: number;
+      } & (
+          | ({
+                playerId: number;
+                teamId: number;
+                color: string;
+                bonus: number;
+                inGame: boolean;
+            } & {
+                isSpectator: false;
+                isBot: false;
+                ready: boolean;
+                sync: {
+                    engine: number;
+                    game: number;
+                    map: number;
+                };
+            })
+          | {
+                isSpectator: true;
+                isBot: false;
+            }
+      ))
+    | null;
+
+export interface TachyonUser {
+    userId: number;
+    displayName: string;
+    avatarUrl: string;
+    clanId: number | null;
     partyId: number | null;
-    muted: boolean;
+    roles: string[];
+    countryCode?: string;
+    battleStatus:
+        | ({
+              battleId: number;
+          } & (
+              | ({
+                    playerId: number;
+                    teamId: number;
+                    color: string;
+                    bonus: number;
+                    inGame: boolean;
+                } & {
+                    isSpectator: false;
+                    isBot: false;
+                    ready: boolean;
+                    sync: {
+                        engine: number;
+                        game: number;
+                        map: number;
+                    };
+                })
+              | {
+                    isSpectator: true;
+                    isBot: false;
+                }
+          ))
+        | null;
 }
 
-export interface UserClient {
+export interface TachyonPrivateUser {
     userId: number;
     displayName: string;
+    avatarUrl: string;
     clanId: number | null;
-    icons: {
-        /**
-         * This interface was referenced by `undefined`'s JSON-Schema definition
-         * via the `patternProperty` "^(.*)$".
-         */
-        [k: string]: string;
-    };
-    roles: ("admin" | "moderator" | "autohost" | "mentor" | "caster" | "tourney")[];
-    battleStatus: {
-        lobbyId: number | null;
-        inGame: boolean;
-        away: boolean;
-        ready: boolean;
-        playerNumber: number | null;
-        teamColour: string | null;
-        isPlayer: boolean;
-        bonus: number;
-        sync: {
-            engine: number;
-            game: number;
-            map: number;
-        };
-        partyId: number | null;
-        muted: boolean;
-    } | null;
+    partyId: number | null;
+    roles: string[];
+    countryCode?: string;
+    battleStatus:
+        | ({
+              battleId: number;
+          } & (
+              | ({
+                    playerId: number;
+                    teamId: number;
+                    color: string;
+                    bonus: number;
+                    inGame: boolean;
+                } & {
+                    isSpectator: false;
+                    isBot: false;
+                    ready: boolean;
+                    sync: {
+                        engine: number;
+                        game: number;
+                        map: number;
+                    };
+                })
+              | {
+                    isSpectator: true;
+                    isBot: false;
+                }
+          ))
+        | null;
+    friendIds: number[];
+    outgoingFriendRequestIds: number[];
+    incomingFriendRequestIds: number[];
+    ignoreIds: number[];
 }
 
-export interface PrivateUserClient {
-    userId: number;
-    displayName: string;
-    clanId: number | null;
-    icons: {
-        /**
-         * This interface was referenced by `undefined`'s JSON-Schema definition
-         * via the `patternProperty` "^(.*)$".
-         */
-        [k: string]: string;
-    };
-    roles: ("admin" | "moderator" | "autohost" | "mentor" | "caster" | "tourney")[];
-    battleStatus: {
-        lobbyId: number | null;
-        inGame: boolean;
-        away: boolean;
-        ready: boolean;
-        playerNumber: number | null;
-        teamColour: string | null;
-        isPlayer: boolean;
-        bonus: number;
-        sync: {
-            engine: number;
-            game: number;
-            map: number;
-        };
-        partyId: number | null;
-        muted: boolean;
-    } | null;
-    friends: number[];
-    friendRequests: number[];
-    ignores: number[];
-}
-
-export interface Rect {
+export interface TachyonRect {
     x: number;
     y: number;
     width: number;
     height: number;
 }
 
-export interface Lobby {
-    id: number;
-    name: string;
-    founderId: number;
-    locked: boolean;
-    passworded: boolean;
-    playerIds: number[];
-    spectatorIds: number[];
+export interface TachyonBattle {
+    battleId: number;
+    hostId: number;
     engine: string;
     game: string;
     map: string;
+    startPosType: 0 | 1 | 2;
     startAreas: {
         /**
          * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -1137,46 +1557,223 @@ export interface Lobby {
             height: number;
         };
     };
+    startTime: number | null;
+    ip: string | null;
+    port: number | null;
+    scriptPassword: string | null;
+    modOptions: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(.*)$".
+         */
+        [k: string]: unknown;
+    };
+    bots: ({
+        playerId: number;
+        teamId: number;
+        color: string;
+        bonus: number;
+        inGame: boolean;
+    } & {
+        isSpectator: false;
+        isBot: true;
+        ownerId: number;
+        aiShortName: string;
+        name: string;
+        aiOptions: {
+            /**
+             * This interface was referenced by `undefined`'s JSON-Schema definition
+             * via the `patternProperty` "^(.*)$".
+             */
+            [k: string]: unknown;
+        };
+        faction: string;
+    })[];
+    users: {
+        userId: number;
+        displayName: string;
+        avatarUrl: string;
+        clanId: number | null;
+        partyId: number | null;
+        roles: string[];
+        countryCode?: string;
+        battleStatus:
+            | ({
+                  battleId: number;
+              } & (
+                  | ({
+                        playerId: number;
+                        teamId: number;
+                        color: string;
+                        bonus: number;
+                        inGame: boolean;
+                    } & {
+                        isSpectator: false;
+                        isBot: false;
+                        ready: boolean;
+                        sync: {
+                            engine: number;
+                            game: number;
+                            map: number;
+                        };
+                    })
+                  | {
+                        isSpectator: true;
+                        isBot: false;
+                    }
+              ))
+            | null;
+    }[];
+}
+
+export type TachyonCustomBattle = {
+    battleId: number;
+    hostId: number;
+    engine: string;
+    game: string;
+    map: string;
+    startPosType: 0 | 1 | 2;
+    startAreas: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+         */
+        [k: string]: {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        };
+    };
+    startTime: number | null;
+    ip: string | null;
+    port: number | null;
+    scriptPassword: string | null;
+    modOptions: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(.*)$".
+         */
+        [k: string]: unknown;
+    };
+    bots: ({
+        playerId: number;
+        teamId: number;
+        color: string;
+        bonus: number;
+        inGame: boolean;
+    } & {
+        isSpectator: false;
+        isBot: true;
+        ownerId: number;
+        aiShortName: string;
+        name: string;
+        aiOptions: {
+            /**
+             * This interface was referenced by `undefined`'s JSON-Schema definition
+             * via the `patternProperty` "^(.*)$".
+             */
+            [k: string]: unknown;
+        };
+        faction: string;
+    })[];
+    users: {
+        userId: number;
+        displayName: string;
+        avatarUrl: string;
+        clanId: number | null;
+        partyId: number | null;
+        roles: string[];
+        countryCode?: string;
+        battleStatus:
+            | ({
+                  battleId: number;
+              } & (
+                  | ({
+                        playerId: number;
+                        teamId: number;
+                        color: string;
+                        bonus: number;
+                        inGame: boolean;
+                    } & {
+                        isSpectator: false;
+                        isBot: false;
+                        ready: boolean;
+                        sync: {
+                            engine: number;
+                            game: number;
+                            map: number;
+                        };
+                    })
+                  | {
+                        isSpectator: true;
+                        isBot: false;
+                    }
+              ))
+            | null;
+    }[];
+} & {
+    title: string;
+    locked: boolean;
+    passworded: boolean;
+    bossIds: number[];
+    joinQueueIds: number[];
     limits: {
         minTeamsize: number | null;
         maxTeamsize: number | null;
         minRating: number | null;
         maxRating: number | null;
     };
-}
+};
 
+import { EmptyObject } from "type-fest";
 
 export type ServiceId = keyof Tachyon;
+export type EndpointId<S extends ServiceId> = keyof Tachyon[S];
+export type Command<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E];
 
-export type EndpointId = keyof Tachyon[ServiceId];
+export type RequestId<S extends ServiceId> = {
+    [K in EndpointId<S>]: Request<S, K> extends never ? never : K;
+}[EndpointId<S>];
 
-export type RequestEndpointId<S extends ServiceId> = keyof {
-    [key in keyof Tachyon[S] as Tachyon[S][key] extends { request: any } ? key : never]: Tachyon[S][key];
+export type ResponseId<S extends ServiceId> = {
+    [K in EndpointId<S>]: Response<S, K> extends never ? never : K;
+}[EndpointId<S>];
+
+export type Request<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+    request: infer Request;
+}
+    ? Request
+    : never;
+export type Response<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+    response: infer Response;
+}
+    ? Response
+    : never;
+
+export type RequestData<S extends ServiceId, E extends EndpointId<S>> = Request<S, E> extends {
+    data: infer Data;
+}
+    ? Data
+    : never;
+
+export type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = Response<S, E> & {
+    status: "success";
+} extends { data: infer Data }
+    ? Data
+    : never;
+
+export type EmptyRequestId<S extends ServiceId> = {
+    [K in RequestId<S>]: RequestData<S, K> extends EmptyObject ? K : never;
+}[RequestId<S>];
+
+export type DataRequestId<S extends ServiceId> = {
+    [K in RequestId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
+}[RequestId<S>];
+
+export type GenericRequestCommand = {
+    messageId: string;
+    commandId: string;
+    data?: Record<string, unknown>;
 };
 
-export type ResponseEndpointId<S extends ServiceId> = keyof {
-    [key in keyof Tachyon[S] as Tachyon[S][key] extends { response: any } ? key : never]: Tachyon[S][key];
-};
-
-export type RequestType<S extends ServiceId, E extends RequestEndpointId<S>> = Tachyon[S][E] extends { request: infer Req } ? Req : object;
-
-export type ResponseType<S extends ServiceId, E extends ResponseEndpointId<S>> = Tachyon[S][E] extends { response: infer Res } ? Res : object;
-
-export type RequestData<S extends ServiceId, E extends RequestEndpointId<S>> = Tachyon[S][E] extends { request: { data: infer Data } } ? Data : never;
-
-export type SuccessResponseData<S extends ServiceId, E extends ResponseEndpointId<S>> = ResponseType<S, E> & { status: "success" } extends { data: infer Data } ? Data : never;
-
-export type RemoveField<T, K extends string> = T extends { [P in K]: any } ? Omit<T, K> : never;
-
-export type GetCommands<S extends ServiceId, E extends keyof Tachyon[S]> = Tachyon[S][E];
-import { ValidateFunction } from 'ajv';
-
-declare const tachyonMeta: {
-    version: string;
-    ids: Record<string, Record<string, string[]>>;
-};
-declare function getValidator<T extends {
-    command: string;
-}>(command: T): ValidateFunction<T>;
-
-export { getValidator, tachyonMeta };

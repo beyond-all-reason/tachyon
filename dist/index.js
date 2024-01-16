@@ -4291,19 +4291,19 @@ var require_core = __commonJS({
         this.addKeyword("$async");
       }
       _addDefaultMetaSchema() {
-        const { $data, meta, schemaId } = this.opts;
+        const { $data, meta: meta2, schemaId } = this.opts;
         let _dataRefSchema = $dataRefSchema;
         if (schemaId === "id") {
           _dataRefSchema = { ...$dataRefSchema };
           _dataRefSchema.id = _dataRefSchema.$id;
           delete _dataRefSchema.$id;
         }
-        if (meta && $data)
+        if (meta2 && $data)
           this.addMetaSchema(_dataRefSchema, _dataRefSchema[schemaId], false);
       }
       defaultMeta() {
-        const { meta, schemaId } = this.opts;
-        return this.opts.defaultMeta = typeof meta == "object" ? meta[schemaId] || meta : void 0;
+        const { meta: meta2, schemaId } = this.opts;
+        return this.opts.defaultMeta = typeof meta2 == "object" ? meta2[schemaId] || meta2 : void 0;
       }
       validate(schemaKeyRef, data) {
         let v;
@@ -4323,12 +4323,12 @@ var require_core = __commonJS({
         const sch = this._addSchema(schema, _meta);
         return sch.validate || this._compileSchemaEnv(sch);
       }
-      compileAsync(schema, meta) {
+      compileAsync(schema, meta2) {
         if (typeof this.opts.loadSchema != "function") {
           throw new Error("options.loadSchema should be a function");
         }
         const { loadSchema } = this.opts;
-        return runCompileAsync.call(this, schema, meta);
+        return runCompileAsync.call(this, schema, meta2);
         async function runCompileAsync(_schema, _meta) {
           await loadMetaSchema.call(this, _schema.$schema);
           const sch = this._addSchema(_schema, _meta);
@@ -4360,7 +4360,7 @@ var require_core = __commonJS({
           if (!this.refs[ref])
             await loadMetaSchema.call(this, _schema.$schema);
           if (!this.refs[ref])
-            this.addSchema(_schema, ref, meta);
+            this.addSchema(_schema, ref, meta2);
         }
         async function _loadSchema(ref) {
           const p = this._loading[ref];
@@ -4577,7 +4577,7 @@ var require_core = __commonJS({
           }
         }
       }
-      _addSchema(schema, meta, baseId, validateSchema = this.opts.validateSchema, addSchema = this.opts.addUsedSchema) {
+      _addSchema(schema, meta2, baseId, validateSchema = this.opts.validateSchema, addSchema = this.opts.addUsedSchema) {
         let id;
         const { schemaId } = this.opts;
         if (typeof schema == "object") {
@@ -4593,7 +4593,7 @@ var require_core = __commonJS({
           return sch;
         baseId = (0, resolve_1.normalizeId)(id || baseId);
         const localRefs = resolve_1.getSchemaRefs.call(this, schema, baseId);
-        sch = new compile_1.SchemaEnv({ schema, schemaId, meta, baseId, localRefs });
+        sch = new compile_1.SchemaEnv({ schema, schemaId, meta: meta2, baseId, localRefs });
         this._cache.set(sch.schema, sch);
         if (addSchema && !baseId.startsWith("#")) {
           if (baseId)
@@ -7065,33 +7065,141 @@ var require_dist = __commonJS({
   }
 });
 
-// src/validator.ts
-var validator_exports = {};
-__export(validator_exports, {
+// src/compiled.ts
+var compiled_exports = {};
+__export(compiled_exports, {
   getValidator: () => getValidator,
   tachyonMeta: () => tachyonMeta
 });
-module.exports = __toCommonJS(validator_exports);
+module.exports = __toCommonJS(compiled_exports);
+
+// src/meta.ts
+var tachyonMeta = {
+  "version": "0.3.1",
+  "ids": {
+    "bot": {
+      "slave": [
+        "request",
+        "response"
+      ],
+      "unslave": [
+        "request",
+        "response"
+      ]
+    },
+    "customBattle": {
+      "close": [
+        "request",
+        "response"
+      ],
+      "create": [
+        "request",
+        "response"
+      ],
+      "join": [
+        "request",
+        "response"
+      ],
+      "joined": [
+        "response"
+      ],
+      "leave": [
+        "request",
+        "response"
+      ],
+      "left": [
+        "response"
+      ],
+      "list": [
+        "request",
+        "response"
+      ],
+      "receiveMessage": [
+        "response"
+      ],
+      "sendMessage": [
+        "request",
+        "response"
+      ],
+      "subscribe": [
+        "request",
+        "response"
+      ],
+      "unsubscribe": [
+        "request",
+        "response"
+      ],
+      "updated": [
+        "response"
+      ]
+    },
+    "game": {
+      "launch": [
+        "response"
+      ]
+    },
+    "matchmaking": {
+      "cancel": [
+        "request",
+        "response"
+      ],
+      "found": [
+        "response"
+      ],
+      "list": [
+        "request",
+        "response"
+      ],
+      "lost": [
+        "response"
+      ],
+      "queue": [
+        "request",
+        "response"
+      ],
+      "queueUpdate": [
+        "response"
+      ],
+      "ready": [
+        "request",
+        "response"
+      ],
+      "readyUpdate": [
+        "response"
+      ]
+    },
+    "system": {
+      "connected": [
+        "response"
+      ],
+      "disconnect": [
+        "request"
+      ],
+      "serverStats": [
+        "request",
+        "response"
+      ]
+    }
+  }
+};
+
+// src/validator.ts
 var import_ajv = __toESM(require_ajv());
 var import_ajv_formats = __toESM(require_dist());
 var import_fs = __toESM(require("fs"));
 var import_path = __toESM(require("path"));
-var tachyonMeta = JSON.parse(
-  import_fs.default.readFileSync(import_path.default.join(__dirname, `./meta.json`), {
-    encoding: "utf-8"
-  })
-);
+var meta = tachyonMeta;
 var validators = /* @__PURE__ */ new Map();
-var ajv = new import_ajv.default({ coerceTypes: true });
+var ajv = new import_ajv.default();
 var initialised = false;
 function init() {
   initialised = true;
   import_ajv_formats.default.default(ajv);
   ajv.addKeyword("requiresLogin");
   ajv.addKeyword("requiresRole");
-  for (const serviceId in tachyonMeta.ids) {
-    for (const endpointId in tachyonMeta.ids[serviceId]) {
-      for (const commandType of tachyonMeta.ids[serviceId][endpointId]) {
+  for (const serviceId in meta.ids) {
+    for (const endpointId in meta.ids[serviceId]) {
+      for (const commandType of meta.ids[serviceId][endpointId]) {
         const commandId = `${serviceId}/${endpointId}/${commandType}`;
         const commandSchemaStr = import_fs.default.readFileSync(
           import_path.default.join(__dirname, `./${serviceId}/${endpointId}/${commandType}.json`),
@@ -7111,12 +7219,12 @@ function getValidator(command) {
   if (typeof command !== "object") {
     throw new Error("Command not object type");
   }
-  if (!command.command || typeof command.command !== "string") {
+  if (!command.commandId || typeof command.commandId !== "string") {
     throw new Error("Command Id missing");
   }
-  const validator = validators.get(command.command);
+  const validator = validators.get(command.commandId);
   if (!validator) {
-    throw new Error(`Validator not found for: ${command.command}`);
+    throw new Error(`Validator not found for: ${command.commandId}`);
   }
   return validator;
 }

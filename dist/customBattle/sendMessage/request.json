@@ -1,0 +1,36 @@
+{
+    "$id": "customBattle/sendMessage/request",
+    "requiresLogin": false,
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "customBattle/sendMessage/request",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "message": "Hello lobby!"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "message": {
+                    "maxLength": 300,
+                    "type": "string"
+                }
+            },
+            "required": [
+                "message"
+            ]
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

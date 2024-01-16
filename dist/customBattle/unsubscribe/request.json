@@ -1,0 +1,30 @@
+{
+    "$id": "customBattle/unsubscribe/request",
+    "requiresLogin": false,
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "customBattle/unsubscribe/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

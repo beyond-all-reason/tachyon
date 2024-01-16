@@ -436,7 +436,7 @@ export type MatchmakingFoundResponse =
 
 ## List
 
-Returns all available matchmaking queues.
+Returns all available matchmaking playlists.
 
 - Endpoint Type: **Request** -> **Response**
 - Requires Login: **false**
@@ -510,23 +510,25 @@ export interface MatchmakingListRequest {
                 "data": {
                     "examples": [
                         {
-                            "queues": [
+                            "playlists": [
                                 {
                                     "id": "1v1",
                                     "name": "Duel",
-                                    "ranked": true
+                                    "ranked": true,
+                                    "teamSize": 1
                                 },
                                 {
                                     "id": "2v2",
                                     "name": "2v2",
-                                    "ranked": true
+                                    "ranked": true,
+                                    "teamSize": 2
                                 }
                             ]
                         }
                     ],
                     "type": "object",
                     "properties": {
-                        "queues": {
+                        "playlists": {
                             "type": "array",
                             "items": {
                                 "type": "object",
@@ -539,18 +541,22 @@ export interface MatchmakingListRequest {
                                     },
                                     "ranked": {
                                         "type": "boolean"
+                                    },
+                                    "teamSize": {
+                                        "type": "integer"
                                     }
                                 },
                                 "required": [
                                     "id",
                                     "name",
-                                    "ranked"
+                                    "ranked",
+                                    "teamSize"
                                 ]
                             }
                         }
                     },
                     "required": [
-                        "queues"
+                        "playlists"
                     ]
                 }
             },
@@ -653,10 +659,11 @@ export type MatchmakingListResponse =
           commandId: "matchmaking/list/response";
           status: "success";
           data: {
-              queues: {
+              playlists: {
                   id: string;
                   name: string;
                   ranked: boolean;
+                  teamSize: number;
               }[];
           };
       }
@@ -687,16 +694,18 @@ export type MatchmakingListResponse =
     "commandId": "matchmaking/list/response",
     "status": "success",
     "data": {
-        "queues": [
+        "playlists": [
             {
                 "id": "1v1",
                 "name": "Duel",
-                "ranked": true
+                "ranked": true,
+                "teamSize": 1
             },
             {
                 "id": "2v2",
                 "name": "2v2",
-                "ranked": true
+                "ranked": true,
+                "teamSize": 2
             }
         ]
     }

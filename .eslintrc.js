@@ -4,7 +4,7 @@ module.exports = {
         node: true,
     },
     ignorePatterns: ["dist", "build", "node_modules", "working-files", "**/*.js"],
-    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+    extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
     parser: "@typescript-eslint/parser",
     parserOptions: {
         ecmaVersion: 2020,

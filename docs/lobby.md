@@ -1022,11 +1022,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                 "data": {
                     "examples": [
                         {
-                            "id": 27,
-                            "name": "8v8 | All Welcome",
-                            "founderId": 822,
-                            "locked": false,
-                            "passworded": false,
+                            "battleId": 27,
+                            "hostId": 822,
                             "playerIds": [
                                 567,
                                 232,
@@ -1034,7 +1031,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                 119
                             ],
                             "spectatorIds": [
-                                88
+                                123
                             ],
                             "engine": "105.1.1-1821-gaca6f20 BAR105",
                             "game": "Beyond All Reason test-23561-0abff7c",
@@ -1052,31 +1049,16 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "width": 1,
                                     "height": 0.3
                                 }
-                            },
-                            "limits": {
-                                "minTeamsize": 3,
-                                "maxTeamsize": 3,
-                                "minRating": null,
-                                "maxRating": 25
                             }
                         }
                     ],
                     "type": "object",
                     "properties": {
-                        "id": {
+                        "battleId": {
                             "type": "integer"
                         },
-                        "name": {
-                            "type": "string"
-                        },
-                        "founderId": {
+                        "hostId": {
                             "type": "integer"
-                        },
-                        "locked": {
-                            "type": "boolean"
-                        },
-                        "passworded": {
-                            "type": "boolean"
                         },
                         "playerIds": {
                             "type": "array",
@@ -1148,72 +1130,17 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     ]
                                 }
                             }
-                        },
-                        "limits": {
-                            "type": "object",
-                            "properties": {
-                                "minTeamsize": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                },
-                                "maxTeamsize": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                },
-                                "minRating": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                },
-                                "maxRating": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "minTeamsize",
-                                "maxTeamsize",
-                                "minRating",
-                                "maxRating"
-                            ]
                         }
                     },
                     "required": [
-                        "id",
-                        "name",
-                        "founderId",
-                        "locked",
-                        "passworded",
+                        "battleId",
+                        "hostId",
                         "playerIds",
                         "spectatorIds",
                         "engine",
                         "game",
                         "map",
-                        "startAreas",
-                        "limits"
+                        "startAreas"
                     ]
                 }
             },
@@ -1316,11 +1243,8 @@ export type LobbyJoinedResponse =
           commandId: "lobby/joined/response";
           status: "success";
           data: {
-              id: number;
-              name: string;
-              founderId: number;
-              locked: boolean;
-              passworded: boolean;
+              battleId: number;
+              hostId: number;
               playerIds: number[];
               spectatorIds: number[];
               engine: string;
@@ -1333,12 +1257,6 @@ export type LobbyJoinedResponse =
                       width: number;
                       height: number;
                   };
-              };
-              limits: {
-                  minTeamsize: number | null;
-                  maxTeamsize: number | null;
-                  minRating: number | null;
-                  maxRating: number | null;
               };
           };
       }
@@ -1369,11 +1287,8 @@ export type LobbyJoinedResponse =
     "commandId": "lobby/joined/response",
     "status": "success",
     "data": {
-        "id": 27,
-        "name": "8v8 | All Welcome",
-        "founderId": 822,
-        "locked": false,
-        "passworded": false,
+        "battleId": 27,
+        "hostId": 822,
         "playerIds": [
             567,
             232,
@@ -1381,7 +1296,7 @@ export type LobbyJoinedResponse =
             119
         ],
         "spectatorIds": [
-            88
+            123
         ],
         "engine": "105.1.1-1821-gaca6f20 BAR105",
         "game": "Beyond All Reason test-23561-0abff7c",
@@ -1399,12 +1314,6 @@ export type LobbyJoinedResponse =
                 "width": 1,
                 "height": 0.3
             }
-        },
-        "limits": {
-            "minTeamsize": 3,
-            "maxTeamsize": 3,
-            "minRating": null,
-            "maxRating": 25
         }
     }
 }
@@ -1885,11 +1794,8 @@ export interface LobbyListRequest {
                             "items": {
                                 "examples": [
                                     {
-                                        "id": 27,
-                                        "name": "8v8 | All Welcome",
-                                        "founderId": 822,
-                                        "locked": false,
-                                        "passworded": false,
+                                        "battleId": 27,
+                                        "hostId": 822,
                                         "playerIds": [
                                             567,
                                             232,
@@ -1897,7 +1803,7 @@ export interface LobbyListRequest {
                                             119
                                         ],
                                         "spectatorIds": [
-                                            88
+                                            123
                                         ],
                                         "engine": "105.1.1-1821-gaca6f20 BAR105",
                                         "game": "Beyond All Reason test-23561-0abff7c",
@@ -1915,31 +1821,16 @@ export interface LobbyListRequest {
                                                 "width": 1,
                                                 "height": 0.3
                                             }
-                                        },
-                                        "limits": {
-                                            "minTeamsize": 3,
-                                            "maxTeamsize": 3,
-                                            "minRating": null,
-                                            "maxRating": 25
                                         }
                                     }
                                 ],
                                 "type": "object",
                                 "properties": {
-                                    "id": {
+                                    "battleId": {
                                         "type": "integer"
                                     },
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "founderId": {
+                                    "hostId": {
                                         "type": "integer"
-                                    },
-                                    "locked": {
-                                        "type": "boolean"
-                                    },
-                                    "passworded": {
-                                        "type": "boolean"
                                     },
                                     "playerIds": {
                                         "type": "array",
@@ -2011,72 +1902,17 @@ export interface LobbyListRequest {
                                                 ]
                                             }
                                         }
-                                    },
-                                    "limits": {
-                                        "type": "object",
-                                        "properties": {
-                                            "minTeamsize": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "integer"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
-                                            },
-                                            "maxTeamsize": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "integer"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
-                                            },
-                                            "minRating": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "integer"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
-                                            },
-                                            "maxRating": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "integer"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
-                                            }
-                                        },
-                                        "required": [
-                                            "minTeamsize",
-                                            "maxTeamsize",
-                                            "minRating",
-                                            "maxRating"
-                                        ]
                                     }
                                 },
                                 "required": [
-                                    "id",
-                                    "name",
-                                    "founderId",
-                                    "locked",
-                                    "passworded",
+                                    "battleId",
+                                    "hostId",
                                     "playerIds",
                                     "spectatorIds",
                                     "engine",
                                     "game",
                                     "map",
-                                    "startAreas",
-                                    "limits"
+                                    "startAreas"
                                 ]
                             }
                         }
@@ -2186,11 +2022,8 @@ export type LobbyListResponse =
           status: "success";
           data: {
               lobbies: {
-                  id: number;
-                  name: string;
-                  founderId: number;
-                  locked: boolean;
-                  passworded: boolean;
+                  battleId: number;
+                  hostId: number;
                   playerIds: number[];
                   spectatorIds: number[];
                   engine: string;
@@ -2203,12 +2036,6 @@ export type LobbyListResponse =
                           width: number;
                           height: number;
                       };
-                  };
-                  limits: {
-                      minTeamsize: number | null;
-                      maxTeamsize: number | null;
-                      minRating: number | null;
-                      maxRating: number | null;
                   };
               }[];
           };
@@ -2242,11 +2069,8 @@ export type LobbyListResponse =
     "data": {
         "lobbies": [
             {
-                "id": 27,
-                "name": "8v8 | All Welcome",
-                "founderId": 822,
-                "locked": false,
-                "passworded": false,
+                "battleId": 27,
+                "hostId": 822,
                 "playerIds": [
                     567,
                     232,
@@ -2254,7 +2078,7 @@ export type LobbyListResponse =
                     119
                 ],
                 "spectatorIds": [
-                    88
+                    123
                 ],
                 "engine": "105.1.1-1821-gaca6f20 BAR105",
                 "game": "Beyond All Reason test-23561-0abff7c",
@@ -2272,12 +2096,6 @@ export type LobbyListResponse =
                         "width": 1,
                         "height": 0.3
                     }
-                },
-                "limits": {
-                    "minTeamsize": 3,
-                    "maxTeamsize": 3,
-                    "minRating": null,
-                    "maxRating": 25
                 }
             }
         ]
@@ -2809,20 +2627,11 @@ Server sends this partial object whenever a lobby relevant to the client changes
                     ],
                     "type": "object",
                     "properties": {
-                        "id": {
+                        "battleId": {
                             "type": "integer"
                         },
-                        "name": {
-                            "type": "string"
-                        },
-                        "founderId": {
+                        "hostId": {
                             "type": "integer"
-                        },
-                        "locked": {
-                            "type": "boolean"
-                        },
-                        "passworded": {
-                            "type": "boolean"
                         },
                         "playerIds": {
                             "type": "array",
@@ -2894,57 +2703,6 @@ Server sends this partial object whenever a lobby relevant to the client changes
                                     ]
                                 }
                             }
-                        },
-                        "limits": {
-                            "type": "object",
-                            "properties": {
-                                "minTeamsize": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                },
-                                "maxTeamsize": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                },
-                                "minRating": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                },
-                                "maxRating": {
-                                    "anyOf": [
-                                        {
-                                            "type": "integer"
-                                        },
-                                        {
-                                            "type": "null"
-                                        }
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "minTeamsize",
-                                "maxTeamsize",
-                                "minRating",
-                                "maxRating"
-                            ]
                         }
                     }
                 }
@@ -3048,11 +2806,8 @@ export type LobbyUpdatedResponse =
           commandId: "lobby/updated/response";
           status: "success";
           data: {
-              id?: number;
-              name?: string;
-              founderId?: number;
-              locked?: boolean;
-              passworded?: boolean;
+              battleId?: number;
+              hostId?: number;
               playerIds?: number[];
               spectatorIds?: number[];
               engine?: string;
@@ -3065,12 +2820,6 @@ export type LobbyUpdatedResponse =
                       width: number;
                       height: number;
                   };
-              };
-              limits?: {
-                  minTeamsize: number | null;
-                  maxTeamsize: number | null;
-                  minRating: number | null;
-                  maxRating: number | null;
               };
           };
       }

@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TProperties, Type } from "@sinclair/typebox";
 import fs from "fs";
 import jsf from "json-schema-faker";
 import path from "path";
-import { EndpointConfig, FailedResponseSchema, SuccessResponseSchema } from "./helpers";
+
+import { EndpointConfig } from "@/schema-helpers";
 
 jsf.option("useExamplesValue", true);
 jsf.option("random", () => 0.1234);

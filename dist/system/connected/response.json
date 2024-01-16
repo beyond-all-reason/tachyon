@@ -19,23 +19,198 @@
                 "data": {
                     "type": "object",
                     "properties": {
-                        "accountId": {
+                        "userId": {
                             "type": "integer"
                         },
                         "displayName": {
                             "type": "string"
                         },
                         "avatarUrl": {
+                            "format": "uri",
                             "type": "string"
+                        },
+                        "clanId": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "partyId": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "roles": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         },
                         "countryCode": {
                             "type": "string"
+                        },
+                        "battleStatus": {
+                            "anyOf": [
+                                {
+                                    "allOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "battleId": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "battleId"
+                                            ]
+                                        },
+                                        {
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "allOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "playerId": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "teamId": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "color": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bonus": {
+                                                                    "type": "number"
+                                                                },
+                                                                "inGame": {
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "playerId",
+                                                                "teamId",
+                                                                "color",
+                                                                "bonus",
+                                                                "inGame"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "isSpectator": {
+                                                                    "const": false,
+                                                                    "type": "boolean"
+                                                                },
+                                                                "isBot": {
+                                                                    "const": false,
+                                                                    "type": "boolean"
+                                                                },
+                                                                "ready": {
+                                                                    "type": "boolean"
+                                                                },
+                                                                "sync": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "engine": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "game": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "map": {
+                                                                            "type": "number"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "engine",
+                                                                        "game",
+                                                                        "map"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "isSpectator",
+                                                                "isBot",
+                                                                "ready",
+                                                                "sync"
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "isSpectator": {
+                                                            "const": true,
+                                                            "type": "boolean"
+                                                        },
+                                                        "isBot": {
+                                                            "const": false,
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "isSpectator",
+                                                        "isBot"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "friendIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "outgoingFriendRequestIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "incomingFriendRequestIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "ignoreIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     },
                     "required": [
-                        "accountId",
+                        "userId",
                         "displayName",
-                        "avatarUrl"
+                        "avatarUrl",
+                        "clanId",
+                        "partyId",
+                        "roles",
+                        "battleStatus",
+                        "friendIds",
+                        "outgoingFriendRequestIds",
+                        "incomingFriendRequestIds",
+                        "ignoreIds"
                     ]
                 }
             },

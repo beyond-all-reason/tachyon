@@ -1,17 +1,14 @@
-import Ajv, { ErrorObject, ValidateFunction } from "ajv";
+import Ajv, { ValidateFunction } from "ajv";
 import addFormats from "ajv-formats";
 import fs from "fs";
 import path from "path";
 
-export const tachyonMeta: { version: string; ids: Record<string, Record<string, string[]>> } =
-    JSON.parse(
-        fs.readFileSync(path.join(__dirname, `./meta.json`), {
-            encoding: "utf-8",
-        })
-    );
+import { tachyonMeta } from "@/meta";
+
+const meta = tachyonMeta as unknown as Record<string, Record<string, string[]>>;
 
 const validators: Map<string, ValidateFunction> = new Map();
-const ajv = new Ajv({ coerceTypes: true });
+const ajv = new Ajv();
 let initialised = false;
 
 function init() {
@@ -21,9 +18,9 @@ function init() {
     ajv.addKeyword("requiresLogin");
     ajv.addKeyword("requiresRole");
 
-    for (const serviceId in tachyonMeta.ids) {
-        for (const endpointId in tachyonMeta.ids[serviceId]) {
-            for (const commandType of tachyonMeta.ids[serviceId][endpointId]) {
+    for (const serviceId in meta.ids) {
+        for (const endpointId in meta.ids[serviceId]) {
+            for (const commandType of meta.ids[serviceId][endpointId]) {
                 const commandId = `${serviceId}/${endpointId}/${commandType}`;
                 const commandSchemaStr = fs.readFileSync(
                     path.join(__dirname, `./${serviceId}/${endpointId}/${commandType}.json`),
@@ -37,7 +34,7 @@ function init() {
     }
 }
 
-export function getValidator<T extends { command: string }>(command: T): ValidateFunction<T> {
+export function getValidator<T extends { commandId: string }>(command: T): ValidateFunction<T> {
     if (!initialised) {
         init();
     }
@@ -46,13 +43,13 @@ export function getValidator<T extends { command: string }>(command: T): Validat
         throw new Error("Command not object type");
     }
 
-    if (!command.command || typeof command.command !== "string") {
+    if (!command.commandId || typeof command.commandId !== "string") {
         throw new Error("Command Id missing");
     }
 
-    const validator = validators.get(command.command) as ValidateFunction<T>;
+    const validator = validators.get(command.commandId) as ValidateFunction<T>;
     if (!validator) {
-        throw new Error(`Validator not found for: ${command.command}`);
+        throw new Error(`Validator not found for: ${command.commandId}`);
     }
 
     return validator;

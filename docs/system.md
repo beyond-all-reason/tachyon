@@ -40,23 +40,198 @@ Sent immediately by the server on connection.
                 "data": {
                     "type": "object",
                     "properties": {
-                        "accountId": {
+                        "userId": {
                             "type": "integer"
                         },
                         "displayName": {
                             "type": "string"
                         },
                         "avatarUrl": {
+                            "format": "uri",
                             "type": "string"
+                        },
+                        "clanId": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "partyId": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "roles": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         },
                         "countryCode": {
                             "type": "string"
+                        },
+                        "battleStatus": {
+                            "anyOf": [
+                                {
+                                    "allOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "battleId": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "required": [
+                                                "battleId"
+                                            ]
+                                        },
+                                        {
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "allOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "playerId": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "teamId": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "color": {
+                                                                    "type": "string"
+                                                                },
+                                                                "bonus": {
+                                                                    "type": "number"
+                                                                },
+                                                                "inGame": {
+                                                                    "type": "boolean"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "playerId",
+                                                                "teamId",
+                                                                "color",
+                                                                "bonus",
+                                                                "inGame"
+                                                            ]
+                                                        },
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "isSpectator": {
+                                                                    "const": false,
+                                                                    "type": "boolean"
+                                                                },
+                                                                "isBot": {
+                                                                    "const": false,
+                                                                    "type": "boolean"
+                                                                },
+                                                                "ready": {
+                                                                    "type": "boolean"
+                                                                },
+                                                                "sync": {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "engine": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "game": {
+                                                                            "type": "number"
+                                                                        },
+                                                                        "map": {
+                                                                            "type": "number"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "engine",
+                                                                        "game",
+                                                                        "map"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "isSpectator",
+                                                                "isBot",
+                                                                "ready",
+                                                                "sync"
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "isSpectator": {
+                                                            "const": true,
+                                                            "type": "boolean"
+                                                        },
+                                                        "isBot": {
+                                                            "const": false,
+                                                            "type": "boolean"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "isSpectator",
+                                                        "isBot"
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "friendIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "outgoingFriendRequestIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "incomingFriendRequestIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
+                        },
+                        "ignoreIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer"
+                            }
                         }
                     },
                     "required": [
-                        "accountId",
+                        "userId",
                         "displayName",
-                        "avatarUrl"
+                        "avatarUrl",
+                        "clanId",
+                        "partyId",
+                        "roles",
+                        "battleStatus",
+                        "friendIds",
+                        "outgoingFriendRequestIds",
+                        "incomingFriendRequestIds",
+                        "ignoreIds"
                     ]
                 }
             },
@@ -159,10 +334,43 @@ export type SystemConnectedResponse =
           commandId: "system/connected/response";
           status: "success";
           data: {
-              accountId: number;
+              userId: number;
               displayName: string;
               avatarUrl: string;
+              clanId: number | null;
+              partyId: number | null;
+              roles: string[];
               countryCode?: string;
+              battleStatus:
+                  | ({
+                        battleId: number;
+                    } & (
+                        | ({
+                              playerId: number;
+                              teamId: number;
+                              color: string;
+                              bonus: number;
+                              inGame: boolean;
+                          } & {
+                              isSpectator: false;
+                              isBot: false;
+                              ready: boolean;
+                              sync: {
+                                  engine: number;
+                                  game: number;
+                                  map: number;
+                              };
+                          })
+                        | {
+                              isSpectator: true;
+                              isBot: false;
+                          }
+                    ))
+                  | null;
+              friendIds: number[];
+              outgoingFriendRequestIds: number[];
+              incomingFriendRequestIds: number[];
+              ignoreIds: number[];
           };
       }
     | {
@@ -192,9 +400,43 @@ export type SystemConnectedResponse =
     "commandId": "system/connected/response",
     "status": "success",
     "data": {
-        "accountId": -75320000,
+        "userId": -75320000,
         "displayName": "mollit",
-        "avatarUrl": "mollit"
+        "avatarUrl": "http://ggggg.ddgigi",
+        "clanId": -75320000,
+        "partyId": -75320000,
+        "roles": [
+            "mollit"
+        ],
+        "countryCode": "mollit",
+        "battleStatus": {
+            "battleId": -75320000,
+            "playerId": -75320000,
+            "teamId": -75320000,
+            "color": "mollit",
+            "bonus": -75320000,
+            "inGame": false,
+            "isSpectator": false,
+            "isBot": false,
+            "ready": false,
+            "sync": {
+                "engine": -75320000,
+                "game": -75320000,
+                "map": -75320000
+            }
+        },
+        "friendIds": [
+            -75320000
+        ],
+        "outgoingFriendRequestIds": [
+            -75320000
+        ],
+        "incomingFriendRequestIds": [
+            -75320000
+        ],
+        "ignoreIds": [
+            -75320000
+        ]
     }
 }
 ```

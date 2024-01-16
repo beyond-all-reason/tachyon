@@ -1,17 +1,12 @@
-import { defineEndpoint } from "@/helpers";
-import { Type } from "@sinclair/typebox";
+import { defineEndpoint } from "@/schema-helpers";
+import { privateUser } from "@/schema/types";
 
 export default defineEndpoint({
     description: "Sent immediately by the server on connection.",
     response: [
         {
             status: "success",
-            data: Type.Object({
-                accountId: Type.Integer(),
-                displayName: Type.String(),
-                avatarUrl: Type.String(),
-                countryCode: Type.Optional(Type.String()),
-            }),
+            data: privateUser,
         },
     ],
 });

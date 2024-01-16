@@ -1,4 +1,4 @@
-import { defineEndpoint } from "@/helpers";
+import { defineEndpoint } from "@/schema-helpers";
 import { Type } from "@sinclair/typebox";
 
 export default defineEndpoint({

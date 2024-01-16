@@ -1,0 +1,18 @@
+{
+    "$id": "customBattle/close/request",
+    "requiresLogin": false,
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "customBattle/close/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId"
+    ]
+}

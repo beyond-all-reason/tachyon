@@ -1,4 +1,4 @@
-import { defineEndpoint } from "@/helpers";
+import { defineEndpoint } from "@/schema-helpers";
 
 export default defineEndpoint({
     description:

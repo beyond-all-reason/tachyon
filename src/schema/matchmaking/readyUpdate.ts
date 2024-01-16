@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/helpers";
+import { defineEndpoint } from "@/schema-helpers";
 
 export default defineEndpoint({
     description: "Sent when a client in a found match readies up.",

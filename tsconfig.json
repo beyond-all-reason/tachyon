@@ -1,6 +1,5 @@
 {
     "compilerOptions": {
-        "composite": true,
         "module": "CommonJS",
         "moduleResolution": "node",
         "skipLibCheck": true,
