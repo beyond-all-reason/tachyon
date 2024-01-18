@@ -446,7 +446,7 @@ export type SystemConnectedResponse =
 
 Ask the server to terminate the connection.
 
-- Endpoint Type: **Request** only
+- Endpoint Type: **Request** -> **Response**
 - Requires Login: **false**
 ### Request
 
@@ -465,6 +465,17 @@ Ask the server to terminate the connection.
         "commandId": {
             "const": "system/disconnect/request",
             "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "reason"
+            ]
         }
     },
     "required": [
@@ -481,6 +492,9 @@ Ask the server to terminate the connection.
 export interface SystemDisconnectRequest {
     messageId: string;
     commandId: "system/disconnect/request";
+    data?: {
+        reason: string;
+    };
 }
 
 ```
@@ -489,6 +503,157 @@ export interface SystemDisconnectRequest {
 {
     "messageId": "mollit",
     "commandId": "system/disconnect/request"
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "system/disconnect/response",
+    "requiresLogin": false,
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type SystemDisconnectResponse =
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+
+```
+#### Example
+```json
+{
+    "messageId": "mollit",
+    "commandId": "system/disconnect/response",
+    "status": "success"
 }
 ```
 ---

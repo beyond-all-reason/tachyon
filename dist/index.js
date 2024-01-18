@@ -7173,7 +7173,8 @@ var tachyonMeta = {
         "response"
       ],
       "disconnect": [
-        "request"
+        "request",
+        "response"
       ],
       "serverStats": [
         "request",

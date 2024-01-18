@@ -37,7 +37,7 @@ declare const tachyonMeta: {
         };
         readonly system: {
             readonly connected: readonly ["response"];
-            readonly disconnect: readonly ["request"];
+            readonly disconnect: readonly ["request", "response"];
             readonly serverStats: readonly ["request", "response"];
         };
     };
@@ -46,45 +46,51 @@ declare const tachyonMeta: {
 type ServiceId = keyof Tachyon;
 type EndpointId<S extends ServiceId> = keyof Tachyon[S];
 type Command<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E];
-type Request<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+type RequestCommand<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
     request: infer Request;
 } ? Request : never;
-type Response<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
-    response: infer Response;
-} ? Response : never;
+type ResponseCommand<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E]["response"];
 type RequestEndpointId<S extends ServiceId> = {
-    [K in EndpointId<S>]: Request<S, K> extends never ? never : K;
+    [E in EndpointId<S>]: "request" extends keyof Command<S, E> ? E : never;
 }[EndpointId<S>];
-type ResponseEndpointId<S extends ServiceId> = {
-    [K in EndpointId<S>]: Response<S, K> extends never ? never : K;
+type ResponseOnlyEndpointId<S extends ServiceId> = {
+    [E in EndpointId<S>]: Command<S, E> extends RequestCommand<S, E> ? never : E;
 }[EndpointId<S>];
-type RequestOnlyEndpointId<S extends ServiceId> = Exclude<RequestEndpointId<S>, ResponseEndpointId<S>>;
-type ResponseOnlyEndpointId<S extends ServiceId> = Exclude<ResponseEndpointId<S>, RequestEndpointId<S>>;
-type RequestData<S extends ServiceId, E extends EndpointId<S>> = Request<S, E> extends {
+type RequestData<S extends ServiceId, E extends EndpointId<S>> = RequestCommand<S, E> extends {
     data: infer Data;
 } ? Data : never;
-type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = Response<S, E> & {
+type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> & {
     status: "success";
 } extends {
     data: infer Data;
 } ? Data : never;
 type EmptyRequestId<S extends ServiceId> = {
-    [K in RequestEndpointId<S>]: RequestData<S, K> extends EmptyObject ? K : never;
-}[RequestEndpointId<S>];
+    [K in EndpointId<S>]: RequestData<S, K> extends EmptyObject ? K : never;
+}[EndpointId<S>];
 type DataRequestId<S extends ServiceId> = {
-    [K in RequestEndpointId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
-}[RequestEndpointId<S>];
+    [K in EndpointId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
+}[EndpointId<S>];
 type GenericRequestCommand = {
-    messageId: string;
     commandId: string;
+    messageId: string;
     data?: Record<string, unknown>;
 };
+type GenericResponseCommand = {
+    commandId: string;
+    messageId: string;
+} & ({
+    status: "success";
+    data?: Record<string, unknown>;
+} | {
+    status: "failed";
+    reason: string;
+});
 
 declare function getValidator<T extends {
     commandId: string;
 }>(command: T): ValidateFunction<T>;
 
-export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, Request, RequestData, RequestEndpointId, RequestOnlyEndpointId, Response, ResponseEndpointId, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
+export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
 export type BotSlaveResponse =
     | {
@@ -295,13 +301,12 @@ export type CustomBattleJoinedResponse =
                    */
                   [k: string]: unknown;
               };
-              bots: ({
+              bots: {
                   playerId: number;
                   teamId: number;
                   color: string;
                   bonus: number;
                   inGame: boolean;
-              } & {
                   isSpectator: false;
                   isBot: true;
                   ownerId: number;
@@ -315,7 +320,7 @@ export type CustomBattleJoinedResponse =
                       [k: string]: unknown;
                   };
                   faction: string;
-              })[];
+              }[];
               users: {
                   userId: number;
                   displayName: string;
@@ -461,13 +466,12 @@ export type CustomBattleListResponse =
                        */
                       [k: string]: unknown;
                   };
-                  bots: ({
+                  bots: {
                       playerId: number;
                       teamId: number;
                       color: string;
                       bonus: number;
                       inGame: boolean;
-                  } & {
                       isSpectator: false;
                       isBot: true;
                       ownerId: number;
@@ -481,7 +485,7 @@ export type CustomBattleListResponse =
                           [k: string]: unknown;
                       };
                       faction: string;
-                  })[];
+                  }[];
                   users: {
                       userId: number;
                       displayName: string;
@@ -698,13 +702,12 @@ export type CustomBattleUpdatedResponse =
                        */
                       [k: string]: unknown;
                   };
-                  bots?: ({
+                  bots?: {
                       playerId: number;
                       teamId: number;
                       color: string;
                       bonus: number;
                       inGame: boolean;
-                  } & {
                       isSpectator: false;
                       isBot: true;
                       ownerId: number;
@@ -718,7 +721,7 @@ export type CustomBattleUpdatedResponse =
                           [k: string]: unknown;
                       };
                       faction: string;
-                  })[];
+                  }[];
                   users?: {
                       userId: number;
                       displayName: string;
@@ -1111,6 +1114,30 @@ export type SystemConnectedResponse =
           status: "failed";
           reason: "invalid_command";
       };
+export type SystemDisconnectResponse =
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
 export type SystemServerStatsResponse =
     | {
           messageId: string;
@@ -1313,6 +1340,7 @@ export interface Tachyon {
          */
         disconnect: {
             request: SystemDisconnectRequest;
+            response: SystemDisconnectResponse;
         };
         /**
          * Get server stats such as user count.
@@ -1321,6 +1349,48 @@ export interface Tachyon {
             request: SystemServerStatsRequest;
             response: SystemServerStatsResponse;
         };
+    };
+    [k: string]: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(.*)$".
+         */
+        [k: string]:
+            | {
+                  request: {
+                      commandId: string;
+                      messageId: string;
+                      data?: unknown;
+                  };
+                  response:
+                      | {
+                            commandId: string;
+                            messageId: string;
+                            status: "success";
+                            data?: unknown;
+                        }
+                      | {
+                            commandId: string;
+                            messageId: string;
+                            status: "failed";
+                            reason: string;
+                        };
+              }
+            | {
+                  response:
+                      | {
+                            commandId: string;
+                            messageId: string;
+                            status: "success";
+                            data?: unknown;
+                        }
+                      | {
+                            commandId: string;
+                            messageId: string;
+                            status: "failed";
+                            reason: string;
+                        };
+              };
     };
 }
 export interface BotSlaveRequest {
@@ -1410,6 +1480,9 @@ export interface MatchmakingReadyRequest {
 export interface SystemDisconnectRequest {
     messageId: string;
     commandId: "system/disconnect/request";
+    data?: {
+        reason: string;
+    };
 }
 export interface SystemServerStatsRequest {
     messageId: string;
@@ -1445,13 +1518,12 @@ export interface TachyonBattleSpectator {
     isBot: false;
 }
 
-export type TachyonBot = {
+export interface TachyonBot {
     playerId: number;
     teamId: number;
     color: string;
     bonus: number;
     inGame: boolean;
-} & {
     isSpectator: false;
     isBot: true;
     ownerId: number;
@@ -1465,7 +1537,7 @@ export type TachyonBot = {
         [k: string]: unknown;
     };
     faction: string;
-};
+}
 
 export type TachyonBattleStatus =
     | ({
@@ -1607,13 +1679,12 @@ export interface TachyonBattle {
          */
         [k: string]: unknown;
     };
-    bots: ({
+    bots: {
         playerId: number;
         teamId: number;
         color: string;
         bonus: number;
         inGame: boolean;
-    } & {
         isSpectator: false;
         isBot: true;
         ownerId: number;
@@ -1627,7 +1698,7 @@ export interface TachyonBattle {
             [k: string]: unknown;
         };
         faction: string;
-    })[];
+    }[];
     users: {
         userId: number;
         displayName: string;
@@ -1695,13 +1766,12 @@ export type TachyonCustomBattle = {
          */
         [k: string]: unknown;
     };
-    bots: ({
+    bots: {
         playerId: number;
         teamId: number;
         color: string;
         bonus: number;
         inGame: boolean;
-    } & {
         isSpectator: false;
         isBot: true;
         ownerId: number;
@@ -1715,7 +1785,7 @@ export type TachyonCustomBattle = {
             [k: string]: unknown;
         };
         faction: string;
-    })[];
+    }[];
     users: {
         userId: number;
         displayName: string;

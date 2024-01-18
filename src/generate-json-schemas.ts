@@ -111,7 +111,50 @@ export async function generateJsonSchemas() {
         }
         compiledSchema[serviceId] = Type.Object(compiledSchema[serviceId]);
     }
-    compiledSchema = Type.Object(compiledSchema);
+
+    const sharedCommandSchema = Type.Object({
+        commandId: Type.String(),
+        messageId: Type.String(),
+    });
+
+    const requestCommandSchema = Type.Composite([
+        sharedCommandSchema,
+        Type.Object({
+            data: Type.Optional(Type.Unknown()),
+        }),
+    ]);
+
+    const responseCommandSchema = Type.Union([
+        Type.Composite([
+            sharedCommandSchema,
+            Type.Object({
+                status: Type.Literal("success"),
+                data: Type.Optional(Type.Unknown()),
+            }),
+        ]),
+        Type.Composite([
+            sharedCommandSchema,
+            Type.Object({
+                status: Type.Literal("failed"),
+                reason: Type.String(),
+            }),
+        ]),
+    ]);
+
+    compiledSchema = Type.Object(compiledSchema, {
+        additionalProperties: Type.Record(
+            Type.String(),
+            Type.Union([
+                Type.Object({
+                    request: requestCommandSchema,
+                    response: responseCommandSchema,
+                }),
+                Type.Object({
+                    response: responseCommandSchema,
+                }),
+            ])
+        ),
+    });
 
     return { individualSchemas, compiledSchema, ids };
 }

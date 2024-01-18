@@ -40,7 +40,7 @@ Both request and response messages are referred to as "commands". A request comm
 
 ### Shared
 
-Every command has the following properties:
+Every command shares the following properties:
 
 | Property   | Type   | Description                                                                           |
 | ---------- | ------ | ------------------------------------------------------------------------------------- |
@@ -51,19 +51,19 @@ Every command has the following properties:
 
 Every request command contains these additional properties:
 
-| Property | type   | Description                                                                                              |
-| -------- | ------ | -------------------------------------------------------------------------------------------------------- |
-| data     | object | A object containing data specific to the command. This may be omitted if the command does not require it |
+| Property        | type   | Description                                                                                              |
+| --------------- | ------ | -------------------------------------------------------------------------------------------------------- |
+| data (optional) | object | A object containing data specific to the command. This may be omitted if the command does not require it |
 
 ### Responses
 
 Every response command contains these additional properties:
 
-| Property | type                  | Description                                                                                              |
-| -------- | --------------------- | -------------------------------------------------------------------------------------------------------- |
-| status   | "success" \| "failed" | A object containing data specific to the command. This may be omitted if the command does not require it |
-| data     | object                | Command-specific data object. Only present for "success" responses                                       |
-| reason   | string                | An error code only present for "failed" responses                                                        |
+| Property        | type                  | Description                                                                                              |
+| --------------- | --------------------- | -------------------------------------------------------------------------------------------------------- |
+| status          | "success" \| "failed" | A object containing data specific to the command. This may be omitted if the command does not require it |
+| data (optional) | object                | Command-specific data object. Only present for "success" responses                                       |
+| reason          | string                | An error code only present for "failed" responses                                                        |
 
 All `failed` responses that are initiated by a request can return one of the following `reason`s, even though not explicitly defined in each command's definition file:
 

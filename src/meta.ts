@@ -99,7 +99,8 @@ export const tachyonMeta = {
                 "response"
             ],
             "disconnect": [
-                "request"
+                "request",
+                "response"
             ],
             "serverStats": [
                 "request",

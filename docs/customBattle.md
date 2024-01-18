@@ -1179,74 +1179,62 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                             "type": "array",
                             "items": {
                                 "type": "object",
-                                "allOf": [
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "playerId": {
-                                                "type": "integer"
-                                            },
-                                            "teamId": {
-                                                "type": "integer"
-                                            },
-                                            "color": {
-                                                "type": "string"
-                                            },
-                                            "bonus": {
-                                                "type": "number"
-                                            },
-                                            "inGame": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "required": [
-                                            "playerId",
-                                            "teamId",
-                                            "color",
-                                            "bonus",
-                                            "inGame"
-                                        ]
+                                "properties": {
+                                    "playerId": {
+                                        "type": "integer"
                                     },
-                                    {
+                                    "teamId": {
+                                        "type": "integer"
+                                    },
+                                    "color": {
+                                        "type": "string"
+                                    },
+                                    "bonus": {
+                                        "type": "number"
+                                    },
+                                    "inGame": {
+                                        "type": "boolean"
+                                    },
+                                    "isSpectator": {
+                                        "const": false,
+                                        "type": "boolean"
+                                    },
+                                    "isBot": {
+                                        "const": true,
+                                        "type": "boolean"
+                                    },
+                                    "ownerId": {
+                                        "type": "integer"
+                                    },
+                                    "aiShortName": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "aiOptions": {
                                         "type": "object",
-                                        "properties": {
-                                            "isSpectator": {
-                                                "const": false,
-                                                "type": "boolean"
-                                            },
-                                            "isBot": {
-                                                "const": true,
-                                                "type": "boolean"
-                                            },
-                                            "ownerId": {
-                                                "type": "integer"
-                                            },
-                                            "aiShortName": {
-                                                "type": "string"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            },
-                                            "aiOptions": {
-                                                "type": "object",
-                                                "patternProperties": {
-                                                    "^(.*)$": {}
-                                                }
-                                            },
-                                            "faction": {
-                                                "type": "string"
-                                            }
-                                        },
-                                        "required": [
-                                            "isSpectator",
-                                            "isBot",
-                                            "ownerId",
-                                            "aiShortName",
-                                            "name",
-                                            "aiOptions",
-                                            "faction"
-                                        ]
+                                        "patternProperties": {
+                                            "^(.*)$": {}
+                                        }
+                                    },
+                                    "faction": {
+                                        "type": "string"
                                     }
+                                },
+                                "required": [
+                                    "playerId",
+                                    "teamId",
+                                    "color",
+                                    "bonus",
+                                    "inGame",
+                                    "isSpectator",
+                                    "isBot",
+                                    "ownerId",
+                                    "aiShortName",
+                                    "name",
+                                    "aiOptions",
+                                    "faction"
                                 ]
                             }
                         },
@@ -1561,13 +1549,12 @@ export type CustomBattleJoinedResponse =
               modOptions: {
                   [k: string]: unknown;
               };
-              bots: ({
+              bots: {
                   playerId: number;
                   teamId: number;
                   color: string;
                   bonus: number;
                   inGame: boolean;
-              } & {
                   isSpectator: false;
                   isBot: true;
                   ownerId: number;
@@ -1577,7 +1564,7 @@ export type CustomBattleJoinedResponse =
                       [k: string]: unknown;
                   };
                   faction: string;
-              })[];
+              }[];
               users: {
                   userId: number;
                   displayName: string;
@@ -2356,74 +2343,62 @@ export interface CustomBattleListRequest {
                                                 "type": "array",
                                                 "items": {
                                                     "type": "object",
-                                                    "allOf": [
-                                                        {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "playerId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "teamId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "color": {
-                                                                    "type": "string"
-                                                                },
-                                                                "bonus": {
-                                                                    "type": "number"
-                                                                },
-                                                                "inGame": {
-                                                                    "type": "boolean"
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "playerId",
-                                                                "teamId",
-                                                                "color",
-                                                                "bonus",
-                                                                "inGame"
-                                                            ]
+                                                    "properties": {
+                                                        "playerId": {
+                                                            "type": "integer"
                                                         },
-                                                        {
+                                                        "teamId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "color": {
+                                                            "type": "string"
+                                                        },
+                                                        "bonus": {
+                                                            "type": "number"
+                                                        },
+                                                        "inGame": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "isSpectator": {
+                                                            "const": false,
+                                                            "type": "boolean"
+                                                        },
+                                                        "isBot": {
+                                                            "const": true,
+                                                            "type": "boolean"
+                                                        },
+                                                        "ownerId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "aiShortName": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "aiOptions": {
                                                             "type": "object",
-                                                            "properties": {
-                                                                "isSpectator": {
-                                                                    "const": false,
-                                                                    "type": "boolean"
-                                                                },
-                                                                "isBot": {
-                                                                    "const": true,
-                                                                    "type": "boolean"
-                                                                },
-                                                                "ownerId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "aiShortName": {
-                                                                    "type": "string"
-                                                                },
-                                                                "name": {
-                                                                    "type": "string"
-                                                                },
-                                                                "aiOptions": {
-                                                                    "type": "object",
-                                                                    "patternProperties": {
-                                                                        "^(.*)$": {}
-                                                                    }
-                                                                },
-                                                                "faction": {
-                                                                    "type": "string"
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "isSpectator",
-                                                                "isBot",
-                                                                "ownerId",
-                                                                "aiShortName",
-                                                                "name",
-                                                                "aiOptions",
-                                                                "faction"
-                                                            ]
+                                                            "patternProperties": {
+                                                                "^(.*)$": {}
+                                                            }
+                                                        },
+                                                        "faction": {
+                                                            "type": "string"
                                                         }
+                                                    },
+                                                    "required": [
+                                                        "playerId",
+                                                        "teamId",
+                                                        "color",
+                                                        "bonus",
+                                                        "inGame",
+                                                        "isSpectator",
+                                                        "isBot",
+                                                        "ownerId",
+                                                        "aiShortName",
+                                                        "name",
+                                                        "aiOptions",
+                                                        "faction"
                                                     ]
                                                 }
                                             },
@@ -2832,13 +2807,12 @@ export type CustomBattleListResponse =
                   modOptions: {
                       [k: string]: unknown;
                   };
-                  bots: ({
+                  bots: {
                       playerId: number;
                       teamId: number;
                       color: string;
                       bonus: number;
                       inGame: boolean;
-                  } & {
                       isSpectator: false;
                       isBot: true;
                       ownerId: number;
@@ -2848,7 +2822,7 @@ export type CustomBattleListResponse =
                           [k: string]: unknown;
                       };
                       faction: string;
-                  })[];
+                  }[];
                   users: {
                       userId: number;
                       displayName: string;
@@ -4072,74 +4046,62 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                 "type": "array",
                                                 "items": {
                                                     "type": "object",
-                                                    "allOf": [
-                                                        {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "playerId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "teamId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "color": {
-                                                                    "type": "string"
-                                                                },
-                                                                "bonus": {
-                                                                    "type": "number"
-                                                                },
-                                                                "inGame": {
-                                                                    "type": "boolean"
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "playerId",
-                                                                "teamId",
-                                                                "color",
-                                                                "bonus",
-                                                                "inGame"
-                                                            ]
+                                                    "properties": {
+                                                        "playerId": {
+                                                            "type": "integer"
                                                         },
-                                                        {
+                                                        "teamId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "color": {
+                                                            "type": "string"
+                                                        },
+                                                        "bonus": {
+                                                            "type": "number"
+                                                        },
+                                                        "inGame": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "isSpectator": {
+                                                            "const": false,
+                                                            "type": "boolean"
+                                                        },
+                                                        "isBot": {
+                                                            "const": true,
+                                                            "type": "boolean"
+                                                        },
+                                                        "ownerId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "aiShortName": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "aiOptions": {
                                                             "type": "object",
-                                                            "properties": {
-                                                                "isSpectator": {
-                                                                    "const": false,
-                                                                    "type": "boolean"
-                                                                },
-                                                                "isBot": {
-                                                                    "const": true,
-                                                                    "type": "boolean"
-                                                                },
-                                                                "ownerId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "aiShortName": {
-                                                                    "type": "string"
-                                                                },
-                                                                "name": {
-                                                                    "type": "string"
-                                                                },
-                                                                "aiOptions": {
-                                                                    "type": "object",
-                                                                    "patternProperties": {
-                                                                        "^(.*)$": {}
-                                                                    }
-                                                                },
-                                                                "faction": {
-                                                                    "type": "string"
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "isSpectator",
-                                                                "isBot",
-                                                                "ownerId",
-                                                                "aiShortName",
-                                                                "name",
-                                                                "aiOptions",
-                                                                "faction"
-                                                            ]
+                                                            "patternProperties": {
+                                                                "^(.*)$": {}
+                                                            }
+                                                        },
+                                                        "faction": {
+                                                            "type": "string"
                                                         }
+                                                    },
+                                                    "required": [
+                                                        "playerId",
+                                                        "teamId",
+                                                        "color",
+                                                        "bonus",
+                                                        "inGame",
+                                                        "isSpectator",
+                                                        "isBot",
+                                                        "ownerId",
+                                                        "aiShortName",
+                                                        "name",
+                                                        "aiOptions",
+                                                        "faction"
                                                     ]
                                                 }
                                             },
@@ -4524,13 +4486,12 @@ export type CustomBattleUpdatedResponse =
                   modOptions?: {
                       [k: string]: unknown;
                   };
-                  bots?: ({
+                  bots?: {
                       playerId: number;
                       teamId: number;
                       color: string;
                       bonus: number;
                       inGame: boolean;
-                  } & {
                       isSpectator: false;
                       isBot: true;
                       ownerId: number;
@@ -4540,7 +4501,7 @@ export type CustomBattleUpdatedResponse =
                           [k: string]: unknown;
                       };
                       faction: string;
-                  })[];
+                  }[];
                   users?: {
                       userId: number;
                       displayName: string;

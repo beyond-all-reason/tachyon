@@ -10,6 +10,7 @@ export type EndpointConfig = {
 } & (
     | {
           request: RequestSchema;
+          response: ResponseSchema;
       }
     | {
           response: ResponseSchema;

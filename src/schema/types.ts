@@ -28,7 +28,7 @@ export const battleSpectator = Type.Object({
     isBot: Type.Literal(false),
 });
 
-export const bot = Type.Intersect([
+export const bot = Type.Composite([
     battleContender,
     Type.Object({
         isSpectator: Type.Literal(false),

@@ -9,6 +9,17 @@
         "commandId": {
             "const": "system/disconnect/request",
             "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "reason": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "reason"
+            ]
         }
     },
     "required": [

@@ -1,6 +1,15 @@
+import { Type } from "@sinclair/typebox";
+
 import { defineEndpoint } from "@/generator-helpers";
 
 export default defineEndpoint({
     description: "Ask the server to terminate the connection.",
-    request: {},
+    request: {
+        data: Type.Optional(
+            Type.Object({
+                reason: Type.String(), // TODO: add some common literals
+            })
+        ),
+    },
+    response: [{ status: "success" }],
 });

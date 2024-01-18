@@ -1,6 +1,9 @@
 // these are just some shims for generated-helpers.ts to make it easier to dev them
 
 declare interface Tachyon {
+    [key: string]: {
+        [key: string]: { request: unknown; response: unknown } | { response: unknown };
+    };
     bot: {
         /**
          * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
@@ -174,6 +177,7 @@ declare interface Tachyon {
          */
         disconnect: {
             request: SystemDisconnectRequest;
+            response: SystemDisconnectResponse;
         };
         /**
          * Get server stats such as user count.
