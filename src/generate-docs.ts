@@ -32,14 +32,16 @@ export async function generateDocs(
 ) {
     let schemaContents = "";
     for (const serviceId in tachyonSchema) {
-        schemaContents += `    - [${serviceId}](${serviceId}.md)\n`;
+        schemaContents += `    -   [${serviceId}](${serviceId}.md)\n`;
     }
 
     let mainReadme = await fs.promises.readFile("README.md", { encoding: "utf-8" });
-    mainReadme = mainReadme.replace(
-        /(?<=COMMAND_SCHEMA_PLACEHOLDER_START.*$\n)[\s|\S]*(?=^.*COMMAND_SCHEMA_PLACEHOLDER_END.*)/ms,
-        schemaContents
-    );
+    const regex =
+        /(?<=COMMAND_SCHEMA_PLACEHOLDER_START.*$\n)[\s|\S]*(?=^.*COMMAND_SCHEMA_PLACEHOLDER_END.*)/ms;
+    if (!mainReadme.match(regex)) {
+        throw new Error("Could not find COMMAND_SCHEMA_PLACEHOLDER comment in main README.md");
+    }
+    mainReadme = mainReadme.replace(regex, schemaContents);
     await fs.promises.writeFile("README.md", mainReadme);
 
     for (const serviceId in tachyonSchema) {
