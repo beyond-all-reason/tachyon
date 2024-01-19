@@ -30,8 +30,16 @@ Tachyon is the name of this protocol, designed to replace the old [Spring Lobby 
 
 -   [Authentication and Authorization](docs/authorization.md)
 -   [Message Structure](docs/commands.md)
--   [Command Schemas](docs/schema.md)
+-   Commands
+<!-- COMMAND_SCHEMA_PLACEHOLDER_START_DO_NOT_REMOVE -->
+    - [autohost](autohost.md)
+    - [game](game.md)
+    - [lobby](lobby.md)
+    - [matchmaking](matchmaking.md)
+    - [system](system.md)
+    - [user](user.md)
+<!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
 
 ## Contributing
 
-The [dist](dist) and [docs/schema](docs/schema) directories are automatically generated based on the files in [src/schema](src/schema). The source files are written in (TypeScript)[https://www.typescriptlang.org/] for [Node.js](https://nodejs.org/en), using the [TypeBox](https://github.com/sinclairzx81/typebox) library for JSONSchema generation.
+The [dist](dist) and [docs/schema](docs/schema) directories are automatically generated based on the files in [src/schema](src/schema). The source files are written in [TypeScript](https://www.typescriptlang.org/) for [Node.js](https://nodejs.org/en), using the [TypeBox](https://github.com/sinclairzx81/typebox) library for JSONSchema generation.
