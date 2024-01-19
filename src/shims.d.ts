@@ -1,4 +1,4 @@
-// these are just some shims for generated-helpers.ts to make it easier to dev them
+// these are just some copy pasted shims from the outputed index.d.ts file, intended for generated-helpers.ts to make it easier to dev them
 
 declare interface Tachyon {
     [key: string]: {

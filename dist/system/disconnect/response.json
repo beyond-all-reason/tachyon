@@ -1,6 +1,6 @@
 {
     "$id": "system/disconnect/response",
-    "requiresLogin": false,
+    "roles": [],
     "anyOf": [
         {
             "type": "object",

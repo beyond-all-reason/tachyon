@@ -1,0 +1,33 @@
+{
+    "$id": "user/unsubscribe/request",
+    "roles": [],
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "user/unsubscribe/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "required": [
+                "userIds"
+            ]
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

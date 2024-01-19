@@ -49,8 +49,7 @@ export async function generateJsonSchemas() {
                 }
                 const schema = Type.Object(props, {
                     $id: `${serviceId}/${endpointId}/request`,
-                    requiresLogin: Boolean(endpointSchema.requiresLogin),
-                    requiresRole: endpointSchema.requiresRole,
+                    roles: endpointSchema.roles,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(
@@ -80,8 +79,7 @@ export async function generateJsonSchemas() {
                     }),
                     {
                         $id: `${serviceId}/${endpointId}/response`,
-                        requiresLogin: Boolean(endpointSchema.requiresLogin),
-                        requiresRole: endpointSchema.requiresRole,
+                        roles: endpointSchema.roles,
                     }
                 );
                 const schemaStr = JSON.stringify(schema, null, 4);

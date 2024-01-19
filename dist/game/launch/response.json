@@ -1,6 +1,6 @@
 {
     "$id": "game/launch/response",
-    "requiresLogin": false,
+    "roles": [],
     "anyOf": [
         {
             "type": "object",

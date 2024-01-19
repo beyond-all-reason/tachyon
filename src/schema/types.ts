@@ -1,6 +1,10 @@
 import { Type } from "@sinclair/typebox";
 import { Nullable } from "jaz-ts-utils";
 
+export const unixTime = Nullable(
+    Type.Integer({ description: "Unix time", examples: [1705432698, null] })
+);
+
 export const battleContender = Type.Object({
     playerId: Type.Integer(),
     teamId: Type.Integer(),
@@ -103,7 +107,7 @@ export const battle = Type.Object(
             Type.Literal(2, { description: "Boxes" }),
         ]),
         startAreas: Type.Record(Type.Integer(), rect),
-        startTime: Nullable(Type.Integer({ description: "Unix time" })),
+        startTime: unixTime,
         ip: Nullable(Type.String()),
         port: Nullable(Type.Integer()),
         scriptPassword: Nullable(Type.String()),
@@ -174,3 +178,7 @@ export const customBattle = Type.Intersect(
         ],
     }
 );
+
+export const autohostStatus = Type.Object({
+    gameStartTime: unixTime,
+});

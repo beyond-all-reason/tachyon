@@ -3,7 +3,7 @@
 export const tachyonMeta = {
     "version": "0.3.1",
     "ids": {
-        "bot": {
+        "autohost": {
             "slave": [
                 "request",
                 "response"
@@ -13,7 +13,12 @@ export const tachyonMeta = {
                 "response"
             ]
         },
-        "customBattle": {
+        "game": {
+            "launch": [
+                "response"
+            ]
+        },
+        "lobby": {
             "close": [
                 "request",
                 "response"
@@ -59,11 +64,6 @@ export const tachyonMeta = {
                 "response"
             ]
         },
-        "game": {
-            "launch": [
-                "response"
-            ]
-        },
         "matchmaking": {
             "cancel": [
                 "request",
@@ -104,6 +104,19 @@ export const tachyonMeta = {
             ],
             "serverStats": [
                 "request",
+                "response"
+            ]
+        },
+        "user": {
+            "subscribe": [
+                "request",
+                "response"
+            ],
+            "unsubscribe": [
+                "request",
+                "response"
+            ],
+            "updated": [
                 "response"
             ]
         }

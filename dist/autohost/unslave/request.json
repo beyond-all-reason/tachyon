@@ -1,0 +1,20 @@
+{
+    "$id": "autohost/unslave/request",
+    "roles": [
+        "autohost"
+    ],
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/unslave/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId"
+    ]
+}

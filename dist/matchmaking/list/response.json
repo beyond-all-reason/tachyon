@@ -1,6 +1,6 @@
 {
     "$id": "matchmaking/list/response",
-    "requiresLogin": false,
+    "roles": [],
     "anyOf": [
         {
             "type": "object",

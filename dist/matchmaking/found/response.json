@@ -1,6 +1,6 @@
 {
     "$id": "matchmaking/found/response",
-    "requiresLogin": false,
+    "roles": [],
     "anyOf": [
         {
             "type": "object",

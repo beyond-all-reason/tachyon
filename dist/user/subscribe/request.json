@@ -1,0 +1,33 @@
+{
+    "$id": "user/subscribe/request",
+    "roles": [],
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "user/subscribe/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "required": [
+                "userIds"
+            ]
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

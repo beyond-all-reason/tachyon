@@ -1,6 +1,6 @@
 {
     "$id": "matchmaking/list/request",
-    "requiresLogin": false,
+    "roles": [],
     "type": "object",
     "properties": {
         "messageId": {

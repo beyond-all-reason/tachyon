@@ -4,11 +4,14 @@ import { ValidateFunction } from 'ajv';
 declare const tachyonMeta: {
     readonly version: "0.3.1";
     readonly ids: {
-        readonly bot: {
+        readonly autohost: {
             readonly slave: readonly ["request", "response"];
             readonly unslave: readonly ["request", "response"];
         };
-        readonly customBattle: {
+        readonly game: {
+            readonly launch: readonly ["response"];
+        };
+        readonly lobby: {
             readonly close: readonly ["request", "response"];
             readonly create: readonly ["request", "response"];
             readonly join: readonly ["request", "response"];
@@ -21,9 +24,6 @@ declare const tachyonMeta: {
             readonly subscribe: readonly ["request", "response"];
             readonly unsubscribe: readonly ["request", "response"];
             readonly updated: readonly ["response"];
-        };
-        readonly game: {
-            readonly launch: readonly ["response"];
         };
         readonly matchmaking: {
             readonly cancel: readonly ["request", "response"];
@@ -39,6 +39,11 @@ declare const tachyonMeta: {
             readonly connected: readonly ["response"];
             readonly disconnect: readonly ["request", "response"];
             readonly serverStats: readonly ["request", "response"];
+        };
+        readonly user: {
+            readonly subscribe: readonly ["request", "response"];
+            readonly unsubscribe: readonly ["request", "response"];
+            readonly updated: readonly ["response"];
         };
     };
 };
@@ -92,184 +97,211 @@ declare function getValidator<T extends {
 
 export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
-export type BotSlaveResponse =
+export type AutohostSlaveResponse =
     | {
           messageId: string;
-          commandId: "bot/slave/response";
+          commandId: "autohost/slave/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "bot/slave/response";
+          commandId: "autohost/slave/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "bot/slave/response";
+          commandId: "autohost/slave/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "bot/slave/response";
+          commandId: "autohost/slave/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type BotUnslaveResponse =
+export type AutohostUnslaveResponse =
     | {
           messageId: string;
-          commandId: "bot/unslave/response";
+          commandId: "autohost/unslave/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "bot/unslave/response";
+          commandId: "autohost/unslave/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "bot/unslave/response";
+          commandId: "autohost/unslave/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "bot/unslave/response";
+          commandId: "autohost/unslave/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleCloseResponse =
+export type GameLaunchResponse =
     | {
           messageId: string;
-          commandId: "customBattle/close/response";
+          commandId: "game/launch/response";
           status: "success";
+          data: {
+              script: string;
+          };
       }
     | {
           messageId: string;
-          commandId: "customBattle/close/response";
+          commandId: "game/launch/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/close/response";
+          commandId: "game/launch/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/close/response";
+          commandId: "game/launch/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleCreateResponse =
+export type LobbyCloseResponse =
     | {
           messageId: string;
-          commandId: "customBattle/create/response";
+          commandId: "lobby/close/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/create/response";
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type LobbyCreateResponse =
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
           status: "failed";
           reason: "no_hosts_available";
       }
     | {
           messageId: string;
-          commandId: "customBattle/create/response";
+          commandId: "lobby/create/response";
           status: "failed";
           reason: "invalid_region";
       }
     | {
           messageId: string;
-          commandId: "customBattle/create/response";
+          commandId: "lobby/create/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/create/response";
+          commandId: "lobby/create/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/create/response";
+          commandId: "lobby/create/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleJoinResponse =
+export type LobbyJoinResponse =
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "locked";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "requires_password";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "invalid_password";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "max_participants_reached";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "rank_too_low";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "rank_too_high";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "banned";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/join/response";
+          commandId: "lobby/join/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleJoinedResponse =
+export type LobbyJoinedResponse =
     | {
           messageId: string;
-          commandId: "customBattle/joined/response";
+          commandId: "lobby/joined/response";
           status: "success";
           data: {
               battleId: number;
@@ -360,80 +392,80 @@ export type CustomBattleJoinedResponse =
       }
     | {
           messageId: string;
-          commandId: "customBattle/joined/response";
+          commandId: "lobby/joined/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/joined/response";
+          commandId: "lobby/joined/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/joined/response";
+          commandId: "lobby/joined/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleLeaveResponse =
+export type LobbyLeaveResponse =
     | {
           messageId: string;
-          commandId: "customBattle/leave/response";
+          commandId: "lobby/leave/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/leave/response";
+          commandId: "lobby/leave/response";
           status: "failed";
           reason: "no_lobby";
       }
     | {
           messageId: string;
-          commandId: "customBattle/leave/response";
+          commandId: "lobby/leave/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/leave/response";
+          commandId: "lobby/leave/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/leave/response";
+          commandId: "lobby/leave/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleLeftResponse =
+export type LobbyLeftResponse =
     | {
           messageId: string;
-          commandId: "customBattle/left/response";
+          commandId: "lobby/left/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/left/response";
+          commandId: "lobby/left/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/left/response";
+          commandId: "lobby/left/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/left/response";
+          commandId: "lobby/left/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleListResponse =
+export type LobbyListResponse =
     | {
           messageId: string;
-          commandId: "customBattle/list/response";
+          commandId: "lobby/list/response";
           status: "success";
           data: {
               battles: ({
@@ -538,26 +570,26 @@ export type CustomBattleListResponse =
       }
     | {
           messageId: string;
-          commandId: "customBattle/list/response";
+          commandId: "lobby/list/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/list/response";
+          commandId: "lobby/list/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/list/response";
+          commandId: "lobby/list/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleReceiveMessageResponse =
+export type LobbyReceiveMessageResponse =
     | {
           messageId: string;
-          commandId: "customBattle/receiveMessage/response";
+          commandId: "lobby/receiveMessage/response";
           status: "success";
           data: {
               userId: number;
@@ -566,110 +598,116 @@ export type CustomBattleReceiveMessageResponse =
       }
     | {
           messageId: string;
-          commandId: "customBattle/receiveMessage/response";
+          commandId: "lobby/receiveMessage/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/receiveMessage/response";
+          commandId: "lobby/receiveMessage/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/receiveMessage/response";
+          commandId: "lobby/receiveMessage/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleSendMessageResponse =
+export type LobbySendMessageResponse =
     | {
           messageId: string;
-          commandId: "customBattle/sendMessage/response";
+          commandId: "lobby/sendMessage/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/sendMessage/response";
+          commandId: "lobby/sendMessage/response";
           status: "failed";
           reason: "not_in_lobby";
       }
     | {
           messageId: string;
-          commandId: "customBattle/sendMessage/response";
+          commandId: "lobby/sendMessage/response";
           status: "failed";
           reason: "muted";
       }
     | {
           messageId: string;
-          commandId: "customBattle/sendMessage/response";
+          commandId: "lobby/sendMessage/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/sendMessage/response";
+          commandId: "lobby/sendMessage/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/sendMessage/response";
+          commandId: "lobby/sendMessage/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleSubscribeResponse =
+export type LobbySubscribeResponse =
     | {
           messageId: string;
-          commandId: "customBattle/subscribe/response";
+          commandId: "lobby/subscribe/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/subscribe/response";
+          commandId: "lobby/subscribe/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/subscribe/response";
+          commandId: "lobby/subscribe/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/subscribe/response";
+          commandId: "lobby/subscribe/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleUnsubscribeResponse =
+export type LobbyUnsubscribeResponse =
     | {
           messageId: string;
-          commandId: "customBattle/unsubscribe/response";
+          commandId: "lobby/unsubscribe/response";
           status: "success";
       }
     | {
           messageId: string;
-          commandId: "customBattle/unsubscribe/response";
+          commandId: "lobby/unsubscribe/response";
+          status: "failed";
+          reason: "cannot_unsub_own_battle";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/unsubscribe/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/unsubscribe/response";
+          commandId: "lobby/unsubscribe/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/unsubscribe/response";
+          commandId: "lobby/unsubscribe/response";
           status: "failed";
           reason: "invalid_command";
       };
-export type CustomBattleUpdatedResponse =
+export type LobbyUpdatedResponse =
     | {
           messageId: string;
-          commandId: "customBattle/updated/response";
+          commandId: "lobby/updated/response";
           status: "success";
           data: {
               battles: ({
@@ -774,46 +812,19 @@ export type CustomBattleUpdatedResponse =
       }
     | {
           messageId: string;
-          commandId: "customBattle/updated/response";
+          commandId: "lobby/updated/response";
           status: "failed";
           reason: "internal_error";
       }
     | {
           messageId: string;
-          commandId: "customBattle/updated/response";
+          commandId: "lobby/updated/response";
           status: "failed";
           reason: "unauthorized";
       }
     | {
           messageId: string;
-          commandId: "customBattle/updated/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-export type GameLaunchResponse =
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "success";
-          data: {
-              script: string;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
+          commandId: "lobby/updated/response";
           status: "failed";
           reason: "invalid_command";
       };
@@ -1165,113 +1176,269 @@ export type SystemServerStatsResponse =
           status: "failed";
           reason: "invalid_command";
       };
+export type UserSubscribeResponse =
+    | {
+          messageId: string;
+          commandId: "user/subscribe/response";
+          status: "success";
+          data: {
+              users: {
+                  userId: number;
+                  displayName: string;
+                  avatarUrl: string;
+                  clanId: number | null;
+                  partyId: number | null;
+                  roles: string[];
+                  countryCode?: string;
+                  battleStatus:
+                      | ({
+                            battleId: number;
+                        } & (
+                            | ({
+                                  playerId: number;
+                                  teamId: number;
+                                  color: string;
+                                  bonus: number;
+                                  inGame: boolean;
+                              } & {
+                                  isSpectator: false;
+                                  isBot: false;
+                                  ready: boolean;
+                                  sync: {
+                                      engine: number;
+                                      game: number;
+                                      map: number;
+                                  };
+                              })
+                            | {
+                                  isSpectator: true;
+                                  isBot: false;
+                              }
+                        ))
+                      | null;
+              }[];
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "user/subscribe/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "user/subscribe/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "user/subscribe/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type UserUnsubscribeResponse =
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "failed";
+          reason: "cannot_unsub_own_user";
+      }
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
+export type UserUpdatedResponse =
+    | {
+          messageId: string;
+          commandId: "user/updated/response";
+          status: "success";
+          data: {
+              users: {
+                  userId?: number;
+                  displayName?: string;
+                  avatarUrl?: string;
+                  clanId?: number | null;
+                  partyId?: number | null;
+                  roles?: string[];
+                  countryCode?: string;
+                  battleStatus?:
+                      | ({
+                            battleId: number;
+                        } & (
+                            | ({
+                                  playerId: number;
+                                  teamId: number;
+                                  color: string;
+                                  bonus: number;
+                                  inGame: boolean;
+                              } & {
+                                  isSpectator: false;
+                                  isBot: false;
+                                  ready: boolean;
+                                  sync: {
+                                      engine: number;
+                                      game: number;
+                                      map: number;
+                                  };
+                              })
+                            | {
+                                  isSpectator: true;
+                                  isBot: false;
+                              }
+                        ))
+                      | null;
+                  friendIds?: number[];
+                  outgoingFriendRequestIds?: number[];
+                  incomingFriendRequestIds?: number[];
+                  ignoreIds?: number[];
+              }[];
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "user/updated/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "user/updated/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "user/updated/response";
+          status: "failed";
+          reason: "invalid_command";
+      };
 
 export interface Tachyon {
-    bot: {
+    autohost: {
         /**
          * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
          */
         slave: {
-            request: BotSlaveRequest;
-            response: BotSlaveResponse;
+            request: AutohostSlaveRequest;
+            response: AutohostSlaveResponse;
         };
         /**
          * Unregisters the client as slavable.
          */
         unslave: {
-            request: BotUnslaveRequest;
-            response: BotUnslaveResponse;
+            request: AutohostUnslaveRequest;
+            response: AutohostUnslaveResponse;
         };
     };
-    customBattle: {
+    game: {
+        /**
+         * When a client receives this response it should launch the game (spring.exe) with the start script.
+         */
+        launch: {
+            response: GameLaunchResponse;
+        };
+    };
+    lobby: {
         /**
          * Close an existing lobby.
          */
         close: {
-            request: CustomBattleCloseRequest;
-            response: CustomBattleCloseResponse;
+            request: LobbyCloseRequest;
+            response: LobbyCloseResponse;
         };
         /**
          * Create a new lobby - intended for player clients to summon a dedicated host.
          */
         create: {
-            request: CustomBattleCreateRequest;
-            response: CustomBattleCreateResponse;
+            request: LobbyCreateRequest;
+            response: LobbyCreateResponse;
         };
         /**
          * Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
          * These commands are split because the server may want to force the client to join a battle without them explicitly requesting it.
          */
         join: {
-            request: CustomBattleJoinRequest;
-            response: CustomBattleJoinResponse;
+            request: LobbyJoinRequest;
+            response: LobbyJoinResponse;
         };
         /**
          * Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
          */
         joined: {
-            response: CustomBattleJoinedResponse;
+            response: LobbyJoinedResponse;
         };
         /**
          * Leave the current lobby.
          */
         leave: {
-            request: CustomBattleLeaveRequest;
-            response: CustomBattleLeaveResponse;
+            request: LobbyLeaveRequest;
+            response: LobbyLeaveResponse;
         };
         /**
          * Sent when the server removes the client from a lobby.
          */
         left: {
-            response: CustomBattleLeftResponse;
+            response: LobbyLeftResponse;
         };
         /**
          * Returns all custom lobbies.
          */
         list: {
-            request: CustomBattleListRequest;
-            response: CustomBattleListResponse;
+            request: LobbyListRequest;
+            response: LobbyListResponse;
         };
         /**
          * Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
          */
         receiveMessage: {
-            response: CustomBattleReceiveMessageResponse;
+            response: LobbyReceiveMessageResponse;
         };
         /**
          * Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
          */
         sendMessage: {
-            request: CustomBattleSendMessageRequest;
-            response: CustomBattleSendMessageResponse;
+            request: LobbySendMessageRequest;
+            response: LobbySendMessageResponse;
         };
         /**
-         * Subscribe to custom battle updates. If battleIds is passed only updates to those battles will be sent, otherwise updates for all battles will be sent.
+         * Subscribe to custom battle updates. By default, updates for the user's own battle will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed battles, and then continue to send partial (stateful) updates via the [updated](#updated) response.
          */
         subscribe: {
-            request: CustomBattleSubscribeRequest;
-            response: CustomBattleSubscribeResponse;
+            request: LobbySubscribeRequest;
+            response: LobbySubscribeResponse;
         };
         /**
          * Unsubscribe from custom battle updates. If battleIds is passed only updates to those battles will be stopped, otherwise this will stop updates for all battles.
          */
         unsubscribe: {
-            request: CustomBattleUnsubscribeRequest;
-            response: CustomBattleUnsubscribeResponse;
+            request: LobbyUnsubscribeRequest;
+            response: LobbyUnsubscribeResponse;
         };
         /**
          * Server sends an array of partial battle objects whenever a subscribed battle changes in some way.
          */
         updated: {
-            response: CustomBattleUpdatedResponse;
-        };
-    };
-    game: {
-        /**
-         * When a client receives this response it should launch the game with the start script.
-         */
-        launch: {
-            response: GameLaunchResponse;
+            response: LobbyUpdatedResponse;
         };
     };
     matchmaking: {
@@ -1350,6 +1517,28 @@ export interface Tachyon {
             response: SystemServerStatsResponse;
         };
     };
+    user: {
+        /**
+         * Subscribe to user updates. By default, updates for the client's own user will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed users, and then continue to send partial (stateful) updates via the [updated](#updated) response.
+         */
+        subscribe: {
+            request: UserSubscribeRequest;
+            response: UserSubscribeResponse;
+        };
+        /**
+         * Unsubscribe from user updates.
+         */
+        unsubscribe: {
+            request: UserUnsubscribeRequest;
+            response: UserUnsubscribeResponse;
+        };
+        /**
+         * Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.
+         */
+        updated: {
+            response: UserUpdatedResponse;
+        };
+    };
     [k: string]: {
         /**
          * This interface was referenced by `undefined`'s JSON-Schema definition
@@ -1393,24 +1582,24 @@ export interface Tachyon {
               };
     };
 }
-export interface BotSlaveRequest {
+export interface AutohostSlaveRequest {
     messageId: string;
-    commandId: "bot/slave/request";
+    commandId: "autohost/slave/request";
     data: {
         maxBattles: number;
     };
 }
-export interface BotUnslaveRequest {
+export interface AutohostUnslaveRequest {
     messageId: string;
-    commandId: "bot/unslave/request";
+    commandId: "autohost/unslave/request";
 }
-export interface CustomBattleCloseRequest {
+export interface LobbyCloseRequest {
     messageId: string;
-    commandId: "customBattle/close/request";
+    commandId: "lobby/close/request";
 }
-export interface CustomBattleCreateRequest {
+export interface LobbyCreateRequest {
     messageId: string;
-    commandId: "customBattle/create/request";
+    commandId: "lobby/create/request";
     data: {
         title: string;
         private: boolean;
@@ -1418,39 +1607,39 @@ export interface CustomBattleCreateRequest {
         maxPlayers: number;
     };
 }
-export interface CustomBattleJoinRequest {
+export interface LobbyJoinRequest {
     messageId: string;
-    commandId: "customBattle/join/request";
+    commandId: "lobby/join/request";
     data: {
         lobbyId: number;
         password?: string;
     };
 }
-export interface CustomBattleLeaveRequest {
+export interface LobbyLeaveRequest {
     messageId: string;
-    commandId: "customBattle/leave/request";
+    commandId: "lobby/leave/request";
 }
-export interface CustomBattleListRequest {
+export interface LobbyListRequest {
     messageId: string;
-    commandId: "customBattle/list/request";
+    commandId: "lobby/list/request";
 }
-export interface CustomBattleSendMessageRequest {
+export interface LobbySendMessageRequest {
     messageId: string;
-    commandId: "customBattle/sendMessage/request";
+    commandId: "lobby/sendMessage/request";
     data: {
         message: string;
     };
 }
-export interface CustomBattleSubscribeRequest {
+export interface LobbySubscribeRequest {
     messageId: string;
-    commandId: "customBattle/subscribe/request";
+    commandId: "lobby/subscribe/request";
     data: {
-        battleIds?: number[];
+        battleIds: number[];
     };
 }
-export interface CustomBattleUnsubscribeRequest {
+export interface LobbyUnsubscribeRequest {
     messageId: string;
-    commandId: "customBattle/unsubscribe/request";
+    commandId: "lobby/unsubscribe/request";
     data: {
         battleIds?: number[];
     };
@@ -1488,6 +1677,22 @@ export interface SystemServerStatsRequest {
     messageId: string;
     commandId: "system/serverStats/request";
 }
+export interface UserSubscribeRequest {
+    messageId: string;
+    commandId: "user/subscribe/request";
+    data: {
+        userIds: number[];
+    };
+}
+export interface UserUnsubscribeRequest {
+    messageId: string;
+    commandId: "user/unsubscribe/request";
+    data: {
+        userIds: number[];
+    };
+}
+export type TachyonUnixTime = number | null;
+
 export interface TachyonBattleContender {
     playerId: number;
     teamId: number;
@@ -1834,4 +2039,8 @@ export type TachyonCustomBattle = {
         maxRating: number | null;
     };
 };
+
+export interface TachyonAutohostStatus {
+    gameStartTime: number | null;
+}
 

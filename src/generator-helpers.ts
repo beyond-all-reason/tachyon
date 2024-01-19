@@ -1,11 +1,10 @@
 import { SchemaOptions, Static, TIntersect, TObject, TSchema, TUnion } from "@sinclair/typebox";
+import { SetOptional } from "type-fest";
 
 export type EndpointConfig = {
     description?: string;
-    /** @default true */
-    requiresLogin?: boolean;
-    /** @default "" */
-    requiresRole?: string;
+    /** Restrict the command to only be usable by users with specific roles. */
+    roles: string[];
     order?: number;
 } & (
     | {
@@ -39,7 +38,7 @@ export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {
     examples?: T extends TSchema ? Static<T>[] : never;
 }
 
-export function defineEndpoint(endpointConfig: EndpointConfig) {
+export function defineEndpoint(endpointConfig: SetOptional<EndpointConfig, "roles">) {
     if ("response" in endpointConfig) {
         endpointConfig.response.push(
             {
@@ -56,5 +55,10 @@ export function defineEndpoint(endpointConfig: EndpointConfig) {
             }
         );
     }
+
+    if (!endpointConfig.roles) {
+        endpointConfig.roles = [];
+    }
+
     return endpointConfig;
 }

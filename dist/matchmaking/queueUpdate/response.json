@@ -1,6 +1,6 @@
 {
     "$id": "matchmaking/queueUpdate/response",
-    "requiresLogin": false,
+    "roles": [],
     "anyOf": [
         {
             "type": "object",

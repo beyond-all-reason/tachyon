@@ -1,0 +1,666 @@
+{
+    "$id": "lobby/list/response",
+    "roles": [],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "battles": {
+                            "type": "array",
+                            "items": {
+                                "examples": [
+                                    {
+                                        "battleId": 27,
+                                        "hostId": 822,
+                                        "engine": "105.1.1-1821-gaca6f20 BAR105",
+                                        "game": "Beyond All Reason test-23561-0abff7c",
+                                        "map": "Red Comet Remake 1.8",
+                                        "startPosType": 2,
+                                        "startAreas": {
+                                            "0": {
+                                                "x": 0,
+                                                "y": 0,
+                                                "width": 1,
+                                                "height": 0.3
+                                            },
+                                            "1": {
+                                                "x": 0,
+                                                "y": 0.7,
+                                                "width": 1,
+                                                "height": 0.3
+                                            }
+                                        },
+                                        "startTime": 1705432698,
+                                        "ip": "121.32.201.76",
+                                        "port": 41403,
+                                        "scriptPassword": "10sdfi90sid0sjkdf",
+                                        "modOptions": {
+                                            "emprework": 0
+                                        },
+                                        "bots": [],
+                                        "users": [],
+                                        "title": "8v8 | All Welcome",
+                                        "bossIds": [
+                                            123,
+                                            456
+                                        ],
+                                        "locked": false,
+                                        "passworded": false,
+                                        "spectatorIds": [
+                                            88
+                                        ],
+                                        "limits": {
+                                            "minTeamsize": 3,
+                                            "maxTeamsize": 3,
+                                            "minRating": null,
+                                            "maxRating": 25
+                                        }
+                                    }
+                                ],
+                                "type": "object",
+                                "allOf": [
+                                    {
+                                        "examples": [
+                                            {
+                                                "battleId": 27,
+                                                "hostId": 822,
+                                                "engine": "105.1.1-1821-gaca6f20 BAR105",
+                                                "game": "Beyond All Reason test-23561-0abff7c",
+                                                "map": "Red Comet Remake 1.8",
+                                                "startPosType": 2,
+                                                "startAreas": {
+                                                    "0": {
+                                                        "x": 0,
+                                                        "y": 0,
+                                                        "width": 1,
+                                                        "height": 0.3
+                                                    },
+                                                    "1": {
+                                                        "x": 0,
+                                                        "y": 0.7,
+                                                        "width": 1,
+                                                        "height": 0.3
+                                                    }
+                                                },
+                                                "startTime": 1705432698,
+                                                "ip": "121.32.201.76",
+                                                "port": 41403,
+                                                "scriptPassword": "10sdfi90sid0sjkdf",
+                                                "modOptions": {
+                                                    "emprework": 0
+                                                },
+                                                "bots": [],
+                                                "users": []
+                                            }
+                                        ],
+                                        "type": "object",
+                                        "properties": {
+                                            "battleId": {
+                                                "type": "integer"
+                                            },
+                                            "hostId": {
+                                                "type": "integer"
+                                            },
+                                            "engine": {
+                                                "type": "string"
+                                            },
+                                            "game": {
+                                                "type": "string"
+                                            },
+                                            "map": {
+                                                "type": "string"
+                                            },
+                                            "startPosType": {
+                                                "anyOf": [
+                                                    {
+                                                        "description": "Fixed",
+                                                        "const": 0,
+                                                        "type": "number"
+                                                    },
+                                                    {
+                                                        "description": "Random",
+                                                        "const": 1,
+                                                        "type": "number"
+                                                    },
+                                                    {
+                                                        "description": "Boxes",
+                                                        "const": 2,
+                                                        "type": "number"
+                                                    }
+                                                ]
+                                            },
+                                            "startAreas": {
+                                                "type": "object",
+                                                "patternProperties": {
+                                                    "^(0|[1-9][0-9]*)$": {
+                                                        "examples": [
+                                                            {
+                                                                "x": 0,
+                                                                "y": 0,
+                                                                "width": 1,
+                                                                "height": 0.3
+                                                            }
+                                                        ],
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "x": {
+                                                                "type": "number"
+                                                            },
+                                                            "y": {
+                                                                "type": "number"
+                                                            },
+                                                            "width": {
+                                                                "type": "number"
+                                                            },
+                                                            "height": {
+                                                                "type": "number"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "x",
+                                                            "y",
+                                                            "width",
+                                                            "height"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "startTime": {
+                                                "anyOf": [
+                                                    {
+                                                        "description": "Unix time",
+                                                        "examples": [
+                                                            1705432698,
+                                                            null
+                                                        ],
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "ip": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "port": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "scriptPassword": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "string"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "modOptions": {
+                                                "type": "object",
+                                                "patternProperties": {
+                                                    "^(.*)$": {}
+                                                }
+                                            },
+                                            "bots": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "playerId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "teamId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "color": {
+                                                            "type": "string"
+                                                        },
+                                                        "bonus": {
+                                                            "type": "number"
+                                                        },
+                                                        "inGame": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "isSpectator": {
+                                                            "const": false,
+                                                            "type": "boolean"
+                                                        },
+                                                        "isBot": {
+                                                            "const": true,
+                                                            "type": "boolean"
+                                                        },
+                                                        "ownerId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "aiShortName": {
+                                                            "type": "string"
+                                                        },
+                                                        "name": {
+                                                            "type": "string"
+                                                        },
+                                                        "aiOptions": {
+                                                            "type": "object",
+                                                            "patternProperties": {
+                                                                "^(.*)$": {}
+                                                            }
+                                                        },
+                                                        "faction": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "playerId",
+                                                        "teamId",
+                                                        "color",
+                                                        "bonus",
+                                                        "inGame",
+                                                        "isSpectator",
+                                                        "isBot",
+                                                        "ownerId",
+                                                        "aiShortName",
+                                                        "name",
+                                                        "aiOptions",
+                                                        "faction"
+                                                    ]
+                                                }
+                                            },
+                                            "users": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "userId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "displayName": {
+                                                            "type": "string"
+                                                        },
+                                                        "avatarUrl": {
+                                                            "format": "uri",
+                                                            "type": "string"
+                                                        },
+                                                        "clanId": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "integer"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        },
+                                                        "partyId": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "integer"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        },
+                                                        "roles": {
+                                                            "type": "array",
+                                                            "items": {
+                                                                "type": "string"
+                                                            }
+                                                        },
+                                                        "countryCode": {
+                                                            "type": "string"
+                                                        },
+                                                        "battleStatus": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "allOf": [
+                                                                        {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "battleId": {
+                                                                                    "type": "integer"
+                                                                                }
+                                                                            },
+                                                                            "required": [
+                                                                                "battleId"
+                                                                            ]
+                                                                        },
+                                                                        {
+                                                                            "anyOf": [
+                                                                                {
+                                                                                    "type": "object",
+                                                                                    "allOf": [
+                                                                                        {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "playerId": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "teamId": {
+                                                                                                    "type": "integer"
+                                                                                                },
+                                                                                                "color": {
+                                                                                                    "type": "string"
+                                                                                                },
+                                                                                                "bonus": {
+                                                                                                    "type": "number"
+                                                                                                },
+                                                                                                "inGame": {
+                                                                                                    "type": "boolean"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "playerId",
+                                                                                                "teamId",
+                                                                                                "color",
+                                                                                                "bonus",
+                                                                                                "inGame"
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "isSpectator": {
+                                                                                                    "const": false,
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "isBot": {
+                                                                                                    "const": false,
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "ready": {
+                                                                                                    "type": "boolean"
+                                                                                                },
+                                                                                                "sync": {
+                                                                                                    "type": "object",
+                                                                                                    "properties": {
+                                                                                                        "engine": {
+                                                                                                            "type": "number"
+                                                                                                        },
+                                                                                                        "game": {
+                                                                                                            "type": "number"
+                                                                                                        },
+                                                                                                        "map": {
+                                                                                                            "type": "number"
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "required": [
+                                                                                                        "engine",
+                                                                                                        "game",
+                                                                                                        "map"
+                                                                                                    ]
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "isSpectator",
+                                                                                                "isBot",
+                                                                                                "ready",
+                                                                                                "sync"
+                                                                                            ]
+                                                                                        }
+                                                                                    ]
+                                                                                },
+                                                                                {
+                                                                                    "type": "object",
+                                                                                    "properties": {
+                                                                                        "isSpectator": {
+                                                                                            "const": true,
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "isBot": {
+                                                                                            "const": false,
+                                                                                            "type": "boolean"
+                                                                                        }
+                                                                                    },
+                                                                                    "required": [
+                                                                                        "isSpectator",
+                                                                                        "isBot"
+                                                                                    ]
+                                                                                }
+                                                                            ]
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "userId",
+                                                        "displayName",
+                                                        "avatarUrl",
+                                                        "clanId",
+                                                        "partyId",
+                                                        "roles",
+                                                        "battleStatus"
+                                                    ]
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "battleId",
+                                            "hostId",
+                                            "engine",
+                                            "game",
+                                            "map",
+                                            "startPosType",
+                                            "startAreas",
+                                            "startTime",
+                                            "ip",
+                                            "port",
+                                            "scriptPassword",
+                                            "modOptions",
+                                            "bots",
+                                            "users"
+                                        ]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "locked": {
+                                                "type": "boolean"
+                                            },
+                                            "passworded": {
+                                                "type": "boolean"
+                                            },
+                                            "bossIds": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "joinQueueIds": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "limits": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "minTeamsize": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "maxTeamsize": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "minRating": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "maxRating": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "minTeamsize",
+                                                    "maxTeamsize",
+                                                    "minRating",
+                                                    "maxRating"
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "title",
+                                            "locked",
+                                            "passworded",
+                                            "bossIds",
+                                            "joinQueueIds",
+                                            "limits"
+                                        ]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "required": [
+                        "battles"
+                    ]
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_command",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}

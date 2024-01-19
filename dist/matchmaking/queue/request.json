@@ -1,6 +1,6 @@
 {
     "$id": "matchmaking/queue/request",
-    "requiresLogin": false,
+    "roles": [],
     "type": "object",
     "properties": {
         "messageId": {

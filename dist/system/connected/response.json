@@ -1,6 +1,6 @@
 {
     "$id": "system/connected/response",
-    "requiresLogin": false,
+    "roles": [],
     "anyOf": [
         {
             "type": "object",

@@ -1,0 +1,30 @@
+{
+    "$id": "lobby/unsubscribe/request",
+    "roles": [],
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/unsubscribe/request",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

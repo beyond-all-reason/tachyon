@@ -7077,7 +7077,7 @@ module.exports = __toCommonJS(compiled_exports);
 var tachyonMeta = {
   "version": "0.3.1",
   "ids": {
-    "bot": {
+    "autohost": {
       "slave": [
         "request",
         "response"
@@ -7087,7 +7087,12 @@ var tachyonMeta = {
         "response"
       ]
     },
-    "customBattle": {
+    "game": {
+      "launch": [
+        "response"
+      ]
+    },
+    "lobby": {
       "close": [
         "request",
         "response"
@@ -7133,11 +7138,6 @@ var tachyonMeta = {
         "response"
       ]
     },
-    "game": {
-      "launch": [
-        "response"
-      ]
-    },
     "matchmaking": {
       "cancel": [
         "request",
@@ -7178,6 +7178,19 @@ var tachyonMeta = {
       ],
       "serverStats": [
         "request",
+        "response"
+      ]
+    },
+    "user": {
+      "subscribe": [
+        "request",
+        "response"
+      ],
+      "unsubscribe": [
+        "request",
+        "response"
+      ],
+      "updated": [
         "response"
       ]
     }

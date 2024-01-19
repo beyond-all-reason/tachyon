@@ -1,6 +1,6 @@
 {
     "$id": "system/serverStats/request",
-    "requiresLogin": false,
+    "roles": [],
     "type": "object",
     "properties": {
         "messageId": {

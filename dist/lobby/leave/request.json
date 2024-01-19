@@ -1,0 +1,18 @@
+{
+    "$id": "lobby/leave/request",
+    "roles": [],
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/leave/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId"
+    ]
+}

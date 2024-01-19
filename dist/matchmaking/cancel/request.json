@@ -1,6 +1,6 @@
 {
     "$id": "matchmaking/cancel/request",
-    "requiresLogin": false,
+    "roles": [],
     "type": "object",
     "properties": {
         "messageId": {
