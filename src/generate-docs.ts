@@ -32,7 +32,7 @@ export async function generateDocs(
 ) {
     let schemaContents = "";
     for (const serviceId in tachyonSchema) {
-        schemaContents += `    -   [${serviceId}](${serviceId}.md)\n`;
+        schemaContents += `    -   [${serviceId}](docs/schema/${serviceId}.md)\n`;
     }
 
     let mainReadme = await fs.promises.readFile("README.md", { encoding: "utf-8" });

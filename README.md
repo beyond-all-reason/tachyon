@@ -32,12 +32,12 @@ Tachyon is the name of this protocol, designed to replace the old [Spring Lobby 
 -   [Message Structure](docs/commands.md)
 -   Commands
     <!-- COMMAND_SCHEMA_PLACEHOLDER_START_DO_NOT_REMOVE -->
-    -   [autohost](autohost.md)
-    -   [game](game.md)
-    -   [lobby](lobby.md)
-    -   [matchmaking](matchmaking.md)
-    -   [system](system.md)
-    -   [user](user.md)
+    -   [autohost](docs/schema/autohost.md)
+    -   [game](docs/schema/game.md)
+    -   [lobby](docs/schema/lobby.md)
+    -   [matchmaking](docs/schema/matchmaking.md)
+    -   [system](docs/schema/system.md)
+    -   [user](docs/schema/user.md)
     <!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
 
 ## Contributing
