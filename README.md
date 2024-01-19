@@ -28,9 +28,9 @@ Tachyon is the name of this protocol, designed to replace the old [Spring Lobby 
 
 ## Docs
 
--   [Authentication and Authorization](docs/authorization)
--   [Message Structure](docs/commands)
--   [Command Schemas](docs/schema)
+-   [Authentication and Authorization](docs/authorization.md)
+-   [Message Structure](docs/commands.md)
+-   [Command Schemas](docs/schema.md)
 
 ## Contributing
 

@@ -1,6 +1,6 @@
 # Commands
 
-Both request and response messages are referred to as "commands". A request command should always be met with a corresponding response command, however, in some cases, the server can send standalone response commands which the client did not initiate with a request. An exaple is the [`system/connected/response`](docs/system.md/#connected).
+Both request and response messages are referred to as "commands". A request command should always be met with a corresponding response command, however, in some cases, the server can send standalone response commands which the client did not initiate with a request. An example is [`system/connected/response`](docs/system.md/#connected).
 
 ## Shared
 
@@ -15,9 +15,9 @@ Every command shares the following properties:
 
 Every request command contains these additional properties:
 
-| Property        | type   | Description                                                                                              |
-| --------------- | ------ | -------------------------------------------------------------------------------------------------------- |
-| data (optional) | object | A object containing data specific to the command. This may be omitted if the command does not require it |
+| Property        | type   | Description                                      |
+| --------------- | ------ | ------------------------------------------------ |
+| data (optional) | object | A object containing data specific to the command |
 
 ## Responses
 
