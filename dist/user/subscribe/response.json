@@ -27,6 +27,9 @@
                                     "userId": {
                                         "type": "integer"
                                     },
+                                    "username": {
+                                        "type": "string"
+                                    },
                                     "displayName": {
                                         "type": "string"
                                     },
@@ -182,6 +185,7 @@
                                 },
                                 "required": [
                                     "userId",
+                                    "username",
                                     "displayName",
                                     "avatarUrl",
                                     "clanId",

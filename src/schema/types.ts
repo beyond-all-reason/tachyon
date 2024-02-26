@@ -56,6 +56,7 @@ export const battleStatus = Nullable(
 
 export const user = Type.Object({
     userId: Type.Integer(),
+    username: Type.String(),
     displayName: Type.String(),
     avatarUrl: Type.String({ format: "uri" }),
     clanId: Nullable(Type.Integer()),

@@ -54,9 +54,14 @@ type Command<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E];
 type RequestCommand<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
     request: infer Request;
 } ? Request : never;
-type ResponseCommand<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E]["response"];
+type ResponseCommand<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+    response: infer Response;
+} ? Response : never;
 type RequestEndpointId<S extends ServiceId> = {
     [E in EndpointId<S>]: "request" extends keyof Command<S, E> ? E : never;
+}[EndpointId<S>];
+type ResponseEndpointId<S extends ServiceId> = {
+    [E in EndpointId<S>]: "response" extends keyof Command<S, E> ? E : never;
 }[EndpointId<S>];
 type ResponseOnlyEndpointId<S extends ServiceId> = {
     [E in EndpointId<S>]: Command<S, E> extends RequestCommand<S, E> ? never : E;
@@ -95,7 +100,7 @@ declare function getValidator<T extends {
     commandId: string;
 }>(command: T): ValidateFunction<T>;
 
-export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
+export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseEndpointId, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
 export type AutohostSlaveResponse =
     | {
@@ -355,6 +360,7 @@ export type LobbyJoinedResponse =
               }[];
               users: {
                   userId: number;
+                  username: string;
                   displayName: string;
                   avatarUrl: string;
                   clanId: number | null;
@@ -520,6 +526,7 @@ export type LobbyListResponse =
                   }[];
                   users: {
                       userId: number;
+                      username: string;
                       displayName: string;
                       avatarUrl: string;
                       clanId: number | null;
@@ -762,6 +769,7 @@ export type LobbyUpdatedResponse =
                   }[];
                   users?: {
                       userId: number;
+                      username: string;
                       displayName: string;
                       avatarUrl: string;
                       clanId: number | null;
@@ -1069,6 +1077,7 @@ export type SystemConnectedResponse =
           status: "success";
           data: {
               userId: number;
+              username: string;
               displayName: string;
               avatarUrl: string;
               clanId: number | null;
@@ -1184,6 +1193,7 @@ export type UserSubscribeResponse =
           data: {
               users: {
                   userId: number;
+                  username: string;
                   displayName: string;
                   avatarUrl: string;
                   clanId: number | null;
@@ -1275,6 +1285,7 @@ export type UserUpdatedResponse =
           data: {
               users: {
                   userId?: number;
+                  username?: string;
                   displayName?: string;
                   avatarUrl?: string;
                   clanId?: number | null;
@@ -1539,48 +1550,6 @@ export interface Tachyon {
             response: UserUpdatedResponse;
         };
     };
-    [k: string]: {
-        /**
-         * This interface was referenced by `undefined`'s JSON-Schema definition
-         * via the `patternProperty` "^(.*)$".
-         */
-        [k: string]:
-            | {
-                  request: {
-                      commandId: string;
-                      messageId: string;
-                      data?: unknown;
-                  };
-                  response:
-                      | {
-                            commandId: string;
-                            messageId: string;
-                            status: "success";
-                            data?: unknown;
-                        }
-                      | {
-                            commandId: string;
-                            messageId: string;
-                            status: "failed";
-                            reason: string;
-                        };
-              }
-            | {
-                  response:
-                      | {
-                            commandId: string;
-                            messageId: string;
-                            status: "success";
-                            data?: unknown;
-                        }
-                      | {
-                            commandId: string;
-                            messageId: string;
-                            status: "failed";
-                            reason: string;
-                        };
-              };
-    };
 }
 export interface AutohostSlaveRequest {
     messageId: string;
@@ -1773,6 +1742,7 @@ export type TachyonBattleStatus =
 
 export interface TachyonUser {
     userId: number;
+    username: string;
     displayName: string;
     avatarUrl: string;
     clanId: number | null;
@@ -1809,6 +1779,7 @@ export interface TachyonUser {
 
 export interface TachyonPrivateUser {
     userId: number;
+    username: string;
     displayName: string;
     avatarUrl: string;
     clanId: number | null;
@@ -1906,6 +1877,7 @@ export interface TachyonBattle {
     }[];
     users: {
         userId: number;
+        username: string;
         displayName: string;
         avatarUrl: string;
         clanId: number | null;
@@ -1993,6 +1965,7 @@ export type TachyonCustomBattle = {
     }[];
     users: {
         userId: number;
+        username: string;
         displayName: string;
         avatarUrl: string;
         clanId: number | null;

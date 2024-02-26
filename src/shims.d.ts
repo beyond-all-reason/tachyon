@@ -1,9 +1,6 @@
 // these are just some copy pasted shims from the outputed index.d.ts file, intended for generated-helpers.ts to make it easier to dev them
 
 declare interface Tachyon {
-    [key: string]: {
-        [key: string]: { request: unknown; response: unknown } | { response: unknown };
-    };
     bot: {
         /**
          * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.

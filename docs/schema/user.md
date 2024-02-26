@@ -113,6 +113,9 @@ export interface UserSubscribeRequest {
                                     "userId": {
                                         "type": "integer"
                                     },
+                                    "username": {
+                                        "type": "string"
+                                    },
                                     "displayName": {
                                         "type": "string"
                                     },
@@ -268,6 +271,7 @@ export interface UserSubscribeRequest {
                                 },
                                 "required": [
                                     "userId",
+                                    "username",
                                     "displayName",
                                     "avatarUrl",
                                     "clanId",
@@ -384,6 +388,7 @@ export type UserSubscribeResponse =
           data: {
               users: {
                   userId: number;
+                  username: string;
                   displayName: string;
                   avatarUrl: string;
                   clanId: number | null;
@@ -449,6 +454,7 @@ export type UserSubscribeResponse =
         "users": [
             {
                 "userId": -75320000,
+                "username": "mollit",
                 "displayName": "mollit",
                 "avatarUrl": "http://ggggg.ddgigi",
                 "clanId": -75320000,
@@ -776,6 +782,9 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     "userId": {
                                         "type": "integer"
                                     },
+                                    "username": {
+                                        "type": "string"
+                                    },
                                     "displayName": {
                                         "type": "string"
                                     },
@@ -1062,6 +1071,7 @@ export type UserUpdatedResponse =
           data: {
               users: {
                   userId?: number;
+                  username?: string;
                   displayName?: string;
                   avatarUrl?: string;
                   clanId?: number | null;
@@ -1131,9 +1141,22 @@ export type UserUpdatedResponse =
         "users": [
             {
                 "mollitb": -75320000,
-                "friendIds": [
-                    -75320000
-                ]
+                "battleStatus": {
+                    "battleId": -75320000,
+                    "playerId": -75320000,
+                    "teamId": -75320000,
+                    "color": "mollit",
+                    "bonus": -75320000,
+                    "inGame": false,
+                    "isSpectator": false,
+                    "isBot": false,
+                    "ready": false,
+                    "sync": {
+                        "engine": -75320000,
+                        "game": -75320000,
+                        "map": -75320000
+                    }
+                }
             }
         ]
     }

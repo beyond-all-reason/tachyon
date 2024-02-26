@@ -42,6 +42,9 @@ Sent immediately by the server on connection.
                         "userId": {
                             "type": "integer"
                         },
+                        "username": {
+                            "type": "string"
+                        },
                         "displayName": {
                             "type": "string"
                         },
@@ -221,6 +224,7 @@ Sent immediately by the server on connection.
                     },
                     "required": [
                         "userId",
+                        "username",
                         "displayName",
                         "avatarUrl",
                         "clanId",
@@ -334,6 +338,7 @@ export type SystemConnectedResponse =
           status: "success";
           data: {
               userId: number;
+              username: string;
               displayName: string;
               avatarUrl: string;
               clanId: number | null;
@@ -400,6 +405,7 @@ export type SystemConnectedResponse =
     "status": "success",
     "data": {
         "userId": -75320000,
+        "username": "mollit",
         "displayName": "mollit",
         "avatarUrl": "http://ggggg.ddgigi",
         "clanId": -75320000,

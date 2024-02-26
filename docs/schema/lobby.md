@@ -1246,6 +1246,9 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "userId": {
                                         "type": "integer"
                                     },
+                                    "username": {
+                                        "type": "string"
+                                    },
                                     "displayName": {
                                         "type": "string"
                                     },
@@ -1401,6 +1404,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                 },
                                 "required": [
                                     "userId",
+                                    "username",
                                     "displayName",
                                     "avatarUrl",
                                     "clanId",
@@ -1567,6 +1571,7 @@ export type LobbyJoinedResponse =
               }[];
               users: {
                   userId: number;
+                  username: string;
                   displayName: string;
                   avatarUrl: string;
                   clanId: number | null;
@@ -2411,6 +2416,9 @@ export interface LobbyListRequest {
                                                         "userId": {
                                                             "type": "integer"
                                                         },
+                                                        "username": {
+                                                            "type": "string"
+                                                        },
                                                         "displayName": {
                                                             "type": "string"
                                                         },
@@ -2566,6 +2574,7 @@ export interface LobbyListRequest {
                                                     },
                                                     "required": [
                                                         "userId",
+                                                        "username",
                                                         "displayName",
                                                         "avatarUrl",
                                                         "clanId",
@@ -2826,6 +2835,7 @@ export type LobbyListResponse =
                   }[];
                   users: {
                       userId: number;
+                      username: string;
                       displayName: string;
                       avatarUrl: string;
                       clanId: number | null;
@@ -4150,6 +4160,9 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                         "userId": {
                                                             "type": "integer"
                                                         },
+                                                        "username": {
+                                                            "type": "string"
+                                                        },
                                                         "displayName": {
                                                             "type": "string"
                                                         },
@@ -4305,6 +4318,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                     },
                                                     "required": [
                                                         "userId",
+                                                        "username",
                                                         "displayName",
                                                         "avatarUrl",
                                                         "clanId",
@@ -4541,6 +4555,7 @@ export type LobbyUpdatedResponse =
                   }[];
                   users?: {
                       userId: number;
+                      username: string;
                       displayName: string;
                       avatarUrl: string;
                       clanId: number | null;

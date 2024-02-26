@@ -10,13 +10,18 @@ export type RequestCommand<S extends ServiceId, E extends EndpointId<S>> = Comma
     ? Request
     : never;
 
-export type ResponseCommand<
-    S extends ServiceId,
-    E extends EndpointId<S>
-> = Tachyon[S][E]["response"];
+export type ResponseCommand<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
+    response: infer Response;
+}
+    ? Response
+    : never;
 
 export type RequestEndpointId<S extends ServiceId> = {
     [E in EndpointId<S>]: "request" extends keyof Command<S, E> ? E : never;
+}[EndpointId<S>];
+
+export type ResponseEndpointId<S extends ServiceId> = {
+    [E in EndpointId<S>]: "response" extends keyof Command<S, E> ? E : never;
 }[EndpointId<S>];
 
 export type ResponseOnlyEndpointId<S extends ServiceId> = {

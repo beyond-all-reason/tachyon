@@ -139,20 +139,7 @@ export async function generateJsonSchemas() {
         ]),
     ]);
 
-    compiledSchema = Type.Object(compiledSchema, {
-        additionalProperties: Type.Record(
-            Type.String(),
-            Type.Union([
-                Type.Object({
-                    request: requestCommandSchema,
-                    response: responseCommandSchema,
-                }),
-                Type.Object({
-                    response: responseCommandSchema,
-                }),
-            ])
-        ),
-    });
+    compiledSchema = Type.Object(compiledSchema);
 
     return { individualSchemas, compiledSchema, ids };
 }
