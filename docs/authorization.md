@@ -84,6 +84,41 @@ Authorization Flows
 
 As outlined in the overview, native applications must use the flow as described in the [RFC 8414] for the interactive player sign in process. After the interactive flow is finished, the lobby should use the received refresh token to obtain new access tokens because access tokens have short expiration time.
 
+#### Sequence
+
+```mermaid
+sequenceDiagram
+   autonumber
+
+   actor User
+   participant Client as Tachyon Client
+   participant Server as Tachyon Server
+   participant Google as Google Auth Server
+
+   User ->> Client: Launches Tachyon Client
+   Client ->> Server: Requests Auth, Open /authorize in Browser
+   Note over Client: Starts Loopback Server
+   opt If not already logged in
+      Server ->> User: Asks for Auth, e.g. Redirect to /login
+      alt Sign-in with Email + Password
+         User ->> Server: Grants Basic Authorization 
+      else Sign-in with Google
+         User ->> Server: User Requests Google Sign-in
+         Server ->> User: Redirect to Google Auth
+         User ->> Google: User Grants Google Auth
+         Google ->> Server: Sends Auth Code
+         Server ->> Google: Requests Token
+         Google ->> Server: Sends Token
+      end
+   end
+   %%Note over User,Server: If user already has valid auth sesssion then sign-in not required
+   
+   Server ->> Client: Provides Auth Code to Loopback Server
+   Note over Client: Stops Loopback Server
+   Client ->> Server: Requests Access Token (GET /token)
+   Server ->> Client: Provides Access Token
+```
+
 #### Example
 
 1. Client calls the well known metadata endpoint to receive the OAuth2 endpoint URLs.
@@ -120,6 +155,25 @@ As outlined in the overview, native applications must use the flow as described 
 If the Client Application runs under software such as the [Steam](https://store.steampowered.com/) client, and the Player is already authenticated there, the client may prefer to authenticate directly as the Steam user without triggering the interactive workflow through a web browser.
 
 For these non-interactive flows the client and server should also use OAuth2 and implement the [RFC 8693] "OAuth 2.0 Token Exchange" flow with the custom token type. The server must not generate any refresh tokens as the Client Authentication is tied to the session open in, for example, Steam and not to the Client Application.
+
+#### Sequence
+
+```mermaid
+sequenceDiagram
+   autonumber
+
+   participant Client as Tachyon Client
+   participant Steam
+   participant Server as Tachyon Server
+
+   Client ->> Steam: Request a Steam Auth Session Ticket
+   Note left of Steam: No user prompt is required<br>when user is logged into Steam
+   Steam ->> Client: Provides Session Ticket
+   Client ->> Server: Requests Access Token Using Session Ticket (GET /token)
+   Server ->> Steam: Session Ticket Verification Request
+   Steam ->> Server: Session Ticket Verification Response
+   Server ->> Client: Provides Access Token
+```
 
 #### Example
 
