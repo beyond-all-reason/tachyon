@@ -299,7 +299,7 @@
                                                     "type": "object",
                                                     "properties": {
                                                         "userId": {
-                                                            "type": "integer"
+                                                            "type": "string"
                                                         },
                                                         "username": {
                                                             "type": "string"

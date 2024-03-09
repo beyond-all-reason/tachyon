@@ -359,7 +359,7 @@ export type LobbyJoinedResponse =
                   faction: string;
               }[];
               users: {
-                  userId: number;
+                  userId: string;
                   username: string;
                   displayName: string;
                   avatarUrl: string;
@@ -525,7 +525,7 @@ export type LobbyListResponse =
                       faction: string;
                   }[];
                   users: {
-                      userId: number;
+                      userId: string;
                       username: string;
                       displayName: string;
                       avatarUrl: string;
@@ -768,7 +768,7 @@ export type LobbyUpdatedResponse =
                       faction: string;
                   }[];
                   users?: {
-                      userId: number;
+                      userId: string;
                       username: string;
                       displayName: string;
                       avatarUrl: string;
@@ -1076,7 +1076,7 @@ export type SystemConnectedResponse =
           commandId: "system/connected/response";
           status: "success";
           data: {
-              userId: number;
+              userId: string;
               username: string;
               displayName: string;
               avatarUrl: string;
@@ -1192,7 +1192,7 @@ export type UserSubscribeResponse =
           status: "success";
           data: {
               users: {
-                  userId: number;
+                  userId: string;
                   username: string;
                   displayName: string;
                   avatarUrl: string;
@@ -1284,7 +1284,7 @@ export type UserUpdatedResponse =
           status: "success";
           data: {
               users: {
-                  userId?: number;
+                  userId?: string;
                   username?: string;
                   displayName?: string;
                   avatarUrl?: string;
@@ -1741,7 +1741,7 @@ export type TachyonBattleStatus =
     | null;
 
 export interface TachyonUser {
-    userId: number;
+    userId: string;
     username: string;
     displayName: string;
     avatarUrl: string;
@@ -1778,7 +1778,7 @@ export interface TachyonUser {
 }
 
 export interface TachyonPrivateUser {
-    userId: number;
+    userId: string;
     username: string;
     displayName: string;
     avatarUrl: string;
@@ -1876,7 +1876,7 @@ export interface TachyonBattle {
         faction: string;
     }[];
     users: {
-        userId: number;
+        userId: string;
         username: string;
         displayName: string;
         avatarUrl: string;
@@ -1964,7 +1964,7 @@ export type TachyonCustomBattle = {
         faction: string;
     }[];
     users: {
-        userId: number;
+        userId: string;
         username: string;
         displayName: string;
         avatarUrl: string;

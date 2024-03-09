@@ -40,7 +40,7 @@ Sent immediately by the server on connection.
                     "type": "object",
                     "properties": {
                         "userId": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "username": {
                             "type": "string"
@@ -337,7 +337,7 @@ export type SystemConnectedResponse =
           commandId: "system/connected/response";
           status: "success";
           data: {
-              userId: number;
+              userId: string;
               username: string;
               displayName: string;
               avatarUrl: string;
@@ -404,7 +404,7 @@ export type SystemConnectedResponse =
     "commandId": "system/connected/response",
     "status": "success",
     "data": {
-        "userId": -75320000,
+        "userId": "mollit",
         "username": "mollit",
         "displayName": "mollit",
         "avatarUrl": "http://ggggg.ddgigi",

@@ -111,7 +111,7 @@ export interface UserSubscribeRequest {
                                 "type": "object",
                                 "properties": {
                                     "userId": {
-                                        "type": "integer"
+                                        "type": "string"
                                     },
                                     "username": {
                                         "type": "string"
@@ -387,7 +387,7 @@ export type UserSubscribeResponse =
           status: "success";
           data: {
               users: {
-                  userId: number;
+                  userId: string;
                   username: string;
                   displayName: string;
                   avatarUrl: string;
@@ -453,7 +453,7 @@ export type UserSubscribeResponse =
     "data": {
         "users": [
             {
-                "userId": -75320000,
+                "userId": "mollit",
                 "username": "mollit",
                 "displayName": "mollit",
                 "avatarUrl": "http://ggggg.ddgigi",
@@ -780,7 +780,7 @@ Sent by the server to inform the client when subscribed users get updated in som
                                 "type": "object",
                                 "properties": {
                                     "userId": {
-                                        "type": "integer"
+                                        "type": "string"
                                     },
                                     "username": {
                                         "type": "string"
@@ -1070,7 +1070,7 @@ export type UserUpdatedResponse =
           status: "success";
           data: {
               users: {
-                  userId?: number;
+                  userId?: string;
                   username?: string;
                   displayName?: string;
                   avatarUrl?: string;

@@ -1244,7 +1244,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                 "type": "object",
                                 "properties": {
                                     "userId": {
-                                        "type": "integer"
+                                        "type": "string"
                                     },
                                     "username": {
                                         "type": "string"
@@ -1570,7 +1570,7 @@ export type LobbyJoinedResponse =
                   faction: string;
               }[];
               users: {
-                  userId: number;
+                  userId: string;
                   username: string;
                   displayName: string;
                   avatarUrl: string;
@@ -2414,7 +2414,7 @@ export interface LobbyListRequest {
                                                     "type": "object",
                                                     "properties": {
                                                         "userId": {
-                                                            "type": "integer"
+                                                            "type": "string"
                                                         },
                                                         "username": {
                                                             "type": "string"
@@ -2834,7 +2834,7 @@ export type LobbyListResponse =
                       faction: string;
                   }[];
                   users: {
-                      userId: number;
+                      userId: string;
                       username: string;
                       displayName: string;
                       avatarUrl: string;
@@ -4158,7 +4158,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                     "type": "object",
                                                     "properties": {
                                                         "userId": {
-                                                            "type": "integer"
+                                                            "type": "string"
                                                         },
                                                         "username": {
                                                             "type": "string"
@@ -4554,7 +4554,7 @@ export type LobbyUpdatedResponse =
                       faction: string;
                   }[];
                   users?: {
-                      userId: number;
+                      userId: string;
                       username: string;
                       displayName: string;
                       avatarUrl: string;
