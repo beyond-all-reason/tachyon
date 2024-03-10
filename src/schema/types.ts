@@ -54,6 +54,13 @@ export const battleStatus = Nullable(
     ])
 );
 
+export const userStatus = Type.Union([
+    Type.Literal("offline"),
+    Type.Literal("menu"),
+    Type.Literal("playing"),
+    Type.Literal("lobby"),
+]);
+
 export const user = Type.Object({
     userId: Type.String(),
     username: Type.String(),
@@ -63,6 +70,7 @@ export const user = Type.Object({
     partyId: Nullable(Type.Integer()),
     roles: Type.Array(Type.String()),
     countryCode: Type.Optional(Type.String()),
+    status: userStatus,
     battleStatus,
 });
 

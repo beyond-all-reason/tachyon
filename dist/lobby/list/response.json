@@ -340,6 +340,26 @@
                                                         "countryCode": {
                                                             "type": "string"
                                                         },
+                                                        "status": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "const": "offline",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "menu",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "playing",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "lobby",
+                                                                    "type": "string"
+                                                                }
+                                                            ]
+                                                        },
                                                         "battleStatus": {
                                                             "anyOf": [
                                                                 {
@@ -465,6 +485,7 @@
                                                         "clanId",
                                                         "partyId",
                                                         "roles",
+                                                        "status",
                                                         "battleStatus"
                                                     ]
                                                 }

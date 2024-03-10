@@ -367,6 +367,7 @@ export type LobbyJoinedResponse =
                   partyId: number | null;
                   roles: string[];
                   countryCode?: string;
+                  status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
                             battleId: number;
@@ -533,6 +534,7 @@ export type LobbyListResponse =
                       partyId: number | null;
                       roles: string[];
                       countryCode?: string;
+                      status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
                                 battleId: number;
@@ -776,6 +778,7 @@ export type LobbyUpdatedResponse =
                       partyId: number | null;
                       roles: string[];
                       countryCode?: string;
+                      status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
                                 battleId: number;
@@ -1084,6 +1087,7 @@ export type SystemConnectedResponse =
               partyId: number | null;
               roles: string[];
               countryCode?: string;
+              status: "offline" | "menu" | "playing" | "lobby";
               battleStatus:
                   | ({
                         battleId: number;
@@ -1200,6 +1204,7 @@ export type UserSubscribeResponse =
                   partyId: number | null;
                   roles: string[];
                   countryCode?: string;
+                  status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
                             battleId: number;
@@ -1292,6 +1297,7 @@ export type UserUpdatedResponse =
                   partyId?: number | null;
                   roles?: string[];
                   countryCode?: string;
+                  status?: "offline" | "menu" | "playing" | "lobby";
                   battleStatus?:
                       | ({
                             battleId: number;
@@ -1740,6 +1746,8 @@ export type TachyonBattleStatus =
       ))
     | null;
 
+export type TachyonUserStatus = "offline" | "menu" | "playing" | "lobby";
+
 export interface TachyonUser {
     userId: string;
     username: string;
@@ -1749,6 +1757,7 @@ export interface TachyonUser {
     partyId: number | null;
     roles: string[];
     countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
     battleStatus:
         | ({
               battleId: number;
@@ -1786,6 +1795,7 @@ export interface TachyonPrivateUser {
     partyId: number | null;
     roles: string[];
     countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
     battleStatus:
         | ({
               battleId: number;
@@ -1884,6 +1894,7 @@ export interface TachyonBattle {
         partyId: number | null;
         roles: string[];
         countryCode?: string;
+        status: "offline" | "menu" | "playing" | "lobby";
         battleStatus:
             | ({
                   battleId: number;
@@ -1972,6 +1983,7 @@ export type TachyonCustomBattle = {
         partyId: number | null;
         roles: string[];
         countryCode?: string;
+        status: "offline" | "menu" | "playing" | "lobby";
         battleStatus:
             | ({
                   battleId: number;

@@ -1285,6 +1285,26 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "countryCode": {
                                         "type": "string"
                                     },
+                                    "status": {
+                                        "anyOf": [
+                                            {
+                                                "const": "offline",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "menu",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "playing",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "lobby",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
                                     "battleStatus": {
                                         "anyOf": [
                                             {
@@ -1410,6 +1430,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "clanId",
                                     "partyId",
                                     "roles",
+                                    "status",
                                     "battleStatus"
                                 ]
                             }
@@ -1578,6 +1599,7 @@ export type LobbyJoinedResponse =
                   partyId: number | null;
                   roles: string[];
                   countryCode?: string;
+                  status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
                             battleId: number;
@@ -2455,6 +2477,26 @@ export interface LobbyListRequest {
                                                         "countryCode": {
                                                             "type": "string"
                                                         },
+                                                        "status": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "const": "offline",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "menu",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "playing",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "lobby",
+                                                                    "type": "string"
+                                                                }
+                                                            ]
+                                                        },
                                                         "battleStatus": {
                                                             "anyOf": [
                                                                 {
@@ -2580,6 +2622,7 @@ export interface LobbyListRequest {
                                                         "clanId",
                                                         "partyId",
                                                         "roles",
+                                                        "status",
                                                         "battleStatus"
                                                     ]
                                                 }
@@ -2842,6 +2885,7 @@ export type LobbyListResponse =
                       partyId: number | null;
                       roles: string[];
                       countryCode?: string;
+                      status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
                                 battleId: number;
@@ -4199,6 +4243,26 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                         "countryCode": {
                                                             "type": "string"
                                                         },
+                                                        "status": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "const": "offline",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "menu",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "playing",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "const": "lobby",
+                                                                    "type": "string"
+                                                                }
+                                                            ]
+                                                        },
                                                         "battleStatus": {
                                                             "anyOf": [
                                                                 {
@@ -4324,6 +4388,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                         "clanId",
                                                         "partyId",
                                                         "roles",
+                                                        "status",
                                                         "battleStatus"
                                                     ]
                                                 }
@@ -4562,6 +4627,7 @@ export type LobbyUpdatedResponse =
                       partyId: number | null;
                       roles: string[];
                       countryCode?: string;
+                      status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
                                 battleId: number;

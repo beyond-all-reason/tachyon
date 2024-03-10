@@ -152,6 +152,26 @@ export interface UserSubscribeRequest {
                                     "countryCode": {
                                         "type": "string"
                                     },
+                                    "status": {
+                                        "anyOf": [
+                                            {
+                                                "const": "offline",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "menu",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "playing",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "lobby",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
                                     "battleStatus": {
                                         "anyOf": [
                                             {
@@ -277,6 +297,7 @@ export interface UserSubscribeRequest {
                                     "clanId",
                                     "partyId",
                                     "roles",
+                                    "status",
                                     "battleStatus"
                                 ]
                             }
@@ -395,6 +416,7 @@ export type UserSubscribeResponse =
                   partyId: number | null;
                   roles: string[];
                   countryCode?: string;
+                  status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
                             battleId: number;
@@ -463,6 +485,7 @@ export type UserSubscribeResponse =
                     "mollit"
                 ],
                 "countryCode": "mollit",
+                "status": "offline",
                 "battleStatus": {
                     "battleId": -75320000,
                     "playerId": -75320000,
@@ -821,6 +844,26 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     "countryCode": {
                                         "type": "string"
                                     },
+                                    "status": {
+                                        "anyOf": [
+                                            {
+                                                "const": "offline",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "menu",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "playing",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "lobby",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    },
                                     "battleStatus": {
                                         "anyOf": [
                                             {
@@ -1078,6 +1121,7 @@ export type UserUpdatedResponse =
                   partyId?: number | null;
                   roles?: string[];
                   countryCode?: string;
+                  status?: "offline" | "menu" | "playing" | "lobby";
                   battleStatus?:
                       | ({
                             battleId: number;
@@ -1141,22 +1185,7 @@ export type UserUpdatedResponse =
         "users": [
             {
                 "mollitb": -75320000,
-                "battleStatus": {
-                    "battleId": -75320000,
-                    "playerId": -75320000,
-                    "teamId": -75320000,
-                    "color": "mollit",
-                    "bonus": -75320000,
-                    "inGame": false,
-                    "isSpectator": false,
-                    "isBot": false,
-                    "ready": false,
-                    "sync": {
-                        "engine": -75320000,
-                        "game": -75320000,
-                        "map": -75320000
-                    }
-                }
+                "status": "offline"
             }
         ]
     }

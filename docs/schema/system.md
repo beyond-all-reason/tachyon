@@ -81,6 +81,26 @@ Sent immediately by the server on connection.
                         "countryCode": {
                             "type": "string"
                         },
+                        "status": {
+                            "anyOf": [
+                                {
+                                    "const": "offline",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "menu",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "playing",
+                                    "type": "string"
+                                },
+                                {
+                                    "const": "lobby",
+                                    "type": "string"
+                                }
+                            ]
+                        },
                         "battleStatus": {
                             "anyOf": [
                                 {
@@ -230,6 +250,7 @@ Sent immediately by the server on connection.
                         "clanId",
                         "partyId",
                         "roles",
+                        "status",
                         "battleStatus",
                         "friendIds",
                         "outgoingFriendRequestIds",
@@ -345,6 +366,7 @@ export type SystemConnectedResponse =
               partyId: number | null;
               roles: string[];
               countryCode?: string;
+              status: "offline" | "menu" | "playing" | "lobby";
               battleStatus:
                   | ({
                         battleId: number;
@@ -414,6 +436,7 @@ export type SystemConnectedResponse =
             "mollit"
         ],
         "countryCode": "mollit",
+        "status": "offline",
         "battleStatus": {
             "battleId": -75320000,
             "playerId": -75320000,
