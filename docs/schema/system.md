@@ -55,7 +55,7 @@ Sent immediately by the server on connection.
                         "clanId": {
                             "anyOf": [
                                 {
-                                    "type": "integer"
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -65,7 +65,7 @@ Sent immediately by the server on connection.
                         "partyId": {
                             "anyOf": [
                                 {
-                                    "type": "integer"
+                                    "type": "string"
                                 },
                                 {
                                     "type": "null"
@@ -109,7 +109,7 @@ Sent immediately by the server on connection.
                                             "type": "object",
                                             "properties": {
                                                 "battleId": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "required": [
@@ -220,25 +220,25 @@ Sent immediately by the server on connection.
                         "friendIds": {
                             "type": "array",
                             "items": {
-                                "type": "integer"
+                                "type": "string"
                             }
                         },
                         "outgoingFriendRequestIds": {
                             "type": "array",
                             "items": {
-                                "type": "integer"
+                                "type": "string"
                             }
                         },
                         "incomingFriendRequestIds": {
                             "type": "array",
                             "items": {
-                                "type": "integer"
+                                "type": "string"
                             }
                         },
                         "ignoreIds": {
                             "type": "array",
                             "items": {
-                                "type": "integer"
+                                "type": "string"
                             }
                         }
                     },
@@ -362,14 +362,14 @@ export type SystemConnectedResponse =
               username: string;
               displayName: string;
               avatarUrl: string;
-              clanId: number | null;
-              partyId: number | null;
+              clanId: string | null;
+              partyId: string | null;
               roles: string[];
               countryCode?: string;
               status: "offline" | "menu" | "playing" | "lobby";
               battleStatus:
                   | ({
-                        battleId: number;
+                        battleId: string;
                     } & (
                         | ({
                               playerId: number;
@@ -393,10 +393,10 @@ export type SystemConnectedResponse =
                           }
                     ))
                   | null;
-              friendIds: number[];
-              outgoingFriendRequestIds: number[];
-              incomingFriendRequestIds: number[];
-              ignoreIds: number[];
+              friendIds: string[];
+              outgoingFriendRequestIds: string[];
+              incomingFriendRequestIds: string[];
+              ignoreIds: string[];
           };
       }
     | {
@@ -430,15 +430,15 @@ export type SystemConnectedResponse =
         "username": "mollit",
         "displayName": "mollit",
         "avatarUrl": "http://ggggg.ddgigi",
-        "clanId": -75320000,
-        "partyId": -75320000,
+        "clanId": "mollit",
+        "partyId": "mollit",
         "roles": [
             "mollit"
         ],
         "countryCode": "mollit",
         "status": "offline",
         "battleStatus": {
-            "battleId": -75320000,
+            "battleId": "mollit",
             "playerId": -75320000,
             "teamId": -75320000,
             "color": "mollit",
@@ -454,16 +454,16 @@ export type SystemConnectedResponse =
             }
         },
         "friendIds": [
-            -75320000
+            "mollit"
         ],
         "outgoingFriendRequestIds": [
-            -75320000
+            "mollit"
         ],
         "incomingFriendRequestIds": [
-            -75320000
+            "mollit"
         ],
         "ignoreIds": [
-            -75320000
+            "mollit"
         ]
     }
 }

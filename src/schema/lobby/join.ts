@@ -8,7 +8,7 @@ These commands are split because the server may want to force the client to join
     request: {
         data: Type.Object(
             {
-                lobbyId: Type.Integer(),
+                lobbyId: Type.String(),
                 password: Type.Optional(Type.String()),
             },
             {

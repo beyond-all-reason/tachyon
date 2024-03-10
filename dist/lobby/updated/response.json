@@ -39,10 +39,10 @@
                                         "type": "object",
                                         "properties": {
                                             "battleId": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "hostId": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "engine": {
                                                 "type": "string"
@@ -188,7 +188,7 @@
                                                             "type": "boolean"
                                                         },
                                                         "ownerId": {
-                                                            "type": "integer"
+                                                            "type": "string"
                                                         },
                                                         "aiShortName": {
                                                             "type": "string"
@@ -243,7 +243,7 @@
                                                         "clanId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "integer"
+                                                                    "type": "string"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -253,7 +253,7 @@
                                                         "partyId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "integer"
+                                                                    "type": "string"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -297,7 +297,7 @@
                                                                             "type": "object",
                                                                             "properties": {
                                                                                 "battleId": {
-                                                                                    "type": "integer"
+                                                                                    "type": "string"
                                                                                 }
                                                                             },
                                                                             "required": [
@@ -436,13 +436,13 @@
                                             "bossIds": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "joinQueueIds": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "limits": {

@@ -6,7 +6,7 @@ export default defineEndpoint({
     description: "Unsubscribe from user updates.",
     request: {
         data: Type.Object({
-            userIds: Type.Array(Type.Integer()),
+            userIds: Type.Array(Type.String()),
         }),
     },
     response: [

@@ -309,8 +309,8 @@ export type LobbyJoinedResponse =
           commandId: "lobby/joined/response";
           status: "success";
           data: {
-              battleId: number;
-              hostId: number;
+              battleId: string;
+              hostId: string;
               engine: string;
               game: string;
               map: string;
@@ -346,7 +346,7 @@ export type LobbyJoinedResponse =
                   inGame: boolean;
                   isSpectator: false;
                   isBot: true;
-                  ownerId: number;
+                  ownerId: string;
                   aiShortName: string;
                   name: string;
                   aiOptions: {
@@ -363,14 +363,14 @@ export type LobbyJoinedResponse =
                   username: string;
                   displayName: string;
                   avatarUrl: string;
-                  clanId: number | null;
-                  partyId: number | null;
+                  clanId: string | null;
+                  partyId: string | null;
                   roles: string[];
                   countryCode?: string;
                   status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
-                            battleId: number;
+                            battleId: string;
                         } & (
                             | ({
                                   playerId: number;
@@ -476,8 +476,8 @@ export type LobbyListResponse =
           status: "success";
           data: {
               battles: ({
-                  battleId: number;
-                  hostId: number;
+                  battleId: string;
+                  hostId: string;
                   engine: string;
                   game: string;
                   map: string;
@@ -513,7 +513,7 @@ export type LobbyListResponse =
                       inGame: boolean;
                       isSpectator: false;
                       isBot: true;
-                      ownerId: number;
+                      ownerId: string;
                       aiShortName: string;
                       name: string;
                       aiOptions: {
@@ -530,14 +530,14 @@ export type LobbyListResponse =
                       username: string;
                       displayName: string;
                       avatarUrl: string;
-                      clanId: number | null;
-                      partyId: number | null;
+                      clanId: string | null;
+                      partyId: string | null;
                       roles: string[];
                       countryCode?: string;
                       status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
-                                battleId: number;
+                                battleId: string;
                             } & (
                                 | ({
                                       playerId: number;
@@ -566,8 +566,8 @@ export type LobbyListResponse =
                   title: string;
                   locked: boolean;
                   passworded: boolean;
-                  bossIds: number[];
-                  joinQueueIds: number[];
+                  bossIds: string[];
+                  joinQueueIds: string[];
                   limits: {
                       minTeamsize: number | null;
                       maxTeamsize: number | null;
@@ -601,7 +601,7 @@ export type LobbyReceiveMessageResponse =
           commandId: "lobby/receiveMessage/response";
           status: "success";
           data: {
-              userId: number;
+              userId: string;
               message: string;
           };
       }
@@ -720,8 +720,8 @@ export type LobbyUpdatedResponse =
           status: "success";
           data: {
               battles: ({
-                  battleId?: number;
-                  hostId?: number;
+                  battleId?: string;
+                  hostId?: string;
                   engine?: string;
                   game?: string;
                   map?: string;
@@ -757,7 +757,7 @@ export type LobbyUpdatedResponse =
                       inGame: boolean;
                       isSpectator: false;
                       isBot: true;
-                      ownerId: number;
+                      ownerId: string;
                       aiShortName: string;
                       name: string;
                       aiOptions: {
@@ -774,14 +774,14 @@ export type LobbyUpdatedResponse =
                       username: string;
                       displayName: string;
                       avatarUrl: string;
-                      clanId: number | null;
-                      partyId: number | null;
+                      clanId: string | null;
+                      partyId: string | null;
                       roles: string[];
                       countryCode?: string;
                       status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
-                                battleId: number;
+                                battleId: string;
                             } & (
                                 | ({
                                       playerId: number;
@@ -810,8 +810,8 @@ export type LobbyUpdatedResponse =
                   title?: string;
                   locked?: boolean;
                   passworded?: boolean;
-                  bossIds?: number[];
-                  joinQueueIds?: number[];
+                  bossIds?: string[];
+                  joinQueueIds?: string[];
                   limits?: {
                       minTeamsize: number | null;
                       maxTeamsize: number | null;
@@ -994,7 +994,7 @@ export type MatchmakingQueueUpdateResponse =
           commandId: "matchmaking/queueUpdate/response";
           status: "success";
           data: {
-              playersQueued: number;
+              playersQueued: string;
           };
       }
     | {
@@ -1083,14 +1083,14 @@ export type SystemConnectedResponse =
               username: string;
               displayName: string;
               avatarUrl: string;
-              clanId: number | null;
-              partyId: number | null;
+              clanId: string | null;
+              partyId: string | null;
               roles: string[];
               countryCode?: string;
               status: "offline" | "menu" | "playing" | "lobby";
               battleStatus:
                   | ({
-                        battleId: number;
+                        battleId: string;
                     } & (
                         | ({
                               playerId: number;
@@ -1114,10 +1114,10 @@ export type SystemConnectedResponse =
                           }
                     ))
                   | null;
-              friendIds: number[];
-              outgoingFriendRequestIds: number[];
-              incomingFriendRequestIds: number[];
-              ignoreIds: number[];
+              friendIds: string[];
+              outgoingFriendRequestIds: string[];
+              incomingFriendRequestIds: string[];
+              ignoreIds: string[];
           };
       }
     | {
@@ -1200,14 +1200,14 @@ export type UserSubscribeResponse =
                   username: string;
                   displayName: string;
                   avatarUrl: string;
-                  clanId: number | null;
-                  partyId: number | null;
+                  clanId: string | null;
+                  partyId: string | null;
                   roles: string[];
                   countryCode?: string;
                   status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
-                            battleId: number;
+                            battleId: string;
                         } & (
                             | ({
                                   playerId: number;
@@ -1293,14 +1293,14 @@ export type UserUpdatedResponse =
                   username?: string;
                   displayName?: string;
                   avatarUrl?: string;
-                  clanId?: number | null;
-                  partyId?: number | null;
+                  clanId?: string | null;
+                  partyId?: string | null;
                   roles?: string[];
                   countryCode?: string;
                   status?: "offline" | "menu" | "playing" | "lobby";
                   battleStatus?:
                       | ({
-                            battleId: number;
+                            battleId: string;
                         } & (
                             | ({
                                   playerId: number;
@@ -1324,10 +1324,10 @@ export type UserUpdatedResponse =
                               }
                         ))
                       | null;
-                  friendIds?: number[];
-                  outgoingFriendRequestIds?: number[];
-                  incomingFriendRequestIds?: number[];
-                  ignoreIds?: number[];
+                  friendIds?: string[];
+                  outgoingFriendRequestIds?: string[];
+                  incomingFriendRequestIds?: string[];
+                  ignoreIds?: string[];
               }[];
           };
       }
@@ -1586,7 +1586,7 @@ export interface LobbyJoinRequest {
     messageId: string;
     commandId: "lobby/join/request";
     data: {
-        lobbyId: number;
+        lobbyId: string;
         password?: string;
     };
 }
@@ -1609,14 +1609,14 @@ export interface LobbySubscribeRequest {
     messageId: string;
     commandId: "lobby/subscribe/request";
     data: {
-        battleIds: number[];
+        battleIds: string[];
     };
 }
 export interface LobbyUnsubscribeRequest {
     messageId: string;
     commandId: "lobby/unsubscribe/request";
     data: {
-        battleIds?: number[];
+        battleIds?: string[];
     };
 }
 export interface MatchmakingCancelRequest {
@@ -1656,14 +1656,14 @@ export interface UserSubscribeRequest {
     messageId: string;
     commandId: "user/subscribe/request";
     data: {
-        userIds: number[];
+        userIds: string[];
     };
 }
 export interface UserUnsubscribeRequest {
     messageId: string;
     commandId: "user/unsubscribe/request";
     data: {
-        userIds: number[];
+        userIds: string[];
     };
 }
 export type TachyonUnixTime = number | null;
@@ -1706,7 +1706,7 @@ export interface TachyonBot {
     inGame: boolean;
     isSpectator: false;
     isBot: true;
-    ownerId: number;
+    ownerId: string;
     aiShortName: string;
     name: string;
     aiOptions: {
@@ -1721,7 +1721,7 @@ export interface TachyonBot {
 
 export type TachyonBattleStatus =
     | ({
-          battleId: number;
+          battleId: string;
       } & (
           | ({
                 playerId: number;
@@ -1753,14 +1753,14 @@ export interface TachyonUser {
     username: string;
     displayName: string;
     avatarUrl: string;
-    clanId: number | null;
-    partyId: number | null;
+    clanId: string | null;
+    partyId: string | null;
     roles: string[];
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     battleStatus:
         | ({
-              battleId: number;
+              battleId: string;
           } & (
               | ({
                     playerId: number;
@@ -1791,14 +1791,14 @@ export interface TachyonPrivateUser {
     username: string;
     displayName: string;
     avatarUrl: string;
-    clanId: number | null;
-    partyId: number | null;
+    clanId: string | null;
+    partyId: string | null;
     roles: string[];
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     battleStatus:
         | ({
-              battleId: number;
+              battleId: string;
           } & (
               | ({
                     playerId: number;
@@ -1822,10 +1822,10 @@ export interface TachyonPrivateUser {
                 }
           ))
         | null;
-    friendIds: number[];
-    outgoingFriendRequestIds: number[];
-    incomingFriendRequestIds: number[];
-    ignoreIds: number[];
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
 }
 
 export interface TachyonRect {
@@ -1836,8 +1836,8 @@ export interface TachyonRect {
 }
 
 export interface TachyonBattle {
-    battleId: number;
-    hostId: number;
+    battleId: string;
+    hostId: string;
     engine: string;
     game: string;
     map: string;
@@ -1873,7 +1873,7 @@ export interface TachyonBattle {
         inGame: boolean;
         isSpectator: false;
         isBot: true;
-        ownerId: number;
+        ownerId: string;
         aiShortName: string;
         name: string;
         aiOptions: {
@@ -1890,14 +1890,14 @@ export interface TachyonBattle {
         username: string;
         displayName: string;
         avatarUrl: string;
-        clanId: number | null;
-        partyId: number | null;
+        clanId: string | null;
+        partyId: string | null;
         roles: string[];
         countryCode?: string;
         status: "offline" | "menu" | "playing" | "lobby";
         battleStatus:
             | ({
-                  battleId: number;
+                  battleId: string;
               } & (
                   | ({
                         playerId: number;
@@ -1925,8 +1925,8 @@ export interface TachyonBattle {
 }
 
 export type TachyonCustomBattle = {
-    battleId: number;
-    hostId: number;
+    battleId: string;
+    hostId: string;
     engine: string;
     game: string;
     map: string;
@@ -1962,7 +1962,7 @@ export type TachyonCustomBattle = {
         inGame: boolean;
         isSpectator: false;
         isBot: true;
-        ownerId: number;
+        ownerId: string;
         aiShortName: string;
         name: string;
         aiOptions: {
@@ -1979,14 +1979,14 @@ export type TachyonCustomBattle = {
         username: string;
         displayName: string;
         avatarUrl: string;
-        clanId: number | null;
-        partyId: number | null;
+        clanId: string | null;
+        partyId: string | null;
         roles: string[];
         countryCode?: string;
         status: "offline" | "menu" | "playing" | "lobby";
         battleStatus:
             | ({
-                  battleId: number;
+                  battleId: string;
               } & (
                   | ({
                         playerId: number;
@@ -2015,8 +2015,8 @@ export type TachyonCustomBattle = {
     title: string;
     locked: boolean;
     passworded: boolean;
-    bossIds: number[];
-    joinQueueIds: number[];
+    bossIds: string[];
+    joinQueueIds: string[];
     limits: {
         minTeamsize: number | null;
         maxTeamsize: number | null;

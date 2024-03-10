@@ -20,7 +20,7 @@
             "type": "object",
             "properties": {
                 "lobbyId": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "password": {
                     "type": "string"

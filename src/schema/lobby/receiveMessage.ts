@@ -9,7 +9,7 @@ export default defineEndpoint({
             status: "success",
             data: Type.Object(
                 {
-                    userId: Type.Integer(),
+                    userId: Type.String(),
                     message: Type.String(),
                 },
                 {

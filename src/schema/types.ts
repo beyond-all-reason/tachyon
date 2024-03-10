@@ -37,7 +37,7 @@ export const bot = Type.Composite([
     Type.Object({
         isSpectator: Type.Literal(false),
         isBot: Type.Literal(true),
-        ownerId: Type.Integer(),
+        ownerId: Type.String(),
         aiShortName: Type.String(),
         name: Type.String(),
         aiOptions: Type.Record(Type.String(), Type.Unknown()),
@@ -48,7 +48,7 @@ export const bot = Type.Composite([
 export const battleStatus = Nullable(
     Type.Intersect([
         Type.Object({
-            battleId: Type.Integer(),
+            battleId: Type.String(),
         }),
         Type.Union([battlePlayer, battleSpectator]),
     ])
@@ -66,8 +66,8 @@ export const user = Type.Object({
     username: Type.String(),
     displayName: Type.String(),
     avatarUrl: Type.String({ format: "uri" }),
-    clanId: Nullable(Type.Integer()),
-    partyId: Nullable(Type.Integer()),
+    clanId: Nullable(Type.String()),
+    partyId: Nullable(Type.String()),
     roles: Type.Array(Type.String()),
     countryCode: Type.Optional(Type.String()),
     status: userStatus,
@@ -77,10 +77,10 @@ export const user = Type.Object({
 export const privateUser = Type.Composite([
     user,
     Type.Object({
-        friendIds: Type.Array(Type.Integer()),
-        outgoingFriendRequestIds: Type.Array(Type.Integer()),
-        incomingFriendRequestIds: Type.Array(Type.Integer()),
-        ignoreIds: Type.Array(Type.Integer()),
+        friendIds: Type.Array(Type.String()),
+        outgoingFriendRequestIds: Type.Array(Type.String()),
+        incomingFriendRequestIds: Type.Array(Type.String()),
+        ignoreIds: Type.Array(Type.String()),
     }),
 ]);
 
@@ -105,8 +105,8 @@ export const rect = Type.Object(
 
 export const battle = Type.Object(
     {
-        battleId: Type.Readonly(Type.Integer()),
-        hostId: Type.Integer(),
+        battleId: Type.Readonly(Type.String()),
+        hostId: Type.String(),
         engine: Type.String(),
         game: Type.String(),
         map: Type.String(),
@@ -158,8 +158,8 @@ export const customBattle = Type.Intersect(
             title: Type.String(),
             locked: Type.Boolean(),
             passworded: Type.Boolean(),
-            bossIds: Type.Array(Type.Integer()),
-            joinQueueIds: Type.Array(Type.Integer()),
+            bossIds: Type.Array(Type.String()),
+            joinQueueIds: Type.Array(Type.String()),
             limits: Type.Object({
                 minTeamsize: Nullable(Type.Integer()),
                 maxTeamsize: Nullable(Type.Integer()),

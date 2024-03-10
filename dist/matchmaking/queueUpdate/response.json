@@ -20,7 +20,7 @@
                     "type": "object",
                     "properties": {
                         "playersQueued": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     "required": [

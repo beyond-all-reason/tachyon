@@ -8,7 +8,7 @@ export default defineEndpoint({
         {
             status: "success",
             data: Type.Object({
-                playersQueued: Type.Integer(),
+                playersQueued: Type.String(),
             }),
         },
     ],

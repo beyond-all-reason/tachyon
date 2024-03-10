@@ -568,7 +568,7 @@ These commands are split because the server may want to force the client to join
             "type": "object",
             "properties": {
                 "lobbyId": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "password": {
                     "type": "string"
@@ -595,7 +595,7 @@ export interface LobbyJoinRequest {
     messageId: string;
     commandId: "lobby/join/request";
     data: {
-        lobbyId: number;
+        lobbyId: string;
         password?: string;
     };
 }
@@ -1055,10 +1055,10 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                     "type": "object",
                     "properties": {
                         "battleId": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "hostId": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "engine": {
                             "type": "string"
@@ -1204,7 +1204,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                         "type": "boolean"
                                     },
                                     "ownerId": {
-                                        "type": "integer"
+                                        "type": "string"
                                     },
                                     "aiShortName": {
                                         "type": "string"
@@ -1259,7 +1259,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "clanId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -1269,7 +1269,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "partyId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -1313,7 +1313,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                                         "type": "object",
                                                         "properties": {
                                                             "battleId": {
-                                                                "type": "integer"
+                                                                "type": "string"
                                                             }
                                                         },
                                                         "required": [
@@ -1553,8 +1553,8 @@ export type LobbyJoinedResponse =
           commandId: "lobby/joined/response";
           status: "success";
           data: {
-              battleId: number;
-              hostId: number;
+              battleId: string;
+              hostId: string;
               engine: string;
               game: string;
               map: string;
@@ -1582,7 +1582,7 @@ export type LobbyJoinedResponse =
                   inGame: boolean;
                   isSpectator: false;
                   isBot: true;
-                  ownerId: number;
+                  ownerId: string;
                   aiShortName: string;
                   name: string;
                   aiOptions: {
@@ -1595,14 +1595,14 @@ export type LobbyJoinedResponse =
                   username: string;
                   displayName: string;
                   avatarUrl: string;
-                  clanId: number | null;
-                  partyId: number | null;
+                  clanId: string | null;
+                  partyId: string | null;
                   roles: string[];
                   countryCode?: string;
                   status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
-                            battleId: number;
+                            battleId: string;
                         } & (
                             | ({
                                   playerId: number;
@@ -2247,10 +2247,10 @@ export interface LobbyListRequest {
                                         "type": "object",
                                         "properties": {
                                             "battleId": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "hostId": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "engine": {
                                                 "type": "string"
@@ -2396,7 +2396,7 @@ export interface LobbyListRequest {
                                                             "type": "boolean"
                                                         },
                                                         "ownerId": {
-                                                            "type": "integer"
+                                                            "type": "string"
                                                         },
                                                         "aiShortName": {
                                                             "type": "string"
@@ -2451,7 +2451,7 @@ export interface LobbyListRequest {
                                                         "clanId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "integer"
+                                                                    "type": "string"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -2461,7 +2461,7 @@ export interface LobbyListRequest {
                                                         "partyId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "integer"
+                                                                    "type": "string"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -2505,7 +2505,7 @@ export interface LobbyListRequest {
                                                                             "type": "object",
                                                                             "properties": {
                                                                                 "battleId": {
-                                                                                    "type": "integer"
+                                                                                    "type": "string"
                                                                                 }
                                                                             },
                                                                             "required": [
@@ -2660,13 +2660,13 @@ export interface LobbyListRequest {
                                             "bossIds": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "joinQueueIds": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "limits": {
@@ -2839,8 +2839,8 @@ export type LobbyListResponse =
           status: "success";
           data: {
               battles: ({
-                  battleId: number;
-                  hostId: number;
+                  battleId: string;
+                  hostId: string;
                   engine: string;
                   game: string;
                   map: string;
@@ -2868,7 +2868,7 @@ export type LobbyListResponse =
                       inGame: boolean;
                       isSpectator: false;
                       isBot: true;
-                      ownerId: number;
+                      ownerId: string;
                       aiShortName: string;
                       name: string;
                       aiOptions: {
@@ -2881,14 +2881,14 @@ export type LobbyListResponse =
                       username: string;
                       displayName: string;
                       avatarUrl: string;
-                      clanId: number | null;
-                      partyId: number | null;
+                      clanId: string | null;
+                      partyId: string | null;
                       roles: string[];
                       countryCode?: string;
                       status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
-                                battleId: number;
+                                battleId: string;
                             } & (
                                 | ({
                                       playerId: number;
@@ -2917,8 +2917,8 @@ export type LobbyListResponse =
                   title: string;
                   locked: boolean;
                   passworded: boolean;
-                  bossIds: number[];
-                  joinQueueIds: number[];
+                  bossIds: string[];
+                  joinQueueIds: string[];
                   limits: {
                       minTeamsize: number | null;
                       maxTeamsize: number | null;
@@ -3048,7 +3048,7 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
                     "type": "object",
                     "properties": {
                         "userId": {
-                            "type": "integer"
+                            "type": "string"
                         },
                         "message": {
                             "type": "string"
@@ -3159,7 +3159,7 @@ export type LobbyReceiveMessageResponse =
           commandId: "lobby/receiveMessage/response";
           status: "success";
           data: {
-              userId: number;
+              userId: string;
               message: string;
           };
       }
@@ -3515,7 +3515,7 @@ Subscribe to custom battle updates. By default, updates for the user's own battl
                 "battleIds": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 }
             },
@@ -3540,7 +3540,7 @@ export interface LobbySubscribeRequest {
     messageId: string;
     commandId: "lobby/subscribe/request";
     data: {
-        battleIds: number[];
+        battleIds: string[];
     };
 }
 
@@ -3552,7 +3552,7 @@ export interface LobbySubscribeRequest {
     "commandId": "lobby/subscribe/request",
     "data": {
         "battleIds": [
-            -75320000
+            "mollit"
         ]
     }
 }
@@ -3739,7 +3739,7 @@ Unsubscribe from custom battle updates. If battleIds is passed only updates to t
                 "battleIds": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 }
             }
@@ -3761,7 +3761,7 @@ export interface LobbyUnsubscribeRequest {
     messageId: string;
     commandId: "lobby/unsubscribe/request";
     data: {
-        battleIds?: number[];
+        battleIds?: string[];
     };
 }
 
@@ -4013,10 +4013,10 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                         "type": "object",
                                         "properties": {
                                             "battleId": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "hostId": {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             "engine": {
                                                 "type": "string"
@@ -4162,7 +4162,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                             "type": "boolean"
                                                         },
                                                         "ownerId": {
-                                                            "type": "integer"
+                                                            "type": "string"
                                                         },
                                                         "aiShortName": {
                                                             "type": "string"
@@ -4217,7 +4217,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                         "clanId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "integer"
+                                                                    "type": "string"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -4227,7 +4227,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                         "partyId": {
                                                             "anyOf": [
                                                                 {
-                                                                    "type": "integer"
+                                                                    "type": "string"
                                                                 },
                                                                 {
                                                                     "type": "null"
@@ -4271,7 +4271,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                                             "type": "object",
                                                                             "properties": {
                                                                                 "battleId": {
-                                                                                    "type": "integer"
+                                                                                    "type": "string"
                                                                                 }
                                                                             },
                                                                             "required": [
@@ -4410,13 +4410,13 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                             "bossIds": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "joinQueueIds": {
                                                 "type": "array",
                                                 "items": {
-                                                    "type": "integer"
+                                                    "type": "string"
                                                 }
                                             },
                                             "limits": {
@@ -4581,8 +4581,8 @@ export type LobbyUpdatedResponse =
           status: "success";
           data: {
               battles: ({
-                  battleId?: number;
-                  hostId?: number;
+                  battleId?: string;
+                  hostId?: string;
                   engine?: string;
                   game?: string;
                   map?: string;
@@ -4610,7 +4610,7 @@ export type LobbyUpdatedResponse =
                       inGame: boolean;
                       isSpectator: false;
                       isBot: true;
-                      ownerId: number;
+                      ownerId: string;
                       aiShortName: string;
                       name: string;
                       aiOptions: {
@@ -4623,14 +4623,14 @@ export type LobbyUpdatedResponse =
                       username: string;
                       displayName: string;
                       avatarUrl: string;
-                      clanId: number | null;
-                      partyId: number | null;
+                      clanId: string | null;
+                      partyId: string | null;
                       roles: string[];
                       countryCode?: string;
                       status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
                           | ({
-                                battleId: number;
+                                battleId: string;
                             } & (
                                 | ({
                                       playerId: number;
@@ -4659,8 +4659,8 @@ export type LobbyUpdatedResponse =
                   title?: string;
                   locked?: boolean;
                   passworded?: boolean;
-                  bossIds?: number[];
-                  joinQueueIds?: number[];
+                  bossIds?: string[];
+                  joinQueueIds?: string[];
                   limits?: {
                       minTeamsize: number | null;
                       maxTeamsize: number | null;

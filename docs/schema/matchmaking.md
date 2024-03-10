@@ -1190,7 +1190,7 @@ Contains some info about the state of the current queue.
                     "type": "object",
                     "properties": {
                         "playersQueued": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     "required": [
@@ -1297,7 +1297,7 @@ export type MatchmakingQueueUpdateResponse =
           commandId: "matchmaking/queueUpdate/response";
           status: "success";
           data: {
-              playersQueued: number;
+              playersQueued: string;
           };
       }
     | {
@@ -1327,7 +1327,7 @@ export type MatchmakingQueueUpdateResponse =
     "commandId": "matchmaking/queueUpdate/response",
     "status": "success",
     "data": {
-        "playersQueued": -75320000
+        "playersQueued": "mollit"
     }
 }
 ```

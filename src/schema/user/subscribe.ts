@@ -8,7 +8,7 @@ export default defineEndpoint({
         "Subscribe to user updates. By default, updates for the client's own user will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed users, and then continue to send partial (stateful) updates via the [updated](#updated) response.",
     request: {
         data: Type.Object({
-            userIds: Type.Array(Type.Integer()),
+            userIds: Type.Array(Type.String()),
         }),
     },
     response: [

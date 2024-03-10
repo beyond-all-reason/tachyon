@@ -16,7 +16,7 @@
                 "userIds": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 }
             },

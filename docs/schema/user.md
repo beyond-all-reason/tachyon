@@ -36,7 +36,7 @@ Subscribe to user updates. By default, updates for the client's own user will al
                 "userIds": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 }
             },
@@ -61,7 +61,7 @@ export interface UserSubscribeRequest {
     messageId: string;
     commandId: "user/subscribe/request";
     data: {
-        userIds: number[];
+        userIds: string[];
     };
 }
 
@@ -73,7 +73,7 @@ export interface UserSubscribeRequest {
     "commandId": "user/subscribe/request",
     "data": {
         "userIds": [
-            -75320000
+            "mollit"
         ]
     }
 }
@@ -126,7 +126,7 @@ export interface UserSubscribeRequest {
                                     "clanId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -136,7 +136,7 @@ export interface UserSubscribeRequest {
                                     "partyId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -180,7 +180,7 @@ export interface UserSubscribeRequest {
                                                         "type": "object",
                                                         "properties": {
                                                             "battleId": {
-                                                                "type": "integer"
+                                                                "type": "string"
                                                             }
                                                         },
                                                         "required": [
@@ -412,14 +412,14 @@ export type UserSubscribeResponse =
                   username: string;
                   displayName: string;
                   avatarUrl: string;
-                  clanId: number | null;
-                  partyId: number | null;
+                  clanId: string | null;
+                  partyId: string | null;
                   roles: string[];
                   countryCode?: string;
                   status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
                       | ({
-                            battleId: number;
+                            battleId: string;
                         } & (
                             | ({
                                   playerId: number;
@@ -479,15 +479,15 @@ export type UserSubscribeResponse =
                 "username": "mollit",
                 "displayName": "mollit",
                 "avatarUrl": "http://ggggg.ddgigi",
-                "clanId": -75320000,
-                "partyId": -75320000,
+                "clanId": "mollit",
+                "partyId": "mollit",
                 "roles": [
                     "mollit"
                 ],
                 "countryCode": "mollit",
                 "status": "offline",
                 "battleStatus": {
-                    "battleId": -75320000,
+                    "battleId": "mollit",
                     "playerId": -75320000,
                     "teamId": -75320000,
                     "color": "mollit",
@@ -538,7 +538,7 @@ Unsubscribe from user updates.
                 "userIds": {
                     "type": "array",
                     "items": {
-                        "type": "integer"
+                        "type": "string"
                     }
                 }
             },
@@ -563,7 +563,7 @@ export interface UserUnsubscribeRequest {
     messageId: string;
     commandId: "user/unsubscribe/request";
     data: {
-        userIds: number[];
+        userIds: string[];
     };
 }
 
@@ -575,7 +575,7 @@ export interface UserUnsubscribeRequest {
     "commandId": "user/unsubscribe/request",
     "data": {
         "userIds": [
-            -75320000
+            "mollit"
         ]
     }
 }
@@ -818,7 +818,7 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     "clanId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -828,7 +828,7 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     "partyId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -872,7 +872,7 @@ Sent by the server to inform the client when subscribed users get updated in som
                                                         "type": "object",
                                                         "properties": {
                                                             "battleId": {
-                                                                "type": "integer"
+                                                                "type": "string"
                                                             }
                                                         },
                                                         "required": [
@@ -983,25 +983,25 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     "friendIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     },
                                     "outgoingFriendRequestIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     },
                                     "incomingFriendRequestIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     },
                                     "ignoreIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     }
                                 }
@@ -1117,14 +1117,14 @@ export type UserUpdatedResponse =
                   username?: string;
                   displayName?: string;
                   avatarUrl?: string;
-                  clanId?: number | null;
-                  partyId?: number | null;
+                  clanId?: string | null;
+                  partyId?: string | null;
                   roles?: string[];
                   countryCode?: string;
                   status?: "offline" | "menu" | "playing" | "lobby";
                   battleStatus?:
                       | ({
-                            battleId: number;
+                            battleId: string;
                         } & (
                             | ({
                                   playerId: number;
@@ -1148,10 +1148,10 @@ export type UserUpdatedResponse =
                               }
                         ))
                       | null;
-                  friendIds?: number[];
-                  outgoingFriendRequestIds?: number[];
-                  incomingFriendRequestIds?: number[];
-                  ignoreIds?: number[];
+                  friendIds?: string[];
+                  outgoingFriendRequestIds?: string[];
+                  incomingFriendRequestIds?: string[];
+                  ignoreIds?: string[];
               }[];
           };
       }

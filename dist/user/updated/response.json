@@ -40,7 +40,7 @@
                                     "clanId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -50,7 +50,7 @@
                                     "partyId": {
                                         "anyOf": [
                                             {
-                                                "type": "integer"
+                                                "type": "string"
                                             },
                                             {
                                                 "type": "null"
@@ -94,7 +94,7 @@
                                                         "type": "object",
                                                         "properties": {
                                                             "battleId": {
-                                                                "type": "integer"
+                                                                "type": "string"
                                                             }
                                                         },
                                                         "required": [
@@ -205,25 +205,25 @@
                                     "friendIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     },
                                     "outgoingFriendRequestIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     },
                                     "incomingFriendRequestIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     },
                                     "ignoreIds": {
                                         "type": "array",
                                         "items": {
-                                            "type": "integer"
+                                            "type": "string"
                                         }
                                     }
                                 }
