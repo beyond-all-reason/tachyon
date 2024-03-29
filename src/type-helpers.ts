@@ -37,6 +37,14 @@ export type RequestData<S extends ServiceId, E extends EndpointId<S>> = RequestC
     ? Data
     : never;
 
+type DistributiveOmit<T, K extends keyof T> = T extends T ? Omit<T, K> : never;
+export type ResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<
+    S,
+    E
+> extends { commandId: string; messageId: string }
+    ? DistributiveOmit<ResponseCommand<S, E>, "commandId" | "messageId">
+    : never;
+
 export type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<
     S,
     E

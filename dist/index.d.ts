@@ -69,6 +69,11 @@ type ResponseOnlyEndpointId<S extends ServiceId> = {
 type RequestData<S extends ServiceId, E extends EndpointId<S>> = RequestCommand<S, E> extends {
     data: infer Data;
 } ? Data : never;
+type DistributiveOmit<T, K extends keyof T> = T extends T ? Omit<T, K> : never;
+type ResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> extends {
+    commandId: string;
+    messageId: string;
+} ? DistributiveOmit<ResponseCommand<S, E>, "commandId" | "messageId"> : never;
 type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> & {
     status: "success";
 } extends {
@@ -100,7 +105,7 @@ declare function getValidator<T extends {
     commandId: string;
 }>(command: T): ValidateFunction<T>;
 
-export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseEndpointId, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
+export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseData, ResponseEndpointId, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
 export type AutohostSlaveResponse =
     | {
