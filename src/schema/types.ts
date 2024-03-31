@@ -65,7 +65,7 @@ export const user = Type.Object({
     userId: Type.String(),
     username: Type.String(),
     displayName: Type.String(),
-    avatarUrl: Type.String({ format: "uri" }),
+    avatarUrl: Nullable(Type.String({ format: "uri" })),
     clanId: Nullable(Type.String()),
     partyId: Nullable(Type.String()),
     roles: Type.Array(Type.String()),

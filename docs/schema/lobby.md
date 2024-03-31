@@ -1253,8 +1253,15 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                         "type": "string"
                                     },
                                     "avatarUrl": {
-                                        "format": "uri",
-                                        "type": "string"
+                                        "anyOf": [
+                                            {
+                                                "format": "uri",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
                                     },
                                     "clanId": {
                                         "anyOf": [
@@ -1594,7 +1601,7 @@ export type LobbyJoinedResponse =
                   userId: string;
                   username: string;
                   displayName: string;
-                  avatarUrl: string;
+                  avatarUrl: string | null;
                   clanId: string | null;
                   partyId: string | null;
                   roles: string[];
@@ -2445,8 +2452,15 @@ export interface LobbyListRequest {
                                                             "type": "string"
                                                         },
                                                         "avatarUrl": {
-                                                            "format": "uri",
-                                                            "type": "string"
+                                                            "anyOf": [
+                                                                {
+                                                                    "format": "uri",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
                                                         },
                                                         "clanId": {
                                                             "anyOf": [
@@ -2880,7 +2894,7 @@ export type LobbyListResponse =
                       userId: string;
                       username: string;
                       displayName: string;
-                      avatarUrl: string;
+                      avatarUrl: string | null;
                       clanId: string | null;
                       partyId: string | null;
                       roles: string[];
@@ -4211,8 +4225,15 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                             "type": "string"
                                                         },
                                                         "avatarUrl": {
-                                                            "format": "uri",
-                                                            "type": "string"
+                                                            "anyOf": [
+                                                                {
+                                                                    "format": "uri",
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
                                                         },
                                                         "clanId": {
                                                             "anyOf": [
@@ -4622,7 +4643,7 @@ export type LobbyUpdatedResponse =
                       userId: string;
                       username: string;
                       displayName: string;
-                      avatarUrl: string;
+                      avatarUrl: string | null;
                       clanId: string | null;
                       partyId: string | null;
                       roles: string[];

@@ -120,8 +120,15 @@ export interface UserSubscribeRequest {
                                         "type": "string"
                                     },
                                     "avatarUrl": {
-                                        "format": "uri",
-                                        "type": "string"
+                                        "anyOf": [
+                                            {
+                                                "format": "uri",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
                                     },
                                     "clanId": {
                                         "anyOf": [
@@ -411,7 +418,7 @@ export type UserSubscribeResponse =
                   userId: string;
                   username: string;
                   displayName: string;
-                  avatarUrl: string;
+                  avatarUrl: string | null;
                   clanId: string | null;
                   partyId: string | null;
                   roles: string[];
@@ -812,8 +819,15 @@ Sent by the server to inform the client when subscribed users get updated in som
                                         "type": "string"
                                     },
                                     "avatarUrl": {
-                                        "format": "uri",
-                                        "type": "string"
+                                        "anyOf": [
+                                            {
+                                                "format": "uri",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
                                     },
                                     "clanId": {
                                         "anyOf": [
@@ -1116,7 +1130,7 @@ export type UserUpdatedResponse =
                   userId?: string;
                   username?: string;
                   displayName?: string;
-                  avatarUrl?: string;
+                  avatarUrl?: string | null;
                   clanId?: string | null;
                   partyId?: string | null;
                   roles?: string[];

@@ -34,8 +34,15 @@
                                         "type": "string"
                                     },
                                     "avatarUrl": {
-                                        "format": "uri",
-                                        "type": "string"
+                                        "anyOf": [
+                                            {
+                                                "format": "uri",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
                                     },
                                     "clanId": {
                                         "anyOf": [

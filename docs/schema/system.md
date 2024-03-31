@@ -49,8 +49,15 @@ Sent immediately by the server on connection.
                             "type": "string"
                         },
                         "avatarUrl": {
-                            "format": "uri",
-                            "type": "string"
+                            "anyOf": [
+                                {
+                                    "format": "uri",
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
                         },
                         "clanId": {
                             "anyOf": [
@@ -361,7 +368,7 @@ export type SystemConnectedResponse =
               userId: string;
               username: string;
               displayName: string;
-              avatarUrl: string;
+              avatarUrl: string | null;
               clanId: string | null;
               partyId: string | null;
               roles: string[];

@@ -1,4 +1,4 @@
-import type { EmptyObject } from "type-fest";
+import type { EmptyObject, KeysOfUnion } from "type-fest";
 
 export type ServiceId = keyof Tachyon;
 export type EndpointId<S extends ServiceId> = keyof Tachyon[S];
@@ -61,6 +61,25 @@ export type EmptyRequestId<S extends ServiceId> = {
 export type DataRequestId<S extends ServiceId> = {
     [K in EndpointId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
 }[EndpointId<S>];
+
+export type RequestType = {
+    [S in keyof Tachyon]: {
+        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { request: unknown }
+            ? Tachyon[S][E]["request"]
+            : never;
+    }[KeysOfUnion<Tachyon[S]>];
+}[KeysOfUnion<Tachyon>];
+
+export type ResponseType = {
+    [S in keyof Tachyon]: {
+        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { response: unknown }
+            ? Tachyon[S][E]["response"]
+            : never;
+    }[KeysOfUnion<Tachyon[S]>];
+}[KeysOfUnion<Tachyon>];
+
+export type RequestCommandId = Pick<RequestType, "commandId">;
+export type ResponseCommandId = Pick<ResponseType, "commandId">;
 
 export type GenericRequestCommand = {
     commandId: string;

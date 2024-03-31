@@ -1,4 +1,4 @@
-import { EmptyObject } from 'type-fest';
+import { EmptyObject, KeysOfUnion } from 'type-fest';
 import { ValidateFunction } from 'ajv';
 
 declare const tachyonMeta: {
@@ -85,6 +85,22 @@ type EmptyRequestId<S extends ServiceId> = {
 type DataRequestId<S extends ServiceId> = {
     [K in EndpointId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
 }[EndpointId<S>];
+type RequestType = {
+    [S in keyof Tachyon]: {
+        [E in keyof Tachyon[S]]: Tachyon[S][E] extends {
+            request: unknown;
+        } ? Tachyon[S][E]["request"] : never;
+    }[KeysOfUnion<Tachyon[S]>];
+}[KeysOfUnion<Tachyon>];
+type ResponseType = {
+    [S in keyof Tachyon]: {
+        [E in keyof Tachyon[S]]: Tachyon[S][E] extends {
+            response: unknown;
+        } ? Tachyon[S][E]["response"] : never;
+    }[KeysOfUnion<Tachyon[S]>];
+}[KeysOfUnion<Tachyon>];
+type RequestCommandId = Pick<RequestType, "commandId">;
+type ResponseCommandId = Pick<ResponseType, "commandId">;
 type GenericRequestCommand = {
     commandId: string;
     messageId: string;
@@ -105,7 +121,7 @@ declare function getValidator<T extends {
     commandId: string;
 }>(command: T): ValidateFunction<T>;
 
-export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestData, RequestEndpointId, ResponseCommand, ResponseData, ResponseEndpointId, ResponseOnlyEndpointId, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
+export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestCommandId, RequestData, RequestEndpointId, RequestType, ResponseCommand, ResponseCommandId, ResponseData, ResponseEndpointId, ResponseOnlyEndpointId, ResponseType, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
 export type AutohostSlaveResponse =
     | {
@@ -367,7 +383,7 @@ export type LobbyJoinedResponse =
                   userId: string;
                   username: string;
                   displayName: string;
-                  avatarUrl: string;
+                  avatarUrl: string | null;
                   clanId: string | null;
                   partyId: string | null;
                   roles: string[];
@@ -534,7 +550,7 @@ export type LobbyListResponse =
                       userId: string;
                       username: string;
                       displayName: string;
-                      avatarUrl: string;
+                      avatarUrl: string | null;
                       clanId: string | null;
                       partyId: string | null;
                       roles: string[];
@@ -778,7 +794,7 @@ export type LobbyUpdatedResponse =
                       userId: string;
                       username: string;
                       displayName: string;
-                      avatarUrl: string;
+                      avatarUrl: string | null;
                       clanId: string | null;
                       partyId: string | null;
                       roles: string[];
@@ -1087,7 +1103,7 @@ export type SystemConnectedResponse =
               userId: string;
               username: string;
               displayName: string;
-              avatarUrl: string;
+              avatarUrl: string | null;
               clanId: string | null;
               partyId: string | null;
               roles: string[];
@@ -1204,7 +1220,7 @@ export type UserSubscribeResponse =
                   userId: string;
                   username: string;
                   displayName: string;
-                  avatarUrl: string;
+                  avatarUrl: string | null;
                   clanId: string | null;
                   partyId: string | null;
                   roles: string[];
@@ -1297,7 +1313,7 @@ export type UserUpdatedResponse =
                   userId?: string;
                   username?: string;
                   displayName?: string;
-                  avatarUrl?: string;
+                  avatarUrl?: string | null;
                   clanId?: string | null;
                   partyId?: string | null;
                   roles?: string[];
@@ -1757,7 +1773,7 @@ export interface TachyonUser {
     userId: string;
     username: string;
     displayName: string;
-    avatarUrl: string;
+    avatarUrl: string | null;
     clanId: string | null;
     partyId: string | null;
     roles: string[];
@@ -1795,7 +1811,7 @@ export interface TachyonPrivateUser {
     userId: string;
     username: string;
     displayName: string;
-    avatarUrl: string;
+    avatarUrl: string | null;
     clanId: string | null;
     partyId: string | null;
     roles: string[];
@@ -1894,7 +1910,7 @@ export interface TachyonBattle {
         userId: string;
         username: string;
         displayName: string;
-        avatarUrl: string;
+        avatarUrl: string | null;
         clanId: string | null;
         partyId: string | null;
         roles: string[];
@@ -1983,7 +1999,7 @@ export type TachyonCustomBattle = {
         userId: string;
         username: string;
         displayName: string;
-        avatarUrl: string;
+        avatarUrl: string | null;
         clanId: string | null;
         partyId: string | null;
         roles: string[];

@@ -15,8 +15,7 @@ function init() {
     initialised = true;
 
     addFormats.default(ajv);
-    ajv.addKeyword("requiresLogin");
-    ajv.addKeyword("requiresRole");
+    ajv.addKeyword("roles");
 
     for (const serviceId in meta.ids) {
         for (const endpointId in meta.ids[serviceId]) {

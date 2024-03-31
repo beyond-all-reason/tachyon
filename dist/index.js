@@ -7209,8 +7209,7 @@ var initialised = false;
 function init() {
   initialised = true;
   import_ajv_formats.default.default(ajv);
-  ajv.addKeyword("requiresLogin");
-  ajv.addKeyword("requiresRole");
+  ajv.addKeyword("roles");
   for (const serviceId in meta.ids) {
     for (const endpointId in meta.ids[serviceId]) {
       for (const commandType of meta.ids[serviceId][endpointId]) {
