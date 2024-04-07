@@ -4,7 +4,7 @@ module.exports = {
         {
             files: "src/**/*.{ts,vue,js}",
             options: {
-                printWidth: 100,
+                printWidth: 120,
             },
         },
     ],

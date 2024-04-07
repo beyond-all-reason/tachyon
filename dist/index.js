@@ -3935,8 +3935,8 @@ var require_uri_all = __commonJS({
             wsComponents.secure = void 0;
           }
           if (wsComponents.resourceName) {
-            var _wsComponents$resourc = wsComponents.resourceName.split("?"), _wsComponents$resourc2 = slicedToArray(_wsComponents$resourc, 2), path2 = _wsComponents$resourc2[0], query = _wsComponents$resourc2[1];
-            wsComponents.path = path2 && path2 !== "/" ? path2 : void 0;
+            var _wsComponents$resourc = wsComponents.resourceName.split("?"), _wsComponents$resourc2 = slicedToArray(_wsComponents$resourc, 2), path = _wsComponents$resourc2[0], query = _wsComponents$resourc2[1];
+            wsComponents.path = path && path !== "/" ? path : void 0;
             wsComponents.query = query;
             wsComponents.resourceName = void 0;
           }
@@ -7187,10 +7187,6 @@ var tachyonMeta = {
 var import_ajv = __toESM(require_ajv(), 1);
 var import_ajv_formats = __toESM(require_dist(), 1);
 import fs from "node:fs";
-import path, { dirname } from "node:path";
-import { fileURLToPath } from "url";
-var __filename = fileURLToPath(import.meta.url);
-var __dirname = dirname(__filename);
 var meta = tachyonMeta;
 var validators = /* @__PURE__ */ new Map();
 var ajv = new import_ajv.default.default();
@@ -7203,10 +7199,8 @@ function init() {
     for (const endpointId in meta.ids[serviceId]) {
       for (const commandType of meta.ids[serviceId][endpointId]) {
         const commandId = `${serviceId}/${endpointId}/${commandType}`;
-        const commandSchemaStr = fs.readFileSync(
-          path.join(__dirname, `./${serviceId}/${endpointId}/${commandType}.json`),
-          { encoding: "utf-8" }
-        );
+        const jsonSchemaPath = new URL(`${serviceId}/${endpointId}/${commandType}.json`, import.meta.url);
+        const commandSchemaStr = fs.readFileSync(jsonSchemaPath, { encoding: "utf-8" });
         const commandSchema = JSON.parse(commandSchemaStr);
         const validator = ajv.compile(commandSchema);
         validators.set(commandId, validator);

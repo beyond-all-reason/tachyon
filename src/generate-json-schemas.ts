@@ -8,9 +8,6 @@ import { fileURLToPath, pathToFileURL } from "url";
 
 import { EndpointConfig } from "@/generator-helpers.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 JSONSchemaFaker.option("useExamplesValue", true);
 JSONSchemaFaker.option("random", () => 0.1234);
 
@@ -18,13 +15,14 @@ export async function generateJsonSchemas() {
     const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
     const individualSchemas: Record<string, Record<string, EndpointConfig>> = {};
 
-    const serviceDirs = path.join(__dirname, "schema");
+    const serviceDirs = new URL("schema", import.meta.url);
     const serviceHandlerDirs = await fs.promises.readdir(serviceDirs);
+
     for (const serviceId of serviceHandlerDirs) {
         if (serviceId.includes(".")) {
             continue;
         }
-        const endpointDir = path.join(serviceDirs, serviceId);
+        const endpointDir = new URL(`schema/${serviceId}`, import.meta.url);
         const endpointSchemaModules = await fs.promises.readdir(endpointDir, {
             withFileTypes: true,
         });
@@ -37,7 +35,8 @@ export async function generateJsonSchemas() {
                 continue;
             }
             const endpointId = path.parse(endpointSchemaPath.name).name;
-            const endpoint = await import(pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString());
+            const endpointUrl = new URL(`${endpointDir}/${endpointId}`, import.meta.url);
+            const endpoint = await import(endpointUrl.href);
             const endpointSchema = endpoint.default as EndpointConfig;
             fullSchemaProps[serviceId][endpointId] = {};
             await fs.promises.mkdir(path.join("dist", serviceId, endpointId), {
@@ -57,10 +56,7 @@ export async function generateJsonSchemas() {
                     roles: endpointSchema.roles,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(
-                    `dist/${serviceId}/${endpointId}/request.json`,
-                    schemaStr
-                );
+                await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/request.json`, schemaStr);
                 fullSchemaProps[serviceId][endpointId].request = schema;
             }
             if ("response" in endpointSchema && endpointSchema.response.length) {
@@ -88,10 +84,7 @@ export async function generateJsonSchemas() {
                     }
                 );
                 const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(
-                    `dist/${serviceId}/${endpointId}/response.json`,
-                    schemaStr
-                );
+                await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/response.json`, schemaStr);
                 fullSchemaProps[serviceId][endpointId].response = schema;
             }
             serviceSchema[endpointId] = endpointSchema;

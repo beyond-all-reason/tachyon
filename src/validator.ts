@@ -7,9 +7,6 @@ import { fileURLToPath } from "url";
 
 import { tachyonMeta } from "@/meta.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 const meta = tachyonMeta as unknown as Record<string, Record<string, string[]>>;
 
 const validators: Map<string, ValidateFunction> = new Map();
@@ -26,10 +23,8 @@ function init() {
         for (const endpointId in meta.ids[serviceId]) {
             for (const commandType of meta.ids[serviceId][endpointId]) {
                 const commandId = `${serviceId}/${endpointId}/${commandType}`;
-                const commandSchemaStr = fs.readFileSync(
-                    path.join(__dirname, `./${serviceId}/${endpointId}/${commandType}.json`),
-                    { encoding: "utf-8" }
-                );
+                const jsonSchemaPath = new URL(`${serviceId}/${endpointId}/${commandType}.json`, import.meta.url);
+                const commandSchemaStr = fs.readFileSync(jsonSchemaPath, { encoding: "utf-8" });
                 const commandSchema = JSON.parse(commandSchemaStr);
                 const validator = ajv.compile(commandSchema);
                 validators.set(commandId, validator);
