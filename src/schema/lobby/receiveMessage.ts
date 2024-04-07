@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/generator-helpers";
+import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
     description: "Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.",

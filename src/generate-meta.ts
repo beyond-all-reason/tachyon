@@ -1,4 +1,4 @@
-import fs from "fs";
+import fs from "node:fs";
 
 // eslint-disable-next-line no-restricted-imports
 import packageJson from "../package.json";

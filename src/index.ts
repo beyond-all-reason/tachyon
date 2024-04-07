@@ -1,10 +1,10 @@
-import fs from "fs";
+import fs from "node:fs";
 
-import { generateCompiled } from "@/generate-compiled";
-import { generateDocs } from "@/generate-docs";
-import { generateJsonSchemas } from "@/generate-json-schemas";
-import { generateMeta } from "@/generate-meta";
-import { generateTSDefs } from "@/generate-ts-defs";
+import { generateJsonSchemas } from "@/generate-json-schemas.js";
+import { generateCompiled } from "@/generate-compiled.js";
+import { generateDocs } from "@/generate-docs.js";
+import { generateMeta } from "@/generate-meta.js";
+import { generateTSDefs } from "@/generate-ts-defs.js";
 
 (async () => {
     console.log("Building Tachyon Protocol JSONSchema, Docs and TypeScript defs, validators...");

@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/generator-helpers";
+import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
     description: "Create a new lobby - intended for player clients to summon a dedicated host.",

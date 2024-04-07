@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { defineEndpoint } from "@/generator-helpers";
+import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
     description: "Queue up for matchmaking. Should cancel the previous queue if already in one.",

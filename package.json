@@ -2,9 +2,10 @@
   "name": "tachyon-protocol",
   "version": "0.3.5",
   "description": "",
+  "type": "module",
   "scripts": {
     "dev": "nodemon --watch src/** --ext ts --ignore src/meta.ts --exec npm run build",
-    "build": "ts-node src/index.ts",
+    "build": "npx tsx src/index.ts",
     "tidy": "npm run lint && npm run format",
     "lint": "eslint . --ext .ts --fix",
     "format": "prettier --write src/**/*.ts",

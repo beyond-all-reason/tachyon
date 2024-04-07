@@ -1,4 +1,3 @@
-"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -7,10 +6,6 @@ var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __commonJS = (cb, mod) => function __require() {
   return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-};
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
@@ -28,7 +23,6 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
 // node_modules/ajv/dist/compile/codegen/code.js
 var require_code = __commonJS({
@@ -2032,9 +2026,9 @@ var require_subschema = __commonJS({
 
 // node_modules/fast-deep-equal/index.js
 var require_fast_deep_equal = __commonJS({
-  "node_modules/fast-deep-equal/index.js"(exports, module2) {
+  "node_modules/fast-deep-equal/index.js"(exports, module) {
     "use strict";
-    module2.exports = function equal(a, b) {
+    module.exports = function equal(a, b) {
       if (a === b)
         return true;
       if (a && b && typeof a == "object" && typeof b == "object") {
@@ -2077,9 +2071,9 @@ var require_fast_deep_equal = __commonJS({
 
 // node_modules/json-schema-traverse/index.js
 var require_json_schema_traverse = __commonJS({
-  "node_modules/json-schema-traverse/index.js"(exports, module2) {
+  "node_modules/json-schema-traverse/index.js"(exports, module) {
     "use strict";
-    var traverse = module2.exports = function(schema, opts, cb) {
+    var traverse = module.exports = function(schema, opts, cb) {
       if (typeof opts == "function") {
         cb = opts;
         opts = {};
@@ -3085,8 +3079,8 @@ var require_compile = __commonJS({
 
 // node_modules/ajv/dist/refs/data.json
 var require_data = __commonJS({
-  "node_modules/ajv/dist/refs/data.json"(exports, module2) {
-    module2.exports = {
+  "node_modules/ajv/dist/refs/data.json"(exports, module) {
+    module.exports = {
       $id: "https://raw.githubusercontent.com/ajv-validator/ajv/master/lib/refs/data.json#",
       description: "Meta-schema for $data reference (JSON AnySchema extension proposal)",
       type: "object",
@@ -3104,10 +3098,10 @@ var require_data = __commonJS({
 
 // node_modules/uri-js/dist/es5/uri.all.js
 var require_uri_all = __commonJS({
-  "node_modules/uri-js/dist/es5/uri.all.js"(exports, module2) {
+  "node_modules/uri-js/dist/es5/uri.all.js"(exports, module) {
     "use strict";
     (function(global, factory) {
-      typeof exports === "object" && typeof module2 !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : factory(global.URI = global.URI || {});
+      typeof exports === "object" && typeof module !== "undefined" ? factory(exports) : typeof define === "function" && define.amd ? define(["exports"], factory) : factory(global.URI = global.URI || {});
     })(exports, function(exports2) {
       "use strict";
       function merge() {
@@ -6561,8 +6555,8 @@ var require_discriminator = __commonJS({
 
 // node_modules/ajv/dist/refs/json-schema-draft-07.json
 var require_json_schema_draft_07 = __commonJS({
-  "node_modules/ajv/dist/refs/json-schema-draft-07.json"(exports, module2) {
-    module2.exports = {
+  "node_modules/ajv/dist/refs/json-schema-draft-07.json"(exports, module) {
+    module.exports = {
       $schema: "http://json-schema.org/draft-07/schema#",
       $id: "http://json-schema.org/draft-07/schema#",
       title: "Core schema meta-schema",
@@ -6718,7 +6712,7 @@ var require_json_schema_draft_07 = __commonJS({
 
 // node_modules/ajv/dist/ajv.js
 var require_ajv = __commonJS({
-  "node_modules/ajv/dist/ajv.js"(exports, module2) {
+  "node_modules/ajv/dist/ajv.js"(exports, module) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.MissingRefError = exports.ValidationError = exports.CodeGen = exports.Name = exports.nil = exports.stringify = exports.str = exports._ = exports.KeywordCxt = void 0;
@@ -6747,7 +6741,7 @@ var require_ajv = __commonJS({
         return this.opts.defaultMeta = super.defaultMeta() || (this.getSchema(META_SCHEMA_ID) ? META_SCHEMA_ID : void 0);
       }
     };
-    module2.exports = exports = Ajv2;
+    module.exports = exports = Ajv2;
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = Ajv2;
     var validate_1 = require_validate();
@@ -7025,7 +7019,7 @@ var require_limit = __commonJS({
 
 // node_modules/ajv-formats/dist/index.js
 var require_dist = __commonJS({
-  "node_modules/ajv-formats/dist/index.js"(exports, module2) {
+  "node_modules/ajv-formats/dist/index.js"(exports, module) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var formats_1 = require_formats();
@@ -7059,19 +7053,11 @@ var require_dist = __commonJS({
       for (const f of list)
         ajv2.addFormat(f, fs2[f]);
     }
-    module2.exports = exports = formatsPlugin;
+    module.exports = exports = formatsPlugin;
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = formatsPlugin;
   }
 });
-
-// src/compiled.ts
-var compiled_exports = {};
-__export(compiled_exports, {
-  getValidator: () => getValidator,
-  tachyonMeta: () => tachyonMeta
-});
-module.exports = __toCommonJS(compiled_exports);
 
 // src/meta.ts
 var tachyonMeta = {
@@ -7198,13 +7184,16 @@ var tachyonMeta = {
 };
 
 // src/validator.ts
-var import_ajv = __toESM(require_ajv());
-var import_ajv_formats = __toESM(require_dist());
-var import_fs = __toESM(require("fs"));
-var import_path = __toESM(require("path"));
+var import_ajv = __toESM(require_ajv(), 1);
+var import_ajv_formats = __toESM(require_dist(), 1);
+import fs from "node:fs";
+import path, { dirname } from "node:path";
+import { fileURLToPath } from "url";
+var __filename = fileURLToPath(import.meta.url);
+var __dirname = dirname(__filename);
 var meta = tachyonMeta;
 var validators = /* @__PURE__ */ new Map();
-var ajv = new import_ajv.default();
+var ajv = new import_ajv.default.default();
 var initialised = false;
 function init() {
   initialised = true;
@@ -7214,8 +7203,8 @@ function init() {
     for (const endpointId in meta.ids[serviceId]) {
       for (const commandType of meta.ids[serviceId][endpointId]) {
         const commandId = `${serviceId}/${endpointId}/${commandType}`;
-        const commandSchemaStr = import_fs.default.readFileSync(
-          import_path.default.join(__dirname, `./${serviceId}/${endpointId}/${commandType}.json`),
+        const commandSchemaStr = fs.readFileSync(
+          path.join(__dirname, `./${serviceId}/${endpointId}/${commandType}.json`),
           { encoding: "utf-8" }
         );
         const commandSchema = JSON.parse(commandSchemaStr);
@@ -7241,11 +7230,10 @@ function getValidator(command) {
   }
   return validator;
 }
-// Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
+export {
   getValidator,
   tachyonMeta
-});
+};
 /*! Bundled license information:
 
 uri-js/dist/es5/uri.all.js:

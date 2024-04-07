@@ -1687,173 +1687,8 @@ export interface UserUnsubscribeRequest {
         userIds: string[];
     };
 }
-export type TachyonUnixTime = number | null;
-
-export interface TachyonBattleContender {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-}
-
-export type TachyonBattlePlayer = {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-} & {
-    isSpectator: false;
-    isBot: false;
-    ready: boolean;
-    sync: {
-        engine: number;
-        game: number;
-        map: number;
-    };
-};
-
-export interface TachyonBattleSpectator {
-    isSpectator: true;
-    isBot: false;
-}
-
-export interface TachyonBot {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-    isSpectator: false;
-    isBot: true;
-    ownerId: string;
-    aiShortName: string;
-    name: string;
-    aiOptions: {
-        /**
-         * This interface was referenced by `undefined`'s JSON-Schema definition
-         * via the `patternProperty` "^(.*)$".
-         */
-        [k: string]: unknown;
-    };
-    faction: string;
-}
-
-export type TachyonBattleStatus =
-    | ({
-          battleId: string;
-      } & (
-          | ({
-                playerId: number;
-                teamId: number;
-                color: string;
-                bonus: number;
-                inGame: boolean;
-            } & {
-                isSpectator: false;
-                isBot: false;
-                ready: boolean;
-                sync: {
-                    engine: number;
-                    game: number;
-                    map: number;
-                };
-            })
-          | {
-                isSpectator: true;
-                isBot: false;
-            }
-      ))
-    | null;
-
-export type TachyonUserStatus = "offline" | "menu" | "playing" | "lobby";
-
-export interface TachyonUser {
-    userId: string;
-    username: string;
-    displayName: string;
-    avatarUrl: string | null;
-    clanId: string | null;
-    partyId: string | null;
-    roles: string[];
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
-    battleStatus:
-        | ({
-              battleId: string;
-          } & (
-              | ({
-                    playerId: number;
-                    teamId: number;
-                    color: string;
-                    bonus: number;
-                    inGame: boolean;
-                } & {
-                    isSpectator: false;
-                    isBot: false;
-                    ready: boolean;
-                    sync: {
-                        engine: number;
-                        game: number;
-                        map: number;
-                    };
-                })
-              | {
-                    isSpectator: true;
-                    isBot: false;
-                }
-          ))
-        | null;
-}
-
-export interface TachyonPrivateUser {
-    userId: string;
-    username: string;
-    displayName: string;
-    avatarUrl: string | null;
-    clanId: string | null;
-    partyId: string | null;
-    roles: string[];
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
-    battleStatus:
-        | ({
-              battleId: string;
-          } & (
-              | ({
-                    playerId: number;
-                    teamId: number;
-                    color: string;
-                    bonus: number;
-                    inGame: boolean;
-                } & {
-                    isSpectator: false;
-                    isBot: false;
-                    ready: boolean;
-                    sync: {
-                        engine: number;
-                        game: number;
-                        map: number;
-                    };
-                })
-              | {
-                    isSpectator: true;
-                    isBot: false;
-                }
-          ))
-        | null;
-    friendIds: string[];
-    outgoingFriendRequestIds: string[];
-    incomingFriendRequestIds: string[];
-    ignoreIds: string[];
-}
-
-export interface TachyonRect {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+export interface TachyonAutohostStatus {
+    gameStartTime: number | null;
 }
 
 export interface TachyonBattle {
@@ -1943,6 +1778,84 @@ export interface TachyonBattle {
               ))
             | null;
     }[];
+}
+
+export interface TachyonBattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+}
+
+export type TachyonBattlePlayer = {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+} & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+};
+
+export interface TachyonBattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+
+export type TachyonBattleStatus =
+    | ({
+          battleId: string;
+      } & (
+          | ({
+                playerId: number;
+                teamId: number;
+                color: string;
+                bonus: number;
+                inGame: boolean;
+            } & {
+                isSpectator: false;
+                isBot: false;
+                ready: boolean;
+                sync: {
+                    engine: number;
+                    game: number;
+                    map: number;
+                };
+            })
+          | {
+                isSpectator: true;
+                isBot: false;
+            }
+      ))
+    | null;
+
+export interface TachyonBot {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+    isSpectator: false;
+    isBot: true;
+    ownerId: string;
+    aiShortName: string;
+    name: string;
+    aiOptions: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(.*)$".
+         */
+        [k: string]: unknown;
+    };
+    faction: string;
 }
 
 export type TachyonCustomBattle = {
@@ -2046,7 +1959,94 @@ export type TachyonCustomBattle = {
     };
 };
 
-export interface TachyonAutohostStatus {
-    gameStartTime: number | null;
+export interface TachyonPrivateUser {
+    userId: string;
+    username: string;
+    displayName: string;
+    avatarUrl: string | null;
+    clanId: string | null;
+    partyId: string | null;
+    roles: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+    battleStatus:
+        | ({
+              battleId: string;
+          } & (
+              | ({
+                    playerId: number;
+                    teamId: number;
+                    color: string;
+                    bonus: number;
+                    inGame: boolean;
+                } & {
+                    isSpectator: false;
+                    isBot: false;
+                    ready: boolean;
+                    sync: {
+                        engine: number;
+                        game: number;
+                        map: number;
+                    };
+                })
+              | {
+                    isSpectator: true;
+                    isBot: false;
+                }
+          ))
+        | null;
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
 }
+
+export interface TachyonRect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
+export type TachyonUnixTime = number | null;
+
+export interface TachyonUser {
+    userId: string;
+    username: string;
+    displayName: string;
+    avatarUrl: string | null;
+    clanId: string | null;
+    partyId: string | null;
+    roles: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+    battleStatus:
+        | ({
+              battleId: string;
+          } & (
+              | ({
+                    playerId: number;
+                    teamId: number;
+                    color: string;
+                    bonus: number;
+                    inGame: boolean;
+                } & {
+                    isSpectator: false;
+                    isBot: false;
+                    ready: boolean;
+                    sync: {
+                        engine: number;
+                        game: number;
+                        map: number;
+                    };
+                })
+              | {
+                    isSpectator: true;
+                    isBot: false;
+                }
+          ))
+        | null;
+}
+
+export type TachyonUserStatus = "offline" | "menu" | "playing" | "lobby";
 

@@ -1,14 +1,19 @@
+import fs from "node:fs";
+import path, { dirname } from "node:path";
+
 import Ajv, { ValidateFunction } from "ajv";
 import addFormats from "ajv-formats";
-import fs from "fs";
-import path from "path";
+import { fileURLToPath } from "url";
 
-import { tachyonMeta } from "@/meta";
+import { tachyonMeta } from "@/meta.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const meta = tachyonMeta as unknown as Record<string, Record<string, string[]>>;
 
 const validators: Map<string, ValidateFunction> = new Map();
-const ajv = new Ajv();
+const ajv = new Ajv.default();
 let initialised = false;
 
 function init() {

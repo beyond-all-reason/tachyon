@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import fs from "node:fs";
+import path, { dirname } from "node:path";
+
 import { TProperties, Type } from "@sinclair/typebox";
-import fs from "fs";
-import jsf from "json-schema-faker";
-import path from "path";
+import { JSONSchemaFaker } from "json-schema-faker";
+import { fileURLToPath, pathToFileURL } from "url";
 
-import { EndpointConfig } from "@/generator-helpers";
+import { EndpointConfig } from "@/generator-helpers.js";
 
-jsf.option("useExamplesValue", true);
-jsf.option("random", () => 0.1234);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+JSONSchemaFaker.option("useExamplesValue", true);
+JSONSchemaFaker.option("random", () => 0.1234);
 
 export async function generateJsonSchemas() {
     const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
@@ -32,7 +37,7 @@ export async function generateJsonSchemas() {
                 continue;
             }
             const endpointId = path.parse(endpointSchemaPath.name).name;
-            const endpoint = await import(path.join(endpointDir, endpointSchemaPath.name));
+            const endpoint = await import(pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString());
             const endpointSchema = endpoint.default as EndpointConfig;
             fullSchemaProps[serviceId][endpointId] = {};
             await fs.promises.mkdir(path.join("dist", serviceId, endpointId), {
@@ -109,35 +114,6 @@ export async function generateJsonSchemas() {
         }
         compiledSchema[serviceId] = Type.Object(compiledSchema[serviceId]);
     }
-
-    const sharedCommandSchema = Type.Object({
-        commandId: Type.String(),
-        messageId: Type.String(),
-    });
-
-    const requestCommandSchema = Type.Composite([
-        sharedCommandSchema,
-        Type.Object({
-            data: Type.Optional(Type.Unknown()),
-        }),
-    ]);
-
-    const responseCommandSchema = Type.Union([
-        Type.Composite([
-            sharedCommandSchema,
-            Type.Object({
-                status: Type.Literal("success"),
-                data: Type.Optional(Type.Unknown()),
-            }),
-        ]),
-        Type.Composite([
-            sharedCommandSchema,
-            Type.Object({
-                status: Type.Literal("failed"),
-                reason: Type.String(),
-            }),
-        ]),
-    ]);
 
     compiledSchema = Type.Object(compiledSchema);
 

@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
-        "module": "CommonJS",
-        "moduleResolution": "node",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "skipLibCheck": true,
         "allowSyntheticDefaultImports": true,
         "strict": true,
@@ -15,9 +15,5 @@
             "@/*": ["./src/*"]
         }
     },
-    "include": ["src/**/*", "package.json"],
-    "ts-node": {
-        "require": ["tsconfig-paths/register"],
-        "swc": true
-    }
+    "include": ["src/**/*", "package.json"]
 }

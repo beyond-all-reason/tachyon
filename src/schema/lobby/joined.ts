@@ -1,4 +1,4 @@
-import { defineEndpoint } from "@/generator-helpers";
+import { defineEndpoint } from "@/generator-helpers.js";
 import { battle } from "@/schema/types";
 
 export default defineEndpoint({

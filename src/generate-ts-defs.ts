@@ -16,7 +16,7 @@ export async function generateTSDefs(fullSchema: TObject) {
         },
     });
 
-    const types = await import("./schema/types");
+    const types = await import("./schema/types.js");
     for (const key of objectKeys(types)) {
         const thing = types[key];
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

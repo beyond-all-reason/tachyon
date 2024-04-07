@@ -1,4 +1,4 @@
-import { defineEndpoint } from "@/generator-helpers";
+import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
     description: "Leave the current lobby.",
