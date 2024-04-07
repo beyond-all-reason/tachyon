@@ -2,7 +2,7 @@ import { EmptyObject, KeysOfUnion } from 'type-fest';
 import { ValidateFunction } from 'ajv';
 
 declare const tachyonMeta: {
-    readonly version: "0.3.5";
+    readonly version: "1.0.0";
     readonly ids: {
         readonly autohost: {
             readonly slave: readonly ["request", "response"];
