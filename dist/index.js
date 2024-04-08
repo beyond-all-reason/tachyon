@@ -7061,7 +7061,7 @@ var require_dist = __commonJS({
 
 // src/meta.ts
 var tachyonMeta = {
-  "version": "1.1.0",
+  "version": "1.2.0",
   "ids": {
     "autohost": {
       "slave": [
