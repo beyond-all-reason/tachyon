@@ -3935,8 +3935,8 @@ var require_uri_all = __commonJS({
             wsComponents.secure = void 0;
           }
           if (wsComponents.resourceName) {
-            var _wsComponents$resourc = wsComponents.resourceName.split("?"), _wsComponents$resourc2 = slicedToArray(_wsComponents$resourc, 2), path = _wsComponents$resourc2[0], query = _wsComponents$resourc2[1];
-            wsComponents.path = path && path !== "/" ? path : void 0;
+            var _wsComponents$resourc = wsComponents.resourceName.split("?"), _wsComponents$resourc2 = slicedToArray(_wsComponents$resourc, 2), path2 = _wsComponents$resourc2[0], query = _wsComponents$resourc2[1];
+            wsComponents.path = path2 && path2 !== "/" ? path2 : void 0;
             wsComponents.query = query;
             wsComponents.resourceName = void 0;
           }
@@ -7046,12 +7046,12 @@ var require_dist = __commonJS({
         throw new Error(`Unknown format "${name}"`);
       return f;
     };
-    function addFormats2(ajv2, list, fs2, exportName) {
+    function addFormats2(ajv2, list, fs, exportName) {
       var _a;
       var _b;
       (_a = (_b = ajv2.opts.code).formats) !== null && _a !== void 0 ? _a : _b.formats = codegen_1._`require("ajv-formats/dist/formats").${exportName}`;
       for (const f of list)
-        ajv2.addFormat(f, fs2[f]);
+        ajv2.addFormat(f, fs[f]);
     }
     module.exports = exports = formatsPlugin;
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -7186,12 +7186,12 @@ var tachyonMeta = {
 // src/validator.ts
 var import_ajv = __toESM(require_ajv(), 1);
 var import_ajv_formats = __toESM(require_dist(), 1);
-import fs from "node:fs";
+import path, { dirname } from "node:path";
 var meta = tachyonMeta;
 var validators = /* @__PURE__ */ new Map();
 var ajv = new import_ajv.default.default();
 var initialised = false;
-function init() {
+async function init() {
   initialised = true;
   import_ajv_formats.default.default(ajv);
   ajv.addKeyword("roles");
@@ -7199,18 +7199,20 @@ function init() {
     for (const endpointId in meta.ids[serviceId]) {
       for (const commandType of meta.ids[serviceId][endpointId]) {
         const commandId = `${serviceId}/${endpointId}/${commandType}`;
-        const jsonSchemaPath = new URL(`${serviceId}/${endpointId}/${commandType}.json`, import.meta.url);
-        const commandSchemaStr = fs.readFileSync(jsonSchemaPath, { encoding: "utf-8" });
-        const commandSchema = JSON.parse(commandSchemaStr);
+        const jsonSchemaPath = new URL(
+          `${serviceId}/${endpointId}/${commandType}.json`,
+          path.join(dirname(import.meta.url), "dist")
+        );
+        const commandSchema = await import(jsonSchemaPath.href);
         const validator = ajv.compile(commandSchema);
         validators.set(commandId, validator);
       }
     }
   }
 }
-function getValidator(command) {
+async function getValidator(command) {
   if (!initialised) {
-    init();
+    await init();
   }
   if (typeof command !== "object") {
     throw new Error("Command not object type");

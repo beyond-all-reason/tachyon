@@ -7,19 +7,23 @@ import { generateMeta } from "@/generate-meta.js";
 import { generateTSDefs } from "@/generate-ts-defs.js";
 
 (async () => {
-    console.log("Building Tachyon Protocol JSONSchema, Docs and TypeScript defs, validators...");
-
+    console.log("Cleaning dist folder 🧹");
     await fs.promises.rm("./dist", { force: true, recursive: true });
 
+    console.log("Generating JSONSchemas 🔨");
     const { individualSchemas, compiledSchema, ids } = await generateJsonSchemas();
 
+    console.log("Generating Meta 🔨");
     await generateMeta(ids);
 
+    console.log("Generating Compiled Schemas 🔨");
     await generateCompiled();
 
+    console.log("Generating Docs 📖");
     await generateDocs(individualSchemas, compiledSchema);
 
+    console.log("Generating TypeScript Definitions 🔨");
     await generateTSDefs(compiledSchema);
 
-    console.log("Done!");
+    console.log("Done! ✅");
 })();

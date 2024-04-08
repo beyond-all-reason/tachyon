@@ -13,7 +13,7 @@ const validators: Map<string, ValidateFunction> = new Map();
 const ajv = new Ajv.default();
 let initialised = false;
 
-function init() {
+async function init() {
     initialised = true;
 
     addFormats.default(ajv);
@@ -23,9 +23,11 @@ function init() {
         for (const endpointId in meta.ids[serviceId]) {
             for (const commandType of meta.ids[serviceId][endpointId]) {
                 const commandId = `${serviceId}/${endpointId}/${commandType}`;
-                const jsonSchemaPath = new URL(`${serviceId}/${endpointId}/${commandType}.json`, import.meta.url);
-                const commandSchemaStr = fs.readFileSync(jsonSchemaPath, { encoding: "utf-8" });
-                const commandSchema = JSON.parse(commandSchemaStr);
+                const jsonSchemaPath = new URL(
+                    `${serviceId}/${endpointId}/${commandType}.json`,
+                    path.join(dirname(import.meta.url), "dist")
+                );
+                const commandSchema = await import(jsonSchemaPath.href, { assert: { type: "json" } });
                 const validator = ajv.compile(commandSchema);
                 validators.set(commandId, validator);
             }
@@ -33,9 +35,9 @@ function init() {
     }
 }
 
-export function getValidator<T extends { commandId: string }>(command: T): ValidateFunction<T> {
+export async function getValidator<T extends { commandId: string }>(command: T): Promise<Ajv.ValidateFunction<T>> {
     if (!initialised) {
-        init();
+        await init();
     }
 
     if (typeof command !== "object") {

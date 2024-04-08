@@ -1,5 +1,5 @@
 import { EmptyObject, KeysOfUnion } from 'type-fest';
-import { ValidateFunction } from 'ajv';
+import Ajv from 'ajv';
 
 declare const tachyonMeta: {
     readonly version: "1.1.0";
@@ -119,7 +119,7 @@ type GenericResponseCommand = {
 
 declare function getValidator<T extends {
     commandId: string;
-}>(command: T): ValidateFunction<T>;
+}>(command: T): Promise<Ajv.ValidateFunction<T>>;
 
 export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestCommandId, RequestData, RequestEndpointId, RequestType, ResponseCommand, ResponseCommandId, ResponseData, ResponseEndpointId, ResponseOnlyEndpointId, ResponseType, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
 
