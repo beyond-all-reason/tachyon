@@ -19,8 +19,7 @@ export async function generateDocs(
     }
 
     let mainReadme = await fs.promises.readFile("README.md", { encoding: "utf-8" });
-    const regex =
-        /(?<=COMMAND_SCHEMA_PLACEHOLDER_START.*$\n)[\s|\S]*(?=^.*COMMAND_SCHEMA_PLACEHOLDER_END.*)/ms;
+    const regex = /(?<=COMMAND_SCHEMA_PLACEHOLDER_START.*$\n)[\s|\S]*(?=^.*COMMAND_SCHEMA_PLACEHOLDER_END.*)/ms;
     if (!mainReadme.match(regex)) {
         throw new Error("Could not find COMMAND_SCHEMA_PLACEHOLDER comment in main README.md");
     }
@@ -72,12 +71,7 @@ export async function generateServiceMarkdown<T extends Record<string, TObject>>
     for (const endpointId in endpoints) {
         const endpointSchema = endpoints[endpointId];
         const endpointConfig = tachyonSchema[serviceId][endpointId];
-        markdown += await generateEndpointMarkdown(
-            endpointSchema,
-            endpointConfig,
-            serviceId,
-            endpointId
-        );
+        markdown += await generateEndpointMarkdown(endpointSchema, endpointConfig, serviceId, endpointId);
     }
 
     return markdown;

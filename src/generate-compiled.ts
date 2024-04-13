@@ -9,5 +9,6 @@ export async function generateCompiled() {
         outDir: "dist",
         dts: true,
         format: ["esm"],
+        silent: true,
     });
 }

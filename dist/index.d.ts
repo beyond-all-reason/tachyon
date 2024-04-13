@@ -1,5 +1,4 @@
 import { EmptyObject, KeysOfUnion } from 'type-fest';
-import Ajv from 'ajv';
 
 declare const tachyonMeta: {
     readonly version: "1.2.0";
@@ -117,11 +116,7 @@ type GenericResponseCommand = {
     reason: string;
 });
 
-declare function getValidator<T extends {
-    commandId: string;
-}>(command: T): Promise<Ajv.ValidateFunction<T>>;
-
-export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestCommandId, RequestData, RequestEndpointId, RequestType, ResponseCommand, ResponseCommandId, ResponseData, ResponseEndpointId, ResponseOnlyEndpointId, ResponseType, ServiceId, SuccessResponseData, getValidator, tachyonMeta };
+export { Command, DataRequestId, EmptyRequestId, EndpointId, GenericRequestCommand, GenericResponseCommand, RequestCommand, RequestCommandId, RequestData, RequestEndpointId, RequestType, ResponseCommand, ResponseCommandId, ResponseData, ResponseEndpointId, ResponseOnlyEndpointId, ResponseType, ServiceId, SuccessResponseData, tachyonMeta };
 
 export type AutohostSlaveResponse =
     | {
