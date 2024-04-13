@@ -1,35 +1,51 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import fs from "node:fs";
-import path, { dirname } from "node:path";
+
 import Ajv from "ajv";
-import addFormats from "ajv-formats";
 import standaloneCode from "ajv/dist/standalone";
-import { tachyonMeta } from "@/meta.js";
+import addFormats from "ajv-formats";
 
 export async function generateValidators(schemas: any) {
     const schemaArray: any[] = [];
+    const schemaMap: Record<string, string> = {};
 
     for (const serviceId in schemas.properties) {
         for (const endpointId in schemas.properties[serviceId].properties) {
             for (const commandType in schemas.properties[serviceId].properties[endpointId].properties) {
                 const schema = schemas.properties[serviceId].properties[endpointId].properties[commandType];
                 schemaArray.push(schema);
+                schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
             }
         }
     }
 
+    // esm
     const ajv = new Ajv.default({
         schemas: schemaArray,
         code: {
             source: true,
+            esm: true,
         },
         keywords: ["roles"],
     });
-
     addFormats.default(ajv);
+    let moduleCode = `import { createRequire } from 'module';const require = createRequire(import.meta.url);`;
+    moduleCode += standaloneCode.default(ajv, schemaMap);
+    await fs.promises.appendFile("./dist/validators.js", moduleCode);
 
-    const moduleCode = standaloneCode.default(ajv);
-
-    await fs.promises.writeFile("./dist/validators.cjs", moduleCode);
+    // cjs
+    const ajvCjs = new Ajv.default({
+        schemas: schemaArray,
+        code: {
+            source: true,
+            esm: false,
+        },
+        keywords: ["roles"],
+    });
+    addFormats.default(ajvCjs);
+    const moduleCodeCjs = standaloneCode.default(ajvCjs, schemaMap);
+    await fs.promises.appendFile("./dist/validators.cjs", moduleCodeCjs);
 
     //console.log(schemas);
     // const meta = tachyonMeta as unknown as Record<string, Record<string, string[]>>;

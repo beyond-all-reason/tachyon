@@ -1,8 +1,8 @@
 import fs from "node:fs";
 
-import { generateJsonSchemas } from "@/generate-json-schemas.js";
 import { generateCompiled } from "@/generate-compiled.js";
 import { generateDocs } from "@/generate-docs.js";
+import { generateJsonSchemas } from "@/generate-json-schemas.js";
 import { generateMeta } from "@/generate-meta.js";
 import { generateTSDefs } from "@/generate-ts-defs.js";
 import { generateValidators } from "@/generate-validators.js";

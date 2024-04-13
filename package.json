@@ -14,8 +14,20 @@
     "prepublishOnly": "npm run build",
     "postpublish": "git commit -a -m \"updated tachyonVersion const literal\" && git push"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./dist": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./validators": {
+      "import": "./dist/validators.js",
+      "require": "./dist/validators.cjs"
+    }
+  },
   "files": [
     "dist"
   ],
@@ -41,7 +53,7 @@
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.0.0",
     "ajv": "^8.12.0",
-    "ajv-formats": "^2.1.1",
+    "ajv-formats": "^3.0.1",
     "eslint": "^8.43.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",

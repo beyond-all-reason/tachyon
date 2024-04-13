@@ -33,5 +33,6 @@ export async function generateTSDefs(fullSchema: TObject) {
         typings += type + "\n";
     }
 
+    await fs.promises.appendFile(`dist/index.d.cts`, typings);
     await fs.promises.appendFile(`dist/index.d.ts`, typings);
 }

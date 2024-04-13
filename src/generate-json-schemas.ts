@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fs from "node:fs";
-import path, { dirname } from "node:path";
+import path from "node:path";
 
 import { TProperties, Type } from "@sinclair/typebox";
 import { JSONSchemaFaker } from "json-schema-faker";
-import { fileURLToPath, pathToFileURL } from "url";
 
 import { EndpointConfig } from "@/generator-helpers.js";
 
