@@ -8,7 +8,7 @@ export async function generateCompiled() {
         bundle: true,
         outDir: "dist",
         dts: true,
-        format: ["esm", "cjs"],
+        format: ["cjs", "esm"],
         silent: true,
     });
 }

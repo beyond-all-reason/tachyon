@@ -1,3 +1,6 @@
+// json-schema-faker.d.ts
+declare module "json-schema-faker";
+
 // these are just some copy pasted shims from the outputed index.d.ts file, intended for generated-helpers.ts to make it easier to dev them
 
 declare type AutohostSlaveResponse =

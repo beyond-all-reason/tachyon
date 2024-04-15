@@ -1,5 +1,3 @@
-import fs from "node:fs";
-
 import { generateCompiled } from "@/generate-compiled.js";
 import { generateDocs } from "@/generate-docs.js";
 import { generateJsonSchemas } from "@/generate-json-schemas.js";
@@ -8,9 +6,9 @@ import { generateTSDefs } from "@/generate-ts-defs.js";
 import { generateValidators } from "@/generate-validators.js";
 
 (async () => {
-    process.stdout.write("Cleaning dist folder...");
-    await fs.promises.rm("./dist", { force: true, recursive: true });
-    process.stdout.write("✔️\n");
+    // process.stdout.write("Cleaning dist folder...");
+    // await fs.promises.rm("./dist", { force: true, recursive: true });
+    // process.stdout.write("✔️\n");
 
     process.stdout.write("Generating JSONSchemas...");
     const { individualSchemas, compiledSchema, ids } = await generateJsonSchemas();
@@ -32,7 +30,7 @@ import { generateValidators } from "@/generate-validators.js";
     await generateTSDefs(compiledSchema);
     process.stdout.write("✔️\n");
 
-    process.stdout.write("Generating JS Validators...");
+    process.stdout.write("Generating Validators...");
     await generateValidators(compiledSchema);
     process.stdout.write("✔️\n");
 })();

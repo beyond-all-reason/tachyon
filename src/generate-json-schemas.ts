@@ -4,6 +4,7 @@ import path from "node:path";
 
 import { TProperties, Type } from "@sinclair/typebox";
 import { JSONSchemaFaker } from "json-schema-faker";
+import { pathToFileURL } from "url";
 
 import { EndpointConfig } from "@/generator-helpers.js";
 
@@ -14,14 +15,14 @@ export async function generateJsonSchemas() {
     const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
     const individualSchemas: Record<string, Record<string, EndpointConfig>> = {};
 
-    const serviceDirs = new URL("schema", import.meta.url);
+    const serviceDirs = path.join(__dirname, "schema");
     const serviceHandlerDirs = await fs.promises.readdir(serviceDirs);
 
     for (const serviceId of serviceHandlerDirs) {
         if (serviceId.includes(".")) {
             continue;
         }
-        const endpointDir = new URL(`schema/${serviceId}`, import.meta.url);
+        const endpointDir = path.join(serviceDirs, serviceId);
         const endpointSchemaModules = await fs.promises.readdir(endpointDir, {
             withFileTypes: true,
         });
@@ -34,8 +35,7 @@ export async function generateJsonSchemas() {
                 continue;
             }
             const endpointId = path.parse(endpointSchemaPath.name).name;
-            const endpointUrl = new URL(`${endpointDir}/${endpointId}`, import.meta.url);
-            const endpoint = await import(endpointUrl.href);
+            const endpoint = await import(pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString());
             const endpointSchema = endpoint.default as EndpointConfig;
             fullSchemaProps[serviceId][endpointId] = {};
             await fs.promises.mkdir(path.join("dist", serviceId, endpointId), {

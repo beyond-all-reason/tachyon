@@ -2,7 +2,6 @@
   "name": "tachyon-protocol",
   "version": "1.4.0",
   "description": "",
-  "type": "module",
   "scripts": {
     "dev": "nodemon --watch src/** --ext ts --ignore src/meta.ts --exec npm run build",
     "build": "npx tsx src/index.ts",
@@ -14,18 +13,23 @@
     "prepublishOnly": "npm run build",
     "postpublish": "git commit -a -m \"updated tachyonVersion const literal\" && git push"
   },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./dist": {
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
     "./validators": {
-      "import": "./dist/validators.js",
-      "require": "./dist/validators.cjs"
+      "import": "./dist/validators.mjs",
+      "require": "./dist/validators.js",
+      "types": "./dist/validators.d.ts"
     }
   },
   "files": [
@@ -42,7 +46,9 @@
   },
   "homepage": "https://github.com/beyond-all-reason/tachyon#readme",
   "dependencies": {
-    "jaz-ts-utils": "^7.10.0"
+    "ajv": "^8.12.0",
+    "jaz-ts-utils": "^7.10.0",
+    "type-fest": "^4.14.0"
   },
   "devDependencies": {
     "@sinclair/typebox": "^0.32.9",
@@ -52,13 +58,12 @@
     "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.0.0",
-    "ajv": "^8.12.0",
     "ajv-formats": "^3.0.1",
     "eslint": "^8.43.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "jest": "^29.5.0",
-    "json-schema-faker": "^0.5.3",
+    "json-schema-faker": "^0.5.6",
     "json-schema-to-typescript": "^13.0.2",
     "nodemon": "^2.0.22",
     "patch-package": "^7.0.0",
@@ -66,7 +71,6 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^7.2.0",
-    "type-fest": "^4.14.0",
     "typescript": "^5.1.6"
   },
   "overrides": {
