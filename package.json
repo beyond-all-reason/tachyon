@@ -9,8 +9,8 @@
     "lint": "eslint . --ext .ts --fix",
     "format": "prettier --write src/**/*.ts",
     "test": "jest",
-    "prepublish": "patch-package",
-    "prepublishOnly": "npm run build",
+    "postinstall": "patch-package",
+    "prepublishOnly": "npm run build && npm run test",
     "postpublish": "git commit -a -m \"updated tachyonVersion const literal\" && git push"
   },
   "main": "dist/index.js",
