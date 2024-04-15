@@ -26,7 +26,7 @@ module.exports = __toCommonJS(compiled_exports);
 
 // src/meta.ts
 var tachyonMeta = {
-  "version": "1.4.0",
+  "version": "1.5.0",
   "ids": {
     "autohost": {
       "slave": [
