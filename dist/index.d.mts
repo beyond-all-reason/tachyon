@@ -1,7 +1,7 @@
 import { EmptyObject, KeysOfUnion } from 'type-fest';
 
 declare const tachyonMeta: {
-    readonly version: "1.5.0";
+    readonly version: "1.5.1";
     readonly ids: {
         readonly autohost: {
             readonly slave: readonly ["request", "response"];
