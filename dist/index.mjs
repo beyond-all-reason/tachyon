@@ -1,6 +1,6 @@
 // src/meta.ts
 var tachyonMeta = {
-  "version": "1.5.2",
+  "version": "1.5.3",
   "ids": {
     "autohost": {
       "slave": [
