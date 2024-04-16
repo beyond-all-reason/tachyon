@@ -36,9 +36,9 @@ export async function generateValidators(schemas: any) {
     addFormats.default(ajv);
     let moduleCode = `import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
+import { createRequire } from 'node:module';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-import { createRequire } from 'node:module';
 const require = createRequire(__dirname);`;
     moduleCode += standaloneCode(ajv, schemaMap);
     await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
@@ -56,9 +56,16 @@ const require = createRequire(__dirname);`;
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);
     await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);
 
-    const types = `import type { ValidateFunction } from "ajv";
-declare const validators: Record<string, ValidateFunction>;
-export default validators;`;
+    // types
+    let types = `import type { ValidateFunction } from "ajv"\n`;
+    for (const key in schemaMap) {
+        types += `declare const ${key}: ValidateFunction;\n`;
+    }
+    types += `export { ${Object.keys(schemaMap).join(", ")} };`;
+
+    //     const types = `import type { ValidateFunction } from "ajv";
+    // declare const validators: Record<string, ValidateFunction>;
+    // export default validators;`;
     await fs.promises.writeFile("./dist/validators.d.ts", types);
     await fs.promises.writeFile("./dist/validators.d.mts", types);
 }

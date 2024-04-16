@@ -16,22 +16,24 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "default": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./dist": {
-      "default": "./dist/index.js",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": {
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.mts"
+      },
+      "require": {
+        "default": "./dist/index.js",
+        "types": "./dist/index.d.ts"
+      }
     },
     "./validators": {
-      "default": "./dist/validators.js",
-      "import": "./dist/validators.mjs",
-      "require": "./dist/validators.js",
-      "types": "./dist/validators.d.ts"
+      "import": {
+        "default": "./dist/validators.mjs",
+        "types": "./dist/validators.d.mts"
+      },
+      "require": {
+        "default": "./dist/validators.js",
+        "types": "./dist/validators.d.ts"
+      }
     }
   },
   "files": [
