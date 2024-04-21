@@ -31,7 +31,6 @@
                         "avatarUrl": {
                             "anyOf": [
                                 {
-                                    "format": "uri",
                                     "type": "string"
                                 },
                                 {

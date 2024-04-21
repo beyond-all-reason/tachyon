@@ -1255,7 +1255,6 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                                     "avatarUrl": {
                                         "anyOf": [
                                             {
-                                                "format": "uri",
                                                 "type": "string"
                                             },
                                             {
@@ -2454,7 +2453,6 @@ export interface LobbyListRequest {
                                                         "avatarUrl": {
                                                             "anyOf": [
                                                                 {
-                                                                    "format": "uri",
                                                                     "type": "string"
                                                                 },
                                                                 {
@@ -4227,7 +4225,6 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                         "avatarUrl": {
                                                             "anyOf": [
                                                                 {
-                                                                    "format": "uri",
                                                                     "type": "string"
                                                                 },
                                                                 {

@@ -1,14 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { exec } from "node:child_process";
 import fs from "node:fs";
-import util from "node:util";
 
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
-import addFormats from "ajv-formats";
-
-const execCommand = util.promisify(exec);
 
 export async function generateValidators(schemas: any) {
     const schemaArray: any[] = [];
@@ -33,14 +28,12 @@ export async function generateValidators(schemas: any) {
         },
         keywords: ["roles"],
     });
-    addFormats.default(ajv);
-    let moduleCode = `import { fileURLToPath } from "node:url";
-import { dirname } from "node:path";
-import { createRequire } from 'node:module';
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const require = createRequire(__dirname);`;
+    let moduleCode = `"use strict"
+import ucs2length from "ajv/dist/runtime/ucs2length";
+`;
     moduleCode += standaloneCode(ajv, schemaMap);
+    moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/ucs2length").default', "ucs2length");
+    moduleCode = moduleCode.replaceAll('require("ajv-formats/dist/formats").', "");
     await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
 
     // cjs
@@ -52,7 +45,6 @@ const require = createRequire(__dirname);`;
         },
         keywords: ["roles"],
     });
-    addFormats.default(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);
     await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);
 

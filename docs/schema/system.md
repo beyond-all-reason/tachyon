@@ -51,7 +51,6 @@ Sent immediately by the server on connection.
                         "avatarUrl": {
                             "anyOf": [
                                 {
-                                    "format": "uri",
                                     "type": "string"
                                 },
                                 {
@@ -436,7 +435,7 @@ export type SystemConnectedResponse =
         "userId": "mollit",
         "username": "mollit",
         "displayName": "mollit",
-        "avatarUrl": "http://ggggg.ddgigi",
+        "avatarUrl": "mollit",
         "clanId": "mollit",
         "partyId": "mollit",
         "roles": [

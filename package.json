@@ -16,6 +16,10 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
+      "default": {
+        "default": "./dist/index.mjs",
+        "types": "./dist/index.d.mts"
+      },
       "import": {
         "default": "./dist/index.mjs",
         "types": "./dist/index.d.mts"
@@ -26,6 +30,10 @@
       }
     },
     "./validators": {
+      "default": {
+        "default": "./dist/validators.mjs",
+        "types": "./dist/validators.d.mts"
+      },
       "import": {
         "default": "./dist/validators.mjs",
         "types": "./dist/validators.d.mts"
@@ -62,7 +70,6 @@
     "@types/jest": "^29.5.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.0.0",
-    "ajv-formats": "^3.0.1",
     "eslint": "^8.43.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",

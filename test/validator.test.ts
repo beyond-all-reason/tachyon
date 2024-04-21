@@ -2,7 +2,7 @@
 
 import validators from "../dist/validators";
 
-it("should validate", () => {
+it("validators", () => {
     const validator = validators["system_connected_response"];
 
     const isValid = validator({

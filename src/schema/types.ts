@@ -1,9 +1,7 @@
 import { Type } from "@sinclair/typebox";
 import { Nullable } from "jaz-ts-utils";
 
-export const unixTime = Nullable(
-    Type.Integer({ description: "Unix time", examples: [1705432698, null] })
-);
+export const unixTime = Nullable(Type.Integer({ description: "Unix time", examples: [1705432698, null] }));
 
 export const battleContender = Type.Object({
     playerId: Type.Integer(),
@@ -65,7 +63,7 @@ export const user = Type.Object({
     userId: Type.String(),
     username: Type.String(),
     displayName: Type.String(),
-    avatarUrl: Nullable(Type.String({ format: "uri" })),
+    avatarUrl: Nullable(Type.String()),
     clanId: Nullable(Type.String()),
     partyId: Nullable(Type.String()),
     roles: Type.Array(Type.String()),

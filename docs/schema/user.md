@@ -122,7 +122,6 @@ export interface UserSubscribeRequest {
                                     "avatarUrl": {
                                         "anyOf": [
                                             {
-                                                "format": "uri",
                                                 "type": "string"
                                             },
                                             {
@@ -485,7 +484,7 @@ export type UserSubscribeResponse =
                 "userId": "mollit",
                 "username": "mollit",
                 "displayName": "mollit",
-                "avatarUrl": "http://ggggg.ddgigi",
+                "avatarUrl": "mollit",
                 "clanId": "mollit",
                 "partyId": "mollit",
                 "roles": [
@@ -821,7 +820,6 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     "avatarUrl": {
                                         "anyOf": [
                                             {
-                                                "format": "uri",
                                                 "type": "string"
                                             },
                                             {
