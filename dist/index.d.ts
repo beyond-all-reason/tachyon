@@ -1,7 +1,7 @@
 import { EmptyObject, KeysOfUnion } from 'type-fest';
 
 declare const tachyonMeta: {
-    readonly version: "1.5.4";
+    readonly version: "1.5.5";
     readonly ids: {
         readonly autohost: {
             readonly slave: readonly ["request", "response"];
@@ -140,7 +140,13 @@ export type AutohostSlaveResponse =
           messageId: string;
           commandId: "autohost/slave/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/slave/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type AutohostUnslaveResponse =
     | {
@@ -164,7 +170,13 @@ export type AutohostUnslaveResponse =
           messageId: string;
           commandId: "autohost/unslave/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/unslave/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type GameLaunchResponse =
     | {
@@ -191,7 +203,13 @@ export type GameLaunchResponse =
           messageId: string;
           commandId: "game/launch/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "game/launch/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyCloseResponse =
     | {
@@ -215,7 +233,13 @@ export type LobbyCloseResponse =
           messageId: string;
           commandId: "lobby/close/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyCreateResponse =
     | {
@@ -251,7 +275,13 @@ export type LobbyCreateResponse =
           messageId: string;
           commandId: "lobby/create/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyJoinResponse =
     | {
@@ -317,7 +347,13 @@ export type LobbyJoinResponse =
           messageId: string;
           commandId: "lobby/join/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyJoinedResponse =
     | {
@@ -429,7 +465,13 @@ export type LobbyJoinedResponse =
           messageId: string;
           commandId: "lobby/joined/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/joined/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyLeaveResponse =
     | {
@@ -459,7 +501,13 @@ export type LobbyLeaveResponse =
           messageId: string;
           commandId: "lobby/leave/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyLeftResponse =
     | {
@@ -483,7 +531,13 @@ export type LobbyLeftResponse =
           messageId: string;
           commandId: "lobby/left/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/left/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyListResponse =
     | {
@@ -609,7 +663,13 @@ export type LobbyListResponse =
           messageId: string;
           commandId: "lobby/list/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/list/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyReceiveMessageResponse =
     | {
@@ -637,7 +697,13 @@ export type LobbyReceiveMessageResponse =
           messageId: string;
           commandId: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbySendMessageResponse =
     | {
@@ -673,7 +739,13 @@ export type LobbySendMessageResponse =
           messageId: string;
           commandId: "lobby/sendMessage/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbySubscribeResponse =
     | {
@@ -697,7 +769,13 @@ export type LobbySubscribeResponse =
           messageId: string;
           commandId: "lobby/subscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/subscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyUnsubscribeResponse =
     | {
@@ -727,7 +805,13 @@ export type LobbyUnsubscribeResponse =
           messageId: string;
           commandId: "lobby/unsubscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/unsubscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type LobbyUpdatedResponse =
     | {
@@ -853,7 +937,13 @@ export type LobbyUpdatedResponse =
           messageId: string;
           commandId: "lobby/updated/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/updated/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingCancelResponse =
     | {
@@ -883,7 +973,13 @@ export type MatchmakingCancelResponse =
           messageId: string;
           commandId: "matchmaking/cancel/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingFoundResponse =
     | {
@@ -910,7 +1006,13 @@ export type MatchmakingFoundResponse =
           messageId: string;
           commandId: "matchmaking/found/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/found/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingListResponse =
     | {
@@ -942,7 +1044,13 @@ export type MatchmakingListResponse =
           messageId: string;
           commandId: "matchmaking/list/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/list/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingLostResponse =
     | {
@@ -966,7 +1074,13 @@ export type MatchmakingLostResponse =
           messageId: string;
           commandId: "matchmaking/lost/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/lost/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingQueueResponse =
     | {
@@ -1002,7 +1116,13 @@ export type MatchmakingQueueResponse =
           messageId: string;
           commandId: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingQueueUpdateResponse =
     | {
@@ -1029,7 +1149,13 @@ export type MatchmakingQueueUpdateResponse =
           messageId: string;
           commandId: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingReadyResponse =
     | {
@@ -1059,7 +1185,13 @@ export type MatchmakingReadyResponse =
           messageId: string;
           commandId: "matchmaking/ready/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type MatchmakingReadyUpdateResponse =
     | {
@@ -1087,7 +1219,13 @@ export type MatchmakingReadyUpdateResponse =
           messageId: string;
           commandId: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type SystemConnectedResponse =
     | {
@@ -1152,7 +1290,13 @@ export type SystemConnectedResponse =
           messageId: string;
           commandId: "system/connected/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "system/connected/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type SystemDisconnectResponse =
     | {
@@ -1176,7 +1320,13 @@ export type SystemDisconnectResponse =
           messageId: string;
           commandId: "system/disconnect/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "system/disconnect/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type SystemServerStatsResponse =
     | {
@@ -1203,7 +1353,13 @@ export type SystemServerStatsResponse =
           messageId: string;
           commandId: "system/serverStats/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "system/serverStats/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type UserSubscribeResponse =
     | {
@@ -1266,7 +1422,13 @@ export type UserSubscribeResponse =
           messageId: string;
           commandId: "user/subscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "user/subscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type UserUnsubscribeResponse =
     | {
@@ -1296,7 +1458,13 @@ export type UserUnsubscribeResponse =
           messageId: string;
           commandId: "user/unsubscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 export type UserUpdatedResponse =
     | {
@@ -1363,7 +1531,13 @@ export type UserUpdatedResponse =
           messageId: string;
           commandId: "user/updated/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "user/updated/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 export interface Tachyon {

@@ -31,8 +31,9 @@ Every response command contains these additional properties:
 
 All `failed` responses that are initiated by a request can return one of the following `reason`s, even though not explicitly defined in each command's definition file:
 
-| Reason          | Description                                                                                |
-| --------------- | ------------------------------------------------------------------------------------------ |
-| unauthorized    | When a client sends a request command of which they do not have the `role` required to use |
-| internal_error  | When the server fails to handle the request in some way, typically sent in a `catch` block |
-| invalid_command | When the request command doesn't match the schema                                          |
+| Reason                | Description                                                                                |
+|-----------------------|--------------------------------------------------------------------------------------------|
+| unauthorized          | When a client sends a request command of which they do not have the `role` required to use |
+| internal_error        | When the server fails to handle the request in some way                                    |
+| invalid_request       | When the request command doesn't match the schema                                          |
+| command_unimplemented | When the server hasn't implemented a response handler for the command                      |

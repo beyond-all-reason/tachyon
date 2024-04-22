@@ -222,7 +222,33 @@ export interface AutohostSlaveRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/slave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -263,7 +289,13 @@ export type AutohostSlaveResponse =
           messageId: string;
           commandId: "autohost/slave/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/slave/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -429,7 +461,33 @@ export interface AutohostUnslaveRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/unslave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -470,7 +528,13 @@ export type AutohostUnslaveResponse =
           messageId: string;
           commandId: "autohost/unslave/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/unslave/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```

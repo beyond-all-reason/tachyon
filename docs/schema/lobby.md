@@ -165,7 +165,33 @@ export interface LobbyCloseRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/close/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -206,7 +232,13 @@ export type LobbyCloseResponse =
           messageId: string;
           commandId: "lobby/close/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/close/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -467,7 +499,33 @@ export interface LobbyCreateRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/create/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -520,7 +578,13 @@ export type LobbyCreateResponse =
           messageId: string;
           commandId: "lobby/create/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/create/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -892,7 +956,33 @@ export interface LobbyJoinRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -975,7 +1065,13 @@ export type LobbyJoinResponse =
           messageId: string;
           commandId: "lobby/join/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/join/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1534,7 +1630,33 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/joined/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1651,7 +1773,13 @@ export type LobbyJoinedResponse =
           messageId: string;
           commandId: "lobby/joined/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/joined/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1868,7 +1996,33 @@ export interface LobbyLeaveRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/leave/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1915,7 +2069,13 @@ export type LobbyLeaveResponse =
           messageId: string;
           commandId: "lobby/leave/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/leave/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -2032,7 +2192,33 @@ Sent when the server removes the client from a lobby.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/left/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -2073,7 +2259,13 @@ export type LobbyLeftResponse =
           messageId: string;
           commandId: "lobby/left/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/left/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -2825,7 +3017,33 @@ export interface LobbyListRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -2956,7 +3174,13 @@ export type LobbyListResponse =
           messageId: string;
           commandId: "lobby/list/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/list/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -3146,7 +3370,33 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/receiveMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -3191,7 +3441,13 @@ export type LobbyReceiveMessageResponse =
           messageId: string;
           commandId: "lobby/receiveMessage/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/receiveMessage/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -3431,7 +3687,33 @@ export interface LobbySendMessageRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/sendMessage/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -3484,7 +3766,13 @@ export type LobbySendMessageResponse =
           messageId: string;
           commandId: "lobby/sendMessage/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/sendMessage/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -3667,7 +3955,33 @@ export interface LobbySubscribeRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/subscribe/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -3708,7 +4022,13 @@ export type LobbySubscribeResponse =
           messageId: string;
           commandId: "lobby/subscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/subscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -3912,7 +4232,33 @@ export interface LobbyUnsubscribeRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/unsubscribe/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -3959,7 +4305,13 @@ export type LobbyUnsubscribeResponse =
           messageId: string;
           commandId: "lobby/unsubscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/unsubscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -4573,7 +4925,33 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/updated/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -4704,7 +5082,13 @@ export type LobbyUpdatedResponse =
           messageId: string;
           commandId: "lobby/updated/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "lobby/updated/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```

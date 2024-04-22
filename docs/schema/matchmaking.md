@@ -195,7 +195,33 @@ export interface MatchmakingCancelRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/cancel/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -242,7 +268,13 @@ export type MatchmakingCancelResponse =
           messageId: string;
           commandId: "matchmaking/cancel/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/cancel/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -371,7 +403,33 @@ Server should send this when there are enough queued players to form a valid gam
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/found/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -415,7 +473,13 @@ export type MatchmakingFoundResponse =
           messageId: string;
           commandId: "matchmaking/found/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/found/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -631,7 +695,33 @@ export interface MatchmakingListRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/list/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -680,7 +770,13 @@ export type MatchmakingListResponse =
           messageId: string;
           commandId: "matchmaking/list/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/list/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -813,7 +909,33 @@ Sent when a found match gets disbanded because a client failed to ready up.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/lost/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -854,7 +976,13 @@ export type MatchmakingLostResponse =
           messageId: string;
           commandId: "matchmaking/lost/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/lost/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1090,7 +1218,33 @@ export interface MatchmakingQueueRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queue/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1143,7 +1297,13 @@ export type MatchmakingQueueResponse =
           messageId: string;
           commandId: "matchmaking/queue/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queue/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1272,7 +1432,33 @@ Contains some info about the state of the current queue.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queueUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1316,7 +1502,13 @@ export type MatchmakingQueueUpdateResponse =
           messageId: string;
           commandId: "matchmaking/queueUpdate/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/queueUpdate/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1505,7 +1697,33 @@ export interface MatchmakingReadyRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/ready/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1552,7 +1770,13 @@ export type MatchmakingReadyResponse =
           messageId: string;
           commandId: "matchmaking/ready/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/ready/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1685,7 +1909,33 @@ Sent when a client in a found match readies up.
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/readyUpdate/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1730,7 +1980,13 @@ export type MatchmakingReadyUpdateResponse =
           messageId: string;
           commandId: "matchmaking/readyUpdate/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "matchmaking/readyUpdate/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```

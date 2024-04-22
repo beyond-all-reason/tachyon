@@ -120,7 +120,33 @@ When a client receives this response it should launch the game (spring.exe) with
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "game/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -164,7 +190,13 @@ export type GameLaunchResponse =
           messageId: string;
           commandId: "game/launch/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "game/launch/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```

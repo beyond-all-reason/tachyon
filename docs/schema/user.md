@@ -388,7 +388,33 @@ export interface UserSubscribeRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "user/subscribe/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -468,7 +494,13 @@ export type UserSubscribeResponse =
           messageId: string;
           commandId: "user/subscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "user/subscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -710,7 +742,33 @@ export interface UserUnsubscribeRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "user/unsubscribe/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -757,7 +815,13 @@ export type UserUnsubscribeResponse =
           messageId: string;
           commandId: "user/unsubscribe/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "user/unsubscribe/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```
@@ -1099,7 +1163,33 @@ Sent by the server to inform the client when subscribed users get updated in som
                     "type": "string"
                 },
                 "reason": {
-                    "const": "invalid_command",
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "user/updated/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
                     "type": "string"
                 }
             },
@@ -1183,7 +1273,13 @@ export type UserUpdatedResponse =
           messageId: string;
           commandId: "user/updated/response";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "user/updated/response";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 
 ```

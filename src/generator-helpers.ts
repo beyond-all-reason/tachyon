@@ -51,7 +51,11 @@ export function defineEndpoint(endpointConfig: SetOptional<EndpointConfig, "role
             },
             {
                 status: "failed",
-                reason: "invalid_command",
+                reason: "invalid_request",
+            },
+            {
+                status: "failed",
+                reason: "command_unimplemented",
             }
         );
     }
