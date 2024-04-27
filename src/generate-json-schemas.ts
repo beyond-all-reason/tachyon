@@ -38,7 +38,7 @@ export async function generateJsonSchemas() {
             const endpoint = await import(pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString());
             const endpointSchema = endpoint.default as EndpointConfig;
             fullSchemaProps[serviceId][endpointId] = {};
-            await fs.promises.mkdir(path.join("dist", serviceId, endpointId), {
+            await fs.promises.mkdir(path.join("schema", serviceId, endpointId), {
                 recursive: true,
             });
 
@@ -55,7 +55,7 @@ export async function generateJsonSchemas() {
                     roles: endpointSchema.roles,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/request.json`, schemaStr);
+                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, schemaStr);
                 fullSchemaProps[serviceId][endpointId].request = schema;
             }
             if ("response" in endpointSchema && endpointSchema.response.length) {
@@ -83,7 +83,7 @@ export async function generateJsonSchemas() {
                     }
                 );
                 const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(`dist/${serviceId}/${endpointId}/response.json`, schemaStr);
+                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, schemaStr);
                 fullSchemaProps[serviceId][endpointId].response = schema;
             }
             serviceSchema[endpointId] = endpointSchema;

@@ -36,3 +36,4 @@ output.js
 routes.js
 todo.txt
 debug.log
+dist/
