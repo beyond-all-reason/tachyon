@@ -575,14 +575,16 @@ export interface MatchmakingListRequest {
                                 {
                                     "id": "1v1",
                                     "name": "Duel",
-                                    "ranked": true,
-                                    "teamSize": 1
+                                    "numOfTeams": 2,
+                                    "teamSize": 1,
+                                    "ranked": true
                                 },
                                 {
-                                    "id": "2v2",
-                                    "name": "2v2",
-                                    "ranked": true,
-                                    "teamSize": 2
+                                    "id": "1v1v1",
+                                    "name": "3 Way FFA",
+                                    "numOfTeams": 3,
+                                    "teamSize": 1,
+                                    "ranked": true
                                 }
                             ]
                         }
@@ -600,18 +602,22 @@ export interface MatchmakingListRequest {
                                     "name": {
                                         "type": "string"
                                     },
-                                    "ranked": {
-                                        "type": "boolean"
+                                    "numOfTeams": {
+                                        "type": "integer"
                                     },
                                     "teamSize": {
                                         "type": "integer"
+                                    },
+                                    "ranked": {
+                                        "type": "boolean"
                                     }
                                 },
                                 "required": [
                                     "id",
                                     "name",
-                                    "ranked",
-                                    "teamSize"
+                                    "numOfTeams",
+                                    "teamSize",
+                                    "ranked"
                                 ]
                             }
                         }
@@ -749,8 +755,9 @@ export type MatchmakingListResponse =
               playlists: {
                   id: string;
                   name: string;
-                  ranked: boolean;
+                  numOfTeams: number;
                   teamSize: number;
+                  ranked: boolean;
               }[];
           };
       }
@@ -791,14 +798,16 @@ export type MatchmakingListResponse =
             {
                 "id": "1v1",
                 "name": "Duel",
-                "ranked": true,
-                "teamSize": 1
+                "numOfTeams": 2,
+                "teamSize": 1,
+                "ranked": true
             },
             {
-                "id": "2v2",
-                "name": "2v2",
-                "ranked": true,
-                "teamSize": 2
+                "id": "1v1v1",
+                "name": "3 Way FFA",
+                "numOfTeams": 3,
+                "teamSize": 1,
+                "ranked": true
             }
         ]
     }

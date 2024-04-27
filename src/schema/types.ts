@@ -189,3 +189,11 @@ export const customBattle = Type.Intersect(
 export const autohostStatus = Type.Object({
     gameStartTime: unixTime,
 });
+
+export const matchmakingPlaylist = Type.Object({
+    id: Type.String(),
+    name: Type.String(),
+    numOfTeams: Type.Integer(),
+    teamSize: Type.Integer(),
+    ranked: Type.Boolean(),
+});

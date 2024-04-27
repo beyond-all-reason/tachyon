@@ -1023,8 +1023,9 @@ export type MatchmakingListResponse =
               playlists: {
                   id: string;
                   name: string;
-                  ranked: boolean;
+                  numOfTeams: number;
                   teamSize: number;
+                  ranked: boolean;
               }[];
           };
       }
@@ -2127,6 +2128,14 @@ export type TachyonCustomBattle = {
         maxRating: number | null;
     };
 };
+
+export interface TachyonMatchmakingPlaylist {
+    id: string;
+    name: string;
+    numOfTeams: number;
+    teamSize: number;
+    ranked: boolean;
+}
 
 export interface TachyonPrivateUser {
     userId: string;

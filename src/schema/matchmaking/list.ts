@@ -1,6 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
+import { matchmakingPlaylist } from "@/schema/types";
 
 export default defineEndpoint({
     description: "Returns all available matchmaking playlists.",
@@ -10,14 +11,7 @@ export default defineEndpoint({
             status: "success",
             data: Type.Object(
                 {
-                    playlists: Type.Array(
-                        Type.Object({
-                            id: Type.String(),
-                            name: Type.String(),
-                            ranked: Type.Boolean(),
-                            teamSize: Type.Integer(),
-                        })
-                    ),
+                    playlists: Type.Array(matchmakingPlaylist),
                 },
                 {
                     examples: [
@@ -26,14 +20,16 @@ export default defineEndpoint({
                                 {
                                     id: "1v1",
                                     name: "Duel",
-                                    ranked: true,
+                                    numOfTeams: 2,
                                     teamSize: 1,
+                                    ranked: true,
                                 },
                                 {
-                                    id: "2v2",
-                                    name: "2v2",
+                                    id: "1v1v1",
+                                    name: "3 Way FFA",
+                                    numOfTeams: 3,
+                                    teamSize: 1,
                                     ranked: true,
-                                    teamSize: 2,
                                 },
                             ],
                         },
