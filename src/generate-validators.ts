@@ -4,6 +4,7 @@ import fs from "node:fs";
 
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
+import { titleCase } from "jaz-ts-utils";
 
 export async function generateValidators(schemas: any) {
     const schemaArray: any[] = [];
@@ -49,15 +50,22 @@ import ucs2length from "ajv/dist/runtime/ucs2length";
     await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);
 
     // types
-    let types = `import type { ValidateFunction } from "ajv"\n`;
+    const imports: string[] = [];
+    let declarations = "";
     for (const key in schemaMap) {
-        types += `declare const ${key}: ValidateFunction;\n`;
+        const schemaType = key
+            .split("_")
+            .map((id) => titleCase(id))
+            .join("");
+        imports.push(schemaType);
+        declarations += `declare const ${key}: ValidateFunction<${schemaType}>;\n`;
     }
-    types += `export { ${Object.keys(schemaMap).join(", ")} };`;
+    let types = "";
+    types += `import type { ValidateFunction } from "ajv"\n`;
+    types += `import { ${imports.join(", ")} } from "..";\n\n`;
+    types += declarations;
+    types += `\nexport { ${Object.keys(schemaMap).join(", ")} };`;
 
-    //     const types = `import type { ValidateFunction } from "ajv";
-    // declare const validators: Record<string, ValidateFunction>;
-    // export default validators;`;
     await fs.promises.writeFile("./dist/validators.d.ts", types);
     await fs.promises.writeFile("./dist/validators.d.mts", types);
 }
