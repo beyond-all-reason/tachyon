@@ -30,7 +30,23 @@ export async function generateValidators(schemas: any) {
         keywords: ["roles"],
     });
     let moduleCode = `"use strict"
-import ucs2length from "ajv/dist/runtime/ucs2length";
+function ucs2length(str) {
+    const len = str.length;
+    let length = 0;
+    let pos = 0;
+    let value;
+    while (pos < len) {
+        length++;
+        value = str.charCodeAt(pos++);
+        if (value >= 0xd800 && value <= 0xdbff && pos < len) {
+            // high surrogate, and there is a next character
+            value = str.charCodeAt(pos);
+            if ((value & 0xfc00) === 0xdc00)
+                pos++; // low surrogate
+        }
+    }
+    return length;
+}
 `;
     moduleCode += standaloneCode(ajv, schemaMap);
     moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/ucs2length").default', "ucs2length");
