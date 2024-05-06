@@ -1,8 +1,8 @@
-These commands should only be usable by client users with the `autohost` role.
+These commands should only be usable by clients with the `tachyon.autohost` scope.
 
 ## Modes
 
-For now, we're only caring about the slaved mode, as it's a lot more work to implement dedicated mode and might not be a necessity until we get a lot more players.
+For now, we're only caring about the slaved mode, as it's a lot more work to implement dedicated mode and might not be necessary until we get a lot more players.
 
 ### Dedicated
 

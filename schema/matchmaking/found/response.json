@@ -21,10 +21,14 @@
                     "properties": {
                         "queueId": {
                             "type": "string"
+                        },
+                        "timeoutMs": {
+                            "type": "integer"
                         }
                     },
                     "required": [
-                        "queueId"
+                        "queueId",
+                        "timeoutMs"
                     ]
                 }
             },

@@ -2,11 +2,11 @@
 
 # Autohost
 
-These commands should only be usable by client users with the `autohost` role.
+These commands should only be usable by clients with the `tachyon.autohost` scope.
 
 ## Modes
 
-For now, we're only caring about the slaved mode, as it's a lot more work to implement dedicated mode and might not be a necessity until we get a lot more players.
+For now, we're only caring about the slaved mode, as it's a lot more work to implement dedicated mode and might not be necessary until we get a lot more players.
 
 ### Dedicated
 
@@ -46,8 +46,408 @@ Autohosts used for matchmaking should use the slaved mode as no pregame communic
 Autohosts used for custom games should use the dedicated mode as lots of pregame communication can take place.
 
 ---
+- [connected](#connected)
+- [launch](#launch)
 - [slave](#slave)
 - [unslave](#unslave)
+---
+
+## Connected
+
+Like [system/connected](system#connected), but only sent to autohosts.
+
+- Endpoint Type: **Response** only
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "autohost/connected/response",
+    "roles": [],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/connected/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type AutohostConnectedResponse =
+    | {
+          messageId: string;
+          commandId: "autohost/connected/response";
+          status: "success";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/connected/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/connected/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/connected/response";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/connected/response";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
+
+```
+#### Example
+```json
+{
+    "messageId": "mollit",
+    "commandId": "autohost/connected/response",
+    "status": "success"
+}
+```
+---
+
+## Launch
+
+When an autohost client receives this response it should launch the game server (spring-dedicated.exe or spring-headless.exe) with the start script.
+
+- Endpoint Type: **Response** only
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "autohost/launch/response",
+    "roles": [],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "script": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "script"
+                    ]
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch/response",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+
+</details>
+
+#### TypeScript Definition
+```ts
+export type AutohostLaunchResponse =
+    | {
+          messageId: string;
+          commandId: "autohost/launch/response";
+          status: "success";
+          data: {
+              script: string;
+          };
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/launch/response";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/launch/response";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/launch/response";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          messageId: string;
+          commandId: "autohost/launch/response";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
+
+```
+#### Example
+```json
+{
+    "messageId": "mollit",
+    "commandId": "autohost/launch/response",
+    "status": "success",
+    "data": {
+        "script": "mollit"
+    }
+}
+```
 ---
 
 ## Slave

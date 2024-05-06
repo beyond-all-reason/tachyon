@@ -12,6 +12,7 @@ export default defineEndpoint({
     response: [
         { status: "success" },
         { status: "failed", reason: "invalid_queue_specified" },
+        { status: "failed", reason: "already_queued" },
         { status: "failed", reason: "already_ingame" },
     ],
 });

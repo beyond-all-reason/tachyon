@@ -1,8 +1,7 @@
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
-    description:
-        "Cancel queueing for matchmaking. Can also be sent during the ready phase to effectively decline the match.",
+    description: "Cancel queueing for matchmaking.",
     request: {},
     response: [{ status: "success" }, { status: "failed", reason: "not_queued" }],
 });

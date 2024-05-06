@@ -3,12 +3,12 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
-    description: "When a user client receives this response it should launch the game (spring.exe) with the start script.",
+    description: "Server should send this when players ready up using [ready](#ready).",
     response: [
         {
             status: "success",
             data: Type.Object({
-                script: Type.String(),
+                readyCount: Type.Integer(),
             }),
         },
     ],

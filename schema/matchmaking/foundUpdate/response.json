@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking/queue/response",
+    "$id": "matchmaking/foundUpdate/response",
     "roles": [],
     "anyOf": [
         {
@@ -9,44 +9,30 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/foundUpdate/response",
                     "type": "string"
                 },
                 "status": {
                     "const": "success",
                     "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
                 },
-                "commandId": {
-                    "const": "matchmaking/queue/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_queue_specified",
-                    "type": "string"
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "readyCount": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "readyCount"
+                    ]
                 }
             },
             "required": [
                 "messageId",
                 "commandId",
                 "status",
-                "reason"
+                "data"
             ]
         },
         {
@@ -56,59 +42,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "already_queued",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "already_ingame",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/foundUpdate/response",
                     "type": "string"
                 },
                 "status": {
@@ -134,7 +68,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/foundUpdate/response",
                     "type": "string"
                 },
                 "status": {
@@ -160,7 +94,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/foundUpdate/response",
                     "type": "string"
                 },
                 "status": {
@@ -186,7 +120,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/foundUpdate/response",
                     "type": "string"
                 },
                 "status": {

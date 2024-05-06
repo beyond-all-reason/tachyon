@@ -28,30 +28,25 @@ export type ResponseOnlyEndpointId<S extends ServiceId> = {
     [E in EndpointId<S>]: Command<S, E> extends RequestCommand<S, E> ? never : E;
 }[EndpointId<S>];
 
-export type RequestData<S extends ServiceId, E extends EndpointId<S>> = RequestCommand<
-    S,
-    E
-> extends {
+export type RequestData<S extends ServiceId, E extends EndpointId<S>> = RequestCommand<S, E> extends {
     data: infer Data;
 }
     ? Data
     : never;
 
 type DistributiveOmit<T, K extends keyof T> = T extends T ? Omit<T, K> : never;
-export type ResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<
-    S,
-    E
-> extends { commandId: string; messageId: string }
+export type ResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> extends { commandId: string; messageId: string }
     ? DistributiveOmit<ResponseCommand<S, E>, "commandId" | "messageId">
     : never;
 
-export type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<
-    S,
-    E
-> & {
+export type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> & {
     status: "success";
 } extends { data: infer Data }
     ? Data
+    : never;
+
+export type FailedResponseReason<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> & { status: "failed" } extends { reason: infer Reason }
+    ? Reason
     : never;
 
 export type EmptyRequestId<S extends ServiceId> = {
@@ -64,17 +59,13 @@ export type DataRequestId<S extends ServiceId> = {
 
 export type RequestType = {
     [S in keyof Tachyon]: {
-        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { request: unknown }
-            ? Tachyon[S][E]["request"]
-            : never;
+        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { request: unknown } ? Tachyon[S][E]["request"] : never;
     }[KeysOfUnion<Tachyon[S]>];
 }[KeysOfUnion<Tachyon>];
 
 export type ResponseType = {
     [S in keyof Tachyon]: {
-        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { response: unknown }
-            ? Tachyon[S][E]["response"]
-            : never;
+        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { response: unknown } ? Tachyon[S][E]["response"] : never;
     }[KeysOfUnion<Tachyon[S]>];
 }[KeysOfUnion<Tachyon>];
 

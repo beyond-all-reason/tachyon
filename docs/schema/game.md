@@ -7,7 +7,7 @@
 
 ## Launch
 
-When a client receives this response it should launch the game (spring.exe) with the start script.
+When a user client receives this response it should launch the game (spring.exe) with the start script.
 
 - Endpoint Type: **Response** only
 ### Response

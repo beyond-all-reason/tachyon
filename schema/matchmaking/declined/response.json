@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking/queue/response",
+    "$id": "matchmaking/declined/response",
     "roles": [],
     "anyOf": [
         {
@@ -9,7 +9,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/declined/response",
                     "type": "string"
                 },
                 "status": {
@@ -30,85 +30,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_queue_specified",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "already_queued",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "already_ingame",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/declined/response",
                     "type": "string"
                 },
                 "status": {
@@ -134,7 +56,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/declined/response",
                     "type": "string"
                 },
                 "status": {
@@ -160,7 +82,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/declined/response",
                     "type": "string"
                 },
                 "status": {
@@ -186,7 +108,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/declined/response",
                     "type": "string"
                 },
                 "status": {

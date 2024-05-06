@@ -1,0 +1,18 @@
+{
+    "$id": "matchmaking/cancelled/request",
+    "roles": [],
+    "type": "object",
+    "properties": {
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "matchmaking/cancelled/request",
+            "type": "string"
+        }
+    },
+    "required": [
+        "messageId",
+        "commandId"
+    ]
+}

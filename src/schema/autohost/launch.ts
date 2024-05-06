@@ -4,13 +4,12 @@ import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
     description:
-        "Server should send this when there are enough queued players to form a valid game that meets their criteria. Clients should then send [ready](#ready).",
+        "When an autohost client receives this response it should launch the game server (spring-dedicated.exe or spring-headless.exe) with the start script.",
     response: [
         {
             status: "success",
             data: Type.Object({
-                queueId: Type.String(),
-                timeoutMs: Type.Integer(),
+                script: Type.String(),
             }),
         },
     ],
