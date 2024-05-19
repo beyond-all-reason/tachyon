@@ -1,48 +1,140 @@
 {
     "$id": "autohost/launch/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
                     "const": "success",
                     "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "script": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "script"
-                    ]
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
-                "status",
-                "data"
+                "status"
             ]
         },
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_script",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_already_running",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_failed_to_start",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -55,6 +147,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -64,11 +157,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -81,6 +178,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -90,11 +188,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -107,6 +209,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -116,11 +219,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -133,6 +240,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",

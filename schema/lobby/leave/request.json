@@ -1,17 +1,24 @@
 {
     "$id": "lobby/leave/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/leave/request",
+            "const": "lobby/leave",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]

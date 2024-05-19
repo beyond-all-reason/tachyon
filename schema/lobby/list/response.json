@@ -1,15 +1,21 @@
 {
     "$id": "lobby/list/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -337,7 +343,7 @@
                                                                 }
                                                             ]
                                                         },
-                                                        "roles": {
+                                                        "scopes": {
                                                             "type": "array",
                                                             "items": {
                                                                 "type": "string"
@@ -490,7 +496,7 @@
                                                         "avatarUrl",
                                                         "clanId",
                                                         "partyId",
-                                                        "roles",
+                                                        "scopes",
                                                         "status",
                                                         "battleStatus"
                                                     ]
@@ -609,6 +615,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -618,11 +625,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -635,6 +646,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -644,11 +656,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -661,6 +677,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -670,11 +687,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -687,6 +708,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -696,11 +718,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -713,6 +739,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",

@@ -3,6 +3,8 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
+    source: "user",
+    target: "server",
     description:
         "Subscribe to custom battle updates. By default, updates for the user's own battle will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed battles, and then continue to send partial (stateful) updates via the [updated](#updated) response.",
     request: {

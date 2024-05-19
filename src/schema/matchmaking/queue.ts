@@ -3,6 +3,8 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
+    source: "user",
+    target: "server",
     description: "Queue up for matchmaking. Should cancel the previous queue if already in one.",
     request: {
         data: Type.Object({

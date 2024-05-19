@@ -1,0 +1,37 @@
+{
+    "$id": "matchmaking/queueUpdate/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "matchmaking/queueUpdate",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "playersQueued": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "playersQueued"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

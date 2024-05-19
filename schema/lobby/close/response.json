@@ -1,15 +1,21 @@
 {
     "$id": "lobby/close/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -18,6 +24,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -26,11 +33,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -43,6 +54,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -52,11 +64,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -69,6 +85,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -78,11 +95,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -95,6 +116,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -104,11 +126,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -121,6 +147,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",

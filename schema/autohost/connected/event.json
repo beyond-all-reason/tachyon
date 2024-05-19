@@ -1,0 +1,30 @@
+{
+    "$id": "autohost/connected/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/connected",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {}
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

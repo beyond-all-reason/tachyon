@@ -1,10 +1,12 @@
+import { Type } from "@sinclair/typebox";
+
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
-    description: "Like [system/connected](system#connected), but only sent to autohosts.",
-    response: [
-        {
-            status: "success",
-        },
-    ],
+    source: "server",
+    target: "autohost",
+    description: "Sent to autohosts on connection.",
+    event: {
+        data: Type.Object({}),
+    },
 });

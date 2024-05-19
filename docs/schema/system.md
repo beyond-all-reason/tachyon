@@ -11,500 +11,387 @@
 
 Sent immediately by the server on connection.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "system/connected/response",
-    "roles": [],
-    "anyOf": [
-        {
+    "$id": "system/connected/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "system/connected",
+            "type": "string"
+        },
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
+                "userId": {
                     "type": "string"
                 },
-                "commandId": {
-                    "const": "system/connected/response",
+                "username": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "avatarUrl": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "clanId": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "partyId": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "scopes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "countryCode": {
                     "type": "string"
                 },
                 "status": {
-                    "const": "success",
-                    "type": "string"
+                    "anyOf": [
+                        {
+                            "const": "offline",
+                            "type": "string"
+                        },
+                        {
+                            "const": "menu",
+                            "type": "string"
+                        },
+                        {
+                            "const": "playing",
+                            "type": "string"
+                        },
+                        {
+                            "const": "lobby",
+                            "type": "string"
+                        }
+                    ]
                 },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "userId": {
-                            "type": "string"
-                        },
-                        "username": {
-                            "type": "string"
-                        },
-                        "displayName": {
-                            "type": "string"
-                        },
-                        "avatarUrl": {
-                            "anyOf": [
+                "battleStatus": {
+                    "anyOf": [
+                        {
+                            "allOf": [
                                 {
-                                    "type": "string"
+                                    "type": "object",
+                                    "properties": {
+                                        "battleId": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "battleId"
+                                    ]
                                 },
                                 {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "clanId": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "partyId": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "roles": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "countryCode": {
-                            "type": "string"
-                        },
-                        "status": {
-                            "anyOf": [
-                                {
-                                    "const": "offline",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "menu",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "playing",
-                                    "type": "string"
-                                },
-                                {
-                                    "const": "lobby",
-                                    "type": "string"
-                                }
-                            ]
-                        },
-                        "battleStatus": {
-                            "anyOf": [
-                                {
-                                    "allOf": [
+                                    "anyOf": [
                                         {
                                             "type": "object",
-                                            "properties": {
-                                                "battleId": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": [
-                                                "battleId"
-                                            ]
-                                        },
-                                        {
-                                            "anyOf": [
+                                            "allOf": [
                                                 {
                                                     "type": "object",
-                                                    "allOf": [
-                                                        {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "playerId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "teamId": {
-                                                                    "type": "integer"
-                                                                },
-                                                                "color": {
-                                                                    "type": "string"
-                                                                },
-                                                                "bonus": {
-                                                                    "type": "number"
-                                                                },
-                                                                "inGame": {
-                                                                    "type": "boolean"
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "playerId",
-                                                                "teamId",
-                                                                "color",
-                                                                "bonus",
-                                                                "inGame"
-                                                            ]
+                                                    "properties": {
+                                                        "playerId": {
+                                                            "type": "integer"
                                                         },
-                                                        {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "isSpectator": {
-                                                                    "const": false,
-                                                                    "type": "boolean"
-                                                                },
-                                                                "isBot": {
-                                                                    "const": false,
-                                                                    "type": "boolean"
-                                                                },
-                                                                "ready": {
-                                                                    "type": "boolean"
-                                                                },
-                                                                "sync": {
-                                                                    "type": "object",
-                                                                    "properties": {
-                                                                        "engine": {
-                                                                            "type": "number"
-                                                                        },
-                                                                        "game": {
-                                                                            "type": "number"
-                                                                        },
-                                                                        "map": {
-                                                                            "type": "number"
-                                                                        }
-                                                                    },
-                                                                    "required": [
-                                                                        "engine",
-                                                                        "game",
-                                                                        "map"
-                                                                    ]
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "isSpectator",
-                                                                "isBot",
-                                                                "ready",
-                                                                "sync"
-                                                            ]
+                                                        "teamId": {
+                                                            "type": "integer"
+                                                        },
+                                                        "color": {
+                                                            "type": "string"
+                                                        },
+                                                        "bonus": {
+                                                            "type": "number"
+                                                        },
+                                                        "inGame": {
+                                                            "type": "boolean"
                                                         }
+                                                    },
+                                                    "required": [
+                                                        "playerId",
+                                                        "teamId",
+                                                        "color",
+                                                        "bonus",
+                                                        "inGame"
                                                     ]
                                                 },
                                                 {
                                                     "type": "object",
                                                     "properties": {
                                                         "isSpectator": {
-                                                            "const": true,
+                                                            "const": false,
                                                             "type": "boolean"
                                                         },
                                                         "isBot": {
                                                             "const": false,
                                                             "type": "boolean"
+                                                        },
+                                                        "ready": {
+                                                            "type": "boolean"
+                                                        },
+                                                        "sync": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "engine": {
+                                                                    "type": "number"
+                                                                },
+                                                                "game": {
+                                                                    "type": "number"
+                                                                },
+                                                                "map": {
+                                                                    "type": "number"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "engine",
+                                                                "game",
+                                                                "map"
+                                                            ]
                                                         }
                                                     },
                                                     "required": [
                                                         "isSpectator",
-                                                        "isBot"
+                                                        "isBot",
+                                                        "ready",
+                                                        "sync"
                                                     ]
                                                 }
                                             ]
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "isSpectator": {
+                                                    "const": true,
+                                                    "type": "boolean"
+                                                },
+                                                "isBot": {
+                                                    "const": false,
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "isSpectator",
+                                                "isBot"
+                                            ]
                                         }
                                     ]
-                                },
-                                {
-                                    "type": "null"
                                 }
                             ]
                         },
-                        "friendIds": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "outgoingFriendRequestIds": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "incomingFriendRequestIds": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        },
-                        "ignoreIds": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                        {
+                            "type": "null"
                         }
-                    },
-                    "required": [
-                        "userId",
-                        "username",
-                        "displayName",
-                        "avatarUrl",
-                        "clanId",
-                        "partyId",
-                        "roles",
-                        "status",
-                        "battleStatus",
-                        "friendIds",
-                        "outgoingFriendRequestIds",
-                        "incomingFriendRequestIds",
-                        "ignoreIds"
                     ]
+                },
+                "friendIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "outgoingFriendRequestIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "incomingFriendRequestIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "ignoreIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
+                "userId",
+                "username",
+                "displayName",
+                "avatarUrl",
+                "clanId",
+                "partyId",
+                "scopes",
                 "status",
-                "data"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "battleStatus",
+                "friendIds",
+                "outgoingFriendRequestIds",
+                "incomingFriendRequestIds",
+                "ignoreIds"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type SystemConnectedResponse =
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "success";
-          data: {
-              userId: string;
-              username: string;
-              displayName: string;
-              avatarUrl: string | null;
-              clanId: string | null;
-              partyId: string | null;
-              roles: string[];
-              countryCode?: string;
-              status: "offline" | "menu" | "playing" | "lobby";
-              battleStatus:
-                  | ({
-                        battleId: string;
-                    } & (
-                        | ({
-                              playerId: number;
-                              teamId: number;
-                              color: string;
-                              bonus: number;
-                              inGame: boolean;
-                          } & {
-                              isSpectator: false;
-                              isBot: false;
-                              ready: boolean;
-                              sync: {
-                                  engine: number;
-                                  game: number;
-                                  map: number;
-                              };
-                          })
-                        | {
-                              isSpectator: true;
-                              isBot: false;
-                          }
-                    ))
-                  | null;
-              friendIds: string[];
-              outgoingFriendRequestIds: string[];
-              incomingFriendRequestIds: string[];
-              ignoreIds: string[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "system/connected/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "esse Lorem anim",
+    "commandId": "system/connected",
     "data": {
-        "userId": "mollit",
-        "username": "mollit",
-        "displayName": "mollit",
-        "avatarUrl": "mollit",
-        "clanId": "mollit",
-        "partyId": "mollit",
-        "roles": [
-            "mollit"
+        "userId": "esse Lorem anim",
+        "username": "esse Lorem anim",
+        "displayName": "esse Lorem anim",
+        "avatarUrl": "esse Lorem anim",
+        "clanId": "esse Lorem anim",
+        "partyId": "esse Lorem anim",
+        "scopes": [
+            "esse Lorem anim",
+            "esse Lorem anim",
+            "esse Lorem anim"
         ],
-        "countryCode": "mollit",
-        "status": "offline",
+        "countryCode": "esse Lorem anim",
+        "status": "menu",
         "battleStatus": {
-            "battleId": "mollit",
-            "playerId": -75320000,
-            "teamId": -75320000,
-            "color": "mollit",
-            "bonus": -75320000,
+            "battleId": "esse Lorem anim",
+            "playerId": -12000000,
+            "teamId": -12000000,
+            "color": "esse Lorem anim",
+            "bonus": -11999999.999999955,
             "inGame": false,
             "isSpectator": false,
             "isBot": false,
             "ready": false,
             "sync": {
-                "engine": -75320000,
-                "game": -75320000,
-                "map": -75320000
+                "engine": -11999999.999999955,
+                "game": -11999999.999999955,
+                "map": -11999999.999999955
             }
         },
         "friendIds": [
-            "mollit"
+            "esse Lorem anim",
+            "esse Lorem anim",
+            "esse Lorem anim"
         ],
         "outgoingFriendRequestIds": [
-            "mollit"
+            "esse Lorem anim",
+            "esse Lorem anim",
+            "esse Lorem anim"
         ],
         "incomingFriendRequestIds": [
-            "mollit"
+            "esse Lorem anim",
+            "esse Lorem anim",
+            "esse Lorem anim"
         ],
         "ignoreIds": [
-            "mollit"
+            "esse Lorem anim",
+            "esse Lorem anim",
+            "esse Lorem anim"
         ]
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface SystemConnectedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "system/connected";
+    data: {
+        userId: string;
+        username: string;
+        displayName: string;
+        avatarUrl: string | null;
+        clanId: string | null;
+        partyId: string | null;
+        scopes: string[];
+        countryCode?: string;
+        status: "offline" | "menu" | "playing" | "lobby";
+        battleStatus:
+            | ({
+                  battleId: string;
+              } & (
+                  | ({
+                        playerId: number;
+                        teamId: number;
+                        color: string;
+                        bonus: number;
+                        inGame: boolean;
+                    } & {
+                        isSpectator: false;
+                        isBot: false;
+                        ready: boolean;
+                        sync: {
+                            engine: number;
+                            game: number;
+                            map: number;
+                        };
+                    })
+                  | {
+                        isSpectator: true;
+                        isBot: false;
+                    }
+              ))
+            | null;
+        friendIds: string[];
+        outgoingFriendRequestIds: string[];
+        incomingFriendRequestIds: string[];
+        ignoreIds: string[];
+    };
+}
+
 ```
 ---
 
@@ -513,6 +400,10 @@ export type SystemConnectedResponse =
 Ask the server to terminate the connection.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -521,14 +412,20 @@ Ask the server to terminate the connection.
 ```json
 {
     "$id": "system/disconnect/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "system/disconnect/request",
+            "const": "system/disconnect",
             "type": "string"
         },
         "data": {
@@ -544,6 +441,7 @@ Ask the server to terminate the connection.
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -552,23 +450,32 @@ Ask the server to terminate the connection.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "aute Lorem officia",
+    "commandId": "system/disconnect",
+    "data": {
+        "reason": "aute Lorem officia"
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface SystemDisconnectRequest {
+    type: "request";
     messageId: string;
-    commandId: "system/disconnect/request";
+    commandId: "system/disconnect";
     data?: {
         reason: string;
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "system/disconnect/request"
-}
 ```
 ### Response
 
@@ -578,16 +485,22 @@ export interface SystemDisconnectRequest {
 ```json
 {
     "$id": "system/disconnect/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/disconnect/response",
+                    "const": "system/disconnect",
                     "type": "string"
                 },
                 "status": {
@@ -596,6 +509,7 @@ export interface SystemDisconnectRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -604,11 +518,15 @@ export interface SystemDisconnectRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/disconnect/response",
+                    "const": "system/disconnect",
                     "type": "string"
                 },
                 "status": {
@@ -621,6 +539,7 @@ export interface SystemDisconnectRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -630,11 +549,15 @@ export interface SystemDisconnectRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/disconnect/response",
+                    "const": "system/disconnect",
                     "type": "string"
                 },
                 "status": {
@@ -647,6 +570,7 @@ export interface SystemDisconnectRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -656,11 +580,15 @@ export interface SystemDisconnectRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/disconnect/response",
+                    "const": "system/disconnect",
                     "type": "string"
                 },
                 "status": {
@@ -673,6 +601,7 @@ export interface SystemDisconnectRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -682,11 +611,15 @@ export interface SystemDisconnectRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/disconnect/response",
+                    "const": "system/disconnect",
                     "type": "string"
                 },
                 "status": {
@@ -699,6 +632,7 @@ export interface SystemDisconnectRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -711,47 +645,28 @@ export interface SystemDisconnectRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type SystemDisconnectResponse =
-    | {
-          messageId: string;
-          commandId: "system/disconnect/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnect/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnect/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnect/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "system/disconnect/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "system/disconnect/response",
+    "type": "response",
+    "messageId": "Duis Lorem culpa",
+    "commandId": "system/disconnect",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface SystemDisconnectResponse {
+    type: "response";
+    messageId: string;
+    commandId: "system/disconnect";
+    status: "success";
+}
+
 ```
 ---
 
@@ -760,6 +675,10 @@ export type SystemDisconnectResponse =
 Get server stats such as user count.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -768,18 +687,25 @@ Get server stats such as user count.
 ```json
 {
     "$id": "system/serverStats/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "system/serverStats/request",
+            "const": "system/serverStats",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -788,20 +714,26 @@ Get server stats such as user count.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "Duis Lorem sint",
+    "commandId": "system/serverStats"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface SystemServerStatsRequest {
+    type: "request";
     messageId: string;
-    commandId: "system/serverStats/request";
+    commandId: "system/serverStats";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "system/serverStats/request"
-}
 ```
 ### Response
 
@@ -811,16 +743,22 @@ export interface SystemServerStatsRequest {
 ```json
 {
     "$id": "system/serverStats/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -840,6 +778,7 @@ export interface SystemServerStatsRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -849,11 +788,15 @@ export interface SystemServerStatsRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -866,6 +809,7 @@ export interface SystemServerStatsRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -875,11 +819,15 @@ export interface SystemServerStatsRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -892,6 +840,7 @@ export interface SystemServerStatsRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -901,11 +850,15 @@ export interface SystemServerStatsRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -918,6 +871,7 @@ export interface SystemServerStatsRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -927,11 +881,15 @@ export interface SystemServerStatsRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -944,6 +902,7 @@ export interface SystemServerStatsRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -956,51 +915,32 @@ export interface SystemServerStatsRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type SystemServerStatsResponse =
-    | {
-          messageId: string;
-          commandId: "system/serverStats/response";
-          status: "success";
-          data: {
-              userCount: number;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "system/serverStats/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/serverStats/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/serverStats/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "system/serverStats/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "system/serverStats/response",
+    "type": "response",
+    "messageId": "laborum Lorem fugiat",
+    "commandId": "system/serverStats",
     "status": "success",
     "data": {
-        "userCount": -75320000
+        "userCount": -4000000
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface SystemServerStatsResponse {
+    type: "response";
+    messageId: string;
+    commandId: "system/serverStats";
+    status: "success";
+    data: {
+        userCount: number;
+    };
+}
+
 ```

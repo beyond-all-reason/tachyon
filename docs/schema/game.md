@@ -9,205 +9,82 @@
 
 When a user client receives this response it should launch the game (spring.exe) with the start script.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "game/launch/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "game/launch/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "script": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "script"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+    "$id": "game/launch/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "game/launch/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "game/launch/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "game/launch",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "game/launch/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
+                "script": {
                     "type": "string"
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "game/launch/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "script"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type GameLaunchResponse =
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "success";
-          data: {
-              script: string;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "game/launch/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "incididunt",
+    "commandId": "game/launch",
     "data": {
-        "script": "mollit"
+        "script": "incididunt"
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface GameLaunchEvent {
+    type: "event";
+    messageId: string;
+    commandId: "game/launch";
+    data: {
+        script: string;
+    };
+}
+
 ```

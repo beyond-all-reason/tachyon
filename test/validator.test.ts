@@ -8,7 +8,8 @@ describe("request", () => {
 
     test("valid", () => {
         const command: MatchmakingQueueRequest = {
-            commandId: "matchmaking/queue/request",
+            type: "request",
+            commandId: "matchmaking/queue",
             messageId: "123",
             data: {
                 queues: ["1v1"],
@@ -26,7 +27,8 @@ describe("request", () => {
 
     test("invalid", () => {
         const command: MatchmakingQueueRequest = {
-            commandId: "matchmaking/queue/request",
+            type: "request",
+            commandId: "matchmaking/queue",
             messageId: "123",
             data: {
                 // @ts-expect-error
@@ -50,7 +52,8 @@ describe("response", () => {
 
     test("valid", () => {
         const command: MatchmakingQueueResponse = {
-            commandId: "matchmaking/queue/response",
+            type: "response",
+            commandId: "matchmaking/queue",
             messageId: "56023780-bf7c-48a4-b2c7-a9eac00e7249",
             status: "failed",
             reason: "command_unimplemented",
@@ -63,7 +66,8 @@ describe("response", () => {
 
     test("invalid", () => {
         const command: MatchmakingQueueResponse = {
-            commandId: "matchmaking/queue/response",
+            type: "response",
+            commandId: "matchmaking/queue",
             // @ts-expect-error
             messageId: 123,
             status: "success",

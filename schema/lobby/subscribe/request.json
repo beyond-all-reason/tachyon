@@ -1,13 +1,19 @@
 {
     "$id": "lobby/subscribe/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/subscribe/request",
+            "const": "lobby/subscribe",
             "type": "string"
         },
         "data": {
@@ -26,6 +32,7 @@
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"

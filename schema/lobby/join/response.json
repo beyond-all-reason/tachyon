@@ -1,15 +1,21 @@
 {
     "$id": "lobby/join/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -18,6 +24,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -26,11 +33,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -43,6 +54,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -52,11 +64,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -69,6 +85,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -78,11 +95,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -95,6 +116,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -104,11 +126,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -121,6 +147,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -130,11 +157,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -147,6 +178,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -156,11 +188,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -173,6 +209,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -182,11 +219,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -199,6 +240,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -208,11 +250,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -225,6 +271,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -234,11 +281,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -251,6 +302,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -260,11 +312,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -277,6 +333,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -286,11 +343,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -303,6 +364,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",

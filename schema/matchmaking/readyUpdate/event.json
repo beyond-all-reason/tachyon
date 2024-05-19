@@ -1,0 +1,41 @@
+{
+    "$id": "matchmaking/readyUpdate/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "matchmaking/readyUpdate",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "readyMax": {
+                    "type": "integer"
+                },
+                "readyCurrent": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "readyMax",
+                "readyCurrent"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

@@ -1,13 +1,14 @@
 # Tachyon
 
-Tachyon is the name of this protocol, designed to replace the old [Spring Lobby Protocol](https://springrts.com/dl/LobbyProtocol/ProtocolDescription.html), primarily intended for use in [Beyond All Reason](https://github.com/beyond-all-reason/Beyond-All-Reason). It describes the message schema that clients should use to communicate with the master server and vice-versa. The exchange format is JSON sent over a WebSocket connection. [JSONSchema](https://json-schema.org/) is used to define the structure of commands, which can be found in the [dist](dist) directory. Server and client implementations of this protocol are encouraged to use a [JSONSchema validator](https://json-schema.org/implementations.html#validators) to validate and sanitize message requests and responses.
+Tachyon is the name of this protocol, designed to replace the old [Spring Lobby Protocol](https://springrts.com/dl/LobbyProtocol/ProtocolDescription.html), primarily intended for use in [Beyond All Reason](https://github.com/beyond-all-reason/Beyond-All-Reason). It describes the message schema that clients should use to communicate with the master server and vice-versa. The exchange format is JSON sent over a WebSocket connection. [JSONSchema](https://json-schema.org/) is used to define the structure of commands, which can be found in the [schema](schema) directory. Server and client implementations of this protocol are encouraged to use a [JSONSchema validator](https://json-schema.org/implementations.html#validators) to validate and sanitize message requests and responses.
 
 ## Terminology
 
 | Term               | Meaning                                                                                                                         |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+|--------------------|---------------------------------------------------------------------------------------------------------------------------------|
 | AI                 | User-owned game AI instances, e.g. ScavengersAI or BARbarianAI. Can only exist within lobbies/battles                           |
 | Autohost           | A bot which is specifically intended to host battles                                                                            |
+| AutohostClient     | An autohost instance that is connected to the server                                                                            |
 | Battle             | Either custom or matchmaking                                                                                                    |
 | Bot                | An automated UserClient, marked as a bot                                                                                        |
 | Client             | A WebSocket client that communicates with the Tachyon server via the Tachyon protocol                                           |
@@ -24,21 +25,76 @@ Tachyon is the name of this protocol, designed to replace the old [Spring Lobby 
 | Server             | The provider of the protocol and what clients connect to. i.e. the master/middleware server                                     |
 | Service            | A collection of endpoints that are categorically related, E.g. `user` or `lobby`                                                |
 | User               | Syonymous with an account, and strictly represents the data which is stored in the server database                              |
-| UserClient         | A registered user who is online                                                                                                 |
+| UserClient         | A registered user that is connected to the server                                                                               |
 
-## Docs
+## Authentication and Authorization
 
--   [Authentication and Authorization](docs/authorization.md)
--   [Message Structure](docs/commands.md)
--   Commands
-    <!-- COMMAND_SCHEMA_PLACEHOLDER_START_DO_NOT_REMOVE -->
+Tachyon uses [OAuth 2](https://oauth.net/2/) for authenticating and authorizing clients. The OAuth token should then be sent in the WebSocket connection request which the Tachyon server should validate and permit the connection if valid, or close the connection if not.
+
+[The full auth process is detailed here.](docs/authorization.md)
+
+## Message Format
+
+JSON messages in this protocol are referred to as "commands".
+
+Every command shares the following properties:
+
+| Property   | Type   | Description                                                                           |
+| ---------- | ------ | ------------------------------------------------------------------------------------- |
+| commandId  | string | The identifier of this command's type, e.g. `lobby/create/request`                    |
+| messsageId | string | A unique identifier for a pair of request/response commands which links them together |
+
+### Requests
+
+Request commands can be sent from either side, and expect the other side to send a correlating response command. They are typically used when asking the other side to perform an action or fetch some data which they require, or simply to acknowledge their request has been fulfilled.
+
+Every request command contains these additional properties:
+
+| Property        | type   | Description                                      |
+| --------------- | ------ | ------------------------------------------------ |
+| data (optional) | object | A object containing data specific to the command |
+
+### Responses
+
+Sent in response to a request.
+
+Every response command contains these additional properties:
+
+| Property                       | type                  | Description                                                                                              |
+|--------------------------------|-----------------------|----------------------------------------------------------------------------------------------------------|
+| status                         | "success" \| "failed" | A object containing data specific to the command. This may be omitted if the command does not require it |
+| data (optional)                | object                | Command-specific data object. Only present for "success" responses                                       |
+| reason (if status is "failed") | string                | An error code only present for "failed" responses                                                        |
+
+All `failed` responses that are initiated by a request can return one of the following `reason`s, even though not explicitly defined in each command's definition file:
+
+| Reason                | Description                                                                                |
+|-----------------------|--------------------------------------------------------------------------------------------|
+| unauthorized          | When a client sends a request command of which they do not have the `role` required to use |
+| internal_error        | When the server fails to handle the request in some way                                    |
+| invalid_request       | When the request command doesn't match the schema                                          |
+| command_unimplemented | When the server hasn't implemented a response handler for the command                      |
+
+### Events
+
+Events are commands which require no response. They are typically sent when the sending party does not care if the message has been acted upon, such as the server sending periodic update data.
+
+Every event command contains these additional properties:
+
+| Property        | type   | Description                                      |
+| --------------- | ------ | ------------------------------------------------ |
+| data (optional) | object | A object containing data specific to the command |
+
+## Schema
+
+<!-- COMMAND_SCHEMA_PLACEHOLDER_START_DO_NOT_REMOVE -->
     -   [autohost](docs/schema/autohost.md)
     -   [game](docs/schema/game.md)
     -   [lobby](docs/schema/lobby.md)
     -   [matchmaking](docs/schema/matchmaking.md)
     -   [system](docs/schema/system.md)
     -   [user](docs/schema/user.md)
-    <!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
+<!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
 
 ## Contributing
 

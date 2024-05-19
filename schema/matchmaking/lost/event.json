@@ -1,0 +1,25 @@
+{
+    "$id": "matchmaking/lost/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "matchmaking/lost",
+            "type": "string"
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId"
+    ]
+}

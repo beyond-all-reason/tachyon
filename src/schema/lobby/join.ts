@@ -3,6 +3,8 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
+    source: "user",
+    target: "server",
     description: `Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data. 
 These commands are split because the server may want to force the client to join a battle without them explicitly requesting it.`,
     request: {

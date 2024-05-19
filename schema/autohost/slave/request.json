@@ -1,15 +1,20 @@
 {
     "$id": "autohost/slave/request",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "autohost/slave/request",
+            "const": "autohost/slave",
             "type": "string"
         },
         "data": {
@@ -27,6 +32,7 @@
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"

@@ -3,8 +3,9 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
-    description:
-        "Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.",
+    source: "user",
+    target: "server",
+    description: "Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.",
     request: {
         data: Type.Object(
             {

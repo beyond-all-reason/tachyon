@@ -1,17 +1,24 @@
 {
-    "$id": "matchmaking/cancelled/request",
-    "roles": [],
+    "$id": "lobby/left/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/cancelled/request",
+            "const": "lobby/left",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]

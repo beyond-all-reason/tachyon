@@ -1,93 +1,33 @@
-import type { EmptyObject, KeysOfUnion } from "type-fest";
+export type TachyonMeta = typeof tachyonMeta.schema;
+export type TachyonActor = keyof TachyonMeta;
+export type TachyonCommandType = TachyonCommand["type"];
 
-export type ServiceId = keyof Tachyon;
-export type EndpointId<S extends ServiceId> = keyof Tachyon[S];
-export type Command<S extends ServiceId, E extends EndpointId<S>> = Tachyon[S][E];
+export type TachyonRequest = Extract<TachyonCommand, { type: "request" }>;
+export type TachyonResponse = Extract<TachyonCommand, { type: "response" }>;
+export type TachyonEvent = Extract<TachyonCommand, { type: "event" }>;
 
-export type RequestCommand<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
-    request: infer Request;
-}
-    ? Request
-    : never;
+export type GetCommandIds<
+    Sender extends TachyonActor = TachyonActor,
+    Receiver extends TachyonActor = TachyonActor,
+    Type extends TachyonCommandType = TachyonCommandType,
+> = ExcludeEmptyArray<TachyonMeta[Sender][Type]["send"]>[number] & ExcludeEmptyArray<TachyonMeta[Receiver][Type]["receive"]>[number];
 
-export type ResponseCommand<S extends ServiceId, E extends EndpointId<S>> = Command<S, E> extends {
-    response: infer Response;
-}
-    ? Response
-    : never;
+export type GetCommands<
+    Sender extends TachyonActor = TachyonActor,
+    Receiver extends TachyonActor = TachyonActor,
+    Type extends TachyonCommandType = TachyonCommandType,
+    CommandId extends GetCommandIds<Sender, Receiver, Type> = GetCommandIds<Sender, Receiver, Type>,
+> = Extract<TachyonCommand, { type: Type; commandId: CommandId }>;
 
-export type RequestEndpointId<S extends ServiceId> = {
-    [E in EndpointId<S>]: "request" extends keyof Command<S, E> ? E : never;
-}[EndpointId<S>];
+export type GetCommandData<C extends TachyonCommand> = C extends { data: infer D } ? D : never;
 
-export type ResponseEndpointId<S extends ServiceId> = {
-    [E in EndpointId<S>]: "response" extends keyof Command<S, E> ? E : never;
-}[EndpointId<S>];
-
-export type ResponseOnlyEndpointId<S extends ServiceId> = {
-    [E in EndpointId<S>]: Command<S, E> extends RequestCommand<S, E> ? never : E;
-}[EndpointId<S>];
-
-export type RequestData<S extends ServiceId, E extends EndpointId<S>> = RequestCommand<S, E> extends {
-    data: infer Data;
-}
-    ? Data
-    : never;
-
-type DistributiveOmit<T, K extends keyof T> = T extends T ? Omit<T, K> : never;
-export type ResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> extends { commandId: string; messageId: string }
-    ? DistributiveOmit<ResponseCommand<S, E>, "commandId" | "messageId">
-    : never;
-
-export type SuccessResponseData<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> & {
-    status: "success";
-} extends { data: infer Data }
-    ? Data
-    : never;
-
-export type FailedResponseReason<S extends ServiceId, E extends EndpointId<S>> = ResponseCommand<S, E> & { status: "failed" } extends { reason: infer Reason }
-    ? Reason
-    : never;
-
-export type EmptyRequestId<S extends ServiceId> = {
-    [K in EndpointId<S>]: RequestData<S, K> extends EmptyObject ? K : never;
-}[EndpointId<S>];
-
-export type DataRequestId<S extends ServiceId> = {
-    [K in EndpointId<S>]: RequestData<S, K> extends EmptyObject ? never : K;
-}[EndpointId<S>];
-
-export type RequestType = {
-    [S in keyof Tachyon]: {
-        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { request: unknown } ? Tachyon[S][E]["request"] : never;
-    }[KeysOfUnion<Tachyon[S]>];
-}[KeysOfUnion<Tachyon>];
-
-export type ResponseType = {
-    [S in keyof Tachyon]: {
-        [E in keyof Tachyon[S]]: Tachyon[S][E] extends { response: unknown } ? Tachyon[S][E]["response"] : never;
-    }[KeysOfUnion<Tachyon[S]>];
-}[KeysOfUnion<Tachyon>];
-
-export type RequestCommandId = Pick<RequestType, "commandId">;
-export type ResponseCommandId = Pick<ResponseType, "commandId">;
-
-export type GenericRequestCommand = {
-    commandId: string;
-    messageId: string;
-    data?: Record<string, unknown>;
-};
-
-export type GenericResponseCommand = {
-    commandId: string;
-    messageId: string;
-} & (
-    | {
-          status: "success";
-          data?: Record<string, unknown>;
-      }
-    | {
-          status: "failed";
-          reason: string;
-      }
-);
+// TODO: move this to jaz-ts-utils
+type ExcludeEmptyArray<T> = T extends readonly unknown[]
+    ? T["length"] extends 0
+        ? never
+        : T
+    : T extends unknown[]
+      ? T["length"] extends 0
+          ? never
+          : T
+      : never;

@@ -3,6 +3,8 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
+    source: "user",
+    target: "server",
     description: "Create a new lobby - intended for player clients to summon a dedicated host.",
     request: {
         data: Type.Object(
@@ -24,9 +26,5 @@ export default defineEndpoint({
             }
         ),
     },
-    response: [
-        { status: "success" },
-        { status: "failed", reason: "no_hosts_available" },
-        { status: "failed", reason: "invalid_region" },
-    ],
+    response: [{ status: "success" }, { status: "failed", reason: "no_hosts_available" }, { status: "failed", reason: "invalid_region" }],
 });

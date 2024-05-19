@@ -1,15 +1,21 @@
 {
     "$id": "system/serverStats/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -29,6 +35,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -38,11 +45,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -55,6 +66,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -64,11 +76,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -81,6 +97,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -90,11 +107,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -107,6 +128,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -116,11 +138,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "system/serverStats/response",
+                    "const": "system/serverStats",
                     "type": "string"
                 },
                 "status": {
@@ -133,6 +159,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",

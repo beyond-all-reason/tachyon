@@ -1,0 +1,41 @@
+{
+    "$id": "matchmaking/found/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "matchmaking/found",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "queueId": {
+                    "type": "string"
+                },
+                "timeoutMs": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "queueId",
+                "timeoutMs"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

@@ -1,13 +1,19 @@
 {
     "$id": "lobby/create/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/create/request",
+            "const": "lobby/create",
             "type": "string"
         },
         "data": {
@@ -48,6 +54,7 @@
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"

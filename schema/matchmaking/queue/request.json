@@ -1,13 +1,19 @@
 {
     "$id": "matchmaking/queue/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/queue/request",
+            "const": "matchmaking/queue",
             "type": "string"
         },
         "data": {
@@ -27,6 +33,7 @@
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"

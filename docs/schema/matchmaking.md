@@ -30,6 +30,10 @@ The matchmaking cycle works as follows:
 Cancel queueing for matchmaking.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -38,18 +42,25 @@ Cancel queueing for matchmaking.
 ```json
 {
     "$id": "matchmaking/cancel/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/cancel/request",
+            "const": "matchmaking/cancel",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -58,20 +69,26 @@ Cancel queueing for matchmaking.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "commodo laborum",
+    "commandId": "matchmaking/cancel"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface MatchmakingCancelRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/cancel/request";
+    commandId: "matchmaking/cancel";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "matchmaking/cancel/request"
-}
 ```
 ### Response
 
@@ -81,16 +98,22 @@ export interface MatchmakingCancelRequest {
 ```json
 {
     "$id": "matchmaking/cancel/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/cancel/response",
+                    "const": "matchmaking/cancel",
                     "type": "string"
                 },
                 "status": {
@@ -99,6 +122,7 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -107,11 +131,15 @@ export interface MatchmakingCancelRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/cancel/response",
+                    "const": "matchmaking/cancel",
                     "type": "string"
                 },
                 "status": {
@@ -124,6 +152,7 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -133,11 +162,15 @@ export interface MatchmakingCancelRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/cancel/response",
+                    "const": "matchmaking/cancel",
                     "type": "string"
                 },
                 "status": {
@@ -150,6 +183,7 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -159,11 +193,15 @@ export interface MatchmakingCancelRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/cancel/response",
+                    "const": "matchmaking/cancel",
                     "type": "string"
                 },
                 "status": {
@@ -176,6 +214,7 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -185,11 +224,15 @@ export interface MatchmakingCancelRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/cancel/response",
+                    "const": "matchmaking/cancel",
                     "type": "string"
                 },
                 "status": {
@@ -202,6 +245,7 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -211,11 +255,15 @@ export interface MatchmakingCancelRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/cancel/response",
+                    "const": "matchmaking/cancel",
                     "type": "string"
                 },
                 "status": {
@@ -228,6 +276,7 @@ export interface MatchmakingCancelRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -240,53 +289,28 @@ export interface MatchmakingCancelRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingCancelResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/cancel/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/cancel/response";
-          status: "failed";
-          reason: "not_queued";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/cancel/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/cancel/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/cancel/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/cancel/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/cancel/response",
+    "type": "response",
+    "messageId": "nisi deserunt",
+    "commandId": "matchmaking/cancel",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingCancelResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/cancel";
+    status: "success";
+}
+
 ```
 ---
 
@@ -295,6 +319,10 @@ export type MatchmakingCancelResponse =
 Sent when a found match is declined, either by manual rejection or timeout from any user in the queue.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -303,18 +331,25 @@ Sent when a found match is declined, either by manual rejection or timeout from 
 ```json
 {
     "$id": "matchmaking/declined/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/declined/request",
+            "const": "matchmaking/declined",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -323,20 +358,26 @@ Sent when a found match is declined, either by manual rejection or timeout from 
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "nisi qui",
+    "commandId": "matchmaking/declined"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface MatchmakingDeclinedRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/declined/request";
+    commandId: "matchmaking/declined";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "matchmaking/declined/request"
-}
 ```
 ### Response
 
@@ -346,16 +387,22 @@ export interface MatchmakingDeclinedRequest {
 ```json
 {
     "$id": "matchmaking/declined/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/declined/response",
+                    "const": "matchmaking/declined",
                     "type": "string"
                 },
                 "status": {
@@ -364,6 +411,7 @@ export interface MatchmakingDeclinedRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -372,11 +420,15 @@ export interface MatchmakingDeclinedRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/declined/response",
+                    "const": "matchmaking/declined",
                     "type": "string"
                 },
                 "status": {
@@ -389,6 +441,7 @@ export interface MatchmakingDeclinedRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -398,11 +451,15 @@ export interface MatchmakingDeclinedRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/declined/response",
+                    "const": "matchmaking/declined",
                     "type": "string"
                 },
                 "status": {
@@ -415,6 +472,7 @@ export interface MatchmakingDeclinedRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -424,11 +482,15 @@ export interface MatchmakingDeclinedRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/declined/response",
+                    "const": "matchmaking/declined",
                     "type": "string"
                 },
                 "status": {
@@ -441,6 +503,7 @@ export interface MatchmakingDeclinedRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -450,11 +513,15 @@ export interface MatchmakingDeclinedRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/declined/response",
+                    "const": "matchmaking/declined",
                     "type": "string"
                 },
                 "status": {
@@ -467,6 +534,7 @@ export interface MatchmakingDeclinedRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -479,47 +547,28 @@ export interface MatchmakingDeclinedRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingDeclinedResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/declined/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/declined/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/declined/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/declined/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/declined/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/declined/response",
+    "type": "response",
+    "messageId": "laboris non",
+    "commandId": "matchmaking/declined",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingDeclinedResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/declined";
+    status: "success";
+}
+
 ```
 ---
 
@@ -527,213 +576,90 @@ export type MatchmakingDeclinedResponse =
 
 Server should send this when there are enough queued players to form a valid game that meets their criteria. Clients should then send [ready](#ready).
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "matchmaking/found/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/found/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "queueId": {
-                            "type": "string"
-                        },
-                        "timeoutMs": {
-                            "type": "integer"
-                        }
-                    },
-                    "required": [
-                        "queueId",
-                        "timeoutMs"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+    "$id": "matchmaking/found/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/found/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/found/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "matchmaking/found",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
+                "queueId": {
                     "type": "string"
                 },
-                "commandId": {
-                    "const": "matchmaking/found/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
+                "timeoutMs": {
+                    "type": "integer"
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/found/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "queueId",
+                "timeoutMs"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingFoundResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/found/response";
-          status: "success";
-          data: {
-              queueId: string;
-              timeoutMs: number;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/found/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/found/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/found/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/found/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/found/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "ullamco occaecat",
+    "commandId": "matchmaking/found",
     "data": {
-        "queueId": "mollit",
-        "timeoutMs": -75320000
+        "queueId": "ullamco occaecat",
+        "timeoutMs": -34000000
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingFoundEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/found";
+    data: {
+        queueId: string;
+        timeoutMs: number;
+    };
+}
+
 ```
 ---
 
@@ -741,207 +667,84 @@ export type MatchmakingFoundResponse =
 
 Server should send this when players ready up using [ready](#ready).
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "matchmaking/foundUpdate/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/foundUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "readyCount": {
-                            "type": "integer"
-                        }
-                    },
-                    "required": [
-                        "readyCount"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+    "$id": "matchmaking/foundUpdate/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/foundUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/foundUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "matchmaking/foundUpdate",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/foundUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
+                "readyCount": {
+                    "type": "integer"
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/foundUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "readyCount"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingFoundUpdateResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/foundUpdate/response";
-          status: "success";
-          data: {
-              readyCount: number;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/foundUpdate/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/foundUpdate/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/foundUpdate/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/foundUpdate/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/foundUpdate/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "reprehenderit Lorem",
+    "commandId": "matchmaking/foundUpdate",
     "data": {
-        "readyCount": -75320000
+        "readyCount": -32000000
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingFoundUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/foundUpdate";
+    data: {
+        readyCount: number;
+    };
+}
+
 ```
 ---
 
@@ -950,6 +753,10 @@ export type MatchmakingFoundUpdateResponse =
 Returns all available matchmaking playlists.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -958,18 +765,25 @@ Returns all available matchmaking playlists.
 ```json
 {
     "$id": "matchmaking/list/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/list/request",
+            "const": "matchmaking/list",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -978,20 +792,26 @@ Returns all available matchmaking playlists.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "dolor Lorem",
+    "commandId": "matchmaking/list"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface MatchmakingListRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/list/request";
+    commandId: "matchmaking/list";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "matchmaking/list/request"
-}
 ```
 ### Response
 
@@ -1001,16 +821,22 @@ export interface MatchmakingListRequest {
 ```json
 {
     "$id": "matchmaking/list/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/list/response",
+                    "const": "matchmaking/list",
                     "type": "string"
                 },
                 "status": {
@@ -1077,6 +903,7 @@ export interface MatchmakingListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1086,11 +913,15 @@ export interface MatchmakingListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/list/response",
+                    "const": "matchmaking/list",
                     "type": "string"
                 },
                 "status": {
@@ -1103,6 +934,7 @@ export interface MatchmakingListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1112,11 +944,15 @@ export interface MatchmakingListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/list/response",
+                    "const": "matchmaking/list",
                     "type": "string"
                 },
                 "status": {
@@ -1129,6 +965,7 @@ export interface MatchmakingListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1138,11 +975,15 @@ export interface MatchmakingListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/list/response",
+                    "const": "matchmaking/list",
                     "type": "string"
                 },
                 "status": {
@@ -1155,6 +996,7 @@ export interface MatchmakingListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1164,11 +1006,15 @@ export interface MatchmakingListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/list/response",
+                    "const": "matchmaking/list",
                     "type": "string"
                 },
                 "status": {
@@ -1181,6 +1027,7 @@ export interface MatchmakingListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1193,54 +1040,14 @@ export interface MatchmakingListRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingListResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/list/response";
-          status: "success";
-          data: {
-              playlists: {
-                  id: string;
-                  name: string;
-                  numOfTeams: number;
-                  teamSize: number;
-                  ranked: boolean;
-              }[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/list/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/list/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/list/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/list/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/list/response",
+    "type": "response",
+    "messageId": "Duis Lorem",
+    "commandId": "matchmaking/list",
     "status": "success",
     "data": {
         "playlists": [
@@ -1262,195 +1069,93 @@ export type MatchmakingListResponse =
     }
 }
 ```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingListResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/list";
+    status: "success";
+    data: {
+        playlists: {
+            id: string;
+            name: string;
+            numOfTeams: number;
+            teamSize: number;
+            ranked: boolean;
+        }[];
+    };
+}
+
+```
 ---
 
 ## Lost
 
 Sent when a found match gets disbanded because a client failed to ready up.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "matchmaking/lost/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/lost/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status"
-            ]
+    "$id": "matchmaking/lost/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/lost/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/lost/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/lost/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/lost/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "matchmaking/lost",
+            "type": "string"
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingLostResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/lost/response",
-    "status": "success"
+    "type": "event",
+    "messageId": "consequat Lorem",
+    "commandId": "matchmaking/lost"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingLostEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/lost";
+}
+
 ```
 ---
 
@@ -1459,6 +1164,10 @@ export type MatchmakingLostResponse =
 Queue up for matchmaking. Should cancel the previous queue if already in one.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -1467,14 +1176,20 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 ```json
 {
     "$id": "matchmaking/queue/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/queue/request",
+            "const": "matchmaking/queue",
             "type": "string"
         },
         "data": {
@@ -1494,6 +1209,7 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -1503,28 +1219,35 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "commodo Lorem",
+    "commandId": "matchmaking/queue",
+    "data": {
+        "queues": [
+            "commodo Lorem",
+            "commodo Lorem"
+        ]
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface MatchmakingQueueRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/queue/request";
+    commandId: "matchmaking/queue";
     data: {
         queues: [string, ...string[]];
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "matchmaking/queue/request",
-    "data": {
-        "queues": [
-            "mollit"
-        ]
-    }
-}
 ```
 ### Response
 
@@ -1534,16 +1257,22 @@ export interface MatchmakingQueueRequest {
 ```json
 {
     "$id": "matchmaking/queue/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1552,6 +1281,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -1560,11 +1290,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1577,6 +1311,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1586,11 +1321,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1603,6 +1342,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1612,11 +1352,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1629,6 +1373,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1638,11 +1383,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1655,6 +1404,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1664,11 +1414,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1681,6 +1435,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1690,11 +1445,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1707,6 +1466,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1716,11 +1476,15 @@ export interface MatchmakingQueueRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/queue/response",
+                    "const": "matchmaking/queue",
                     "type": "string"
                 },
                 "status": {
@@ -1733,6 +1497,7 @@ export interface MatchmakingQueueRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1745,65 +1510,28 @@ export interface MatchmakingQueueRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingQueueResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "invalid_queue_specified";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "already_queued";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "already_ingame";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queue/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/queue/response",
+    "type": "response",
+    "messageId": "ut Lorem",
+    "commandId": "matchmaking/queue",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueueResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/queue";
+    status: "success";
+}
+
 ```
 ---
 
@@ -1811,207 +1539,84 @@ export type MatchmakingQueueResponse =
 
 Contains some info about the state of the current queue.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "matchmaking/queueUpdate/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queueUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "playersQueued": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "playersQueued"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+    "$id": "matchmaking/queueUpdate/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queueUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queueUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "matchmaking/queueUpdate",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queueUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
+                "playersQueued": {
                     "type": "string"
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queueUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "playersQueued"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingQueueUpdateResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "success";
-          data: {
-              playersQueued: string;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/queueUpdate/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "occaecat Lorem in",
+    "commandId": "matchmaking/queueUpdate",
     "data": {
-        "playersQueued": "mollit"
+        "playersQueued": "occaecat Lorem in"
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueueUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/queueUpdate";
+    data: {
+        playersQueued: string;
+    };
+}
+
 ```
 ---
 
@@ -2020,6 +1625,10 @@ export type MatchmakingQueueUpdateResponse =
 Clients should send this when they are ready to proceed with the found match. If not sent within 10s of the [found](#found) response then queue should be cancelled.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -2028,18 +1637,25 @@ Clients should send this when they are ready to proceed with the found match. If
 ```json
 {
     "$id": "matchmaking/ready/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "matchmaking/ready/request",
+            "const": "matchmaking/ready",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -2048,20 +1664,26 @@ Clients should send this when they are ready to proceed with the found match. If
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "pariatur Lorem reprehenderit",
+    "commandId": "matchmaking/ready"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface MatchmakingReadyRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/ready/request";
+    commandId: "matchmaking/ready";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "matchmaking/ready/request"
-}
 ```
 ### Response
 
@@ -2071,16 +1693,22 @@ export interface MatchmakingReadyRequest {
 ```json
 {
     "$id": "matchmaking/ready/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/ready/response",
+                    "const": "matchmaking/ready",
                     "type": "string"
                 },
                 "status": {
@@ -2089,6 +1717,7 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -2097,11 +1726,15 @@ export interface MatchmakingReadyRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/ready/response",
+                    "const": "matchmaking/ready",
                     "type": "string"
                 },
                 "status": {
@@ -2114,6 +1747,7 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2123,11 +1757,15 @@ export interface MatchmakingReadyRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/ready/response",
+                    "const": "matchmaking/ready",
                     "type": "string"
                 },
                 "status": {
@@ -2140,6 +1778,7 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2149,11 +1788,15 @@ export interface MatchmakingReadyRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/ready/response",
+                    "const": "matchmaking/ready",
                     "type": "string"
                 },
                 "status": {
@@ -2166,6 +1809,7 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2175,11 +1819,15 @@ export interface MatchmakingReadyRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/ready/response",
+                    "const": "matchmaking/ready",
                     "type": "string"
                 },
                 "status": {
@@ -2192,6 +1840,7 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2201,11 +1850,15 @@ export interface MatchmakingReadyRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "matchmaking/ready/response",
+                    "const": "matchmaking/ready",
                     "type": "string"
                 },
                 "status": {
@@ -2218,6 +1871,7 @@ export interface MatchmakingReadyRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2230,53 +1884,28 @@ export interface MatchmakingReadyRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingReadyResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/ready/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/ready/response";
-          status: "failed";
-          reason: "no_match";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/ready/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/ready/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/ready/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/ready/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/ready/response",
+    "type": "response",
+    "messageId": "fugiat Lorem irure",
+    "commandId": "matchmaking/ready",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingReadyResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/ready";
+    status: "success";
+}
+
 ```
 ---
 
@@ -2284,211 +1913,88 @@ export type MatchmakingReadyResponse =
 
 Sent when a client in a found match readies up.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "matchmaking/readyUpdate/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/readyUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "readyMax": {
-                            "type": "integer"
-                        },
-                        "readyCurrent": {
-                            "type": "integer"
-                        }
-                    },
-                    "required": [
-                        "readyMax",
-                        "readyCurrent"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+    "$id": "matchmaking/readyUpdate/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/readyUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/readyUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "matchmaking/readyUpdate",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
-                    "type": "string"
+                "readyMax": {
+                    "type": "integer"
                 },
-                "commandId": {
-                    "const": "matchmaking/readyUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
+                "readyCurrent": {
+                    "type": "integer"
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/readyUpdate/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "readyMax",
+                "readyCurrent"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type MatchmakingReadyUpdateResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "success";
-          data: {
-              readyMax: number;
-              readyCurrent: number;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "matchmaking/readyUpdate/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "cillum Lorem ut",
+    "commandId": "matchmaking/readyUpdate",
     "data": {
-        "readyMax": -75320000,
-        "readyCurrent": -75320000
+        "readyMax": -14000000,
+        "readyCurrent": -14000000
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingReadyUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/readyUpdate";
+    data: {
+        readyMax: number;
+        readyCurrent: number;
+    };
+}
+
 ```

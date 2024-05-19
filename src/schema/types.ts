@@ -52,12 +52,7 @@ export const battleStatus = Nullable(
     ])
 );
 
-export const userStatus = Type.Union([
-    Type.Literal("offline"),
-    Type.Literal("menu"),
-    Type.Literal("playing"),
-    Type.Literal("lobby"),
-]);
+export const userStatus = Type.Union([Type.Literal("offline"), Type.Literal("menu"), Type.Literal("playing"), Type.Literal("lobby")]);
 
 export const user = Type.Object({
     userId: Type.String(),
@@ -66,7 +61,7 @@ export const user = Type.Object({
     avatarUrl: Nullable(Type.String()),
     clanId: Nullable(Type.String()),
     partyId: Nullable(Type.String()),
-    roles: Type.Array(Type.String()),
+    scopes: Type.Array(Type.String()),
     countryCode: Type.Optional(Type.String()),
     status: userStatus,
     battleStatus,

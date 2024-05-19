@@ -1,8 +1,10 @@
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
+    source: "autohost",
+    target: "server",
     description: "Unregisters the client as slavable.",
-    roles: ["autohost"],
+    scopes: ["autohost"],
     request: {},
     response: [{ status: "success" }],
 });

@@ -1,0 +1,37 @@
+{
+    "$id": "autohost/launch/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/launch",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "script": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "script"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

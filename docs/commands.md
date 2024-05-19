@@ -1,8 +1,6 @@
 # Commands
 
-Both request and response messages are referred to as "commands". A request command should always be met with a corresponding response command, however, in some cases, the server can send standalone response commands which the client did not initiate with a request. An example is [`system/connected/response`](docs/system.md/#connected).
-
-## Shared
+JSON messages in this protocol are referred to as "commands".
 
 Every command shares the following properties:
 
@@ -13,6 +11,8 @@ Every command shares the following properties:
 
 ## Requests
 
+Request commands can be sent from either side, and expect the other side to send a correlating response command. They are typically used when asking the other side to perform an action or fetch some data which they require, or simply to acknowledge their request has been fulfilled.
+
 Every request command contains these additional properties:
 
 | Property        | type   | Description                                      |
@@ -20,6 +20,8 @@ Every request command contains these additional properties:
 | data (optional) | object | A object containing data specific to the command |
 
 ## Responses
+
+Sent in response to a request.
 
 Every response command contains these additional properties:
 
@@ -37,3 +39,13 @@ All `failed` responses that are initiated by a request can return one of the fol
 | internal_error        | When the server fails to handle the request in some way                                    |
 | invalid_request       | When the request command doesn't match the schema                                          |
 | command_unimplemented | When the server hasn't implemented a response handler for the command                      |
+
+## Events
+
+Events are commands which require no response. They are typically sent when the sending party does not care if the message has been acted upon, such as the server sending periodic update data.
+
+Every event command contains these additional properties:
+
+| Property        | type   | Description                                      |
+| --------------- | ------ | ------------------------------------------------ |
+| data (optional) | object | A object containing data specific to the command |

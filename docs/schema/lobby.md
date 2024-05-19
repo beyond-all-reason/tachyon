@@ -24,6 +24,10 @@ These commands relate to custom battles.
 Close an existing lobby.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -32,18 +36,25 @@ Close an existing lobby.
 ```json
 {
     "$id": "lobby/close/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/close/request",
+            "const": "lobby/close",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -52,20 +63,26 @@ Close an existing lobby.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "tempor",
+    "commandId": "lobby/close"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbyCloseRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/close/request";
+    commandId: "lobby/close";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/close/request"
-}
 ```
 ### Response
 
@@ -75,16 +92,22 @@ export interface LobbyCloseRequest {
 ```json
 {
     "$id": "lobby/close/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -93,6 +116,7 @@ export interface LobbyCloseRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -101,11 +125,15 @@ export interface LobbyCloseRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -118,6 +146,7 @@ export interface LobbyCloseRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -127,11 +156,15 @@ export interface LobbyCloseRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -144,6 +177,7 @@ export interface LobbyCloseRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -153,11 +187,15 @@ export interface LobbyCloseRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -170,6 +208,7 @@ export interface LobbyCloseRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -179,11 +218,15 @@ export interface LobbyCloseRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/close/response",
+                    "const": "lobby/close",
                     "type": "string"
                 },
                 "status": {
@@ -196,6 +239,7 @@ export interface LobbyCloseRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -208,47 +252,28 @@ export interface LobbyCloseRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyCloseResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/close/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/close/response",
+    "type": "response",
+    "messageId": "eiusmod",
+    "commandId": "lobby/close",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyCloseResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/close";
+    status: "success";
+}
+
 ```
 ---
 
@@ -257,6 +282,10 @@ export type LobbyCloseResponse =
 Create a new lobby - intended for player clients to summon a dedicated host.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -265,14 +294,20 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 ```json
 {
     "$id": "lobby/create/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/create/request",
+            "const": "lobby/create",
             "type": "string"
         },
         "data": {
@@ -313,6 +348,7 @@ Create a new lobby - intended for player clients to summon a dedicated host.
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -322,11 +358,30 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "do",
+    "commandId": "lobby/create",
+    "data": {
+        "title": "8v8 | All Welcome",
+        "private": false,
+        "region": "EU",
+        "maxPlayers": 16
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbyCreateRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/create/request";
+    commandId: "lobby/create";
     data: {
         title: string;
         private: boolean;
@@ -336,19 +391,6 @@ export interface LobbyCreateRequest {
 }
 
 ```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/create/request",
-    "data": {
-        "title": "8v8 | All Welcome",
-        "private": false,
-        "region": "EU",
-        "maxPlayers": 16
-    }
-}
-```
 ### Response
 
 <details>
@@ -357,16 +399,22 @@ export interface LobbyCreateRequest {
 ```json
 {
     "$id": "lobby/create/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -375,6 +423,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -383,11 +432,15 @@ export interface LobbyCreateRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -400,6 +453,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -409,11 +463,15 @@ export interface LobbyCreateRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -426,6 +484,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -435,11 +494,15 @@ export interface LobbyCreateRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -452,6 +515,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -461,11 +525,15 @@ export interface LobbyCreateRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -478,6 +546,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -487,11 +556,15 @@ export interface LobbyCreateRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -504,6 +577,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -513,11 +587,15 @@ export interface LobbyCreateRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/create/response",
+                    "const": "lobby/create",
                     "type": "string"
                 },
                 "status": {
@@ -530,6 +608,7 @@ export interface LobbyCreateRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -542,59 +621,28 @@ export interface LobbyCreateRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyCreateResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "no_hosts_available";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "invalid_region";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/create/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/create/response",
+    "type": "response",
+    "messageId": "id",
+    "commandId": "lobby/create",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyCreateResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/create";
+    status: "success";
+}
+
 ```
 ---
 
@@ -604,6 +652,10 @@ Join a custom lobby. Server will send a [joined](#joined) response containing th
 These commands are split because the server may want to force the client to join a battle without them explicitly requesting it.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -612,14 +664,20 @@ These commands are split because the server may want to force the client to join
 ```json
 {
     "$id": "lobby/join/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/join/request",
+            "const": "lobby/join",
             "type": "string"
         },
         "data": {
@@ -644,6 +702,7 @@ These commands are split because the server may want to force the client to join
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -653,28 +712,34 @@ These commands are split because the server may want to force the client to join
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "sint",
+    "commandId": "lobby/join",
+    "data": {
+        "lobbyId": 27,
+        "password": "fish"
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbyJoinRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/join/request";
+    commandId: "lobby/join";
     data: {
         lobbyId: string;
         password?: string;
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/join/request",
-    "data": {
-        "lobbyId": 27,
-        "password": "fish"
-    }
-}
 ```
 ### Response
 
@@ -684,16 +749,22 @@ export interface LobbyJoinRequest {
 ```json
 {
     "$id": "lobby/join/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -702,6 +773,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -710,11 +782,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -727,6 +803,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -736,11 +813,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -753,6 +834,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -762,11 +844,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -779,6 +865,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -788,11 +875,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -805,6 +896,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -814,11 +906,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -831,6 +927,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -840,11 +937,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -857,6 +958,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -866,11 +968,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -883,6 +989,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -892,11 +999,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -909,6 +1020,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -918,11 +1030,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -935,6 +1051,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -944,11 +1061,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -961,6 +1082,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -970,11 +1092,15 @@ export interface LobbyJoinRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/join/response",
+                    "const": "lobby/join",
                     "type": "string"
                 },
                 "status": {
@@ -987,6 +1113,7 @@ export interface LobbyJoinRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -999,89 +1126,28 @@ export interface LobbyJoinRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyJoinResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "locked";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "requires_password";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "invalid_password";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "max_participants_reached";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "rank_too_low";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "rank_too_high";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "banned";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/join/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/join/response",
+    "type": "response",
+    "messageId": "nulla",
+    "commandId": "lobby/join",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/join";
+    status: "success";
+}
+
 ```
 ---
 
@@ -1089,706 +1155,496 @@ export type LobbyJoinResponse =
 
 Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "lobby/joined/response",
-    "roles": [],
-    "anyOf": [
-        {
+    "$id": "lobby/joined/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/joined",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "battleId": 27,
+                    "hostId": 822,
+                    "engine": "105.1.1-1821-gaca6f20 BAR105",
+                    "game": "Beyond All Reason test-23561-0abff7c",
+                    "map": "Red Comet Remake 1.8",
+                    "startPosType": 2,
+                    "startAreas": {
+                        "0": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 1,
+                            "height": 0.3
+                        },
+                        "1": {
+                            "x": 0,
+                            "y": 0.7,
+                            "width": 1,
+                            "height": 0.3
+                        }
+                    },
+                    "startTime": 1705432698,
+                    "ip": "121.32.201.76",
+                    "port": 41403,
+                    "scriptPassword": "10sdfi90sid0sjkdf",
+                    "modOptions": {
+                        "emprework": 0
+                    },
+                    "bots": [],
+                    "users": []
+                }
+            ],
             "type": "object",
             "properties": {
-                "messageId": {
+                "battleId": {
                     "type": "string"
                 },
-                "commandId": {
-                    "const": "lobby/joined/response",
+                "hostId": {
                     "type": "string"
                 },
-                "status": {
-                    "const": "success",
+                "engine": {
                     "type": "string"
                 },
-                "data": {
-                    "examples": [
+                "game": {
+                    "type": "string"
+                },
+                "map": {
+                    "type": "string"
+                },
+                "startPosType": {
+                    "anyOf": [
                         {
-                            "battleId": 27,
-                            "hostId": 822,
-                            "engine": "105.1.1-1821-gaca6f20 BAR105",
-                            "game": "Beyond All Reason test-23561-0abff7c",
-                            "map": "Red Comet Remake 1.8",
-                            "startPosType": 2,
-                            "startAreas": {
-                                "0": {
+                            "description": "Fixed",
+                            "const": 0,
+                            "type": "number"
+                        },
+                        {
+                            "description": "Random",
+                            "const": 1,
+                            "type": "number"
+                        },
+                        {
+                            "description": "Boxes",
+                            "const": 2,
+                            "type": "number"
+                        }
+                    ]
+                },
+                "startAreas": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(0|[1-9][0-9]*)$": {
+                            "examples": [
+                                {
                                     "x": 0,
                                     "y": 0,
                                     "width": 1,
                                     "height": 0.3
+                                }
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "x": {
+                                    "type": "number"
                                 },
-                                "1": {
-                                    "x": 0,
-                                    "y": 0.7,
-                                    "width": 1,
-                                    "height": 0.3
+                                "y": {
+                                    "type": "number"
+                                },
+                                "width": {
+                                    "type": "number"
+                                },
+                                "height": {
+                                    "type": "number"
                                 }
                             },
-                            "startTime": 1705432698,
-                            "ip": "121.32.201.76",
-                            "port": 41403,
-                            "scriptPassword": "10sdfi90sid0sjkdf",
-                            "modOptions": {
-                                "emprework": 0
-                            },
-                            "bots": [],
-                            "users": []
+                            "required": [
+                                "x",
+                                "y",
+                                "width",
+                                "height"
+                            ]
                         }
-                    ],
+                    }
+                },
+                "startTime": {
+                    "anyOf": [
+                        {
+                            "description": "Unix time",
+                            "examples": [
+                                1705432698,
+                                null
+                            ],
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "ip": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "port": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "scriptPassword": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "modOptions": {
                     "type": "object",
-                    "properties": {
-                        "battleId": {
-                            "type": "string"
-                        },
-                        "hostId": {
-                            "type": "string"
-                        },
-                        "engine": {
-                            "type": "string"
-                        },
-                        "game": {
-                            "type": "string"
-                        },
-                        "map": {
-                            "type": "string"
-                        },
-                        "startPosType": {
-                            "anyOf": [
-                                {
-                                    "description": "Fixed",
-                                    "const": 0,
-                                    "type": "number"
-                                },
-                                {
-                                    "description": "Random",
-                                    "const": 1,
-                                    "type": "number"
-                                },
-                                {
-                                    "description": "Boxes",
-                                    "const": 2,
-                                    "type": "number"
-                                }
-                            ]
-                        },
-                        "startAreas": {
-                            "type": "object",
-                            "patternProperties": {
-                                "^(0|[1-9][0-9]*)$": {
-                                    "examples": [
-                                        {
-                                            "x": 0,
-                                            "y": 0,
-                                            "width": 1,
-                                            "height": 0.3
-                                        }
-                                    ],
-                                    "type": "object",
-                                    "properties": {
-                                        "x": {
-                                            "type": "number"
-                                        },
-                                        "y": {
-                                            "type": "number"
-                                        },
-                                        "width": {
-                                            "type": "number"
-                                        },
-                                        "height": {
-                                            "type": "number"
-                                        }
-                                    },
-                                    "required": [
-                                        "x",
-                                        "y",
-                                        "width",
-                                        "height"
-                                    ]
-                                }
-                            }
-                        },
-                        "startTime": {
-                            "anyOf": [
-                                {
-                                    "description": "Unix time",
-                                    "examples": [
-                                        1705432698,
-                                        null
-                                    ],
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "ip": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "port": {
-                            "anyOf": [
-                                {
-                                    "type": "integer"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "scriptPassword": {
-                            "anyOf": [
-                                {
-                                    "type": "string"
-                                },
-                                {
-                                    "type": "null"
-                                }
-                            ]
-                        },
-                        "modOptions": {
-                            "type": "object",
-                            "patternProperties": {
-                                "^(.*)$": {}
-                            }
-                        },
-                        "bots": {
-                            "type": "array",
-                            "items": {
+                    "patternProperties": {
+                        "^(.*)$": {}
+                    }
+                },
+                "bots": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "playerId": {
+                                "type": "integer"
+                            },
+                            "teamId": {
+                                "type": "integer"
+                            },
+                            "color": {
+                                "type": "string"
+                            },
+                            "bonus": {
+                                "type": "number"
+                            },
+                            "inGame": {
+                                "type": "boolean"
+                            },
+                            "isSpectator": {
+                                "const": false,
+                                "type": "boolean"
+                            },
+                            "isBot": {
+                                "const": true,
+                                "type": "boolean"
+                            },
+                            "ownerId": {
+                                "type": "string"
+                            },
+                            "aiShortName": {
+                                "type": "string"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "aiOptions": {
                                 "type": "object",
-                                "properties": {
-                                    "playerId": {
-                                        "type": "integer"
-                                    },
-                                    "teamId": {
-                                        "type": "integer"
-                                    },
-                                    "color": {
+                                "patternProperties": {
+                                    "^(.*)$": {}
+                                }
+                            },
+                            "faction": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "playerId",
+                            "teamId",
+                            "color",
+                            "bonus",
+                            "inGame",
+                            "isSpectator",
+                            "isBot",
+                            "ownerId",
+                            "aiShortName",
+                            "name",
+                            "aiOptions",
+                            "faction"
+                        ]
+                    }
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "displayName": {
+                                "type": "string"
+                            },
+                            "avatarUrl": {
+                                "anyOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "bonus": {
-                                        "type": "number"
-                                    },
-                                    "inGame": {
-                                        "type": "boolean"
-                                    },
-                                    "isSpectator": {
-                                        "const": false,
-                                        "type": "boolean"
-                                    },
-                                    "isBot": {
-                                        "const": true,
-                                        "type": "boolean"
-                                    },
-                                    "ownerId": {
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "clanId": {
+                                "anyOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "aiShortName": {
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "partyId": {
+                                "anyOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "name": {
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "countryCode": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "anyOf": [
+                                    {
+                                        "const": "offline",
                                         "type": "string"
                                     },
-                                    "aiOptions": {
-                                        "type": "object",
-                                        "patternProperties": {
-                                            "^(.*)$": {}
-                                        }
+                                    {
+                                        "const": "menu",
+                                        "type": "string"
                                     },
-                                    "faction": {
+                                    {
+                                        "const": "playing",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "const": "lobby",
                                         "type": "string"
                                     }
-                                },
-                                "required": [
-                                    "playerId",
-                                    "teamId",
-                                    "color",
-                                    "bonus",
-                                    "inGame",
-                                    "isSpectator",
-                                    "isBot",
-                                    "ownerId",
-                                    "aiShortName",
-                                    "name",
-                                    "aiOptions",
-                                    "faction"
                                 ]
-                            }
-                        },
-                        "users": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "type": "string"
-                                    },
-                                    "username": {
-                                        "type": "string"
-                                    },
-                                    "displayName": {
-                                        "type": "string"
-                                    },
-                                    "avatarUrl": {
-                                        "anyOf": [
+                            },
+                            "battleStatus": {
+                                "anyOf": [
+                                    {
+                                        "allOf": [
                                             {
-                                                "type": "string"
+                                                "type": "object",
+                                                "properties": {
+                                                    "battleId": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "battleId"
+                                                ]
                                             },
                                             {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "clanId": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "roles": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "countryCode": {
-                                        "type": "string"
-                                    },
-                                    "status": {
-                                        "anyOf": [
-                                            {
-                                                "const": "offline",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "menu",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "playing",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "lobby",
-                                                "type": "string"
-                                            }
-                                        ]
-                                    },
-                                    "battleStatus": {
-                                        "anyOf": [
-                                            {
-                                                "allOf": [
+                                                "anyOf": [
                                                     {
                                                         "type": "object",
-                                                        "properties": {
-                                                            "battleId": {
-                                                                "type": "string"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "battleId"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "anyOf": [
+                                                        "allOf": [
                                                             {
                                                                 "type": "object",
-                                                                "allOf": [
-                                                                    {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "playerId": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "teamId": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "color": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "bonus": {
-                                                                                "type": "number"
-                                                                            },
-                                                                            "inGame": {
-                                                                                "type": "boolean"
-                                                                            }
-                                                                        },
-                                                                        "required": [
-                                                                            "playerId",
-                                                                            "teamId",
-                                                                            "color",
-                                                                            "bonus",
-                                                                            "inGame"
-                                                                        ]
+                                                                "properties": {
+                                                                    "playerId": {
+                                                                        "type": "integer"
                                                                     },
-                                                                    {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "isSpectator": {
-                                                                                "const": false,
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "isBot": {
-                                                                                "const": false,
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "ready": {
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "sync": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "engine": {
-                                                                                        "type": "number"
-                                                                                    },
-                                                                                    "game": {
-                                                                                        "type": "number"
-                                                                                    },
-                                                                                    "map": {
-                                                                                        "type": "number"
-                                                                                    }
-                                                                                },
-                                                                                "required": [
-                                                                                    "engine",
-                                                                                    "game",
-                                                                                    "map"
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        "required": [
-                                                                            "isSpectator",
-                                                                            "isBot",
-                                                                            "ready",
-                                                                            "sync"
-                                                                        ]
+                                                                    "teamId": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "color": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "bonus": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "inGame": {
+                                                                        "type": "boolean"
                                                                     }
+                                                                },
+                                                                "required": [
+                                                                    "playerId",
+                                                                    "teamId",
+                                                                    "color",
+                                                                    "bonus",
+                                                                    "inGame"
                                                                 ]
                                                             },
                                                             {
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "isSpectator": {
-                                                                        "const": true,
+                                                                        "const": false,
                                                                         "type": "boolean"
                                                                     },
                                                                     "isBot": {
                                                                         "const": false,
                                                                         "type": "boolean"
+                                                                    },
+                                                                    "ready": {
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "sync": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "engine": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "game": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "map": {
+                                                                                "type": "number"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "engine",
+                                                                            "game",
+                                                                            "map"
+                                                                        ]
                                                                     }
                                                                 },
                                                                 "required": [
                                                                     "isSpectator",
-                                                                    "isBot"
+                                                                    "isBot",
+                                                                    "ready",
+                                                                    "sync"
                                                                 ]
                                                             }
                                                         ]
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "isSpectator": {
+                                                                "const": true,
+                                                                "type": "boolean"
+                                                            },
+                                                            "isBot": {
+                                                                "const": false,
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "isSpectator",
+                                                            "isBot"
+                                                        ]
                                                     }
                                                 ]
-                                            },
-                                            {
-                                                "type": "null"
                                             }
                                         ]
+                                    },
+                                    {
+                                        "type": "null"
                                     }
-                                },
-                                "required": [
-                                    "userId",
-                                    "username",
-                                    "displayName",
-                                    "avatarUrl",
-                                    "clanId",
-                                    "partyId",
-                                    "roles",
-                                    "status",
-                                    "battleStatus"
                                 ]
                             }
-                        }
-                    },
-                    "required": [
-                        "battleId",
-                        "hostId",
-                        "engine",
-                        "game",
-                        "map",
-                        "startPosType",
-                        "startAreas",
-                        "startTime",
-                        "ip",
-                        "port",
-                        "scriptPassword",
-                        "modOptions",
-                        "bots",
-                        "users"
-                    ]
+                        },
+                        "required": [
+                            "userId",
+                            "username",
+                            "displayName",
+                            "avatarUrl",
+                            "clanId",
+                            "partyId",
+                            "scopes",
+                            "status",
+                            "battleStatus"
+                        ]
+                    }
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/joined/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/joined/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/joined/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/joined/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "battleId",
+                "hostId",
+                "engine",
+                "game",
+                "map",
+                "startPosType",
+                "startAreas",
+                "startTime",
+                "ip",
+                "port",
+                "scriptPassword",
+                "modOptions",
+                "bots",
+                "users"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyJoinedResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "success";
-          data: {
-              battleId: string;
-              hostId: string;
-              engine: string;
-              game: string;
-              map: string;
-              startPosType: 0 | 1 | 2;
-              startAreas: {
-                  [k: string]: {
-                      x: number;
-                      y: number;
-                      width: number;
-                      height: number;
-                  };
-              };
-              startTime: number | null;
-              ip: string | null;
-              port: number | null;
-              scriptPassword: string | null;
-              modOptions: {
-                  [k: string]: unknown;
-              };
-              bots: {
-                  playerId: number;
-                  teamId: number;
-                  color: string;
-                  bonus: number;
-                  inGame: boolean;
-                  isSpectator: false;
-                  isBot: true;
-                  ownerId: string;
-                  aiShortName: string;
-                  name: string;
-                  aiOptions: {
-                      [k: string]: unknown;
-                  };
-                  faction: string;
-              }[];
-              users: {
-                  userId: string;
-                  username: string;
-                  displayName: string;
-                  avatarUrl: string | null;
-                  clanId: string | null;
-                  partyId: string | null;
-                  roles: string[];
-                  countryCode?: string;
-                  status: "offline" | "menu" | "playing" | "lobby";
-                  battleStatus:
-                      | ({
-                            battleId: string;
-                        } & (
-                            | ({
-                                  playerId: number;
-                                  teamId: number;
-                                  color: string;
-                                  bonus: number;
-                                  inGame: boolean;
-                              } & {
-                                  isSpectator: false;
-                                  isBot: false;
-                                  ready: boolean;
-                                  sync: {
-                                      engine: number;
-                                      game: number;
-                                      map: number;
-                                  };
-                              })
-                            | {
-                                  isSpectator: true;
-                                  isBot: false;
-                              }
-                        ))
-                      | null;
-              }[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/joined/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "dolor",
+    "commandId": "lobby/joined",
     "data": {
         "battleId": 27,
         "hostId": 822,
@@ -1822,6 +1678,93 @@ export type LobbyJoinedResponse =
     }
 }
 ```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/joined";
+    data: {
+        battleId: string;
+        hostId: string;
+        engine: string;
+        game: string;
+        map: string;
+        startPosType: 0 | 1 | 2;
+        startAreas: {
+            [k: string]: {
+                x: number;
+                y: number;
+                width: number;
+                height: number;
+            };
+        };
+        startTime: number | null;
+        ip: string | null;
+        port: number | null;
+        scriptPassword: string | null;
+        modOptions: {
+            [k: string]: unknown;
+        };
+        bots: {
+            playerId: number;
+            teamId: number;
+            color: string;
+            bonus: number;
+            inGame: boolean;
+            isSpectator: false;
+            isBot: true;
+            ownerId: string;
+            aiShortName: string;
+            name: string;
+            aiOptions: {
+                [k: string]: unknown;
+            };
+            faction: string;
+        }[];
+        users: {
+            userId: string;
+            username: string;
+            displayName: string;
+            avatarUrl: string | null;
+            clanId: string | null;
+            partyId: string | null;
+            scopes: string[];
+            countryCode?: string;
+            status: "offline" | "menu" | "playing" | "lobby";
+            battleStatus:
+                | ({
+                      battleId: string;
+                  } & (
+                      | ({
+                            playerId: number;
+                            teamId: number;
+                            color: string;
+                            bonus: number;
+                            inGame: boolean;
+                        } & {
+                            isSpectator: false;
+                            isBot: false;
+                            ready: boolean;
+                            sync: {
+                                engine: number;
+                                game: number;
+                                map: number;
+                            };
+                        })
+                      | {
+                            isSpectator: true;
+                            isBot: false;
+                        }
+                  ))
+                | null;
+        }[];
+    };
+}
+
+```
 ---
 
 ## Leave
@@ -1829,6 +1772,10 @@ export type LobbyJoinedResponse =
 Leave the current lobby.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -1837,18 +1784,25 @@ Leave the current lobby.
 ```json
 {
     "$id": "lobby/leave/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/leave/request",
+            "const": "lobby/leave",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -1857,20 +1811,26 @@ Leave the current lobby.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "aute",
+    "commandId": "lobby/leave"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbyLeaveRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/leave/request";
+    commandId: "lobby/leave";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/leave/request"
-}
 ```
 ### Response
 
@@ -1880,16 +1840,22 @@ export interface LobbyLeaveRequest {
 ```json
 {
     "$id": "lobby/leave/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/leave",
                     "type": "string"
                 },
                 "status": {
@@ -1898,6 +1864,7 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -1906,11 +1873,15 @@ export interface LobbyLeaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/leave",
                     "type": "string"
                 },
                 "status": {
@@ -1923,6 +1894,7 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1932,11 +1904,15 @@ export interface LobbyLeaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/leave",
                     "type": "string"
                 },
                 "status": {
@@ -1949,6 +1925,7 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1958,11 +1935,15 @@ export interface LobbyLeaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/leave",
                     "type": "string"
                 },
                 "status": {
@@ -1975,6 +1956,7 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -1984,11 +1966,15 @@ export interface LobbyLeaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/leave",
                     "type": "string"
                 },
                 "status": {
@@ -2001,6 +1987,7 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2010,11 +1997,15 @@ export interface LobbyLeaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/leave/response",
+                    "const": "lobby/leave",
                     "type": "string"
                 },
                 "status": {
@@ -2027,6 +2018,7 @@ export interface LobbyLeaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2039,53 +2031,28 @@ export interface LobbyLeaveRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyLeaveResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "no_lobby";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/leave/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/leave/response",
+    "type": "response",
+    "messageId": "nisi",
+    "commandId": "lobby/leave",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyLeaveResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/leave";
+    status: "success";
+}
+
 ```
 ---
 
@@ -2093,217 +2060,38 @@ export type LobbyLeaveResponse =
 
 Sent when the server removes the client from a lobby.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "lobby/left/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/left/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/left/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/left/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/left/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/left/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        }
-    ]
-}
-```
-
-</details>
-
-#### TypeScript Definition
-```ts
-export type LobbyLeftResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
-
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/left/response",
-    "status": "success"
-}
-```
----
-
-## List
-
-Returns all custom lobbies.
-
-- Endpoint Type: **Request** -> **Response**
-### Request
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "lobby/list/request",
-    "roles": [],
+    "$id": "lobby/left/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/list/request",
+            "const": "lobby/left",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -2312,20 +2100,93 @@ Returns all custom lobbies.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "ullamco",
+    "commandId": "lobby/left"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
-export interface LobbyListRequest {
+export interface LobbyLeftEvent {
+    type: "event";
     messageId: string;
-    commandId: "lobby/list/request";
+    commandId: "lobby/left";
 }
 
 ```
-#### Example
+---
+
+## List
+
+Returns all custom lobbies.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/list/request"
+    "$id": "lobby/list/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/list",
+            "type": "string"
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId"
+    ]
 }
+```
+
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "exercitation",
+    "commandId": "lobby/list"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyListRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/list";
+}
+
 ```
 ### Response
 
@@ -2335,16 +2196,22 @@ export interface LobbyListRequest {
 ```json
 {
     "$id": "lobby/list/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -2672,7 +2539,7 @@ export interface LobbyListRequest {
                                                                 }
                                                             ]
                                                         },
-                                                        "roles": {
+                                                        "scopes": {
                                                             "type": "array",
                                                             "items": {
                                                                 "type": "string"
@@ -2825,7 +2692,7 @@ export interface LobbyListRequest {
                                                         "avatarUrl",
                                                         "clanId",
                                                         "partyId",
-                                                        "roles",
+                                                        "scopes",
                                                         "status",
                                                         "battleStatus"
                                                     ]
@@ -2944,6 +2811,7 @@ export interface LobbyListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2953,11 +2821,15 @@ export interface LobbyListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -2970,6 +2842,7 @@ export interface LobbyListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -2979,11 +2852,15 @@ export interface LobbyListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -2996,6 +2873,7 @@ export interface LobbyListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3005,11 +2883,15 @@ export interface LobbyListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -3022,6 +2904,7 @@ export interface LobbyListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3031,11 +2914,15 @@ export interface LobbyListRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/list/response",
+                    "const": "lobby/list",
                     "type": "string"
                 },
                 "status": {
@@ -3048,6 +2935,7 @@ export interface LobbyListRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3060,138 +2948,64 @@ export interface LobbyListRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyListResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "success";
-          data: {
-              battles: ({
-                  battleId: string;
-                  hostId: string;
-                  engine: string;
-                  game: string;
-                  map: string;
-                  startPosType: 0 | 1 | 2;
-                  startAreas: {
-                      [k: string]: {
-                          x: number;
-                          y: number;
-                          width: number;
-                          height: number;
-                      };
-                  };
-                  startTime: number | null;
-                  ip: string | null;
-                  port: number | null;
-                  scriptPassword: string | null;
-                  modOptions: {
-                      [k: string]: unknown;
-                  };
-                  bots: {
-                      playerId: number;
-                      teamId: number;
-                      color: string;
-                      bonus: number;
-                      inGame: boolean;
-                      isSpectator: false;
-                      isBot: true;
-                      ownerId: string;
-                      aiShortName: string;
-                      name: string;
-                      aiOptions: {
-                          [k: string]: unknown;
-                      };
-                      faction: string;
-                  }[];
-                  users: {
-                      userId: string;
-                      username: string;
-                      displayName: string;
-                      avatarUrl: string | null;
-                      clanId: string | null;
-                      partyId: string | null;
-                      roles: string[];
-                      countryCode?: string;
-                      status: "offline" | "menu" | "playing" | "lobby";
-                      battleStatus:
-                          | ({
-                                battleId: string;
-                            } & (
-                                | ({
-                                      playerId: number;
-                                      teamId: number;
-                                      color: string;
-                                      bonus: number;
-                                      inGame: boolean;
-                                  } & {
-                                      isSpectator: false;
-                                      isBot: false;
-                                      ready: boolean;
-                                      sync: {
-                                          engine: number;
-                                          game: number;
-                                          map: number;
-                                      };
-                                  })
-                                | {
-                                      isSpectator: true;
-                                      isBot: false;
-                                  }
-                            ))
-                          | null;
-                  }[];
-              } & {
-                  title: string;
-                  locked: boolean;
-                  passworded: boolean;
-                  bossIds: string[];
-                  joinQueueIds: string[];
-                  limits: {
-                      minTeamsize: number | null;
-                      maxTeamsize: number | null;
-                      minRating: number | null;
-                      maxRating: number | null;
-                  };
-              })[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/list/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/list/response",
+    "type": "response",
+    "messageId": "Ut velit",
+    "commandId": "lobby/list",
     "status": "success",
     "data": {
         "battles": [
+            {
+                "battleId": 27,
+                "hostId": 822,
+                "engine": "105.1.1-1821-gaca6f20 BAR105",
+                "game": "Beyond All Reason test-23561-0abff7c",
+                "map": "Red Comet Remake 1.8",
+                "startPosType": 2,
+                "startAreas": {
+                    "0": {
+                        "x": 0,
+                        "y": 0,
+                        "width": 1,
+                        "height": 0.3
+                    },
+                    "1": {
+                        "x": 0,
+                        "y": 0.7,
+                        "width": 1,
+                        "height": 0.3
+                    }
+                },
+                "startTime": 1705432698,
+                "ip": "121.32.201.76",
+                "port": 41403,
+                "scriptPassword": "10sdfi90sid0sjkdf",
+                "modOptions": {
+                    "emprework": 0
+                },
+                "bots": [],
+                "users": [],
+                "title": "8v8 | All Welcome",
+                "bossIds": [
+                    123,
+                    456
+                ],
+                "locked": false,
+                "passworded": false,
+                "spectatorIds": [
+                    88
+                ],
+                "limits": {
+                    "minTeamsize": 3,
+                    "maxTeamsize": 3,
+                    "minRating": null,
+                    "maxRating": 25
+                }
+            },
             {
                 "battleId": 27,
                 "hostId": 822,
@@ -3243,225 +3057,204 @@ export type LobbyListResponse =
     }
 }
 ```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyListResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/list";
+    status: "success";
+    data: {
+        battles: ({
+            battleId: string;
+            hostId: string;
+            engine: string;
+            game: string;
+            map: string;
+            startPosType: 0 | 1 | 2;
+            startAreas: {
+                [k: string]: {
+                    x: number;
+                    y: number;
+                    width: number;
+                    height: number;
+                };
+            };
+            startTime: number | null;
+            ip: string | null;
+            port: number | null;
+            scriptPassword: string | null;
+            modOptions: {
+                [k: string]: unknown;
+            };
+            bots: {
+                playerId: number;
+                teamId: number;
+                color: string;
+                bonus: number;
+                inGame: boolean;
+                isSpectator: false;
+                isBot: true;
+                ownerId: string;
+                aiShortName: string;
+                name: string;
+                aiOptions: {
+                    [k: string]: unknown;
+                };
+                faction: string;
+            }[];
+            users: {
+                userId: string;
+                username: string;
+                displayName: string;
+                avatarUrl: string | null;
+                clanId: string | null;
+                partyId: string | null;
+                scopes: string[];
+                countryCode?: string;
+                status: "offline" | "menu" | "playing" | "lobby";
+                battleStatus:
+                    | ({
+                          battleId: string;
+                      } & (
+                          | ({
+                                playerId: number;
+                                teamId: number;
+                                color: string;
+                                bonus: number;
+                                inGame: boolean;
+                            } & {
+                                isSpectator: false;
+                                isBot: false;
+                                ready: boolean;
+                                sync: {
+                                    engine: number;
+                                    game: number;
+                                    map: number;
+                                };
+                            })
+                          | {
+                                isSpectator: true;
+                                isBot: false;
+                            }
+                      ))
+                    | null;
+            }[];
+        } & {
+            title: string;
+            locked: boolean;
+            passworded: boolean;
+            bossIds: string[];
+            joinQueueIds: string[];
+            limits: {
+                minTeamsize: number | null;
+                maxTeamsize: number | null;
+                minRating: number | null;
+                maxRating: number | null;
+            };
+        })[];
+    };
+}
+
+```
 ---
 
 ## ReceiveMessage
 
 Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "lobby/receiveMessage/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/receiveMessage/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "examples": [
-                        {
-                            "userId": 27,
-                            "message": "Hello lobby!"
-                        }
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "userId": {
-                            "type": "string"
-                        },
-                        "message": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "userId",
-                        "message"
-                    ]
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+    "$id": "lobby/receiveMessage/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/receiveMessage/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/receiveMessage/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "lobby/receiveMessage",
+            "type": "string"
         },
-        {
+        "data": {
+            "examples": [
+                {
+                    "userId": 27,
+                    "message": "Hello lobby!"
+                }
+            ],
             "type": "object",
             "properties": {
-                "messageId": {
+                "userId": {
                     "type": "string"
                 },
-                "commandId": {
-                    "const": "lobby/receiveMessage/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
+                "message": {
                     "type": "string"
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/receiveMessage/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "userId",
+                "message"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyReceiveMessageResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "success";
-          data: {
-              userId: string;
-              message: string;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/receiveMessage/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "Ut in",
+    "commandId": "lobby/receiveMessage",
     "data": {
         "userId": 27,
         "message": "Hello lobby!"
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyReceiveMessageEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/receiveMessage";
+    data: {
+        userId: string;
+        message: string;
+    };
+}
+
 ```
 ---
 
@@ -3470,6 +3263,10 @@ export type LobbyReceiveMessageResponse =
 Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -3478,14 +3275,20 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
 ```json
 {
     "$id": "lobby/sendMessage/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/sendMessage/request",
+            "const": "lobby/sendMessage",
             "type": "string"
         },
         "data": {
@@ -3507,6 +3310,7 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -3516,26 +3320,32 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "aliqua in",
+    "commandId": "lobby/sendMessage",
+    "data": {
+        "message": "Hello lobby!"
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbySendMessageRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/sendMessage/request";
+    commandId: "lobby/sendMessage";
     data: {
         message: string;
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/sendMessage/request",
-    "data": {
-        "message": "Hello lobby!"
-    }
-}
 ```
 ### Response
 
@@ -3545,16 +3355,22 @@ export interface LobbySendMessageRequest {
 ```json
 {
     "$id": "lobby/sendMessage/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3563,6 +3379,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -3571,11 +3388,15 @@ export interface LobbySendMessageRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3588,6 +3409,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3597,11 +3419,15 @@ export interface LobbySendMessageRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3614,6 +3440,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3623,11 +3450,15 @@ export interface LobbySendMessageRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3640,6 +3471,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3649,11 +3481,15 @@ export interface LobbySendMessageRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3666,6 +3502,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3675,11 +3512,15 @@ export interface LobbySendMessageRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3692,6 +3533,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3701,11 +3543,15 @@ export interface LobbySendMessageRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/sendMessage/response",
+                    "const": "lobby/sendMessage",
                     "type": "string"
                 },
                 "status": {
@@ -3718,6 +3564,7 @@ export interface LobbySendMessageRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3730,59 +3577,28 @@ export interface LobbySendMessageRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbySendMessageResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "not_in_lobby";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "muted";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/sendMessage/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/sendMessage/response",
+    "type": "response",
+    "messageId": "magna commodo",
+    "commandId": "lobby/sendMessage",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySendMessageResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/sendMessage";
+    status: "success";
+}
+
 ```
 ---
 
@@ -3791,6 +3607,10 @@ export type LobbySendMessageResponse =
 Subscribe to custom battle updates. By default, updates for the user's own battle will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed battles, and then continue to send partial (stateful) updates via the [updated](#updated) response.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -3799,14 +3619,20 @@ Subscribe to custom battle updates. By default, updates for the user's own battl
 ```json
 {
     "$id": "lobby/subscribe/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/subscribe/request",
+            "const": "lobby/subscribe",
             "type": "string"
         },
         "data": {
@@ -3825,6 +3651,7 @@ Subscribe to custom battle updates. By default, updates for the user's own battl
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -3834,28 +3661,35 @@ Subscribe to custom battle updates. By default, updates for the user's own battl
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "id ea",
+    "commandId": "lobby/subscribe",
+    "data": {
+        "battleIds": [
+            "id ea",
+            "id ea"
+        ]
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbySubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/subscribe/request";
+    commandId: "lobby/subscribe";
     data: {
         battleIds: string[];
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/subscribe/request",
-    "data": {
-        "battleIds": [
-            "mollit"
-        ]
-    }
-}
 ```
 ### Response
 
@@ -3865,16 +3699,22 @@ export interface LobbySubscribeRequest {
 ```json
 {
     "$id": "lobby/subscribe/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/subscribe/response",
+                    "const": "lobby/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -3883,6 +3723,7 @@ export interface LobbySubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -3891,11 +3732,15 @@ export interface LobbySubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/subscribe/response",
+                    "const": "lobby/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -3908,6 +3753,7 @@ export interface LobbySubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3917,11 +3763,15 @@ export interface LobbySubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/subscribe/response",
+                    "const": "lobby/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -3934,6 +3784,7 @@ export interface LobbySubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3943,11 +3794,15 @@ export interface LobbySubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/subscribe/response",
+                    "const": "lobby/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -3960,6 +3815,7 @@ export interface LobbySubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3969,11 +3825,15 @@ export interface LobbySubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/subscribe/response",
+                    "const": "lobby/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -3986,6 +3846,7 @@ export interface LobbySubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -3998,47 +3859,28 @@ export interface LobbySubscribeRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbySubscribeResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/subscribe/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/subscribe/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/subscribe/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/subscribe/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/subscribe/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/subscribe/response",
+    "type": "response",
+    "messageId": "voluptate ullamco",
+    "commandId": "lobby/subscribe",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySubscribeResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/subscribe";
+    status: "success";
+}
+
 ```
 ---
 
@@ -4047,6 +3889,10 @@ export type LobbySubscribeResponse =
 Unsubscribe from custom battle updates. If battleIds is passed only updates to those battles will be stopped, otherwise this will stop updates for all battles.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -4055,14 +3901,20 @@ Unsubscribe from custom battle updates. If battleIds is passed only updates to t
 ```json
 {
     "$id": "lobby/unsubscribe/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/unsubscribe/request",
+            "const": "lobby/unsubscribe",
             "type": "string"
         },
         "data": {
@@ -4078,6 +3930,7 @@ Unsubscribe from custom battle updates. If battleIds is passed only updates to t
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -4087,26 +3940,35 @@ Unsubscribe from custom battle updates. If battleIds is passed only updates to t
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "in exercitation",
+    "commandId": "lobby/unsubscribe",
+    "data": {
+        "battleIds": [
+            "in exercitation",
+            "in exercitation"
+        ]
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface LobbyUnsubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/unsubscribe/request";
+    commandId: "lobby/unsubscribe";
     data: {
         battleIds?: string[];
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "lobby/unsubscribe/request",
-    "data": {
-        "mollitb": -75320000
-    }
-}
 ```
 ### Response
 
@@ -4116,16 +3978,22 @@ export interface LobbyUnsubscribeRequest {
 ```json
 {
     "$id": "lobby/unsubscribe/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/unsubscribe/response",
+                    "const": "lobby/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -4134,6 +4002,7 @@ export interface LobbyUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -4142,11 +4011,15 @@ export interface LobbyUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/unsubscribe/response",
+                    "const": "lobby/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -4159,6 +4032,7 @@ export interface LobbyUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -4168,11 +4042,15 @@ export interface LobbyUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/unsubscribe/response",
+                    "const": "lobby/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -4185,6 +4063,7 @@ export interface LobbyUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -4194,11 +4073,15 @@ export interface LobbyUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/unsubscribe/response",
+                    "const": "lobby/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -4211,6 +4094,7 @@ export interface LobbyUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -4220,11 +4104,15 @@ export interface LobbyUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/unsubscribe/response",
+                    "const": "lobby/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -4237,6 +4125,7 @@ export interface LobbyUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -4246,11 +4135,15 @@ export interface LobbyUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "lobby/unsubscribe/response",
+                    "const": "lobby/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -4263,6 +4156,7 @@ export interface LobbyUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -4275,53 +4169,28 @@ export interface LobbyUnsubscribeRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyUnsubscribeResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/unsubscribe/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/unsubscribe/response";
-          status: "failed";
-          reason: "cannot_unsub_own_battle";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/unsubscribe/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/unsubscribe/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/unsubscribe/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/unsubscribe/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/unsubscribe/response",
+    "type": "response",
+    "messageId": "in nostrud",
+    "commandId": "lobby/unsubscribe",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUnsubscribeResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/unsubscribe";
+    status: "success";
+}
+
 ```
 ---
 
@@ -4329,777 +4198,562 @@ export type LobbyUnsubscribeResponse =
 
 Server sends an array of partial battle objects whenever a subscribed battle changes in some way.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "lobby/updated/response",
-    "roles": [],
-    "anyOf": [
-        {
+    "$id": "lobby/updated/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/updated",
+            "type": "string"
+        },
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "battles": {
-                            "type": "array",
-                            "items": {
-                                "examples": [
-                                    {
-                                        "title": "3v3 | Newbies only",
-                                        "limits": {
-                                            "minTeamsize": 3,
-                                            "maxTeamsize": 3,
-                                            "minRating": null,
-                                            "maxRating": 25
-                                        }
-                                    }
-                                ],
+                "battles": {
+                    "type": "array",
+                    "items": {
+                        "examples": [
+                            {
+                                "title": "3v3 | Newbies only",
+                                "limits": {
+                                    "minTeamsize": 3,
+                                    "maxTeamsize": 3,
+                                    "minRating": null,
+                                    "maxRating": 25
+                                }
+                            }
+                        ],
+                        "type": "object",
+                        "allOf": [
+                            {
                                 "type": "object",
-                                "allOf": [
-                                    {
+                                "properties": {
+                                    "battleId": {
+                                        "type": "string"
+                                    },
+                                    "hostId": {
+                                        "type": "string"
+                                    },
+                                    "engine": {
+                                        "type": "string"
+                                    },
+                                    "game": {
+                                        "type": "string"
+                                    },
+                                    "map": {
+                                        "type": "string"
+                                    },
+                                    "startPosType": {
+                                        "anyOf": [
+                                            {
+                                                "description": "Fixed",
+                                                "const": 0,
+                                                "type": "number"
+                                            },
+                                            {
+                                                "description": "Random",
+                                                "const": 1,
+                                                "type": "number"
+                                            },
+                                            {
+                                                "description": "Boxes",
+                                                "const": 2,
+                                                "type": "number"
+                                            }
+                                        ]
+                                    },
+                                    "startAreas": {
                                         "type": "object",
-                                        "properties": {
-                                            "battleId": {
-                                                "type": "string"
-                                            },
-                                            "hostId": {
-                                                "type": "string"
-                                            },
-                                            "engine": {
-                                                "type": "string"
-                                            },
-                                            "game": {
-                                                "type": "string"
-                                            },
-                                            "map": {
-                                                "type": "string"
-                                            },
-                                            "startPosType": {
-                                                "anyOf": [
+                                        "patternProperties": {
+                                            "^(0|[1-9][0-9]*)$": {
+                                                "examples": [
                                                     {
-                                                        "description": "Fixed",
-                                                        "const": 0,
-                                                        "type": "number"
-                                                    },
-                                                    {
-                                                        "description": "Random",
-                                                        "const": 1,
-                                                        "type": "number"
-                                                    },
-                                                    {
-                                                        "description": "Boxes",
-                                                        "const": 2,
-                                                        "type": "number"
+                                                        "x": 0,
+                                                        "y": 0,
+                                                        "width": 1,
+                                                        "height": 0.3
                                                     }
-                                                ]
-                                            },
-                                            "startAreas": {
+                                                ],
                                                 "type": "object",
-                                                "patternProperties": {
-                                                    "^(0|[1-9][0-9]*)$": {
-                                                        "examples": [
-                                                            {
-                                                                "x": 0,
-                                                                "y": 0,
-                                                                "width": 1,
-                                                                "height": 0.3
-                                                            }
-                                                        ],
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "x": {
-                                                                "type": "number"
-                                                            },
-                                                            "y": {
-                                                                "type": "number"
-                                                            },
-                                                            "width": {
-                                                                "type": "number"
-                                                            },
-                                                            "height": {
-                                                                "type": "number"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "x",
-                                                            "y",
-                                                            "width",
-                                                            "height"
-                                                        ]
-                                                    }
-                                                }
-                                            },
-                                            "startTime": {
-                                                "anyOf": [
-                                                    {
-                                                        "description": "Unix time",
-                                                        "examples": [
-                                                            1705432698,
-                                                            null
-                                                        ],
-                                                        "type": "integer"
+                                                "properties": {
+                                                    "x": {
+                                                        "type": "number"
                                                     },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
-                                            },
-                                            "ip": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string"
+                                                    "y": {
+                                                        "type": "number"
                                                     },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
-                                            },
-                                            "port": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "integer"
+                                                    "width": {
+                                                        "type": "number"
                                                     },
-                                                    {
-                                                        "type": "null"
+                                                    "height": {
+                                                        "type": "number"
                                                     }
+                                                },
+                                                "required": [
+                                                    "x",
+                                                    "y",
+                                                    "width",
+                                                    "height"
                                                 ]
+                                            }
+                                        }
+                                    },
+                                    "startTime": {
+                                        "anyOf": [
+                                            {
+                                                "description": "Unix time",
+                                                "examples": [
+                                                    1705432698,
+                                                    null
+                                                ],
+                                                "type": "integer"
                                             },
-                                            "scriptPassword": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
-                                                ]
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "ip": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
                                             },
-                                            "modOptions": {
-                                                "type": "object",
-                                                "patternProperties": {
-                                                    "^(.*)$": {}
-                                                }
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "port": {
+                                        "anyOf": [
+                                            {
+                                                "type": "integer"
                                             },
-                                            "bots": {
-                                                "type": "array",
-                                                "items": {
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "scriptPassword": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "modOptions": {
+                                        "type": "object",
+                                        "patternProperties": {
+                                            "^(.*)$": {}
+                                        }
+                                    },
+                                    "bots": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "playerId": {
+                                                    "type": "integer"
+                                                },
+                                                "teamId": {
+                                                    "type": "integer"
+                                                },
+                                                "color": {
+                                                    "type": "string"
+                                                },
+                                                "bonus": {
+                                                    "type": "number"
+                                                },
+                                                "inGame": {
+                                                    "type": "boolean"
+                                                },
+                                                "isSpectator": {
+                                                    "const": false,
+                                                    "type": "boolean"
+                                                },
+                                                "isBot": {
+                                                    "const": true,
+                                                    "type": "boolean"
+                                                },
+                                                "ownerId": {
+                                                    "type": "string"
+                                                },
+                                                "aiShortName": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "aiOptions": {
                                                     "type": "object",
-                                                    "properties": {
-                                                        "playerId": {
-                                                            "type": "integer"
-                                                        },
-                                                        "teamId": {
-                                                            "type": "integer"
-                                                        },
-                                                        "color": {
+                                                    "patternProperties": {
+                                                        "^(.*)$": {}
+                                                    }
+                                                },
+                                                "faction": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "playerId",
+                                                "teamId",
+                                                "color",
+                                                "bonus",
+                                                "inGame",
+                                                "isSpectator",
+                                                "isBot",
+                                                "ownerId",
+                                                "aiShortName",
+                                                "name",
+                                                "aiOptions",
+                                                "faction"
+                                            ]
+                                        }
+                                    },
+                                    "users": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "userId": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                },
+                                                "displayName": {
+                                                    "type": "string"
+                                                },
+                                                "avatarUrl": {
+                                                    "anyOf": [
+                                                        {
                                                             "type": "string"
                                                         },
-                                                        "bonus": {
-                                                            "type": "number"
-                                                        },
-                                                        "inGame": {
-                                                            "type": "boolean"
-                                                        },
-                                                        "isSpectator": {
-                                                            "const": false,
-                                                            "type": "boolean"
-                                                        },
-                                                        "isBot": {
-                                                            "const": true,
-                                                            "type": "boolean"
-                                                        },
-                                                        "ownerId": {
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "clanId": {
+                                                    "anyOf": [
+                                                        {
                                                             "type": "string"
                                                         },
-                                                        "aiShortName": {
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "partyId": {
+                                                    "anyOf": [
+                                                        {
                                                             "type": "string"
                                                         },
-                                                        "name": {
+                                                        {
+                                                            "type": "null"
+                                                        }
+                                                    ]
+                                                },
+                                                "scopes": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "countryCode": {
+                                                    "type": "string"
+                                                },
+                                                "status": {
+                                                    "anyOf": [
+                                                        {
+                                                            "const": "offline",
                                                             "type": "string"
                                                         },
-                                                        "aiOptions": {
-                                                            "type": "object",
-                                                            "patternProperties": {
-                                                                "^(.*)$": {}
-                                                            }
+                                                        {
+                                                            "const": "menu",
+                                                            "type": "string"
                                                         },
-                                                        "faction": {
+                                                        {
+                                                            "const": "playing",
+                                                            "type": "string"
+                                                        },
+                                                        {
+                                                            "const": "lobby",
                                                             "type": "string"
                                                         }
-                                                    },
-                                                    "required": [
-                                                        "playerId",
-                                                        "teamId",
-                                                        "color",
-                                                        "bonus",
-                                                        "inGame",
-                                                        "isSpectator",
-                                                        "isBot",
-                                                        "ownerId",
-                                                        "aiShortName",
-                                                        "name",
-                                                        "aiOptions",
-                                                        "faction"
                                                     ]
-                                                }
-                                            },
-                                            "users": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "userId": {
-                                                            "type": "string"
-                                                        },
-                                                        "username": {
-                                                            "type": "string"
-                                                        },
-                                                        "displayName": {
-                                                            "type": "string"
-                                                        },
-                                                        "avatarUrl": {
-                                                            "anyOf": [
+                                                },
+                                                "battleStatus": {
+                                                    "anyOf": [
+                                                        {
+                                                            "allOf": [
                                                                 {
-                                                                    "type": "string"
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "battleId": {
+                                                                            "type": "string"
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "battleId"
+                                                                    ]
                                                                 },
                                                                 {
-                                                                    "type": "null"
-                                                                }
-                                                            ]
-                                                        },
-                                                        "clanId": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "type": "string"
-                                                                },
-                                                                {
-                                                                    "type": "null"
-                                                                }
-                                                            ]
-                                                        },
-                                                        "partyId": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "type": "string"
-                                                                },
-                                                                {
-                                                                    "type": "null"
-                                                                }
-                                                            ]
-                                                        },
-                                                        "roles": {
-                                                            "type": "array",
-                                                            "items": {
-                                                                "type": "string"
-                                                            }
-                                                        },
-                                                        "countryCode": {
-                                                            "type": "string"
-                                                        },
-                                                        "status": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "const": "offline",
-                                                                    "type": "string"
-                                                                },
-                                                                {
-                                                                    "const": "menu",
-                                                                    "type": "string"
-                                                                },
-                                                                {
-                                                                    "const": "playing",
-                                                                    "type": "string"
-                                                                },
-                                                                {
-                                                                    "const": "lobby",
-                                                                    "type": "string"
-                                                                }
-                                                            ]
-                                                        },
-                                                        "battleStatus": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "allOf": [
+                                                                    "anyOf": [
                                                                         {
                                                                             "type": "object",
-                                                                            "properties": {
-                                                                                "battleId": {
-                                                                                    "type": "string"
-                                                                                }
-                                                                            },
-                                                                            "required": [
-                                                                                "battleId"
-                                                                            ]
-                                                                        },
-                                                                        {
-                                                                            "anyOf": [
+                                                                            "allOf": [
                                                                                 {
                                                                                     "type": "object",
-                                                                                    "allOf": [
-                                                                                        {
-                                                                                            "type": "object",
-                                                                                            "properties": {
-                                                                                                "playerId": {
-                                                                                                    "type": "integer"
-                                                                                                },
-                                                                                                "teamId": {
-                                                                                                    "type": "integer"
-                                                                                                },
-                                                                                                "color": {
-                                                                                                    "type": "string"
-                                                                                                },
-                                                                                                "bonus": {
-                                                                                                    "type": "number"
-                                                                                                },
-                                                                                                "inGame": {
-                                                                                                    "type": "boolean"
-                                                                                                }
-                                                                                            },
-                                                                                            "required": [
-                                                                                                "playerId",
-                                                                                                "teamId",
-                                                                                                "color",
-                                                                                                "bonus",
-                                                                                                "inGame"
-                                                                                            ]
+                                                                                    "properties": {
+                                                                                        "playerId": {
+                                                                                            "type": "integer"
                                                                                         },
-                                                                                        {
-                                                                                            "type": "object",
-                                                                                            "properties": {
-                                                                                                "isSpectator": {
-                                                                                                    "const": false,
-                                                                                                    "type": "boolean"
-                                                                                                },
-                                                                                                "isBot": {
-                                                                                                    "const": false,
-                                                                                                    "type": "boolean"
-                                                                                                },
-                                                                                                "ready": {
-                                                                                                    "type": "boolean"
-                                                                                                },
-                                                                                                "sync": {
-                                                                                                    "type": "object",
-                                                                                                    "properties": {
-                                                                                                        "engine": {
-                                                                                                            "type": "number"
-                                                                                                        },
-                                                                                                        "game": {
-                                                                                                            "type": "number"
-                                                                                                        },
-                                                                                                        "map": {
-                                                                                                            "type": "number"
-                                                                                                        }
-                                                                                                    },
-                                                                                                    "required": [
-                                                                                                        "engine",
-                                                                                                        "game",
-                                                                                                        "map"
-                                                                                                    ]
-                                                                                                }
-                                                                                            },
-                                                                                            "required": [
-                                                                                                "isSpectator",
-                                                                                                "isBot",
-                                                                                                "ready",
-                                                                                                "sync"
-                                                                                            ]
+                                                                                        "teamId": {
+                                                                                            "type": "integer"
+                                                                                        },
+                                                                                        "color": {
+                                                                                            "type": "string"
+                                                                                        },
+                                                                                        "bonus": {
+                                                                                            "type": "number"
+                                                                                        },
+                                                                                        "inGame": {
+                                                                                            "type": "boolean"
                                                                                         }
+                                                                                    },
+                                                                                    "required": [
+                                                                                        "playerId",
+                                                                                        "teamId",
+                                                                                        "color",
+                                                                                        "bonus",
+                                                                                        "inGame"
                                                                                     ]
                                                                                 },
                                                                                 {
                                                                                     "type": "object",
                                                                                     "properties": {
                                                                                         "isSpectator": {
-                                                                                            "const": true,
+                                                                                            "const": false,
                                                                                             "type": "boolean"
                                                                                         },
                                                                                         "isBot": {
                                                                                             "const": false,
                                                                                             "type": "boolean"
+                                                                                        },
+                                                                                        "ready": {
+                                                                                            "type": "boolean"
+                                                                                        },
+                                                                                        "sync": {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "engine": {
+                                                                                                    "type": "number"
+                                                                                                },
+                                                                                                "game": {
+                                                                                                    "type": "number"
+                                                                                                },
+                                                                                                "map": {
+                                                                                                    "type": "number"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "engine",
+                                                                                                "game",
+                                                                                                "map"
+                                                                                            ]
                                                                                         }
                                                                                     },
                                                                                     "required": [
                                                                                         "isSpectator",
-                                                                                        "isBot"
+                                                                                        "isBot",
+                                                                                        "ready",
+                                                                                        "sync"
                                                                                     ]
                                                                                 }
                                                                             ]
+                                                                        },
+                                                                        {
+                                                                            "type": "object",
+                                                                            "properties": {
+                                                                                "isSpectator": {
+                                                                                    "const": true,
+                                                                                    "type": "boolean"
+                                                                                },
+                                                                                "isBot": {
+                                                                                    "const": false,
+                                                                                    "type": "boolean"
+                                                                                }
+                                                                            },
+                                                                            "required": [
+                                                                                "isSpectator",
+                                                                                "isBot"
+                                                                            ]
                                                                         }
                                                                     ]
-                                                                },
-                                                                {
-                                                                    "type": "null"
                                                                 }
                                                             ]
+                                                        },
+                                                        {
+                                                            "type": "null"
                                                         }
-                                                    },
-                                                    "required": [
-                                                        "userId",
-                                                        "username",
-                                                        "displayName",
-                                                        "avatarUrl",
-                                                        "clanId",
-                                                        "partyId",
-                                                        "roles",
-                                                        "status",
-                                                        "battleStatus"
                                                     ]
                                                 }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "title": {
-                                                "type": "string"
                                             },
-                                            "locked": {
-                                                "type": "boolean"
-                                            },
-                                            "passworded": {
-                                                "type": "boolean"
-                                            },
-                                            "bossIds": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "joinQueueIds": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "limits": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "minTeamsize": {
-                                                        "anyOf": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "null"
-                                                            }
-                                                        ]
-                                                    },
-                                                    "maxTeamsize": {
-                                                        "anyOf": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "null"
-                                                            }
-                                                        ]
-                                                    },
-                                                    "minRating": {
-                                                        "anyOf": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "null"
-                                                            }
-                                                        ]
-                                                    },
-                                                    "maxRating": {
-                                                        "anyOf": [
-                                                            {
-                                                                "type": "integer"
-                                                            },
-                                                            {
-                                                                "type": "null"
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                "required": [
-                                                    "minTeamsize",
-                                                    "maxTeamsize",
-                                                    "minRating",
-                                                    "maxRating"
-                                                ]
-                                            }
+                                            "required": [
+                                                "userId",
+                                                "username",
+                                                "displayName",
+                                                "avatarUrl",
+                                                "clanId",
+                                                "partyId",
+                                                "scopes",
+                                                "status",
+                                                "battleStatus"
+                                            ]
                                         }
                                     }
-                                ]
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "locked": {
+                                        "type": "boolean"
+                                    },
+                                    "passworded": {
+                                        "type": "boolean"
+                                    },
+                                    "bossIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "joinQueueIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "limits": {
+                                        "type": "object",
+                                        "properties": {
+                                            "minTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "maxTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "minRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "maxRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "minTeamsize",
+                                            "maxTeamsize",
+                                            "minRating",
+                                            "maxRating"
+                                        ]
+                                    }
+                                }
                             }
-                        }
-                    },
-                    "required": [
-                        "battles"
-                    ]
+                        ]
+                    }
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "lobby/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "battles"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type LobbyUpdatedResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "success";
-          data: {
-              battles: ({
-                  battleId?: string;
-                  hostId?: string;
-                  engine?: string;
-                  game?: string;
-                  map?: string;
-                  startPosType?: 0 | 1 | 2;
-                  startAreas?: {
-                      [k: string]: {
-                          x: number;
-                          y: number;
-                          width: number;
-                          height: number;
-                      };
-                  };
-                  startTime?: number | null;
-                  ip?: string | null;
-                  port?: number | null;
-                  scriptPassword?: string | null;
-                  modOptions?: {
-                      [k: string]: unknown;
-                  };
-                  bots?: {
-                      playerId: number;
-                      teamId: number;
-                      color: string;
-                      bonus: number;
-                      inGame: boolean;
-                      isSpectator: false;
-                      isBot: true;
-                      ownerId: string;
-                      aiShortName: string;
-                      name: string;
-                      aiOptions: {
-                          [k: string]: unknown;
-                      };
-                      faction: string;
-                  }[];
-                  users?: {
-                      userId: string;
-                      username: string;
-                      displayName: string;
-                      avatarUrl: string | null;
-                      clanId: string | null;
-                      partyId: string | null;
-                      roles: string[];
-                      countryCode?: string;
-                      status: "offline" | "menu" | "playing" | "lobby";
-                      battleStatus:
-                          | ({
-                                battleId: string;
-                            } & (
-                                | ({
-                                      playerId: number;
-                                      teamId: number;
-                                      color: string;
-                                      bonus: number;
-                                      inGame: boolean;
-                                  } & {
-                                      isSpectator: false;
-                                      isBot: false;
-                                      ready: boolean;
-                                      sync: {
-                                          engine: number;
-                                          game: number;
-                                          map: number;
-                                      };
-                                  })
-                                | {
-                                      isSpectator: true;
-                                      isBot: false;
-                                  }
-                            ))
-                          | null;
-                  }[];
-              } & {
-                  title?: string;
-                  locked?: boolean;
-                  passworded?: boolean;
-                  bossIds?: string[];
-                  joinQueueIds?: string[];
-                  limits?: {
-                      minTeamsize: number | null;
-                      maxTeamsize: number | null;
-                      minRating: number | null;
-                      maxRating: number | null;
-                  };
-              })[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "lobby/updated/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "consequat quis",
+    "commandId": "lobby/updated",
     "data": {
         "battles": [
+            {
+                "title": "3v3 | Newbies only",
+                "limits": {
+                    "minTeamsize": 3,
+                    "maxTeamsize": 3,
+                    "minRating": null,
+                    "maxRating": 25
+                }
+            },
             {
                 "title": "3v3 | Newbies only",
                 "limits": {
@@ -5112,4 +4766,105 @@ export type LobbyUpdatedResponse =
         ]
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdatedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/updated";
+    data: {
+        battles: ({
+            battleId?: string;
+            hostId?: string;
+            engine?: string;
+            game?: string;
+            map?: string;
+            startPosType?: 0 | 1 | 2;
+            startAreas?: {
+                [k: string]: {
+                    x: number;
+                    y: number;
+                    width: number;
+                    height: number;
+                };
+            };
+            startTime?: number | null;
+            ip?: string | null;
+            port?: number | null;
+            scriptPassword?: string | null;
+            modOptions?: {
+                [k: string]: unknown;
+            };
+            bots?: {
+                playerId: number;
+                teamId: number;
+                color: string;
+                bonus: number;
+                inGame: boolean;
+                isSpectator: false;
+                isBot: true;
+                ownerId: string;
+                aiShortName: string;
+                name: string;
+                aiOptions: {
+                    [k: string]: unknown;
+                };
+                faction: string;
+            }[];
+            users?: {
+                userId: string;
+                username: string;
+                displayName: string;
+                avatarUrl: string | null;
+                clanId: string | null;
+                partyId: string | null;
+                scopes: string[];
+                countryCode?: string;
+                status: "offline" | "menu" | "playing" | "lobby";
+                battleStatus:
+                    | ({
+                          battleId: string;
+                      } & (
+                          | ({
+                                playerId: number;
+                                teamId: number;
+                                color: string;
+                                bonus: number;
+                                inGame: boolean;
+                            } & {
+                                isSpectator: false;
+                                isBot: false;
+                                ready: boolean;
+                                sync: {
+                                    engine: number;
+                                    game: number;
+                                    map: number;
+                                };
+                            })
+                          | {
+                                isSpectator: true;
+                                isBot: false;
+                            }
+                      ))
+                    | null;
+            }[];
+        } & {
+            title?: string;
+            locked?: boolean;
+            passworded?: boolean;
+            bossIds?: string[];
+            joinQueueIds?: string[];
+            limits?: {
+                minTeamsize: number | null;
+                maxTeamsize: number | null;
+                minRating: number | null;
+                maxRating: number | null;
+            };
+        })[];
+    };
+}
+
 ```

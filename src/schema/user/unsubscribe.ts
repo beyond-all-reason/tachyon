@@ -3,6 +3,8 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
+    source: "user",
+    target: "server",
     description: "Unsubscribe from user updates.",
     request: {
         data: Type.Object({

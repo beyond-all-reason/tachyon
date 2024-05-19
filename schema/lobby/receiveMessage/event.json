@@ -1,0 +1,47 @@
+{
+    "$id": "lobby/receiveMessage/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/receiveMessage",
+            "type": "string"
+        },
+        "data": {
+            "examples": [
+                {
+                    "userId": 27,
+                    "message": "Hello lobby!"
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "userId",
+                "message"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

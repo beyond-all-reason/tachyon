@@ -3,377 +3,552 @@ declare module "json-schema-faker";
 
 // these are just some copy pasted shims from the outputed index.d.ts file, intended for generated-helpers.ts to make it easier to dev them
 
-declare type AutohostSlaveResponse =
+declare const tachyonMeta: {
+    readonly version: "1.6.4";
+    readonly schema: {
+        readonly server: {
+            readonly request: {
+                readonly send: readonly ["autohost/launch"];
+                readonly receive: readonly [
+                    "autohost/slave",
+                    "autohost/unslave",
+                    "lobby/close",
+                    "lobby/create",
+                    "lobby/join",
+                    "lobby/leave",
+                    "lobby/list",
+                    "lobby/sendMessage",
+                    "lobby/subscribe",
+                    "lobby/unsubscribe",
+                    "matchmaking/cancel",
+                    "matchmaking/declined",
+                    "matchmaking/list",
+                    "matchmaking/queue",
+                    "matchmaking/ready",
+                    "system/disconnect",
+                    "system/serverStats",
+                    "user/subscribe",
+                    "user/unsubscribe",
+                ];
+            };
+            readonly response: {
+                readonly send: readonly [
+                    "autohost/slave",
+                    "autohost/unslave",
+                    "lobby/close",
+                    "lobby/create",
+                    "lobby/join",
+                    "lobby/leave",
+                    "lobby/list",
+                    "lobby/sendMessage",
+                    "lobby/subscribe",
+                    "lobby/unsubscribe",
+                    "matchmaking/cancel",
+                    "matchmaking/declined",
+                    "matchmaking/list",
+                    "matchmaking/queue",
+                    "matchmaking/ready",
+                    "system/disconnect",
+                    "system/serverStats",
+                    "user/subscribe",
+                    "user/unsubscribe",
+                ];
+                readonly receive: readonly ["autohost/launch"];
+            };
+            readonly event: {
+                readonly send: readonly [
+                    "autohost/connected",
+                    "game/launch",
+                    "lobby/joined",
+                    "lobby/left",
+                    "lobby/receiveMessage",
+                    "lobby/updated",
+                    "matchmaking/found",
+                    "matchmaking/foundUpdate",
+                    "matchmaking/lost",
+                    "matchmaking/queueUpdate",
+                    "matchmaking/readyUpdate",
+                    "system/connected",
+                    "user/updated",
+                ];
+                readonly receive: readonly [];
+            };
+        };
+        readonly user: {
+            readonly request: {
+                readonly send: readonly [
+                    "lobby/close",
+                    "lobby/create",
+                    "lobby/join",
+                    "lobby/leave",
+                    "lobby/list",
+                    "lobby/sendMessage",
+                    "lobby/subscribe",
+                    "lobby/unsubscribe",
+                    "matchmaking/cancel",
+                    "matchmaking/declined",
+                    "matchmaking/list",
+                    "matchmaking/queue",
+                    "matchmaking/ready",
+                    "system/disconnect",
+                    "system/serverStats",
+                    "user/subscribe",
+                    "user/unsubscribe",
+                ];
+                readonly receive: readonly [];
+            };
+            readonly response: {
+                readonly send: readonly [];
+                readonly receive: readonly [
+                    "lobby/close",
+                    "lobby/create",
+                    "lobby/join",
+                    "lobby/leave",
+                    "lobby/list",
+                    "lobby/sendMessage",
+                    "lobby/subscribe",
+                    "lobby/unsubscribe",
+                    "matchmaking/cancel",
+                    "matchmaking/declined",
+                    "matchmaking/list",
+                    "matchmaking/queue",
+                    "matchmaking/ready",
+                    "system/disconnect",
+                    "system/serverStats",
+                    "user/subscribe",
+                    "user/unsubscribe",
+                ];
+            };
+            readonly event: {
+                readonly send: readonly [];
+                readonly receive: readonly [
+                    "game/launch",
+                    "lobby/joined",
+                    "lobby/left",
+                    "lobby/receiveMessage",
+                    "lobby/updated",
+                    "matchmaking/found",
+                    "matchmaking/foundUpdate",
+                    "matchmaking/lost",
+                    "matchmaking/queueUpdate",
+                    "matchmaking/readyUpdate",
+                    "system/connected",
+                    "user/updated",
+                ];
+            };
+        };
+        readonly autohost: {
+            readonly request: {
+                readonly send: readonly ["autohost/slave", "autohost/unslave"];
+                readonly receive: readonly ["autohost/launch"];
+            };
+            readonly response: {
+                readonly send: readonly ["autohost/launch"];
+                readonly receive: readonly ["autohost/slave", "autohost/unslave"];
+            };
+            readonly event: {
+                readonly send: readonly [];
+                readonly receive: readonly ["autohost/connected"];
+            };
+        };
+    };
+};
+
+declare type TachyonCommand =
+    | AutohostConnectedEvent
+    | AutohostLaunchRequest
+    | AutohostLaunchResponse
+    | AutohostSlaveRequest
+    | AutohostSlaveResponse
+    | AutohostUnslaveRequest
+    | AutohostUnslaveResponse
+    | GameLaunchEvent
+    | LobbyCloseRequest
+    | LobbyCloseResponse
+    | LobbyCreateRequest
+    | LobbyCreateResponse
+    | LobbyJoinRequest
+    | LobbyJoinResponse
+    | LobbyJoinedEvent
+    | LobbyLeaveRequest
+    | LobbyLeaveResponse
+    | LobbyLeftEvent
+    | LobbyListRequest
+    | LobbyListResponse
+    | LobbyReceiveMessageEvent
+    | LobbySendMessageRequest
+    | LobbySendMessageResponse
+    | LobbySubscribeRequest
+    | LobbySubscribeResponse
+    | LobbyUnsubscribeRequest
+    | LobbyUnsubscribeResponse
+    | LobbyUpdatedEvent
+    | MatchmakingCancelRequest
+    | MatchmakingCancelResponse
+    | MatchmakingDeclinedRequest
+    | MatchmakingDeclinedResponse
+    | MatchmakingFoundEvent
+    | MatchmakingFoundUpdateEvent
+    | MatchmakingListRequest
+    | MatchmakingListResponse
+    | MatchmakingLostEvent
+    | MatchmakingQueueRequest
+    | MatchmakingQueueResponse
+    | MatchmakingQueueUpdateEvent
+    | MatchmakingReadyRequest
+    | MatchmakingReadyResponse
+    | MatchmakingReadyUpdateEvent
+    | SystemConnectedEvent
+    | SystemDisconnectRequest
+    | SystemDisconnectResponse
+    | SystemServerStatsRequest
+    | SystemServerStatsResponse
+    | UserSubscribeRequest
+    | UserSubscribeResponse
+    | UserUnsubscribeRequest
+    | UserUnsubscribeResponse
+    | UserUpdatedEvent;
+declare type AutohostLaunchResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/slave/response";
+          commandId: "autohost/launch";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/slave/response";
+          commandId: "autohost/launch";
+          status: "failed";
+          reason: "invalid_script";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/launch";
+          status: "failed";
+          reason: "server_already_running";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/launch";
+          status: "failed";
+          reason: "server_failed_to_start";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/launch";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/slave/response";
+          commandId: "autohost/launch";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/slave/response";
+          commandId: "autohost/launch";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/launch";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
+declare type AutohostSlaveResponse =
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/slave";
+          status: "success";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/slave";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/slave";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/slave";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/slave";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type AutohostUnslaveResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/unslave/response";
+          commandId: "autohost/unslave";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/unslave/response";
+          commandId: "autohost/unslave";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/unslave/response";
+          commandId: "autohost/unslave";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "autohost/unslave/response";
+          commandId: "autohost/unslave";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type GameLaunchResponse =
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "success";
-          data: {
-              script: string;
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "game/launch/response";
+          commandId: "autohost/unslave";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "game/launch/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type LobbyCloseResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/close/response";
+          commandId: "lobby/close";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/close/response";
+          commandId: "lobby/close";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/close/response";
+          commandId: "lobby/close";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/close/response";
+          commandId: "lobby/close";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "lobby/close";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type LobbyCreateResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/create/response";
+          commandId: "lobby/create";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/create/response";
+          commandId: "lobby/create";
           status: "failed";
           reason: "no_hosts_available";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/create/response";
+          commandId: "lobby/create";
           status: "failed";
           reason: "invalid_region";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/create/response";
+          commandId: "lobby/create";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/create/response";
+          commandId: "lobby/create";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/create/response";
+          commandId: "lobby/create";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "lobby/create";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type LobbyJoinResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "locked";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "requires_password";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "invalid_password";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "max_participants_reached";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "rank_too_low";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "rank_too_high";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "banned";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/join/response";
+          commandId: "lobby/join";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type LobbyJoinedResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "success";
-          data: {
-              battleId: string;
-              hostId: string;
-              engine: string;
-              game: string;
-              map: string;
-              startPosType: 0 | 1 | 2;
-              startAreas: {
-                  /**
-                   * This interface was referenced by `undefined`'s JSON-Schema definition
-                   * via the `patternProperty` "^(0|[1-9][0-9]*)$".
-                   */
-                  [k: string]: {
-                      x: number;
-                      y: number;
-                      width: number;
-                      height: number;
-                  };
-              };
-              startTime: number | null;
-              ip: string | null;
-              port: number | null;
-              scriptPassword: string | null;
-              modOptions: {
-                  /**
-                   * This interface was referenced by `undefined`'s JSON-Schema definition
-                   * via the `patternProperty` "^(.*)$".
-                   */
-                  [k: string]: unknown;
-              };
-              bots: {
-                  playerId: number;
-                  teamId: number;
-                  color: string;
-                  bonus: number;
-                  inGame: boolean;
-                  isSpectator: false;
-                  isBot: true;
-                  ownerId: string;
-                  aiShortName: string;
-                  name: string;
-                  aiOptions: {
-                      /**
-                       * This interface was referenced by `undefined`'s JSON-Schema definition
-                       * via the `patternProperty` "^(.*)$".
-                       */
-                      [k: string]: unknown;
-                  };
-                  faction: string;
-              }[];
-              users: {
-                  userId: string;
-                  username: string;
-                  displayName: string;
-                  avatarUrl: string;
-                  clanId: string | null;
-                  partyId: string | null;
-                  roles: string[];
-                  countryCode?: string;
-                  status: "offline" | "menu" | "playing" | "lobby";
-                  battleStatus:
-                      | ({
-                            battleId: string;
-                        } & (
-                            | ({
-                                  playerId: number;
-                                  teamId: number;
-                                  color: string;
-                                  bonus: number;
-                                  inGame: boolean;
-                              } & {
-                                  isSpectator: false;
-                                  isBot: false;
-                                  ready: boolean;
-                                  sync: {
-                                      engine: number;
-                                      game: number;
-                                      map: number;
-                                  };
-                              })
-                            | {
-                                  isSpectator: true;
-                                  isBot: false;
-                              }
-                        ))
-                      | null;
-              }[];
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/joined/response";
+          commandId: "lobby/join";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/joined/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type LobbyLeaveResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/leave/response";
+          commandId: "lobby/leave";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/leave/response";
+          commandId: "lobby/leave";
           status: "failed";
           reason: "no_lobby";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/leave/response";
+          commandId: "lobby/leave";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/leave/response";
+          commandId: "lobby/leave";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/leave/response";
+          commandId: "lobby/leave";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type LobbyLeftResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "success";
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/left/response";
+          commandId: "lobby/leave";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/left/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type LobbyListResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/list/response";
+          commandId: "lobby/list";
           status: "success";
           data: {
               battles: ({
@@ -430,10 +605,10 @@ declare type LobbyListResponse =
                       userId: string;
                       username: string;
                       displayName: string;
-                      avatarUrl: string;
+                      avatarUrl: string | null;
                       clanId: string | null;
                       partyId: string | null;
-                      roles: string[];
+                      scopes: string[];
                       countryCode?: string;
                       status: "offline" | "menu" | "playing" | "lobby";
                       battleStatus:
@@ -479,631 +654,466 @@ declare type LobbyListResponse =
           };
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/list/response";
+          commandId: "lobby/list";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/list/response";
+          commandId: "lobby/list";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/list/response";
+          commandId: "lobby/list";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type LobbyReceiveMessageResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "success";
-          data: {
-              userId: string;
-              message: string;
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/receiveMessage/response";
+          commandId: "lobby/list";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/receiveMessage/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type LobbySendMessageResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/sendMessage/response";
+          commandId: "lobby/sendMessage";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/sendMessage/response";
+          commandId: "lobby/sendMessage";
           status: "failed";
           reason: "not_in_lobby";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/sendMessage/response";
+          commandId: "lobby/sendMessage";
           status: "failed";
           reason: "muted";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/sendMessage/response";
+          commandId: "lobby/sendMessage";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/sendMessage/response";
+          commandId: "lobby/sendMessage";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/sendMessage/response";
+          commandId: "lobby/sendMessage";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "lobby/sendMessage";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type LobbySubscribeResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/subscribe/response";
+          commandId: "lobby/subscribe";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/subscribe/response";
+          commandId: "lobby/subscribe";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/subscribe/response";
+          commandId: "lobby/subscribe";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/subscribe/response";
+          commandId: "lobby/subscribe";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "lobby/subscribe";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type LobbyUnsubscribeResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/unsubscribe/response";
+          commandId: "lobby/unsubscribe";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/unsubscribe/response";
+          commandId: "lobby/unsubscribe";
           status: "failed";
           reason: "cannot_unsub_own_battle";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/unsubscribe/response";
+          commandId: "lobby/unsubscribe";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/unsubscribe/response";
+          commandId: "lobby/unsubscribe";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/unsubscribe/response";
+          commandId: "lobby/unsubscribe";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type LobbyUpdatedResponse =
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "success";
-          data: {
-              battles: ({
-                  battleId?: string;
-                  hostId?: string;
-                  engine?: string;
-                  game?: string;
-                  map?: string;
-                  startPosType?: 0 | 1 | 2;
-                  startAreas?: {
-                      /**
-                       * This interface was referenced by `undefined`'s JSON-Schema definition
-                       * via the `patternProperty` "^(0|[1-9][0-9]*)$".
-                       */
-                      [k: string]: {
-                          x: number;
-                          y: number;
-                          width: number;
-                          height: number;
-                      };
-                  };
-                  startTime?: number | null;
-                  ip?: string | null;
-                  port?: number | null;
-                  scriptPassword?: string | null;
-                  modOptions?: {
-                      /**
-                       * This interface was referenced by `undefined`'s JSON-Schema definition
-                       * via the `patternProperty` "^(.*)$".
-                       */
-                      [k: string]: unknown;
-                  };
-                  bots?: {
-                      playerId: number;
-                      teamId: number;
-                      color: string;
-                      bonus: number;
-                      inGame: boolean;
-                      isSpectator: false;
-                      isBot: true;
-                      ownerId: string;
-                      aiShortName: string;
-                      name: string;
-                      aiOptions: {
-                          /**
-                           * This interface was referenced by `undefined`'s JSON-Schema definition
-                           * via the `patternProperty` "^(.*)$".
-                           */
-                          [k: string]: unknown;
-                      };
-                      faction: string;
-                  }[];
-                  users?: {
-                      userId: string;
-                      username: string;
-                      displayName: string;
-                      avatarUrl: string;
-                      clanId: string | null;
-                      partyId: string | null;
-                      roles: string[];
-                      countryCode?: string;
-                      status: "offline" | "menu" | "playing" | "lobby";
-                      battleStatus:
-                          | ({
-                                battleId: string;
-                            } & (
-                                | ({
-                                      playerId: number;
-                                      teamId: number;
-                                      color: string;
-                                      bonus: number;
-                                      inGame: boolean;
-                                  } & {
-                                      isSpectator: false;
-                                      isBot: false;
-                                      ready: boolean;
-                                      sync: {
-                                          engine: number;
-                                          game: number;
-                                          map: number;
-                                      };
-                                  })
-                                | {
-                                      isSpectator: true;
-                                      isBot: false;
-                                  }
-                            ))
-                          | null;
-                  }[];
-              } & {
-                  title?: string;
-                  locked?: boolean;
-                  passworded?: boolean;
-                  bossIds?: string[];
-                  joinQueueIds?: string[];
-                  limits?: {
-                      minTeamsize: number | null;
-                      maxTeamsize: number | null;
-                      minRating: number | null;
-                      maxRating: number | null;
-                  };
-              })[];
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "lobby/updated/response";
+          commandId: "lobby/unsubscribe";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "lobby/updated/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type MatchmakingCancelResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/cancel/response";
+          commandId: "matchmaking/cancel";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/cancel/response";
+          commandId: "matchmaking/cancel";
           status: "failed";
           reason: "not_queued";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/cancel/response";
+          commandId: "matchmaking/cancel";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/cancel/response";
+          commandId: "matchmaking/cancel";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/cancel/response";
+          commandId: "matchmaking/cancel";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "matchmaking/cancel";
+          status: "failed";
+          reason: "command_unimplemented";
       };
-declare type MatchmakingFoundResponse =
+declare type MatchmakingDeclinedResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/found/response";
+          commandId: "matchmaking/declined";
           status: "success";
-          data: {
-              queueId: string;
-          };
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/found/response";
+          commandId: "matchmaking/declined";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/found/response";
+          commandId: "matchmaking/declined";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/found/response";
+          commandId: "matchmaking/declined";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "matchmaking/declined";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type MatchmakingListResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/list/response";
+          commandId: "matchmaking/list";
           status: "success";
           data: {
               playlists: {
                   id: string;
                   name: string;
-                  ranked: boolean;
+                  numOfTeams: number;
                   teamSize: number;
+                  ranked: boolean;
               }[];
           };
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/list/response";
+          commandId: "matchmaking/list";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/list/response";
+          commandId: "matchmaking/list";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/list/response";
+          commandId: "matchmaking/list";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type MatchmakingLostResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "success";
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/lost/response";
+          commandId: "matchmaking/list";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/lost/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type MatchmakingQueueResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queue/response";
+          commandId: "matchmaking/queue";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queue/response";
+          commandId: "matchmaking/queue";
           status: "failed";
           reason: "invalid_queue_specified";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queue/response";
+          commandId: "matchmaking/queue";
+          status: "failed";
+          reason: "already_queued";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "matchmaking/queue";
           status: "failed";
           reason: "already_ingame";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queue/response";
+          commandId: "matchmaking/queue";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queue/response";
+          commandId: "matchmaking/queue";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queue/response";
+          commandId: "matchmaking/queue";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type MatchmakingQueueUpdateResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "success";
-          data: {
-              playersQueued: string;
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
+          commandId: "matchmaking/queue";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/queueUpdate/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type MatchmakingReadyResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/ready/response";
+          commandId: "matchmaking/ready";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/ready/response";
+          commandId: "matchmaking/ready";
           status: "failed";
           reason: "no_match";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/ready/response";
+          commandId: "matchmaking/ready";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/ready/response";
+          commandId: "matchmaking/ready";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/ready/response";
+          commandId: "matchmaking/ready";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type MatchmakingReadyUpdateResponse =
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "success";
-          data: {
-              readyMax: number;
-              readyCurrent: number;
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
+          commandId: "matchmaking/ready";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "matchmaking/readyUpdate/response";
-          status: "failed";
-          reason: "invalid_command";
-      };
-declare type SystemConnectedResponse =
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "success";
-          data: {
-              userId: string;
-              username: string;
-              displayName: string;
-              avatarUrl: string;
-              clanId: string | null;
-              partyId: string | null;
-              roles: string[];
-              countryCode?: string;
-              status: "offline" | "menu" | "playing" | "lobby";
-              battleStatus:
-                  | ({
-                        battleId: string;
-                    } & (
-                        | ({
-                              playerId: number;
-                              teamId: number;
-                              color: string;
-                              bonus: number;
-                              inGame: boolean;
-                          } & {
-                              isSpectator: false;
-                              isBot: false;
-                              ready: boolean;
-                              sync: {
-                                  engine: number;
-                                  game: number;
-                                  map: number;
-                              };
-                          })
-                        | {
-                              isSpectator: true;
-                              isBot: false;
-                          }
-                    ))
-                  | null;
-              friendIds: string[];
-              outgoingFriendRequestIds: string[];
-              incomingFriendRequestIds: string[];
-              ignoreIds: string[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "system/connected/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 declare type SystemDisconnectResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/disconnect/response";
+          commandId: "system/disconnect";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/disconnect/response";
+          commandId: "system/disconnect";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/disconnect/response";
+          commandId: "system/disconnect";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/disconnect/response";
+          commandId: "system/disconnect";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/disconnect";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type SystemServerStatsResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/serverStats/response";
+          commandId: "system/serverStats";
           status: "success";
           data: {
               userCount: number;
           };
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/serverStats/response";
+          commandId: "system/serverStats";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/serverStats/response";
+          commandId: "system/serverStats";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "system/serverStats/response";
+          commandId: "system/serverStats";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/serverStats";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type UserSubscribeResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/subscribe/response";
+          commandId: "user/subscribe";
           status: "success";
           data: {
               users: {
                   userId: string;
                   username: string;
                   displayName: string;
-                  avatarUrl: string;
+                  avatarUrl: string | null;
                   clanId: string | null;
                   partyId: string | null;
-                  roles: string[];
+                  scopes: string[];
                   countryCode?: string;
                   status: "offline" | "menu" | "playing" | "lobby";
                   battleStatus:
@@ -1136,346 +1146,119 @@ declare type UserSubscribeResponse =
           };
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/subscribe/response";
+          commandId: "user/subscribe";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/subscribe/response";
+          commandId: "user/subscribe";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/subscribe/response";
+          commandId: "user/subscribe";
           status: "failed";
-          reason: "invalid_command";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "user/subscribe";
+          status: "failed";
+          reason: "command_unimplemented";
       };
 declare type UserUnsubscribeResponse =
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/unsubscribe/response";
+          commandId: "user/unsubscribe";
           status: "success";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/unsubscribe/response";
+          commandId: "user/unsubscribe";
           status: "failed";
           reason: "cannot_unsub_own_user";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/unsubscribe/response";
+          commandId: "user/unsubscribe";
           status: "failed";
           reason: "internal_error";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/unsubscribe/response";
+          commandId: "user/unsubscribe";
           status: "failed";
           reason: "unauthorized";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/unsubscribe/response";
+          commandId: "user/unsubscribe";
           status: "failed";
-          reason: "invalid_command";
-      };
-declare type UserUpdatedResponse =
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "success";
-          data: {
-              users: {
-                  userId?: string;
-                  username?: string;
-                  displayName?: string;
-                  avatarUrl?: string;
-                  clanId?: string | null;
-                  partyId?: string | null;
-                  roles?: string[];
-                  countryCode?: string;
-                  status?: "offline" | "menu" | "playing" | "lobby";
-                  battleStatus?:
-                      | ({
-                            battleId: string;
-                        } & (
-                            | ({
-                                  playerId: number;
-                                  teamId: number;
-                                  color: string;
-                                  bonus: number;
-                                  inGame: boolean;
-                              } & {
-                                  isSpectator: false;
-                                  isBot: false;
-                                  ready: boolean;
-                                  sync: {
-                                      engine: number;
-                                      game: number;
-                                      map: number;
-                                  };
-                              })
-                            | {
-                                  isSpectator: true;
-                                  isBot: false;
-                              }
-                        ))
-                      | null;
-                  friendIds?: string[];
-                  outgoingFriendRequestIds?: string[];
-                  incomingFriendRequestIds?: string[];
-                  ignoreIds?: string[];
-              }[];
-          };
+          reason: "invalid_request";
       }
     | {
+          type: "response";
           messageId: string;
-          commandId: "user/updated/response";
+          commandId: "user/unsubscribe";
           status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "failed";
-          reason: "invalid_command";
+          reason: "command_unimplemented";
       };
 
-declare interface Tachyon {
-    autohost: {
-        /**
-         * Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
-         */
-        slave: {
-            request: AutohostSlaveRequest;
-            response: AutohostSlaveResponse;
-        };
-        /**
-         * Unregisters the client as slavable.
-         */
-        unslave: {
-            request: AutohostUnslaveRequest;
-            response: AutohostUnslaveResponse;
-        };
-    };
-    game: {
-        /**
-         * When a client receives this response it should launch the game (spring.exe) with the start script.
-         */
-        launch: {
-            response: GameLaunchResponse;
-        };
-    };
-    lobby: {
-        /**
-         * Close an existing lobby.
-         */
-        close: {
-            request: LobbyCloseRequest;
-            response: LobbyCloseResponse;
-        };
-        /**
-         * Create a new lobby - intended for player clients to summon a dedicated host.
-         */
-        create: {
-            request: LobbyCreateRequest;
-            response: LobbyCreateResponse;
-        };
-        /**
-         * Join a custom lobby. Server will send a [joined](#joined) response containing the joined lobby's data.
-         * These commands are split because the server may want to force the client to join a battle without them explicitly requesting it.
-         */
-        join: {
-            request: LobbyJoinRequest;
-            response: LobbyJoinResponse;
-        };
-        /**
-         * Sent when the client successfully joins a lobby. Can also be sent at any time by the server to forcibly make the client join a lobby.
-         */
-        joined: {
-            response: LobbyJoinedResponse;
-        };
-        /**
-         * Leave the current lobby.
-         */
-        leave: {
-            request: LobbyLeaveRequest;
-            response: LobbyLeaveResponse;
-        };
-        /**
-         * Sent when the server removes the client from a lobby.
-         */
-        left: {
-            response: LobbyLeftResponse;
-        };
-        /**
-         * Returns all custom lobbies.
-         */
-        list: {
-            request: LobbyListRequest;
-            response: LobbyListResponse;
-        };
-        /**
-         * Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
-         */
-        receiveMessage: {
-            response: LobbyReceiveMessageResponse;
-        };
-        /**
-         * Send a lobby message. See [receiveMessage](#receivemessage) for incoming messages.
-         */
-        sendMessage: {
-            request: LobbySendMessageRequest;
-            response: LobbySendMessageResponse;
-        };
-        /**
-         * Subscribe to custom battle updates. By default, updates for the user's own battle will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed battles, and then continue to send partial (stateful) updates via the [updated](#updated) response.
-         */
-        subscribe: {
-            request: LobbySubscribeRequest;
-            response: LobbySubscribeResponse;
-        };
-        /**
-         * Unsubscribe from custom battle updates. If battleIds is passed only updates to those battles will be stopped, otherwise this will stop updates for all battles.
-         */
-        unsubscribe: {
-            request: LobbyUnsubscribeRequest;
-            response: LobbyUnsubscribeResponse;
-        };
-        /**
-         * Server sends an array of partial battle objects whenever a subscribed battle changes in some way.
-         */
-        updated: {
-            response: LobbyUpdatedResponse;
-        };
-    };
-    matchmaking: {
-        /**
-         * Cancel queueing for matchmaking. Can also be sent during the ready phase to effectively decline the match.
-         */
-        cancel: {
-            request: MatchmakingCancelRequest;
-            response: MatchmakingCancelResponse;
-        };
-        /**
-         * Server should send this when there are enough queued players to form a valid game that meets their criteria. Clients should respond with [ready](#ready).
-         */
-        found: {
-            response: MatchmakingFoundResponse;
-        };
-        /**
-         * Returns all available matchmaking playlists.
-         */
-        list: {
-            request: MatchmakingListRequest;
-            response: MatchmakingListResponse;
-        };
-        /**
-         * Sent when a found match gets disbanded because a client failed to ready up.
-         */
-        lost: {
-            response: MatchmakingLostResponse;
-        };
-        /**
-         * Queue up for matchmaking. Should cancel the previous queue if already in one.
-         */
-        queue: {
-            request: MatchmakingQueueRequest;
-            response: MatchmakingQueueResponse;
-        };
-        /**
-         * Contains some info about the state of the current queue.
-         */
-        queueUpdate: {
-            response: MatchmakingQueueUpdateResponse;
-        };
-        /**
-         * Clients should send this when they are ready to proceed with the found match. If not sent within 10s of the [found](#found) response then queue should be cancelled.
-         */
-        ready: {
-            request: MatchmakingReadyRequest;
-            response: MatchmakingReadyResponse;
-        };
-        /**
-         * Sent when a client in a found match readies up.
-         */
-        readyUpdate: {
-            response: MatchmakingReadyUpdateResponse;
-        };
-    };
-    system: {
-        /**
-         * Sent immediately by the server on connection.
-         */
-        connected: {
-            response: SystemConnectedResponse;
-        };
-        /**
-         * Ask the server to terminate the connection.
-         */
-        disconnect: {
-            request: SystemDisconnectRequest;
-            response: SystemDisconnectResponse;
-        };
-        /**
-         * Get server stats such as user count.
-         */
-        serverStats: {
-            request: SystemServerStatsRequest;
-            response: SystemServerStatsResponse;
-        };
-    };
-    user: {
-        /**
-         * Subscribe to user updates. By default, updates for the client's own user will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed users, and then continue to send partial (stateful) updates via the [updated](#updated) response.
-         */
-        subscribe: {
-            request: UserSubscribeRequest;
-            response: UserSubscribeResponse;
-        };
-        /**
-         * Unsubscribe from user updates.
-         */
-        unsubscribe: {
-            request: UserUnsubscribeRequest;
-            response: UserUnsubscribeResponse;
-        };
-        /**
-         * Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.
-         */
-        updated: {
-            response: UserUpdatedResponse;
-        };
+declare interface AutohostConnectedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "autohost/connected";
+}
+declare interface AutohostLaunchRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/launch";
+    data: {
+        script: string;
     };
 }
 declare interface AutohostSlaveRequest {
+    type: "request";
     messageId: string;
-    commandId: "autohost/slave/request";
+    commandId: "autohost/slave";
     data: {
         maxBattles: number;
     };
 }
 declare interface AutohostUnslaveRequest {
+    type: "request";
     messageId: string;
-    commandId: "autohost/unslave/request";
+    commandId: "autohost/unslave";
+}
+declare interface GameLaunchEvent {
+    type: "event";
+    messageId: string;
+    commandId: "game/launch";
+    data: {
+        script: string;
+    };
 }
 declare interface LobbyCloseRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/close/request";
+    commandId: "lobby/close";
 }
 declare interface LobbyCreateRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/create/request";
+    commandId: "lobby/create";
     data: {
         title: string;
         private: boolean;
@@ -1484,53 +1267,303 @@ declare interface LobbyCreateRequest {
     };
 }
 declare interface LobbyJoinRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/join/request";
+    commandId: "lobby/join";
     data: {
         lobbyId: string;
         password?: string;
     };
 }
-declare interface LobbyLeaveRequest {
+declare interface LobbyJoinedEvent {
+    type: "event";
     messageId: string;
-    commandId: "lobby/leave/request";
+    commandId: "lobby/joined";
+    data: {
+        battleId: string;
+        hostId: string;
+        engine: string;
+        game: string;
+        map: string;
+        startPosType: 0 | 1 | 2;
+        startAreas: {
+            /**
+             * This interface was referenced by `undefined`'s JSON-Schema definition
+             * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+             */
+            [k: string]: {
+                x: number;
+                y: number;
+                width: number;
+                height: number;
+            };
+        };
+        startTime: number | null;
+        ip: string | null;
+        port: number | null;
+        scriptPassword: string | null;
+        modOptions: {
+            /**
+             * This interface was referenced by `undefined`'s JSON-Schema definition
+             * via the `patternProperty` "^(.*)$".
+             */
+            [k: string]: unknown;
+        };
+        bots: {
+            playerId: number;
+            teamId: number;
+            color: string;
+            bonus: number;
+            inGame: boolean;
+            isSpectator: false;
+            isBot: true;
+            ownerId: string;
+            aiShortName: string;
+            name: string;
+            aiOptions: {
+                /**
+                 * This interface was referenced by `undefined`'s JSON-Schema definition
+                 * via the `patternProperty` "^(.*)$".
+                 */
+                [k: string]: unknown;
+            };
+            faction: string;
+        }[];
+        users: {
+            userId: string;
+            username: string;
+            displayName: string;
+            avatarUrl: string | null;
+            clanId: string | null;
+            partyId: string | null;
+            scopes: string[];
+            countryCode?: string;
+            status: "offline" | "menu" | "playing" | "lobby";
+            battleStatus:
+                | ({
+                      battleId: string;
+                  } & (
+                      | ({
+                            playerId: number;
+                            teamId: number;
+                            color: string;
+                            bonus: number;
+                            inGame: boolean;
+                        } & {
+                            isSpectator: false;
+                            isBot: false;
+                            ready: boolean;
+                            sync: {
+                                engine: number;
+                                game: number;
+                                map: number;
+                            };
+                        })
+                      | {
+                            isSpectator: true;
+                            isBot: false;
+                        }
+                  ))
+                | null;
+        }[];
+    };
+}
+declare interface LobbyLeaveRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/leave";
+}
+declare interface LobbyLeftEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/left";
 }
 declare interface LobbyListRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/list/request";
+    commandId: "lobby/list";
+}
+declare interface LobbyReceiveMessageEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/receiveMessage";
+    data: {
+        userId: string;
+        message: string;
+    };
 }
 declare interface LobbySendMessageRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/sendMessage/request";
+    commandId: "lobby/sendMessage";
     data: {
         message: string;
     };
 }
 declare interface LobbySubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/subscribe/request";
+    commandId: "lobby/subscribe";
     data: {
         battleIds: string[];
     };
 }
 declare interface LobbyUnsubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "lobby/unsubscribe/request";
+    commandId: "lobby/unsubscribe";
     data: {
         battleIds?: string[];
     };
 }
-declare interface MatchmakingCancelRequest {
+declare interface LobbyUpdatedEvent {
+    type: "event";
     messageId: string;
-    commandId: "matchmaking/cancel/request";
+    commandId: "lobby/updated";
+    data: {
+        battles: ({
+            battleId?: string;
+            hostId?: string;
+            engine?: string;
+            game?: string;
+            map?: string;
+            startPosType?: 0 | 1 | 2;
+            startAreas?: {
+                /**
+                 * This interface was referenced by `undefined`'s JSON-Schema definition
+                 * via the `patternProperty` "^(0|[1-9][0-9]*)$".
+                 */
+                [k: string]: {
+                    x: number;
+                    y: number;
+                    width: number;
+                    height: number;
+                };
+            };
+            startTime?: number | null;
+            ip?: string | null;
+            port?: number | null;
+            scriptPassword?: string | null;
+            modOptions?: {
+                /**
+                 * This interface was referenced by `undefined`'s JSON-Schema definition
+                 * via the `patternProperty` "^(.*)$".
+                 */
+                [k: string]: unknown;
+            };
+            bots?: {
+                playerId: number;
+                teamId: number;
+                color: string;
+                bonus: number;
+                inGame: boolean;
+                isSpectator: false;
+                isBot: true;
+                ownerId: string;
+                aiShortName: string;
+                name: string;
+                aiOptions: {
+                    /**
+                     * This interface was referenced by `undefined`'s JSON-Schema definition
+                     * via the `patternProperty` "^(.*)$".
+                     */
+                    [k: string]: unknown;
+                };
+                faction: string;
+            }[];
+            users?: {
+                userId: string;
+                username: string;
+                displayName: string;
+                avatarUrl: string | null;
+                clanId: string | null;
+                partyId: string | null;
+                scopes: string[];
+                countryCode?: string;
+                status: "offline" | "menu" | "playing" | "lobby";
+                battleStatus:
+                    | ({
+                          battleId: string;
+                      } & (
+                          | ({
+                                playerId: number;
+                                teamId: number;
+                                color: string;
+                                bonus: number;
+                                inGame: boolean;
+                            } & {
+                                isSpectator: false;
+                                isBot: false;
+                                ready: boolean;
+                                sync: {
+                                    engine: number;
+                                    game: number;
+                                    map: number;
+                                };
+                            })
+                          | {
+                                isSpectator: true;
+                                isBot: false;
+                            }
+                      ))
+                    | null;
+            }[];
+        } & {
+            title?: string;
+            locked?: boolean;
+            passworded?: boolean;
+            bossIds?: string[];
+            joinQueueIds?: string[];
+            limits?: {
+                minTeamsize: number | null;
+                maxTeamsize: number | null;
+                minRating: number | null;
+                maxRating: number | null;
+            };
+        })[];
+    };
+}
+declare interface MatchmakingCancelRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/cancel";
+}
+declare interface MatchmakingDeclinedRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/declined";
+}
+declare interface MatchmakingFoundEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/found";
+    data: {
+        queueId: string;
+        timeoutMs: number;
+    };
+}
+declare interface MatchmakingFoundUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/foundUpdate";
+    data: {
+        readyCount: number;
+    };
 }
 declare interface MatchmakingListRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/list/request";
+    commandId: "matchmaking/list";
+}
+declare interface MatchmakingLostEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/lost";
 }
 declare interface MatchmakingQueueRequest {
+    type: "request";
     messageId: string;
-    commandId: "matchmaking/queue/request";
+    commandId: "matchmaking/queue";
     data: {
         /**
          * @minItems 1
@@ -1538,202 +1571,153 @@ declare interface MatchmakingQueueRequest {
         queues: [string, ...string[]];
     };
 }
-declare interface MatchmakingReadyRequest {
+declare interface MatchmakingQueueUpdateEvent {
+    type: "event";
     messageId: string;
-    commandId: "matchmaking/ready/request";
+    commandId: "matchmaking/queueUpdate";
+    data: {
+        playersQueued: string;
+    };
+}
+declare interface MatchmakingReadyRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/ready";
+}
+declare interface MatchmakingReadyUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/readyUpdate";
+    data: {
+        readyMax: number;
+        readyCurrent: number;
+    };
+}
+declare interface SystemConnectedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "system/connected";
+    data: {
+        userId: string;
+        username: string;
+        displayName: string;
+        avatarUrl: string | null;
+        clanId: string | null;
+        partyId: string | null;
+        scopes: string[];
+        countryCode?: string;
+        status: "offline" | "menu" | "playing" | "lobby";
+        battleStatus:
+            | ({
+                  battleId: string;
+              } & (
+                  | ({
+                        playerId: number;
+                        teamId: number;
+                        color: string;
+                        bonus: number;
+                        inGame: boolean;
+                    } & {
+                        isSpectator: false;
+                        isBot: false;
+                        ready: boolean;
+                        sync: {
+                            engine: number;
+                            game: number;
+                            map: number;
+                        };
+                    })
+                  | {
+                        isSpectator: true;
+                        isBot: false;
+                    }
+              ))
+            | null;
+        friendIds: string[];
+        outgoingFriendRequestIds: string[];
+        incomingFriendRequestIds: string[];
+        ignoreIds: string[];
+    };
 }
 declare interface SystemDisconnectRequest {
+    type: "request";
     messageId: string;
-    commandId: "system/disconnect/request";
+    commandId: "system/disconnect";
     data?: {
         reason: string;
     };
 }
 declare interface SystemServerStatsRequest {
+    type: "request";
     messageId: string;
-    commandId: "system/serverStats/request";
+    commandId: "system/serverStats";
 }
 declare interface UserSubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "user/subscribe/request";
+    commandId: "user/subscribe";
     data: {
         userIds: string[];
     };
 }
 declare interface UserUnsubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "user/unsubscribe/request";
+    commandId: "user/unsubscribe";
     data: {
         userIds: string[];
     };
 }
-declare type TachyonUnixTime = number | null;
-
-declare interface TachyonBattleContender {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-}
-
-declare type TachyonBattlePlayer = {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-} & {
-    isSpectator: false;
-    isBot: false;
-    ready: boolean;
-    sync: {
-        engine: number;
-        game: number;
-        map: number;
+declare interface UserUpdatedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/updated";
+    data: {
+        users: {
+            userId?: string;
+            username?: string;
+            displayName?: string;
+            avatarUrl?: string | null;
+            clanId?: string | null;
+            partyId?: string | null;
+            scopes?: string[];
+            countryCode?: string;
+            status?: "offline" | "menu" | "playing" | "lobby";
+            battleStatus?:
+                | ({
+                      battleId: string;
+                  } & (
+                      | ({
+                            playerId: number;
+                            teamId: number;
+                            color: string;
+                            bonus: number;
+                            inGame: boolean;
+                        } & {
+                            isSpectator: false;
+                            isBot: false;
+                            ready: boolean;
+                            sync: {
+                                engine: number;
+                                game: number;
+                                map: number;
+                            };
+                        })
+                      | {
+                            isSpectator: true;
+                            isBot: false;
+                        }
+                  ))
+                | null;
+            friendIds?: string[];
+            outgoingFriendRequestIds?: string[];
+            incomingFriendRequestIds?: string[];
+            ignoreIds?: string[];
+        }[];
     };
-};
-
-declare interface TachyonBattleSpectator {
-    isSpectator: true;
-    isBot: false;
 }
-
-declare interface TachyonBot {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-    isSpectator: false;
-    isBot: true;
-    ownerId: string;
-    aiShortName: string;
-    name: string;
-    aiOptions: {
-        /**
-         * This interface was referenced by `undefined`'s JSON-Schema definition
-         * via the `patternProperty` "^(.*)$".
-         */
-        [k: string]: unknown;
-    };
-    faction: string;
-}
-
-declare type TachyonBattleStatus =
-    | ({
-          battleId: string;
-      } & (
-          | ({
-                playerId: number;
-                teamId: number;
-                color: string;
-                bonus: number;
-                inGame: boolean;
-            } & {
-                isSpectator: false;
-                isBot: false;
-                ready: boolean;
-                sync: {
-                    engine: number;
-                    game: number;
-                    map: number;
-                };
-            })
-          | {
-                isSpectator: true;
-                isBot: false;
-            }
-      ))
-    | null;
-
-declare type TachyonUserStatus = "offline" | "menu" | "playing" | "lobby";
-
-declare interface TachyonUser {
-    userId: string;
-    username: string;
-    displayName: string;
-    avatarUrl: string;
-    clanId: string | null;
-    partyId: string | null;
-    roles: string[];
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
-    battleStatus:
-        | ({
-              battleId: string;
-          } & (
-              | ({
-                    playerId: number;
-                    teamId: number;
-                    color: string;
-                    bonus: number;
-                    inGame: boolean;
-                } & {
-                    isSpectator: false;
-                    isBot: false;
-                    ready: boolean;
-                    sync: {
-                        engine: number;
-                        game: number;
-                        map: number;
-                    };
-                })
-              | {
-                    isSpectator: true;
-                    isBot: false;
-                }
-          ))
-        | null;
-}
-
-declare interface TachyonPrivateUser {
-    userId: string;
-    username: string;
-    displayName: string;
-    avatarUrl: string;
-    clanId: string | null;
-    partyId: string | null;
-    roles: string[];
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
-    battleStatus:
-        | ({
-              battleId: string;
-          } & (
-              | ({
-                    playerId: number;
-                    teamId: number;
-                    color: string;
-                    bonus: number;
-                    inGame: boolean;
-                } & {
-                    isSpectator: false;
-                    isBot: false;
-                    ready: boolean;
-                    sync: {
-                        engine: number;
-                        game: number;
-                        map: number;
-                    };
-                })
-              | {
-                    isSpectator: true;
-                    isBot: false;
-                }
-          ))
-        | null;
-    friendIds: string[];
-    outgoingFriendRequestIds: string[];
-    incomingFriendRequestIds: string[];
-    ignoreIds: string[];
-}
-
-declare interface TachyonRect {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
+declare interface TachyonAutohostStatus {
+    gameStartTime: number | null;
 }
 
 declare interface TachyonBattle {
@@ -1790,10 +1774,10 @@ declare interface TachyonBattle {
         userId: string;
         username: string;
         displayName: string;
-        avatarUrl: string;
+        avatarUrl: string | null;
         clanId: string | null;
         partyId: string | null;
-        roles: string[];
+        scopes: string[];
         countryCode?: string;
         status: "offline" | "menu" | "playing" | "lobby";
         battleStatus:
@@ -1823,6 +1807,84 @@ declare interface TachyonBattle {
               ))
             | null;
     }[];
+}
+
+declare interface TachyonBattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+}
+
+declare type TachyonBattlePlayer = {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+} & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+};
+
+declare interface TachyonBattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+
+declare type TachyonBattleStatus =
+    | ({
+          battleId: string;
+      } & (
+          | ({
+                playerId: number;
+                teamId: number;
+                color: string;
+                bonus: number;
+                inGame: boolean;
+            } & {
+                isSpectator: false;
+                isBot: false;
+                ready: boolean;
+                sync: {
+                    engine: number;
+                    game: number;
+                    map: number;
+                };
+            })
+          | {
+                isSpectator: true;
+                isBot: false;
+            }
+      ))
+    | null;
+
+declare interface TachyonBot {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+    isSpectator: false;
+    isBot: true;
+    ownerId: string;
+    aiShortName: string;
+    name: string;
+    aiOptions: {
+        /**
+         * This interface was referenced by `undefined`'s JSON-Schema definition
+         * via the `patternProperty` "^(.*)$".
+         */
+        [k: string]: unknown;
+    };
+    faction: string;
 }
 
 declare type TachyonCustomBattle = {
@@ -1879,10 +1941,10 @@ declare type TachyonCustomBattle = {
         userId: string;
         username: string;
         displayName: string;
-        avatarUrl: string;
+        avatarUrl: string | null;
         clanId: string | null;
         partyId: string | null;
-        roles: string[];
+        scopes: string[];
         countryCode?: string;
         status: "offline" | "menu" | "playing" | "lobby";
         battleStatus:
@@ -1926,6 +1988,101 @@ declare type TachyonCustomBattle = {
     };
 };
 
-declare interface TachyonAutohostStatus {
-    gameStartTime: number | null;
+declare interface TachyonMatchmakingPlaylist {
+    id: string;
+    name: string;
+    numOfTeams: number;
+    teamSize: number;
+    ranked: boolean;
 }
+
+declare interface TachyonPrivateUser {
+    userId: string;
+    username: string;
+    displayName: string;
+    avatarUrl: string | null;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+    battleStatus:
+        | ({
+              battleId: string;
+          } & (
+              | ({
+                    playerId: number;
+                    teamId: number;
+                    color: string;
+                    bonus: number;
+                    inGame: boolean;
+                } & {
+                    isSpectator: false;
+                    isBot: false;
+                    ready: boolean;
+                    sync: {
+                        engine: number;
+                        game: number;
+                        map: number;
+                    };
+                })
+              | {
+                    isSpectator: true;
+                    isBot: false;
+                }
+          ))
+        | null;
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
+}
+
+declare interface TachyonRect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+
+declare type TachyonUnixTime = number | null;
+
+declare interface TachyonUser {
+    userId: string;
+    username: string;
+    displayName: string;
+    avatarUrl: string | null;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+    battleStatus:
+        | ({
+              battleId: string;
+          } & (
+              | ({
+                    playerId: number;
+                    teamId: number;
+                    color: string;
+                    bonus: number;
+                    inGame: boolean;
+                } & {
+                    isSpectator: false;
+                    isBot: false;
+                    ready: boolean;
+                    sync: {
+                        engine: number;
+                        game: number;
+                        map: number;
+                    };
+                })
+              | {
+                    isSpectator: true;
+                    isBot: false;
+                }
+          ))
+        | null;
+}
+
+declare type TachyonUserStatus = "offline" | "menu" | "playing" | "lobby";

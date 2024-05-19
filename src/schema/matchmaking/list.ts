@@ -4,6 +4,8 @@ import { defineEndpoint } from "@/generator-helpers.js";
 import { matchmakingPlaylist } from "@/schema/types";
 
 export default defineEndpoint({
+    source: "user",
+    target: "server",
     description: "Returns all available matchmaking playlists.",
     request: {},
     response: [

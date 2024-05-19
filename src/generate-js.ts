@@ -1,19 +1,20 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { TObject } from "@sinclair/typebox";
+import { TObject, TSchema, TUnion } from "@sinclair/typebox";
 import { build } from "tsup";
 
 import { generateValidators as generateJsValidators } from "@/generate-js-validators.js";
+import { SchemaMeta } from "@/generate-json-schemas";
 import { generateTSDefs } from "@/generate-ts-defs";
 
 // eslint-disable-next-line no-restricted-imports
 import packageJson from "../package.json";
 
-export async function generateJs(compiledSchema: TObject, ids: Record<string, Record<string, string[]>>) {
+export async function generateJs(compiledSchema: TObject, unionSchema: TUnion<TSchema[]>, schema: SchemaMeta) {
     const meta = {
         version: packageJson.version,
-        ids,
+        schema,
     };
 
     const tempFilePath = path.join("dist", "temp.ts");
@@ -33,7 +34,7 @@ export async function generateJs(compiledSchema: TObject, ids: Record<string, Re
 
     await generateJsValidators(compiledSchema);
 
-    await generateTSDefs(compiledSchema);
+    await generateTSDefs(unionSchema);
 }
 
 export async function buildTs(tsPath: string) {

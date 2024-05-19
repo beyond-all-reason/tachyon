@@ -1,0 +1,37 @@
+{
+    "$id": "matchmaking/foundUpdate/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "matchmaking/foundUpdate",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "readyCount": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "readyCount"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

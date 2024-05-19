@@ -27,7 +27,7 @@ export async function generateValidators(schemas: any) {
             source: true,
             esm: true,
         },
-        keywords: ["roles"],
+        keywords: ["scopes"],
     });
     let moduleCode = `"use strict"
 function ucs2length(str) {
@@ -60,7 +60,7 @@ function ucs2length(str) {
             source: true,
             esm: false,
         },
-        keywords: ["roles"],
+        keywords: ["scopes"],
     });
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);
     await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);

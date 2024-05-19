@@ -1,17 +1,22 @@
 {
     "$id": "autohost/slave/response",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -20,6 +25,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -28,11 +34,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -45,6 +55,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -54,11 +65,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -71,6 +86,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -80,11 +96,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -97,6 +117,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -106,11 +127,15 @@
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -123,6 +148,7 @@
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",

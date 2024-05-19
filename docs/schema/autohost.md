@@ -54,199 +54,163 @@ Autohosts used for custom games should use the dedicated mode as lots of pregame
 
 ## Connected
 
-Like [system/connected](system#connected), but only sent to autohosts.
+Sent to autohosts on connection.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "autohost/connected/response",
-    "roles": [],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status"
-            ]
+    "$id": "autohost/connected/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "autohost/connected",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/connected/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "properties": {}
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type AutohostConnectedResponse =
-    | {
-          messageId: string;
-          commandId: "autohost/connected/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/connected/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/connected/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/connected/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/connected/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "autohost/connected/response",
-    "status": "success"
+    "type": "event",
+    "messageId": "ipsum",
+    "commandId": "autohost/connected",
+    "data": {
+        "ipsum_": -98000000
+    }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostConnectedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "autohost/connected";
+    data: {};
+}
+
 ```
 ---
 
 ## Launch
 
-When an autohost client receives this response it should launch the game server (spring-dedicated.exe or spring-headless.exe) with the start script.
+Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.
 
-- Endpoint Type: **Response** only
+- Endpoint Type: **Request** -> **Response**
+- Source: **Server**
+- Target: **Autohost**
+- Requires Role: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "autohost/launch/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/launch",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "script": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "script"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "fugiat",
+    "commandId": "autohost/launch",
+    "data": {
+        "script": "fugiat"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostLaunchRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/launch";
+    data: {
+        script: string;
+    };
+}
+
+```
 ### Response
 
 <details>
@@ -255,49 +219,141 @@ When an autohost client receives this response it should launch the game server 
 ```json
 {
     "$id": "autohost/launch/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
                     "const": "success",
                     "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "script": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "script"
-                    ]
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
-                "status",
-                "data"
+                "status"
             ]
         },
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_script",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_already_running",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_failed_to_start",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -310,6 +366,7 @@ When an autohost client receives this response it should launch the game server 
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -319,11 +376,15 @@ When an autohost client receives this response it should launch the game server 
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -336,6 +397,7 @@ When an autohost client receives this response it should launch the game server 
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -345,11 +407,15 @@ When an autohost client receives this response it should launch the game server 
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -362,6 +428,7 @@ When an autohost client receives this response it should launch the game server 
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -371,11 +438,15 @@ When an autohost client receives this response it should launch the game server 
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/launch/response",
+                    "const": "autohost/launch",
                     "type": "string"
                 },
                 "status": {
@@ -388,6 +459,7 @@ When an autohost client receives this response it should launch the game server 
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -400,62 +472,39 @@ When an autohost client receives this response it should launch the game server 
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type AutohostLaunchResponse =
-    | {
-          messageId: string;
-          commandId: "autohost/launch/response";
-          status: "success";
-          data: {
-              script: string;
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/launch/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/launch/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/launch/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/launch/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "autohost/launch/response",
-    "status": "success",
-    "data": {
-        "script": "mollit"
-    }
+    "type": "response",
+    "messageId": "ea",
+    "commandId": "autohost/launch",
+    "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostLaunchResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/launch";
+    status: "success";
+}
+
 ```
 ---
 
 ## Slave
 
-Registers the client as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
+Registers the autohost as slavable by the master server to be used for hosting dedicated lobbies or matchmaking.
 
 - Endpoint Type: **Request** -> **Response**
-- Requires Role: `autohost`
+- Source: **Autohost**
+- Target: **Server**
+- Requires Role: `autohost,tachyon.lobby`
 
 ### Request
 
@@ -465,16 +514,21 @@ Registers the client as slavable by the master server to be used for hosting ded
 ```json
 {
     "$id": "autohost/slave/request",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "autohost/slave/request",
+            "const": "autohost/slave",
             "type": "string"
         },
         "data": {
@@ -492,6 +546,7 @@ Registers the client as slavable by the master server to be used for hosting ded
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -501,26 +556,32 @@ Registers the client as slavable by the master server to be used for hosting ded
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "quis",
+    "commandId": "autohost/slave",
+    "data": {
+        "maxBattles": 4
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface AutohostSlaveRequest {
+    type: "request";
     messageId: string;
-    commandId: "autohost/slave/request";
+    commandId: "autohost/slave";
     data: {
         maxBattles: number;
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "autohost/slave/request",
-    "data": {
-        "maxBattles": 12340001
-    }
-}
 ```
 ### Response
 
@@ -530,18 +591,23 @@ export interface AutohostSlaveRequest {
 ```json
 {
     "$id": "autohost/slave/response",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -550,6 +616,7 @@ export interface AutohostSlaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -558,11 +625,15 @@ export interface AutohostSlaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -575,6 +646,7 @@ export interface AutohostSlaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -584,11 +656,15 @@ export interface AutohostSlaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -601,6 +677,7 @@ export interface AutohostSlaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -610,11 +687,15 @@ export interface AutohostSlaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -627,6 +708,7 @@ export interface AutohostSlaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -636,11 +718,15 @@ export interface AutohostSlaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/slave/response",
+                    "const": "autohost/slave",
                     "type": "string"
                 },
                 "status": {
@@ -653,6 +739,7 @@ export interface AutohostSlaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -665,47 +752,28 @@ export interface AutohostSlaveRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type AutohostSlaveResponse =
-    | {
-          messageId: string;
-          commandId: "autohost/slave/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/slave/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/slave/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/slave/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/slave/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "autohost/slave/response",
+    "type": "response",
+    "messageId": "Ut",
+    "commandId": "autohost/slave",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSlaveResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/slave";
+    status: "success";
+}
+
 ```
 ---
 
@@ -714,7 +782,9 @@ export type AutohostSlaveResponse =
 Unregisters the client as slavable.
 
 - Endpoint Type: **Request** -> **Response**
-- Requires Role: `autohost`
+- Source: **Autohost**
+- Target: **Server**
+- Requires Role: `autohost,tachyon.lobby`
 
 ### Request
 
@@ -724,20 +794,26 @@ Unregisters the client as slavable.
 ```json
 {
     "$id": "autohost/unslave/request",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "autohost/unslave/request",
+            "const": "autohost/unslave",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
@@ -746,20 +822,26 @@ Unregisters the client as slavable.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "dolore",
+    "commandId": "autohost/unslave"
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface AutohostUnslaveRequest {
+    type: "request";
     messageId: string;
-    commandId: "autohost/unslave/request";
+    commandId: "autohost/unslave";
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "autohost/unslave/request"
-}
 ```
 ### Response
 
@@ -769,18 +851,23 @@ export interface AutohostUnslaveRequest {
 ```json
 {
     "$id": "autohost/unslave/response",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/unslave/response",
+                    "const": "autohost/unslave",
                     "type": "string"
                 },
                 "status": {
@@ -789,6 +876,7 @@ export interface AutohostUnslaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -797,11 +885,15 @@ export interface AutohostUnslaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/unslave/response",
+                    "const": "autohost/unslave",
                     "type": "string"
                 },
                 "status": {
@@ -814,6 +906,7 @@ export interface AutohostUnslaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -823,11 +916,15 @@ export interface AutohostUnslaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/unslave/response",
+                    "const": "autohost/unslave",
                     "type": "string"
                 },
                 "status": {
@@ -840,6 +937,7 @@ export interface AutohostUnslaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -849,11 +947,15 @@ export interface AutohostUnslaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/unslave/response",
+                    "const": "autohost/unslave",
                     "type": "string"
                 },
                 "status": {
@@ -866,6 +968,7 @@ export interface AutohostUnslaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -875,11 +978,15 @@ export interface AutohostUnslaveRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/unslave/response",
+                    "const": "autohost/unslave",
                     "type": "string"
                 },
                 "status": {
@@ -892,6 +999,7 @@ export interface AutohostUnslaveRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -904,45 +1012,26 @@ export interface AutohostUnslaveRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type AutohostUnslaveResponse =
-    | {
-          messageId: string;
-          commandId: "autohost/unslave/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/unslave/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/unslave/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/unslave/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "autohost/unslave/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "autohost/unslave/response",
+    "type": "response",
+    "messageId": "labore",
+    "commandId": "autohost/unslave",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostUnslaveResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/unslave";
+    status: "success";
+}
+
 ```

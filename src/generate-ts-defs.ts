@@ -1,12 +1,12 @@
-import { TObject, Type } from "@sinclair/typebox";
+import { TSchema, TUnion, Type } from "@sinclair/typebox";
 import fs from "fs";
 import { objectKeys, titleCase } from "jaz-ts-utils";
 import { compile } from "json-schema-to-typescript";
 
-export async function generateTSDefs(fullSchema: TObject) {
+export async function generateTSDefs(unionSchema: TUnion<TSchema[]>) {
     let typings = "\n";
 
-    typings += await compile(fullSchema, "Tachyon", {
+    typings += await compile(unionSchema, "TachyonCommand", {
         additionalProperties: false,
         bannerComment: "",
         style: {

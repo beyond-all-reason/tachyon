@@ -1,13 +1,19 @@
 {
     "$id": "lobby/sendMessage/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "lobby/sendMessage/request",
+            "const": "lobby/sendMessage",
             "type": "string"
         },
         "data": {
@@ -29,6 +35,7 @@
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"

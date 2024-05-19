@@ -12,6 +12,10 @@
 Subscribe to user updates. By default, updates for the client's own user will always be subscribed to. If successful, the Tachyon server should respond with full data about the subscribed users, and then continue to send partial (stateful) updates via the [updated](#updated) response.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -20,14 +24,20 @@ Subscribe to user updates. By default, updates for the client's own user will al
 ```json
 {
     "$id": "user/subscribe/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "user/subscribe/request",
+            "const": "user/subscribe",
             "type": "string"
         },
         "data": {
@@ -46,6 +56,7 @@ Subscribe to user updates. By default, updates for the client's own user will al
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -55,28 +66,36 @@ Subscribe to user updates. By default, updates for the client's own user will al
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "anim Lorem eu",
+    "commandId": "user/subscribe",
+    "data": {
+        "userIds": [
+            "anim Lorem eu",
+            "anim Lorem eu",
+            "anim Lorem eu"
+        ]
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface UserSubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "user/subscribe/request";
+    commandId: "user/subscribe";
     data: {
         userIds: string[];
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "user/subscribe/request",
-    "data": {
-        "userIds": [
-            "mollit"
-        ]
-    }
-}
 ```
 ### Response
 
@@ -86,16 +105,22 @@ export interface UserSubscribeRequest {
 ```json
 {
     "$id": "user/subscribe/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/subscribe/response",
+                    "const": "user/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -149,7 +174,7 @@ export interface UserSubscribeRequest {
                                             }
                                         ]
                                     },
-                                    "roles": {
+                                    "scopes": {
                                         "type": "array",
                                         "items": {
                                             "type": "string"
@@ -302,7 +327,7 @@ export interface UserSubscribeRequest {
                                     "avatarUrl",
                                     "clanId",
                                     "partyId",
-                                    "roles",
+                                    "scopes",
                                     "status",
                                     "battleStatus"
                                 ]
@@ -315,6 +340,7 @@ export interface UserSubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -324,11 +350,15 @@ export interface UserSubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/subscribe/response",
+                    "const": "user/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -341,6 +371,7 @@ export interface UserSubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -350,11 +381,15 @@ export interface UserSubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/subscribe/response",
+                    "const": "user/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -367,6 +402,7 @@ export interface UserSubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -376,11 +412,15 @@ export interface UserSubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/subscribe/response",
+                    "const": "user/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -393,6 +433,7 @@ export interface UserSubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -402,11 +443,15 @@ export interface UserSubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/subscribe/response",
+                    "const": "user/subscribe",
                     "type": "string"
                 },
                 "status": {
@@ -419,6 +464,7 @@ export interface UserSubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -431,119 +477,119 @@ export interface UserSubscribeRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type UserSubscribeResponse =
-    | {
-          messageId: string;
-          commandId: "user/subscribe/response";
-          status: "success";
-          data: {
-              users: {
-                  userId: string;
-                  username: string;
-                  displayName: string;
-                  avatarUrl: string | null;
-                  clanId: string | null;
-                  partyId: string | null;
-                  roles: string[];
-                  countryCode?: string;
-                  status: "offline" | "menu" | "playing" | "lobby";
-                  battleStatus:
-                      | ({
-                            battleId: string;
-                        } & (
-                            | ({
-                                  playerId: number;
-                                  teamId: number;
-                                  color: string;
-                                  bonus: number;
-                                  inGame: boolean;
-                              } & {
-                                  isSpectator: false;
-                                  isBot: false;
-                                  ready: boolean;
-                                  sync: {
-                                      engine: number;
-                                      game: number;
-                                      map: number;
-                                  };
-                              })
-                            | {
-                                  isSpectator: true;
-                                  isBot: false;
-                              }
-                        ))
-                      | null;
-              }[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "user/subscribe/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "user/subscribe/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "user/subscribe/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "user/subscribe/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "user/subscribe/response",
+    "type": "response",
+    "messageId": "Lorem anim ipsum",
+    "commandId": "user/subscribe",
     "status": "success",
     "data": {
         "users": [
             {
-                "userId": "mollit",
-                "username": "mollit",
-                "displayName": "mollit",
-                "avatarUrl": "mollit",
-                "clanId": "mollit",
-                "partyId": "mollit",
-                "roles": [
-                    "mollit"
+                "userId": "Lorem anim ipsum",
+                "username": "Lorem anim ipsum",
+                "displayName": "Lorem anim ipsum",
+                "avatarUrl": null,
+                "clanId": null,
+                "partyId": null,
+                "scopes": [
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum"
                 ],
-                "countryCode": "mollit",
-                "status": "offline",
-                "battleStatus": {
-                    "battleId": "mollit",
-                    "playerId": -75320000,
-                    "teamId": -75320000,
-                    "color": "mollit",
-                    "bonus": -75320000,
-                    "inGame": false,
-                    "isSpectator": false,
-                    "isBot": false,
-                    "ready": false,
-                    "sync": {
-                        "engine": -75320000,
-                        "game": -75320000,
-                        "map": -75320000
-                    }
-                }
+                "countryCode": "Lorem anim ipsum",
+                "status": "playing",
+                "battleStatus": null
+            },
+            {
+                "userId": "Lorem anim ipsum",
+                "username": "Lorem anim ipsum",
+                "displayName": "Lorem anim ipsum",
+                "avatarUrl": null,
+                "clanId": null,
+                "partyId": null,
+                "scopes": [
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum"
+                ],
+                "countryCode": "Lorem anim ipsum",
+                "status": "playing",
+                "battleStatus": null
+            },
+            {
+                "userId": "Lorem anim ipsum",
+                "username": "Lorem anim ipsum",
+                "displayName": "Lorem anim ipsum",
+                "avatarUrl": null,
+                "clanId": null,
+                "partyId": null,
+                "scopes": [
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum"
+                ],
+                "countryCode": "Lorem anim ipsum",
+                "status": "playing",
+                "battleStatus": null
             }
         ]
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserSubscribeResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/subscribe";
+    status: "success";
+    data: {
+        users: {
+            userId: string;
+            username: string;
+            displayName: string;
+            avatarUrl: string | null;
+            clanId: string | null;
+            partyId: string | null;
+            scopes: string[];
+            countryCode?: string;
+            status: "offline" | "menu" | "playing" | "lobby";
+            battleStatus:
+                | ({
+                      battleId: string;
+                  } & (
+                      | ({
+                            playerId: number;
+                            teamId: number;
+                            color: string;
+                            bonus: number;
+                            inGame: boolean;
+                        } & {
+                            isSpectator: false;
+                            isBot: false;
+                            ready: boolean;
+                            sync: {
+                                engine: number;
+                                game: number;
+                                map: number;
+                            };
+                        })
+                      | {
+                            isSpectator: true;
+                            isBot: false;
+                        }
+                  ))
+                | null;
+        }[];
+    };
+}
+
 ```
 ---
 
@@ -552,6 +598,10 @@ export type UserSubscribeResponse =
 Unsubscribe from user updates.
 
 - Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Requires Role: `tachyon.lobby`
+
 ### Request
 
 <details>
@@ -560,14 +610,20 @@ Unsubscribe from user updates.
 ```json
 {
     "$id": "user/unsubscribe/request",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "user/unsubscribe/request",
+            "const": "user/unsubscribe",
             "type": "string"
         },
         "data": {
@@ -586,6 +642,7 @@ Unsubscribe from user updates.
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId",
         "data"
@@ -595,28 +652,36 @@ Unsubscribe from user updates.
 
 </details>
 
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "Lorem mollit ipsum",
+    "commandId": "user/unsubscribe",
+    "data": {
+        "userIds": [
+            "Lorem mollit ipsum",
+            "Lorem mollit ipsum",
+            "Lorem mollit ipsum"
+        ]
+    }
+}
+```
+</details>
+
 #### TypeScript Definition
 ```ts
 export interface UserUnsubscribeRequest {
+    type: "request";
     messageId: string;
-    commandId: "user/unsubscribe/request";
+    commandId: "user/unsubscribe";
     data: {
         userIds: string[];
     };
 }
 
-```
-#### Example
-```json
-{
-    "messageId": "mollit",
-    "commandId": "user/unsubscribe/request",
-    "data": {
-        "userIds": [
-            "mollit"
-        ]
-    }
-}
 ```
 ### Response
 
@@ -626,16 +691,22 @@ export interface UserUnsubscribeRequest {
 ```json
 {
     "$id": "user/unsubscribe/response",
-    "roles": [],
+    "scopes": [
+        "tachyon.lobby"
+    ],
     "anyOf": [
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe/response",
+                    "const": "user/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -644,6 +715,7 @@ export interface UserUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status"
@@ -652,11 +724,15 @@ export interface UserUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe/response",
+                    "const": "user/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -669,6 +745,7 @@ export interface UserUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -678,11 +755,15 @@ export interface UserUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe/response",
+                    "const": "user/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -695,6 +776,7 @@ export interface UserUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -704,11 +786,15 @@ export interface UserUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe/response",
+                    "const": "user/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -721,6 +807,7 @@ export interface UserUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -730,11 +817,15 @@ export interface UserUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe/response",
+                    "const": "user/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -747,6 +838,7 @@ export interface UserUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -756,11 +848,15 @@ export interface UserUnsubscribeRequest {
         {
             "type": "object",
             "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
                 "messageId": {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe/response",
+                    "const": "user/unsubscribe",
                     "type": "string"
                 },
                 "status": {
@@ -773,6 +869,7 @@ export interface UserUnsubscribeRequest {
                 }
             },
             "required": [
+                "type",
                 "messageId",
                 "commandId",
                 "status",
@@ -785,53 +882,28 @@ export interface UserUnsubscribeRequest {
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type UserUnsubscribeResponse =
-    | {
-          messageId: string;
-          commandId: "user/unsubscribe/response";
-          status: "success";
-      }
-    | {
-          messageId: string;
-          commandId: "user/unsubscribe/response";
-          status: "failed";
-          reason: "cannot_unsub_own_user";
-      }
-    | {
-          messageId: string;
-          commandId: "user/unsubscribe/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "user/unsubscribe/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "user/unsubscribe/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "user/unsubscribe/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "user/unsubscribe/response",
+    "type": "response",
+    "messageId": "Lorem qui ipsum",
+    "commandId": "user/unsubscribe",
     "status": "success"
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserUnsubscribeResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/unsubscribe";
+    status: "success";
+}
+
 ```
 ---
 
@@ -839,463 +911,396 @@ export type UserUnsubscribeResponse =
 
 Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.
 
-- Endpoint Type: **Response** only
-### Response
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Requires Role: `tachyon.lobby`
+
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "user/updated/response",
-    "roles": [],
-    "anyOf": [
-        {
+    "$id": "user/updated/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "user/updated",
+            "type": "string"
+        },
+        "data": {
             "type": "object",
             "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "user/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "users": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "type": "string"
+                            },
+                            "username": {
+                                "type": "string"
+                            },
+                            "displayName": {
+                                "type": "string"
+                            },
+                            "avatarUrl": {
+                                "anyOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "username": {
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "clanId": {
+                                "anyOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "displayName": {
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "partyId": {
+                                "anyOf": [
+                                    {
                                         "type": "string"
                                     },
-                                    "avatarUrl": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "clanId": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
-                                    },
-                                    "roles": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "countryCode": {
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "countryCode": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "anyOf": [
+                                    {
+                                        "const": "offline",
                                         "type": "string"
                                     },
-                                    "status": {
-                                        "anyOf": [
-                                            {
-                                                "const": "offline",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "menu",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "playing",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "lobby",
-                                                "type": "string"
-                                            }
-                                        ]
+                                    {
+                                        "const": "menu",
+                                        "type": "string"
                                     },
-                                    "battleStatus": {
-                                        "anyOf": [
+                                    {
+                                        "const": "playing",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "const": "lobby",
+                                        "type": "string"
+                                    }
+                                ]
+                            },
+                            "battleStatus": {
+                                "anyOf": [
+                                    {
+                                        "allOf": [
                                             {
-                                                "allOf": [
+                                                "type": "object",
+                                                "properties": {
+                                                    "battleId": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": [
+                                                    "battleId"
+                                                ]
+                                            },
+                                            {
+                                                "anyOf": [
                                                     {
                                                         "type": "object",
-                                                        "properties": {
-                                                            "battleId": {
-                                                                "type": "string"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "battleId"
-                                                        ]
-                                                    },
-                                                    {
-                                                        "anyOf": [
+                                                        "allOf": [
                                                             {
                                                                 "type": "object",
-                                                                "allOf": [
-                                                                    {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "playerId": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "teamId": {
-                                                                                "type": "integer"
-                                                                            },
-                                                                            "color": {
-                                                                                "type": "string"
-                                                                            },
-                                                                            "bonus": {
-                                                                                "type": "number"
-                                                                            },
-                                                                            "inGame": {
-                                                                                "type": "boolean"
-                                                                            }
-                                                                        },
-                                                                        "required": [
-                                                                            "playerId",
-                                                                            "teamId",
-                                                                            "color",
-                                                                            "bonus",
-                                                                            "inGame"
-                                                                        ]
+                                                                "properties": {
+                                                                    "playerId": {
+                                                                        "type": "integer"
                                                                     },
-                                                                    {
-                                                                        "type": "object",
-                                                                        "properties": {
-                                                                            "isSpectator": {
-                                                                                "const": false,
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "isBot": {
-                                                                                "const": false,
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "ready": {
-                                                                                "type": "boolean"
-                                                                            },
-                                                                            "sync": {
-                                                                                "type": "object",
-                                                                                "properties": {
-                                                                                    "engine": {
-                                                                                        "type": "number"
-                                                                                    },
-                                                                                    "game": {
-                                                                                        "type": "number"
-                                                                                    },
-                                                                                    "map": {
-                                                                                        "type": "number"
-                                                                                    }
-                                                                                },
-                                                                                "required": [
-                                                                                    "engine",
-                                                                                    "game",
-                                                                                    "map"
-                                                                                ]
-                                                                            }
-                                                                        },
-                                                                        "required": [
-                                                                            "isSpectator",
-                                                                            "isBot",
-                                                                            "ready",
-                                                                            "sync"
-                                                                        ]
+                                                                    "teamId": {
+                                                                        "type": "integer"
+                                                                    },
+                                                                    "color": {
+                                                                        "type": "string"
+                                                                    },
+                                                                    "bonus": {
+                                                                        "type": "number"
+                                                                    },
+                                                                    "inGame": {
+                                                                        "type": "boolean"
                                                                     }
+                                                                },
+                                                                "required": [
+                                                                    "playerId",
+                                                                    "teamId",
+                                                                    "color",
+                                                                    "bonus",
+                                                                    "inGame"
                                                                 ]
                                                             },
                                                             {
                                                                 "type": "object",
                                                                 "properties": {
                                                                     "isSpectator": {
-                                                                        "const": true,
+                                                                        "const": false,
                                                                         "type": "boolean"
                                                                     },
                                                                     "isBot": {
                                                                         "const": false,
                                                                         "type": "boolean"
+                                                                    },
+                                                                    "ready": {
+                                                                        "type": "boolean"
+                                                                    },
+                                                                    "sync": {
+                                                                        "type": "object",
+                                                                        "properties": {
+                                                                            "engine": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "game": {
+                                                                                "type": "number"
+                                                                            },
+                                                                            "map": {
+                                                                                "type": "number"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "engine",
+                                                                            "game",
+                                                                            "map"
+                                                                        ]
                                                                     }
                                                                 },
                                                                 "required": [
                                                                     "isSpectator",
-                                                                    "isBot"
+                                                                    "isBot",
+                                                                    "ready",
+                                                                    "sync"
                                                                 ]
                                                             }
                                                         ]
+                                                    },
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "isSpectator": {
+                                                                "const": true,
+                                                                "type": "boolean"
+                                                            },
+                                                            "isBot": {
+                                                                "const": false,
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "isSpectator",
+                                                            "isBot"
+                                                        ]
                                                     }
                                                 ]
-                                            },
-                                            {
-                                                "type": "null"
                                             }
                                         ]
                                     },
-                                    "friendIds": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "outgoingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "incomingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "ignoreIds": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                    {
+                                        "type": "null"
                                     }
+                                ]
+                            },
+                            "friendIds": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "outgoingFriendRequestIds": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "incomingFriendRequestIds": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "ignoreIds": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
                                 }
                             }
                         }
-                    },
-                    "required": [
-                        "users"
-                    ]
+                    }
                 }
             },
             "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "user/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "user/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "user/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "user/updated/response",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "users"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
 
 </details>
 
-#### TypeScript Definition
-```ts
-export type UserUpdatedResponse =
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "success";
-          data: {
-              users: {
-                  userId?: string;
-                  username?: string;
-                  displayName?: string;
-                  avatarUrl?: string | null;
-                  clanId?: string | null;
-                  partyId?: string | null;
-                  roles?: string[];
-                  countryCode?: string;
-                  status?: "offline" | "menu" | "playing" | "lobby";
-                  battleStatus?:
-                      | ({
-                            battleId: string;
-                        } & (
-                            | ({
-                                  playerId: number;
-                                  teamId: number;
-                                  color: string;
-                                  bonus: number;
-                                  inGame: boolean;
-                              } & {
-                                  isSpectator: false;
-                                  isBot: false;
-                                  ready: boolean;
-                                  sync: {
-                                      engine: number;
-                                      game: number;
-                                      map: number;
-                                  };
-                              })
-                            | {
-                                  isSpectator: true;
-                                  isBot: false;
-                              }
-                        ))
-                      | null;
-                  friendIds?: string[];
-                  outgoingFriendRequestIds?: string[];
-                  incomingFriendRequestIds?: string[];
-                  ignoreIds?: string[];
-              }[];
-          };
-      }
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          messageId: string;
-          commandId: "user/updated/response";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+<details>
+<summary>Example</summary>
 
-```
-#### Example
 ```json
 {
-    "messageId": "mollit",
-    "commandId": "user/updated/response",
-    "status": "success",
+    "type": "event",
+    "messageId": "Lorem non ipsum",
+    "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "mollitb": -75320000,
-                "status": "offline"
+                "Lorem_22": "Lorem non ipsum",
+                "userId": "Lorem non ipsum",
+                "username": "Lorem non ipsum",
+                "displayName": "Lorem non ipsum",
+                "avatarUrl": null,
+                "clanId": null,
+                "status": "playing",
+                "battleStatus": null,
+                "outgoingFriendRequestIds": [
+                    "Lorem non ipsum",
+                    "Lorem non ipsum",
+                    "Lorem non ipsum"
+                ],
+                "ignoreIds": [
+                    "Lorem non ipsum",
+                    "Lorem non ipsum",
+                    "Lorem non ipsum"
+                ]
+            },
+            {
+                "Lorem_22": "Lorem non ipsum",
+                "userId": "Lorem non ipsum",
+                "username": "Lorem non ipsum",
+                "displayName": "Lorem non ipsum",
+                "avatarUrl": null,
+                "clanId": null,
+                "status": "playing",
+                "battleStatus": null,
+                "outgoingFriendRequestIds": [
+                    "Lorem non ipsum",
+                    "Lorem non ipsum",
+                    "Lorem non ipsum"
+                ],
+                "ignoreIds": [
+                    "Lorem non ipsum",
+                    "Lorem non ipsum",
+                    "Lorem non ipsum"
+                ]
+            },
+            {
+                "Lorem_22": "Lorem non ipsum",
+                "userId": "Lorem non ipsum",
+                "username": "Lorem non ipsum",
+                "displayName": "Lorem non ipsum",
+                "avatarUrl": null,
+                "clanId": null,
+                "status": "playing",
+                "battleStatus": null,
+                "outgoingFriendRequestIds": [
+                    "Lorem non ipsum",
+                    "Lorem non ipsum",
+                    "Lorem non ipsum"
+                ],
+                "ignoreIds": [
+                    "Lorem non ipsum",
+                    "Lorem non ipsum",
+                    "Lorem non ipsum"
+                ]
             }
         ]
     }
 }
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserUpdatedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/updated";
+    data: {
+        users: {
+            userId?: string;
+            username?: string;
+            displayName?: string;
+            avatarUrl?: string | null;
+            clanId?: string | null;
+            partyId?: string | null;
+            scopes?: string[];
+            countryCode?: string;
+            status?: "offline" | "menu" | "playing" | "lobby";
+            battleStatus?:
+                | ({
+                      battleId: string;
+                  } & (
+                      | ({
+                            playerId: number;
+                            teamId: number;
+                            color: string;
+                            bonus: number;
+                            inGame: boolean;
+                        } & {
+                            isSpectator: false;
+                            isBot: false;
+                            ready: boolean;
+                            sync: {
+                                engine: number;
+                                game: number;
+                                map: number;
+                            };
+                        })
+                      | {
+                            isSpectator: true;
+                            isBot: false;
+                        }
+                  ))
+                | null;
+            friendIds?: string[];
+            outgoingFriendRequestIds?: string[];
+            incomingFriendRequestIds?: string[];
+            ignoreIds?: string[];
+        }[];
+    };
+}
+
 ```

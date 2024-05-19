@@ -1,0 +1,37 @@
+{
+    "$id": "game/launch/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "game/launch",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "script": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "script"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

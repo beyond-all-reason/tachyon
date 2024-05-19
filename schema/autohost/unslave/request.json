@@ -1,19 +1,25 @@
 {
     "$id": "autohost/unslave/request",
-    "roles": [
-        "autohost"
+    "scopes": [
+        "autohost",
+        "tachyon.lobby"
     ],
     "type": "object",
     "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "autohost/unslave/request",
+            "const": "autohost/unslave",
             "type": "string"
         }
     },
     "required": [
+        "type",
         "messageId",
         "commandId"
     ]
