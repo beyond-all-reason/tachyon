@@ -69,7 +69,7 @@ Close an existing lobby.
 ```json
 {
     "type": "request",
-    "messageId": "tempor",
+    "messageId": "incididunt",
     "commandId": "lobby/close"
 }
 ```
@@ -258,7 +258,7 @@ export interface LobbyCloseRequest {
 ```json
 {
     "type": "response",
-    "messageId": "eiusmod",
+    "messageId": "tempor",
     "commandId": "lobby/close",
     "status": "success"
 }
@@ -364,7 +364,7 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 ```json
 {
     "type": "request",
-    "messageId": "do",
+    "messageId": "eiusmod",
     "commandId": "lobby/create",
     "data": {
         "title": "8v8 | All Welcome",
@@ -627,7 +627,7 @@ export interface LobbyCreateRequest {
 ```json
 {
     "type": "response",
-    "messageId": "id",
+    "messageId": "do",
     "commandId": "lobby/create",
     "status": "success"
 }
@@ -718,7 +718,7 @@ These commands are split because the server may want to force the client to join
 ```json
 {
     "type": "request",
-    "messageId": "sint",
+    "messageId": "id",
     "commandId": "lobby/join",
     "data": {
         "lobbyId": 27,
@@ -1132,7 +1132,7 @@ export interface LobbyJoinRequest {
 ```json
 {
     "type": "response",
-    "messageId": "nulla",
+    "messageId": "sint",
     "commandId": "lobby/join",
     "status": "success"
 }
@@ -1418,16 +1418,6 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                             "displayName": {
                                 "type": "string"
                             },
-                            "avatarUrl": {
-                                "anyOf": [
-                                    {
-                                        "type": "string"
-                                    },
-                                    {
-                                        "type": "null"
-                                    }
-                                ]
-                            },
                             "clanId": {
                                 "anyOf": [
                                     {
@@ -1598,7 +1588,6 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
                             "userId",
                             "username",
                             "displayName",
-                            "avatarUrl",
                             "clanId",
                             "partyId",
                             "scopes",
@@ -1643,7 +1632,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
 ```json
 {
     "type": "event",
-    "messageId": "dolor",
+    "messageId": "nulla",
     "commandId": "lobby/joined",
     "data": {
         "battleId": 27,
@@ -1728,7 +1717,6 @@ export interface LobbyJoinedEvent {
             userId: string;
             username: string;
             displayName: string;
-            avatarUrl: string | null;
             clanId: string | null;
             partyId: string | null;
             scopes: string[];
@@ -1817,7 +1805,7 @@ Leave the current lobby.
 ```json
 {
     "type": "request",
-    "messageId": "aute",
+    "messageId": "dolor",
     "commandId": "lobby/leave"
 }
 ```
@@ -2037,7 +2025,7 @@ export interface LobbyLeaveRequest {
 ```json
 {
     "type": "response",
-    "messageId": "nisi",
+    "messageId": "aute",
     "commandId": "lobby/leave",
     "status": "success"
 }
@@ -2106,7 +2094,7 @@ Sent when the server removes the client from a lobby.
 ```json
 {
     "type": "event",
-    "messageId": "ullamco",
+    "messageId": "nisi",
     "commandId": "lobby/left"
 }
 ```
@@ -2173,7 +2161,7 @@ Returns all custom lobbies.
 ```json
 {
     "type": "request",
-    "messageId": "exercitation",
+    "messageId": "ullamco",
     "commandId": "lobby/list"
 }
 ```
@@ -2509,16 +2497,6 @@ export interface LobbyListRequest {
                                                         "displayName": {
                                                             "type": "string"
                                                         },
-                                                        "avatarUrl": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "type": "string"
-                                                                },
-                                                                {
-                                                                    "type": "null"
-                                                                }
-                                                            ]
-                                                        },
                                                         "clanId": {
                                                             "anyOf": [
                                                                 {
@@ -2689,7 +2667,6 @@ export interface LobbyListRequest {
                                                         "userId",
                                                         "username",
                                                         "displayName",
-                                                        "avatarUrl",
                                                         "clanId",
                                                         "partyId",
                                                         "scopes",
@@ -2954,58 +2931,11 @@ export interface LobbyListRequest {
 ```json
 {
     "type": "response",
-    "messageId": "Ut velit",
+    "messageId": "exercitation",
     "commandId": "lobby/list",
     "status": "success",
     "data": {
         "battles": [
-            {
-                "battleId": 27,
-                "hostId": 822,
-                "engine": "105.1.1-1821-gaca6f20 BAR105",
-                "game": "Beyond All Reason test-23561-0abff7c",
-                "map": "Red Comet Remake 1.8",
-                "startPosType": 2,
-                "startAreas": {
-                    "0": {
-                        "x": 0,
-                        "y": 0,
-                        "width": 1,
-                        "height": 0.3
-                    },
-                    "1": {
-                        "x": 0,
-                        "y": 0.7,
-                        "width": 1,
-                        "height": 0.3
-                    }
-                },
-                "startTime": 1705432698,
-                "ip": "121.32.201.76",
-                "port": 41403,
-                "scriptPassword": "10sdfi90sid0sjkdf",
-                "modOptions": {
-                    "emprework": 0
-                },
-                "bots": [],
-                "users": [],
-                "title": "8v8 | All Welcome",
-                "bossIds": [
-                    123,
-                    456
-                ],
-                "locked": false,
-                "passworded": false,
-                "spectatorIds": [
-                    88
-                ],
-                "limits": {
-                    "minTeamsize": 3,
-                    "maxTeamsize": 3,
-                    "minRating": null,
-                    "maxRating": 25
-                }
-            },
             {
                 "battleId": 27,
                 "hostId": 822,
@@ -3109,7 +3039,6 @@ export interface LobbyListResponse {
                 userId: string;
                 username: string;
                 displayName: string;
-                avatarUrl: string | null;
                 clanId: string | null;
                 partyId: string | null;
                 scopes: string[];
@@ -3233,7 +3162,7 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
 ```json
 {
     "type": "event",
-    "messageId": "Ut in",
+    "messageId": "Ut velit",
     "commandId": "lobby/receiveMessage",
     "data": {
         "userId": 27,
@@ -3326,7 +3255,7 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
 ```json
 {
     "type": "request",
-    "messageId": "aliqua in",
+    "messageId": "Ut in",
     "commandId": "lobby/sendMessage",
     "data": {
         "message": "Hello lobby!"
@@ -3583,7 +3512,7 @@ export interface LobbySendMessageRequest {
 ```json
 {
     "type": "response",
-    "messageId": "magna commodo",
+    "messageId": "aliqua in",
     "commandId": "lobby/sendMessage",
     "status": "success"
 }
@@ -3667,12 +3596,12 @@ Subscribe to custom battle updates. By default, updates for the user's own battl
 ```json
 {
     "type": "request",
-    "messageId": "id ea",
+    "messageId": "magna commodo",
     "commandId": "lobby/subscribe",
     "data": {
         "battleIds": [
-            "id ea",
-            "id ea"
+            "magna commodo",
+            "magna commodo"
         ]
     }
 }
@@ -3865,7 +3794,7 @@ export interface LobbySubscribeRequest {
 ```json
 {
     "type": "response",
-    "messageId": "voluptate ullamco",
+    "messageId": "id ea",
     "commandId": "lobby/subscribe",
     "status": "success"
 }
@@ -3946,12 +3875,12 @@ Unsubscribe from custom battle updates. If battleIds is passed only updates to t
 ```json
 {
     "type": "request",
-    "messageId": "in exercitation",
+    "messageId": "voluptate ullamco",
     "commandId": "lobby/unsubscribe",
     "data": {
         "battleIds": [
-            "in exercitation",
-            "in exercitation"
+            "voluptate ullamco",
+            "voluptate ullamco"
         ]
     }
 }
@@ -4175,7 +4104,7 @@ export interface LobbyUnsubscribeRequest {
 ```json
 {
     "type": "response",
-    "messageId": "in nostrud",
+    "messageId": "in exercitation",
     "commandId": "lobby/unsubscribe",
     "status": "success"
 }
@@ -4447,16 +4376,6 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                 "displayName": {
                                                     "type": "string"
                                                 },
-                                                "avatarUrl": {
-                                                    "anyOf": [
-                                                        {
-                                                            "type": "string"
-                                                        },
-                                                        {
-                                                            "type": "null"
-                                                        }
-                                                    ]
-                                                },
                                                 "clanId": {
                                                     "anyOf": [
                                                         {
@@ -4627,7 +4546,6 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
                                                 "userId",
                                                 "username",
                                                 "displayName",
-                                                "avatarUrl",
                                                 "clanId",
                                                 "partyId",
                                                 "scopes",
@@ -4741,7 +4659,7 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
 ```json
 {
     "type": "event",
-    "messageId": "consequat quis",
+    "messageId": "in nostrud",
     "commandId": "lobby/updated",
     "data": {
         "battles": [
@@ -4818,7 +4736,6 @@ export interface LobbyUpdatedEvent {
                 userId: string;
                 username: string;
                 displayName: string;
-                avatarUrl: string | null;
                 clanId: string | null;
                 partyId: string | null;
                 scopes: string[];

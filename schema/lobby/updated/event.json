@@ -236,16 +236,6 @@
                                                 "displayName": {
                                                     "type": "string"
                                                 },
-                                                "avatarUrl": {
-                                                    "anyOf": [
-                                                        {
-                                                            "type": "string"
-                                                        },
-                                                        {
-                                                            "type": "null"
-                                                        }
-                                                    ]
-                                                },
                                                 "clanId": {
                                                     "anyOf": [
                                                         {
@@ -416,7 +406,6 @@
                                                 "userId",
                                                 "username",
                                                 "displayName",
-                                                "avatarUrl",
                                                 "clanId",
                                                 "partyId",
                                                 "scopes",

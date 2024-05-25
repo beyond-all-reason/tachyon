@@ -72,13 +72,13 @@ Subscribe to user updates. By default, updates for the client's own user will al
 ```json
 {
     "type": "request",
-    "messageId": "anim Lorem eu",
+    "messageId": "Duis Lorem sint",
     "commandId": "user/subscribe",
     "data": {
         "userIds": [
-            "anim Lorem eu",
-            "anim Lorem eu",
-            "anim Lorem eu"
+            "Duis Lorem sint",
+            "Duis Lorem sint",
+            "Duis Lorem sint"
         ]
     }
 }
@@ -143,16 +143,6 @@ export interface UserSubscribeRequest {
                                     },
                                     "displayName": {
                                         "type": "string"
-                                    },
-                                    "avatarUrl": {
-                                        "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
-                                        ]
                                     },
                                     "clanId": {
                                         "anyOf": [
@@ -324,7 +314,6 @@ export interface UserSubscribeRequest {
                                     "userId",
                                     "username",
                                     "displayName",
-                                    "avatarUrl",
                                     "clanId",
                                     "partyId",
                                     "scopes",
@@ -483,58 +472,100 @@ export interface UserSubscribeRequest {
 ```json
 {
     "type": "response",
-    "messageId": "Lorem anim ipsum",
+    "messageId": "laborum Lorem fugiat",
     "commandId": "user/subscribe",
     "status": "success",
     "data": {
         "users": [
             {
-                "userId": "Lorem anim ipsum",
-                "username": "Lorem anim ipsum",
-                "displayName": "Lorem anim ipsum",
-                "avatarUrl": null,
-                "clanId": null,
-                "partyId": null,
+                "userId": "laborum Lorem fugiat",
+                "username": "laborum Lorem fugiat",
+                "displayName": "laborum Lorem fugiat",
+                "clanId": "laborum Lorem fugiat",
+                "partyId": "laborum Lorem fugiat",
                 "scopes": [
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum"
+                    "laborum Lorem fugiat",
+                    "laborum Lorem fugiat",
+                    "laborum Lorem fugiat"
                 ],
-                "countryCode": "Lorem anim ipsum",
-                "status": "playing",
-                "battleStatus": null
+                "countryCode": "laborum Lorem fugiat",
+                "status": "menu",
+                "battleStatus": {
+                    "battleId": "laborum Lorem fugiat",
+                    "playerId": -4000000,
+                    "teamId": -4000000,
+                    "color": "laborum Lorem fugiat",
+                    "bonus": -3999999.9999999553,
+                    "inGame": false,
+                    "isSpectator": false,
+                    "isBot": false,
+                    "ready": false,
+                    "sync": {
+                        "engine": -3999999.9999999553,
+                        "game": -3999999.9999999553,
+                        "map": -3999999.9999999553
+                    }
+                }
             },
             {
-                "userId": "Lorem anim ipsum",
-                "username": "Lorem anim ipsum",
-                "displayName": "Lorem anim ipsum",
-                "avatarUrl": null,
-                "clanId": null,
-                "partyId": null,
+                "userId": "laborum Lorem fugiat",
+                "username": "laborum Lorem fugiat",
+                "displayName": "laborum Lorem fugiat",
+                "clanId": "laborum Lorem fugiat",
+                "partyId": "laborum Lorem fugiat",
                 "scopes": [
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum"
+                    "laborum Lorem fugiat",
+                    "laborum Lorem fugiat",
+                    "laborum Lorem fugiat"
                 ],
-                "countryCode": "Lorem anim ipsum",
-                "status": "playing",
-                "battleStatus": null
+                "countryCode": "laborum Lorem fugiat",
+                "status": "menu",
+                "battleStatus": {
+                    "battleId": "laborum Lorem fugiat",
+                    "playerId": -4000000,
+                    "teamId": -4000000,
+                    "color": "laborum Lorem fugiat",
+                    "bonus": -3999999.9999999553,
+                    "inGame": false,
+                    "isSpectator": false,
+                    "isBot": false,
+                    "ready": false,
+                    "sync": {
+                        "engine": -3999999.9999999553,
+                        "game": -3999999.9999999553,
+                        "map": -3999999.9999999553
+                    }
+                }
             },
             {
-                "userId": "Lorem anim ipsum",
-                "username": "Lorem anim ipsum",
-                "displayName": "Lorem anim ipsum",
-                "avatarUrl": null,
-                "clanId": null,
-                "partyId": null,
+                "userId": "laborum Lorem fugiat",
+                "username": "laborum Lorem fugiat",
+                "displayName": "laborum Lorem fugiat",
+                "clanId": "laborum Lorem fugiat",
+                "partyId": "laborum Lorem fugiat",
                 "scopes": [
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum"
+                    "laborum Lorem fugiat",
+                    "laborum Lorem fugiat",
+                    "laborum Lorem fugiat"
                 ],
-                "countryCode": "Lorem anim ipsum",
-                "status": "playing",
-                "battleStatus": null
+                "countryCode": "laborum Lorem fugiat",
+                "status": "menu",
+                "battleStatus": {
+                    "battleId": "laborum Lorem fugiat",
+                    "playerId": -4000000,
+                    "teamId": -4000000,
+                    "color": "laborum Lorem fugiat",
+                    "bonus": -3999999.9999999553,
+                    "inGame": false,
+                    "isSpectator": false,
+                    "isBot": false,
+                    "ready": false,
+                    "sync": {
+                        "engine": -3999999.9999999553,
+                        "game": -3999999.9999999553,
+                        "map": -3999999.9999999553
+                    }
+                }
             }
         ]
     }
@@ -554,7 +585,6 @@ export interface UserSubscribeResponse {
             userId: string;
             username: string;
             displayName: string;
-            avatarUrl: string | null;
             clanId: string | null;
             partyId: string | null;
             scopes: string[];
@@ -658,13 +688,13 @@ Unsubscribe from user updates.
 ```json
 {
     "type": "request",
-    "messageId": "Lorem mollit ipsum",
+    "messageId": "anim Lorem eu",
     "commandId": "user/unsubscribe",
     "data": {
         "userIds": [
-            "Lorem mollit ipsum",
-            "Lorem mollit ipsum",
-            "Lorem mollit ipsum"
+            "anim Lorem eu",
+            "anim Lorem eu",
+            "anim Lorem eu"
         ]
     }
 }
@@ -888,7 +918,7 @@ export interface UserUnsubscribeRequest {
 ```json
 {
     "type": "response",
-    "messageId": "Lorem qui ipsum",
+    "messageId": "Lorem anim ipsum",
     "commandId": "user/unsubscribe",
     "status": "success"
 }
@@ -909,7 +939,7 @@ export interface UserUnsubscribeResponse {
 
 ## Updated
 
-Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.
+Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged. This event should be sent to a user when they login to inform them about their own user data.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -956,16 +986,6 @@ Sent by the server to inform the client when subscribed users get updated in som
                             },
                             "displayName": {
                                 "type": "string"
-                            },
-                            "avatarUrl": {
-                                "anyOf": [
-                                    {
-                                        "type": "string"
-                                    },
-                                    {
-                                        "type": "null"
-                                    }
-                                ]
                             },
                             "clanId": {
                                 "anyOf": [
@@ -1182,68 +1202,65 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "Lorem non ipsum",
+    "messageId": "Lorem mollit ipsum",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "Lorem_22": "Lorem non ipsum",
-                "userId": "Lorem non ipsum",
-                "username": "Lorem non ipsum",
-                "displayName": "Lorem non ipsum",
-                "avatarUrl": null,
+                "Lorem_11": "Lorem mollit ipsum",
+                "userId": "Lorem mollit ipsum",
+                "username": "Lorem mollit ipsum",
+                "displayName": "Lorem mollit ipsum",
                 "clanId": null,
                 "status": "playing",
                 "battleStatus": null,
-                "outgoingFriendRequestIds": [
-                    "Lorem non ipsum",
-                    "Lorem non ipsum",
-                    "Lorem non ipsum"
+                "friendIds": [
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum"
                 ],
-                "ignoreIds": [
-                    "Lorem non ipsum",
-                    "Lorem non ipsum",
-                    "Lorem non ipsum"
+                "incomingFriendRequestIds": [
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum"
                 ]
             },
             {
-                "Lorem_22": "Lorem non ipsum",
-                "userId": "Lorem non ipsum",
-                "username": "Lorem non ipsum",
-                "displayName": "Lorem non ipsum",
-                "avatarUrl": null,
+                "Lorem_11": "Lorem mollit ipsum",
+                "userId": "Lorem mollit ipsum",
+                "username": "Lorem mollit ipsum",
+                "displayName": "Lorem mollit ipsum",
                 "clanId": null,
                 "status": "playing",
                 "battleStatus": null,
-                "outgoingFriendRequestIds": [
-                    "Lorem non ipsum",
-                    "Lorem non ipsum",
-                    "Lorem non ipsum"
+                "friendIds": [
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum"
                 ],
-                "ignoreIds": [
-                    "Lorem non ipsum",
-                    "Lorem non ipsum",
-                    "Lorem non ipsum"
+                "incomingFriendRequestIds": [
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum"
                 ]
             },
             {
-                "Lorem_22": "Lorem non ipsum",
-                "userId": "Lorem non ipsum",
-                "username": "Lorem non ipsum",
-                "displayName": "Lorem non ipsum",
-                "avatarUrl": null,
+                "Lorem_11": "Lorem mollit ipsum",
+                "userId": "Lorem mollit ipsum",
+                "username": "Lorem mollit ipsum",
+                "displayName": "Lorem mollit ipsum",
                 "clanId": null,
                 "status": "playing",
                 "battleStatus": null,
-                "outgoingFriendRequestIds": [
-                    "Lorem non ipsum",
-                    "Lorem non ipsum",
-                    "Lorem non ipsum"
+                "friendIds": [
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum"
                 ],
-                "ignoreIds": [
-                    "Lorem non ipsum",
-                    "Lorem non ipsum",
-                    "Lorem non ipsum"
+                "incomingFriendRequestIds": [
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum",
+                    "Lorem mollit ipsum"
                 ]
             }
         ]
@@ -1263,7 +1280,6 @@ export interface UserUpdatedEvent {
             userId?: string;
             username?: string;
             displayName?: string;
-            avatarUrl?: string | null;
             clanId?: string | null;
             partyId?: string | null;
             scopes?: string[];

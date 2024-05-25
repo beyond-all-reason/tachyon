@@ -6,12 +6,12 @@ The matchmaking cycle works as follows:
 
 1. Clients should first retrieve a list of all the available queues from the server using [list](#list).
 2. Clients should then queue for one or more of these queues by sending an array of the queue ids in a [queue](#queue) request.
-3. The server should send periodic updates about the total number of clients in at least one of the same queues as the queued client as a [queueUpdate](#queueupdate) response.
+3. The server can send periodic updates about the status of the search as a [queueUpdate](#queueupdate) response.
 4. When a match is found, the server should send a [found](#found) response along with the id of the queue of the found match.
 5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [readyUpdate](#readyupdate) response.
 6. To cancel queueing, or to decline a found match, clients should send a [cancel](#cancel) request.
 7. If a client fails to ready up for a found match, the server should send a [lost](#lost) response, and the queueing phase should resume.
-
+8. If all players are ready
 ---
 - [cancel](#cancel)
 - [declined](#declined)
@@ -75,7 +75,7 @@ Cancel queueing for matchmaking.
 ```json
 {
     "type": "request",
-    "messageId": "commodo laborum",
+    "messageId": "consequat quis",
     "commandId": "matchmaking/cancel"
 }
 ```
@@ -295,7 +295,7 @@ export interface MatchmakingCancelRequest {
 ```json
 {
     "type": "response",
-    "messageId": "nisi deserunt",
+    "messageId": "commodo laborum",
     "commandId": "matchmaking/cancel",
     "status": "success"
 }
@@ -364,7 +364,7 @@ Sent when a found match is declined, either by manual rejection or timeout from 
 ```json
 {
     "type": "request",
-    "messageId": "nisi qui",
+    "messageId": "nisi deserunt",
     "commandId": "matchmaking/declined"
 }
 ```
@@ -553,7 +553,7 @@ export interface MatchmakingDeclinedRequest {
 ```json
 {
     "type": "response",
-    "messageId": "laboris non",
+    "messageId": "nisi qui",
     "commandId": "matchmaking/declined",
     "status": "success"
 }
@@ -638,11 +638,11 @@ Server should send this when there are enough queued players to form a valid gam
 ```json
 {
     "type": "event",
-    "messageId": "ullamco occaecat",
+    "messageId": "laboris non",
     "commandId": "matchmaking/found",
     "data": {
-        "queueId": "ullamco occaecat",
-        "timeoutMs": -34000000
+        "queueId": "laboris non",
+        "timeoutMs": -36000000
     }
 }
 ```
@@ -725,10 +725,10 @@ Server should send this when players ready up using [ready](#ready).
 ```json
 {
     "type": "event",
-    "messageId": "reprehenderit Lorem",
+    "messageId": "ullamco occaecat",
     "commandId": "matchmaking/foundUpdate",
     "data": {
-        "readyCount": -32000000
+        "readyCount": -34000000
     }
 }
 ```
@@ -798,7 +798,7 @@ Returns all available matchmaking playlists.
 ```json
 {
     "type": "request",
-    "messageId": "dolor Lorem",
+    "messageId": "reprehenderit Lorem",
     "commandId": "matchmaking/list"
 }
 ```
@@ -1046,7 +1046,7 @@ export interface MatchmakingListRequest {
 ```json
 {
     "type": "response",
-    "messageId": "Duis Lorem",
+    "messageId": "dolor Lorem",
     "commandId": "matchmaking/list",
     "status": "success",
     "data": {
@@ -1142,7 +1142,7 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```json
 {
     "type": "event",
-    "messageId": "consequat Lorem",
+    "messageId": "Duis Lorem",
     "commandId": "matchmaking/lost"
 }
 ```
@@ -1225,12 +1225,12 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 ```json
 {
     "type": "request",
-    "messageId": "commodo Lorem",
+    "messageId": "consequat Lorem",
     "commandId": "matchmaking/queue",
     "data": {
         "queues": [
-            "commodo Lorem",
-            "commodo Lorem"
+            "consequat Lorem",
+            "consequat Lorem"
         ]
     }
 }
@@ -1516,7 +1516,7 @@ export interface MatchmakingQueueRequest {
 ```json
 {
     "type": "response",
-    "messageId": "ut Lorem",
+    "messageId": "commodo Lorem",
     "commandId": "matchmaking/queue",
     "status": "success"
 }
@@ -1597,10 +1597,10 @@ Contains some info about the state of the current queue.
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
+    "messageId": "ut Lorem",
     "commandId": "matchmaking/queueUpdate",
     "data": {
-        "playersQueued": "occaecat Lorem in"
+        "playersQueued": "ut Lorem"
     }
 }
 ```
@@ -1670,7 +1670,7 @@ Clients should send this when they are ready to proceed with the found match. If
 ```json
 {
     "type": "request",
-    "messageId": "pariatur Lorem reprehenderit",
+    "messageId": "occaecat Lorem in",
     "commandId": "matchmaking/ready"
 }
 ```
@@ -1890,7 +1890,7 @@ export interface MatchmakingReadyRequest {
 ```json
 {
     "type": "response",
-    "messageId": "fugiat Lorem irure",
+    "messageId": "pariatur Lorem reprehenderit",
     "commandId": "matchmaking/ready",
     "status": "success"
 }
@@ -1975,11 +1975,11 @@ Sent when a client in a found match readies up.
 ```json
 {
     "type": "event",
-    "messageId": "cillum Lorem ut",
+    "messageId": "fugiat Lorem irure",
     "commandId": "matchmaking/readyUpdate",
     "data": {
-        "readyMax": -14000000,
-        "readyCurrent": -14000000
+        "readyMax": -16000000,
+        "readyCurrent": -16000000
     }
 }
 ```

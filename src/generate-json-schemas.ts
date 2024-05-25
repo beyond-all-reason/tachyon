@@ -8,7 +8,10 @@ import { pathToFileURL } from "url";
 import { EndpointConfig } from "@/generator-helpers.js";
 import { TachyonActor } from "@/type-helpers";
 
-export type SchemaMeta = Record<TachyonActor, Record<"request" | "response" | "event", { send: string[]; receive: string[] }>>;
+export type SchemaMeta = {
+    actors: Record<TachyonActor, Record<"request" | "response" | "event", { send: string[]; receive: string[] }>>;
+    serviceIds: Record<string, string[]>;
+};
 
 export async function generateJsonSchemas() {
     const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
@@ -141,38 +144,42 @@ export async function generateJsonSchemas() {
     }
 
     const schemaMeta: SchemaMeta = {
-        server: {
-            request: { send: [], receive: [] },
-            response: { send: [], receive: [] },
-            event: { send: [], receive: [] },
+        actors: {
+            server: {
+                request: { send: [], receive: [] },
+                response: { send: [], receive: [] },
+                event: { send: [], receive: [] },
+            },
+            user: {
+                request: { send: [], receive: [] },
+                response: { send: [], receive: [] },
+                event: { send: [], receive: [] },
+            },
+            autohost: {
+                request: { send: [], receive: [] },
+                response: { send: [], receive: [] },
+                event: { send: [], receive: [] },
+            },
         },
-        user: {
-            request: { send: [], receive: [] },
-            response: { send: [], receive: [] },
-            event: { send: [], receive: [] },
-        },
-        autohost: {
-            request: { send: [], receive: [] },
-            response: { send: [], receive: [] },
-            event: { send: [], receive: [] },
-        },
+        serviceIds: {},
     };
     let compiledSchema: any = {};
     for (const serviceId in fullSchemaProps) {
         compiledSchema[serviceId] = {};
+        schemaMeta.serviceIds[serviceId] = Object.keys(fullSchemaProps[serviceId]);
         const serviceSchema = fullSchemaProps[serviceId];
         for (const endpointId in serviceSchema) {
             const endpointSchema = serviceSchema[endpointId];
             const endpointConfig = individualSchemas[serviceId][endpointId];
 
             if ("request" in endpointSchema && "response" in endpointSchema) {
-                schemaMeta[endpointConfig.source].request.send.push(`${serviceId}/${endpointId}`);
-                schemaMeta[endpointConfig.target].request.receive.push(`${serviceId}/${endpointId}`);
-                schemaMeta[endpointConfig.source].response.receive.push(`${serviceId}/${endpointId}`);
-                schemaMeta[endpointConfig.target].response.send.push(`${serviceId}/${endpointId}`);
+                schemaMeta.actors[endpointConfig.source].request.send.push(`${serviceId}/${endpointId}`);
+                schemaMeta.actors[endpointConfig.target].request.receive.push(`${serviceId}/${endpointId}`);
+                schemaMeta.actors[endpointConfig.source].response.receive.push(`${serviceId}/${endpointId}`);
+                schemaMeta.actors[endpointConfig.target].response.send.push(`${serviceId}/${endpointId}`);
             } else if ("event" in endpointSchema) {
-                schemaMeta[endpointConfig.source].event.send.push(`${serviceId}/${endpointId}`);
-                schemaMeta[endpointConfig.target].event.receive.push(`${serviceId}/${endpointId}`);
+                schemaMeta.actors[endpointConfig.source].event.send.push(`${serviceId}/${endpointId}`);
+                schemaMeta.actors[endpointConfig.target].event.receive.push(`${serviceId}/${endpointId}`);
             } else {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} has an invalid schema`);
             }

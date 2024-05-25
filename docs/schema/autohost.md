@@ -46,86 +46,9 @@ Autohosts used for matchmaking should use the slaved mode as no pregame communic
 Autohosts used for custom games should use the dedicated mode as lots of pregame communication can take place.
 
 ---
-- [connected](#connected)
 - [launch](#launch)
 - [slave](#slave)
 - [unslave](#unslave)
----
-
-## Connected
-
-Sent to autohosts on connection.
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **Autohost**
-- Requires Role: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "autohost/connected/event",
-    "scopes": [
-        "tachyon.lobby"
-    ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/connected",
-            "type": "string"
-        },
-        "data": {
-            "type": "object",
-            "properties": {}
-        }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
-}
-```
-
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "ipsum",
-    "commandId": "autohost/connected",
-    "data": {
-        "ipsum_": -98000000
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface AutohostConnectedEvent {
-    type: "event";
-    messageId: string;
-    commandId: "autohost/connected";
-    data: {};
-}
-
-```
 ---
 
 ## Launch
@@ -190,10 +113,10 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 ```json
 {
     "type": "request",
-    "messageId": "fugiat",
+    "messageId": "ipsum",
     "commandId": "autohost/launch",
     "data": {
-        "script": "fugiat"
+        "script": "ipsum"
     }
 }
 ```
@@ -478,7 +401,7 @@ export interface AutohostLaunchRequest {
 ```json
 {
     "type": "response",
-    "messageId": "ea",
+    "messageId": "fugiat",
     "commandId": "autohost/launch",
     "status": "success"
 }
@@ -562,7 +485,7 @@ Registers the autohost as slavable by the master server to be used for hosting d
 ```json
 {
     "type": "request",
-    "messageId": "quis",
+    "messageId": "ea",
     "commandId": "autohost/slave",
     "data": {
         "maxBattles": 4
@@ -758,7 +681,7 @@ export interface AutohostSlaveRequest {
 ```json
 {
     "type": "response",
-    "messageId": "Ut",
+    "messageId": "quis",
     "commandId": "autohost/slave",
     "status": "success"
 }
@@ -828,7 +751,7 @@ Unregisters the client as slavable.
 ```json
 {
     "type": "request",
-    "messageId": "dolore",
+    "messageId": "Ut",
     "commandId": "autohost/unslave"
 }
 ```
@@ -1018,7 +941,7 @@ export interface AutohostUnslaveRequest {
 ```json
 {
     "type": "response",
-    "messageId": "labore",
+    "messageId": "dolore",
     "commandId": "autohost/unslave",
     "status": "success"
 }

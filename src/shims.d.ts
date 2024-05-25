@@ -4,152 +4,175 @@ declare module "json-schema-faker";
 // these are just some copy pasted shims from the outputed index.d.ts file, intended for generated-helpers.ts to make it easier to dev them
 
 declare const tachyonMeta: {
-    readonly version: "1.6.4";
+    readonly version: "1.7.0";
     readonly schema: {
-        readonly server: {
-            readonly request: {
-                readonly send: readonly ["autohost/launch"];
-                readonly receive: readonly [
-                    "autohost/slave",
-                    "autohost/unslave",
-                    "lobby/close",
-                    "lobby/create",
-                    "lobby/join",
-                    "lobby/leave",
-                    "lobby/list",
-                    "lobby/sendMessage",
-                    "lobby/subscribe",
-                    "lobby/unsubscribe",
-                    "matchmaking/cancel",
-                    "matchmaking/declined",
-                    "matchmaking/list",
-                    "matchmaking/queue",
-                    "matchmaking/ready",
-                    "system/disconnect",
-                    "system/serverStats",
-                    "user/subscribe",
-                    "user/unsubscribe",
-                ];
+        readonly actors: {
+            readonly server: {
+                readonly request: {
+                    readonly send: readonly ["autohost/launch"];
+                    readonly receive: readonly [
+                        "autohost/slave",
+                        "autohost/unslave",
+                        "lobby/close",
+                        "lobby/create",
+                        "lobby/join",
+                        "lobby/leave",
+                        "lobby/list",
+                        "lobby/sendMessage",
+                        "lobby/subscribe",
+                        "lobby/unsubscribe",
+                        "matchmaking/cancel",
+                        "matchmaking/declined",
+                        "matchmaking/list",
+                        "matchmaking/queue",
+                        "matchmaking/ready",
+                        "system/disconnect",
+                        "system/serverStats",
+                        "user/subscribe",
+                        "user/unsubscribe",
+                    ];
+                };
+                readonly response: {
+                    readonly send: readonly [
+                        "autohost/slave",
+                        "autohost/unslave",
+                        "lobby/close",
+                        "lobby/create",
+                        "lobby/join",
+                        "lobby/leave",
+                        "lobby/list",
+                        "lobby/sendMessage",
+                        "lobby/subscribe",
+                        "lobby/unsubscribe",
+                        "matchmaking/cancel",
+                        "matchmaking/declined",
+                        "matchmaking/list",
+                        "matchmaking/queue",
+                        "matchmaking/ready",
+                        "system/disconnect",
+                        "system/serverStats",
+                        "user/subscribe",
+                        "user/unsubscribe",
+                    ];
+                    readonly receive: readonly ["autohost/launch"];
+                };
+                readonly event: {
+                    readonly send: readonly [
+                        "autohost/connected",
+                        "game/launch",
+                        "lobby/joined",
+                        "lobby/left",
+                        "lobby/receiveMessage",
+                        "lobby/updated",
+                        "matchmaking/found",
+                        "matchmaking/foundUpdate",
+                        "matchmaking/lost",
+                        "matchmaking/queueUpdate",
+                        "matchmaking/readyUpdate",
+                        "system/connected",
+                        "user/updated",
+                    ];
+                    readonly receive: readonly [];
+                };
             };
-            readonly response: {
-                readonly send: readonly [
-                    "autohost/slave",
-                    "autohost/unslave",
-                    "lobby/close",
-                    "lobby/create",
-                    "lobby/join",
-                    "lobby/leave",
-                    "lobby/list",
-                    "lobby/sendMessage",
-                    "lobby/subscribe",
-                    "lobby/unsubscribe",
-                    "matchmaking/cancel",
-                    "matchmaking/declined",
-                    "matchmaking/list",
-                    "matchmaking/queue",
-                    "matchmaking/ready",
-                    "system/disconnect",
-                    "system/serverStats",
-                    "user/subscribe",
-                    "user/unsubscribe",
-                ];
-                readonly receive: readonly ["autohost/launch"];
+            readonly user: {
+                readonly request: {
+                    readonly send: readonly [
+                        "lobby/close",
+                        "lobby/create",
+                        "lobby/join",
+                        "lobby/leave",
+                        "lobby/list",
+                        "lobby/sendMessage",
+                        "lobby/subscribe",
+                        "lobby/unsubscribe",
+                        "matchmaking/cancel",
+                        "matchmaking/declined",
+                        "matchmaking/list",
+                        "matchmaking/queue",
+                        "matchmaking/ready",
+                        "system/disconnect",
+                        "system/serverStats",
+                        "user/subscribe",
+                        "user/unsubscribe",
+                    ];
+                    readonly receive: readonly [];
+                };
+                readonly response: {
+                    readonly send: readonly [];
+                    readonly receive: readonly [
+                        "lobby/close",
+                        "lobby/create",
+                        "lobby/join",
+                        "lobby/leave",
+                        "lobby/list",
+                        "lobby/sendMessage",
+                        "lobby/subscribe",
+                        "lobby/unsubscribe",
+                        "matchmaking/cancel",
+                        "matchmaking/declined",
+                        "matchmaking/list",
+                        "matchmaking/queue",
+                        "matchmaking/ready",
+                        "system/disconnect",
+                        "system/serverStats",
+                        "user/subscribe",
+                        "user/unsubscribe",
+                    ];
+                };
+                readonly event: {
+                    readonly send: readonly [];
+                    readonly receive: readonly [
+                        "game/launch",
+                        "lobby/joined",
+                        "lobby/left",
+                        "lobby/receiveMessage",
+                        "lobby/updated",
+                        "matchmaking/found",
+                        "matchmaking/foundUpdate",
+                        "matchmaking/lost",
+                        "matchmaking/queueUpdate",
+                        "matchmaking/readyUpdate",
+                        "system/connected",
+                        "user/updated",
+                    ];
+                };
             };
-            readonly event: {
-                readonly send: readonly [
-                    "autohost/connected",
-                    "game/launch",
-                    "lobby/joined",
-                    "lobby/left",
-                    "lobby/receiveMessage",
-                    "lobby/updated",
-                    "matchmaking/found",
-                    "matchmaking/foundUpdate",
-                    "matchmaking/lost",
-                    "matchmaking/queueUpdate",
-                    "matchmaking/readyUpdate",
-                    "system/connected",
-                    "user/updated",
-                ];
-                readonly receive: readonly [];
+            readonly autohost: {
+                readonly request: {
+                    readonly send: readonly ["autohost/slave", "autohost/unslave"];
+                    readonly receive: readonly ["autohost/launch"];
+                };
+                readonly response: {
+                    readonly send: readonly ["autohost/launch"];
+                    readonly receive: readonly ["autohost/slave", "autohost/unslave"];
+                };
+                readonly event: {
+                    readonly send: readonly [];
+                    readonly receive: readonly ["autohost/connected"];
+                };
             };
         };
-        readonly user: {
-            readonly request: {
-                readonly send: readonly [
-                    "lobby/close",
-                    "lobby/create",
-                    "lobby/join",
-                    "lobby/leave",
-                    "lobby/list",
-                    "lobby/sendMessage",
-                    "lobby/subscribe",
-                    "lobby/unsubscribe",
-                    "matchmaking/cancel",
-                    "matchmaking/declined",
-                    "matchmaking/list",
-                    "matchmaking/queue",
-                    "matchmaking/ready",
-                    "system/disconnect",
-                    "system/serverStats",
-                    "user/subscribe",
-                    "user/unsubscribe",
-                ];
-                readonly receive: readonly [];
-            };
-            readonly response: {
-                readonly send: readonly [];
-                readonly receive: readonly [
-                    "lobby/close",
-                    "lobby/create",
-                    "lobby/join",
-                    "lobby/leave",
-                    "lobby/list",
-                    "lobby/sendMessage",
-                    "lobby/subscribe",
-                    "lobby/unsubscribe",
-                    "matchmaking/cancel",
-                    "matchmaking/declined",
-                    "matchmaking/list",
-                    "matchmaking/queue",
-                    "matchmaking/ready",
-                    "system/disconnect",
-                    "system/serverStats",
-                    "user/subscribe",
-                    "user/unsubscribe",
-                ];
-            };
-            readonly event: {
-                readonly send: readonly [];
-                readonly receive: readonly [
-                    "game/launch",
-                    "lobby/joined",
-                    "lobby/left",
-                    "lobby/receiveMessage",
-                    "lobby/updated",
-                    "matchmaking/found",
-                    "matchmaking/foundUpdate",
-                    "matchmaking/lost",
-                    "matchmaking/queueUpdate",
-                    "matchmaking/readyUpdate",
-                    "system/connected",
-                    "user/updated",
-                ];
-            };
-        };
-        readonly autohost: {
-            readonly request: {
-                readonly send: readonly ["autohost/slave", "autohost/unslave"];
-                readonly receive: readonly ["autohost/launch"];
-            };
-            readonly response: {
-                readonly send: readonly ["autohost/launch"];
-                readonly receive: readonly ["autohost/slave", "autohost/unslave"];
-            };
-            readonly event: {
-                readonly send: readonly [];
-                readonly receive: readonly ["autohost/connected"];
-            };
+        readonly serviceIds: {
+            readonly autohost: readonly ["connected", "launch", "slave", "unslave"];
+            readonly game: readonly ["launch"];
+            readonly lobby: readonly [
+                "close",
+                "create",
+                "join",
+                "joined",
+                "leave",
+                "left",
+                "list",
+                "receiveMessage",
+                "sendMessage",
+                "subscribe",
+                "unsubscribe",
+                "updated",
+            ];
+            readonly matchmaking: readonly ["cancel", "declined", "found", "foundUpdate", "list", "lost", "queue", "queueUpdate", "ready", "readyUpdate"];
+            readonly system: readonly ["connected", "disconnect", "serverStats"];
+            readonly user: readonly ["subscribe", "unsubscribe", "updated"];
         };
     };
 };

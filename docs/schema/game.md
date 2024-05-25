@@ -67,10 +67,10 @@ When a user client receives this response it should launch the game (spring.exe)
 ```json
 {
     "type": "event",
-    "messageId": "incididunt",
+    "messageId": "labore",
     "commandId": "game/launch",
     "data": {
-        "script": "incididunt"
+        "script": "labore"
     }
 }
 ```

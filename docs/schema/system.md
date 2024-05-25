@@ -2,397 +2,8 @@
 
 # System
 
-- [connected](#connected)
 - [disconnect](#disconnect)
 - [serverStats](#serverstats)
----
-
-## Connected
-
-Sent immediately by the server on connection.
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **User**
-- Requires Role: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "system/connected/event",
-    "scopes": [
-        "tachyon.lobby"
-    ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "system/connected",
-            "type": "string"
-        },
-        "data": {
-            "type": "object",
-            "properties": {
-                "userId": {
-                    "type": "string"
-                },
-                "username": {
-                    "type": "string"
-                },
-                "displayName": {
-                    "type": "string"
-                },
-                "avatarUrl": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
-                },
-                "clanId": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
-                },
-                "partyId": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
-                },
-                "scopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "countryCode": {
-                    "type": "string"
-                },
-                "status": {
-                    "anyOf": [
-                        {
-                            "const": "offline",
-                            "type": "string"
-                        },
-                        {
-                            "const": "menu",
-                            "type": "string"
-                        },
-                        {
-                            "const": "playing",
-                            "type": "string"
-                        },
-                        {
-                            "const": "lobby",
-                            "type": "string"
-                        }
-                    ]
-                },
-                "battleStatus": {
-                    "anyOf": [
-                        {
-                            "allOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "battleId": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "required": [
-                                        "battleId"
-                                    ]
-                                },
-                                {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "allOf": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "playerId": {
-                                                            "type": "integer"
-                                                        },
-                                                        "teamId": {
-                                                            "type": "integer"
-                                                        },
-                                                        "color": {
-                                                            "type": "string"
-                                                        },
-                                                        "bonus": {
-                                                            "type": "number"
-                                                        },
-                                                        "inGame": {
-                                                            "type": "boolean"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "playerId",
-                                                        "teamId",
-                                                        "color",
-                                                        "bonus",
-                                                        "inGame"
-                                                    ]
-                                                },
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "isSpectator": {
-                                                            "const": false,
-                                                            "type": "boolean"
-                                                        },
-                                                        "isBot": {
-                                                            "const": false,
-                                                            "type": "boolean"
-                                                        },
-                                                        "ready": {
-                                                            "type": "boolean"
-                                                        },
-                                                        "sync": {
-                                                            "type": "object",
-                                                            "properties": {
-                                                                "engine": {
-                                                                    "type": "number"
-                                                                },
-                                                                "game": {
-                                                                    "type": "number"
-                                                                },
-                                                                "map": {
-                                                                    "type": "number"
-                                                                }
-                                                            },
-                                                            "required": [
-                                                                "engine",
-                                                                "game",
-                                                                "map"
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "isSpectator",
-                                                        "isBot",
-                                                        "ready",
-                                                        "sync"
-                                                    ]
-                                                }
-                                            ]
-                                        },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "isSpectator": {
-                                                    "const": true,
-                                                    "type": "boolean"
-                                                },
-                                                "isBot": {
-                                                    "const": false,
-                                                    "type": "boolean"
-                                                }
-                                            },
-                                            "required": [
-                                                "isSpectator",
-                                                "isBot"
-                                            ]
-                                        }
-                                    ]
-                                }
-                            ]
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
-                },
-                "friendIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "outgoingFriendRequestIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "incomingFriendRequestIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "ignoreIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "userId",
-                "username",
-                "displayName",
-                "avatarUrl",
-                "clanId",
-                "partyId",
-                "scopes",
-                "status",
-                "battleStatus",
-                "friendIds",
-                "outgoingFriendRequestIds",
-                "incomingFriendRequestIds",
-                "ignoreIds"
-            ]
-        }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
-}
-```
-
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "esse Lorem anim",
-    "commandId": "system/connected",
-    "data": {
-        "userId": "esse Lorem anim",
-        "username": "esse Lorem anim",
-        "displayName": "esse Lorem anim",
-        "avatarUrl": "esse Lorem anim",
-        "clanId": "esse Lorem anim",
-        "partyId": "esse Lorem anim",
-        "scopes": [
-            "esse Lorem anim",
-            "esse Lorem anim",
-            "esse Lorem anim"
-        ],
-        "countryCode": "esse Lorem anim",
-        "status": "menu",
-        "battleStatus": {
-            "battleId": "esse Lorem anim",
-            "playerId": -12000000,
-            "teamId": -12000000,
-            "color": "esse Lorem anim",
-            "bonus": -11999999.999999955,
-            "inGame": false,
-            "isSpectator": false,
-            "isBot": false,
-            "ready": false,
-            "sync": {
-                "engine": -11999999.999999955,
-                "game": -11999999.999999955,
-                "map": -11999999.999999955
-            }
-        },
-        "friendIds": [
-            "esse Lorem anim",
-            "esse Lorem anim",
-            "esse Lorem anim"
-        ],
-        "outgoingFriendRequestIds": [
-            "esse Lorem anim",
-            "esse Lorem anim",
-            "esse Lorem anim"
-        ],
-        "incomingFriendRequestIds": [
-            "esse Lorem anim",
-            "esse Lorem anim",
-            "esse Lorem anim"
-        ],
-        "ignoreIds": [
-            "esse Lorem anim",
-            "esse Lorem anim",
-            "esse Lorem anim"
-        ]
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface SystemConnectedEvent {
-    type: "event";
-    messageId: string;
-    commandId: "system/connected";
-    data: {
-        userId: string;
-        username: string;
-        displayName: string;
-        avatarUrl: string | null;
-        clanId: string | null;
-        partyId: string | null;
-        scopes: string[];
-        countryCode?: string;
-        status: "offline" | "menu" | "playing" | "lobby";
-        battleStatus:
-            | ({
-                  battleId: string;
-              } & (
-                  | ({
-                        playerId: number;
-                        teamId: number;
-                        color: string;
-                        bonus: number;
-                        inGame: boolean;
-                    } & {
-                        isSpectator: false;
-                        isBot: false;
-                        ready: boolean;
-                        sync: {
-                            engine: number;
-                            game: number;
-                            map: number;
-                        };
-                    })
-                  | {
-                        isSpectator: true;
-                        isBot: false;
-                    }
-              ))
-            | null;
-        friendIds: string[];
-        outgoingFriendRequestIds: string[];
-        incomingFriendRequestIds: string[];
-        ignoreIds: string[];
-    };
-}
-
-```
 ---
 
 ## Disconnect
@@ -456,10 +67,10 @@ Ask the server to terminate the connection.
 ```json
 {
     "type": "request",
-    "messageId": "aute Lorem officia",
+    "messageId": "cillum Lorem ut",
     "commandId": "system/disconnect",
     "data": {
-        "reason": "aute Lorem officia"
+        "reason": "cillum Lorem ut"
     }
 }
 ```
@@ -651,7 +262,7 @@ export interface SystemDisconnectRequest {
 ```json
 {
     "type": "response",
-    "messageId": "Duis Lorem culpa",
+    "messageId": "esse Lorem anim",
     "commandId": "system/disconnect",
     "status": "success"
 }
@@ -720,7 +331,7 @@ Get server stats such as user count.
 ```json
 {
     "type": "request",
-    "messageId": "Duis Lorem sint",
+    "messageId": "aute Lorem officia",
     "commandId": "system/serverStats"
 }
 ```
@@ -921,11 +532,11 @@ export interface SystemServerStatsRequest {
 ```json
 {
     "type": "response",
-    "messageId": "laborum Lorem fugiat",
+    "messageId": "Duis Lorem culpa",
     "commandId": "system/serverStats",
     "status": "success",
     "data": {
-        "userCount": -4000000
+        "userCount": -8000000
     }
 }
 ```
