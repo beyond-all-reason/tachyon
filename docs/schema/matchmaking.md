@@ -4,14 +4,15 @@
 
 The matchmaking cycle works as follows:
 
-1. Clients should first retrieve a list of all the available queues from the server using [list](#list).
-2. Clients should then queue for one or more of these queues by sending an array of the queue ids in a [queue](#queue) request.
-3. The server can send periodic updates about the status of the search as a [queueUpdate](#queueupdate) response.
-4. When a match is found, the server should send a [found](#found) response along with the id of the queue of the found match.
-5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [readyUpdate](#readyupdate) response.
-6. To cancel queueing, or to decline a found match, clients should send a [cancel](#cancel) request.
-7. If a client fails to ready up for a found match, the server should send a [lost](#lost) response, and the queueing phase should resume.
-8. If all players are ready
+1. Clients should first retrieve a list of all the available playlists from the server using a [matchmaking/list](#list) request.
+2. Clients can then queue for one or more of these playlists by sending an array of playlist ids in a [matchmaking/queue](#queue) request.
+3. The server can send periodic updates about the status of the search as [matchmaking/queueUpdate](#queueupdate) events.
+4. When a match is found, the server must send a [matchmaking/found](#found) event along with the playlist id of the found match.
+5. Clients should then ready up by sending a [matchmaking/ready](#ready) request. The number of ready players should be sent to clients via the [matchmaking/readyUpdate](#readyupdate) response.
+6. To cancel queueing, or to decline a found match, clients should send a [matchmaking/cancel](#cancel) request.
+7. If a client fails to ready up for a found match, the server should send a [matchmaking/lost](#lost) response, and the queueing phase should resume.
+8. When all players are ready, the server should send a [autohost/launch](autohost#launch) request to a provisioned autohost client
+9. When the autohost has sent a successful [autohost/launch](autohost#launch) response, the server must then send [game/launch](game#launch) requests to the users.
 ---
 - [cancel](#cancel)
 - [declined](#declined)
