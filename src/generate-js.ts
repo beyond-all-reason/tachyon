@@ -34,7 +34,9 @@ export async function generateJs(compiledSchema: TObject, unionSchema: TUnion<TS
 
     await generateJsValidators(compiledSchema);
 
+    process.stdout.write("Generating TS Defs...");
     await generateTSDefs(unionSchema);
+    process.stdout.write("✔️\n");
 }
 
 export async function buildTs(tsPath: string) {

@@ -1,0 +1,36 @@
+{
+    "$id": "privateUser",
+    "type": "object",
+    "properties": {
+        "friendIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "outgoingFriendRequestIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "incomingFriendRequestIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "ignoreIds": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "friendIds",
+        "outgoingFriendRequestIds",
+        "incomingFriendRequestIds",
+        "ignoreIds"
+    ]
+}

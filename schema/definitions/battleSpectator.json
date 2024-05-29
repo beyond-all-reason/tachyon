@@ -1,0 +1,18 @@
+{
+    "$id": "battleSpectator",
+    "type": "object",
+    "properties": {
+        "isSpectator": {
+            "const": true,
+            "type": "boolean"
+        },
+        "isBot": {
+            "const": false,
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "isSpectator",
+        "isBot"
+    ]
+}

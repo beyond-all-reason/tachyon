@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { customBattle } from "@/schema/types";
+import { customBattle } from "@/schema/definitions";
 
 export default defineEndpoint({
     source: "server",
@@ -10,7 +10,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             battles: Type.Array(
-                Type.Partial(customBattle, {
+                Type.Partial(Type.Ref(customBattle), {
                     examples: [
                         {
                             title: "3v3 | Newbies only",

@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking/queue/response",
+    "$id": "matchmaking.queue.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -111,7 +111,7 @@
                     "type": "string"
                 },
                 "reason": {
-                    "const": "already_ingame",
+                    "const": "already_inbattle",
                     "type": "string"
                 }
             },

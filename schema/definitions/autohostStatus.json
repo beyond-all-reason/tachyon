@@ -1,0 +1,12 @@
+{
+    "$id": "autohostStatus",
+    "type": "object",
+    "properties": {
+        "battleStartTime": {
+            "$ref": "unixTime"
+        }
+    },
+    "required": [
+        "battleStartTime"
+    ]
+}

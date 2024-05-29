@@ -17,12 +17,11 @@ Ask the server to terminate the connection.
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "system/disconnect/request",
+    "$id": "system.disconnect.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -58,44 +57,28 @@ Ask the server to terminate the connection.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "cillum Lorem ut",
+    "messageId": "occaecat Lorem in",
     "commandId": "system/disconnect",
     "data": {
-        "reason": "cillum Lorem ut"
+        "reason": "occaecat Lorem in"
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface SystemDisconnectRequest {
-    type: "request";
-    messageId: string;
-    commandId: "system/disconnect";
-    data?: {
-        reason: string;
-    };
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "system/disconnect/response",
+    "$id": "system.disconnect.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -253,32 +236,19 @@ export interface SystemDisconnectRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "esse Lorem anim",
+    "messageId": "pariatur Lorem reprehenderit",
     "commandId": "system/disconnect",
     "status": "success"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface SystemDisconnectResponse {
-    type: "response";
-    messageId: string;
-    commandId: "system/disconnect";
-    status: "success";
-}
-
-```
 ---
 
 ## ServerStats
@@ -292,12 +262,11 @@ Get server stats such as user count.
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "system/serverStats/request",
+    "$id": "system.serverStats.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -322,38 +291,25 @@ Get server stats such as user count.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "aute Lorem officia",
+    "messageId": "fugiat Lorem irure",
     "commandId": "system/serverStats"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface SystemServerStatsRequest {
-    type: "request";
-    messageId: string;
-    commandId: "system/serverStats";
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "system/serverStats/response",
+    "$id": "system.serverStats.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -523,35 +479,19 @@ export interface SystemServerStatsRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "Duis Lorem culpa",
+    "messageId": "cillum Lorem ut",
     "commandId": "system/serverStats",
     "status": "success",
     "data": {
-        "userCount": -8000000
+        "userCount": -14000000
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface SystemServerStatsResponse {
-    type: "response";
-    messageId: string;
-    commandId: "system/serverStats";
-    status: "success";
-    data: {
-        userCount: number;
-    };
-}
-
-```

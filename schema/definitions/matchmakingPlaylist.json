@@ -1,0 +1,28 @@
+{
+    "$id": "matchmakingPlaylist",
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "numOfTeams": {
+            "type": "integer"
+        },
+        "teamSize": {
+            "type": "integer"
+        },
+        "ranked": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "id",
+        "name",
+        "numOfTeams",
+        "teamSize",
+        "ranked"
+    ]
+}

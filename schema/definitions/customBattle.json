@@ -1,0 +1,142 @@
+{
+    "$id": "customBattle",
+    "examples": [
+        {
+            "battleId": 27,
+            "hostId": 822,
+            "engine": "105.1.1-1821-gaca6f20 BAR105",
+            "game": "Beyond All Reason test-23561-0abff7c",
+            "map": "Red Comet Remake 1.8",
+            "startPosType": 2,
+            "startAreas": {
+                "0": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1,
+                    "height": 0.3
+                },
+                "1": {
+                    "x": 0,
+                    "y": 0.7,
+                    "width": 1,
+                    "height": 0.3
+                }
+            },
+            "startTime": 1705432698,
+            "ip": "121.32.201.76",
+            "port": 41403,
+            "scriptPassword": "10sdfi90sid0sjkdf",
+            "modOptions": {
+                "emprework": 0
+            },
+            "bots": [],
+            "users": [],
+            "title": "8v8 | All Welcome",
+            "bossIds": [
+                123,
+                456
+            ],
+            "locked": false,
+            "passworded": false,
+            "spectatorIds": [
+                88
+            ],
+            "limits": {
+                "minTeamsize": 3,
+                "maxTeamsize": 3,
+                "minRating": null,
+                "maxRating": 25
+            }
+        }
+    ],
+    "allOf": [
+        {
+            "$ref": "battle"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "locked": {
+                    "type": "boolean"
+                },
+                "passworded": {
+                    "type": "boolean"
+                },
+                "bossIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "joinQueueIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "limits": {
+                    "type": "object",
+                    "properties": {
+                        "minTeamsize": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "maxTeamsize": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "minRating": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        },
+                        "maxRating": {
+                            "anyOf": [
+                                {
+                                    "type": "integer"
+                                },
+                                {
+                                    "type": "null"
+                                }
+                            ]
+                        }
+                    },
+                    "required": [
+                        "minTeamsize",
+                        "maxTeamsize",
+                        "minRating",
+                        "maxRating"
+                    ]
+                }
+            },
+            "required": [
+                "title",
+                "locked",
+                "passworded",
+                "bossIds",
+                "joinQueueIds",
+                "limits"
+            ]
+        }
+    ]
+}

@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking/queue/request",
+    "$id": "matchmaking.queue.request",
     "scopes": [
         "tachyon.lobby"
     ],

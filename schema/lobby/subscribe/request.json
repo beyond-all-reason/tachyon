@@ -1,5 +1,5 @@
 {
-    "$id": "lobby/subscribe/request",
+    "$id": "lobby.subscribe.request",
     "scopes": [
         "tachyon.lobby"
     ],

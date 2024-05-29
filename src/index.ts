@@ -18,11 +18,9 @@ const clean = false; // enabling this can cause intellisense errors when develop
     const { individualSchemas, compiledSchema, unionSchema, schemaMeta } = await generateJsonSchemas();
     process.stdout.write("✔️\n");
 
-    process.stdout.write("Generating JS...");
     await generateJs(compiledSchema, unionSchema, schemaMeta);
-    process.stdout.write("✔️\n");
 
     process.stdout.write("Generating Docs...");
-    await generateDocs(individualSchemas, compiledSchema);
+    await generateDocs(individualSchemas, unionSchema, compiledSchema);
     process.stdout.write("✔️\n");
 })();

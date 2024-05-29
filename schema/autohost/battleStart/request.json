@@ -1,5 +1,5 @@
 {
-    "$id": "user/subscribe/request",
+    "$id": "autohost.battleStart.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -13,22 +13,11 @@
             "type": "string"
         },
         "commandId": {
-            "const": "user/subscribe",
+            "const": "autohost/battleStart",
             "type": "string"
         },
         "data": {
-            "type": "object",
-            "properties": {
-                "userIds": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                }
-            },
-            "required": [
-                "userIds"
-            ]
+            "$ref": "battle"
         }
     },
     "required": [

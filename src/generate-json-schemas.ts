@@ -6,7 +6,14 @@ import { TProperties, TSchema, Type } from "@sinclair/typebox";
 import { pathToFileURL } from "url";
 
 import { EndpointConfig } from "@/generator-helpers.js";
+import * as definitions from "@/schema/definitions";
 import { TachyonActor } from "@/type-helpers";
+
+const definitionsMap: Record<string, TSchema> = {};
+
+for (const key in definitions) {
+    definitionsMap[key] = definitions[key as keyof typeof definitions];
+}
 
 export type SchemaMeta = {
     actors: Record<TachyonActor, Record<"request" | "response" | "event", { send: string[]; receive: string[] }>>;
@@ -79,7 +86,7 @@ export async function generateJsonSchemas() {
                     props.data = endpointSchema.request.data;
                 }
                 const schema = Type.Object(props, {
-                    $id: `${serviceId}/${endpointId}/request`,
+                    $id: `${serviceId}.${endpointId}.request`,
                     scopes: endpointSchema.scopes,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
@@ -109,7 +116,7 @@ export async function generateJsonSchemas() {
                         return Type.Object(props);
                     }),
                     {
-                        $id: `${serviceId}/${endpointId}/response`,
+                        $id: `${serviceId}.${endpointId}.response`,
                         scopes: endpointSchema.scopes,
                     }
                 );
@@ -129,7 +136,7 @@ export async function generateJsonSchemas() {
                     props.data = endpointSchema.event.data;
                 }
                 const schema = Type.Object(props, {
-                    $id: `${serviceId}/${endpointId}/event`,
+                    $id: `${serviceId}.${endpointId}.event`,
                     scopes: endpointSchema.scopes,
                 });
                 const schemaStr = JSON.stringify(schema, null, 4);
@@ -143,6 +150,21 @@ export async function generateJsonSchemas() {
         individualSchemas[serviceId] = serviceSchema;
     }
 
+    // defs
+    await fs.promises.mkdir("schema/definitions", { recursive: true });
+
+    for (const id in definitionsMap) {
+        const schema = definitionsMap[id];
+        const schemaStr = JSON.stringify(schema, null, 4);
+        await fs.promises.writeFile(`schema/definitions/${schema.$id}.json`, schemaStr);
+    }
+
+    // single combined schema
+    const unionSchema = Type.Union(unionSchemas, {
+        definitions: definitionsMap,
+    });
+
+    // schema meta
     const schemaMeta: SchemaMeta = {
         actors: {
             server: {
@@ -193,8 +215,6 @@ export async function generateJsonSchemas() {
     }
 
     compiledSchema = Type.Object(compiledSchema);
-
-    const unionSchema = Type.Union(unionSchemas);
 
     return { individualSchemas, compiledSchema, unionSchema, schemaMeta };
 }

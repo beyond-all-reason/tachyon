@@ -1,5 +1,5 @@
 {
-    "$id": "lobby/create/response",
+    "$id": "lobby.create.response",
     "scopes": [
         "tachyon.lobby"
     ],

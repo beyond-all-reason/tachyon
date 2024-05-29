@@ -1,5 +1,5 @@
 {
-    "$id": "lobby/sendMessage/response",
+    "$id": "lobby.sendMessage.response",
     "scopes": [
         "tachyon.lobby"
     ],

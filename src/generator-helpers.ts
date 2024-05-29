@@ -1,4 +1,4 @@
-import { SchemaOptions, Static, TIntersect, TObject, TSchema, TUnion } from "@sinclair/typebox";
+import { SchemaOptions, Static, TIntersect, TObject, TRef, TSchema, TUnion } from "@sinclair/typebox";
 import { SetOptional } from "type-fest";
 
 import { TachyonActor } from "@/type-helpers";
@@ -39,7 +39,7 @@ export type EndpointConfig = {
 );
 
 export type DataSchema = {
-    data?: TObject | TUnion | TIntersect;
+    data?: TObject | TUnion | TIntersect | TRef<TObject | TUnion | TIntersect>;
 };
 
 export type ResponseSchema = Array<SuccessResponseSchema | FailedResponseSchema>;

@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking/ready/response",
+    "$id": "matchmaking.ready.response",
     "scopes": [
         "tachyon.lobby"
     ],

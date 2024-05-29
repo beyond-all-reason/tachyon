@@ -1,5 +1,5 @@
 {
-    "$id": "lobby/receiveMessage/event",
+    "$id": "lobby.receiveMessage.event",
     "scopes": [
         "tachyon.lobby"
     ],

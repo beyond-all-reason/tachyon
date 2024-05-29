@@ -1,33 +1,30 @@
 {
-    "$id": "autohost/slave/request",
+    "$id": "battle.launch.event",
     "scopes": [
-        "autohost",
         "tachyon.lobby"
     ],
     "type": "object",
     "properties": {
         "type": {
-            "const": "request",
+            "const": "event",
             "type": "string"
         },
         "messageId": {
             "type": "string"
         },
         "commandId": {
-            "const": "autohost/slave",
+            "const": "battle/launch",
             "type": "string"
         },
         "data": {
             "type": "object",
             "properties": {
-                "maxBattles": {
-                    "minimum": 1,
-                    "default": 4,
-                    "type": "integer"
+                "script": {
+                    "type": "string"
                 }
             },
             "required": [
-                "maxBattles"
+                "script"
             ]
         }
     },

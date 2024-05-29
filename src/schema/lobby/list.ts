@@ -1,7 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { customBattle } from "@/schema/types";
+import { customBattle } from "@/schema/definitions";
 
 export default defineEndpoint({
     source: "user",
@@ -12,7 +12,7 @@ export default defineEndpoint({
         {
             status: "success",
             data: Type.Object({
-                battles: Type.Array(customBattle),
+                battles: Type.Array(Type.Ref(customBattle)),
             }),
         },
     ],

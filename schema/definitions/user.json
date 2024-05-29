@@ -1,0 +1,60 @@
+{
+    "$id": "user",
+    "type": "object",
+    "properties": {
+        "userId": {
+            "type": "string"
+        },
+        "username": {
+            "type": "string"
+        },
+        "displayName": {
+            "type": "string"
+        },
+        "clanId": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "partyId": {
+            "anyOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "scopes": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "countryCode": {
+            "type": "string"
+        },
+        "status": {
+            "$ref": "userStatus"
+        },
+        "battleStatus": {
+            "$ref": "battleStatus"
+        }
+    },
+    "required": [
+        "userId",
+        "username",
+        "displayName",
+        "clanId",
+        "partyId",
+        "scopes",
+        "status",
+        "battleStatus"
+    ]
+}

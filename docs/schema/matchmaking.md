@@ -4,15 +4,14 @@
 
 The matchmaking cycle works as follows:
 
-1. Clients should first retrieve a list of all the available playlists from the server using a [matchmaking/list](#list) request.
-2. Clients can then queue for one or more of these playlists by sending an array of playlist ids in a [matchmaking/queue](#queue) request.
-3. The server can send periodic updates about the status of the search as [matchmaking/queueUpdate](#queueupdate) events.
-4. When a match is found, the server must send a [matchmaking/found](#found) event along with the playlist id of the found match.
-5. Clients should then ready up by sending a [matchmaking/ready](#ready) request. The number of ready players should be sent to clients via the [matchmaking/readyUpdate](#readyupdate) response.
-6. To cancel queueing, or to decline a found match, clients should send a [matchmaking/cancel](#cancel) request.
-7. If a client fails to ready up for a found match, the server should send a [matchmaking/lost](#lost) response, and the queueing phase should resume.
-8. When all players are ready, the server should send a [autohost/launch](autohost#launch) request to a provisioned autohost client
-9. When the autohost has sent a successful [autohost/launch](autohost#launch) response, the server must then send [game/launch](game#launch) requests to the users.
+1. Clients should first retrieve a list of all the available queues from the server using [list](#list).
+2. Clients should then queue for one or more of these queues by sending an array of the queue ids in a [queue](#queue) request.
+3. The server can send periodic updates about the status of the search as a [queueUpdate](#queueupdate) response.
+4. When a match is found, the server should send a [found](#found) response along with the id of the queue of the found match.
+5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [readyUpdate](#readyupdate) response.
+6. To cancel queueing, or to decline a found match, clients should send a [cancel](#cancel) request.
+7. If a client fails to ready up for a found match, the server should send a [lost](#lost) response, and the queueing phase should resume.
+8. If all players are ready
 ---
 - [cancel](#cancel)
 - [declined](#declined)
@@ -37,12 +36,11 @@ Cancel queueing for matchmaking.
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/cancel/request",
+    "$id": "matchmaking.cancel.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -67,38 +65,25 @@ Cancel queueing for matchmaking.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "consequat quis",
+    "messageId": "voluptate ullamco",
     "commandId": "matchmaking/cancel"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingCancelRequest {
-    type: "request";
-    messageId: string;
-    commandId: "matchmaking/cancel";
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/cancel/response",
+    "$id": "matchmaking.cancel.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -287,32 +272,19 @@ export interface MatchmakingCancelRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "commodo laborum",
+    "messageId": "in exercitation",
     "commandId": "matchmaking/cancel",
     "status": "success"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingCancelResponse {
-    type: "response";
-    messageId: string;
-    commandId: "matchmaking/cancel";
-    status: "success";
-}
-
-```
 ---
 
 ## Declined
@@ -326,12 +298,11 @@ Sent when a found match is declined, either by manual rejection or timeout from 
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/declined/request",
+    "$id": "matchmaking.declined.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -356,38 +327,25 @@ Sent when a found match is declined, either by manual rejection or timeout from 
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "nisi deserunt",
+    "messageId": "in nostrud",
     "commandId": "matchmaking/declined"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingDeclinedRequest {
-    type: "request";
-    messageId: string;
-    commandId: "matchmaking/declined";
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/declined/response",
+    "$id": "matchmaking.declined.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -545,37 +503,24 @@ export interface MatchmakingDeclinedRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "nisi qui",
+    "messageId": "consequat quis",
     "commandId": "matchmaking/declined",
     "status": "success"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingDeclinedResponse {
-    type: "response";
-    messageId: string;
-    commandId: "matchmaking/declined";
-    status: "success";
-}
-
-```
 ---
 
 ## Found
 
-Server should send this when there are enough queued players to form a valid game that meets their criteria. Clients should then send [ready](#ready).
+Server should send this when there are enough queued players to form a valid battle that meets their criteria. Clients should then send [ready](#ready).
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -584,12 +529,11 @@ Server should send this when there are enough queued players to form a valid gam
 
 ### Event
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/found/event",
+    "$id": "matchmaking.found.event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -630,38 +574,22 @@ Server should send this when there are enough queued players to form a valid gam
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "event",
-    "messageId": "laboris non",
+    "messageId": "commodo laborum",
     "commandId": "matchmaking/found",
     "data": {
-        "queueId": "laboris non",
-        "timeoutMs": -36000000
+        "queueId": "commodo laborum",
+        "timeoutMs": -42000000
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingFoundEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/found";
-    data: {
-        queueId: string;
-        timeoutMs: number;
-    };
-}
-
-```
 ---
 
 ## FoundUpdate
@@ -675,12 +603,11 @@ Server should send this when players ready up using [ready](#ready).
 
 ### Event
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/foundUpdate/event",
+    "$id": "matchmaking.foundUpdate.event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -717,36 +644,21 @@ Server should send this when players ready up using [ready](#ready).
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "event",
-    "messageId": "ullamco occaecat",
+    "messageId": "nisi deserunt",
     "commandId": "matchmaking/foundUpdate",
     "data": {
-        "readyCount": -34000000
+        "readyCount": -40000000
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingFoundUpdateEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/foundUpdate";
-    data: {
-        readyCount: number;
-    };
-}
-
-```
 ---
 
 ## List
@@ -760,12 +672,11 @@ Returns all available matchmaking playlists.
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/list/request",
+    "$id": "matchmaking.list.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -790,38 +701,25 @@ Returns all available matchmaking playlists.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "reprehenderit Lorem",
+    "messageId": "nisi qui",
     "commandId": "matchmaking/list"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingListRequest {
-    type: "request";
-    messageId: string;
-    commandId: "matchmaking/list";
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/list/response",
+    "$id": "matchmaking.list.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -870,31 +768,7 @@ export interface MatchmakingListRequest {
                         "playlists": {
                             "type": "array",
                             "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "numOfTeams": {
-                                        "type": "integer"
-                                    },
-                                    "teamSize": {
-                                        "type": "integer"
-                                    },
-                                    "ranked": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "id",
-                                    "name",
-                                    "numOfTeams",
-                                    "teamSize",
-                                    "ranked"
-                                ]
+                                "$ref": "matchmakingPlaylist"
                             }
                         }
                     },
@@ -1038,16 +912,13 @@ export interface MatchmakingListRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "dolor Lorem",
+    "messageId": "laboris non",
     "commandId": "matchmaking/list",
     "status": "success",
     "data": {
@@ -1072,25 +943,6 @@ export interface MatchmakingListRequest {
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingListResponse {
-    type: "response";
-    messageId: string;
-    commandId: "matchmaking/list";
-    status: "success";
-    data: {
-        playlists: {
-            id: string;
-            name: string;
-            numOfTeams: number;
-            teamSize: number;
-            ranked: boolean;
-        }[];
-    };
-}
-
-```
 ---
 
 ## Lost
@@ -1104,12 +956,11 @@ Sent when a found match gets disbanded because a client failed to ready up.
 
 ### Event
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/lost/event",
+    "$id": "matchmaking.lost.event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1134,30 +985,18 @@ Sent when a found match gets disbanded because a client failed to ready up.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "event",
-    "messageId": "Duis Lorem",
+    "messageId": "ullamco occaecat",
     "commandId": "matchmaking/lost"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingLostEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/lost";
-}
-
-```
 ---
 
 ## Queue
@@ -1171,12 +1010,11 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/queue/request",
+    "$id": "matchmaking.queue.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1217,47 +1055,31 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "consequat Lorem",
+    "messageId": "reprehenderit Lorem",
     "commandId": "matchmaking/queue",
     "data": {
         "queues": [
-            "consequat Lorem",
-            "consequat Lorem"
+            "reprehenderit Lorem",
+            "reprehenderit Lorem"
         ]
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingQueueRequest {
-    type: "request";
-    messageId: string;
-    commandId: "matchmaking/queue";
-    data: {
-        queues: [string, ...string[]];
-    };
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/queue/response",
+    "$id": "matchmaking.queue.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1369,7 +1191,7 @@ export interface MatchmakingQueueRequest {
                     "type": "string"
                 },
                 "reason": {
-                    "const": "already_ingame",
+                    "const": "already_inbattle",
                     "type": "string"
                 }
             },
@@ -1508,32 +1330,19 @@ export interface MatchmakingQueueRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "commodo Lorem",
+    "messageId": "dolor Lorem",
     "commandId": "matchmaking/queue",
     "status": "success"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingQueueResponse {
-    type: "response";
-    messageId: string;
-    commandId: "matchmaking/queue";
-    status: "success";
-}
-
-```
 ---
 
 ## QueueUpdate
@@ -1547,12 +1356,11 @@ Contains some info about the state of the current queue.
 
 ### Event
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/queueUpdate/event",
+    "$id": "matchmaking.queueUpdate.event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1589,36 +1397,21 @@ Contains some info about the state of the current queue.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "event",
-    "messageId": "ut Lorem",
+    "messageId": "Duis Lorem",
     "commandId": "matchmaking/queueUpdate",
     "data": {
-        "playersQueued": "ut Lorem"
+        "playersQueued": "Duis Lorem"
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingQueueUpdateEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/queueUpdate";
-    data: {
-        playersQueued: string;
-    };
-}
-
-```
 ---
 
 ## Ready
@@ -1632,12 +1425,11 @@ Clients should send this when they are ready to proceed with the found match. If
 
 ### Request
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/ready/request",
+    "$id": "matchmaking.ready.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1662,38 +1454,25 @@ Clients should send this when they are ready to proceed with the found match. If
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "request",
-    "messageId": "occaecat Lorem in",
+    "messageId": "consequat Lorem",
     "commandId": "matchmaking/ready"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingReadyRequest {
-    type: "request";
-    messageId: string;
-    commandId: "matchmaking/ready";
-}
-
-```
 ### Response
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/ready/response",
+    "$id": "matchmaking.ready.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1882,32 +1661,19 @@ export interface MatchmakingReadyRequest {
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "response",
-    "messageId": "pariatur Lorem reprehenderit",
+    "messageId": "commodo Lorem",
     "commandId": "matchmaking/ready",
     "status": "success"
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingReadyResponse {
-    type: "response";
-    messageId: string;
-    commandId: "matchmaking/ready";
-    status: "success";
-}
-
-```
 ---
 
 ## ReadyUpdate
@@ -1921,12 +1687,11 @@ Sent when a client in a found match readies up.
 
 ### Event
 
-<details>
-<summary>JSONSchema</summary>
+JSONSchema
 
 ```json
 {
-    "$id": "matchmaking/readyUpdate/event",
+    "$id": "matchmaking.readyUpdate.event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1967,35 +1732,19 @@ Sent when a client in a found match readies up.
     ]
 }
 ```
-
-</details>
-
 <details>
 <summary>Example</summary>
 
 ```json
 {
     "type": "event",
-    "messageId": "fugiat Lorem irure",
+    "messageId": "ut Lorem",
     "commandId": "matchmaking/readyUpdate",
     "data": {
-        "readyMax": -16000000,
-        "readyCurrent": -16000000
+        "readyMax": -22000000,
+        "readyCurrent": -22000000
     }
 }
 ```
 </details>
 
-#### TypeScript Definition
-```ts
-export interface MatchmakingReadyUpdateEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/readyUpdate";
-    data: {
-        readyMax: number;
-        readyCurrent: number;
-    };
-}
-
-```

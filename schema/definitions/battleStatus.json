@@ -1,0 +1,33 @@
+{
+    "$id": "battleStatus",
+    "anyOf": [
+        {
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "battleId": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "battleId"
+                    ]
+                },
+                {
+                    "anyOf": [
+                        {
+                            "$ref": "battlePlayer"
+                        },
+                        {
+                            "$ref": "battleSpectator"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "null"
+        }
+    ]
+}

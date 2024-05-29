@@ -1,5 +1,5 @@
 {
-    "$id": "user/unsubscribe/response",
+    "$id": "autohost.battleStart.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -15,7 +15,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe",
+                    "const": "autohost/battleStart",
                     "type": "string"
                 },
                 "status": {
@@ -41,7 +41,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe",
+                    "const": "autohost/battleStart",
                     "type": "string"
                 },
                 "status": {
@@ -49,7 +49,7 @@
                     "type": "string"
                 },
                 "reason": {
-                    "const": "cannot_unsub_own_user",
+                    "const": "invalid_script",
                     "type": "string"
                 }
             },
@@ -72,7 +72,69 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe",
+                    "const": "autohost/battleStart",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_already_running",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/battleStart",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_failed_to_start",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/battleStart",
                     "type": "string"
                 },
                 "status": {
@@ -103,7 +165,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe",
+                    "const": "autohost/battleStart",
                     "type": "string"
                 },
                 "status": {
@@ -134,7 +196,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe",
+                    "const": "autohost/battleStart",
                     "type": "string"
                 },
                 "status": {
@@ -165,7 +227,7 @@
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "user/unsubscribe",
+                    "const": "autohost/battleStart",
                     "type": "string"
                 },
                 "status": {

@@ -1,12 +1,16 @@
-import { TSchema, TUnion, Type } from "@sinclair/typebox";
+import { TSchema, TUnion } from "@sinclair/typebox";
 import fs from "fs";
-import { objectKeys, titleCase } from "jaz-ts-utils";
 import { compile } from "json-schema-to-typescript";
 
 export async function generateTSDefs(unionSchema: TUnion<TSchema[]>) {
     let typings = "\n";
 
-    typings += await compile(unionSchema, "TachyonCommand", {
+    let json = JSON.stringify(unionSchema, null, 4);
+    json = json.replace(/"\$ref":\s*"([^"]+)"/g, `"$ref": "#/definitions/$1"`);
+    const schema = JSON.parse(json);
+
+    // generate d.ts
+    typings += await compile(schema, "TachyonCommand", {
         additionalProperties: false,
         bannerComment: "",
         style: {
@@ -16,22 +20,32 @@ export async function generateTSDefs(unionSchema: TUnion<TSchema[]>) {
         },
     });
 
-    const types = await import("./schema/types.js");
-    for (const key of objectKeys(types)) {
-        const thing = types[key];
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const fullType = Type.Strict(thing as any);
-        const type = await compile(fullType, `Tachyon${titleCase(key)}`, {
-            bannerComment: "",
-            additionalProperties: false,
-            style: {
-                bracketSpacing: true,
-                tabWidth: 4,
-                semi: true,
-            },
-        });
-        typings += type + "\n";
-    }
+    // typings += await compile(unionSchema, "TachyonCommand", {
+    //     additionalProperties: false,
+    //     bannerComment: "",
+    //     style: {
+    //         bracketSpacing: true,
+    //         tabWidth: 4,
+    //         semi: true,
+    //     },
+    // });
+
+    // const types = await import("./schema/definitions.js");
+    // for (const key of objectKeys(types)) {
+    //     const thing = types[key];
+    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //     const fullType = Type.Strict(thing as any);
+    //     const type = await compile(fullType, `Tachyon${titleCase(key)}`, {
+    //         bannerComment: "",
+    //         additionalProperties: false,
+    //         style: {
+    //             bracketSpacing: true,
+    //             tabWidth: 4,
+    //             semi: true,
+    //         },
+    //     });
+    //     typings += type + "\n";
+    // }
 
     await fs.promises.appendFile(`dist/index.d.ts`, typings);
     await fs.promises.appendFile(`dist/index.d.mts`, typings);

@@ -1,0 +1,28 @@
+{
+    "$id": "battleContender",
+    "type": "object",
+    "properties": {
+        "playerId": {
+            "type": "integer"
+        },
+        "teamId": {
+            "type": "integer"
+        },
+        "color": {
+            "type": "string"
+        },
+        "bonus": {
+            "type": "number"
+        },
+        "inGame": {
+            "type": "boolean"
+        }
+    },
+    "required": [
+        "playerId",
+        "teamId",
+        "color",
+        "bonus",
+        "inGame"
+    ]
+}

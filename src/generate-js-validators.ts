@@ -2,25 +2,34 @@
 
 import fs from "node:fs";
 
+import { TSchema } from "@sinclair/typebox";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import { titleCase } from "jaz-ts-utils";
 
-export async function generateValidators(schemas: any) {
-    const schemaArray: any[] = [];
-    const schemaMap: Record<string, string> = {};
+import * as types from "@/schema/definitions";
 
+const schemaArray: TSchema[] = [];
+const schemaMap: Record<string, string> = {};
+
+for (const key in types) {
+    schemaArray.push(types[key as keyof typeof types]);
+    schemaMap[key] = key;
+}
+
+export async function generateValidators(schemas: TSchema) {
     for (const serviceId in schemas.properties) {
         for (const endpointId in schemas.properties[serviceId].properties) {
             for (const commandType in schemas.properties[serviceId].properties[endpointId].properties) {
                 const schema = schemas.properties[serviceId].properties[endpointId].properties[commandType];
                 schemaArray.push(schema);
-                schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
+                schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}.${endpointId}.${commandType}`;
             }
         }
     }
 
     // esm
+    process.stdout.write("Generating ESM validators...");
     const ajv = new Ajv({
         schemas: schemaArray,
         code: {
@@ -52,8 +61,10 @@ function ucs2length(str) {
     moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/ucs2length").default', "ucs2length");
     moduleCode = moduleCode.replaceAll('require("ajv-formats/dist/formats").', "");
     await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
+    process.stdout.write("✔️\n");
 
     // cjs
+    process.stdout.write("Generating CJS validators...");
     const ajvCjs = new Ajv({
         schemas: schemaArray,
         code: {
@@ -64,8 +75,10 @@ function ucs2length(str) {
     });
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);
     await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);
+    process.stdout.write("✔️\n");
 
     // types
+    process.stdout.write("Generating validator types...");
     const imports: string[] = [];
     let declarations = "";
     for (const key in schemaMap) {
@@ -84,4 +97,5 @@ function ucs2length(str) {
 
     await fs.promises.writeFile("./dist/validators.d.ts", types);
     await fs.promises.writeFile("./dist/validators.d.mts", types);
+    process.stdout.write("✔️\n");
 }

@@ -1,5 +1,5 @@
 {
-    "$id": "lobby/create/request",
+    "$id": "lobby.create.request",
     "scopes": [
         "tachyon.lobby"
     ],
