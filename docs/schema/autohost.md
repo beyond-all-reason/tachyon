@@ -61,7 +61,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -94,6 +95,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -137,9 +140,96 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export type UnixTime = number | null;
+export type Bot = BattleContender & {
+    isSpectator: false;
+    isBot: true;
+    ownerId: string;
+    aiShortName: string;
+    name: string;
+    aiOptions: {
+        [k: string]: unknown;
+    };
+    faction: string;
+};
+export type UserStatus = "offline" | "menu" | "playing" | "lobby";
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & (BattlePlayer | BattleSpectator))
+    | null;
+export type BattlePlayer = BattleContender & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+};
+
+export interface AutohostBattleStartRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/battleStart";
+    data: Battle;
+}
+export interface Battle {
+    battleId: string;
+    hostId: string;
+    engine: string;
+    game: string;
+    map: string;
+    startPosType: 0 | 1 | 2;
+    startAreas: {
+        [k: string]: Rect;
+    };
+    startTime: UnixTime;
+    ip: string | null;
+    port: number | null;
+    scriptPassword: string | null;
+    modOptions: {
+        [k: string]: unknown;
+    };
+    bots: Bot[];
+    users: User[];
+}
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+export interface BattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+}
+export interface User {
+    userId: string;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: UserStatus;
+    battleStatus: BattleStatus;
+}
+export interface BattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -394,6 +484,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -406,6 +498,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostBattleStartResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/battleStart";
+    status: "success";
+}
+```
+Possible Failed Reasons: `invalid_script`, `server_already_running`, `server_failed_to_start`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -420,7 +523,8 @@ This event should be sent to the server on connection and whenever any of the st
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -465,6 +569,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -481,3 +587,15 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface AutohostStatusEvent {
+    type: "event";
+    messageId: string;
+    commandId: "autohost/status";
+    data: {
+        maxBattles: number;
+        currentBattles: number;
+    };
+}
+```

@@ -30,7 +30,8 @@ Close an existing lobby.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -59,6 +60,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -71,9 +74,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyCloseRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/close";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -235,6 +247,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -247,6 +261,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyCloseResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/close";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -261,7 +286,8 @@ Create a new lobby - intended for player clients to summon a dedicated host.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -327,6 +353,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -345,9 +373,24 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyCreateRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/create";
+    data: {
+        title: string;
+        private: boolean;
+        region: string;
+        maxPlayers: number;
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -571,6 +614,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -583,6 +628,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyCreateResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/create";
+    status: "success";
+}
+```
+Possible Failed Reasons: `no_hosts_available`, `invalid_region`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -598,7 +654,8 @@ These commands are split because the server may want to force the client to join
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -648,6 +705,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -664,9 +723,22 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyJoinRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/join";
+    data: {
+        lobbyId: string;
+        password?: string;
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1045,6 +1117,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1057,6 +1131,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/join";
+    status: "success";
+}
+```
+Possible Failed Reasons: `locked`, `requires_password`, `invalid_password`, `max_participants_reached`, `rank_too_low`, `rank_too_high`, `banned`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1071,7 +1156,8 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1104,6 +1190,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1147,6 +1235,92 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export type UnixTime = number | null;
+export type Bot = BattleContender & {
+    isSpectator: false;
+    isBot: true;
+    ownerId: string;
+    aiShortName: string;
+    name: string;
+    aiOptions: {
+        [k: string]: unknown;
+    };
+    faction: string;
+};
+export type UserStatus = "offline" | "menu" | "playing" | "lobby";
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & (BattlePlayer | BattleSpectator))
+    | null;
+export type BattlePlayer = BattleContender & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+};
+
+export interface LobbyJoinedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/joined";
+    data: Battle;
+}
+export interface Battle {
+    battleId: string;
+    hostId: string;
+    engine: string;
+    game: string;
+    map: string;
+    startPosType: 0 | 1 | 2;
+    startAreas: {
+        [k: string]: Rect;
+    };
+    startTime: UnixTime;
+    ip: string | null;
+    port: number | null;
+    scriptPassword: string | null;
+    modOptions: {
+        [k: string]: unknown;
+    };
+    bots: Bot[];
+    users: User[];
+}
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+export interface BattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+}
+export interface User {
+    userId: string;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: UserStatus;
+    battleStatus: BattleStatus;
+}
+export interface BattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+```
 ---
 
 ## Leave
@@ -1160,7 +1334,8 @@ Leave the current lobby.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1189,6 +1364,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1201,9 +1378,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyLeaveRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/leave";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1396,6 +1582,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1408,6 +1596,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyLeaveResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/leave";
+    status: "success";
+}
+```
+Possible Failed Reasons: `no_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1422,7 +1621,8 @@ Sent when the server removes the client from a lobby.
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1451,6 +1651,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1463,6 +1665,14 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyLeftEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/left";
+}
+```
 ---
 
 ## List
@@ -1476,7 +1686,8 @@ Returns all custom lobbies.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1505,6 +1716,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1517,9 +1730,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyListRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/list";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1696,6 +1918,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1760,6 +1984,110 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export type CustomBattle = Battle & {
+    title: string;
+    locked: boolean;
+    passworded: boolean;
+    bossIds: string[];
+    joinQueueIds: string[];
+    limits: {
+        minTeamsize: number | null;
+        maxTeamsize: number | null;
+        minRating: number | null;
+        maxRating: number | null;
+    };
+};
+export type UnixTime = number | null;
+export type Bot = BattleContender & {
+    isSpectator: false;
+    isBot: true;
+    ownerId: string;
+    aiShortName: string;
+    name: string;
+    aiOptions: {
+        [k: string]: unknown;
+    };
+    faction: string;
+};
+export type UserStatus = "offline" | "menu" | "playing" | "lobby";
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & (BattlePlayer | BattleSpectator))
+    | null;
+export type BattlePlayer = BattleContender & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+};
+
+export interface LobbyListResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/list";
+    status: "success";
+    data: {
+        battles: CustomBattle[];
+    };
+}
+export interface Battle {
+    battleId: string;
+    hostId: string;
+    engine: string;
+    game: string;
+    map: string;
+    startPosType: 0 | 1 | 2;
+    startAreas: {
+        [k: string]: Rect;
+    };
+    startTime: UnixTime;
+    ip: string | null;
+    port: number | null;
+    scriptPassword: string | null;
+    modOptions: {
+        [k: string]: unknown;
+    };
+    bots: Bot[];
+    users: User[];
+}
+export interface Rect {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+}
+export interface BattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+}
+export interface User {
+    userId: string;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: UserStatus;
+    battleStatus: BattleStatus;
+}
+export interface BattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## ReceiveMessage
@@ -1773,7 +2101,8 @@ Receive a lobby message. See [sendMessage](#sendmessage) for outgoing messages.
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1824,6 +2153,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1840,6 +2171,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyReceiveMessageEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/receiveMessage";
+    data: {
+        userId: string;
+        message: string;
+    };
+}
+```
 ---
 
 ## SendMessage
@@ -1853,7 +2196,8 @@ Send a lobby message. See [receiveMessage](#receivemessage) for incoming message
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1900,6 +2244,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1915,9 +2261,21 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbySendMessageRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/sendMessage";
+    data: {
+        message: string;
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -2141,6 +2499,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -2153,6 +2513,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySendMessageResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/sendMessage";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `muted`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2167,7 +2538,8 @@ Subscribe to custom battle updates. By default, updates for the user's own battl
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -2211,6 +2583,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -2229,9 +2603,21 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbySubscribeRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/subscribe";
+    data: {
+        battleIds: string[];
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -2393,6 +2779,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -2405,6 +2793,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySubscribeResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/subscribe";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2419,7 +2818,8 @@ Unsubscribe from custom battle updates. If battleIds is passed only updates to t
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -2460,6 +2860,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -2475,9 +2877,21 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyUnsubscribeRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/unsubscribe";
+    data: {
+        battleIds?: string[];
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -2670,6 +3084,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -2682,6 +3098,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUnsubscribeResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/unsubscribe";
+    status: "success";
+}
+```
+Possible Failed Reasons: `cannot_unsub_own_battle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2696,7 +3123,8 @@ Server sends an array of partial battle objects whenever a subscribed battle cha
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -2723,9 +3151,6 @@ JSONSchema
                 "battles": {
                     "type": "array",
                     "items": {
-                        "$ref": "customBattle",
-                        "type": "object",
-                        "properties": {},
                         "examples": [
                             {
                                 "title": "3v3 | Newbies only",
@@ -2736,7 +3161,91 @@ JSONSchema
                                     "maxRating": 25
                                 }
                             }
-                        ]
+                        ],
+                        "allOf": [
+                            {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "locked": {
+                                        "type": "boolean"
+                                    },
+                                    "passworded": {
+                                        "type": "boolean"
+                                    },
+                                    "bossIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "joinQueueIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "limits": {
+                                        "type": "object",
+                                        "properties": {
+                                            "minTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "maxTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "minRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "maxRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "minTeamsize",
+                                            "maxTeamsize",
+                                            "minRating",
+                                            "maxRating"
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "type": "object"
                     }
                 }
             },
@@ -2753,6 +3262,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -2787,3 +3298,26 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface LobbyUpdatedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/updated";
+    data: {
+        battles: ({} & {
+            title?: string;
+            locked?: boolean;
+            passworded?: boolean;
+            bossIds?: string[];
+            joinQueueIds?: string[];
+            limits?: {
+                minTeamsize: number | null;
+                maxTeamsize: number | null;
+                minRating: number | null;
+                maxRating: number | null;
+            };
+        })[];
+    };
+}
+```

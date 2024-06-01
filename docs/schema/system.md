@@ -17,7 +17,8 @@ Ask the server to terminate the connection.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -57,6 +58,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -72,9 +75,21 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface SystemDisconnectRequest {
+    type: "request";
+    messageId: string;
+    commandId: "system/disconnect";
+    data?: {
+        reason: string;
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -236,6 +251,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -248,6 +265,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface SystemDisconnectResponse {
+    type: "response";
+    messageId: string;
+    commandId: "system/disconnect";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -262,7 +290,8 @@ Get server stats such as user count.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -291,6 +320,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -303,9 +334,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface SystemServerStatsRequest {
+    type: "request";
+    messageId: string;
+    commandId: "system/serverStats";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -479,6 +519,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -494,4 +536,18 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface SystemServerStatsResponse {
+    type: "response";
+    messageId: string;
+    commandId: "system/serverStats";
+    status: "success";
+    data: {
+        userCount: number;
+    };
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 

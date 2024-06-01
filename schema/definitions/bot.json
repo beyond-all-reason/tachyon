@@ -1,41 +1,48 @@
 {
     "$id": "bot",
-    "type": "object",
-    "properties": {
-        "isSpectator": {
-            "const": false,
-            "type": "boolean"
+    "allOf": [
+        {
+            "$ref": "battleContender"
         },
-        "isBot": {
-            "const": true,
-            "type": "boolean"
-        },
-        "ownerId": {
-            "type": "string"
-        },
-        "aiShortName": {
-            "type": "string"
-        },
-        "name": {
-            "type": "string"
-        },
-        "aiOptions": {
+        {
             "type": "object",
-            "patternProperties": {
-                "^(.*)$": {}
-            }
-        },
-        "faction": {
-            "type": "string"
+            "properties": {
+                "isSpectator": {
+                    "const": false,
+                    "type": "boolean"
+                },
+                "isBot": {
+                    "const": true,
+                    "type": "boolean"
+                },
+                "ownerId": {
+                    "type": "string"
+                },
+                "aiShortName": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "aiOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {}
+                    }
+                },
+                "faction": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "isSpectator",
+                "isBot",
+                "ownerId",
+                "aiShortName",
+                "name",
+                "aiOptions",
+                "faction"
+            ]
         }
-    },
-    "required": [
-        "isSpectator",
-        "isBot",
-        "ownerId",
-        "aiShortName",
-        "name",
-        "aiOptions",
-        "faction"
     ]
 }

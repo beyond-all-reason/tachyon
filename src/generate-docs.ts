@@ -1,7 +1,9 @@
 import { TObject, TSchema, TUnion } from "@sinclair/typebox";
 import fs from "fs";
 import { titleCase } from "jaz-ts-utils";
+import { JSONSchema4 } from "json-schema";
 import { JSONSchemaFaker } from "json-schema-faker";
+import { compile } from "json-schema-to-typescript";
 
 import { EndpointConfig } from "@/generator-helpers.js";
 
@@ -129,43 +131,61 @@ export async function generateCommandMarkdown<C extends "request" | "response" |
 ): Promise<string> {
     let markdown = `### ${titleCase(commandType)}\n\n`;
 
-    markdown += `JSONSchema\n
+    markdown += `<details>
+<summary>JSONSchema</summary>\n
 \`\`\`json
 ${JSON.stringify(schema, null, 4)}
-\`\`\`\n`;
+\`\`\`\n</details>\n\n`;
+
+    const failedReasons: string[] = [];
 
     if (commandType === "response") {
+        failedReasons.push(
+            ...schema.anyOf.filter((res: TObject) => res.properties.status.const === "failed").map((res: TObject) => res.properties.reason.const)
+        );
         schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
     }
+
+    const finalSchema: JSONSchema4 = {
+        definitions: unionSchema.definitions,
+        ...JSON.parse(JSON.stringify(schema, null, 4).replace(/"\$ref":\s*"([^"]+)"/g, `"$ref": "#/definitions/$1"`)),
+    };
 
     JSONSchemaFaker.option("random", () => randomSeed);
     randomSeed += 0.01;
 
-    const dummyData = await JSONSchemaFaker.resolve(schema, unionSchema.definitions);
-
+    const dummyData = await JSONSchemaFaker.resolve(finalSchema);
     markdown += `<details>
 <summary>Example</summary>\n
 \`\`\`json
 ${JSON.stringify(dummyData, null, 4)}
 \`\`\`\n</details>\n\n`;
 
-    //     let typings = await compile(schema, `${titleCase(serviceId)}${titleCase(endpointId)}${titleCase(commandType)}`, {
-    //         additionalProperties: false,
-    //         bannerComment: ``,
-    //         style: {
-    //             bracketSpacing: true,
-    //             tabWidth: 4,
-    //             semi: true,
-    //         },
-    //     });
+    try {
+        let typings = await compile(finalSchema, `${titleCase(serviceId)}${titleCase(endpointId)}${titleCase(commandType)}`, {
+            additionalProperties: false,
+            bannerComment: ``,
+            style: {
+                bracketSpacing: true,
+                tabWidth: 4,
+                semi: true,
+            },
+        });
+        typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
 
-    //     typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
+        markdown += `#### TypeScript Definition
+\`\`\`ts
+${typings.trim()}
+\`\`\`
+`;
 
-    //     markdown += `#### TypeScript Definition
-    // \`\`\`ts
-    // ${typings}
-    // \`\`\`
-    // `;
+        if (failedReasons.length) {
+            markdown += `Possible Failed Reasons: ${failedReasons.map((r) => `\`${r}\``).join(", ")}\n\n`;
+        }
+    } catch (err) {
+        console.log(schema);
+        throw err;
+    }
 
     return markdown;
 }

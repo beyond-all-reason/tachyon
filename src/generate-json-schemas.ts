@@ -160,9 +160,11 @@ export async function generateJsonSchemas() {
     }
 
     // single combined schema
-    const unionSchema = Type.Union(unionSchemas, {
+    let unionSchema = Type.Union(unionSchemas, {
         definitions: definitionsMap,
     });
+
+    unionSchema = JSON.parse(JSON.stringify(unionSchema, null, 4).replace(/"\$ref":\s*"([^"]+)"/g, `"$ref": "#/definitions/$1"`));
 
     // schema meta
     const schemaMeta: SchemaMeta = {

@@ -40,7 +40,7 @@ export const battleSpectator = Type.Object(
     { $id: "battleSpectator" }
 );
 
-export const bot = Type.Composite(
+export const bot = Type.Intersect(
     [
         Type.Ref(battleContender),
         Type.Object({
@@ -84,7 +84,7 @@ export const user = Type.Object(
     { $id: "user" }
 );
 
-export const privateUser = Type.Composite(
+export const privateUser = Type.Intersect(
     [
         Type.Ref(user),
         Type.Object({

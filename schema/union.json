@@ -1,0 +1,4993 @@
+{
+    "definitions": {
+        "autohostStatus": {
+            "$id": "autohostStatus",
+            "type": "object",
+            "properties": {
+                "battleStartTime": {
+                    "$ref": "#/definitions/unixTime"
+                }
+            },
+            "required": [
+                "battleStartTime"
+            ]
+        },
+        "battle": {
+            "$id": "battle",
+            "examples": [
+                {
+                    "battleId": 27,
+                    "hostId": 822,
+                    "engine": "105.1.1-1821-gaca6f20 BAR105",
+                    "game": "Beyond All Reason test-23561-0abff7c",
+                    "map": "Red Comet Remake 1.8",
+                    "startPosType": 2,
+                    "startAreas": {
+                        "0": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 1,
+                            "height": 0.3
+                        },
+                        "1": {
+                            "x": 0,
+                            "y": 0.7,
+                            "width": 1,
+                            "height": 0.3
+                        }
+                    },
+                    "startTime": 1705432698,
+                    "ip": "121.32.201.76",
+                    "port": 41403,
+                    "scriptPassword": "10sdfi90sid0sjkdf",
+                    "modOptions": {
+                        "emprework": 0
+                    },
+                    "bots": [],
+                    "users": []
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "type": "string"
+                },
+                "hostId": {
+                    "type": "string"
+                },
+                "engine": {
+                    "type": "string"
+                },
+                "game": {
+                    "type": "string"
+                },
+                "map": {
+                    "type": "string"
+                },
+                "startPosType": {
+                    "anyOf": [
+                        {
+                            "description": "Fixed",
+                            "const": 0,
+                            "type": "number"
+                        },
+                        {
+                            "description": "Random",
+                            "const": 1,
+                            "type": "number"
+                        },
+                        {
+                            "description": "Boxes",
+                            "const": 2,
+                            "type": "number"
+                        }
+                    ]
+                },
+                "startAreas": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(0|[1-9][0-9]*)$": {
+                            "$ref": "#/definitions/rect"
+                        }
+                    }
+                },
+                "startTime": {
+                    "$ref": "#/definitions/unixTime"
+                },
+                "ip": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "port": {
+                    "anyOf": [
+                        {
+                            "type": "integer"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "scriptPassword": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "modOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {}
+                    }
+                },
+                "bots": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/bot"
+                    }
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/user"
+                    }
+                }
+            },
+            "required": [
+                "battleId",
+                "hostId",
+                "engine",
+                "game",
+                "map",
+                "startPosType",
+                "startAreas",
+                "startTime",
+                "ip",
+                "port",
+                "scriptPassword",
+                "modOptions",
+                "bots",
+                "users"
+            ]
+        },
+        "battleContender": {
+            "$id": "battleContender",
+            "type": "object",
+            "properties": {
+                "playerId": {
+                    "type": "integer"
+                },
+                "teamId": {
+                    "type": "integer"
+                },
+                "color": {
+                    "type": "string"
+                },
+                "bonus": {
+                    "type": "number"
+                },
+                "inGame": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "playerId",
+                "teamId",
+                "color",
+                "bonus",
+                "inGame"
+            ]
+        },
+        "battlePlayer": {
+            "$id": "battlePlayer",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/battleContender"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "isSpectator": {
+                            "const": false,
+                            "type": "boolean"
+                        },
+                        "isBot": {
+                            "const": false,
+                            "type": "boolean"
+                        },
+                        "ready": {
+                            "type": "boolean"
+                        },
+                        "sync": {
+                            "type": "object",
+                            "properties": {
+                                "engine": {
+                                    "type": "number"
+                                },
+                                "game": {
+                                    "type": "number"
+                                },
+                                "map": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "engine",
+                                "game",
+                                "map"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "isSpectator",
+                        "isBot",
+                        "ready",
+                        "sync"
+                    ]
+                }
+            ]
+        },
+        "battleSpectator": {
+            "$id": "battleSpectator",
+            "type": "object",
+            "properties": {
+                "isSpectator": {
+                    "const": true,
+                    "type": "boolean"
+                },
+                "isBot": {
+                    "const": false,
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "isSpectator",
+                "isBot"
+            ]
+        },
+        "battleStatus": {
+            "$id": "battleStatus",
+            "anyOf": [
+                {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "battleId": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "battleId"
+                            ]
+                        },
+                        {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/definitions/battlePlayer"
+                                },
+                                {
+                                    "$ref": "#/definitions/battleSpectator"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "bot": {
+            "$id": "bot",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/battleContender"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "isSpectator": {
+                            "const": false,
+                            "type": "boolean"
+                        },
+                        "isBot": {
+                            "const": true,
+                            "type": "boolean"
+                        },
+                        "ownerId": {
+                            "type": "string"
+                        },
+                        "aiShortName": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "aiOptions": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": {}
+                            }
+                        },
+                        "faction": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "isSpectator",
+                        "isBot",
+                        "ownerId",
+                        "aiShortName",
+                        "name",
+                        "aiOptions",
+                        "faction"
+                    ]
+                }
+            ]
+        },
+        "customBattle": {
+            "$id": "customBattle",
+            "examples": [
+                {
+                    "battleId": 27,
+                    "hostId": 822,
+                    "engine": "105.1.1-1821-gaca6f20 BAR105",
+                    "game": "Beyond All Reason test-23561-0abff7c",
+                    "map": "Red Comet Remake 1.8",
+                    "startPosType": 2,
+                    "startAreas": {
+                        "0": {
+                            "x": 0,
+                            "y": 0,
+                            "width": 1,
+                            "height": 0.3
+                        },
+                        "1": {
+                            "x": 0,
+                            "y": 0.7,
+                            "width": 1,
+                            "height": 0.3
+                        }
+                    },
+                    "startTime": 1705432698,
+                    "ip": "121.32.201.76",
+                    "port": 41403,
+                    "scriptPassword": "10sdfi90sid0sjkdf",
+                    "modOptions": {
+                        "emprework": 0
+                    },
+                    "bots": [],
+                    "users": [],
+                    "title": "8v8 | All Welcome",
+                    "bossIds": [
+                        123,
+                        456
+                    ],
+                    "locked": false,
+                    "passworded": false,
+                    "spectatorIds": [
+                        88
+                    ],
+                    "limits": {
+                        "minTeamsize": 3,
+                        "maxTeamsize": 3,
+                        "minRating": null,
+                        "maxRating": 25
+                    }
+                }
+            ],
+            "allOf": [
+                {
+                    "$ref": "#/definitions/battle"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "type": "string"
+                        },
+                        "locked": {
+                            "type": "boolean"
+                        },
+                        "passworded": {
+                            "type": "boolean"
+                        },
+                        "bossIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "joinQueueIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "limits": {
+                            "type": "object",
+                            "properties": {
+                                "minTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "maxTeamsize": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "minRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                },
+                                "maxRating": {
+                                    "anyOf": [
+                                        {
+                                            "type": "integer"
+                                        },
+                                        {
+                                            "type": "null"
+                                        }
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "minTeamsize",
+                                "maxTeamsize",
+                                "minRating",
+                                "maxRating"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "title",
+                        "locked",
+                        "passworded",
+                        "bossIds",
+                        "joinQueueIds",
+                        "limits"
+                    ]
+                }
+            ]
+        },
+        "matchmakingPlaylist": {
+            "$id": "matchmakingPlaylist",
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "numOfTeams": {
+                    "type": "integer"
+                },
+                "teamSize": {
+                    "type": "integer"
+                },
+                "ranked": {
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "id",
+                "name",
+                "numOfTeams",
+                "teamSize",
+                "ranked"
+            ]
+        },
+        "privateUser": {
+            "$id": "privateUser",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/user"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "friendIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "outgoingFriendRequestIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "incomingFriendRequestIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "ignoreIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "friendIds",
+                        "outgoingFriendRequestIds",
+                        "incomingFriendRequestIds",
+                        "ignoreIds"
+                    ]
+                }
+            ]
+        },
+        "rect": {
+            "$id": "rect",
+            "examples": [
+                {
+                    "x": 0,
+                    "y": 0,
+                    "width": 1,
+                    "height": 0.3
+                }
+            ],
+            "type": "object",
+            "properties": {
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "width": {
+                    "type": "number"
+                },
+                "height": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "x",
+                "y",
+                "width",
+                "height"
+            ]
+        },
+        "unixTime": {
+            "$id": "unixTime",
+            "anyOf": [
+                {
+                    "description": "Unix time",
+                    "examples": [
+                        1705432698,
+                        null
+                    ],
+                    "type": "integer"
+                },
+                {
+                    "type": "null"
+                }
+            ]
+        },
+        "user": {
+            "$id": "user",
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "displayName": {
+                    "type": "string"
+                },
+                "clanId": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "partyId": {
+                    "anyOf": [
+                        {
+                            "type": "string"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "scopes": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "countryCode": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/userStatus"
+                },
+                "battleStatus": {
+                    "$ref": "#/definitions/battleStatus"
+                }
+            },
+            "required": [
+                "userId",
+                "username",
+                "displayName",
+                "clanId",
+                "partyId",
+                "scopes",
+                "status",
+                "battleStatus"
+            ]
+        },
+        "userStatus": {
+            "$id": "userStatus",
+            "anyOf": [
+                {
+                    "const": "offline",
+                    "type": "string"
+                },
+                {
+                    "const": "menu",
+                    "type": "string"
+                },
+                {
+                    "const": "playing",
+                    "type": "string"
+                },
+                {
+                    "const": "lobby",
+                    "type": "string"
+                }
+            ]
+        }
+    },
+    "anyOf": [
+        {
+            "$id": "autohost.battleStart.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/battleStart",
+                    "type": "string"
+                },
+                "data": {
+                    "$ref": "#/definitions/battle"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "autohost.battleStart.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_script",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "server_already_running",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "server_failed_to_start",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "autohost/battleStart",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "autohost.status.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/status",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "maxBattles": {
+                            "type": "integer"
+                        },
+                        "currentBattles": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "maxBattles",
+                        "currentBattles"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "battle.launch.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/launch",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "script": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "script"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.close.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/close",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "lobby.close.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/close",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/close",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/close",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/close",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/close",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.create.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/create",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "title": "8v8 | All Welcome",
+                            "private": false,
+                            "region": "EU",
+                            "maxPlayers": 16
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "minLength": 2,
+                            "maxLength": 30,
+                            "type": "string"
+                        },
+                        "private": {
+                            "default": true,
+                            "type": "boolean"
+                        },
+                        "region": {
+                            "type": "string"
+                        },
+                        "maxPlayers": {
+                            "minimum": 0,
+                            "default": 16,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "title",
+                        "private",
+                        "region",
+                        "maxPlayers"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.create.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "no_hosts_available",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_region",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/create",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.join.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/join",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "lobbyId": 27,
+                            "password": "fish"
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "lobbyId": {
+                            "type": "string"
+                        },
+                        "password": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "lobbyId"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.join.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "locked",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "requires_password",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_password",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "max_participants_reached",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "rank_too_low",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "rank_too_high",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "banned",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/join",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.joined.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/joined",
+                    "type": "string"
+                },
+                "data": {
+                    "$ref": "#/definitions/battle"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.leave.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/leave",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "lobby.leave.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/leave",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/leave",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "no_lobby",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/leave",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/leave",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/leave",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/leave",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.left.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/left",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "lobby.list.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/list",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "lobby.list.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        },
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "battles": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/customBattle"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "battles"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.receiveMessage.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/receiveMessage",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "userId": 27,
+                            "message": "Hello lobby!"
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "userId": {
+                            "type": "string"
+                        },
+                        "message": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "userId",
+                        "message"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.sendMessage.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/sendMessage",
+                    "type": "string"
+                },
+                "data": {
+                    "examples": [
+                        {
+                            "message": "Hello lobby!"
+                        }
+                    ],
+                    "type": "object",
+                    "properties": {
+                        "message": {
+                            "maxLength": 300,
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "message"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.sendMessage.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "not_in_lobby",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "muted",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/sendMessage",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.subscribe.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/subscribe",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "battleIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "battleIds"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.subscribe.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/subscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/subscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/subscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/subscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/subscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.unsubscribe.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/unsubscribe",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "battleIds": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "lobby.unsubscribe.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/unsubscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/unsubscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "cannot_unsub_own_battle",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/unsubscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/unsubscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/unsubscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "lobby/unsubscribe",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "lobby.updated.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "lobby/updated",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "battles": {
+                            "type": "array",
+                            "items": {
+                                "examples": [
+                                    {
+                                        "title": "3v3 | Newbies only",
+                                        "limits": {
+                                            "minTeamsize": 3,
+                                            "maxTeamsize": 3,
+                                            "minRating": null,
+                                            "maxRating": 25
+                                        }
+                                    }
+                                ],
+                                "allOf": [
+                                    {
+                                        "type": "object",
+                                        "properties": {}
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "locked": {
+                                                "type": "boolean"
+                                            },
+                                            "passworded": {
+                                                "type": "boolean"
+                                            },
+                                            "bossIds": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "joinQueueIds": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "limits": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "minTeamsize": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "maxTeamsize": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "minRating": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    },
+                                                    "maxRating": {
+                                                        "anyOf": [
+                                                            {
+                                                                "type": "integer"
+                                                            },
+                                                            {
+                                                                "type": "null"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "minTeamsize",
+                                                    "maxTeamsize",
+                                                    "minRating",
+                                                    "maxRating"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                ],
+                                "type": "object"
+                            }
+                        }
+                    },
+                    "required": [
+                        "battles"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "matchmaking.cancel.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/cancel",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "matchmaking.cancel.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/cancel",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/cancel",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "not_queued",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/cancel",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/cancel",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/cancel",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/cancel",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "matchmaking.declined.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/declined",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "matchmaking.declined.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/declined",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/declined",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/declined",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/declined",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/declined",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "matchmaking.found.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/found",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "queueId": {
+                            "type": "string"
+                        },
+                        "timeoutMs": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "queueId",
+                        "timeoutMs"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "matchmaking.foundUpdate.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/foundUpdate",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "readyCount": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "readyCount"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "matchmaking.list.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/list",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "matchmaking.list.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        },
+                        "data": {
+                            "examples": [
+                                {
+                                    "playlists": [
+                                        {
+                                            "id": "1v1",
+                                            "name": "Duel",
+                                            "numOfTeams": 2,
+                                            "teamSize": 1,
+                                            "ranked": true
+                                        },
+                                        {
+                                            "id": "1v1v1",
+                                            "name": "3 Way FFA",
+                                            "numOfTeams": 3,
+                                            "teamSize": 1,
+                                            "ranked": true
+                                        }
+                                    ]
+                                }
+                            ],
+                            "type": "object",
+                            "properties": {
+                                "playlists": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/matchmakingPlaylist"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "playlists"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/list",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "matchmaking.lost.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/lost",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "matchmaking.queue.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queue",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "queues": {
+                            "minItems": 1,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "required": [
+                        "queues"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "matchmaking.queue.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_queue_specified",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "already_queued",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "already_inbattle",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/queue",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "matchmaking.queueUpdate.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/queueUpdate",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "playersQueued": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "playersQueued"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "matchmaking.ready.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/ready",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "matchmaking.ready.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/ready",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/ready",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "no_match",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/ready",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/ready",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/ready",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "matchmaking/ready",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "matchmaking.readyUpdate.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "matchmaking/readyUpdate",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "readyMax": {
+                            "type": "integer"
+                        },
+                        "readyCurrent": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "readyMax",
+                        "readyCurrent"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        },
+        {
+            "$id": "system.disconnect.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "reason": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "reason"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "system.disconnect.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/disconnect",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/disconnect",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/disconnect",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/disconnect",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/disconnect",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "system.serverStats.request",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "request",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId"
+            ]
+        },
+        {
+            "$id": "system.serverStats.response",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/serverStats",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "success",
+                            "type": "string"
+                        },
+                        "data": {
+                            "type": "object",
+                            "properties": {
+                                "userCount": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "userCount"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/serverStats",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "internal_error",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/serverStats",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "unauthorized",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/serverStats",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "invalid_request",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "const": "response",
+                            "type": "string"
+                        },
+                        "messageId": {
+                            "type": "string"
+                        },
+                        "commandId": {
+                            "const": "system/serverStats",
+                            "type": "string"
+                        },
+                        "status": {
+                            "const": "failed",
+                            "type": "string"
+                        },
+                        "reason": {
+                            "const": "command_unimplemented",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "$id": "user.updated.event",
+            "scopes": [
+                "tachyon.lobby"
+            ],
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "event",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "user/updated",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "users": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/privateUser"
+                            }
+                        }
+                    },
+                    "required": [
+                        "users"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "data"
+            ]
+        }
+    ]
+}

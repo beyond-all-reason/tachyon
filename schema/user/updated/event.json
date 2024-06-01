@@ -22,9 +22,7 @@
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "privateUser",
-                        "type": "object",
-                        "properties": {}
+                        "$ref": "privateUser"
                     }
                 }
             },

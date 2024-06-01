@@ -36,7 +36,8 @@ Cancel queueing for matchmaking.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -65,6 +66,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -77,9 +80,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingCancelRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/cancel";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -272,6 +284,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -284,6 +298,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingCancelResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/cancel";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_queued`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -298,7 +323,8 @@ Sent when a found match is declined, either by manual rejection or timeout from 
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -327,6 +353,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -339,9 +367,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingDeclinedRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/declined";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -503,6 +540,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -515,6 +554,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingDeclinedResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/declined";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -529,7 +579,8 @@ Server should send this when there are enough queued players to form a valid bat
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -574,6 +625,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -590,6 +643,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingFoundEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/found";
+    data: {
+        queueId: string;
+        timeoutMs: number;
+    };
+}
+```
 ---
 
 ## FoundUpdate
@@ -603,7 +668,8 @@ Server should send this when players ready up using [ready](#ready).
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -644,6 +710,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -659,6 +727,17 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingFoundUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/foundUpdate";
+    data: {
+        readyCount: number;
+    };
+}
+```
 ---
 
 ## List
@@ -672,7 +751,8 @@ Returns all available matchmaking playlists.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -701,6 +781,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -713,9 +795,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingListRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/list";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -912,6 +1003,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -943,6 +1036,27 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingListResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/list";
+    status: "success";
+    data: {
+        playlists: MatchmakingPlaylist[];
+    };
+}
+export interface MatchmakingPlaylist {
+    id: string;
+    name: string;
+    numOfTeams: number;
+    teamSize: number;
+    ranked: boolean;
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## Lost
@@ -956,7 +1070,8 @@ Sent when a found match gets disbanded because a client failed to ready up.
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -985,6 +1100,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -997,6 +1114,14 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingLostEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/lost";
+}
+```
 ---
 
 ## Queue
@@ -1010,7 +1135,8 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1055,6 +1181,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1073,9 +1201,21 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueueRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/queue";
+    data: {
+        queues: [string, ...string[]];
+    };
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1330,6 +1470,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1342,6 +1484,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueueResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/queue";
+    status: "success";
+}
+```
+Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_inbattle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1356,7 +1509,8 @@ Contains some info about the state of the current queue.
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1397,6 +1551,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1412,6 +1568,17 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueueUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/queueUpdate";
+    data: {
+        playersQueued: string;
+    };
+}
+```
 ---
 
 ## Ready
@@ -1425,7 +1592,8 @@ Clients should send this when they are ready to proceed with the found match. If
 
 ### Request
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1454,6 +1622,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1466,9 +1636,18 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingReadyRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/ready";
+}
+```
 ### Response
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1661,6 +1840,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1673,6 +1854,17 @@ JSONSchema
 }
 ```
 </details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingReadyResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/ready";
+    status: "success";
+}
+```
+Possible Failed Reasons: `no_match`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1687,7 +1879,8 @@ Sent when a client in a found match readies up.
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -1732,6 +1925,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -1748,3 +1943,15 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface MatchmakingReadyUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/readyUpdate";
+    data: {
+        readyMax: number;
+        readyCurrent: number;
+    };
+}
+```

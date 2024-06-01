@@ -22,9 +22,6 @@
                 "battles": {
                     "type": "array",
                     "items": {
-                        "$ref": "customBattle",
-                        "type": "object",
-                        "properties": {},
                         "examples": [
                             {
                                 "title": "3v3 | Newbies only",
@@ -35,7 +32,91 @@
                                     "maxRating": 25
                                 }
                             }
-                        ]
+                        ],
+                        "allOf": [
+                            {
+                                "type": "object",
+                                "properties": {}
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "locked": {
+                                        "type": "boolean"
+                                    },
+                                    "passworded": {
+                                        "type": "boolean"
+                                    },
+                                    "bossIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "joinQueueIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "limits": {
+                                        "type": "object",
+                                        "properties": {
+                                            "minTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "maxTeamsize": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "minRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            },
+                                            "maxRating": {
+                                                "anyOf": [
+                                                    {
+                                                        "type": "integer"
+                                                    },
+                                                    {
+                                                        "type": "null"
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        "required": [
+                                            "minTeamsize",
+                                            "maxTeamsize",
+                                            "minRating",
+                                            "maxRating"
+                                        ]
+                                    }
+                                }
+                            }
+                        ],
+                        "type": "object"
                     }
                 }
             },

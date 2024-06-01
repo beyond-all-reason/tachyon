@@ -16,7 +16,8 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -43,9 +44,7 @@ JSONSchema
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "privateUser",
-                        "type": "object",
-                        "properties": {}
+                        "$ref": "privateUser"
                     }
                 }
             },
@@ -62,6 +61,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -73,22 +74,115 @@ JSONSchema
     "data": {
         "users": [
             {
-                "friendIds": -11999999.999999955,
-                "outgoingFriendRequestIds": -11999999.999999955,
-                "incomingFriendRequestIds": -11999999.999999955,
-                "ignoreIds": -11999999.999999955
+                "userId": "esse Lorem anim",
+                "username": "esse Lorem anim",
+                "displayName": "esse Lorem anim",
+                "clanId": "esse Lorem anim",
+                "partyId": "esse Lorem anim",
+                "scopes": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "countryCode": "esse Lorem anim",
+                "status": "menu",
+                "battleStatus": {
+                    "battleId": "esse Lorem anim"
+                },
+                "friendIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "outgoingFriendRequestIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "incomingFriendRequestIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "ignoreIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ]
             },
             {
-                "friendIds": -11999999.999999955,
-                "outgoingFriendRequestIds": -11999999.999999955,
-                "incomingFriendRequestIds": -11999999.999999955,
-                "ignoreIds": -11999999.999999955
+                "userId": "esse Lorem anim",
+                "username": "esse Lorem anim",
+                "displayName": "esse Lorem anim",
+                "clanId": "esse Lorem anim",
+                "partyId": "esse Lorem anim",
+                "scopes": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "countryCode": "esse Lorem anim",
+                "status": "menu",
+                "battleStatus": {
+                    "battleId": "esse Lorem anim"
+                },
+                "friendIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "outgoingFriendRequestIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "incomingFriendRequestIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "ignoreIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ]
             },
             {
-                "friendIds": -11999999.999999955,
-                "outgoingFriendRequestIds": -11999999.999999955,
-                "incomingFriendRequestIds": -11999999.999999955,
-                "ignoreIds": -11999999.999999955
+                "userId": "esse Lorem anim",
+                "username": "esse Lorem anim",
+                "displayName": "esse Lorem anim",
+                "clanId": "esse Lorem anim",
+                "partyId": "esse Lorem anim",
+                "scopes": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "countryCode": "esse Lorem anim",
+                "status": "menu",
+                "battleStatus": {
+                    "battleId": "esse Lorem anim"
+                },
+                "friendIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "outgoingFriendRequestIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "incomingFriendRequestIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ],
+                "ignoreIds": [
+                    "esse Lorem anim",
+                    "esse Lorem anim",
+                    "esse Lorem anim"
+                ]
             }
         ]
     }
@@ -96,3 +190,59 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export type PrivateUser = User & {
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
+};
+export type UserStatus = "offline" | "menu" | "playing" | "lobby";
+export type BattleStatus =
+    | ({
+          battleId: string;
+      } & (BattlePlayer | BattleSpectator))
+    | null;
+export type BattlePlayer = BattleContender & {
+    isSpectator: false;
+    isBot: false;
+    ready: boolean;
+    sync: {
+        engine: number;
+        game: number;
+        map: number;
+    };
+};
+
+export interface UserUpdatedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/updated";
+    data: {
+        users: PrivateUser[];
+    };
+}
+export interface User {
+    userId: string;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: UserStatus;
+    battleStatus: BattleStatus;
+}
+export interface BattleContender {
+    playerId: number;
+    teamId: number;
+    color: string;
+    bonus: number;
+    inGame: boolean;
+}
+export interface BattleSpectator {
+    isSpectator: true;
+    isBot: false;
+}
+```

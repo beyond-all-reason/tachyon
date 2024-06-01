@@ -5,12 +5,8 @@ import { compile } from "json-schema-to-typescript";
 export async function generateTSDefs(unionSchema: TUnion<TSchema[]>) {
     let typings = "\n";
 
-    let json = JSON.stringify(unionSchema, null, 4);
-    json = json.replace(/"\$ref":\s*"([^"]+)"/g, `"$ref": "#/definitions/$1"`);
-    const schema = JSON.parse(json);
-
     // generate d.ts
-    typings += await compile(schema, "TachyonCommand", {
+    typings += await compile(unionSchema, "TachyonCommand", {
         additionalProperties: false,
         bannerComment: "",
         style: {

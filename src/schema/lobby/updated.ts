@@ -10,7 +10,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             battles: Type.Array(
-                Type.Partial(Type.Ref(customBattle), {
+                Type.Partial(customBattle, {
                     examples: [
                         {
                             title: "3v3 | Newbies only",

@@ -16,7 +16,8 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ### Event
 
-JSONSchema
+<details>
+<summary>JSONSchema</summary>
 
 ```json
 {
@@ -57,6 +58,8 @@ JSONSchema
     ]
 }
 ```
+</details>
+
 <details>
 <summary>Example</summary>
 
@@ -72,3 +75,14 @@ JSONSchema
 ```
 </details>
 
+#### TypeScript Definition
+```ts
+export interface BattleLaunchEvent {
+    type: "event";
+    messageId: string;
+    commandId: "battle/launch";
+    data: {
+        script: string;
+    };
+}
+```
