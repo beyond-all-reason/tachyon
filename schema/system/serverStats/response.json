@@ -1,5 +1,5 @@
 {
-    "$id": "system.serverStats.response",
+    "$id": "system/serverStats/response",
     "scopes": [
         "tachyon.lobby"
     ],

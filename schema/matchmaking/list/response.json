@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking.list.response",
+    "$id": "matchmaking/list/response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -48,7 +48,31 @@
                         "playlists": {
                             "type": "array",
                             "items": {
-                                "$ref": "matchmakingPlaylist"
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "numOfTeams": {
+                                        "type": "integer"
+                                    },
+                                    "teamSize": {
+                                        "type": "integer"
+                                    },
+                                    "ranked": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "required": [
+                                    "id",
+                                    "name",
+                                    "numOfTeams",
+                                    "teamSize",
+                                    "ranked"
+                                ]
                             }
                         }
                     },

@@ -2,11 +2,11 @@ import { TSchema, TUnion } from "@sinclair/typebox";
 import fs from "fs";
 import { compile } from "json-schema-to-typescript";
 
-export async function generateTSDefs(unionSchema: TUnion<TSchema[]>) {
+export async function generateTSDefs(schema: TUnion<TSchema[]>) {
     let typings = "\n";
 
     // generate d.ts
-    typings += await compile(unionSchema, "TachyonCommand", {
+    typings += await compile(schema, "TachyonCommand", {
         additionalProperties: false,
         bannerComment: "",
         style: {

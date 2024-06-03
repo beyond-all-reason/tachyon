@@ -8,8 +8,8 @@ export default defineEndpoint({
     description: "This event should be sent to the server on connection and whenever any of the status properties change.",
     event: {
         data: Type.Object({
-            maxBattles: Type.Integer(),
-            currentBattles: Type.Integer(),
+            maxBattles: Type.Integer({ minimum: 0 }),
+            currentBattles: Type.Integer({ minimum: 0 }),
         }),
     },
 });

@@ -1,7 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { matchmakingPlaylist } from "@/schema/definitions";
 
 export default defineEndpoint({
     source: "user",
@@ -13,7 +12,15 @@ export default defineEndpoint({
             status: "success",
             data: Type.Object(
                 {
-                    playlists: Type.Array(Type.Ref(matchmakingPlaylist)),
+                    playlists: Type.Array(
+                        Type.Object({
+                            id: Type.String(),
+                            name: Type.String(),
+                            numOfTeams: Type.Integer(),
+                            teamSize: Type.Integer(),
+                            ranked: Type.Boolean(),
+                        })
+                    ),
                 },
                 {
                     examples: [

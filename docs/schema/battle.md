@@ -2,10 +2,10 @@
 
 # Battle
 
-- [launch](#launch)
+- [start](#start)
 ---
 
-## Launch
+## Start
 
 When a user client receives this response it should launch the game (spring.exe) with the start script.
 
@@ -21,7 +21,7 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ```json
 {
-    "$id": "battle.launch.event",
+    "$id": "battle.start.event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -35,18 +35,30 @@ When a user client receives this response it should launch the game (spring.exe)
             "type": "string"
         },
         "commandId": {
-            "const": "battle/launch",
+            "const": "battle/start",
             "type": "string"
         },
         "data": {
             "type": "object",
             "properties": {
-                "script": {
+                "username": {
                     "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "number"
                 }
             },
             "required": [
-                "script"
+                "username",
+                "password",
+                "ip",
+                "port"
             ]
         }
     },
@@ -67,9 +79,12 @@ When a user client receives this response it should launch the game (spring.exe)
 {
     "type": "event",
     "messageId": "quis",
-    "commandId": "battle/launch",
+    "commandId": "battle/start",
     "data": {
-        "script": "quis"
+        "username": "quis",
+        "password": "quis",
+        "ip": "quis",
+        "port": -92000000
     }
 }
 ```
@@ -77,12 +92,15 @@ When a user client receives this response it should launch the game (spring.exe)
 
 #### TypeScript Definition
 ```ts
-export interface BattleLaunchEvent {
+export interface BattleStartEvent {
     type: "event";
     messageId: string;
-    commandId: "battle/launch";
+    commandId: "battle/start";
     data: {
-        script: string;
+        username: string;
+        password: string;
+        ip: string;
+        port: number;
     };
 }
 ```

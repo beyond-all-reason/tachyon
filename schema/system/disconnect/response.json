@@ -1,5 +1,5 @@
 {
-    "$id": "system.disconnect.response",
+    "$id": "system/disconnect/response",
     "scopes": [
         "tachyon.lobby"
     ],

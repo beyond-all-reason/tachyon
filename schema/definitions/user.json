@@ -3,7 +3,7 @@
     "type": "object",
     "properties": {
         "userId": {
-            "type": "string"
+            "$ref": "../definitions/userId.json"
         },
         "username": {
             "type": "string"
@@ -41,10 +41,24 @@
             "type": "string"
         },
         "status": {
-            "$ref": "userStatus"
-        },
-        "battleStatus": {
-            "$ref": "battleStatus"
+            "anyOf": [
+                {
+                    "const": "offline",
+                    "type": "string"
+                },
+                {
+                    "const": "menu",
+                    "type": "string"
+                },
+                {
+                    "const": "playing",
+                    "type": "string"
+                },
+                {
+                    "const": "lobby",
+                    "type": "string"
+                }
+            ]
         }
     },
     "required": [
@@ -54,7 +68,6 @@
         "clanId",
         "partyId",
         "scopes",
-        "status",
-        "battleStatus"
+        "status"
     ]
 }

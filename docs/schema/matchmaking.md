@@ -11,10 +11,10 @@ The matchmaking cycle works as follows:
 5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [readyUpdate](#readyupdate) event.
 6. To cancel queueing, or to decline a found match, clients should send a [cancel](#cancel) request.
 7. If a client fails to ready up for a found match, the server should send a [lost](#lost) event, and the queueing phase should resume.
-8. If all players are ready
+8. Once all players are ready, the server should send a [autohost/battleStart](#autohost/battleStart) request to a suitable autohost client. If the autohost doesn't respond quickly, or if it sends a failed response, the server should repeat this step.
+9. Once the autohost has successfully started the battle, the server should then send [battle/battleStart](#battle/battleStart) requests to the users.
 ---
 - [cancel](#cancel)
-- [declined](#declined)
 - [found](#found)
 - [foundUpdate](#foundupdate)
 - [list](#list)
@@ -312,262 +312,6 @@ Possible Failed Reasons: `not_queued`, `internal_error`, `unauthorized`, `invali
 
 ---
 
-## Declined
-
-Sent when a found match is declined, either by manual rejection or timeout from any user in the queue.
-
-- Endpoint Type: **Request** -> **Response**
-- Source: **User**
-- Target: **Server**
-- Requires Role: `tachyon.lobby`
-
-### Request
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "matchmaking.declined.request",
-    "scopes": [
-        "tachyon.lobby"
-    ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "matchmaking/declined",
-            "type": "string"
-        }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
-}
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "in nostrud",
-    "commandId": "matchmaking/declined"
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface MatchmakingDeclinedRequest {
-    type: "request";
-    messageId: string;
-    commandId: "matchmaking/declined";
-}
-```
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "matchmaking.declined.response",
-    "scopes": [
-        "tachyon.lobby"
-    ],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/declined",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/declined",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/declined",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/declined",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/declined",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        }
-    ]
-}
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "consequat quis",
-    "commandId": "matchmaking/declined",
-    "status": "success"
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface MatchmakingDeclinedResponse {
-    type: "response";
-    messageId: string;
-    commandId: "matchmaking/declined";
-    status: "success";
-}
-```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
-
----
-
 ## Found
 
 Server should send this when there are enough queued players to form a valid battle that meets their criteria. Clients should then send [ready](#ready).
@@ -633,11 +377,11 @@ Server should send this when there are enough queued players to form a valid bat
 ```json
 {
     "type": "event",
-    "messageId": "commodo laborum",
+    "messageId": "in nostrud",
     "commandId": "matchmaking/found",
     "data": {
-        "queueId": "commodo laborum",
-        "timeoutMs": -42000000
+        "queueId": "in nostrud",
+        "timeoutMs": -46000000
     }
 }
 ```
@@ -718,10 +462,10 @@ Server should send this when players ready up using [ready](#ready).
 ```json
 {
     "type": "event",
-    "messageId": "nisi deserunt",
+    "messageId": "consequat quis",
     "commandId": "matchmaking/foundUpdate",
     "data": {
-        "readyCount": -40000000
+        "readyCount": -44000000
     }
 }
 ```
@@ -789,7 +533,7 @@ Returns all available matchmaking playlists.
 ```json
 {
     "type": "request",
-    "messageId": "nisi qui",
+    "messageId": "commodo laborum",
     "commandId": "matchmaking/list"
 }
 ```
@@ -1011,7 +755,7 @@ export interface MatchmakingListRequest {
 ```json
 {
     "type": "response",
-    "messageId": "laboris non",
+    "messageId": "nisi deserunt",
     "commandId": "matchmaking/list",
     "status": "success",
     "data": {
@@ -1108,7 +852,7 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```json
 {
     "type": "event",
-    "messageId": "ullamco occaecat",
+    "messageId": "nisi qui",
     "commandId": "matchmaking/lost"
 }
 ```
@@ -1189,12 +933,12 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 ```json
 {
     "type": "request",
-    "messageId": "reprehenderit Lorem",
+    "messageId": "laboris non",
     "commandId": "matchmaking/queue",
     "data": {
         "queues": [
-            "reprehenderit Lorem",
-            "reprehenderit Lorem"
+            "laboris non",
+            "laboris non"
         ]
     }
 }
@@ -1478,7 +1222,7 @@ export interface MatchmakingQueueRequest {
 ```json
 {
     "type": "response",
-    "messageId": "dolor Lorem",
+    "messageId": "ullamco occaecat",
     "commandId": "matchmaking/queue",
     "status": "success"
 }
@@ -1559,10 +1303,10 @@ Contains some info about the state of the current queue.
 ```json
 {
     "type": "event",
-    "messageId": "Duis Lorem",
+    "messageId": "reprehenderit Lorem",
     "commandId": "matchmaking/queueUpdate",
     "data": {
-        "playersQueued": "Duis Lorem"
+        "playersQueued": "reprehenderit Lorem"
     }
 }
 ```
@@ -1630,7 +1374,7 @@ Clients should send this when they are ready to proceed with the found match. If
 ```json
 {
     "type": "request",
-    "messageId": "consequat Lorem",
+    "messageId": "dolor Lorem",
     "commandId": "matchmaking/ready"
 }
 ```
@@ -1848,7 +1592,7 @@ export interface MatchmakingReadyRequest {
 ```json
 {
     "type": "response",
-    "messageId": "commodo Lorem",
+    "messageId": "Duis Lorem",
     "commandId": "matchmaking/ready",
     "status": "success"
 }
@@ -1933,11 +1677,11 @@ Sent when a client in a found match readies up.
 ```json
 {
     "type": "event",
-    "messageId": "ut Lorem",
+    "messageId": "consequat Lorem",
     "commandId": "matchmaking/readyUpdate",
     "data": {
-        "readyMax": -22000000,
-        "readyCurrent": -22000000
+        "readyMax": -26000000,
+        "readyCurrent": -26000000
     }
 }
 ```

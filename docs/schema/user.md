@@ -69,119 +69,119 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "esse Lorem anim",
+    "messageId": "fugiat Lorem irure",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "userId": "esse Lorem anim",
-                "username": "esse Lorem anim",
-                "displayName": "esse Lorem anim",
-                "clanId": "esse Lorem anim",
-                "partyId": "esse Lorem anim",
+                "userId": "fugiat Lorem irure",
+                "username": "fugiat Lorem irure",
+                "displayName": "fugiat Lorem irure",
+                "clanId": "fugiat Lorem irure",
+                "partyId": "fugiat Lorem irure",
                 "scopes": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
-                "countryCode": "esse Lorem anim",
+                "countryCode": "fugiat Lorem irure",
                 "status": "menu",
                 "battleStatus": {
-                    "battleId": "esse Lorem anim"
+                    "battleId": "fugiat Lorem irure"
                 },
                 "friendIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "outgoingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "incomingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "ignoreIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ]
             },
             {
-                "userId": "esse Lorem anim",
-                "username": "esse Lorem anim",
-                "displayName": "esse Lorem anim",
-                "clanId": "esse Lorem anim",
-                "partyId": "esse Lorem anim",
+                "userId": "fugiat Lorem irure",
+                "username": "fugiat Lorem irure",
+                "displayName": "fugiat Lorem irure",
+                "clanId": "fugiat Lorem irure",
+                "partyId": "fugiat Lorem irure",
                 "scopes": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
-                "countryCode": "esse Lorem anim",
+                "countryCode": "fugiat Lorem irure",
                 "status": "menu",
                 "battleStatus": {
-                    "battleId": "esse Lorem anim"
+                    "battleId": "fugiat Lorem irure"
                 },
                 "friendIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "outgoingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "incomingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "ignoreIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ]
             },
             {
-                "userId": "esse Lorem anim",
-                "username": "esse Lorem anim",
-                "displayName": "esse Lorem anim",
-                "clanId": "esse Lorem anim",
-                "partyId": "esse Lorem anim",
+                "userId": "fugiat Lorem irure",
+                "username": "fugiat Lorem irure",
+                "displayName": "fugiat Lorem irure",
+                "clanId": "fugiat Lorem irure",
+                "partyId": "fugiat Lorem irure",
                 "scopes": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
-                "countryCode": "esse Lorem anim",
+                "countryCode": "fugiat Lorem irure",
                 "status": "menu",
                 "battleStatus": {
-                    "battleId": "esse Lorem anim"
+                    "battleId": "fugiat Lorem irure"
                 },
                 "friendIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "outgoingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "incomingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ],
                 "ignoreIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure",
+                    "fugiat Lorem irure"
                 ]
             }
         ]

@@ -46,11 +46,11 @@ Autohosts used for matchmaking should use the slaved mode as no pregame communic
 Autohosts used for custom games should use the dedicated mode as lots of pregame communication can take place.
 
 ---
-- [battleStart](#battlestart)
+- [start](#start)
 - [status](#status)
 ---
 
-## BattleStart
+## Start
 
 Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.
 
@@ -66,7 +66,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
-    "$id": "autohost.battleStart.request",
+    "$id": "autohost.start.request",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -80,11 +80,78 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
             "type": "string"
         },
         "commandId": {
-            "const": "autohost/battleStart",
+            "const": "autohost/start",
             "type": "string"
         },
         "data": {
-            "$ref": "battle"
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "type": "string"
+                },
+                "engineVersion": {
+                    "pattern": "^[0-9a-zA-Z .+-]+$",
+                    "type": "string"
+                },
+                "gameName": {
+                    "type": "string"
+                },
+                "mapName": {
+                    "type": "string"
+                },
+                "gameArchiveHash": {
+                    "pattern": "^[a-fA-F0-9]{128}$",
+                    "type": "string"
+                },
+                "mapArchiveHash": {
+                    "pattern": "^[a-fA-F0-9]{128}$",
+                    "type": "string"
+                },
+                "mapOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "gameOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "startDelay": {
+                    "type": "integer"
+                },
+                "startPosType": {
+                    "$ref": "startPosType"
+                },
+                "allyTeams": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            },
+            "required": [
+                "battleId",
+                "engineVersion",
+                "gameName",
+                "mapName",
+                "gameArchiveHash",
+                "mapArchiveHash",
+                "mapOptions",
+                "gameOptions",
+                "startDelay",
+                "startPosType",
+                "allyTeams"
+            ]
         }
     },
     "required": [
@@ -104,37 +171,27 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 {
     "type": "request",
     "messageId": "ipsum",
-    "commandId": "autohost/battleStart",
+    "commandId": "autohost/start",
     "data": {
-        "battleId": 27,
-        "hostId": 822,
-        "engine": "105.1.1-1821-gaca6f20 BAR105",
-        "game": "Beyond All Reason test-23561-0abff7c",
-        "map": "Red Comet Remake 1.8",
-        "startPosType": 2,
-        "startAreas": {
-            "0": {
-                "x": 0,
-                "y": 0,
-                "width": 1,
-                "height": 0.3
-            },
-            "1": {
-                "x": 0,
-                "y": 0.7,
-                "width": 1,
-                "height": 0.3
-            }
+        "battleId": "ipsum",
+        "engineVersion": "0",
+        "gameName": "ipsum",
+        "mapName": "ipsum",
+        "gameArchiveHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mapArchiveHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mapOptions": {
+            "": "ipsum"
         },
-        "startTime": 1705432698,
-        "ip": "121.32.201.76",
-        "port": 41403,
-        "scriptPassword": "10sdfi90sid0sjkdf",
-        "modOptions": {
-            "emprework": 0
+        "gameOptions": {
+            "": "ipsum"
         },
-        "bots": [],
-        "users": []
+        "startDelay": -98000000,
+        "startPosType": 0,
+        "allyTeams": [
+            [
+                -98000000
+            ]
+        ]
     }
 }
 ```
@@ -142,88 +199,29 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 #### TypeScript Definition
 ```ts
-export type UnixTime = number | null;
-export type Bot = BattleContender & {
-    isSpectator: false;
-    isBot: true;
-    ownerId: string;
-    aiShortName: string;
-    name: string;
-    aiOptions: {
-        [k: string]: unknown;
-    };
-    faction: string;
-};
-export type UserStatus = "offline" | "menu" | "playing" | "lobby";
-export type BattleStatus =
-    | ({
-          battleId: string;
-      } & (BattlePlayer | BattleSpectator))
-    | null;
-export type BattlePlayer = BattleContender & {
-    isSpectator: false;
-    isBot: false;
-    ready: boolean;
-    sync: {
-        engine: number;
-        game: number;
-        map: number;
-    };
-};
+export type StartPosType = 0 | 1 | 2;
 
-export interface AutohostBattleStartRequest {
+export interface AutohostStartRequest {
     type: "request";
     messageId: string;
-    commandId: "autohost/battleStart";
-    data: Battle;
-}
-export interface Battle {
-    battleId: string;
-    hostId: string;
-    engine: string;
-    game: string;
-    map: string;
-    startPosType: 0 | 1 | 2;
-    startAreas: {
-        [k: string]: Rect;
+    commandId: "autohost/start";
+    data: {
+        battleId: string;
+        engineVersion: string;
+        gameName: string;
+        mapName: string;
+        gameArchiveHash: string;
+        mapArchiveHash: string;
+        mapOptions: {
+            [k: string]: string;
+        };
+        gameOptions: {
+            [k: string]: string;
+        };
+        startDelay: number;
+        startPosType: StartPosType;
+        allyTeams: number[][];
     };
-    startTime: UnixTime;
-    ip: string | null;
-    port: number | null;
-    scriptPassword: string | null;
-    modOptions: {
-        [k: string]: unknown;
-    };
-    bots: Bot[];
-    users: User[];
-}
-export interface Rect {
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-}
-export interface BattleContender {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-}
-export interface User {
-    userId: string;
-    username: string;
-    displayName: string;
-    clanId: string | null;
-    partyId: string | null;
-    scopes: string[];
-    countryCode?: string;
-    status: UserStatus;
-    battleStatus: BattleStatus;
-}
-export interface BattleSpectator {
-    isSpectator: true;
-    isBot: false;
 }
 ```
 ### Response
@@ -233,7 +231,7 @@ export interface BattleSpectator {
 
 ```json
 {
-    "$id": "autohost.battleStart.response",
+    "$id": "autohost.start.response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -249,7 +247,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -275,7 +273,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -306,7 +304,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -337,7 +335,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -368,7 +366,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -399,7 +397,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -430,7 +428,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -461,7 +459,7 @@ export interface BattleSpectator {
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/battleStart",
+                    "const": "autohost/start",
                     "type": "string"
                 },
                 "status": {
@@ -493,7 +491,7 @@ export interface BattleSpectator {
 {
     "type": "response",
     "messageId": "fugiat",
-    "commandId": "autohost/battleStart",
+    "commandId": "autohost/start",
     "status": "success"
 }
 ```
@@ -501,10 +499,10 @@ export interface BattleSpectator {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostBattleStartResponse {
+export interface AutohostStartResponse {
     type: "response";
     messageId: string;
-    commandId: "autohost/battleStart";
+    commandId: "autohost/start";
     status: "success";
 }
 ```

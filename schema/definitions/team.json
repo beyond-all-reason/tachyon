@@ -1,0 +1,83 @@
+{
+    "$id": "team",
+    "type": "object",
+    "properties": {
+        "players": {
+            "type": "array",
+            "items": {
+                "$ref": "../definitions/player.json"
+            }
+        },
+        "bots": {
+            "type": "array",
+            "items": {
+                "$ref": "../definitions/bot.json"
+            }
+        },
+        "advantage": {
+            "minimum": -1,
+            "type": "number"
+        },
+        "incomeMultiplier": {
+            "minimum": 0,
+            "type": "number"
+        },
+        "faction": {
+            "type": "string"
+        },
+        "color": {
+            "type": "object",
+            "properties": {
+                "r": {
+                    "minimum": 0,
+                    "maximum": 1,
+                    "type": "number"
+                },
+                "g": {
+                    "minimum": 0,
+                    "maximum": 1,
+                    "type": "number"
+                },
+                "b": {
+                    "minimum": 0,
+                    "maximum": 1,
+                    "type": "number"
+                }
+            },
+            "required": [
+                "r",
+                "g",
+                "b"
+            ]
+        },
+        "startPos": {
+            "type": "object",
+            "properties": {
+                "x": {
+                    "type": "integer"
+                },
+                "y": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "x",
+                "y"
+            ]
+        },
+        "options": {
+            "type": "object",
+            "patternProperties": {
+                "^(.*)$": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": [
+        "players",
+        "bots",
+        "faction",
+        "color"
+    ]
+}

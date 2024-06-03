@@ -1,0 +1,27 @@
+{
+    "$id": "allyTeam",
+    "type": "object",
+    "properties": {
+        "teams": {
+            "type": "array",
+            "items": {
+                "$ref": "../definitions/team.json"
+            }
+        },
+        "startBox": {
+            "$ref": "../definitions/startBox.json"
+        },
+        "options": {
+            "type": "object",
+            "patternProperties": {
+                "^(.*)$": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "required": [
+        "teams",
+        "startBox"
+    ]
+}

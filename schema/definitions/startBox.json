@@ -1,0 +1,32 @@
+{
+    "$id": "startBox",
+    "type": "object",
+    "properties": {
+        "top": {
+            "minimum": 0,
+            "maximum": 200,
+            "type": "integer"
+        },
+        "bottom": {
+            "minimum": 0,
+            "maximum": 200,
+            "type": "integer"
+        },
+        "left": {
+            "minimum": 0,
+            "maximum": 200,
+            "type": "integer"
+        },
+        "right": {
+            "minimum": 0,
+            "maximum": 200,
+            "type": "integer"
+        }
+    },
+    "required": [
+        "top",
+        "bottom",
+        "left",
+        "right"
+    ]
+}

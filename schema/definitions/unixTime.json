@@ -1,16 +1,8 @@
 {
     "$id": "unixTime",
-    "anyOf": [
-        {
-            "description": "Unix time",
-            "examples": [
-                1705432698,
-                null
-            ],
-            "type": "integer"
-        },
-        {
-            "type": "null"
-        }
-    ]
+    "description": "Unix time",
+    "examples": [
+        1705432698
+    ],
+    "type": "integer"
 }

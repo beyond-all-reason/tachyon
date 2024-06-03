@@ -2,34 +2,39 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { TProperties, TSchema, Type } from "@sinclair/typebox";
+import { TProperties, TSchema, TUnion, Type } from "@sinclair/typebox";
+import { objectKeys } from "jaz-ts-utils";
 import { pathToFileURL } from "url";
 
 import { EndpointConfig } from "@/generator-helpers.js";
-import * as definitions from "@/schema/definitions";
 import { TachyonActor } from "@/type-helpers";
 
-const definitionsMap: Record<string, TSchema> = {};
+export type TachyonConfig = {
+    commandConfigs: Record<`${string}/${string}`, CommandConfig>;
+    compiledSchema: TUnion<TSchema[]>;
+    schemaMeta: SchemaMeta;
+};
 
-for (const key in definitions) {
-    definitionsMap[key] = definitions[key as keyof typeof definitions];
-}
-
-export type SchemaMeta = {
+type SchemaMeta = {
     actors: Record<TachyonActor, Record<"request" | "response" | "event", { send: string[]; receive: string[] }>>;
     serviceIds: Record<string, string[]>;
 };
 
-export async function generateJsonSchemas() {
-    const fullSchemaProps: Record<string, Record<string, TProperties>> = {};
-    const individualSchemas: Record<string, Record<string, EndpointConfig>> = {};
-    const unionSchemas: TSchema[] = [];
+type CommandConfig = {
+    commandId: `${string}/${string}`;
+    schema: TSchema;
+    config: EndpointConfig;
+    type: "request" | "response" | "event";
+};
 
+const commandConfigs: TachyonConfig["commandConfigs"] = {};
+
+export async function generateJsonSchemas(): Promise<TachyonConfig> {
     const serviceDirs = path.join(__dirname, "schema");
     const serviceHandlerDirs = await fs.promises.readdir(serviceDirs);
 
     for (const serviceId of serviceHandlerDirs) {
-        if (serviceId.includes(".")) {
+        if (serviceId.includes(".") || serviceId === "definitions") {
             continue;
         }
         const endpointDir = path.join(serviceDirs, serviceId);
@@ -37,71 +42,70 @@ export async function generateJsonSchemas() {
             withFileTypes: true,
         });
 
-        const serviceSchema: Record<string, EndpointConfig> = {};
-        fullSchemaProps[serviceId] = {};
-
         for (const endpointSchemaPath of endpointSchemaModules) {
             if (endpointSchemaPath.name.endsWith(".md")) {
                 continue;
             }
             const endpointId = path.parse(endpointSchemaPath.name).name;
             const endpoint = await import(pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString());
-            const endpointSchema = endpoint.default as EndpointConfig;
-            fullSchemaProps[serviceId][endpointId] = {};
+            const schemaConfig = endpoint.default as EndpointConfig;
+
             await fs.promises.mkdir(path.join("schema", serviceId, endpointId), {
                 recursive: true,
             });
 
-            if (!endpointSchema.source) {
+            if (!schemaConfig.source) {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} does not have a source field`);
             }
 
-            if (!endpointSchema.target) {
+            if (!schemaConfig.target) {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} does not have a target field`);
             }
 
-            if ("request" in endpointSchema && "event" in endpointSchema) {
+            if ("request" in schemaConfig && "event" in schemaConfig) {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} cannot have both a request and an event`);
             }
 
-            if (!("request" in endpointSchema || "event" in endpointSchema)) {
+            if (!("request" in schemaConfig || "event" in schemaConfig)) {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} must have either a request or an event`);
             }
 
-            if ("request" in endpointSchema && !("response" in endpointSchema)) {
+            if ("request" in schemaConfig && !("response" in schemaConfig)) {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} must have a response if it has a request`);
             }
 
-            if ("response" in endpointSchema && !("request" in endpointSchema)) {
+            if ("response" in schemaConfig && !("request" in schemaConfig)) {
                 throw new Error(`Endpoint ${serviceId}/${endpointId} must have a request if it has a response`);
             }
 
-            if ("request" in endpointSchema) {
+            const commandId = `${serviceId}/${endpointId}` as const;
+
+            if ("request" in schemaConfig) {
                 const props: TProperties = {
                     type: Type.Literal("request"),
                     messageId: Type.String(),
-                    commandId: Type.Literal(`${serviceId}/${endpointId}`),
+                    commandId: Type.Literal(commandId),
                 };
-                if (endpointSchema.request.data) {
-                    props.data = endpointSchema.request.data;
+                if (schemaConfig.request.data) {
+                    props.data = schemaConfig.request.data;
                 }
                 const schema = Type.Object(props, {
-                    $id: `${serviceId}.${endpointId}.request`,
-                    scopes: endpointSchema.scopes,
+                    $id: `${commandId}/request`,
+                    scopes: schemaConfig.scopes,
                 });
+                replaceRefs(schema, "../../");
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, schemaStr);
-                fullSchemaProps[serviceId][endpointId].request = schema;
-                unionSchemas.push(schema);
+                commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "request" };
             }
 
-            if ("response" in endpointSchema && endpointSchema.response.length) {
+            if ("response" in schemaConfig && schemaConfig.response.length) {
                 const schema = Type.Union(
-                    endpointSchema.response.map((schema) => {
+                    schemaConfig.response.map((schema) => {
                         const props: TProperties = {
                             type: Type.Literal("response"),
                             messageId: Type.String(),
-                            commandId: Type.Literal(`${serviceId}/${endpointId}`),
+                            commandId: Type.Literal(commandId),
                             status: Type.Literal(schema.status),
                         };
 
@@ -116,57 +120,55 @@ export async function generateJsonSchemas() {
                         return Type.Object(props);
                     }),
                     {
-                        $id: `${serviceId}.${endpointId}.response`,
-                        scopes: endpointSchema.scopes,
+                        $id: `${commandId}/response`,
+                        scopes: schemaConfig.scopes,
                     }
                 );
+                replaceRefs(schema, "../../");
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, schemaStr);
-                fullSchemaProps[serviceId][endpointId].response = schema;
-                unionSchemas.push(schema);
+                commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "response" };
             }
 
-            if ("event" in endpointSchema) {
+            if ("event" in schemaConfig) {
                 const props: TProperties = {
                     type: Type.Literal("event"),
                     messageId: Type.String(),
-                    commandId: Type.Literal(`${serviceId}/${endpointId}`),
+                    commandId: Type.Literal(commandId),
                 };
-                if (endpointSchema.event.data) {
-                    props.data = endpointSchema.event.data;
+                if (schemaConfig.event.data) {
+                    props.data = schemaConfig.event.data;
                 }
                 const schema = Type.Object(props, {
-                    $id: `${serviceId}.${endpointId}.event`,
-                    scopes: endpointSchema.scopes,
+                    $id: `${commandId}/event`,
+                    scopes: schemaConfig.scopes,
                 });
+                replaceRefs(schema, "../../");
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/event.json`, schemaStr);
-                fullSchemaProps[serviceId][endpointId].event = schema;
-                unionSchemas.push(schema);
+                commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "event" };
             }
-
-            serviceSchema[endpointId] = endpointSchema;
         }
-        individualSchemas[serviceId] = serviceSchema;
     }
 
-    // defs
     await fs.promises.mkdir("schema/definitions", { recursive: true });
-
-    for (const id in definitionsMap) {
-        const schema = definitionsMap[id];
-        const schemaStr = JSON.stringify(schema, null, 4);
-        await fs.promises.writeFile(`schema/definitions/${schema.$id}.json`, schemaStr);
+    const definitionsMap: Record<string, TSchema> = {};
+    const definitionsPath = path.join(__dirname, "schema", "definitions");
+    for (const definitionFile of await fs.promises.readdir(definitionsPath)) {
+        if (definitionFile.endsWith(".ts")) {
+            const imports = await import(pathToFileURL(path.join(definitionsPath, definitionFile)).toString());
+            const key = Object.keys(imports)[0];
+            const schema = imports[key];
+            if (!schema.$id) {
+                throw new Error(`Definition schema does not have a $id field: ${definitionFile}`);
+            }
+            replaceRefs(schema, "../");
+            const schemaStr = JSON.stringify(schema, null, 4);
+            await fs.promises.writeFile(`schema/definitions/${schema.$id}.json`, schemaStr);
+            definitionsMap[schema.$id] = schema;
+        }
     }
 
-    // single combined schema
-    let unionSchema = Type.Union(unionSchemas, {
-        definitions: definitionsMap,
-    });
-
-    unionSchema = JSON.parse(JSON.stringify(unionSchema, null, 4).replace(/"\$ref":\s*"([^"]+)"/g, `"$ref": "#/definitions/$1"`));
-
-    // schema meta
     const schemaMeta: SchemaMeta = {
         actors: {
             server: {
@@ -187,36 +189,47 @@ export async function generateJsonSchemas() {
         },
         serviceIds: {},
     };
-    let compiledSchema: any = {};
-    for (const serviceId in fullSchemaProps) {
-        compiledSchema[serviceId] = {};
-        schemaMeta.serviceIds[serviceId] = Object.keys(fullSchemaProps[serviceId]);
-        const serviceSchema = fullSchemaProps[serviceId];
-        for (const endpointId in serviceSchema) {
-            const endpointSchema = serviceSchema[endpointId];
-            const endpointConfig = individualSchemas[serviceId][endpointId];
 
-            if ("request" in endpointSchema && "response" in endpointSchema) {
-                schemaMeta.actors[endpointConfig.source].request.send.push(`${serviceId}/${endpointId}`);
-                schemaMeta.actors[endpointConfig.target].request.receive.push(`${serviceId}/${endpointId}`);
-                schemaMeta.actors[endpointConfig.source].response.receive.push(`${serviceId}/${endpointId}`);
-                schemaMeta.actors[endpointConfig.target].response.send.push(`${serviceId}/${endpointId}`);
-            } else if ("event" in endpointSchema) {
-                schemaMeta.actors[endpointConfig.source].event.send.push(`${serviceId}/${endpointId}`);
-                schemaMeta.actors[endpointConfig.target].event.receive.push(`${serviceId}/${endpointId}`);
-            } else {
-                throw new Error(`Endpoint ${serviceId}/${endpointId} has an invalid schema`);
-            }
+    const individualSchemas: TSchema[] = [];
 
-            const compiledEndpoint = Type.Object(endpointSchema, {
-                description: individualSchemas[serviceId][endpointId].description,
-            });
-            compiledSchema[serviceId][endpointId] = compiledEndpoint;
+    objectKeys(commandConfigs).forEach((commandId) => {
+        const commandConfig = commandConfigs[commandId];
+        const [serviceId, endpointId] = commandId.split("/") as [string, string];
+
+        if ("request" in commandConfig.config && "response" in commandConfig.config) {
+            schemaMeta.actors[commandConfig.config.source].request.send.push(commandConfig.commandId);
+            schemaMeta.actors[commandConfig.config.target].request.receive.push(commandConfig.commandId);
+            schemaMeta.actors[commandConfig.config.source].response.receive.push(commandConfig.commandId);
+            schemaMeta.actors[commandConfig.config.target].response.send.push(commandConfig.commandId);
+        } else if ("event" in commandConfig.config) {
+            schemaMeta.actors[commandConfig.config.source].event.send.push(commandConfig.commandId);
+            schemaMeta.actors[commandConfig.config.target].event.receive.push(commandConfig.commandId);
+        } else {
+            throw new Error(`Endpoint ${commandConfig.commandId} has an invalid schema`);
         }
-        compiledSchema[serviceId] = Type.Object(compiledSchema[serviceId]);
+
+        if (!schemaMeta.serviceIds[serviceId]) {
+            schemaMeta.serviceIds[serviceId] = [endpointId];
+        } else {
+            schemaMeta.serviceIds[serviceId].push(endpointId);
+        }
+
+        individualSchemas.push(commandConfig.schema);
+    });
+
+    const compiledSchema = Type.Union(individualSchemas, { definitions: definitionsMap });
+
+    return { commandConfigs, compiledSchema, schemaMeta };
+}
+
+function replaceRefs(schema: TSchema, prefix: string) {
+    for (const key in schema) {
+        if (typeof schema[key] === "object") {
+            replaceRefs(schema[key] as TSchema, prefix);
+        }
+
+        if (key === "$ref") {
+            schema.$ref = `${prefix}definitions/${schema.$ref}.json`;
+        }
     }
-
-    compiledSchema = Type.Object(compiledSchema);
-
-    return { individualSchemas, compiledSchema, unionSchema, schemaMeta };
 }

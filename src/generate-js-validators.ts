@@ -7,17 +7,10 @@ import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import { titleCase } from "jaz-ts-utils";
 
-import * as types from "@/schema/definitions";
-
-const schemaArray: TSchema[] = [];
-const schemaMap: Record<string, string> = {};
-
-for (const key in types) {
-    schemaArray.push(types[key as keyof typeof types]);
-    schemaMap[key] = key;
-}
-
 export async function generateValidators(schemas: TSchema) {
+    const schemaArray: TSchema[] = [];
+    const schemaMap: Record<string, string> = {};
+
     for (const serviceId in schemas.properties) {
         for (const endpointId in schemas.properties[serviceId].properties) {
             for (const commandType in schemas.properties[serviceId].properties[endpointId].properties) {

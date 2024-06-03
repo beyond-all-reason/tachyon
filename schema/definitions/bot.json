@@ -1,48 +1,33 @@
 {
     "$id": "bot",
-    "allOf": [
-        {
-            "$ref": "battleContender"
+    "type": "object",
+    "properties": {
+        "hostUserId": {
+            "format": "uuid",
+            "description": "UserId of the player hosting this AI",
+            "type": "string"
         },
-        {
+        "name": {
+            "type": "string"
+        },
+        "aiShortName": {
+            "type": "string"
+        },
+        "aiVersion": {
+            "type": "string"
+        },
+        "customOptions": {
             "type": "object",
-            "properties": {
-                "isSpectator": {
-                    "const": false,
-                    "type": "boolean"
-                },
-                "isBot": {
-                    "const": true,
-                    "type": "boolean"
-                },
-                "ownerId": {
-                    "type": "string"
-                },
-                "aiShortName": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "aiOptions": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {}
-                    }
-                },
-                "faction": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "isSpectator",
-                "isBot",
-                "ownerId",
-                "aiShortName",
-                "name",
-                "aiOptions",
-                "faction"
-            ]
+            "patternProperties": {
+                "^(.*)$": {}
+            }
         }
+    },
+    "required": [
+        "hostUserId",
+        "name",
+        "aiShortName",
+        "aiVersion",
+        "customOptions"
     ]
 }

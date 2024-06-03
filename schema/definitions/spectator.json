@@ -1,0 +1,25 @@
+{
+    "$id": "spectator",
+    "type": "object",
+    "properties": {
+        "userId": {
+            "$ref": "../definitions/userId.json"
+        },
+        "name": {
+            "description": "Name of the player, must be unique just like userId",
+            "type": "string"
+        },
+        "rank": {
+            "type": "integer"
+        },
+        "countryCode": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "userId",
+        "name",
+        "rank",
+        "countryCode"
+    ]
+}

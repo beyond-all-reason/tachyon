@@ -1,0 +1,117 @@
+{
+    "$id": "autohost/start/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/start",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "type": "string"
+                },
+                "engineVersion": {
+                    "pattern": "^[0-9a-zA-Z .+-]+$",
+                    "type": "string"
+                },
+                "gameName": {
+                    "type": "string"
+                },
+                "mapName": {
+                    "type": "string"
+                },
+                "gameArchiveHash": {
+                    "pattern": "^[a-fA-F0-9]{128}$",
+                    "type": "string"
+                },
+                "mapArchiveHash": {
+                    "pattern": "^[a-fA-F0-9]{128}$",
+                    "type": "string"
+                },
+                "startDelay": {
+                    "type": "integer"
+                },
+                "startPosType": {
+                    "$ref": "../../definitions/startPosType.json"
+                },
+                "allyTeams": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../definitions/allyTeam.json"
+                    }
+                },
+                "spectators": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../definitions/spectator.json"
+                    }
+                },
+                "mapOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "gameOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "restrictions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "unitId": {
+                                "type": "string"
+                            },
+                            "limit": {
+                                "minimum": 0,
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "unitId",
+                            "limit"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "battleId",
+                "engineVersion",
+                "gameName",
+                "mapName",
+                "gameArchiveHash",
+                "mapArchiveHash",
+                "startDelay",
+                "startPosType",
+                "allyTeams",
+                "spectators"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

@@ -1,5 +1,5 @@
 {
-    "$id": "autohost.status.event",
+    "$id": "autohost/status/event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -20,9 +20,11 @@
             "type": "object",
             "properties": {
                 "maxBattles": {
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "currentBattles": {
+                    "minimum": 0,
                     "type": "integer"
                 }
             },

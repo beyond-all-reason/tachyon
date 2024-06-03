@@ -1,20 +1,19 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { TObject, TSchema, TUnion } from "@sinclair/typebox";
 import { build } from "tsup";
 
 import { generateValidators as generateJsValidators } from "@/generate-js-validators.js";
-import { SchemaMeta } from "@/generate-json-schemas";
+import { TachyonConfig } from "@/generate-json-schemas";
 import { generateTSDefs } from "@/generate-ts-defs";
 
 // eslint-disable-next-line no-restricted-imports
 import packageJson from "../package.json";
 
-export async function generateJs(compiledSchema: TObject, unionSchema: TUnion<TSchema[]>, schema: SchemaMeta) {
+export async function generateJs(tachyonConfig: TachyonConfig) {
     const meta = {
         version: packageJson.version,
-        schema,
+        schema: tachyonConfig.schemaMeta,
     };
 
     const tempFilePath = path.join("dist", "temp.ts");
@@ -32,10 +31,10 @@ export async function generateJs(compiledSchema: TObject, unionSchema: TUnion<TS
 
     await fs.promises.rm(tempFilePath, { force: true });
 
-    await generateJsValidators(compiledSchema);
+    await generateJsValidators(tachyonConfig.compiledSchema);
 
     process.stdout.write("Generating TS Defs...");
-    await generateTSDefs(unionSchema);
+    await generateTSDefs(tachyonConfig.compiledSchema);
     process.stdout.write("✔️\n");
 }
 

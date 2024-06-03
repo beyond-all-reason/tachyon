@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking.found.event",
+    "$id": "matchmaking/found/event",
     "scopes": [
         "tachyon.lobby"
     ],

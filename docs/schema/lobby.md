@@ -1237,6 +1237,7 @@ Sent when the client successfully joins a lobby. Can also be sent at any time by
 
 #### TypeScript Definition
 ```ts
+export type StartPosType = 0 | 1 | 2;
 export type UnixTime = number | null;
 export type Bot = BattleContender & {
     isSpectator: false;
@@ -1278,7 +1279,7 @@ export interface Battle {
     engine: string;
     game: string;
     map: string;
-    startPosType: 0 | 1 | 2;
+    startPosType: StartPosType;
     startAreas: {
         [k: string]: Rect;
     };
@@ -1999,6 +2000,7 @@ export type CustomBattle = Battle & {
         maxRating: number | null;
     };
 };
+export type StartPosType = 0 | 1 | 2;
 export type UnixTime = number | null;
 export type Bot = BattleContender & {
     isSpectator: false;
@@ -2043,7 +2045,7 @@ export interface Battle {
     engine: string;
     game: string;
     map: string;
-    startPosType: 0 | 1 | 2;
+    startPosType: StartPosType;
     startAreas: {
         [k: string]: Rect;
     };

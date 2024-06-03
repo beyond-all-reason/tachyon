@@ -1,5 +1,5 @@
 {
-    "$id": "matchmaking.cancel.response",
+    "$id": "matchmaking/cancel/response",
     "scopes": [
         "tachyon.lobby"
     ],

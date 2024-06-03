@@ -1,0 +1,21 @@
+{
+    "$id": "player",
+    "allOf": [
+        {
+            "$ref": "../definitions/spectator.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "customOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}

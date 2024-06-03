@@ -1,0 +1,49 @@
+{
+    "$id": "battle/start/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "battle/start",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "ip": {
+                    "type": "string"
+                },
+                "port": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "username",
+                "password",
+                "ip",
+                "port"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

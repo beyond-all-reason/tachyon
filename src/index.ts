@@ -1,7 +1,7 @@
 import fs from "fs";
 
-import { generateDocs } from "@/generate-docs.js";
-import { generateJs } from "@/generate-js.js";
+import { generateDocs } from "@/generate-docs";
+import { generateJs } from "@/generate-js";
 import { generateJsonSchemas } from "@/generate-json-schemas.js";
 
 const clean = false; // enabling this can cause intellisense errors when developing with linked npm modules because of caching
@@ -15,12 +15,12 @@ const clean = false; // enabling this can cause intellisense errors when develop
     }
 
     process.stdout.write("Generating JSONSchemas...");
-    const { individualSchemas, compiledSchema, unionSchema, schemaMeta } = await generateJsonSchemas();
+    const tachyonConfig = await generateJsonSchemas();
     process.stdout.write("✔️\n");
 
-    await generateJs(compiledSchema, unionSchema, schemaMeta);
+    await generateJs(tachyonConfig);
 
     process.stdout.write("Generating Docs...");
-    await generateDocs(individualSchemas, unionSchema, compiledSchema);
+    await generateDocs(tachyonConfig);
     process.stdout.write("✔️\n");
 })();

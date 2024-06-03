@@ -2,7 +2,7 @@
     "$id": "privateUser",
     "allOf": [
         {
-            "$ref": "user"
+            "$ref": "../definitions/user.json"
         },
         {
             "type": "object",
