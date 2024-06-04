@@ -33,6 +33,10 @@ Tachyon uses [OAuth 2](https://oauth.net/2/) for authenticating and authorizing 
 
 [The full auth process is detailed here.](docs/authorization.md)
 
+## Connection
+
+See [connection](docs/connection.md) for details on how to establish the WebSocket connection to the server.
+
 ## Message Format
 
 JSON messages in this protocol are referred to as "commands".
