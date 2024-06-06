@@ -13,7 +13,7 @@ Ask the server to terminate the connection.
 - Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
-- Requires Role: `tachyon.lobby`
+- Required Scopes: `tachyon.lobby`
 
 ### Request
 
@@ -22,78 +22,7 @@ Ask the server to terminate the connection.
 
 ```json
 {
-    "$id": "system.disconnect.request",
-    "scopes": [
-        "tachyon.lobby"
-    ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "system/disconnect",
-            "type": "string"
-        },
-        "data": {
-            "type": "object",
-            "properties": {
-                "reason": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "reason"
-            ]
-        }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
-}
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "commodo Lorem",
-    "commandId": "system/disconnect",
-    "data": {
-        "reason": "commodo Lorem"
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface SystemDisconnectRequest {
-    type: "request";
-    messageId: string;
-    commandId: "system/disconnect";
-    data?: {
-        reason: string;
-    };
-}
-```
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "system.disconnect.response",
+    "$id": "system/disconnect/response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -259,7 +188,225 @@ export interface SystemDisconnectRequest {
 ```json
 {
     "type": "response",
-    "messageId": "ut Lorem",
+    "messageId": "exercitation",
+    "commandId": "system/disconnect",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type SystemDisconnectResponse =
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/disconnect";
+          status: "success";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/disconnect";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/disconnect";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/disconnect";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/disconnect";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "system/disconnect/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/disconnect",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "Ut velit",
     "commandId": "system/disconnect",
     "status": "success"
 }
@@ -286,7 +433,7 @@ Get server stats such as user count.
 - Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
-- Requires Role: `tachyon.lobby`
+- Required Scopes: `tachyon.lobby`
 
 ### Request
 
@@ -295,61 +442,7 @@ Get server stats such as user count.
 
 ```json
 {
-    "$id": "system.serverStats.request",
-    "scopes": [
-        "tachyon.lobby"
-    ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "system/serverStats",
-            "type": "string"
-        }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
-}
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "occaecat Lorem in",
-    "commandId": "system/serverStats"
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface SystemServerStatsRequest {
-    type: "request";
-    messageId: string;
-    commandId: "system/serverStats";
-}
-```
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "$id": "system.serverStats.response",
+    "$id": "system/serverStats/response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -527,11 +620,245 @@ export interface SystemServerStatsRequest {
 ```json
 {
     "type": "response",
-    "messageId": "pariatur Lorem reprehenderit",
+    "messageId": "Ut in",
+    "commandId": "system/serverStats",
+    "status": "failed",
+    "reason": "internal_error"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type SystemServerStatsResponse =
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/serverStats";
+          status: "success";
+          data: {
+              userCount: number;
+          };
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/serverStats";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/serverStats";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/serverStats";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "system/serverStats";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "system/serverStats/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "userCount": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "userCount"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "system/serverStats",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "aliqua in",
     "commandId": "system/serverStats",
     "status": "success",
     "data": {
-        "userCount": -18000000
+        "userCount": -56000000
     }
 }
 ```

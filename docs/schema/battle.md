@@ -9,64 +9,216 @@
 
 When a user client receives this response it should launch the game (spring.exe) with the start script.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **User**
-- Requires Role: `tachyon.lobby`
+- Required Scopes: `tachyon.lobby`
 
-### Event
+### Request
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "$id": "battle.start.event",
+    "$id": "battle/start/response",
     "scopes": [
         "tachyon.lobby"
     ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "battle/start",
-            "type": "string"
-        },
-        "data": {
+    "anyOf": [
+        {
             "type": "object",
             "properties": {
-                "username": {
+                "type": {
+                    "const": "response",
                     "type": "string"
                 },
-                "password": {
+                "messageId": {
                     "type": "string"
                 },
-                "ip": {
+                "commandId": {
+                    "const": "battle/start",
                     "type": "string"
                 },
-                "port": {
-                    "type": "number"
+                "status": {
+                    "const": "success",
+                    "type": "string"
                 }
             },
             "required": [
-                "username",
-                "password",
-                "ip",
-                "port"
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "game_crashed",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "error"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
             ]
         }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
     ]
 }
 ```
@@ -77,30 +229,293 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ```json
 {
-    "type": "event",
+    "type": "response",
     "messageId": "quis",
     "commandId": "battle/start",
-    "data": {
-        "username": "quis",
-        "password": "quis",
-        "ip": "quis",
-        "port": -92000000
-    }
+    "status": "success"
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export interface BattleStartEvent {
-    type: "event";
-    messageId: string;
-    commandId: "battle/start";
-    data: {
-        username: string;
-        password: string;
-        ip: string;
-        port: number;
-    };
+export type BattleStartResponse =
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "battle/start";
+          status: "success";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "battle/start";
+          status: "failed";
+          reason: "game_crashed";
+          data: {
+              error: string;
+          };
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "battle/start";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "battle/start";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "battle/start";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "battle/start";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$id": "battle/start/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "game_crashed",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "error"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "battle/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
 }
 ```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "Ut",
+    "commandId": "battle/start",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface BattleStartResponse {
+    type: "response";
+    messageId: string;
+    commandId: "battle/start";
+    status: "success";
+}
+```
+Possible Failed Reasons: `game_crashed`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+

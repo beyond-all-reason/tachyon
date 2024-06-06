@@ -7,7 +7,11 @@ import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import { titleCase } from "jaz-ts-utils";
 
-export async function generateValidators(schemas: TSchema) {
+import { TachyonConfig } from "@/generate-json-schemas";
+
+export async function generateValidators(tachyonConfig: TachyonConfig) {
+    const schemas = tachyonConfig.compiledSchema;
+
     const schemaArray: TSchema[] = [];
     const schemaMap: Record<string, string> = {};
 

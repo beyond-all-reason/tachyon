@@ -1,12 +1,13 @@
-import { TSchema, TUnion } from "@sinclair/typebox";
 import fs from "fs";
 import { compile } from "json-schema-to-typescript";
 
-export async function generateTSDefs(schema: TUnion<TSchema[]>) {
+import { TachyonConfig } from "@/generate-json-schemas";
+
+export async function generateTSDefs(tachyonConfig: TachyonConfig) {
     let typings = "\n";
 
     // generate d.ts
-    typings += await compile(schema, "TachyonCommand", {
+    typings += await compile(tachyonConfig.compiledSchema, "TachyonCommand", {
         additionalProperties: false,
         bannerComment: "",
         style: {

@@ -12,7 +12,7 @@ Sent by the server to inform the client when subscribed users get updated in som
 - Endpoint Type: **Event**
 - Source: **Server**
 - Target: **User**
-- Requires Role: `tachyon.lobby`
+- Required Scopes: `tachyon.lobby`
 
 ### Event
 
@@ -21,7 +21,7 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 ```json
 {
-    "$id": "user.updated.event",
+    "$id": "user/updated/event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -44,7 +44,105 @@ Sent by the server to inform the client when subscribed users get updated in som
                 "users": {
                     "type": "array",
                     "items": {
-                        "$ref": "privateUser"
+                        "allOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "format": "uuid",
+                                        "examples": [
+                                            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+                                        ],
+                                        "type": "string"
+                                    },
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "displayName": {
+                                        "type": "string"
+                                    },
+                                    "clanId": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "partyId": {
+                                        "anyOf": [
+                                            {
+                                                "type": "string"
+                                            },
+                                            {
+                                                "type": "null"
+                                            }
+                                        ]
+                                    },
+                                    "scopes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "countryCode": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "anyOf": [
+                                            {
+                                                "const": "offline",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "menu",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "playing",
+                                                "type": "string"
+                                            },
+                                            {
+                                                "const": "lobby",
+                                                "type": "string"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "friendIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "outgoingFriendRequestIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "incomingFriendRequestIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "ignoreIds": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        ],
+                        "type": "object"
                     }
                 }
             },
@@ -69,119 +167,26 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "fugiat Lorem irure",
+    "messageId": "magna commodo",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "userId": "fugiat Lorem irure",
-                "username": "fugiat Lorem irure",
-                "displayName": "fugiat Lorem irure",
-                "clanId": "fugiat Lorem irure",
-                "partyId": "fugiat Lorem irure",
-                "scopes": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "countryCode": "fugiat Lorem irure",
-                "status": "menu",
-                "battleStatus": {
-                    "battleId": "fugiat Lorem irure"
-                },
+                "magnac": -54000000,
+                "clanId": "magna commodo",
+                "partyId": "magna commodo",
                 "friendIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "outgoingFriendRequestIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "incomingFriendRequestIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "ignoreIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
+                    "magna commodo",
+                    "magna commodo"
                 ]
             },
             {
-                "userId": "fugiat Lorem irure",
-                "username": "fugiat Lorem irure",
-                "displayName": "fugiat Lorem irure",
-                "clanId": "fugiat Lorem irure",
-                "partyId": "fugiat Lorem irure",
-                "scopes": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "countryCode": "fugiat Lorem irure",
-                "status": "menu",
-                "battleStatus": {
-                    "battleId": "fugiat Lorem irure"
-                },
+                "magnac": -54000000,
+                "clanId": "magna commodo",
+                "partyId": "magna commodo",
                 "friendIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "outgoingFriendRequestIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "incomingFriendRequestIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "ignoreIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ]
-            },
-            {
-                "userId": "fugiat Lorem irure",
-                "username": "fugiat Lorem irure",
-                "displayName": "fugiat Lorem irure",
-                "clanId": "fugiat Lorem irure",
-                "partyId": "fugiat Lorem irure",
-                "scopes": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "countryCode": "fugiat Lorem irure",
-                "status": "menu",
-                "battleStatus": {
-                    "battleId": "fugiat Lorem irure"
-                },
-                "friendIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "outgoingFriendRequestIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "incomingFriendRequestIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
-                ],
-                "ignoreIds": [
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure",
-                    "fugiat Lorem irure"
+                    "magna commodo",
+                    "magna commodo"
                 ]
             }
         ]
@@ -192,57 +197,26 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 #### TypeScript Definition
 ```ts
-export type PrivateUser = User & {
-    friendIds: string[];
-    outgoingFriendRequestIds: string[];
-    incomingFriendRequestIds: string[];
-    ignoreIds: string[];
-};
-export type UserStatus = "offline" | "menu" | "playing" | "lobby";
-export type BattleStatus =
-    | ({
-          battleId: string;
-      } & (BattlePlayer | BattleSpectator))
-    | null;
-export type BattlePlayer = BattleContender & {
-    isSpectator: false;
-    isBot: false;
-    ready: boolean;
-    sync: {
-        engine: number;
-        game: number;
-        map: number;
-    };
-};
-
 export interface UserUpdatedEvent {
     type: "event";
     messageId: string;
     commandId: "user/updated";
     data: {
-        users: PrivateUser[];
+        users: ({
+            userId?: string;
+            username?: string;
+            displayName?: string;
+            clanId?: string | null;
+            partyId?: string | null;
+            scopes?: string[];
+            countryCode?: string;
+            status?: "offline" | "menu" | "playing" | "lobby";
+        } & {
+            friendIds?: string[];
+            outgoingFriendRequestIds?: string[];
+            incomingFriendRequestIds?: string[];
+            ignoreIds?: string[];
+        })[];
     };
-}
-export interface User {
-    userId: string;
-    username: string;
-    displayName: string;
-    clanId: string | null;
-    partyId: string | null;
-    scopes: string[];
-    countryCode?: string;
-    status: UserStatus;
-    battleStatus: BattleStatus;
-}
-export interface BattleContender {
-    playerId: number;
-    teamId: number;
-    color: string;
-    bonus: number;
-    inGame: boolean;
-}
-export interface BattleSpectator {
-    isSpectator: true;
-    isBot: false;
 }
 ```

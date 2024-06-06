@@ -57,7 +57,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 - Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
-- Requires Role: `tachyon.lobby`
+- Required Scopes: `tachyon.lobby`
 
 ### Request
 
@@ -66,99 +66,254 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
-    "$id": "autohost.start.request",
+    "$id": "autohost/start/response",
     "scopes": [
         "tachyon.lobby"
     ],
-    "type": "object",
-    "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/start",
-            "type": "string"
-        },
-        "data": {
+    "anyOf": [
+        {
             "type": "object",
             "properties": {
-                "battleId": {
+                "type": {
+                    "const": "response",
                     "type": "string"
                 },
-                "engineVersion": {
-                    "pattern": "^[0-9a-zA-Z .+-]+$",
+                "messageId": {
                     "type": "string"
                 },
-                "gameName": {
+                "commandId": {
+                    "const": "autohost/start",
                     "type": "string"
                 },
-                "mapName": {
+                "status": {
+                    "const": "success",
                     "type": "string"
-                },
-                "gameArchiveHash": {
-                    "pattern": "^[a-fA-F0-9]{128}$",
-                    "type": "string"
-                },
-                "mapArchiveHash": {
-                    "pattern": "^[a-fA-F0-9]{128}$",
-                    "type": "string"
-                },
-                "mapOptions": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "gameOptions": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
-                },
-                "startDelay": {
-                    "type": "integer"
-                },
-                "startPosType": {
-                    "$ref": "startPosType"
-                },
-                "allyTeams": {
-                    "type": "array",
-                    "items": {
-                        "type": "array",
-                        "items": {
-                            "type": "integer"
-                        }
-                    }
                 }
             },
             "required": [
-                "battleId",
-                "engineVersion",
-                "gameName",
-                "mapName",
-                "gameArchiveHash",
-                "mapArchiveHash",
-                "mapOptions",
-                "gameOptions",
-                "startDelay",
-                "startPosType",
-                "allyTeams"
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_script",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_already_running",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_failed_to_start",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
             ]
         }
-    },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
     ]
 }
 ```
@@ -169,60 +324,72 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
-    "type": "request",
+    "type": "response",
     "messageId": "ipsum",
     "commandId": "autohost/start",
-    "data": {
-        "battleId": "ipsum",
-        "engineVersion": "0",
-        "gameName": "ipsum",
-        "mapName": "ipsum",
-        "gameArchiveHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "mapArchiveHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        "mapOptions": {
-            "": "ipsum"
-        },
-        "gameOptions": {
-            "": "ipsum"
-        },
-        "startDelay": -98000000,
-        "startPosType": 0,
-        "allyTeams": [
-            [
-                -98000000
-            ]
-        ]
-    }
+    "status": "success"
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type StartPosType = 0 | 1 | 2;
-
-export interface AutohostStartRequest {
-    type: "request";
-    messageId: string;
-    commandId: "autohost/start";
-    data: {
-        battleId: string;
-        engineVersion: string;
-        gameName: string;
-        mapName: string;
-        gameArchiveHash: string;
-        mapArchiveHash: string;
-        mapOptions: {
-            [k: string]: string;
-        };
-        gameOptions: {
-            [k: string]: string;
-        };
-        startDelay: number;
-        startPosType: StartPosType;
-        allyTeams: number[][];
-    };
-}
+export type AutohostStartResponse =
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "success";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "invalid_script";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "server_already_running";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "server_failed_to_start";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "internal_error";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "unauthorized";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "invalid_request";
+      }
+    | {
+          type: "response";
+          messageId: string;
+          commandId: "autohost/start";
+          status: "failed";
+          reason: "command_unimplemented";
+      };
 ```
 ### Response
 
@@ -231,7 +398,7 @@ export interface AutohostStartRequest {
 
 ```json
 {
-    "$id": "autohost.start.response",
+    "$id": "autohost/start/response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -517,7 +684,7 @@ This event should be sent to the server on connection and whenever any of the st
 - Endpoint Type: **Event**
 - Source: **Autohost**
 - Target: **Server**
-- Requires Role: `tachyon.lobby`
+- Required Scopes: `tachyon.lobby`
 
 ### Event
 
@@ -526,7 +693,7 @@ This event should be sent to the server on connection and whenever any of the st
 
 ```json
 {
-    "$id": "autohost.status.event",
+    "$id": "autohost/status/event",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -547,9 +714,11 @@ This event should be sent to the server on connection and whenever any of the st
             "type": "object",
             "properties": {
                 "maxBattles": {
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "currentBattles": {
+                    "minimum": 0,
                     "type": "integer"
                 }
             },
@@ -578,8 +747,8 @@ This event should be sent to the server on connection and whenever any of the st
     "messageId": "ea",
     "commandId": "autohost/status",
     "data": {
-        "maxBattles": -94000000,
-        "currentBattles": -94000000
+        "maxBattles": 3000000,
+        "currentBattles": 3000000
     }
 }
 ```

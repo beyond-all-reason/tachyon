@@ -93,7 +93,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     $id: `${commandId}/request`,
                     scopes: schemaConfig.scopes,
                 });
-                replaceRefs(schema, "../../");
+                replaceRefs(schema, "../../definitions/", ".json");
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, schemaStr);
                 commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "request" };
@@ -124,7 +124,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                         scopes: schemaConfig.scopes,
                     }
                 );
-                replaceRefs(schema, "../../");
+                replaceRefs(schema, "../../definitions/", ".json");
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, schemaStr);
                 commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "response" };
@@ -143,7 +143,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     $id: `${commandId}/event`,
                     scopes: schemaConfig.scopes,
                 });
-                replaceRefs(schema, "../../");
+                replaceRefs(schema, "../../definitions/", ".json");
                 const schemaStr = JSON.stringify(schema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/event.json`, schemaStr);
                 commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "event" };
@@ -162,7 +162,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
             if (!schema.$id) {
                 throw new Error(`Definition schema does not have a $id field: ${definitionFile}`);
             }
-            replaceRefs(schema, "../");
+            replaceRefs(schema, "../definitions/", ".json");
             const schemaStr = JSON.stringify(schema, null, 4);
             await fs.promises.writeFile(`schema/definitions/${schema.$id}.json`, schemaStr);
             definitionsMap[schema.$id] = schema;
@@ -217,19 +217,19 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         individualSchemas.push(commandConfig.schema);
     });
 
-    const compiledSchema = Type.Union(individualSchemas, { definitions: definitionsMap });
+    const compiledSchema = Type.Union(individualSchemas);
 
     return { commandConfigs, compiledSchema, schemaMeta };
 }
 
-function replaceRefs(schema: TSchema, prefix: string) {
+function replaceRefs(schema: TSchema, prefix: string, suffix: string) {
     for (const key in schema) {
         if (typeof schema[key] === "object") {
-            replaceRefs(schema[key] as TSchema, prefix);
+            replaceRefs(schema[key] as TSchema, prefix, suffix);
         }
 
         if (key === "$ref") {
-            schema.$ref = `${prefix}definitions/${schema.$ref}.json`;
+            schema.$ref = `${prefix}${schema.$ref}${suffix}`;
         }
     }
 }

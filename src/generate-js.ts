@@ -31,10 +31,10 @@ export async function generateJs(tachyonConfig: TachyonConfig) {
 
     await fs.promises.rm(tempFilePath, { force: true });
 
-    await generateJsValidators(tachyonConfig.compiledSchema);
+    await generateJsValidators(tachyonConfig);
 
     process.stdout.write("Generating TS Defs...");
-    await generateTSDefs(tachyonConfig.compiledSchema);
+    await generateTSDefs(tachyonConfig);
     process.stdout.write("✔️\n");
 }
 
