@@ -6,6 +6,8 @@ import { TachyonConfig } from "@/generate-json-schemas";
 export async function generateTSDefs(tachyonConfig: TachyonConfig) {
     let typings = "\n";
 
+    //const compiledSchema = JSON.parse(JSON.stringify(tachyonConfig.compiledSchema).replaceAll("../../definitions", "./schema/definitions"));
+
     // generate d.ts
     typings += await compile(tachyonConfig.compiledSchema, "TachyonCommand", {
         additionalProperties: false,

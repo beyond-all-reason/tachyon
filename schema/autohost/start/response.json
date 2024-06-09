@@ -1,4 +1,5 @@
 {
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/start/response",
     "scopes": [
         "tachyon.lobby"
@@ -21,13 +22,43 @@
                 "status": {
                     "const": "success",
                     "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "ips": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "format": "ipv4",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "format": "ipv6",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "port": {
+                            "minimum": 1024,
+                            "maximum": 65535,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "ips",
+                        "port"
+                    ]
                 }
             },
             "required": [
                 "type",
                 "messageId",
                 "commandId",
-                "status"
+                "status",
+                "data"
             ]
         },
         {

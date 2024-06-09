@@ -46,15 +46,24 @@ Autohosts used for matchmaking should use the slaved mode as no pregame communic
 Autohosts used for custom games should use the dedicated mode as lots of pregame communication can take place.
 
 ---
+- [addPlayer](#addplayer)
+- [kickPlayer](#kickplayer)
+- [kill](#kill)
+- [mutePlayer](#muteplayer)
+- [sendCommand](#sendcommand)
+- [sendMessage](#sendmessage)
+- [specPlayers](#specplayers)
 - [start](#start)
 - [status](#status)
+- [subscribeUpdates](#subscribeupdates)
+- [update](#update)
 ---
 
-## Start
+## AddPlayer
 
-Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.
+Request to kill a battle.
 
-- Endpoint Type: **Request** -> **Response**
+- Endpoint Type: **Event**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -66,254 +75,54 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
-    "$id": "autohost/start/response",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/addPlayer/request",
     "scopes": [
         "tachyon.lobby"
     ],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_script",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "server_already_running",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "autohost/addPlayer",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
+                "battleId": {
+                    "format": "uuid",
                     "type": "string"
                 },
-                "messageId": {
+                "userId": {
+                    "$ref": "../../definitions/userId.json"
+                },
+                "name": {
                     "type": "string"
                 },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "server_failed_to_start",
+                "password": {
                     "type": "string"
                 }
             },
             "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "battleId",
+                "userId",
+                "name",
+                "password"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
@@ -324,72 +133,34 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
-    "type": "response",
+    "type": "request",
     "messageId": "ipsum",
-    "commandId": "autohost/start",
-    "status": "success"
+    "commandId": "autohost/addPlayer",
+    "data": {
+        "battleId": "00000000-0000-0000-0000-000000000000",
+        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+        "name": "ipsum",
+        "password": "ipsum"
+    }
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type AutohostStartResponse =
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "success";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "invalid_script";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "server_already_running";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "server_failed_to_start";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "autohost/start";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+export type UserId = string;
+
+export interface AutohostAddPlayerRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/addPlayer";
+    data: {
+        battleId: string;
+        userId: UserId;
+        name: string;
+        password: string;
+    };
+}
 ```
 ### Response
 
@@ -398,7 +169,8 @@ export type AutohostStartResponse =
 
 ```json
 {
-    "$id": "autohost/start/response",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/addPlayer/response",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -414,7 +186,7 @@ export type AutohostStartResponse =
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/start",
+                    "const": "autohost/addPlayer",
                     "type": "string"
                 },
                 "status": {
@@ -440,100 +212,7 @@ export type AutohostStartResponse =
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_script",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "server_already_running",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "server_failed_to_start",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
+                    "const": "autohost/addPlayer",
                     "type": "string"
                 },
                 "status": {
@@ -564,7 +243,7 @@ export type AutohostStartResponse =
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/start",
+                    "const": "autohost/addPlayer",
                     "type": "string"
                 },
                 "status": {
@@ -595,7 +274,7 @@ export type AutohostStartResponse =
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/start",
+                    "const": "autohost/addPlayer",
                     "type": "string"
                 },
                 "status": {
@@ -626,7 +305,7 @@ export type AutohostStartResponse =
                     "type": "string"
                 },
                 "commandId": {
-                    "const": "autohost/start",
+                    "const": "autohost/addPlayer",
                     "type": "string"
                 },
                 "status": {
@@ -658,8 +337,2341 @@ export type AutohostStartResponse =
 {
     "type": "response",
     "messageId": "fugiat",
-    "commandId": "autohost/start",
+    "commandId": "autohost/addPlayer",
     "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostAddPlayerResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/addPlayer";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## KickPlayer
+
+Kick a player from a battle.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/kickPlayer/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/kickPlayer",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "userId": {
+                    "$ref": "../../definitions/userId.json"
+                }
+            },
+            "required": [
+                "battleId",
+                "userId"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ea",
+    "commandId": "autohost/kickPlayer",
+    "data": {
+        "battleId": "00000000-0000-0000-0000-000000000000",
+        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface AutohostKickPlayerRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/kickPlayer";
+    data: {
+        battleId: string;
+        userId: UserId;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/kickPlayer/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kickPlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kickPlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kickPlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kickPlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kickPlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "quis",
+    "commandId": "autohost/kickPlayer",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostKickPlayerResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/kickPlayer";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## Kill
+
+Request to kill a battle.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/kill/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/kill",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "battleId"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "Ut",
+    "commandId": "autohost/kill",
+    "data": {
+        "battleId": "00000000-0000-0000-0000-000000000000"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostKillRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/kill";
+    data: {
+        battleId: string;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/kill/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kill",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kill",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kill",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kill",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/kill",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "dolore",
+    "commandId": "autohost/kill",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostKillResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/kill";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## MutePlayer
+
+Mute a player in a battle.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/mutePlayer/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/mutePlayer",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "userId": {
+                    "$ref": "../../definitions/userId.json"
+                }
+            },
+            "required": [
+                "battleId",
+                "userId"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "labore",
+    "commandId": "autohost/mutePlayer",
+    "data": {
+        "battleId": "11111111-1111-1111-1111-111111111111",
+        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface AutohostMutePlayerRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/mutePlayer";
+    data: {
+        battleId: string;
+        userId: UserId;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/mutePlayer/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/mutePlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/mutePlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/mutePlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/mutePlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/mutePlayer",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "incididunt",
+    "commandId": "autohost/mutePlayer",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostMutePlayerResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/mutePlayer";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## SendCommand
+
+Send a custom command for the autohost to execute.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/sendCommand/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/sendCommand",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "command": {
+                    "type": "string"
+                },
+                "arguments": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "required": [
+                "battleId",
+                "command"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "tempor",
+    "commandId": "autohost/sendCommand",
+    "data": {
+        "battleId": "11111111-1111-1111-1111-111111111111",
+        "command": "tempor"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSendCommandRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/sendCommand";
+    data: {
+        battleId: string;
+        command: string;
+        arguments?: string[];
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/sendCommand/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendCommand",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendCommand",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendCommand",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendCommand",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendCommand",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "eiusmod",
+    "commandId": "autohost/sendCommand",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSendCommandResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/sendCommand";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## SendMessage
+
+Send a message for the autohost to display to players.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/sendMessage/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/sendMessage",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "message": {
+                    "maxLength": 127,
+                    "type": "string"
+                }
+            },
+            "required": [
+                "battleId",
+                "message"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "do",
+    "commandId": "autohost/sendMessage",
+    "data": {
+        "battleId": "11111111-1111-1111-1111-111111111111",
+        "message": "do"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSendMessageRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/sendMessage";
+    data: {
+        battleId: string;
+        message: string;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/sendMessage/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendMessage",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendMessage",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendMessage",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendMessage",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/sendMessage",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "id",
+    "commandId": "autohost/sendMessage",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSendMessageResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/sendMessage";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## SpecPlayers
+
+Force players to become spectators in a battle.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/specPlayers/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/specPlayers",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../definitions/userId.json"
+                    }
+                }
+            },
+            "required": [
+                "battleId",
+                "userIds"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "sint",
+    "commandId": "autohost/specPlayers",
+    "data": {
+        "battleId": "22222222-2222-2222-2222-222222222222",
+        "userIds": [
+            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface AutohostSpecPlayersRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/specPlayers";
+    data: {
+        battleId: string;
+        userIds: UserId[];
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/specPlayers/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/specPlayers",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/specPlayers",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/specPlayers",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/specPlayers",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/specPlayers",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "nulla",
+    "commandId": "autohost/specPlayers",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSpecPlayersResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/specPlayers";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## Start
+
+Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/start/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/start",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "type": "string"
+                },
+                "engineVersion": {
+                    "pattern": "^[0-9a-zA-Z .+-]+$",
+                    "type": "string"
+                },
+                "gameName": {
+                    "type": "string"
+                },
+                "mapName": {
+                    "type": "string"
+                },
+                "gameArchiveHash": {
+                    "pattern": "^[a-fA-F0-9]{128}$",
+                    "type": "string"
+                },
+                "mapArchiveHash": {
+                    "pattern": "^[a-fA-F0-9]{128}$",
+                    "type": "string"
+                },
+                "startDelay": {
+                    "type": "integer"
+                },
+                "startPosType": {
+                    "$ref": "../../definitions/startPosType.json"
+                },
+                "allyTeams": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../definitions/allyTeam.json"
+                    }
+                },
+                "spectators": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "../../definitions/spectator.json"
+                    }
+                },
+                "mapOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "gameOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "restrictions": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "unitId": {
+                                "type": "string"
+                            },
+                            "limit": {
+                                "minimum": 0,
+                                "type": "integer"
+                            }
+                        },
+                        "required": [
+                            "unitId",
+                            "limit"
+                        ]
+                    }
+                }
+            },
+            "required": [
+                "battleId",
+                "engineVersion",
+                "gameName",
+                "mapName",
+                "gameArchiveHash",
+                "mapArchiveHash",
+                "startDelay",
+                "startPosType",
+                "allyTeams",
+                "spectators"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "dolor",
+    "commandId": "autohost/start",
+    "data": {
+        "battleId": "dolor",
+        "engineVersion": "99",
+        "gameName": "dolor",
+        "mapName": "dolor",
+        "gameArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "mapArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+        "startDelay": -70000000,
+        "startPosType": 0,
+        "allyTeams": [
+            {
+                "teams": [
+                    {
+                        "players": [
+                            {
+                                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                                "name": "dolor",
+                                "rank": -70000000,
+                                "countryCode": "dolor",
+                                "customOptions": {
+                                    ".": "dolor"
+                                }
+                            }
+                        ],
+                        "bots": [
+                            {
+                                "hostUserId": "22222222-2222-2222-2222-222222222222",
+                                "name": "dolor",
+                                "aiShortName": "dolor",
+                                "aiVersion": "dolor"
+                            }
+                        ],
+                        "incomeMultiplier": 15000000,
+                        "faction": "dolor",
+                        "color": {
+                            "r": 0.15,
+                            "g": 0.15,
+                            "b": 0.15
+                        }
+                    }
+                ],
+                "startBox": {
+                    "top": 30,
+                    "bottom": 30,
+                    "left": 30,
+                    "right": 30
+                }
+            }
+        ],
+        "spectators": [],
+        "gameOptions": {
+            ".": "dolor"
+        },
+        "restrictions": [
+            {
+                "unitId": "dolor",
+                "limit": 15000000
+            }
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type StartPosType = 0 | 1 | 2;
+export type Player = Spectator & {
+    customOptions?: {
+        [k: string]: string;
+    };
+};
+export type UserId = string;
+
+export interface AutohostStartRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/start";
+    data: {
+        battleId: string;
+        engineVersion: string;
+        gameName: string;
+        mapName: string;
+        gameArchiveHash: string;
+        mapArchiveHash: string;
+        startDelay: number;
+        startPosType: StartPosType;
+        allyTeams: AllyTeam[];
+        spectators: Spectator1[];
+        mapOptions?: {
+            [k: string]: string;
+        };
+        gameOptions?: {
+            [k: string]: string;
+        };
+        restrictions?: {
+            unitId: string;
+            limit: number;
+        }[];
+    };
+}
+export interface AllyTeam {
+    teams: Team[];
+    startBox: StartBox;
+    options?: {
+        [k: string]: string;
+    };
+}
+export interface Team {
+    players: Player[];
+    bots: Bot[];
+    advantage?: number;
+    incomeMultiplier?: number;
+    faction: string;
+    color: {
+        r: number;
+        g: number;
+        b: number;
+    };
+    startPos?: {
+        x: number;
+        y: number;
+    };
+    options?: {
+        [k: string]: string;
+    };
+}
+export interface Spectator {
+    userId: UserId;
+    name: string;
+    rank: number;
+    countryCode: string;
+}
+export interface Bot {
+    hostUserId: string;
+    name: string;
+    aiShortName: string;
+    aiVersion: string;
+    customOptions: {
+        [k: string]: unknown;
+    };
+}
+export interface StartBox {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+}
+export interface Spectator1 {
+    userId: UserId;
+    name: string;
+    rank: number;
+    countryCode: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/start/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                },
+                "data": {
+                    "type": "object",
+                    "properties": {
+                        "ips": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "format": "ipv4",
+                                        "type": "string"
+                                    },
+                                    {
+                                        "format": "ipv6",
+                                        "type": "string"
+                                    }
+                                ]
+                            }
+                        },
+                        "port": {
+                            "minimum": 1024,
+                            "maximum": 65535,
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "ips",
+                        "port"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "data"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_script",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_already_running",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "server_failed_to_start",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/start",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "aute",
+    "commandId": "autohost/start",
+    "status": "success",
+    "data": {
+        "ips": [
+            "40.40.40.40"
+        ],
+        "port": 11345
+    }
 }
 ```
 </details>
@@ -671,6 +2683,10 @@ export interface AutohostStartResponse {
     messageId: string;
     commandId: "autohost/start";
     status: "success";
+    data: {
+        ips: string[];
+        port: number;
+    };
 }
 ```
 Possible Failed Reasons: `invalid_script`, `server_already_running`, `server_failed_to_start`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -693,6 +2709,7 @@ This event should be sent to the server on connection and whenever any of the st
 
 ```json
 {
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/status/event",
     "scopes": [
         "tachyon.lobby"
@@ -744,11 +2761,11 @@ This event should be sent to the server on connection and whenever any of the st
 ```json
 {
     "type": "event",
-    "messageId": "ea",
+    "messageId": "nisi",
     "commandId": "autohost/status",
     "data": {
-        "maxBattles": 3000000,
-        "currentBattles": 3000000
+        "maxBattles": 17000000,
+        "currentBattles": 17000000
     }
 }
 ```
@@ -763,6 +2780,539 @@ export interface AutohostStatusEvent {
     data: {
         maxBattles: number;
         currentBattles: number;
+    };
+}
+```
+---
+
+## SubscribeUpdates
+
+Ask the autohost to send us updates about its battles.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/subscribeUpdates/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/subscribeUpdates",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "since": {
+                    "$ref": "../../definitions/unixTime.json"
+                }
+            },
+            "required": [
+                "since"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ullamco",
+    "commandId": "autohost/subscribeUpdates",
+    "data": {
+        "since": 1705432698
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UnixTime = number;
+
+export interface AutohostSubscribeUpdatesRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/subscribeUpdates";
+    data: {
+        since: UnixTime;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/subscribeUpdates/response",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "anyOf": [
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/subscribeUpdates",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "success",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/subscribeUpdates",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "internal_error",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/subscribeUpdates",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "unauthorized",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/subscribeUpdates",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "invalid_request",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "response",
+                    "type": "string"
+                },
+                "messageId": {
+                    "type": "string"
+                },
+                "commandId": {
+                    "const": "autohost/subscribeUpdates",
+                    "type": "string"
+                },
+                "status": {
+                    "const": "failed",
+                    "type": "string"
+                },
+                "reason": {
+                    "const": "command_unimplemented",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "messageId",
+                "commandId",
+                "status",
+                "reason"
+            ]
+        }
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "exercitation",
+    "commandId": "autohost/subscribeUpdates",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostSubscribeUpdatesResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/subscribeUpdates";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## Update
+
+Inform the server of battle updates.
+
+- Endpoint Type: **Event**
+- Source: **Autohost**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/update/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/update",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "time": {
+                    "$ref": "../../definitions/unixTime.json"
+                },
+                "update": {
+                    "anyOf": [
+                        {
+                            "description": "The battle has started.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "start",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        {
+                            "description": "The battle finished, generated once per every single player reporting who won.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "finished",
+                                    "type": "string"
+                                },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "winningAllyTeams": {
+                                    "minItems": 1,
+                                    "description": "Ally team IDs",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "userId",
+                                "winningAllyTeams"
+                            ]
+                        },
+                        {
+                            "description": "A message from the engine, e.g. some ip is trying to connect.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_message",
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "message"
+                            ]
+                        },
+                        {
+                            "description": "A warning from the engine.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_warning",
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "message"
+                            ]
+                        },
+                        {
+                            "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_quit",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        {
+                            "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_crash",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        {
+                            "description": "Player number in the game, can be useful for custom commands.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "player_joined",
+                                    "type": "string"
+                                },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "playerNumber": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "userId",
+                                "playerNumber"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "battleId",
+                "time",
+                "update"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "Ut velit",
+    "commandId": "autohost/update",
+    "data": {
+        "battleId": "33333333-3333-3333-3333-333333333333",
+        "time": 1705432698,
+        "update": {
+            "type": "finished",
+            "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+            "winningAllyTeams": [
+                -60000000,
+                -60000000
+            ]
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UnixTime = number;
+export type UserId = string;
+
+export interface AutohostUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "autohost/update";
+    data: {
+        battleId: string;
+        time: UnixTime;
+        update:
+            | {
+                  type: "start";
+              }
+            | {
+                  type: "finished";
+                  userId: UserId;
+                  winningAllyTeams: [number, ...number[]];
+              }
+            | {
+                  type: "engine_message";
+                  message: string;
+              }
+            | {
+                  type: "engine_warning";
+                  message: string;
+              }
+            | {
+                  type: "engine_quit";
+              }
+            | {
+                  type: "engine_crash";
+              }
+            | {
+                  type: "player_joined";
+                  userId: UserId;
+                  playerNumber: number;
+              };
     };
 }
 ```

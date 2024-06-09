@@ -1,0 +1,43 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/mutePlayer/request",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/mutePlayer",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "userId": {
+                    "$ref": "../../definitions/userId.json"
+                }
+            },
+            "required": [
+                "battleId",
+                "userId"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}

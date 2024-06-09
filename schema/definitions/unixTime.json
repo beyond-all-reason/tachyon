@@ -1,6 +1,6 @@
 {
     "$id": "unixTime",
-    "description": "Unix time",
+    "description": "Unix timestamp in microseconds",
     "examples": [
         1705432698
     ],

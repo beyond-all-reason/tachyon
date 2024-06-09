@@ -36,6 +36,10 @@ export default defineEndpoint({
     response: [
         {
             status: "success",
+            data: Type.Object({
+                ips: Type.Array(Type.Union([Type.String({ format: "ipv4" }), Type.String({ format: "ipv6" })])),
+                port: Type.Integer({ minimum: 1024, maximum: 65535 }),
+            }),
         },
         {
             status: "failed",

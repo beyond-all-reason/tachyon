@@ -20,12 +20,24 @@ type SchemaMeta = {
     serviceIds: Record<string, string[]>;
 };
 
-type CommandConfig = {
+export type CommandConfig = {
     commandId: `${string}/${string}`;
-    schema: TSchema;
     config: EndpointConfig;
-    type: "request" | "response" | "event";
-};
+} & (
+    | {
+          type: "requestResponse";
+          schema: {
+              request: TSchema;
+              response: TSchema;
+          };
+      }
+    | {
+          type: "event";
+          schema: {
+              event: TSchema;
+          };
+      }
+);
 
 const commandConfigs: TachyonConfig["commandConfigs"] = {};
 
@@ -89,18 +101,16 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 if (schemaConfig.request.data) {
                     props.data = schemaConfig.request.data;
                 }
-                const schema = Type.Object(props, {
+                const requestSchema = Type.Object(props, {
+                    $schema: "http://json-schema.org/draft-07/schema#",
                     $id: `${commandId}/request`,
                     scopes: schemaConfig.scopes,
                 });
-                replaceRefs(schema, "../../definitions/", ".json");
-                const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, schemaStr);
-                commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "request" };
-            }
+                replaceRefs(requestSchema, "../../definitions/", ".json");
+                const requestSchemaStr = JSON.stringify(requestSchema, null, 4);
+                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, requestSchemaStr);
 
-            if ("response" in schemaConfig && schemaConfig.response.length) {
-                const schema = Type.Union(
+                const responseSchema = Type.Union(
                     schemaConfig.response.map((schema) => {
                         const props: TProperties = {
                             type: Type.Literal("response"),
@@ -120,14 +130,21 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                         return Type.Object(props);
                     }),
                     {
+                        $schema: "http://json-schema.org/draft-07/schema#",
                         $id: `${commandId}/response`,
                         scopes: schemaConfig.scopes,
                     }
                 );
-                replaceRefs(schema, "../../definitions/", ".json");
-                const schemaStr = JSON.stringify(schema, null, 4);
-                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, schemaStr);
-                commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "response" };
+                replaceRefs(responseSchema, "../../definitions/", ".json");
+                const responseSchemaStr = JSON.stringify(responseSchema, null, 4);
+                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, responseSchemaStr);
+
+                commandConfigs[commandId] = {
+                    commandId,
+                    schema: { request: requestSchema, response: responseSchema },
+                    config: schemaConfig,
+                    type: "requestResponse",
+                };
             }
 
             if ("event" in schemaConfig) {
@@ -139,14 +156,16 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 if (schemaConfig.event.data) {
                     props.data = schemaConfig.event.data;
                 }
-                const schema = Type.Object(props, {
+                const eventSchema = Type.Object(props, {
+                    $schema: "http://json-schema.org/draft-07/schema#",
                     $id: `${commandId}/event`,
                     scopes: schemaConfig.scopes,
                 });
-                replaceRefs(schema, "../../definitions/", ".json");
-                const schemaStr = JSON.stringify(schema, null, 4);
+                replaceRefs(eventSchema, "../../definitions/", ".json");
+                const schemaStr = JSON.stringify(eventSchema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/event.json`, schemaStr);
-                commandConfigs[commandId] = { commandId, schema, config: schemaConfig, type: "event" };
+
+                commandConfigs[commandId] = { commandId, schema: { event: eventSchema }, config: schemaConfig, type: "event" };
             }
         }
     }
@@ -196,14 +215,19 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         const commandConfig = commandConfigs[commandId];
         const [serviceId, endpointId] = commandId.split("/") as [string, string];
 
-        if ("request" in commandConfig.config && "response" in commandConfig.config) {
+        if (commandConfig.type === "requestResponse") {
             schemaMeta.actors[commandConfig.config.source].request.send.push(commandConfig.commandId);
             schemaMeta.actors[commandConfig.config.target].request.receive.push(commandConfig.commandId);
             schemaMeta.actors[commandConfig.config.source].response.receive.push(commandConfig.commandId);
             schemaMeta.actors[commandConfig.config.target].response.send.push(commandConfig.commandId);
+
+            individualSchemas.push(commandConfig.schema.request);
+            individualSchemas.push(commandConfig.schema.response);
         } else if ("event" in commandConfig.config) {
             schemaMeta.actors[commandConfig.config.source].event.send.push(commandConfig.commandId);
             schemaMeta.actors[commandConfig.config.target].event.receive.push(commandConfig.commandId);
+
+            individualSchemas.push(commandConfig.schema.event);
         } else {
             throw new Error(`Endpoint ${commandConfig.commandId} has an invalid schema`);
         }
@@ -213,11 +237,11 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         } else {
             schemaMeta.serviceIds[serviceId].push(endpointId);
         }
-
-        individualSchemas.push(commandConfig.schema);
     });
 
-    const compiledSchema = Type.Union(individualSchemas);
+    let compiledSchema = Type.Union(individualSchemas, { definitions: definitionsMap });
+    compiledSchema = JSON.parse(JSON.stringify(compiledSchema, null, 4).replaceAll(/(?:\.\.\/)+definitions\/(.*)?\.json/g, "#/definitions/$1"));
+    await fs.promises.writeFile("schema/compiled.json", JSON.stringify(compiledSchema, null, 4));
 
     return { commandConfigs, compiledSchema, schemaMeta };
 }

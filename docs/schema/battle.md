@@ -9,7 +9,7 @@
 
 When a user client receives this response it should launch the game (spring.exe) with the start script.
 
-- Endpoint Type: **Request** -> **Response**
+- Endpoint Type: **Event**
 - Source: **Server**
 - Target: **User**
 - Required Scopes: `tachyon.lobby`
@@ -21,204 +21,53 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ```json
 {
-    "$id": "battle/start/response",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "battle/start/request",
     "scopes": [
         "tachyon.lobby"
     ],
-    "anyOf": [
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "request",
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "game_crashed",
-                    "type": "string"
-                },
-                "data": {
-                    "type": "object",
-                    "properties": {
-                        "error": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "error"
-                    ]
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason",
-                "data"
-            ]
+        "messageId": {
+            "type": "string"
         },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "internal_error",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+        "commandId": {
+            "const": "battle/start",
+            "type": "string"
         },
-        {
+        "data": {
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
+                "username": {
                     "type": "string"
                 },
-                "messageId": {
+                "password": {
                     "type": "string"
                 },
-                "commandId": {
-                    "const": "battle/start",
+                "ip": {
                     "type": "string"
                 },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "unauthorized",
-                    "type": "string"
+                "port": {
+                    "type": "number"
                 }
             },
             "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "invalid_request",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
-        },
-        {
-            "type": "object",
-            "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
-                "reason": {
-                    "const": "command_unimplemented",
-                    "type": "string"
-                }
-            },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
+                "username",
+                "password",
+                "ip",
+                "port"
             ]
         }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
     ]
 }
 ```
@@ -229,61 +78,32 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ```json
 {
-    "type": "response",
-    "messageId": "quis",
+    "type": "request",
+    "messageId": "Ut in",
     "commandId": "battle/start",
-    "status": "success"
+    "data": {
+        "username": "Ut in",
+        "password": "Ut in",
+        "ip": "Ut in",
+        "port": -57999999.99999999
+    }
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type BattleStartResponse =
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "battle/start";
-          status: "success";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "battle/start";
-          status: "failed";
-          reason: "game_crashed";
-          data: {
-              error: string;
-          };
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "battle/start";
-          status: "failed";
-          reason: "internal_error";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "battle/start";
-          status: "failed";
-          reason: "unauthorized";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "battle/start";
-          status: "failed";
-          reason: "invalid_request";
-      }
-    | {
-          type: "response";
-          messageId: string;
-          commandId: "battle/start";
-          status: "failed";
-          reason: "command_unimplemented";
-      };
+export interface BattleStartRequest {
+    type: "request";
+    messageId: string;
+    commandId: "battle/start";
+    data: {
+        username: string;
+        password: string;
+        ip: string;
+        port: number;
+    };
+}
 ```
 ### Response
 
@@ -292,6 +112,7 @@ export type BattleStartResponse =
 
 ```json
 {
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "battle/start/response",
     "scopes": [
         "tachyon.lobby"
@@ -501,7 +322,7 @@ export type BattleStartResponse =
 ```json
 {
     "type": "response",
-    "messageId": "Ut",
+    "messageId": "aliqua in",
     "commandId": "battle/start",
     "status": "success"
 }

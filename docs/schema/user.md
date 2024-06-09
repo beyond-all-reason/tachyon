@@ -21,6 +21,7 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 ```json
 {
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "user/updated/event",
     "scopes": [
         "tachyon.lobby"
@@ -167,26 +168,59 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "magna commodo",
+    "messageId": "occaecat Lorem in",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "magnac": -54000000,
-                "clanId": "magna commodo",
-                "partyId": "magna commodo",
-                "friendIds": [
-                    "magna commodo",
-                    "magna commodo"
+                "occaecatff": -19999999.999999955,
+                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "username": "occaecat Lorem in",
+                "scopes": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "countryCode": "occaecat Lorem in",
+                "status": "menu",
+                "outgoingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
                 ]
             },
             {
-                "magnac": -54000000,
-                "clanId": "magna commodo",
-                "partyId": "magna commodo",
-                "friendIds": [
-                    "magna commodo",
-                    "magna commodo"
+                "occaecatff": -19999999.999999955,
+                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "username": "occaecat Lorem in",
+                "scopes": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "countryCode": "occaecat Lorem in",
+                "status": "menu",
+                "outgoingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ]
+            },
+            {
+                "occaecatff": -19999999.999999955,
+                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "username": "occaecat Lorem in",
+                "scopes": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
+                ],
+                "countryCode": "occaecat Lorem in",
+                "status": "menu",
+                "outgoingFriendRequestIds": [
+                    "occaecat Lorem in",
+                    "occaecat Lorem in",
+                    "occaecat Lorem in"
                 ]
             }
         ]

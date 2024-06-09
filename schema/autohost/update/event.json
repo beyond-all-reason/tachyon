@@ -1,0 +1,168 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "autohost/update/event",
+    "scopes": [
+        "tachyon.lobby"
+    ],
+    "type": "object",
+    "properties": {
+        "type": {
+            "const": "event",
+            "type": "string"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "autohost/update",
+            "type": "string"
+        },
+        "data": {
+            "type": "object",
+            "properties": {
+                "battleId": {
+                    "format": "uuid",
+                    "type": "string"
+                },
+                "time": {
+                    "$ref": "../../definitions/unixTime.json"
+                },
+                "update": {
+                    "anyOf": [
+                        {
+                            "description": "The battle has started.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "start",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        {
+                            "description": "The battle finished, generated once per every single player reporting who won.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "finished",
+                                    "type": "string"
+                                },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "winningAllyTeams": {
+                                    "minItems": 1,
+                                    "description": "Ally team IDs",
+                                    "type": "array",
+                                    "items": {
+                                        "type": "integer"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "userId",
+                                "winningAllyTeams"
+                            ]
+                        },
+                        {
+                            "description": "A message from the engine, e.g. some ip is trying to connect.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_message",
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "message"
+                            ]
+                        },
+                        {
+                            "description": "A warning from the engine.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_warning",
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "message"
+                            ]
+                        },
+                        {
+                            "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_quit",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        {
+                            "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "engine_crash",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        {
+                            "description": "Player number in the game, can be useful for custom commands.",
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "const": "player_joined",
+                                    "type": "string"
+                                },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "playerNumber": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "type",
+                                "userId",
+                                "playerNumber"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "battleId",
+                "time",
+                "update"
+            ]
+        }
+    },
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
+}
