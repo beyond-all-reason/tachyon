@@ -467,101 +467,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/addPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/addPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/addPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -669,101 +580,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kickPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kickPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kickPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -867,101 +689,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kill",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kill",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kill",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -1069,101 +802,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/mutePlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/mutePlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/mutePlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -1277,101 +921,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendCommand",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendCommand",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendCommand",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -1480,101 +1035,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendMessage",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendMessage",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendMessage",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -1685,101 +1151,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/specPlayers",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/specPlayers",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/specPlayers",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -1992,194 +1369,15 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "invalid_script",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "server_already_running",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "server_failed_to_start",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "invalid_script",
+                                "server_already_running",
+                                "server_failed_to_start",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -2326,101 +1524,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/subscribeUpdates",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/subscribeUpdates",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/subscribeUpdates",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -2703,144 +1812,13 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "game_crashed",
-                            "type": "string"
-                        },
-                        "data": {
-                            "type": "object",
-                            "properties": {
-                                "error": {
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "error"
+                            "enum": [
+                                "game_crashed",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
                             ]
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason",
-                        "data"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "battle/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "battle/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "battle/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "battle/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
                         }
                     },
                     "required": [
@@ -2931,132 +1909,13 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "not_queued",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/cancel",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/cancel",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/cancel",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/cancel",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "not_queued",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -3286,101 +2145,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/list",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/list",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/list",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -3513,194 +2283,15 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "invalid_queue_specified",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "already_queued",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "already_inbattle",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "invalid_queue_specified",
+                                "already_queued",
+                                "already_inbattle",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -3829,132 +2420,13 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "no_match",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/ready",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/ready",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/ready",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/ready",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "no_match",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -4098,101 +2570,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/disconnect",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/disconnect",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/disconnect",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [
@@ -4295,101 +2678,12 @@
                             "type": "string"
                         },
                         "reason": {
-                            "const": "internal_error",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/serverStats",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "unauthorized",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/serverStats",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "invalid_request",
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                },
-                {
-                    "type": "object",
-                    "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/serverStats",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
-                        "reason": {
-                            "const": "command_unimplemented",
-                            "type": "string"
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
                         }
                     },
                     "required": [

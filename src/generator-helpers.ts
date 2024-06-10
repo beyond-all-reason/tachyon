@@ -51,7 +51,7 @@ export type SuccessResponseSchema = {
 export type FailedResponseSchema = {
     status: "failed";
     reason: string;
-} & DataSchema;
+};
 
 export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {
     default?: Static<T>;

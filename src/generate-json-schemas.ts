@@ -8,6 +8,7 @@ import { pathToFileURL } from "url";
 
 import { EndpointConfig } from "@/generator-helpers.js";
 import { TachyonActor } from "@/type-helpers";
+import { UnionEnum } from "@/union-enum";
 
 export type TachyonConfig = {
     commandConfigs: Record<`${string}/${string}`, CommandConfig>;
@@ -111,24 +112,29 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, requestSchemaStr);
 
                 const responseSchema = Type.Union(
-                    schemaConfig.response.map((schema) => {
-                        const props: TProperties = {
-                            type: Type.Literal("response"),
-                            messageId: Type.String(),
-                            commandId: Type.Literal(commandId),
-                            status: Type.Literal(schema.status),
-                        };
-
-                        if (schema.status == "failed") {
-                            props.reason = Type.Literal(schema.reason);
-                        }
-
-                        if (schema.data) {
-                            props.data = schema.data;
-                        }
-
-                        return Type.Object(props);
-                    }),
+                    schemaConfig.response
+                        .filter((schema) => schema.status == "success")
+                        .map((schema) => {
+                            const props: TProperties = {
+                                type: Type.Literal("response"),
+                                messageId: Type.String(),
+                                commandId: Type.Literal(commandId),
+                                status: Type.Literal(schema.status),
+                            };
+                            if (schema.data) {
+                                props.data = schema.data;
+                            }
+                            return Type.Object(props);
+                        })
+                        .concat([
+                            Type.Object({
+                                type: Type.Literal("response"),
+                                messageId: Type.String(),
+                                commandId: Type.Literal(commandId),
+                                status: Type.Literal("failed"),
+                                reason: UnionEnum(schemaConfig.response.filter((schema) => schema.status == "failed").map((schema) => schema.reason)),
+                            }),
+                        ]),
                     {
                         $schema: "http://json-schema.org/draft-07/schema#",
                         $id: `${commandId}/response`,
