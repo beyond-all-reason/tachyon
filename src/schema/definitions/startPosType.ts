@@ -1,8 +1,3 @@
-import { Type } from "@sinclair/typebox";
+import { UnionEnum } from "@/union-enum";
 
-enum StartPosType {
-    Fixed = 0,
-    Random = 1,
-    Boxes = 2,
-}
-export const startPosType = Type.Enum(StartPosType, { $id: "startPosType" });
+export const startPosType = UnionEnum(["fixed", "random", "ingame", "beforegame"], { $id: "startPosType" });
