@@ -136,7 +136,10 @@ ${JSON.stringify(schema, null, 4)}
 
     if (commandType === "response") {
         failedReasons.push(
-            ...schema.anyOf.filter((res: TObject) => res.properties.status.const === "failed").map((res: TObject) => res.properties.reason.const)
+            ...schema.anyOf
+                .filter((res: TObject) => res.properties.status.const === "failed")
+                .map((res: TObject) => res.properties.reason.enum)
+                .flat()
         );
         schema = schema.anyOf.find((res: TObject) => res.properties.status.const === "success");
     }
