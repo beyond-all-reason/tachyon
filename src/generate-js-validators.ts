@@ -2,39 +2,36 @@
 
 import fs from "node:fs";
 
-import { TSchema } from "@sinclair/typebox";
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
+import addFormats from "ajv-formats";
 import { titleCase } from "jaz-ts-utils";
 
 import { TachyonConfig } from "@/generate-json-schemas";
 
 export async function generateValidators(tachyonConfig: TachyonConfig) {
-    const schemas = tachyonConfig.compiledSchema;
-
-    const schemaArray: TSchema[] = [];
     const schemaMap: Record<string, string> = {};
 
-    for (const serviceId in schemas.properties) {
-        for (const endpointId in schemas.properties[serviceId].properties) {
-            for (const commandType in schemas.properties[serviceId].properties[endpointId].properties) {
-                const schema = schemas.properties[serviceId].properties[endpointId].properties[commandType];
-                schemaArray.push(schema);
-                schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}.${endpointId}.${commandType}`;
-            }
-        }
+    for (const schema of tachyonConfig.compiledSchema.anyOf) {
+        const [serviceId, endpointId, commandType] = schema.$id!.split("/");
+        schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
     }
+
+    const compiledSchema = JSON.parse(JSON.stringify(tachyonConfig.compiledSchema).replaceAll("#/definitions/", "/"));
+    const definitions = JSON.parse(JSON.stringify(compiledSchema.definitions).replaceAll('$id":"', '$id":"/'));
+    const schemas = [...compiledSchema.anyOf, { definitions }];
 
     // esm
     process.stdout.write("Generating ESM validators...");
-    const ajv = new Ajv({
-        schemas: schemaArray,
+    const ajvEsm = new Ajv({
+        schemas: schemas,
         code: {
             source: true,
             esm: true,
         },
         keywords: ["scopes"],
     });
+    addFormats(ajvEsm);
     let moduleCode = `"use strict"
 function ucs2length(str) {
     const len = str.length;
@@ -54,7 +51,7 @@ function ucs2length(str) {
     return length;
 }
 `;
-    moduleCode += standaloneCode(ajv, schemaMap);
+    moduleCode += standaloneCode(ajvEsm, schemaMap);
     moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/ucs2length").default', "ucs2length");
     moduleCode = moduleCode.replaceAll('require("ajv-formats/dist/formats").', "");
     await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
@@ -63,13 +60,14 @@ function ucs2length(str) {
     // cjs
     process.stdout.write("Generating CJS validators...");
     const ajvCjs = new Ajv({
-        schemas: schemaArray,
+        schemas: schemas,
         code: {
             source: true,
             esm: false,
         },
         keywords: ["scopes"],
     });
+    addFormats(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);
     await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);
     process.stdout.write("✔️\n");
