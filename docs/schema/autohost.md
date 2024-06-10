@@ -2219,7 +2219,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
         "gameArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         "mapArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         "startDelay": -70000000,
-        "startPosType": 0,
+        "startPosType": "fixed",
         "allyTeams": [
             {
                 "teams": [
@@ -2277,7 +2277,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 #### TypeScript Definition
 ```ts
-export type StartPosType = 0 | 1 | 2;
+export type StartPosType = "fixed" | "random" | "ingame" | "beforegame";
 export type Player = Spectator & {
     customOptions?: {
         [k: string]: string;
