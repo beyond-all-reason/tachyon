@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/readyUpdate/event",
+    "title": "MatchmakingReadyUpdateEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -30,7 +31,8 @@
             "required": [
                 "readyMax",
                 "readyCurrent"
-            ]
+            ],
+            "title": "MatchmakingReadyUpdateEventData"
         }
     },
     "required": [

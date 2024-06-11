@@ -1,11 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "system/serverStats/response",
+    "title": "SystemServerStatsResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "SystemServerStatsOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -32,7 +34,8 @@
                     },
                     "required": [
                         "userCount"
-                    ]
+                    ],
+                    "title": "SystemServerStatsOkResponseData"
                 }
             },
             "required": [
@@ -44,6 +47,7 @@
             ]
         },
         {
+            "title": "SystemServerStatsFailResponse",
             "type": "object",
             "properties": {
                 "type": {

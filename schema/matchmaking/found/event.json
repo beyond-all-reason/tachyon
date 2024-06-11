@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/found/event",
+    "title": "MatchmakingFoundEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -30,7 +31,8 @@
             "required": [
                 "queueId",
                 "timeoutMs"
-            ]
+            ],
+            "title": "MatchmakingFoundEventData"
         }
     },
     "required": [

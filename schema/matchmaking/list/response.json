@@ -1,11 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/list/response",
+    "title": "MatchmakingListResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "MatchmakingListOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -79,7 +81,8 @@
                     },
                     "required": [
                         "playlists"
-                    ]
+                    ],
+                    "title": "MatchmakingListOkResponseData"
                 }
             },
             "required": [
@@ -91,6 +94,7 @@
             ]
         },
         {
+            "title": "MatchmakingListFailResponse",
             "type": "object",
             "properties": {
                 "type": {

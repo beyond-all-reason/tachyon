@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/kickPlayer/request",
+    "title": "AutohostKickPlayerRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -31,7 +32,8 @@
             "required": [
                 "battleId",
                 "userId"
-            ]
+            ],
+            "title": "AutohostKickPlayerRequestData"
         }
     },
     "required": [

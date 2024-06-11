@@ -4,5 +4,6 @@
     "examples": [
         1705432698
     ],
-    "type": "integer"
+    "type": "integer",
+    "title": "UnixTime"
 }

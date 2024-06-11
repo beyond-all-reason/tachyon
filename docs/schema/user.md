@@ -23,6 +23,7 @@ Sent by the server to inform the client when subscribed users get updated in som
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "user/updated/event",
+    "title": "UserUpdatedEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -149,7 +150,8 @@ Sent by the server to inform the client when subscribed users get updated in som
             },
             "required": [
                 "users"
-            ]
+            ],
+            "title": "UserUpdatedEventData"
         }
     },
     "required": [
@@ -235,22 +237,23 @@ export interface UserUpdatedEvent {
     type: "event";
     messageId: string;
     commandId: "user/updated";
-    data: {
-        users: ({
-            userId?: string;
-            username?: string;
-            displayName?: string;
-            clanId?: string | null;
-            partyId?: string | null;
-            scopes?: string[];
-            countryCode?: string;
-            status?: "offline" | "menu" | "playing" | "lobby";
-        } & {
-            friendIds?: string[];
-            outgoingFriendRequestIds?: string[];
-            incomingFriendRequestIds?: string[];
-            ignoreIds?: string[];
-        })[];
-    };
+    data: UserUpdatedEventData;
+}
+export interface UserUpdatedEventData {
+    users: ({
+        userId?: string;
+        username?: string;
+        displayName?: string;
+        clanId?: string | null;
+        partyId?: string | null;
+        scopes?: string[];
+        countryCode?: string;
+        status?: "offline" | "menu" | "playing" | "lobby";
+    } & {
+        friendIds?: string[];
+        outgoingFriendRequestIds?: string[];
+        incomingFriendRequestIds?: string[];
+        ignoreIds?: string[];
+    })[];
 }
 ```

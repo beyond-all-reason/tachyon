@@ -79,5 +79,6 @@
         "bots",
         "faction",
         "color"
-    ]
+    ],
+    "title": "Team"
 }

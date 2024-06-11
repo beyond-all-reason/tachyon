@@ -1,11 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/specPlayers/response",
+    "title": "AutohostSpecPlayersResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostSpecPlayersOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -32,6 +34,7 @@
             ]
         },
         {
+            "title": "AutohostSpecPlayersFailResponse",
             "type": "object",
             "properties": {
                 "type": {

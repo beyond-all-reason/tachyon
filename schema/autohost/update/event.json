@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/update/event",
+    "title": "AutohostUpdateEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -31,6 +32,7 @@
                     "anyOf": [
                         {
                             "description": "The battle has started.",
+                            "title": "StartUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -44,6 +46,7 @@
                         },
                         {
                             "description": "The battle finished, generated once per every single player reporting who won.",
+                            "title": "FinishedUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -70,6 +73,7 @@
                         },
                         {
                             "description": "A message from the engine, e.g. some ip is trying to connect.",
+                            "title": "EngineMessageUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -87,6 +91,7 @@
                         },
                         {
                             "description": "A warning from the engine.",
+                            "title": "EngineWarningUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -104,6 +109,7 @@
                         },
                         {
                             "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
+                            "title": "EngineQuitUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -117,6 +123,7 @@
                         },
                         {
                             "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
+                            "title": "EngineCrashUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -130,6 +137,7 @@
                         },
                         {
                             "description": "Player number in the game, can be useful for custom commands.",
+                            "title": "PlayerJoinedUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -156,7 +164,8 @@
                 "battleId",
                 "time",
                 "update"
-            ]
+            ],
+            "title": "AutohostUpdateEventData"
         }
     },
     "required": [

@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "battle/start/request",
+    "title": "BattleStartRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -38,7 +39,8 @@
                 "password",
                 "ip",
                 "port"
-            ]
+            ],
+            "title": "BattleStartRequestData"
         }
     },
     "required": [

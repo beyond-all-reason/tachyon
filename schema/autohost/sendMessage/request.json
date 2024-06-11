@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/sendMessage/request",
+    "title": "AutohostSendMessageRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -32,7 +33,8 @@
             "required": [
                 "battleId",
                 "message"
-            ]
+            ],
+            "title": "AutohostSendMessageRequestData"
         }
     },
     "required": [

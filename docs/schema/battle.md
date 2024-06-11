@@ -23,6 +23,7 @@ When a user client receives this response it should launch the game (spring.exe)
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "battle/start/request",
+    "title": "BattleStartRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -60,7 +61,8 @@ When a user client receives this response it should launch the game (spring.exe)
                 "password",
                 "ip",
                 "port"
-            ]
+            ],
+            "title": "BattleStartRequestData"
         }
     },
     "required": [
@@ -97,12 +99,13 @@ export interface BattleStartRequest {
     type: "request";
     messageId: string;
     commandId: "battle/start";
-    data: {
-        username: string;
-        password: string;
-        ip: string;
-        port: number;
-    };
+    data: BattleStartRequestData;
+}
+export interface BattleStartRequestData {
+    username: string;
+    password: string;
+    ip: string;
+    port: number;
 }
 ```
 ### Response
@@ -114,11 +117,13 @@ export interface BattleStartRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "battle/start/response",
+    "title": "BattleStartResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "BattleStartOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -145,6 +150,7 @@ export interface BattleStartRequest {
             ]
         },
         {
+            "title": "BattleStartFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -200,7 +206,7 @@ export interface BattleStartRequest {
 
 #### TypeScript Definition
 ```ts
-export interface BattleStartResponse {
+export interface BattleStartOkResponse {
     type: "response";
     messageId: string;
     commandId: "battle/start";

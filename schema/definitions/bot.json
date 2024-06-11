@@ -29,5 +29,6 @@
         "aiShortName",
         "aiVersion",
         "customOptions"
-    ]
+    ],
+    "title": "Bot"
 }

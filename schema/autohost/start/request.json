@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/start/request",
+    "title": "AutohostStartRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -106,7 +107,8 @@
                 "startPosType",
                 "allyTeams",
                 "spectators"
-            ]
+            ],
+            "title": "AutohostStartRequestData"
         }
     },
     "required": [

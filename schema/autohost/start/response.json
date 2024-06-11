@@ -1,11 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/start/response",
+    "title": "AutohostStartResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostStartOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -50,7 +52,8 @@
                     "required": [
                         "ips",
                         "port"
-                    ]
+                    ],
+                    "title": "AutohostStartOkResponseData"
                 }
             },
             "required": [
@@ -62,6 +65,7 @@
             ]
         },
         {
+            "title": "AutohostStartFailResponse",
             "type": "object",
             "properties": {
                 "type": {

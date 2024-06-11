@@ -23,5 +23,6 @@
     "required": [
         "teams",
         "startBox"
-    ]
+    ],
+    "title": "AllyTeam"
 }

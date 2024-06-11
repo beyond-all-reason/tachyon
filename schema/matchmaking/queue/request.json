@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/queue/request",
+    "title": "MatchmakingQueueRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -30,7 +31,8 @@
             },
             "required": [
                 "queues"
-            ]
+            ],
+            "title": "MatchmakingQueueRequestData"
         }
     },
     "required": [

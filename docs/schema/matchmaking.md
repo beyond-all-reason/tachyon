@@ -43,6 +43,7 @@ Cancel queueing for matchmaking.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/cancel/request",
+    "title": "MatchmakingCancelRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -98,11 +99,13 @@ export interface MatchmakingCancelRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/cancel/response",
+    "title": "MatchmakingCancelResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "MatchmakingCancelOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -129,6 +132,7 @@ export interface MatchmakingCancelRequest {
             ]
         },
         {
+            "title": "MatchmakingCancelFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -184,7 +188,7 @@ export interface MatchmakingCancelRequest {
 
 #### TypeScript Definition
 ```ts
-export interface MatchmakingCancelResponse {
+export interface MatchmakingCancelOkResponse {
     type: "response";
     messageId: string;
     commandId: "matchmaking/cancel";
@@ -213,6 +217,7 @@ Server should send this when there are enough queued players to form a valid bat
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/found/event",
+    "title": "MatchmakingFoundEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -242,7 +247,8 @@ Server should send this when there are enough queued players to form a valid bat
             "required": [
                 "queueId",
                 "timeoutMs"
-            ]
+            ],
+            "title": "MatchmakingFoundEventData"
         }
     },
     "required": [
@@ -277,10 +283,11 @@ export interface MatchmakingFoundEvent {
     type: "event";
     messageId: string;
     commandId: "matchmaking/found";
-    data: {
-        queueId: string;
-        timeoutMs: number;
-    };
+    data: MatchmakingFoundEventData;
+}
+export interface MatchmakingFoundEventData {
+    queueId: string;
+    timeoutMs: number;
 }
 ```
 ---
@@ -303,6 +310,7 @@ Server should send this when players ready up using [ready](#ready).
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/foundUpdate/event",
+    "title": "MatchmakingFoundUpdateEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -328,7 +336,8 @@ Server should send this when players ready up using [ready](#ready).
             },
             "required": [
                 "readyCount"
-            ]
+            ],
+            "title": "MatchmakingFoundUpdateEventData"
         }
     },
     "required": [
@@ -362,9 +371,10 @@ export interface MatchmakingFoundUpdateEvent {
     type: "event";
     messageId: string;
     commandId: "matchmaking/foundUpdate";
-    data: {
-        readyCount: number;
-    };
+    data: MatchmakingFoundUpdateEventData;
+}
+export interface MatchmakingFoundUpdateEventData {
+    readyCount: number;
 }
 ```
 ---
@@ -387,6 +397,7 @@ Returns all available matchmaking playlists.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/list/request",
+    "title": "MatchmakingListRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -442,11 +453,13 @@ export interface MatchmakingListRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/list/response",
+    "title": "MatchmakingListResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "MatchmakingListOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -520,7 +533,8 @@ export interface MatchmakingListRequest {
                     },
                     "required": [
                         "playlists"
-                    ]
+                    ],
+                    "title": "MatchmakingListOkResponseData"
                 }
             },
             "required": [
@@ -532,6 +546,7 @@ export interface MatchmakingListRequest {
             ]
         },
         {
+            "title": "MatchmakingListFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -604,20 +619,21 @@ export interface MatchmakingListRequest {
 
 #### TypeScript Definition
 ```ts
-export interface MatchmakingListResponse {
+export interface MatchmakingListOkResponse {
     type: "response";
     messageId: string;
     commandId: "matchmaking/list";
     status: "success";
-    data: {
-        playlists: {
-            id: string;
-            name: string;
-            numOfTeams: number;
-            teamSize: number;
-            ranked: boolean;
-        }[];
-    };
+    data: MatchmakingListOkResponseData;
+}
+export interface MatchmakingListOkResponseData {
+    playlists: {
+        id: string;
+        name: string;
+        numOfTeams: number;
+        teamSize: number;
+        ranked: boolean;
+    }[];
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -642,6 +658,7 @@ Sent when a found match gets disbanded because a client failed to ready up.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/lost/event",
+    "title": "MatchmakingLostEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -708,6 +725,7 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/queue/request",
+    "title": "MatchmakingQueueRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -737,7 +755,8 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
             },
             "required": [
                 "queues"
-            ]
+            ],
+            "title": "MatchmakingQueueRequestData"
         }
     },
     "required": [
@@ -774,9 +793,10 @@ export interface MatchmakingQueueRequest {
     type: "request";
     messageId: string;
     commandId: "matchmaking/queue";
-    data: {
-        queues: [string, ...string[]];
-    };
+    data: MatchmakingQueueRequestData;
+}
+export interface MatchmakingQueueRequestData {
+    queues: [string, ...string[]];
 }
 ```
 ### Response
@@ -788,11 +808,13 @@ export interface MatchmakingQueueRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/queue/response",
+    "title": "MatchmakingQueueResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "MatchmakingQueueOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -819,6 +841,7 @@ export interface MatchmakingQueueRequest {
             ]
         },
         {
+            "title": "MatchmakingQueueFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -876,7 +899,7 @@ export interface MatchmakingQueueRequest {
 
 #### TypeScript Definition
 ```ts
-export interface MatchmakingQueueResponse {
+export interface MatchmakingQueueOkResponse {
     type: "response";
     messageId: string;
     commandId: "matchmaking/queue";
@@ -905,6 +928,7 @@ Contains some info about the state of the current queue.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/queueUpdate/event",
+    "title": "MatchmakingQueueUpdateEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -930,7 +954,8 @@ Contains some info about the state of the current queue.
             },
             "required": [
                 "playersQueued"
-            ]
+            ],
+            "title": "MatchmakingQueueUpdateEventData"
         }
     },
     "required": [
@@ -964,9 +989,10 @@ export interface MatchmakingQueueUpdateEvent {
     type: "event";
     messageId: string;
     commandId: "matchmaking/queueUpdate";
-    data: {
-        playersQueued: string;
-    };
+    data: MatchmakingQueueUpdateEventData;
+}
+export interface MatchmakingQueueUpdateEventData {
+    playersQueued: string;
 }
 ```
 ---
@@ -989,6 +1015,7 @@ Clients should send this when they are ready to proceed with the found match. If
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/ready/request",
+    "title": "MatchmakingReadyRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1044,11 +1071,13 @@ export interface MatchmakingReadyRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/ready/response",
+    "title": "MatchmakingReadyResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "MatchmakingReadyOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1075,6 +1104,7 @@ export interface MatchmakingReadyRequest {
             ]
         },
         {
+            "title": "MatchmakingReadyFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1130,7 +1160,7 @@ export interface MatchmakingReadyRequest {
 
 #### TypeScript Definition
 ```ts
-export interface MatchmakingReadyResponse {
+export interface MatchmakingReadyOkResponse {
     type: "response";
     messageId: string;
     commandId: "matchmaking/ready";
@@ -1159,6 +1189,7 @@ Sent when a client in a found match readies up.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "matchmaking/readyUpdate/event",
+    "title": "MatchmakingReadyUpdateEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1188,7 +1219,8 @@ Sent when a client in a found match readies up.
             "required": [
                 "readyMax",
                 "readyCurrent"
-            ]
+            ],
+            "title": "MatchmakingReadyUpdateEventData"
         }
     },
     "required": [
@@ -1223,9 +1255,10 @@ export interface MatchmakingReadyUpdateEvent {
     type: "event";
     messageId: string;
     commandId: "matchmaking/readyUpdate";
-    data: {
-        readyMax: number;
-        readyCurrent: number;
-    };
+    data: MatchmakingReadyUpdateEventData;
+}
+export interface MatchmakingReadyUpdateEventData {
+    readyMax: number;
+    readyCurrent: number;
 }
 ```

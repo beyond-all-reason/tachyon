@@ -1,11 +1,13 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/sendMessage/response",
+    "title": "AutohostSendMessageResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostSendMessageOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -32,6 +34,7 @@
             ]
         },
         {
+            "title": "AutohostSendMessageFailResponse",
             "type": "object",
             "properties": {
                 "type": {

@@ -46,6 +46,7 @@ export type ResponseSchema = Array<SuccessResponseSchema | FailedResponseSchema>
 
 export type SuccessResponseSchema = {
     status: "success";
+    title?: string;
 } & DataSchema;
 
 export type FailedResponseSchema = {

@@ -77,6 +77,7 @@ Request to kill a battle.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/addPlayer/request",
+    "title": "AutohostAddPlayerRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -115,7 +116,8 @@ Request to kill a battle.
                 "userId",
                 "name",
                 "password"
-            ]
+            ],
+            "title": "AutohostAddPlayerRequestData"
         }
     },
     "required": [
@@ -154,12 +156,13 @@ export interface AutohostAddPlayerRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/addPlayer";
-    data: {
-        battleId: string;
-        userId: UserId;
-        name: string;
-        password: string;
-    };
+    data: AutohostAddPlayerRequestData;
+}
+export interface AutohostAddPlayerRequestData {
+    battleId: string;
+    userId: UserId;
+    name: string;
+    password: string;
 }
 ```
 ### Response
@@ -171,11 +174,13 @@ export interface AutohostAddPlayerRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/addPlayer/response",
+    "title": "AutohostAddPlayerResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostAddPlayerOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -202,6 +207,7 @@ export interface AutohostAddPlayerRequest {
             ]
         },
         {
+            "title": "AutohostAddPlayerFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -256,7 +262,7 @@ export interface AutohostAddPlayerRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostAddPlayerResponse {
+export interface AutohostAddPlayerOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/addPlayer";
@@ -285,6 +291,7 @@ Kick a player from a battle.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/kickPlayer/request",
+    "title": "AutohostKickPlayerRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -315,7 +322,8 @@ Kick a player from a battle.
             "required": [
                 "battleId",
                 "userId"
-            ]
+            ],
+            "title": "AutohostKickPlayerRequestData"
         }
     },
     "required": [
@@ -352,10 +360,11 @@ export interface AutohostKickPlayerRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/kickPlayer";
-    data: {
-        battleId: string;
-        userId: UserId;
-    };
+    data: AutohostKickPlayerRequestData;
+}
+export interface AutohostKickPlayerRequestData {
+    battleId: string;
+    userId: UserId;
 }
 ```
 ### Response
@@ -367,11 +376,13 @@ export interface AutohostKickPlayerRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/kickPlayer/response",
+    "title": "AutohostKickPlayerResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostKickPlayerOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -398,6 +409,7 @@ export interface AutohostKickPlayerRequest {
             ]
         },
         {
+            "title": "AutohostKickPlayerFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -452,7 +464,7 @@ export interface AutohostKickPlayerRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostKickPlayerResponse {
+export interface AutohostKickPlayerOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/kickPlayer";
@@ -481,6 +493,7 @@ Request to kill a battle.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/kill/request",
+    "title": "AutohostKillRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -507,7 +520,8 @@ Request to kill a battle.
             },
             "required": [
                 "battleId"
-            ]
+            ],
+            "title": "AutohostKillRequestData"
         }
     },
     "required": [
@@ -541,9 +555,10 @@ export interface AutohostKillRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/kill";
-    data: {
-        battleId: string;
-    };
+    data: AutohostKillRequestData;
+}
+export interface AutohostKillRequestData {
+    battleId: string;
 }
 ```
 ### Response
@@ -555,11 +570,13 @@ export interface AutohostKillRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/kill/response",
+    "title": "AutohostKillResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostKillOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -586,6 +603,7 @@ export interface AutohostKillRequest {
             ]
         },
         {
+            "title": "AutohostKillFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -640,7 +658,7 @@ export interface AutohostKillRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostKillResponse {
+export interface AutohostKillOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/kill";
@@ -669,6 +687,7 @@ Mute a player in a battle.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/mutePlayer/request",
+    "title": "AutohostMutePlayerRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -699,7 +718,8 @@ Mute a player in a battle.
             "required": [
                 "battleId",
                 "userId"
-            ]
+            ],
+            "title": "AutohostMutePlayerRequestData"
         }
     },
     "required": [
@@ -736,10 +756,11 @@ export interface AutohostMutePlayerRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/mutePlayer";
-    data: {
-        battleId: string;
-        userId: UserId;
-    };
+    data: AutohostMutePlayerRequestData;
+}
+export interface AutohostMutePlayerRequestData {
+    battleId: string;
+    userId: UserId;
 }
 ```
 ### Response
@@ -751,11 +772,13 @@ export interface AutohostMutePlayerRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/mutePlayer/response",
+    "title": "AutohostMutePlayerResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostMutePlayerOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -782,6 +805,7 @@ export interface AutohostMutePlayerRequest {
             ]
         },
         {
+            "title": "AutohostMutePlayerFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -836,7 +860,7 @@ export interface AutohostMutePlayerRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostMutePlayerResponse {
+export interface AutohostMutePlayerOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/mutePlayer";
@@ -865,6 +889,7 @@ Send a custom command for the autohost to execute.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/sendCommand/request",
+    "title": "AutohostSendCommandRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -901,7 +926,8 @@ Send a custom command for the autohost to execute.
             "required": [
                 "battleId",
                 "command"
-            ]
+            ],
+            "title": "AutohostSendCommandRequestData"
         }
     },
     "required": [
@@ -936,11 +962,12 @@ export interface AutohostSendCommandRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/sendCommand";
-    data: {
-        battleId: string;
-        command: string;
-        arguments?: string[];
-    };
+    data: AutohostSendCommandRequestData;
+}
+export interface AutohostSendCommandRequestData {
+    battleId: string;
+    command: string;
+    arguments?: string[];
 }
 ```
 ### Response
@@ -952,11 +979,13 @@ export interface AutohostSendCommandRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/sendCommand/response",
+    "title": "AutohostSendCommandResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostSendCommandOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -983,6 +1012,7 @@ export interface AutohostSendCommandRequest {
             ]
         },
         {
+            "title": "AutohostSendCommandFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1037,7 +1067,7 @@ export interface AutohostSendCommandRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostSendCommandResponse {
+export interface AutohostSendCommandOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/sendCommand";
@@ -1066,6 +1096,7 @@ Send a message for the autohost to display to players.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/sendMessage/request",
+    "title": "AutohostSendMessageRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1097,7 +1128,8 @@ Send a message for the autohost to display to players.
             "required": [
                 "battleId",
                 "message"
-            ]
+            ],
+            "title": "AutohostSendMessageRequestData"
         }
     },
     "required": [
@@ -1132,10 +1164,11 @@ export interface AutohostSendMessageRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/sendMessage";
-    data: {
-        battleId: string;
-        message: string;
-    };
+    data: AutohostSendMessageRequestData;
+}
+export interface AutohostSendMessageRequestData {
+    battleId: string;
+    message: string;
 }
 ```
 ### Response
@@ -1147,11 +1180,13 @@ export interface AutohostSendMessageRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/sendMessage/response",
+    "title": "AutohostSendMessageResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostSendMessageOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1178,6 +1213,7 @@ export interface AutohostSendMessageRequest {
             ]
         },
         {
+            "title": "AutohostSendMessageFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1232,7 +1268,7 @@ export interface AutohostSendMessageRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostSendMessageResponse {
+export interface AutohostSendMessageOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/sendMessage";
@@ -1261,6 +1297,7 @@ Force players to become spectators in a battle.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/specPlayers/request",
+    "title": "AutohostSpecPlayersRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1294,7 +1331,8 @@ Force players to become spectators in a battle.
             "required": [
                 "battleId",
                 "userIds"
-            ]
+            ],
+            "title": "AutohostSpecPlayersRequestData"
         }
     },
     "required": [
@@ -1333,10 +1371,11 @@ export interface AutohostSpecPlayersRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/specPlayers";
-    data: {
-        battleId: string;
-        userIds: UserId[];
-    };
+    data: AutohostSpecPlayersRequestData;
+}
+export interface AutohostSpecPlayersRequestData {
+    battleId: string;
+    userIds: UserId[];
 }
 ```
 ### Response
@@ -1348,11 +1387,13 @@ export interface AutohostSpecPlayersRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/specPlayers/response",
+    "title": "AutohostSpecPlayersResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostSpecPlayersOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1379,6 +1420,7 @@ export interface AutohostSpecPlayersRequest {
             ]
         },
         {
+            "title": "AutohostSpecPlayersFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1433,7 +1475,7 @@ export interface AutohostSpecPlayersRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostSpecPlayersResponse {
+export interface AutohostSpecPlayersOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/specPlayers";
@@ -1462,6 +1504,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/start/request",
+    "title": "AutohostStartRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1567,7 +1610,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 "startPosType",
                 "allyTeams",
                 "spectators"
-            ]
+            ],
+            "title": "AutohostStartRequestData"
         }
     },
     "required": [
@@ -1666,28 +1710,29 @@ export interface AutohostStartRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/start";
-    data: {
-        battleId: string;
-        engineVersion: string;
-        gameName: string;
-        mapName: string;
-        gameArchiveHash: string;
-        mapArchiveHash: string;
-        startDelay: number;
-        startPosType: StartPosType;
-        allyTeams: AllyTeam[];
-        spectators: Spectator1[];
-        mapOptions?: {
-            [k: string]: string;
-        };
-        gameOptions?: {
-            [k: string]: string;
-        };
-        restrictions?: {
-            unitId: string;
-            limit: number;
-        }[];
+    data: AutohostStartRequestData;
+}
+export interface AutohostStartRequestData {
+    battleId: string;
+    engineVersion: string;
+    gameName: string;
+    mapName: string;
+    gameArchiveHash: string;
+    mapArchiveHash: string;
+    startDelay: number;
+    startPosType: StartPosType;
+    allyTeams: AllyTeam[];
+    spectators: Spectator1[];
+    mapOptions?: {
+        [k: string]: string;
     };
+    gameOptions?: {
+        [k: string]: string;
+    };
+    restrictions?: {
+        unitId: string;
+        limit: number;
+    }[];
 }
 export interface AllyTeam {
     teams: Team[];
@@ -1752,11 +1797,13 @@ export interface Spectator1 {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/start/response",
+    "title": "AutohostStartResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostStartOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1801,7 +1848,8 @@ export interface Spectator1 {
                     "required": [
                         "ips",
                         "port"
-                    ]
+                    ],
+                    "title": "AutohostStartOkResponseData"
                 }
             },
             "required": [
@@ -1813,6 +1861,7 @@ export interface Spectator1 {
             ]
         },
         {
+            "title": "AutohostStartFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -1876,15 +1925,16 @@ export interface Spectator1 {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostStartResponse {
+export interface AutohostStartOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/start";
     status: "success";
-    data: {
-        ips: string[];
-        port: number;
-    };
+    data: AutohostStartOkResponseData;
+}
+export interface AutohostStartOkResponseData {
+    ips: string[];
+    port: number;
 }
 ```
 Possible Failed Reasons: `invalid_script`, `server_already_running`, `server_failed_to_start`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -1909,6 +1959,7 @@ This event should be sent to the server on connection and whenever any of the st
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/status/event",
+    "title": "AutohostStatusEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -1940,7 +1991,8 @@ This event should be sent to the server on connection and whenever any of the st
             "required": [
                 "maxBattles",
                 "currentBattles"
-            ]
+            ],
+            "title": "AutohostStatusEventData"
         }
     },
     "required": [
@@ -1975,10 +2027,11 @@ export interface AutohostStatusEvent {
     type: "event";
     messageId: string;
     commandId: "autohost/status";
-    data: {
-        maxBattles: number;
-        currentBattles: number;
-    };
+    data: AutohostStatusEventData;
+}
+export interface AutohostStatusEventData {
+    maxBattles: number;
+    currentBattles: number;
 }
 ```
 ---
@@ -2001,6 +2054,7 @@ Ask the autohost to send us updates about its battles.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/subscribeUpdates/request",
+    "title": "AutohostSubscribeUpdatesRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -2026,7 +2080,8 @@ Ask the autohost to send us updates about its battles.
             },
             "required": [
                 "since"
-            ]
+            ],
+            "title": "AutohostSubscribeUpdatesRequestData"
         }
     },
     "required": [
@@ -2062,9 +2117,10 @@ export interface AutohostSubscribeUpdatesRequest {
     type: "request";
     messageId: string;
     commandId: "autohost/subscribeUpdates";
-    data: {
-        since: UnixTime;
-    };
+    data: AutohostSubscribeUpdatesRequestData;
+}
+export interface AutohostSubscribeUpdatesRequestData {
+    since: UnixTime;
 }
 ```
 ### Response
@@ -2076,11 +2132,13 @@ export interface AutohostSubscribeUpdatesRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/subscribeUpdates/response",
+    "title": "AutohostSubscribeUpdatesResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "AutohostSubscribeUpdatesOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -2107,6 +2165,7 @@ export interface AutohostSubscribeUpdatesRequest {
             ]
         },
         {
+            "title": "AutohostSubscribeUpdatesFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -2161,7 +2220,7 @@ export interface AutohostSubscribeUpdatesRequest {
 
 #### TypeScript Definition
 ```ts
-export interface AutohostSubscribeUpdatesResponse {
+export interface AutohostSubscribeUpdatesOkResponse {
     type: "response";
     messageId: string;
     commandId: "autohost/subscribeUpdates";
@@ -2190,6 +2249,7 @@ Inform the server of battle updates.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/update/event",
+    "title": "AutohostUpdateEvent",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -2220,6 +2280,7 @@ Inform the server of battle updates.
                     "anyOf": [
                         {
                             "description": "The battle has started.",
+                            "title": "StartUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2233,6 +2294,7 @@ Inform the server of battle updates.
                         },
                         {
                             "description": "The battle finished, generated once per every single player reporting who won.",
+                            "title": "FinishedUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2259,6 +2321,7 @@ Inform the server of battle updates.
                         },
                         {
                             "description": "A message from the engine, e.g. some ip is trying to connect.",
+                            "title": "EngineMessageUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2276,6 +2339,7 @@ Inform the server of battle updates.
                         },
                         {
                             "description": "A warning from the engine.",
+                            "title": "EngineWarningUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2293,6 +2357,7 @@ Inform the server of battle updates.
                         },
                         {
                             "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
+                            "title": "EngineQuitUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2306,6 +2371,7 @@ Inform the server of battle updates.
                         },
                         {
                             "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
+                            "title": "EngineCrashUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2319,6 +2385,7 @@ Inform the server of battle updates.
                         },
                         {
                             "description": "Player number in the game, can be useful for custom commands.",
+                            "title": "PlayerJoinedUpdate",
                             "type": "object",
                             "properties": {
                                 "type": {
@@ -2345,7 +2412,8 @@ Inform the server of battle updates.
                 "battleId",
                 "time",
                 "update"
-            ]
+            ],
+            "title": "AutohostUpdateEventData"
         }
     },
     "required": [
@@ -2391,37 +2459,45 @@ export interface AutohostUpdateEvent {
     type: "event";
     messageId: string;
     commandId: "autohost/update";
-    data: {
-        battleId: string;
-        time: UnixTime;
-        update:
-            | {
-                  type: "start";
-              }
-            | {
-                  type: "finished";
-                  userId: UserId;
-                  winningAllyTeams: [number, ...number[]];
-              }
-            | {
-                  type: "engine_message";
-                  message: string;
-              }
-            | {
-                  type: "engine_warning";
-                  message: string;
-              }
-            | {
-                  type: "engine_quit";
-              }
-            | {
-                  type: "engine_crash";
-              }
-            | {
-                  type: "player_joined";
-                  userId: UserId;
-                  playerNumber: number;
-              };
-    };
+    data: AutohostUpdateEventData;
+}
+export interface AutohostUpdateEventData {
+    battleId: string;
+    time: UnixTime;
+    update:
+        | StartUpdate
+        | FinishedUpdate
+        | EngineMessageUpdate
+        | EngineWarningUpdate
+        | EngineQuitUpdate
+        | EngineCrashUpdate
+        | PlayerJoinedUpdate;
+}
+export interface StartUpdate {
+    type: "start";
+}
+export interface FinishedUpdate {
+    type: "finished";
+    userId: UserId;
+    winningAllyTeams: [number, ...number[]];
+}
+export interface EngineMessageUpdate {
+    type: "engine_message";
+    message: string;
+}
+export interface EngineWarningUpdate {
+    type: "engine_warning";
+    message: string;
+}
+export interface EngineQuitUpdate {
+    type: "engine_quit";
+}
+export interface EngineCrashUpdate {
+    type: "engine_crash";
+}
+export interface PlayerJoinedUpdate {
+    type: "player_joined";
+    userId: UserId;
+    playerNumber: number;
 }
 ```

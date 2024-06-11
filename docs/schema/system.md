@@ -24,6 +24,7 @@ Ask the server to terminate the connection.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "system/disconnect/request",
+    "title": "SystemDisconnectRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -49,7 +50,8 @@ Ask the server to terminate the connection.
             },
             "required": [
                 "reason"
-            ]
+            ],
+            "title": "SystemDisconnectRequestData"
         }
     },
     "required": [
@@ -82,9 +84,10 @@ export interface SystemDisconnectRequest {
     type: "request";
     messageId: string;
     commandId: "system/disconnect";
-    data?: {
-        reason: string;
-    };
+    data?: SystemDisconnectRequestData;
+}
+export interface SystemDisconnectRequestData {
+    reason: string;
 }
 ```
 ### Response
@@ -96,11 +99,13 @@ export interface SystemDisconnectRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "system/disconnect/response",
+    "title": "SystemDisconnectResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "SystemDisconnectOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -127,6 +132,7 @@ export interface SystemDisconnectRequest {
             ]
         },
         {
+            "title": "SystemDisconnectFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -181,7 +187,7 @@ export interface SystemDisconnectRequest {
 
 #### TypeScript Definition
 ```ts
-export interface SystemDisconnectResponse {
+export interface SystemDisconnectOkResponse {
     type: "response";
     messageId: string;
     commandId: "system/disconnect";
@@ -210,6 +216,7 @@ Get server stats such as user count.
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "system/serverStats/request",
+    "title": "SystemServerStatsRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -265,11 +272,13 @@ export interface SystemServerStatsRequest {
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "system/serverStats/response",
+    "title": "SystemServerStatsResponse",
     "scopes": [
         "tachyon.lobby"
     ],
     "anyOf": [
         {
+            "title": "SystemServerStatsOkResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -296,7 +305,8 @@ export interface SystemServerStatsRequest {
                     },
                     "required": [
                         "userCount"
-                    ]
+                    ],
+                    "title": "SystemServerStatsOkResponseData"
                 }
             },
             "required": [
@@ -308,6 +318,7 @@ export interface SystemServerStatsRequest {
             ]
         },
         {
+            "title": "SystemServerStatsFailResponse",
             "type": "object",
             "properties": {
                 "type": {
@@ -365,14 +376,15 @@ export interface SystemServerStatsRequest {
 
 #### TypeScript Definition
 ```ts
-export interface SystemServerStatsResponse {
+export interface SystemServerStatsOkResponse {
     type: "response";
     messageId: string;
     commandId: "system/serverStats";
     status: "success";
-    data: {
-        userCount: number;
-    };
+    data: SystemServerStatsOkResponseData;
+}
+export interface SystemServerStatsOkResponseData {
+    userCount: number;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`

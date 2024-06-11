@@ -1,6 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "autohost/subscribeUpdates/request",
+    "title": "AutohostSubscribeUpdatesRequest",
     "scopes": [
         "tachyon.lobby"
     ],
@@ -26,7 +27,8 @@
             },
             "required": [
                 "since"
-            ]
+            ],
+            "title": "AutohostSubscribeUpdatesRequestData"
         }
     },
     "required": [
