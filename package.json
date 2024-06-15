@@ -89,6 +89,7 @@
     "typescript": "^5.5.0-beta"
   },
   "overrides": {
+    "typescript": "$typescript",
     "@sinclair/typebox": "$@sinclair/typebox",
     "@typescript-eslint/eslint-plugin": "$@typescript-eslint/eslint-plugin",
     "@typescript-eslint/parser": "$@typescript-eslint/parser",
