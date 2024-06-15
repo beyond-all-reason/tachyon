@@ -6,6 +6,7 @@ import { TProperties, TSchema, TUnion, Type } from "@sinclair/typebox";
 import { objectKeys } from "jaz-ts-utils";
 import { pathToFileURL } from "url";
 
+import { FailedResponseSchema, SuccessResponseSchema } from "@/generator-helpers";
 import { EndpointConfig } from "@/generator-helpers.js";
 import { TachyonActor } from "@/type-helpers";
 import { UnionEnum } from "@/union-enum";
@@ -118,8 +119,8 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 const requestSchemaStr = JSON.stringify(requestSchema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, requestSchemaStr);
 
-                const successResponses = schemaConfig.response.filter((schema) => schema.status == "success");
-                const failedResponses = schemaConfig.response.filter((schema) => schema.status == "failed");
+                const successResponses = schemaConfig.response.filter((schema) => schema.status == "success") as SuccessResponseSchema[]; // Cast won't be necessary in typescript 5.5
+                const failedResponses = schemaConfig.response.filter((schema) => schema.status == "failed") as FailedResponseSchema[]; // Cast won't be necessary in typescript 5.5
                 if (successResponses.length === 0) {
                     throw new Error(`Endpoint ${serviceId}/${endpointId} does not have a success response`);
                 }

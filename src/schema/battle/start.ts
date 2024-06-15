@@ -18,12 +18,5 @@ export default defineEndpoint({
         {
             status: "success",
         },
-        {
-            status: "failed",
-            reason: "game_crashed",
-            data: Type.Object({
-                error: Type.String(),
-            }),
-        },
     ],
 });

@@ -54,7 +54,6 @@
                 },
                 "reason": {
                     "enum": [
-                        "game_crashed",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

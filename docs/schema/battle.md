@@ -170,7 +170,6 @@ export interface BattleStartRequestData {
                 },
                 "reason": {
                     "enum": [
-                        "game_crashed",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -213,5 +212,5 @@ export interface BattleStartOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `game_crashed`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
