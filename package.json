@@ -3,7 +3,7 @@
   "version": "1.7.0",
   "description": "",
   "scripts": {
-    "dev": "nodemon --watch src/** --ext ts --ignore src/meta.ts --exec npm run build",
+    "dev": "nodemon --watch 'src/**' --ext ts --ignore src/meta.ts --exec npm run build",
     "build": "npx tsx src/index.ts",
     "build:clean": "rm -rf dist schema docs/schema && npm run build",
     "tidy": "npm run lint && npm run format",
