@@ -26,10 +26,14 @@ export default defineEndpoint({
                     {
                         type: Type.Const("finished"),
                         userId: Type.Ref(userId),
-                        winningAllyTeams: Type.Array(Type.Integer(), { minItems: 1, description: "Ally team IDs" }),
+                        winningAllyTeams: Type.Array(Type.Integer(), {
+                            minItems: 1,
+                            description: "Ally team IDs",
+                        }),
                     },
                     {
-                        description: "The battle finished, generated once per every single player reporting who won.",
+                        description:
+                            "The battle finished, generated once per every single player reporting who won.",
                         title: "FinishedUpdate",
                     }
                 ),
@@ -39,7 +43,8 @@ export default defineEndpoint({
                         message: Type.String(),
                     },
                     {
-                        description: "A message from the engine, e.g. some ip is trying to connect.",
+                        description:
+                            "A message from the engine, e.g. some ip is trying to connect.",
                         title: "EngineMessageUpdate",
                     }
                 ),
@@ -58,7 +63,8 @@ export default defineEndpoint({
                         type: Type.Const("engine_quit"),
                     },
                     {
-                        description: "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
+                        description:
+                            "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
                         title: "EngineQuitUpdate",
                     }
                 ),
@@ -67,7 +73,8 @@ export default defineEndpoint({
                         type: Type.Const("engine_crash"),
                     },
                     {
-                        description: "The engine process for battle has crashed, no more updates will be sent for this battle.",
+                        description:
+                            "The engine process for battle has crashed, no more updates will be sent for this battle.",
                         title: "EngineCrashUpdate",
                     }
                 ),
@@ -78,7 +85,8 @@ export default defineEndpoint({
                         playerNumber: Type.Integer(),
                     },
                     {
-                        description: "Player number in the game, can be useful for custom commands.",
+                        description:
+                            "Player number in the game, can be useful for custom commands.",
                         title: "PlayerJoinedUpdate",
                     }
                 ),

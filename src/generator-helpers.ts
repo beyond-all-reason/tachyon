@@ -1,4 +1,12 @@
-import { SchemaOptions, Static, TIntersect, TObject, TRef, TSchema, TUnion } from "@sinclair/typebox";
+import {
+    SchemaOptions,
+    Static,
+    TIntersect,
+    TObject,
+    TRef,
+    TSchema,
+    TUnion,
+} from "@sinclair/typebox";
 import { SetOptional } from "type-fest";
 
 import { TachyonActor } from "@/type-helpers";
@@ -25,13 +33,15 @@ export type EndpointConfig = {
            *
            * If status is `failed`, a `reason` string must also be provided.
            *
-           * `success` responses may optionally include `data`, defined with TypeBox, describing the shape of the data, gets resolves to JSONSchema.
+           * `success` responses may optionally include `data`, defined with TypeBox, describing the
+           * shape of the data, gets resolves to JSONSchema.
            * */
           response: ResponseSchema;
       }
     | {
           /**
-           * An event is a one-way message containing data that doesn't need to be responded to or acknowledged.
+           * An event is a one-way message containing data that doesn't need to be responded to or
+           * acknowledged.
            *
            * Is defined with TypeBox, describing the shape of the data, gets resolves to JSONSchema. */
           event: DataSchema;

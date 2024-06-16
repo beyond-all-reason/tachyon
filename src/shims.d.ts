@@ -170,7 +170,18 @@ declare const tachyonMeta: {
                 "unsubscribe",
                 "updated",
             ];
-            readonly matchmaking: readonly ["cancel", "declined", "found", "foundUpdate", "list", "lost", "queue", "queueUpdate", "ready", "readyUpdate"];
+            readonly matchmaking: readonly [
+                "cancel",
+                "declined",
+                "found",
+                "foundUpdate",
+                "list",
+                "lost",
+                "queue",
+                "queueUpdate",
+                "ready",
+                "readyUpdate",
+            ];
             readonly system: readonly ["connected", "disconnect", "serverStats"];
             readonly user: readonly ["subscribe", "unsubscribe", "updated"];
         };

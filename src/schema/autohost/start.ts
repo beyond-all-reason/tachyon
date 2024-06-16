@@ -8,7 +8,8 @@ import { startPosType } from "@/schema/definitions/startPosType";
 export default defineEndpoint({
     source: "server",
     target: "autohost",
-    description: "Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.",
+    description:
+        "Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.",
     request: {
         data: Type.Object({
             battleId: Type.String(),
@@ -37,7 +38,9 @@ export default defineEndpoint({
         {
             status: "success",
             data: Type.Object({
-                ips: Type.Array(Type.Union([Type.String({ format: "ipv4" }), Type.String({ format: "ipv6" })])),
+                ips: Type.Array(
+                    Type.Union([Type.String({ format: "ipv4" }), Type.String({ format: "ipv6" })])
+                ),
                 port: Type.Integer({ minimum: 1024, maximum: 65535 }),
             }),
         },

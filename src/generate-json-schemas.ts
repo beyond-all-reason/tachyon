@@ -20,7 +20,10 @@ export type TachyonConfig = {
 };
 
 type SchemaMeta = {
-    actors: Record<TachyonActor, Record<"request" | "response" | "event", { send: string[]; receive: string[] }>>;
+    actors: Record<
+        TachyonActor,
+        Record<"request" | "response" | "event", { send: string[]; receive: string[] }>
+    >;
     serviceIds: Record<string, string[]>;
 };
 
@@ -67,7 +70,9 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 continue;
             }
             const endpointId = path.parse(endpointSchemaPath.name).name;
-            const endpoint = await import(pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString());
+            const endpoint = await import(
+                pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString()
+            );
             const schemaConfig = endpoint.default as EndpointConfig;
 
             await fs.promises.mkdir(path.join("schema", serviceId, endpointId), {
@@ -83,19 +88,27 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
             }
 
             if ("request" in schemaConfig && "event" in schemaConfig) {
-                throw new Error(`Endpoint ${serviceId}/${endpointId} cannot have both a request and an event`);
+                throw new Error(
+                    `Endpoint ${serviceId}/${endpointId} cannot have both a request and an event`
+                );
             }
 
             if (!("request" in schemaConfig || "event" in schemaConfig)) {
-                throw new Error(`Endpoint ${serviceId}/${endpointId} must have either a request or an event`);
+                throw new Error(
+                    `Endpoint ${serviceId}/${endpointId} must have either a request or an event`
+                );
             }
 
             if ("request" in schemaConfig && !("response" in schemaConfig)) {
-                throw new Error(`Endpoint ${serviceId}/${endpointId} must have a response if it has a request`);
+                throw new Error(
+                    `Endpoint ${serviceId}/${endpointId} must have a response if it has a request`
+                );
             }
 
             if ("response" in schemaConfig && !("request" in schemaConfig)) {
-                throw new Error(`Endpoint ${serviceId}/${endpointId} must have a request if it has a response`);
+                throw new Error(
+                    `Endpoint ${serviceId}/${endpointId} must have a request if it has a response`
+                );
             }
 
             const commandId = `${serviceId}/${endpointId}` as const;
@@ -119,18 +132,34 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 });
                 mapRefs(requestSchema, (ref) => `../../definitions/${ref}.json`);
                 const requestSchemaStr = JSON.stringify(requestSchema, null, 4);
-                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, requestSchemaStr);
+                await fs.promises.writeFile(
+                    `schema/${serviceId}/${endpointId}/request.json`,
+                    requestSchemaStr
+                );
 
-                const successResponses = schemaConfig.response.filter((schema) => schema.status == "success") as SuccessResponseSchema[]; // Cast won't be necessary in typescript 5.5
-                const failedResponses = schemaConfig.response.filter((schema) => schema.status == "failed") as FailedResponseSchema[]; // Cast won't be necessary in typescript 5.5
+                const successResponses = schemaConfig.response.filter(
+                    (schema) => schema.status == "success"
+                ) as SuccessResponseSchema[]; // Cast won't be necessary in typescript 5.5
+                const failedResponses = schemaConfig.response.filter(
+                    (schema) => schema.status == "failed"
+                ) as FailedResponseSchema[]; // Cast won't be necessary in typescript 5.5
                 if (successResponses.length === 0) {
-                    throw new Error(`Endpoint ${serviceId}/${endpointId} does not have a success response`);
+                    throw new Error(
+                        `Endpoint ${serviceId}/${endpointId} does not have a success response`
+                    );
                 }
                 if (failedResponses.length === 0) {
-                    throw new Error(`Endpoint ${serviceId}/${endpointId} does not have a failed response`);
+                    throw new Error(
+                        `Endpoint ${serviceId}/${endpointId} does not have a failed response`
+                    );
                 }
-                if (successResponses.length > 1 && successResponses.filter((s) => !s.title).length > 1) {
-                    throw new Error(`Endpoint ${serviceId}/${endpointId} has multiple success responses but not all have a title`);
+                if (
+                    successResponses.length > 1 &&
+                    successResponses.filter((s) => !s.title).length > 1
+                ) {
+                    throw new Error(
+                        `Endpoint ${serviceId}/${endpointId} has multiple success responses but not all have a title`
+                    );
                 }
 
                 const responseSchema = Type.Union(
@@ -156,7 +185,9 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                                     messageId: Type.String(),
                                     commandId: Type.Literal(commandId),
                                     status: Type.Literal("failed"),
-                                    reason: UnionEnum(failedResponses.map((schema) => schema.reason)),
+                                    reason: UnionEnum(
+                                        failedResponses.map((schema) => schema.reason)
+                                    ),
                                 },
                                 { title: baseTypeName + "FailResponse" }
                             ),
@@ -170,7 +201,10 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 );
                 mapRefs(responseSchema, (ref) => `../../definitions/${ref}.json`);
                 const responseSchemaStr = JSON.stringify(responseSchema, null, 4);
-                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, responseSchemaStr);
+                await fs.promises.writeFile(
+                    `schema/${serviceId}/${endpointId}/response.json`,
+                    responseSchemaStr
+                );
 
                 commandConfigs[commandId] = {
                     commandId,
@@ -198,9 +232,17 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 });
                 mapRefs(eventSchema, (ref) => `../../definitions/${ref}.json`);
                 const schemaStr = JSON.stringify(eventSchema, null, 4);
-                await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/event.json`, schemaStr);
+                await fs.promises.writeFile(
+                    `schema/${serviceId}/${endpointId}/event.json`,
+                    schemaStr
+                );
 
-                commandConfigs[commandId] = { commandId, schema: { event: eventSchema }, config: schemaConfig, type: "event" };
+                commandConfigs[commandId] = {
+                    commandId,
+                    schema: { event: eventSchema },
+                    config: schemaConfig,
+                    type: "event",
+                };
             }
         }
     }
@@ -213,10 +255,14 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
             continue;
         }
         const name = path.parse(definitionFile).name;
-        const imports = await import(pathToFileURL(path.join(definitionsPath, definitionFile)).toString());
+        const imports = await import(
+            pathToFileURL(path.join(definitionsPath, definitionFile)).toString()
+        );
         const key = Object.keys(imports)[0];
         if (key !== name) {
-            throw new Error(`Definition schema does not have the same name as the file: ${definitionFile}`);
+            throw new Error(
+                `Definition schema does not have the same name as the file: ${definitionFile}`
+            );
         }
         const schema = imports[key];
         if (!schema.$id) {
@@ -265,16 +311,26 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         const [serviceId, endpointId] = commandId.split("/") as [string, string];
 
         if (commandConfig.type === "requestResponse") {
-            schemaMeta.actors[commandConfig.config.source].request.send.push(commandConfig.commandId);
-            schemaMeta.actors[commandConfig.config.target].request.receive.push(commandConfig.commandId);
-            schemaMeta.actors[commandConfig.config.source].response.receive.push(commandConfig.commandId);
-            schemaMeta.actors[commandConfig.config.target].response.send.push(commandConfig.commandId);
+            schemaMeta.actors[commandConfig.config.source].request.send.push(
+                commandConfig.commandId
+            );
+            schemaMeta.actors[commandConfig.config.target].request.receive.push(
+                commandConfig.commandId
+            );
+            schemaMeta.actors[commandConfig.config.source].response.receive.push(
+                commandConfig.commandId
+            );
+            schemaMeta.actors[commandConfig.config.target].response.send.push(
+                commandConfig.commandId
+            );
 
             individualSchemas.push(commandConfig.schema.request);
             individualSchemas.push(commandConfig.schema.response);
         } else if ("event" in commandConfig.config) {
             schemaMeta.actors[commandConfig.config.source].event.send.push(commandConfig.commandId);
-            schemaMeta.actors[commandConfig.config.target].event.receive.push(commandConfig.commandId);
+            schemaMeta.actors[commandConfig.config.target].event.receive.push(
+                commandConfig.commandId
+            );
 
             individualSchemas.push(commandConfig.schema.event);
         } else {
@@ -304,7 +360,9 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         title: "TachyonCompiled",
         definitions: definitionsMap,
     });
-    mapRefs(compiledSchema, (ref) => ref.replace(/.*\/definitions\/(.*)\.json/, "#/definitions/$1"));
+    mapRefs(compiledSchema, (ref) =>
+        ref.replace(/.*\/definitions\/(.*)\.json/, "#/definitions/$1")
+    );
     await fs.promises.writeFile("schema/compiled.json", JSON.stringify(compiledSchema, null, 4));
 
     return { commandConfigs, compiledSchema, schemaMeta };

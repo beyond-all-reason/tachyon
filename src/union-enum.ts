@@ -40,9 +40,14 @@ export interface TUnionEnum<T extends (string | number)[]> extends TSchema {
 // UnionEnum
 // -------------------------------------------------------------------------------------
 /** `[Experimental]` Creates a Union type with a `enum` schema representation  */
-export function UnionEnum<T extends (string | number)[]>(values: [...T], options: SchemaOptions = {}) {
+export function UnionEnum<T extends (string | number)[]>(
+    values: [...T],
+    options: SchemaOptions = {}
+) {
     function UnionEnumCheck(schema: TUnionEnum<(string | number)[]>, value: unknown) {
-        return (typeof value === "string" || typeof value === "number") && schema.enum.includes(value);
+        return (
+            (typeof value === "string" || typeof value === "number") && schema.enum.includes(value)
+        );
     }
     if (!TypeRegistry.Has("UnionEnum")) TypeRegistry.Set("UnionEnum", UnionEnumCheck);
     return { ...options, [Kind]: "UnionEnum", enum: values } as TUnionEnum<T>;

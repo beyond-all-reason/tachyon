@@ -25,7 +25,9 @@ export async function generateValidators() {
         if (file === "compiled.json" || !file.endsWith(".json")) {
             continue;
         }
-        const schema = JSON.parse(await fs.promises.readFile(path.join("schema", file), { encoding: "utf-8" }));
+        const schema = JSON.parse(
+            await fs.promises.readFile(path.join("schema", file), { encoding: "utf-8" })
+        );
         schemas.push(schema);
 
         if (!file.startsWith("definitions")) {
@@ -67,7 +69,10 @@ function ucs2length(str) {
 }
 `;
     moduleCode += standaloneCode(ajvEsm, schemaMap);
-    moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/ucs2length").default', "ucs2length");
+    moduleCode = moduleCode.replaceAll(
+        'require("ajv/dist/runtime/ucs2length").default',
+        "ucs2length"
+    );
     moduleCode = moduleCode.replaceAll('require("ajv-formats/dist/formats").', "");
     await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
     process.stdout.write("✔️\n");

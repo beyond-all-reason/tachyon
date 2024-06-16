@@ -7,13 +7,16 @@ export type TachyonResponse = Extract<TachyonCommand, { type: "response" }>;
 export type TachyonEvent = Extract<TachyonCommand, { type: "event" }>;
 
 export type ServiceId = keyof TachyonMeta["serviceIds"];
-export type EndpointId<S extends ServiceId> = ExcludeEmptyArray<TachyonMeta["serviceIds"][S]>[number];
+export type EndpointId<S extends ServiceId> = ExcludeEmptyArray<
+    TachyonMeta["serviceIds"][S]
+>[number];
 
 export type GetCommandIds<
     Sender extends TachyonActor = TachyonActor,
     Receiver extends TachyonActor = TachyonActor,
     Type extends TachyonCommandType = TachyonCommandType,
-> = ExcludeEmptyArray<TachyonMeta["actors"][Sender][Type]["send"]>[number] & ExcludeEmptyArray<TachyonMeta["actors"][Receiver][Type]["receive"]>[number];
+> = ExcludeEmptyArray<TachyonMeta["actors"][Sender][Type]["send"]>[number] &
+    ExcludeEmptyArray<TachyonMeta["actors"][Receiver][Type]["receive"]>[number];
 
 export type GetCommands<
     Sender extends TachyonActor = TachyonActor,
@@ -24,12 +27,11 @@ export type GetCommands<
 
 export type GetCommandData<C extends TachyonCommand> = C extends { data: infer D } ? D : never;
 
-export type GetFailedResponseReason<C extends GetCommandIds<TachyonActor, TachyonActor, "response">> = GetCommands<
-    TachyonActor,
-    TachyonActor,
-    "response",
-    C
-> & { status: "failed" } extends { reason: infer R }
+export type GetFailedResponseReason<
+    C extends GetCommandIds<TachyonActor, TachyonActor, "response">,
+> = GetCommands<TachyonActor, TachyonActor, "response", C> & { status: "failed" } extends {
+    reason: infer R;
+}
     ? R
     : never;
 

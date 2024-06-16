@@ -12,7 +12,12 @@ export const user = Type.Object(
         partyId: Nullable(Type.String()),
         scopes: Type.Array(Type.String()),
         countryCode: Type.Optional(Type.String()),
-        status: Type.Union([Type.Literal("offline"), Type.Literal("menu"), Type.Literal("playing"), Type.Literal("lobby")]),
+        status: Type.Union([
+            Type.Literal("offline"),
+            Type.Literal("menu"),
+            Type.Literal("playing"),
+            Type.Literal("lobby"),
+        ]),
     },
     { $id: "user" }
 );

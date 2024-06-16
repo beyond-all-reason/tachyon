@@ -20,7 +20,8 @@ export async function generateDocs(tachyonConfig: TachyonConfig) {
             if (!tachyonSchema[serviceId]) {
                 tachyonSchema[serviceId] = {};
             }
-            tachyonSchema[serviceId][endpointId] = tachyonConfig.commandConfigs[`${serviceId}/${endpointId}`];
+            tachyonSchema[serviceId][endpointId] =
+                tachyonConfig.commandConfigs[`${serviceId}/${endpointId}`];
         }
     });
 
@@ -30,7 +31,8 @@ export async function generateDocs(tachyonConfig: TachyonConfig) {
     }
 
     let mainReadme = await fs.promises.readFile("README.md", { encoding: "utf-8" });
-    const regex = /(?<=COMMAND_SCHEMA_PLACEHOLDER_START.*$\n)[\s|\S]*(?=^.*COMMAND_SCHEMA_PLACEHOLDER_END.*)/ms;
+    const regex =
+        /(?<=COMMAND_SCHEMA_PLACEHOLDER_START.*$\n)[\s|\S]*(?=^.*COMMAND_SCHEMA_PLACEHOLDER_END.*)/ms;
     if (!mainReadme.match(regex)) {
         throw new Error("Could not find COMMAND_SCHEMA_PLACEHOLDER comment in main README.md");
     }
@@ -52,7 +54,11 @@ export async function generateDocs(tachyonConfig: TachyonConfig) {
             orderedCommandConfigs[id] = tachyonConfig.commandConfigs[`${serviceId}/${id}`];
         }
 
-        const markdown = await generateServiceMarkdown(serviceId, orderedCommandConfigs, tachyonConfig.compiledSchema);
+        const markdown = await generateServiceMarkdown(
+            serviceId,
+            orderedCommandConfigs,
+            tachyonConfig.compiledSchema
+        );
 
         await fs.promises.writeFile(`docs/schema/${serviceId.toString()}.md`, markdown);
     }
@@ -80,13 +86,23 @@ export async function generateServiceMarkdown(
     }
 
     for (const endpointId in endpointConfigs) {
-        markdown += await generateEndpointMarkdown(serviceId, endpointId, endpointConfigs[endpointId], compiledSchema);
+        markdown += await generateEndpointMarkdown(
+            serviceId,
+            endpointId,
+            endpointConfigs[endpointId],
+            compiledSchema
+        );
     }
 
     return markdown;
 }
 
-export async function generateEndpointMarkdown(serviceId: string, endpointId: string, commandConfig: CommandConfig, compiledSchema: TSchema): Promise<string> {
+export async function generateEndpointMarkdown(
+    serviceId: string,
+    endpointId: string,
+    commandConfig: CommandConfig,
+    compiledSchema: TSchema
+): Promise<string> {
     let markdown = `---\n\n## ${titleCase(endpointId)}\n\n`;
 
     if (commandConfig.config.description) {
@@ -109,10 +125,28 @@ export async function generateEndpointMarkdown(serviceId: string, endpointId: st
     }
 
     if (commandConfig.type === "requestResponse") {
-        markdown += await generateCommandMarkdown(serviceId, endpointId, commandConfig.schema.request, compiledSchema.definitions, "request");
-        markdown += await generateCommandMarkdown(serviceId, endpointId, commandConfig.schema.response, compiledSchema.definitions, "response");
+        markdown += await generateCommandMarkdown(
+            serviceId,
+            endpointId,
+            commandConfig.schema.request,
+            compiledSchema.definitions,
+            "request"
+        );
+        markdown += await generateCommandMarkdown(
+            serviceId,
+            endpointId,
+            commandConfig.schema.response,
+            compiledSchema.definitions,
+            "response"
+        );
     } else {
-        markdown += await generateCommandMarkdown(serviceId, endpointId, commandConfig.schema.event, compiledSchema.definitions, "event");
+        markdown += await generateCommandMarkdown(
+            serviceId,
+            endpointId,
+            commandConfig.schema.event,
+            compiledSchema.definitions,
+            "event"
+        );
     }
 
     return markdown;
@@ -147,7 +181,12 @@ ${JSON.stringify(schema, null, 4)}
 
     schema.definitions = definitions;
 
-    schema = JSON.parse(JSON.stringify(schema, null, 4).replaceAll(/(?:\.\.\/)+definitions\/(.*)?\.json/g, "#/definitions/$1"));
+    schema = JSON.parse(
+        JSON.stringify(schema, null, 4).replaceAll(
+            /(?:\.\.\/)+definitions\/(.*)?\.json/g,
+            "#/definitions/$1"
+        )
+    );
 
     JSONSchemaFaker.option("random", () => randomSeed);
     randomSeed += 0.01;
@@ -160,15 +199,19 @@ ${JSON.stringify(dummyData, null, 4)}
 \`\`\`\n</details>\n\n`;
 
     try {
-        let typings = await compile(schema, `${titleCase(serviceId)}${titleCase(endpointId)}${titleCase(commandType)}`, {
-            additionalProperties: false,
-            bannerComment: ``,
-            style: {
-                bracketSpacing: true,
-                tabWidth: 4,
-                semi: true,
-            },
-        });
+        let typings = await compile(
+            schema,
+            `${titleCase(serviceId)}${titleCase(endpointId)}${titleCase(commandType)}`,
+            {
+                additionalProperties: false,
+                bannerComment: ``,
+                style: {
+                    bracketSpacing: true,
+                    tabWidth: 4,
+                    semi: true,
+                },
+            }
+        );
         typings = typings.replace(/\s*\/\*[\s\S]*?\*\/|(?<=[^:])\/\/.*|^\/\/.*/g, ""); // remove comments
 
         markdown += `#### TypeScript Definition
