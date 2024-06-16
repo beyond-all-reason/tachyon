@@ -92,11 +92,11 @@ Every event command contains these additional properties:
 ## Schema
 
 <!-- COMMAND_SCHEMA_PLACEHOLDER_START_DO_NOT_REMOVE -->
-    -   [autohost](docs/schema/autohost.md)
-    -   [battle](docs/schema/battle.md)
-    -   [matchmaking](docs/schema/matchmaking.md)
-    -   [system](docs/schema/system.md)
-    -   [user](docs/schema/user.md)
+  - [autohost](docs/schema/autohost.md)
+  - [battle](docs/schema/battle.md)
+  - [matchmaking](docs/schema/matchmaking.md)
+  - [system](docs/schema/system.md)
+  - [user](docs/schema/user.md)
 <!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
 
 ## Contributing
