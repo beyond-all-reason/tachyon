@@ -1,5 +1,5 @@
 {
-    "$id": "startPosType",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/startPosType.json",
     "enum": [
         "fixed",
         "random",

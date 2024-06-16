@@ -75,8 +75,6 @@ Request to kill a battle.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/addPlayer/request",
     "title": "AutohostAddPlayerRequest",
     "scopes": [
         "tachyon.lobby"
@@ -172,8 +170,6 @@ export interface AutohostAddPlayerRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/addPlayer/response",
     "title": "AutohostAddPlayerResponse",
     "scopes": [
         "tachyon.lobby"
@@ -289,8 +285,6 @@ Kick a player from a battle.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/kickPlayer/request",
     "title": "AutohostKickPlayerRequest",
     "scopes": [
         "tachyon.lobby"
@@ -374,8 +368,6 @@ export interface AutohostKickPlayerRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/kickPlayer/response",
     "title": "AutohostKickPlayerResponse",
     "scopes": [
         "tachyon.lobby"
@@ -491,8 +483,6 @@ Request to kill a battle.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/kill/request",
     "title": "AutohostKillRequest",
     "scopes": [
         "tachyon.lobby"
@@ -568,8 +558,6 @@ export interface AutohostKillRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/kill/response",
     "title": "AutohostKillResponse",
     "scopes": [
         "tachyon.lobby"
@@ -685,8 +673,6 @@ Mute a player in a battle.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/mutePlayer/request",
     "title": "AutohostMutePlayerRequest",
     "scopes": [
         "tachyon.lobby"
@@ -770,8 +756,6 @@ export interface AutohostMutePlayerRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/mutePlayer/response",
     "title": "AutohostMutePlayerResponse",
     "scopes": [
         "tachyon.lobby"
@@ -887,8 +871,6 @@ Send a custom command for the autohost to execute.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/sendCommand/request",
     "title": "AutohostSendCommandRequest",
     "scopes": [
         "tachyon.lobby"
@@ -977,8 +959,6 @@ export interface AutohostSendCommandRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/sendCommand/response",
     "title": "AutohostSendCommandResponse",
     "scopes": [
         "tachyon.lobby"
@@ -1094,8 +1074,6 @@ Send a message for the autohost to display to players.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/sendMessage/request",
     "title": "AutohostSendMessageRequest",
     "scopes": [
         "tachyon.lobby"
@@ -1178,8 +1156,6 @@ export interface AutohostSendMessageRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/sendMessage/response",
     "title": "AutohostSendMessageResponse",
     "scopes": [
         "tachyon.lobby"
@@ -1295,8 +1271,6 @@ Force players to become spectators in a battle.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/specPlayers/request",
     "title": "AutohostSpecPlayersRequest",
     "scopes": [
         "tachyon.lobby"
@@ -1385,8 +1359,6 @@ export interface AutohostSpecPlayersRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/specPlayers/response",
     "title": "AutohostSpecPlayersResponse",
     "scopes": [
         "tachyon.lobby"
@@ -1502,8 +1474,6 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/start/request",
     "title": "AutohostStartRequest",
     "scopes": [
         "tachyon.lobby"
@@ -1699,7 +1669,12 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 #### TypeScript Definition
 ```ts
 export type StartPosType = "fixed" | "random" | "ingame" | "beforegame";
-export type Player = Spectator & {
+export type Player = {
+    userId: UserId;
+    name: string;
+    rank: number;
+    countryCode: string;
+} & {
     customOptions?: {
         [k: string]: string;
     };
@@ -1722,7 +1697,7 @@ export interface AutohostStartRequestData {
     startDelay: number;
     startPosType: StartPosType;
     allyTeams: AllyTeam[];
-    spectators: Spectator1[];
+    spectators: Spectator[];
     mapOptions?: {
         [k: string]: string;
     };
@@ -1760,12 +1735,6 @@ export interface Team {
         [k: string]: string;
     };
 }
-export interface Spectator {
-    userId: UserId;
-    name: string;
-    rank: number;
-    countryCode: string;
-}
 export interface Bot {
     hostUserId: string;
     name: string;
@@ -1781,7 +1750,7 @@ export interface StartBox {
     left: number;
     right: number;
 }
-export interface Spectator1 {
+export interface Spectator {
     userId: UserId;
     name: string;
     rank: number;
@@ -1795,8 +1764,6 @@ export interface Spectator1 {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/start/response",
     "title": "AutohostStartResponse",
     "scopes": [
         "tachyon.lobby"
@@ -1957,8 +1924,6 @@ This event should be sent to the server on connection and whenever any of the st
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/status/event",
     "title": "AutohostStatusEvent",
     "scopes": [
         "tachyon.lobby"
@@ -2052,8 +2017,6 @@ Ask the autohost to send us updates about its battles.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/subscribeUpdates/request",
     "title": "AutohostSubscribeUpdatesRequest",
     "scopes": [
         "tachyon.lobby"
@@ -2130,8 +2093,6 @@ export interface AutohostSubscribeUpdatesRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/subscribeUpdates/response",
     "title": "AutohostSubscribeUpdatesResponse",
     "scopes": [
         "tachyon.lobby"
@@ -2247,8 +2208,6 @@ Inform the server of battle updates.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/update/event",
     "title": "AutohostUpdateEvent",
     "scopes": [
         "tachyon.lobby"

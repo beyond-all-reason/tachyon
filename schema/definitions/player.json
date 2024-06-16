@@ -1,5 +1,5 @@
 {
-    "$id": "player",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/player.json",
     "allOf": [
         {
             "$ref": "../definitions/spectator.json"

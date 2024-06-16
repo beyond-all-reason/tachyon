@@ -1,5 +1,5 @@
 {
-    "$id": "spectator",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/spectator.json",
     "type": "object",
     "properties": {
         "userId": {

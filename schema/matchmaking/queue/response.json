@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/queue/response",
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/queue/response.json",
     "title": "MatchmakingQueueResponse",
     "scopes": [
         "tachyon.lobby"

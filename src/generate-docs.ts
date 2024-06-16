@@ -37,6 +37,7 @@ export async function generateDocs(tachyonConfig: TachyonConfig) {
     mainReadme = mainReadme.replace(regex, schemaContents);
     await fs.promises.writeFile("README.md", mainReadme);
 
+    await fs.promises.mkdir("docs/schema", { recursive: true });
     for (const serviceId in tachyonSchema) {
         const serviceSchema = tachyonSchema[serviceId] as Record<string, CommandConfig>;
 

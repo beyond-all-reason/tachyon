@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/found/event",
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/found/event.json",
     "title": "MatchmakingFoundEvent",
     "scopes": [
         "tachyon.lobby"

@@ -1,5 +1,5 @@
 {
-    "$id": "user",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/user.json",
     "type": "object",
     "properties": {
         "userId": {

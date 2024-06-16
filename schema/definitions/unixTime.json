@@ -1,5 +1,5 @@
 {
-    "$id": "unixTime",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/unixTime.json",
     "description": "Unix timestamp in microseconds",
     "examples": [
         1705432698

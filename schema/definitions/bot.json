@@ -1,5 +1,5 @@
 {
-    "$id": "bot",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/bot.json",
     "type": "object",
     "properties": {
         "hostUserId": {

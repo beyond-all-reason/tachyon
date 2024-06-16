@@ -22,8 +22,6 @@ Ask the server to terminate the connection.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "system/disconnect/request",
     "title": "SystemDisconnectRequest",
     "scopes": [
         "tachyon.lobby"
@@ -97,8 +95,6 @@ export interface SystemDisconnectRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "system/disconnect/response",
     "title": "SystemDisconnectResponse",
     "scopes": [
         "tachyon.lobby"
@@ -214,8 +210,6 @@ Get server stats such as user count.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "system/serverStats/request",
     "title": "SystemServerStatsRequest",
     "scopes": [
         "tachyon.lobby"
@@ -270,8 +264,6 @@ export interface SystemServerStatsRequest {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "system/serverStats/response",
     "title": "SystemServerStatsResponse",
     "scopes": [
         "tachyon.lobby"

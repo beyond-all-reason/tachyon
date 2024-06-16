@@ -1,5 +1,5 @@
 {
-    "$id": "privateUser",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/privateUser.json",
     "allOf": [
         {
             "$ref": "../definitions/user.json"

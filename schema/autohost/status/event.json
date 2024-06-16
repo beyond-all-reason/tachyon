@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/status/event",
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/status/event.json",
     "title": "AutohostStatusEvent",
     "scopes": [
         "tachyon.lobby"

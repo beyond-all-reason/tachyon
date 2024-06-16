@@ -31,7 +31,7 @@ export async function generateJs(tachyonConfig: TachyonConfig) {
 
     await fs.promises.rm(tempFilePath, { force: true });
 
-    await generateJsValidators(tachyonConfig);
+    await generateJsValidators();
 
     process.stdout.write("Generating TS Defs...");
     await generateTSDefs(tachyonConfig);
@@ -47,6 +47,6 @@ export async function buildTs(tsPath: string) {
         outDir: "dist",
         dts: true,
         format: ["cjs", "esm"],
-        silent: true,
+        silent: false,
     });
 }

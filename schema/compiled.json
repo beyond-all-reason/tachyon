@@ -1,7 +1,9 @@
 {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://schema.beyondallreason.dev/tachyon/compiled.json",
+    "title": "TachyonCompiled",
     "definitions": {
         "allyTeam": {
-            "$id": "allyTeam",
             "type": "object",
             "properties": {
                 "teams": {
@@ -25,11 +27,9 @@
             "required": [
                 "teams",
                 "startBox"
-            ],
-            "title": "AllyTeam"
+            ]
         },
         "bot": {
-            "$id": "bot",
             "type": "object",
             "properties": {
                 "hostUserId": {
@@ -59,11 +59,9 @@
                 "aiShortName",
                 "aiVersion",
                 "customOptions"
-            ],
-            "title": "Bot"
+            ]
         },
         "player": {
-            "$id": "player",
             "allOf": [
                 {
                     "$ref": "#/definitions/spectator"
@@ -81,11 +79,9 @@
                         }
                     }
                 }
-            ],
-            "title": "Player"
+            ]
         },
         "privateUser": {
-            "$id": "privateUser",
             "allOf": [
                 {
                     "$ref": "#/definitions/user"
@@ -125,11 +121,9 @@
                         "ignoreIds"
                     ]
                 }
-            ],
-            "title": "PrivateUser"
+            ]
         },
         "spectator": {
-            "$id": "spectator",
             "type": "object",
             "properties": {
                 "userId": {
@@ -151,11 +145,9 @@
                 "name",
                 "rank",
                 "countryCode"
-            ],
-            "title": "Spectator"
+            ]
         },
         "startBox": {
-            "$id": "startBox",
             "type": "object",
             "properties": {
                 "top": {
@@ -184,21 +176,17 @@
                 "bottom",
                 "left",
                 "right"
-            ],
-            "title": "StartBox"
+            ]
         },
         "startPosType": {
-            "$id": "startPosType",
             "enum": [
                 "fixed",
                 "random",
                 "ingame",
                 "beforegame"
-            ],
-            "title": "StartPosType"
+            ]
         },
         "team": {
-            "$id": "team",
             "type": "object",
             "properties": {
                 "players": {
@@ -278,20 +266,16 @@
                 "bots",
                 "faction",
                 "color"
-            ],
-            "title": "Team"
+            ]
         },
         "unixTime": {
-            "$id": "unixTime",
             "description": "Unix timestamp in microseconds",
             "examples": [
                 1705432698
             ],
-            "type": "integer",
-            "title": "UnixTime"
+            "type": "integer"
         },
         "user": {
-            "$id": "user",
             "type": "object",
             "properties": {
                 "userId": {
@@ -361,23 +345,18 @@
                 "partyId",
                 "scopes",
                 "status"
-            ],
-            "title": "User"
+            ]
         },
         "userId": {
-            "$id": "userId",
             "format": "uuid",
             "examples": [
                 "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
             ],
-            "type": "string",
-            "title": "UserId"
+            "type": "string"
         }
     },
     "anyOf": [
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/addPlayer/request",
             "title": "AutohostAddPlayerRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -429,8 +408,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/addPlayer/response",
             "title": "AutohostAddPlayerResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -502,8 +479,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/kickPlayer/request",
             "title": "AutohostKickPlayerRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -547,8 +522,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/kickPlayer/response",
             "title": "AutohostKickPlayerResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -620,8 +593,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/kill/request",
             "title": "AutohostKillRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -661,8 +632,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/kill/response",
             "title": "AutohostKillResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -734,8 +703,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/mutePlayer/request",
             "title": "AutohostMutePlayerRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -779,8 +746,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/mutePlayer/response",
             "title": "AutohostMutePlayerResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -852,8 +817,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/sendCommand/request",
             "title": "AutohostSendCommandRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -903,8 +866,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/sendCommand/response",
             "title": "AutohostSendCommandResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -976,8 +937,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/sendMessage/request",
             "title": "AutohostSendMessageRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -1022,8 +981,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/sendMessage/response",
             "title": "AutohostSendMessageResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -1095,8 +1052,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/specPlayers/request",
             "title": "AutohostSpecPlayersRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -1143,8 +1098,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/specPlayers/response",
             "title": "AutohostSpecPlayersResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -1216,8 +1169,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/start/request",
             "title": "AutohostStartRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -1336,8 +1287,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/start/response",
             "title": "AutohostStartResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -1443,8 +1392,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/status/event",
             "title": "AutohostStatusEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -1489,8 +1436,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/subscribeUpdates/request",
             "title": "AutohostSubscribeUpdatesRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -1529,8 +1474,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/subscribeUpdates/response",
             "title": "AutohostSubscribeUpdatesResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -1602,8 +1545,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "autohost/update/event",
             "title": "AutohostUpdateEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -1779,8 +1720,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "battle/start/request",
             "title": "BattleStartRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -1831,8 +1770,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "battle/start/response",
             "title": "BattleStartResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -1904,8 +1841,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/cancel/request",
             "title": "MatchmakingCancelRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -1931,8 +1866,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/cancel/response",
             "title": "MatchmakingCancelResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -2005,8 +1938,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/found/event",
             "title": "MatchmakingFoundEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -2049,8 +1980,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/foundUpdate/event",
             "title": "MatchmakingFoundUpdateEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -2089,8 +2018,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/list/request",
             "title": "MatchmakingListRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -2116,8 +2043,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/list/response",
             "title": "MatchmakingListResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -2249,8 +2174,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/lost/event",
             "title": "MatchmakingLostEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -2276,8 +2199,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/queue/request",
             "title": "MatchmakingQueueRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -2320,8 +2241,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/queue/response",
             "title": "MatchmakingQueueResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -2396,8 +2315,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/queueUpdate/event",
             "title": "MatchmakingQueueUpdateEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -2436,8 +2353,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/ready/request",
             "title": "MatchmakingReadyRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -2463,8 +2378,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/ready/response",
             "title": "MatchmakingReadyResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -2537,8 +2450,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "matchmaking/readyUpdate/event",
             "title": "MatchmakingReadyUpdateEvent",
             "scopes": [
                 "tachyon.lobby"
@@ -2581,8 +2492,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "system/disconnect/request",
             "title": "SystemDisconnectRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -2620,8 +2529,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "system/disconnect/response",
             "title": "SystemDisconnectResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -2693,8 +2600,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "system/serverStats/request",
             "title": "SystemServerStatsRequest",
             "scopes": [
                 "tachyon.lobby"
@@ -2720,8 +2625,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "system/serverStats/response",
             "title": "SystemServerStatsResponse",
             "scopes": [
                 "tachyon.lobby"
@@ -2806,8 +2709,6 @@
             ]
         },
         {
-            "$schema": "http://json-schema.org/draft-07/schema#",
-            "$id": "user/updated/event",
             "title": "UserUpdatedEvent",
             "scopes": [
                 "tachyon.lobby"

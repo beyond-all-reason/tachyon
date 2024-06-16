@@ -41,8 +41,6 @@ Cancel queueing for matchmaking.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/cancel/request",
     "title": "MatchmakingCancelRequest",
     "scopes": [
         "tachyon.lobby"
@@ -97,8 +95,6 @@ export interface MatchmakingCancelRequest {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/cancel/response",
     "title": "MatchmakingCancelResponse",
     "scopes": [
         "tachyon.lobby"
@@ -215,8 +211,6 @@ Server should send this when there are enough queued players to form a valid bat
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/found/event",
     "title": "MatchmakingFoundEvent",
     "scopes": [
         "tachyon.lobby"
@@ -308,8 +302,6 @@ Server should send this when players ready up using [ready](#ready).
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/foundUpdate/event",
     "title": "MatchmakingFoundUpdateEvent",
     "scopes": [
         "tachyon.lobby"
@@ -395,8 +387,6 @@ Returns all available matchmaking playlists.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/list/request",
     "title": "MatchmakingListRequest",
     "scopes": [
         "tachyon.lobby"
@@ -451,8 +441,6 @@ export interface MatchmakingListRequest {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/list/response",
     "title": "MatchmakingListResponse",
     "scopes": [
         "tachyon.lobby"
@@ -656,8 +644,6 @@ Sent when a found match gets disbanded because a client failed to ready up.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/lost/event",
     "title": "MatchmakingLostEvent",
     "scopes": [
         "tachyon.lobby"
@@ -723,8 +709,6 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/queue/request",
     "title": "MatchmakingQueueRequest",
     "scopes": [
         "tachyon.lobby"
@@ -806,8 +790,6 @@ export interface MatchmakingQueueRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/queue/response",
     "title": "MatchmakingQueueResponse",
     "scopes": [
         "tachyon.lobby"
@@ -926,8 +908,6 @@ Contains some info about the state of the current queue.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/queueUpdate/event",
     "title": "MatchmakingQueueUpdateEvent",
     "scopes": [
         "tachyon.lobby"
@@ -1013,8 +993,6 @@ Clients should send this when they are ready to proceed with the found match. If
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/ready/request",
     "title": "MatchmakingReadyRequest",
     "scopes": [
         "tachyon.lobby"
@@ -1069,8 +1047,6 @@ export interface MatchmakingReadyRequest {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/ready/response",
     "title": "MatchmakingReadyResponse",
     "scopes": [
         "tachyon.lobby"
@@ -1187,8 +1163,6 @@ Sent when a client in a found match readies up.
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "matchmaking/readyUpdate/event",
     "title": "MatchmakingReadyUpdateEvent",
     "scopes": [
         "tachyon.lobby"

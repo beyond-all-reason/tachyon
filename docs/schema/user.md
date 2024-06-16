@@ -21,8 +21,6 @@ Sent by the server to inform the client when subscribed users get updated in som
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "user/updated/event",
     "title": "UserUpdatedEvent",
     "scopes": [
         "tachyon.lobby"

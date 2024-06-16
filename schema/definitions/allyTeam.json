@@ -1,5 +1,5 @@
 {
-    "$id": "allyTeam",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/allyTeam.json",
     "type": "object",
     "properties": {
         "teams": {

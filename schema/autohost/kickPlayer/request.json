@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/kickPlayer/request",
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/kickPlayer/request.json",
     "title": "AutohostKickPlayerRequest",
     "scopes": [
         "tachyon.lobby"

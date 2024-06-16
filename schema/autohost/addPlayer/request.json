@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "autohost/addPlayer/request",
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/addPlayer/request.json",
     "title": "AutohostAddPlayerRequest",
     "scopes": [
         "tachyon.lobby"

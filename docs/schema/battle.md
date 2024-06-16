@@ -21,8 +21,6 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "battle/start/request",
     "title": "BattleStartRequest",
     "scopes": [
         "tachyon.lobby"
@@ -115,8 +113,6 @@ export interface BattleStartRequestData {
 
 ```json
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "battle/start/response",
     "title": "BattleStartResponse",
     "scopes": [
         "tachyon.lobby"

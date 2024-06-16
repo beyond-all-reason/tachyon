@@ -11,6 +11,8 @@ import { EndpointConfig } from "@/generator-helpers.js";
 import { TachyonActor } from "@/type-helpers";
 import { UnionEnum } from "@/union-enum";
 
+const schemaBaseUri = "https://schema.beyondallreason.dev/tachyon";
+
 export type TachyonConfig = {
     commandConfigs: Record<`${string}/${string}`, CommandConfig>;
     compiledSchema: TUnion<TSchema[]>;
@@ -111,11 +113,11 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 }
                 const requestSchema = Type.Object(props, {
                     $schema: "http://json-schema.org/draft-07/schema#",
-                    $id: `${commandId}/request`,
+                    $id: `${schemaBaseUri}/${commandId}/request.json`,
                     title: baseTypeName + "Request",
                     scopes: schemaConfig.scopes,
                 });
-                replaceRefs(requestSchema, "../../definitions/", ".json");
+                mapRefs(requestSchema, (ref) => `../../definitions/${ref}.json`);
                 const requestSchemaStr = JSON.stringify(requestSchema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/request.json`, requestSchemaStr);
 
@@ -161,12 +163,12 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                         ]),
                     {
                         $schema: "http://json-schema.org/draft-07/schema#",
-                        $id: `${commandId}/response`,
+                        $id: `${schemaBaseUri}/${commandId}/response.json`,
                         title: baseTypeName + "Response",
                         scopes: schemaConfig.scopes,
                     }
                 );
-                replaceRefs(responseSchema, "../../definitions/", ".json");
+                mapRefs(responseSchema, (ref) => `../../definitions/${ref}.json`);
                 const responseSchemaStr = JSON.stringify(responseSchema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/response.json`, responseSchemaStr);
 
@@ -190,11 +192,11 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 }
                 const eventSchema = Type.Object(props, {
                     $schema: "http://json-schema.org/draft-07/schema#",
-                    $id: `${commandId}/event`,
+                    $id: `${schemaBaseUri}/${commandId}/event.json`,
                     title: baseTypeName + "Event",
                     scopes: schemaConfig.scopes,
                 });
-                replaceRefs(eventSchema, "../../definitions/", ".json");
+                mapRefs(eventSchema, (ref) => `../../definitions/${ref}.json`);
                 const schemaStr = JSON.stringify(eventSchema, null, 4);
                 await fs.promises.writeFile(`schema/${serviceId}/${endpointId}/event.json`, schemaStr);
 
@@ -223,11 +225,16 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         if (schema.$id !== name) {
             throw new Error(`Definition schema $id does not match the name: ${definitionFile}`);
         }
-        schema.title ??= capitalize(name);
-        replaceRefs(schema, "../definitions/", ".json");
-        const schemaStr = JSON.stringify(schema, null, 4);
-        await fs.promises.writeFile(`schema/definitions/${schema.$id}.json`, schemaStr);
-        definitionsMap[schema.$id] = schema;
+        // We need to have ternary in mapper below because the schema might have been modified by us already.
+        mapRefs(schema, (ref) => `../definitions/${ref}.json`);
+        definitionsMap[name] = schema;
+
+        // We have to clone the schema because we modify it in place and it impacts later lookups
+        const schemaClone = { ...schema };
+        schemaClone.$id = `${schemaBaseUri}/definitions/${name}.json`;
+        schemaClone.title ??= capitalize(name);
+        const schemaStr = JSON.stringify(schemaClone, null, 4);
+        await fs.promises.writeFile(`schema/definitions/${name}.json`, schemaStr);
     }
 
     const schemaMeta: SchemaMeta = {
@@ -281,21 +288,35 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         }
     });
 
-    let compiledSchema = Type.Union(individualSchemas, { definitions: definitionsMap });
-    compiledSchema = JSON.parse(JSON.stringify(compiledSchema, null, 4).replaceAll(/(?:\.\.\/)+definitions\/(.*)?\.json/g, "#/definitions/$1"));
+    // Remove all $id and $schema fields in the sub-schemas of the combined schema
+    for (const def of Object.values(definitionsMap)) {
+        delete def.$id;
+        delete def.$schema;
+    }
+    for (const s of individualSchemas) {
+        delete s.$id;
+        delete s.$schema;
+    }
+
+    const compiledSchema = Type.Union(individualSchemas, {
+        $schema: "http://json-schema.org/draft-07/schema#",
+        $id: `${schemaBaseUri}/compiled.json`,
+        title: "TachyonCompiled",
+        definitions: definitionsMap,
+    });
+    mapRefs(compiledSchema, (ref) => ref.replace(/.*\/definitions\/(.*)\.json/, "#/definitions/$1"));
     await fs.promises.writeFile("schema/compiled.json", JSON.stringify(compiledSchema, null, 4));
 
     return { commandConfigs, compiledSchema, schemaMeta };
 }
 
-function replaceRefs(schema: TSchema, prefix: string, suffix: string) {
+function mapRefs(schema: TSchema, f: (ref: string) => string) {
     for (const key in schema) {
         if (typeof schema[key] === "object") {
-            replaceRefs(schema[key] as TSchema, prefix, suffix);
+            mapRefs(schema[key] as TSchema, f);
         }
-
         if (key === "$ref") {
-            schema.$ref = `${prefix}${schema.$ref}${suffix}`;
+            schema.$ref = f(schema.$ref);
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-    "$id": "startBox",
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/startBox.json",
     "type": "object",
     "properties": {
         "top": {

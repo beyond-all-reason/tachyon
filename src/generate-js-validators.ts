@@ -1,25 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import fs from "node:fs";
+import path from "node:path";
 
 import Ajv from "ajv";
 import standaloneCode from "ajv/dist/standalone";
 import addFormats from "ajv-formats";
 import { titleCase } from "jaz-ts-utils";
 
-import { TachyonConfig } from "@/generate-json-schemas";
-
-export async function generateValidators(tachyonConfig: TachyonConfig) {
+export async function generateValidators() {
     const schemaMap: Record<string, string> = {};
 
-    for (const schema of tachyonConfig.compiledSchema.anyOf) {
-        const [serviceId, endpointId, commandType] = schema.$id!.split("/");
-        schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
-    }
+    // for (const schema of tachyonConfig.compiledSchema.anyOf) {
+    //     const properties = schema.properties ?? schema.anyOf[0].properties;
+    //     const [serviceId, endpointId] = properties.commandId.const.split("/");
+    //     const commandType = properties.type.const;
+    //     schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
+    // }
 
-    const compiledSchema = JSON.parse(JSON.stringify(tachyonConfig.compiledSchema).replaceAll("#/definitions/", "/"));
-    const definitions = JSON.parse(JSON.stringify(compiledSchema.definitions).replaceAll('$id":"', '$id":"/'));
-    const schemas = [...compiledSchema.anyOf, { definitions }];
+    //const schemas = [...tachyonConfig.compiledSchema.anyOf, { definitions: tachyonConfig.compiledSchema.definitions }];
+
+    const schemas = [];
+    for (const file of await fs.promises.readdir("schema", { recursive: true })) {
+        if (file === "compiled.json" || !file.endsWith(".json")) {
+            continue;
+        }
+        const schema = JSON.parse(await fs.promises.readFile(path.join("schema", file), { encoding: "utf-8" }));
+        schemas.push(schema);
+
+        if (!file.startsWith("definitions")) {
+            const properties = schema.properties ?? schema.anyOf[0].properties;
+            const [serviceId, endpointId] = properties.commandId.const.split("/");
+            const commandType = properties.type.const;
+            schemaMap[`${serviceId}_${endpointId}_${commandType}`] = schema.$id;
+        }
+    }
 
     // esm
     process.stdout.write("Generating ESM validators...");
