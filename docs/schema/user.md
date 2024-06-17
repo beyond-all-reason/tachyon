@@ -25,93 +25,57 @@ Sent by the server to inform the client when subscribed users get updated in som
     "tachyon": {
         "source": "server",
         "target": "user",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "event",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "user/updated",
-            "type": "string"
-        },
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/updated" },
         "data": {
+            "title": "UserUpdatedEventData",
             "type": "object",
             "properties": {
                 "users": {
                     "type": "array",
                     "items": {
+                        "type": "object",
                         "allOf": [
                             {
                                 "type": "object",
                                 "properties": {
                                     "userId": {
+                                        "type": "string",
                                         "format": "uuid",
                                         "examples": [
                                             "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-                                        ],
-                                        "type": "string"
+                                        ]
                                     },
-                                    "username": {
-                                        "type": "string"
-                                    },
-                                    "displayName": {
-                                        "type": "string"
-                                    },
+                                    "username": { "type": "string" },
+                                    "displayName": { "type": "string" },
                                     "clanId": {
                                         "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
+                                            { "type": "string" },
+                                            { "type": "null" }
                                         ]
                                     },
                                     "partyId": {
                                         "anyOf": [
-                                            {
-                                                "type": "string"
-                                            },
-                                            {
-                                                "type": "null"
-                                            }
+                                            { "type": "string" },
+                                            { "type": "null" }
                                         ]
                                     },
                                     "scopes": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
-                                    "countryCode": {
-                                        "type": "string"
-                                    },
+                                    "countryCode": { "type": "string" },
                                     "status": {
                                         "anyOf": [
-                                            {
-                                                "const": "offline",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "menu",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "playing",
-                                                "type": "string"
-                                            },
-                                            {
-                                                "const": "lobby",
-                                                "type": "string"
-                                            }
+                                            { "const": "offline" },
+                                            { "const": "menu" },
+                                            { "const": "playing" },
+                                            { "const": "lobby" }
                                         ]
                                     }
                                 }
@@ -121,48 +85,32 @@ Sent by the server to inform the client when subscribed users get updated in som
                                 "properties": {
                                     "friendIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
                                     "outgoingFriendRequestIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
                                     "incomingFriendRequestIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     },
                                     "ignoreIds": {
                                         "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }
+                                        "items": { "type": "string" }
                                     }
                                 }
                             }
-                        ],
-                        "type": "object"
+                        ]
                     }
                 }
             },
-            "required": [
-                "users"
-            ],
-            "title": "UserUpdatedEventData"
+            "required": ["users"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 

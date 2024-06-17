@@ -1,84 +1,40 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/team.json",
+    "title": "Team",
     "type": "object",
     "properties": {
         "players": {
             "type": "array",
-            "items": {
-                "$ref": "../definitions/player.json"
-            }
+            "items": { "$ref": "../definitions/player.json" }
         },
         "bots": {
             "type": "array",
-            "items": {
-                "$ref": "../definitions/bot.json"
-            }
+            "items": { "$ref": "../definitions/bot.json" }
         },
-        "advantage": {
-            "minimum": -1,
-            "type": "number"
-        },
-        "incomeMultiplier": {
-            "minimum": 0,
-            "type": "number"
-        },
-        "faction": {
-            "type": "string"
-        },
+        "advantage": { "type": "number", "minimum": -1 },
+        "incomeMultiplier": { "type": "number", "minimum": 0 },
+        "faction": { "type": "string" },
         "color": {
             "type": "object",
             "properties": {
-                "r": {
-                    "minimum": 0,
-                    "maximum": 1,
-                    "type": "number"
-                },
-                "g": {
-                    "minimum": 0,
-                    "maximum": 1,
-                    "type": "number"
-                },
-                "b": {
-                    "minimum": 0,
-                    "maximum": 1,
-                    "type": "number"
-                }
+                "r": { "type": "number", "minimum": 0, "maximum": 1 },
+                "g": { "type": "number", "minimum": 0, "maximum": 1 },
+                "b": { "type": "number", "minimum": 0, "maximum": 1 }
             },
-            "required": [
-                "r",
-                "g",
-                "b"
-            ]
+            "required": ["r", "g", "b"]
         },
         "startPos": {
             "type": "object",
             "properties": {
-                "x": {
-                    "type": "integer"
-                },
-                "y": {
-                    "type": "integer"
-                }
+                "x": { "type": "integer" },
+                "y": { "type": "integer" }
             },
-            "required": [
-                "x",
-                "y"
-            ]
+            "required": ["x", "y"]
         },
         "options": {
             "type": "object",
-            "patternProperties": {
-                "^(.*)$": {
-                    "type": "string"
-                }
-            }
+            "patternProperties": { "^(.*)$": { "type": "string" } }
         }
     },
-    "required": [
-        "players",
-        "bots",
-        "faction",
-        "color"
-    ],
-    "title": "Team"
+    "required": ["players", "bots", "faction", "color"]
 }

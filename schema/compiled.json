@@ -1,6 +1,6 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/compiled.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "TachyonCommand",
     "definitions": {
         "allyTeam": {
@@ -8,49 +8,30 @@
             "properties": {
                 "teams": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/team"
-                    }
+                    "items": { "$ref": "#/definitions/team" }
                 },
-                "startBox": {
-                    "$ref": "#/definitions/startBox"
-                },
+                "startBox": { "$ref": "#/definitions/startBox" },
                 "options": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 }
             },
-            "required": [
-                "teams",
-                "startBox"
-            ]
+            "required": ["teams", "startBox"]
         },
         "bot": {
             "type": "object",
             "properties": {
                 "hostUserId": {
-                    "format": "uuid",
                     "description": "UserId of the player hosting this AI",
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                 },
-                "name": {
-                    "type": "string"
-                },
-                "aiShortName": {
-                    "type": "string"
-                },
-                "aiVersion": {
-                    "type": "string"
-                },
+                "name": { "type": "string" },
+                "aiShortName": { "type": "string" },
+                "aiVersion": { "type": "string" },
                 "customOptions": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {}
-                    }
+                    "patternProperties": { "^(.*)$": {} }
                 }
             },
             "required": [
@@ -63,18 +44,14 @@
         },
         "player": {
             "allOf": [
-                {
-                    "$ref": "#/definitions/spectator"
-                },
+                { "$ref": "#/definitions/spectator" },
                 {
                     "type": "object",
                     "properties": {
                         "customOptions": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
-                                    "type": "string"
-                                }
+                                "^(.*)$": { "type": "string" }
                             }
                         }
                     }
@@ -83,35 +60,25 @@
         },
         "privateUser": {
             "allOf": [
-                {
-                    "$ref": "#/definitions/user"
-                },
+                { "$ref": "#/definitions/user" },
                 {
                     "type": "object",
                     "properties": {
                         "friendIds": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         },
                         "outgoingFriendRequestIds": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         },
                         "incomingFriendRequestIds": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         },
                         "ignoreIds": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         }
                     },
                     "required": [
@@ -126,214 +93,90 @@
         "spectator": {
             "type": "object",
             "properties": {
-                "userId": {
-                    "$ref": "#/definitions/userId"
-                },
+                "userId": { "$ref": "#/definitions/userId" },
                 "name": {
                     "description": "Name of the player, must be unique just like userId",
                     "type": "string"
                 },
-                "rank": {
-                    "type": "integer"
-                },
-                "countryCode": {
-                    "type": "string"
-                }
+                "rank": { "type": "integer" },
+                "countryCode": { "type": "string" }
             },
-            "required": [
-                "userId",
-                "name",
-                "rank",
-                "countryCode"
-            ]
+            "required": ["userId", "name", "rank", "countryCode"]
         },
         "startBox": {
             "type": "object",
             "properties": {
-                "top": {
-                    "minimum": 0,
-                    "maximum": 200,
-                    "type": "integer"
-                },
-                "bottom": {
-                    "minimum": 0,
-                    "maximum": 200,
-                    "type": "integer"
-                },
-                "left": {
-                    "minimum": 0,
-                    "maximum": 200,
-                    "type": "integer"
-                },
-                "right": {
-                    "minimum": 0,
-                    "maximum": 200,
-                    "type": "integer"
-                }
+                "top": { "type": "integer", "minimum": 0, "maximum": 200 },
+                "bottom": { "type": "integer", "minimum": 0, "maximum": 200 },
+                "left": { "type": "integer", "minimum": 0, "maximum": 200 },
+                "right": { "type": "integer", "minimum": 0, "maximum": 200 }
             },
-            "required": [
-                "top",
-                "bottom",
-                "left",
-                "right"
-            ]
+            "required": ["top", "bottom", "left", "right"]
         },
-        "startPosType": {
-            "enum": [
-                "fixed",
-                "random",
-                "ingame",
-                "beforegame"
-            ]
-        },
+        "startPosType": { "enum": ["fixed", "random", "ingame", "beforegame"] },
         "team": {
             "type": "object",
             "properties": {
                 "players": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/player"
-                    }
+                    "items": { "$ref": "#/definitions/player" }
                 },
                 "bots": {
                     "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/bot"
-                    }
+                    "items": { "$ref": "#/definitions/bot" }
                 },
-                "advantage": {
-                    "minimum": -1,
-                    "type": "number"
-                },
-                "incomeMultiplier": {
-                    "minimum": 0,
-                    "type": "number"
-                },
-                "faction": {
-                    "type": "string"
-                },
+                "advantage": { "type": "number", "minimum": -1 },
+                "incomeMultiplier": { "type": "number", "minimum": 0 },
+                "faction": { "type": "string" },
                 "color": {
                     "type": "object",
                     "properties": {
-                        "r": {
-                            "minimum": 0,
-                            "maximum": 1,
-                            "type": "number"
-                        },
-                        "g": {
-                            "minimum": 0,
-                            "maximum": 1,
-                            "type": "number"
-                        },
-                        "b": {
-                            "minimum": 0,
-                            "maximum": 1,
-                            "type": "number"
-                        }
+                        "r": { "type": "number", "minimum": 0, "maximum": 1 },
+                        "g": { "type": "number", "minimum": 0, "maximum": 1 },
+                        "b": { "type": "number", "minimum": 0, "maximum": 1 }
                     },
-                    "required": [
-                        "r",
-                        "g",
-                        "b"
-                    ]
+                    "required": ["r", "g", "b"]
                 },
                 "startPos": {
                     "type": "object",
                     "properties": {
-                        "x": {
-                            "type": "integer"
-                        },
-                        "y": {
-                            "type": "integer"
-                        }
+                        "x": { "type": "integer" },
+                        "y": { "type": "integer" }
                     },
-                    "required": [
-                        "x",
-                        "y"
-                    ]
+                    "required": ["x", "y"]
                 },
                 "options": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 }
             },
-            "required": [
-                "players",
-                "bots",
-                "faction",
-                "color"
-            ]
+            "required": ["players", "bots", "faction", "color"]
         },
         "unixTime": {
             "description": "Unix timestamp in microseconds",
-            "examples": [
-                1705432698
-            ],
-            "type": "integer"
+            "type": "integer",
+            "examples": [1705432698]
         },
         "user": {
             "type": "object",
             "properties": {
-                "userId": {
-                    "$ref": "#/definitions/userId"
-                },
-                "username": {
-                    "type": "string"
-                },
-                "displayName": {
-                    "type": "string"
-                },
+                "userId": { "$ref": "#/definitions/userId" },
+                "username": { "type": "string" },
+                "displayName": { "type": "string" },
                 "clanId": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
                 },
                 "partyId": {
-                    "anyOf": [
-                        {
-                            "type": "string"
-                        },
-                        {
-                            "type": "null"
-                        }
-                    ]
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
                 },
-                "scopes": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
-                },
-                "countryCode": {
-                    "type": "string"
-                },
+                "scopes": { "type": "array", "items": { "type": "string" } },
+                "countryCode": { "type": "string" },
                 "status": {
                     "anyOf": [
-                        {
-                            "const": "offline",
-                            "type": "string"
-                        },
-                        {
-                            "const": "menu",
-                            "type": "string"
-                        },
-                        {
-                            "const": "playing",
-                            "type": "string"
-                        },
-                        {
-                            "const": "lobby",
-                            "type": "string"
-                        }
+                        { "const": "offline" },
+                        { "const": "menu" },
+                        { "const": "playing" },
+                        { "const": "lobby" }
                     ]
                 }
             },
@@ -348,11 +191,9 @@
             ]
         },
         "userId": {
+            "type": "string",
             "format": "uuid",
-            "examples": [
-                "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-            ],
-            "type": "string"
+            "examples": ["f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"]
         }
     },
     "anyOf": [
@@ -361,112 +202,54 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/addPlayer",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/addPlayer" },
                 "data": {
+                    "title": "AutohostAddPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
-                        "userId": {
-                            "$ref": "#/definitions/userId"
-                        },
-                        "name": {
-                            "type": "string"
-                        },
-                        "password": {
-                            "type": "string"
-                        }
+                        "battleId": { "type": "string", "format": "uuid" },
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "name": { "type": "string" },
+                        "password": { "type": "string" }
                     },
-                    "required": [
-                        "battleId",
-                        "userId",
-                        "name",
-                        "password"
-                    ],
-                    "title": "AutohostAddPlayerRequestData"
+                    "required": ["battleId", "userId", "name", "password"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostAddPlayerResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostAddPlayerOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/addPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/addPlayer" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostAddPlayerFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/addPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/addPlayer" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -491,104 +274,52 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/kickPlayer",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/kickPlayer" },
                 "data": {
+                    "title": "AutohostKickPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
-                        "userId": {
-                            "$ref": "#/definitions/userId"
-                        }
+                        "battleId": { "type": "string", "format": "uuid" },
+                        "userId": { "$ref": "#/definitions/userId" }
                     },
-                    "required": [
-                        "battleId",
-                        "userId"
-                    ],
-                    "title": "AutohostKickPlayerRequestData"
+                    "required": ["battleId", "userId"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostKickPlayerResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostKickPlayerOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kickPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/kickPlayer" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostKickPlayerFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kickPlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/kickPlayer" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -613,100 +344,51 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/kill",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/kill" },
                 "data": {
+                    "title": "AutohostKillRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        }
+                        "battleId": { "type": "string", "format": "uuid" }
                     },
-                    "required": [
-                        "battleId"
-                    ],
-                    "title": "AutohostKillRequestData"
+                    "required": ["battleId"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostKillResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostKillOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kill",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/kill" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostKillFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/kill",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/kill" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -731,104 +413,52 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/mutePlayer",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/mutePlayer" },
                 "data": {
+                    "title": "AutohostMutePlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
-                        "userId": {
-                            "$ref": "#/definitions/userId"
-                        }
+                        "battleId": { "type": "string", "format": "uuid" },
+                        "userId": { "$ref": "#/definitions/userId" }
                     },
-                    "required": [
-                        "battleId",
-                        "userId"
-                    ],
-                    "title": "AutohostMutePlayerRequestData"
+                    "required": ["battleId", "userId"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostMutePlayerResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostMutePlayerOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/mutePlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/mutePlayer" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostMutePlayerFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/mutePlayer",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/mutePlayer" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -853,110 +483,56 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/sendCommand",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/sendCommand" },
                 "data": {
+                    "title": "AutohostSendCommandRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
-                        "command": {
-                            "type": "string"
-                        },
+                        "battleId": { "type": "string", "format": "uuid" },
+                        "command": { "type": "string" },
                         "arguments": {
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" }
                         }
                     },
-                    "required": [
-                        "battleId",
-                        "command"
-                    ],
-                    "title": "AutohostSendCommandRequestData"
+                    "required": ["battleId", "command"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostSendCommandResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostSendCommandOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendCommand",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/sendCommand" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostSendCommandFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendCommand",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/sendCommand" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -981,105 +557,52 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/sendMessage",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/sendMessage" },
                 "data": {
+                    "title": "AutohostSendMessageRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
-                        "message": {
-                            "maxLength": 127,
-                            "type": "string"
-                        }
+                        "battleId": { "type": "string", "format": "uuid" },
+                        "message": { "type": "string", "maxLength": 127 }
                     },
-                    "required": [
-                        "battleId",
-                        "message"
-                    ],
-                    "title": "AutohostSendMessageRequestData"
+                    "required": ["battleId", "message"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostSendMessageResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostSendMessageOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendMessage",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/sendMessage" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostSendMessageFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/sendMessage",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/sendMessage" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -1104,107 +627,55 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/specPlayers",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/specPlayers" },
                 "data": {
+                    "title": "AutohostSpecPlayersRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
+                        "battleId": { "type": "string", "format": "uuid" },
                         "userIds": {
                             "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/userId"
-                            }
+                            "items": { "$ref": "#/definitions/userId" }
                         }
                     },
-                    "required": [
-                        "battleId",
-                        "userIds"
-                    ],
-                    "title": "AutohostSpecPlayersRequestData"
+                    "required": ["battleId", "userIds"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostSpecPlayersResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostSpecPlayersOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/specPlayers",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/specPlayers" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostSpecPlayersFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/specPlayers",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/specPlayers" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -1229,79 +700,54 @@
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/start",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/start" },
                 "data": {
+                    "title": "AutohostStartRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "type": "string"
-                        },
+                        "battleId": { "type": "string" },
                         "engineVersion": {
-                            "pattern": "^[0-9a-zA-Z .+-]+$",
-                            "type": "string"
+                            "type": "string",
+                            "pattern": "^[0-9a-zA-Z .+-]+$"
                         },
-                        "gameName": {
-                            "type": "string"
-                        },
-                        "mapName": {
-                            "type": "string"
-                        },
+                        "gameName": { "type": "string" },
+                        "mapName": { "type": "string" },
                         "gameArchiveHash": {
-                            "pattern": "^[a-fA-F0-9]{128}$",
-                            "type": "string"
+                            "type": "string",
+                            "pattern": "^[a-fA-F0-9]{128}$"
                         },
                         "mapArchiveHash": {
-                            "pattern": "^[a-fA-F0-9]{128}$",
-                            "type": "string"
+                            "type": "string",
+                            "pattern": "^[a-fA-F0-9]{128}$"
                         },
-                        "startDelay": {
-                            "type": "integer"
-                        },
+                        "startDelay": { "type": "integer" },
                         "startPosType": {
                             "$ref": "#/definitions/startPosType"
                         },
                         "allyTeams": {
                             "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/allyTeam"
-                            }
+                            "items": { "$ref": "#/definitions/allyTeam" }
                         },
                         "spectators": {
                             "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/spectator"
-                            }
+                            "items": { "$ref": "#/definitions/spectator" }
                         },
                         "mapOptions": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
-                                    "type": "string"
-                                }
+                                "^(.*)$": { "type": "string" }
                             }
                         },
                         "gameOptions": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
-                                    "type": "string"
-                                }
+                                "^(.*)$": { "type": "string" }
                             }
                         },
                         "restrictions": {
@@ -1309,18 +755,10 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "unitId": {
-                                        "type": "string"
-                                    },
-                                    "limit": {
-                                        "minimum": 0,
-                                        "type": "integer"
-                                    }
+                                    "unitId": { "type": "string" },
+                                    "limit": { "type": "integer", "minimum": 0 }
                                 },
-                                "required": [
-                                    "unitId",
-                                    "limit"
-                                ]
+                                "required": ["unitId", "limit"]
                             }
                         }
                     },
@@ -1335,47 +773,29 @@
                         "startPosType",
                         "allyTeams",
                         "spectators"
-                    ],
-                    "title": "AutohostStartRequestData"
+                    ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostStartResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostStartOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/start" },
+                        "status": { "const": "success" },
                         "data": {
+                            "title": "AutohostStartOkResponseData",
                             "type": "object",
                             "properties": {
                                 "ips": {
@@ -1383,27 +803,23 @@
                                     "items": {
                                         "anyOf": [
                                             {
-                                                "format": "ipv4",
-                                                "type": "string"
+                                                "type": "string",
+                                                "format": "ipv4"
                                             },
                                             {
-                                                "format": "ipv6",
-                                                "type": "string"
+                                                "type": "string",
+                                                "format": "ipv6"
                                             }
                                         ]
                                     }
                                 },
                                 "port": {
+                                    "type": "integer",
                                     "minimum": 1024,
-                                    "maximum": 65535,
-                                    "type": "integer"
+                                    "maximum": 65535
                                 }
                             },
-                            "required": [
-                                "ips",
-                                "port"
-                            ],
-                            "title": "AutohostStartOkResponseData"
+                            "required": ["ips", "port"]
                         }
                     },
                     "required": [
@@ -1418,21 +834,10 @@
                     "title": "AutohostStartFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/start" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "invalid_script",
@@ -1460,147 +865,75 @@
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/status",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/status" },
                 "data": {
+                    "title": "AutohostStatusEventData",
                     "type": "object",
                     "properties": {
-                        "maxBattles": {
-                            "minimum": 0,
-                            "type": "integer"
-                        },
-                        "currentBattles": {
-                            "minimum": 0,
-                            "type": "integer"
-                        }
+                        "maxBattles": { "type": "integer", "minimum": 0 },
+                        "currentBattles": { "type": "integer", "minimum": 0 }
                     },
-                    "required": [
-                        "maxBattles",
-                        "currentBattles"
-                    ],
-                    "title": "AutohostStatusEventData"
+                    "required": ["maxBattles", "currentBattles"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostSubscribeUpdatesRequest",
             "tachyon": {
                 "source": "server",
                 "target": "autohost",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/subscribeUpdates",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/subscribeUpdates" },
                 "data": {
+                    "title": "AutohostSubscribeUpdatesRequestData",
                     "type": "object",
                     "properties": {
-                        "since": {
-                            "$ref": "#/definitions/unixTime"
-                        }
+                        "since": { "$ref": "#/definitions/unixTime" }
                     },
-                    "required": [
-                        "since"
-                    ],
-                    "title": "AutohostSubscribeUpdatesRequestData"
+                    "required": ["since"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "AutohostSubscribeUpdatesResponse",
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "AutohostSubscribeUpdatesOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/subscribeUpdates",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/subscribeUpdates" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "AutohostSubscribeUpdatesFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "autohost/subscribeUpdates",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "autohost/subscribeUpdates" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -1625,68 +958,44 @@
             "tachyon": {
                 "source": "autohost",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "autohost/update",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/update" },
                 "data": {
+                    "title": "AutohostUpdateEventData",
                     "type": "object",
                     "properties": {
-                        "battleId": {
-                            "format": "uuid",
-                            "type": "string"
-                        },
-                        "time": {
-                            "$ref": "#/definitions/unixTime"
-                        },
+                        "battleId": { "type": "string", "format": "uuid" },
+                        "time": { "$ref": "#/definitions/unixTime" },
                         "update": {
                             "anyOf": [
                                 {
-                                    "description": "The battle has started.",
                                     "title": "StartUpdate",
+                                    "description": "The battle has started.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "start",
-                                            "type": "string"
-                                        }
+                                        "type": { "const": "start" }
                                     },
-                                    "required": [
-                                        "type"
-                                    ]
+                                    "required": ["type"]
                                 },
                                 {
-                                    "description": "The battle finished, generated once per every single player reporting who won.",
                                     "title": "FinishedUpdate",
+                                    "description": "The battle finished, generated once per every single player reporting who won.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "finished",
-                                            "type": "string"
-                                        },
+                                        "type": { "const": "finished" },
                                         "userId": {
                                             "$ref": "#/definitions/userId"
                                         },
                                         "winningAllyTeams": {
-                                            "minItems": 1,
                                             "description": "Ally team IDs",
                                             "type": "array",
-                                            "items": {
-                                                "type": "integer"
-                                            }
+                                            "items": { "type": "integer" },
+                                            "minItems": 1
                                         }
                                     },
                                     "required": [
@@ -1696,84 +1005,53 @@
                                     ]
                                 },
                                 {
-                                    "description": "A message from the engine, e.g. some ip is trying to connect.",
                                     "title": "EngineMessageUpdate",
+                                    "description": "A message from the engine, e.g. some ip is trying to connect.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "engine_message",
-                                            "type": "string"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        }
+                                        "type": { "const": "engine_message" },
+                                        "message": { "type": "string" }
                                     },
-                                    "required": [
-                                        "type",
-                                        "message"
-                                    ]
+                                    "required": ["type", "message"]
                                 },
                                 {
-                                    "description": "A warning from the engine.",
                                     "title": "EngineWarningUpdate",
+                                    "description": "A warning from the engine.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "engine_warning",
-                                            "type": "string"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        }
+                                        "type": { "const": "engine_warning" },
+                                        "message": { "type": "string" }
                                     },
-                                    "required": [
-                                        "type",
-                                        "message"
-                                    ]
+                                    "required": ["type", "message"]
                                 },
                                 {
-                                    "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
                                     "title": "EngineQuitUpdate",
+                                    "description": "The engine process for battle has quit cleanly, no more updates will be sent for this battle.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "engine_quit",
-                                            "type": "string"
-                                        }
+                                        "type": { "const": "engine_quit" }
                                     },
-                                    "required": [
-                                        "type"
-                                    ]
+                                    "required": ["type"]
                                 },
                                 {
-                                    "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                                     "title": "EngineCrashUpdate",
+                                    "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "engine_crash",
-                                            "type": "string"
-                                        }
+                                        "type": { "const": "engine_crash" }
                                     },
-                                    "required": [
-                                        "type"
-                                    ]
+                                    "required": ["type"]
                                 },
                                 {
-                                    "description": "Player number in the game, can be useful for custom commands.",
                                     "title": "PlayerJoinedUpdate",
+                                    "description": "Player number in the game, can be useful for custom commands.",
                                     "type": "object",
                                     "properties": {
-                                        "type": {
-                                            "const": "player_joined",
-                                            "type": "string"
-                                        },
+                                        "type": { "const": "player_joined" },
                                         "userId": {
                                             "$ref": "#/definitions/userId"
                                         },
-                                        "playerNumber": {
-                                            "type": "integer"
-                                        }
+                                        "playerNumber": { "type": "integer" }
                                     },
                                     "required": [
                                         "type",
@@ -1784,131 +1062,64 @@
                             ]
                         }
                     },
-                    "required": [
-                        "battleId",
-                        "time",
-                        "update"
-                    ],
-                    "title": "AutohostUpdateEventData"
+                    "required": ["battleId", "time", "update"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "BattleStartRequest",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "battle/start" },
                 "data": {
+                    "title": "BattleStartRequestData",
                     "type": "object",
                     "properties": {
-                        "username": {
-                            "type": "string"
-                        },
-                        "password": {
-                            "type": "string"
-                        },
-                        "ip": {
-                            "type": "string"
-                        },
-                        "port": {
-                            "type": "number"
-                        }
+                        "username": { "type": "string" },
+                        "password": { "type": "string" },
+                        "ip": { "type": "string" },
+                        "port": { "type": "number" }
                     },
-                    "required": [
-                        "username",
-                        "password",
-                        "ip",
-                        "port"
-                    ],
-                    "title": "BattleStartRequestData"
+                    "required": ["username", "password", "ip", "port"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "BattleStartResponse",
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "BattleStartOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "battle/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "battle/start" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "BattleStartFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "battle/start",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "battle/start" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -1933,86 +1144,43 @@
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/cancel",
-                    "type": "string"
-                }
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/cancel" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId"
-            ]
+            "required": ["type", "messageId", "commandId"]
         },
         {
             "title": "MatchmakingCancelResponse",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "MatchmakingCancelOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/cancel",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/cancel" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "MatchmakingCancelFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/cancel",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/cancel" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "not_queued",
@@ -2038,148 +1206,103 @@
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/found",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/found" },
                 "data": {
+                    "title": "MatchmakingFoundEventData",
                     "type": "object",
                     "properties": {
-                        "queueId": {
-                            "type": "string"
-                        },
-                        "timeoutMs": {
-                            "type": "integer"
-                        }
+                        "queueId": { "type": "string" },
+                        "timeoutMs": { "type": "integer" }
                     },
-                    "required": [
-                        "queueId",
-                        "timeoutMs"
-                    ],
-                    "title": "MatchmakingFoundEventData"
+                    "required": ["queueId", "timeoutMs"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingFoundUpdateEvent",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/foundUpdate",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/foundUpdate" },
                 "data": {
+                    "title": "MatchmakingFoundUpdateEventData",
                     "type": "object",
-                    "properties": {
-                        "readyCount": {
-                            "type": "integer"
-                        }
-                    },
-                    "required": [
-                        "readyCount"
-                    ],
-                    "title": "MatchmakingFoundUpdateEventData"
+                    "properties": { "readyCount": { "type": "integer" } },
+                    "required": ["readyCount"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingListRequest",
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/list",
-                    "type": "string"
-                }
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/list" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId"
-            ]
+            "required": ["type", "messageId", "commandId"]
         },
         {
             "title": "MatchmakingListResponse",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "MatchmakingListOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/list",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/list" },
+                        "status": { "const": "success" },
                         "data": {
+                            "title": "MatchmakingListOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "playlists": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id": { "type": "string" },
+                                            "name": { "type": "string" },
+                                            "numOfTeams": { "type": "integer" },
+                                            "teamSize": { "type": "integer" },
+                                            "ranked": { "type": "boolean" }
+                                        },
+                                        "required": [
+                                            "id",
+                                            "name",
+                                            "numOfTeams",
+                                            "teamSize",
+                                            "ranked"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": ["playlists"],
                             "examples": [
                                 {
                                     "playlists": [
@@ -2199,44 +1322,7 @@
                                         }
                                     ]
                                 }
-                            ],
-                            "type": "object",
-                            "properties": {
-                                "playlists": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": {
-                                                "type": "string"
-                                            },
-                                            "name": {
-                                                "type": "string"
-                                            },
-                                            "numOfTeams": {
-                                                "type": "integer"
-                                            },
-                                            "teamSize": {
-                                                "type": "integer"
-                                            },
-                                            "ranked": {
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "required": [
-                                            "id",
-                                            "name",
-                                            "numOfTeams",
-                                            "teamSize",
-                                            "ranked"
-                                        ]
-                                    }
-                                }
-                            },
-                            "required": [
-                                "playlists"
-                            ],
-                            "title": "MatchmakingListOkResponseData"
+                            ]
                         }
                     },
                     "required": [
@@ -2251,21 +1337,10 @@
                     "title": "MatchmakingListFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/list",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/list" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -2290,132 +1365,70 @@
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/lost",
-                    "type": "string"
-                }
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/lost" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId"
-            ]
+            "required": ["type", "messageId", "commandId"]
         },
         {
             "title": "MatchmakingQueueRequest",
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queue",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/queue" },
                 "data": {
+                    "title": "MatchmakingQueueRequestData",
                     "type": "object",
                     "properties": {
                         "queues": {
-                            "minItems": 1,
                             "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "items": { "type": "string" },
+                            "minItems": 1
                         }
                     },
-                    "required": [
-                        "queues"
-                    ],
-                    "title": "MatchmakingQueueRequestData"
+                    "required": ["queues"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingQueueResponse",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "MatchmakingQueueOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/queue" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "MatchmakingQueueFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/queue",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/queue" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "invalid_queue_specified",
@@ -2443,128 +1456,64 @@
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/queueUpdate",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/queueUpdate" },
                 "data": {
+                    "title": "MatchmakingQueueUpdateEventData",
                     "type": "object",
-                    "properties": {
-                        "playersQueued": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "playersQueued"
-                    ],
-                    "title": "MatchmakingQueueUpdateEventData"
+                    "properties": { "playersQueued": { "type": "string" } },
+                    "required": ["playersQueued"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingReadyRequest",
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/ready",
-                    "type": "string"
-                }
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/ready" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId"
-            ]
+            "required": ["type", "messageId", "commandId"]
         },
         {
             "title": "MatchmakingReadyResponse",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "MatchmakingReadyOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/ready",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/ready" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "MatchmakingReadyFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "matchmaking/ready",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/ready" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "no_match",
@@ -2590,144 +1539,73 @@
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/readyUpdate",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/readyUpdate" },
                 "data": {
+                    "title": "MatchmakingReadyUpdateEventData",
                     "type": "object",
                     "properties": {
-                        "readyMax": {
-                            "type": "integer"
-                        },
-                        "readyCurrent": {
-                            "type": "integer"
-                        }
+                        "readyMax": { "type": "integer" },
+                        "readyCurrent": { "type": "integer" }
                     },
-                    "required": [
-                        "readyMax",
-                        "readyCurrent"
-                    ],
-                    "title": "MatchmakingReadyUpdateEventData"
+                    "required": ["readyMax", "readyCurrent"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "SystemDisconnectRequest",
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnect",
-                    "type": "string"
-                },
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "system/disconnect" },
                 "data": {
+                    "title": "SystemDisconnectRequestData",
                     "type": "object",
-                    "properties": {
-                        "reason": {
-                            "type": "string"
-                        }
-                    },
-                    "required": [
-                        "reason"
-                    ],
-                    "title": "SystemDisconnectRequestData"
+                    "properties": { "reason": { "type": "string" } },
+                    "required": ["reason"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId"
-            ]
+            "required": ["type", "messageId", "commandId"]
         },
         {
             "title": "SystemDisconnectResponse",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "SystemDisconnectOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/disconnect",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        }
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "system/disconnect" },
+                        "status": { "const": "success" }
                     },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status"
-                    ]
+                    "required": ["type", "messageId", "commandId", "status"]
                 },
                 {
                     "title": "SystemDisconnectFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/disconnect",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "system/disconnect" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -2752,70 +1630,39 @@
             "tachyon": {
                 "source": "user",
                 "target": "server",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "request",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/serverStats",
-                    "type": "string"
-                }
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "system/serverStats" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId"
-            ]
+            "required": ["type", "messageId", "commandId"]
         },
         {
             "title": "SystemServerStatsResponse",
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "anyOf": [
                 {
                     "title": "SystemServerStatsOkResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/serverStats",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "success",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "system/serverStats" },
+                        "status": { "const": "success" },
                         "data": {
+                            "title": "SystemServerStatsOkResponseData",
                             "type": "object",
                             "properties": {
-                                "userCount": {
-                                    "type": "integer"
-                                }
+                                "userCount": { "type": "integer" }
                             },
-                            "required": [
-                                "userCount"
-                            ],
-                            "title": "SystemServerStatsOkResponseData"
+                            "required": ["userCount"]
                         }
                     },
                     "required": [
@@ -2830,21 +1677,10 @@
                     "title": "SystemServerStatsFailResponse",
                     "type": "object",
                     "properties": {
-                        "type": {
-                            "const": "response",
-                            "type": "string"
-                        },
-                        "messageId": {
-                            "type": "string"
-                        },
-                        "commandId": {
-                            "const": "system/serverStats",
-                            "type": "string"
-                        },
-                        "status": {
-                            "const": "failed",
-                            "type": "string"
-                        },
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "system/serverStats" },
+                        "status": { "const": "failed" },
                         "reason": {
                             "enum": [
                                 "internal_error",
@@ -2869,93 +1705,57 @@
             "tachyon": {
                 "source": "server",
                 "target": "user",
-                "scopes": [
-                    "tachyon.lobby"
-                ]
+                "scopes": ["tachyon.lobby"]
             },
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "event",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "user/updated",
-                    "type": "string"
-                },
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/updated" },
                 "data": {
+                    "title": "UserUpdatedEventData",
                     "type": "object",
                     "properties": {
                         "users": {
                             "type": "array",
                             "items": {
+                                "type": "object",
                                 "allOf": [
                                     {
                                         "type": "object",
                                         "properties": {
                                             "userId": {
+                                                "type": "string",
                                                 "format": "uuid",
                                                 "examples": [
                                                     "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-                                                ],
-                                                "type": "string"
+                                                ]
                                             },
-                                            "username": {
-                                                "type": "string"
-                                            },
-                                            "displayName": {
-                                                "type": "string"
-                                            },
+                                            "username": { "type": "string" },
+                                            "displayName": { "type": "string" },
                                             "clanId": {
                                                 "anyOf": [
-                                                    {
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
+                                                    { "type": "string" },
+                                                    { "type": "null" }
                                                 ]
                                             },
                                             "partyId": {
                                                 "anyOf": [
-                                                    {
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "type": "null"
-                                                    }
+                                                    { "type": "string" },
+                                                    { "type": "null" }
                                                 ]
                                             },
                                             "scopes": {
                                                 "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                                "items": { "type": "string" }
                                             },
-                                            "countryCode": {
-                                                "type": "string"
-                                            },
+                                            "countryCode": { "type": "string" },
                                             "status": {
                                                 "anyOf": [
-                                                    {
-                                                        "const": "offline",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "const": "menu",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "const": "playing",
-                                                        "type": "string"
-                                                    },
-                                                    {
-                                                        "const": "lobby",
-                                                        "type": "string"
-                                                    }
+                                                    { "const": "offline" },
+                                                    { "const": "menu" },
+                                                    { "const": "playing" },
+                                                    { "const": "lobby" }
                                                 ]
                                             }
                                         }
@@ -2965,47 +1765,30 @@
                                         "properties": {
                                             "friendIds": {
                                                 "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                                "items": { "type": "string" }
                                             },
                                             "outgoingFriendRequestIds": {
                                                 "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                                "items": { "type": "string" }
                                             },
                                             "incomingFriendRequestIds": {
                                                 "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                                "items": { "type": "string" }
                                             },
                                             "ignoreIds": {
                                                 "type": "array",
-                                                "items": {
-                                                    "type": "string"
-                                                }
+                                                "items": { "type": "string" }
                                             }
                                         }
                                     }
-                                ],
-                                "type": "object"
+                                ]
                             }
                         }
                     },
-                    "required": [
-                        "users"
-                    ],
-                    "title": "UserUpdatedEventData"
+                    "required": ["users"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "data"]
         }
     ]
 }

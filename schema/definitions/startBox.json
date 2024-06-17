@@ -1,33 +1,12 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/startBox.json",
+    "title": "StartBox",
     "type": "object",
     "properties": {
-        "top": {
-            "minimum": 0,
-            "maximum": 200,
-            "type": "integer"
-        },
-        "bottom": {
-            "minimum": 0,
-            "maximum": 200,
-            "type": "integer"
-        },
-        "left": {
-            "minimum": 0,
-            "maximum": 200,
-            "type": "integer"
-        },
-        "right": {
-            "minimum": 0,
-            "maximum": 200,
-            "type": "integer"
-        }
+        "top": { "type": "integer", "minimum": 0, "maximum": 200 },
+        "bottom": { "type": "integer", "minimum": 0, "maximum": 200 },
+        "left": { "type": "integer", "minimum": 0, "maximum": 200 },
+        "right": { "type": "integer", "minimum": 0, "maximum": 200 }
     },
-    "required": [
-        "top",
-        "bottom",
-        "left",
-        "right"
-    ],
-    "title": "StartBox"
+    "required": ["top", "bottom", "left", "right"]
 }

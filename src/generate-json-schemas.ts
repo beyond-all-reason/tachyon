@@ -8,9 +8,9 @@ import { pathToFileURL } from "url";
 
 import { FailedResponseSchema, SuccessResponseSchema } from "@/generator-helpers";
 import { EndpointConfig } from "@/generator-helpers.js";
+import { writeJsonSchema } from "@/json-schema-format";
 import { TachyonActor, TachyonMessageType } from "@/tachyon-constants";
 import { UnionEnum } from "@/union-enum";
-
 const schemaBaseUri = "https://schema.beyondallreason.dev/tachyon";
 
 export type TachyonConfig = {
@@ -132,10 +132,9 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     },
                 });
                 mapRefs(requestSchema, (ref) => `../../definitions/${ref}.json`);
-                const requestSchemaStr = JSON.stringify(requestSchema, null, 4);
-                await fs.promises.writeFile(
+                await writeJsonSchema(
                     `schema/${serviceId}/${endpointId}/request.json`,
-                    requestSchemaStr
+                    requestSchema
                 );
 
                 const successResponses = schemaConfig.response.filter(
@@ -205,10 +204,9 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     }
                 );
                 mapRefs(responseSchema, (ref) => `../../definitions/${ref}.json`);
-                const responseSchemaStr = JSON.stringify(responseSchema, null, 4);
-                await fs.promises.writeFile(
+                await writeJsonSchema(
                     `schema/${serviceId}/${endpointId}/response.json`,
-                    responseSchemaStr
+                    responseSchema
                 );
 
                 commandConfigs[commandId] = {
@@ -240,11 +238,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     },
                 });
                 mapRefs(eventSchema, (ref) => `../../definitions/${ref}.json`);
-                const schemaStr = JSON.stringify(eventSchema, null, 4);
-                await fs.promises.writeFile(
-                    `schema/${serviceId}/${endpointId}/event.json`,
-                    schemaStr
-                );
+                await writeJsonSchema(`schema/${serviceId}/${endpointId}/event.json`, eventSchema);
 
                 commandConfigs[commandId] = {
                     commandId,
@@ -288,8 +282,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         const schemaClone = { ...schema };
         schemaClone.$id = `${schemaBaseUri}/definitions/${name}.json`;
         schemaClone.title ??= capitalize(name);
-        const schemaStr = JSON.stringify(schemaClone, null, 4);
-        await fs.promises.writeFile(`schema/definitions/${name}.json`, schemaStr);
+        await writeJsonSchema(`schema/definitions/${name}.json`, schemaClone);
     }
 
     const schemaMeta: SchemaMeta = {
@@ -372,7 +365,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
     mapRefs(compiledSchema, (ref) =>
         ref.replace(/.*\/definitions\/(.*)\.json/, "#/definitions/$1")
     );
-    await fs.promises.writeFile("schema/compiled.json", JSON.stringify(compiledSchema, null, 4));
+    await writeJsonSchema("schema/compiled.json", compiledSchema);
 
     return { commandConfigs, compiledSchema, schemaMeta };
 }

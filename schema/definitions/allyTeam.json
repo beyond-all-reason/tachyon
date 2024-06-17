@@ -1,28 +1,17 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/allyTeam.json",
+    "title": "AllyTeam",
     "type": "object",
     "properties": {
         "teams": {
             "type": "array",
-            "items": {
-                "$ref": "../definitions/team.json"
-            }
+            "items": { "$ref": "../definitions/team.json" }
         },
-        "startBox": {
-            "$ref": "../definitions/startBox.json"
-        },
+        "startBox": { "$ref": "../definitions/startBox.json" },
         "options": {
             "type": "object",
-            "patternProperties": {
-                "^(.*)$": {
-                    "type": "string"
-                }
-            }
+            "patternProperties": { "^(.*)$": { "type": "string" } }
         }
     },
-    "required": [
-        "teams",
-        "startBox"
-    ],
-    "title": "AllyTeam"
+    "required": ["teams", "startBox"]
 }

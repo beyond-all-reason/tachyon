@@ -1,102 +1,65 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/autohost/start/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostStartRequest",
     "tachyon": {
         "source": "server",
         "target": "autohost",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/start",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/start" },
         "data": {
+            "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "type": "string"
-                },
+                "battleId": { "type": "string" },
                 "engineVersion": {
-                    "pattern": "^[0-9a-zA-Z .+-]+$",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^[0-9a-zA-Z .+-]+$"
                 },
-                "gameName": {
-                    "type": "string"
-                },
-                "mapName": {
-                    "type": "string"
-                },
+                "gameName": { "type": "string" },
+                "mapName": { "type": "string" },
                 "gameArchiveHash": {
-                    "pattern": "^[a-fA-F0-9]{128}$",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{128}$"
                 },
                 "mapArchiveHash": {
-                    "pattern": "^[a-fA-F0-9]{128}$",
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^[a-fA-F0-9]{128}$"
                 },
-                "startDelay": {
-                    "type": "integer"
-                },
+                "startDelay": { "type": "integer" },
                 "startPosType": {
                     "$ref": "../../definitions/startPosType.json"
                 },
                 "allyTeams": {
                     "type": "array",
-                    "items": {
-                        "$ref": "../../definitions/allyTeam.json"
-                    }
+                    "items": { "$ref": "../../definitions/allyTeam.json" }
                 },
                 "spectators": {
                     "type": "array",
-                    "items": {
-                        "$ref": "../../definitions/spectator.json"
-                    }
+                    "items": { "$ref": "../../definitions/spectator.json" }
                 },
                 "mapOptions": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "gameOptions": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "restrictions": {
                     "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
-                            "unitId": {
-                                "type": "string"
-                            },
-                            "limit": {
-                                "minimum": 0,
-                                "type": "integer"
-                            }
+                            "unitId": { "type": "string" },
+                            "limit": { "type": "integer", "minimum": 0 }
                         },
-                        "required": [
-                            "unitId",
-                            "limit"
-                        ]
+                        "required": ["unitId", "limit"]
                     }
                 }
             },
@@ -111,14 +74,8 @@
                 "startPosType",
                 "allyTeams",
                 "spectators"
-            ],
-            "title": "AutohostStartRequestData"
+            ]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }

@@ -1,22 +1,16 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/player.json",
+    "title": "Player",
     "allOf": [
-        {
-            "$ref": "../definitions/spectator.json"
-        },
+        { "$ref": "../definitions/spectator.json" },
         {
             "type": "object",
             "properties": {
                 "customOptions": {
                     "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "string"
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 }
             }
         }
-    ],
-    "title": "Player"
+    ]
 }

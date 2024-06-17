@@ -1,35 +1,47 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/list/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingListResponse",
     "tachyon": {
         "source": "server",
         "target": "user",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "anyOf": [
         {
             "title": "MatchmakingListOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/list",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/list" },
+                "status": { "const": "success" },
                 "data": {
+                    "title": "MatchmakingListOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "playlists": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": { "type": "string" },
+                                    "name": { "type": "string" },
+                                    "numOfTeams": { "type": "integer" },
+                                    "teamSize": { "type": "integer" },
+                                    "ranked": { "type": "boolean" }
+                                },
+                                "required": [
+                                    "id",
+                                    "name",
+                                    "numOfTeams",
+                                    "teamSize",
+                                    "ranked"
+                                ]
+                            }
+                        }
+                    },
+                    "required": ["playlists"],
                     "examples": [
                         {
                             "playlists": [
@@ -49,73 +61,19 @@
                                 }
                             ]
                         }
-                    ],
-                    "type": "object",
-                    "properties": {
-                        "playlists": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "id": {
-                                        "type": "string"
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "numOfTeams": {
-                                        "type": "integer"
-                                    },
-                                    "teamSize": {
-                                        "type": "integer"
-                                    },
-                                    "ranked": {
-                                        "type": "boolean"
-                                    }
-                                },
-                                "required": [
-                                    "id",
-                                    "name",
-                                    "numOfTeams",
-                                    "teamSize",
-                                    "ranked"
-                                ]
-                            }
-                        }
-                    },
-                    "required": [
-                        "playlists"
-                    ],
-                    "title": "MatchmakingListOkResponseData"
+                    ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "MatchmakingListFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "matchmaking/list",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/list" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -125,13 +83,7 @@
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }

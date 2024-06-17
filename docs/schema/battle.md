@@ -25,55 +25,28 @@ When a user client receives this response it should launch the game (spring.exe)
     "tachyon": {
         "source": "server",
         "target": "user",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "battle/start",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "battle/start" },
         "data": {
+            "title": "BattleStartRequestData",
             "type": "object",
             "properties": {
-                "username": {
-                    "type": "string"
-                },
-                "password": {
-                    "type": "string"
-                },
-                "ip": {
-                    "type": "string"
-                },
-                "port": {
-                    "type": "number"
-                }
+                "username": { "type": "string" },
+                "password": { "type": "string" },
+                "ip": { "type": "string" },
+                "port": { "type": "number" }
             },
-            "required": [
-                "username",
-                "password",
-                "ip",
-                "port"
-            ],
-            "title": "BattleStartRequestData"
+            "required": ["username", "password", "ip", "port"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
+
 ```
 </details>
 
@@ -121,57 +94,28 @@ export interface BattleStartRequestData {
     "tachyon": {
         "source": "user",
         "target": "server",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "anyOf": [
         {
             "title": "BattleStartOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "battle/start" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "BattleStartFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "battle/start",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "battle/start" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -181,16 +125,11 @@ export interface BattleStartRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 

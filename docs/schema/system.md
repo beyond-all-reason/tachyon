@@ -26,42 +26,23 @@ Ask the server to terminate the connection.
     "tachyon": {
         "source": "user",
         "target": "server",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "system/disconnect",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "system/disconnect" },
         "data": {
+            "title": "SystemDisconnectRequestData",
             "type": "object",
-            "properties": {
-                "reason": {
-                    "type": "string"
-                }
-            },
-            "required": [
-                "reason"
-            ],
-            "title": "SystemDisconnectRequestData"
+            "properties": { "reason": { "type": "string" } },
+            "required": ["reason"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
+    "required": ["type", "messageId", "commandId"]
 }
+
 ```
 </details>
 
@@ -103,57 +84,28 @@ export interface SystemDisconnectRequestData {
     "tachyon": {
         "source": "server",
         "target": "user",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "anyOf": [
         {
             "title": "SystemDisconnectOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnect",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                }
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "system/disconnect" },
+                "status": { "const": "success" }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status"
-            ]
+            "required": ["type", "messageId", "commandId", "status"]
         },
         {
             "title": "SystemDisconnectFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/disconnect",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "system/disconnect" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -163,16 +115,11 @@ export interface SystemDisconnectRequestData {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 
@@ -222,30 +169,17 @@ Get server stats such as user count.
     "tachyon": {
         "source": "user",
         "target": "server",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "system/serverStats",
-            "type": "string"
-        }
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "system/serverStats" }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId"
-    ]
+    "required": ["type", "messageId", "commandId"]
 }
+
 ```
 </details>
 
@@ -280,70 +214,34 @@ export interface SystemServerStatsRequest {
     "tachyon": {
         "source": "server",
         "target": "user",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "anyOf": [
         {
             "title": "SystemServerStatsOkResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/serverStats",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "success",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "system/serverStats" },
+                "status": { "const": "success" },
                 "data": {
+                    "title": "SystemServerStatsOkResponseData",
                     "type": "object",
-                    "properties": {
-                        "userCount": {
-                            "type": "integer"
-                        }
-                    },
-                    "required": [
-                        "userCount"
-                    ],
-                    "title": "SystemServerStatsOkResponseData"
+                    "properties": { "userCount": { "type": "integer" } },
+                    "required": ["userCount"]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "data"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "SystemServerStatsFailResponse",
             "type": "object",
             "properties": {
-                "type": {
-                    "const": "response",
-                    "type": "string"
-                },
-                "messageId": {
-                    "type": "string"
-                },
-                "commandId": {
-                    "const": "system/serverStats",
-                    "type": "string"
-                },
-                "status": {
-                    "const": "failed",
-                    "type": "string"
-                },
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "system/serverStats" },
+                "status": { "const": "failed" },
                 "reason": {
                     "enum": [
                         "internal_error",
@@ -353,16 +251,11 @@ export interface SystemServerStatsRequest {
                     ]
                 }
             },
-            "required": [
-                "type",
-                "messageId",
-                "commandId",
-                "status",
-                "reason"
-            ]
+            "required": ["type", "messageId", "commandId", "status", "reason"]
         }
     ]
 }
+
 ```
 </details>
 

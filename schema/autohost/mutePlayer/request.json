@@ -1,49 +1,26 @@
 {
-    "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/autohost/mutePlayer/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostMutePlayerRequest",
     "tachyon": {
         "source": "server",
         "target": "autohost",
-        "scopes": [
-            "tachyon.lobby"
-        ]
+        "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": {
-            "const": "request",
-            "type": "string"
-        },
-        "messageId": {
-            "type": "string"
-        },
-        "commandId": {
-            "const": "autohost/mutePlayer",
-            "type": "string"
-        },
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/mutePlayer" },
         "data": {
+            "title": "AutohostMutePlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": {
-                    "format": "uuid",
-                    "type": "string"
-                },
-                "userId": {
-                    "$ref": "../../definitions/userId.json"
-                }
+                "battleId": { "type": "string", "format": "uuid" },
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
-            "required": [
-                "battleId",
-                "userId"
-            ],
-            "title": "AutohostMutePlayerRequestData"
+            "required": ["battleId", "userId"]
         }
     },
-    "required": [
-        "type",
-        "messageId",
-        "commandId",
-        "data"
-    ]
+    "required": ["type", "messageId", "commandId", "data"]
 }
