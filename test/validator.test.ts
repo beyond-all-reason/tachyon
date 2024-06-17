@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-imports */
 
-import { MatchmakingQueueRequest, MatchmakingQueueResponse } from "../dist";
+import { MatchmakingQueueRequest, MatchmakingQueueResponse } from "../dist/types";
 import validators from "../dist/validators";
 
 describe("request", () => {
