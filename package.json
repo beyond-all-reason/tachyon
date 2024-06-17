@@ -45,6 +45,20 @@
         "default": "./dist/validators.js",
         "types": "./dist/validators.d.ts"
       }
+    },
+    "./types": {
+      "default": {
+        "default": "./dist/types.mjs",
+        "types": "./dist/types.d.mts"
+      },
+      "import": {
+        "default": "./dist/types.mjs",
+        "types": "./dist/types.d.mts"
+      },
+      "require": {
+        "default": "./dist/types.js",
+        "types": "./dist/types.d.ts"
+      }
     }
   },
   "files": [

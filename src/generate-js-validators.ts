@@ -11,15 +11,6 @@ import { titleCase } from "jaz-ts-utils";
 export async function generateValidators() {
     const schemaMap: Record<string, string> = {};
 
-    // for (const schema of tachyonConfig.compiledSchema.anyOf) {
-    //     const properties = schema.properties ?? schema.anyOf[0].properties;
-    //     const [serviceId, endpointId] = properties.commandId.const.split("/");
-    //     const commandType = properties.type.const;
-    //     schemaMap[`${serviceId}_${endpointId}_${commandType}`] = `${serviceId}/${endpointId}/${commandType}`;
-    // }
-
-    //const schemas = [...tachyonConfig.compiledSchema.anyOf, { definitions: tachyonConfig.compiledSchema.definitions }];
-
     const schemas = [];
     for (const file of await fs.promises.readdir("schema", { recursive: true })) {
         if (file === "compiled.json" || !file.endsWith(".json")) {
@@ -106,11 +97,11 @@ function ucs2length(str) {
     }
     let types = "";
     types += `import type { ValidateFunction } from "ajv"\n`;
-    types += `import { ${imports.join(", ")} } from "..";\n\n`;
+    types += `import type { ${imports.join(", ")} } from "./types.js";\n\n`;
     types += declarations;
     types += `\nexport { ${Object.keys(schemaMap).join(", ")} };`;
 
     await fs.promises.writeFile("./dist/validators.d.ts", types);
-    await fs.promises.writeFile("./dist/validators.d.mts", types);
+    await fs.promises.writeFile("./dist/validators.d.mts", types.replace(".js", ".mjs"));
     process.stdout.write("✔️\n");
 }

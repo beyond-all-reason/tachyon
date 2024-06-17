@@ -357,7 +357,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
     const compiledSchema = Type.Union(individualSchemas, {
         $schema: "http://json-schema.org/draft-07/schema#",
         $id: `${schemaBaseUri}/compiled.json`,
-        title: "TachyonCompiled",
+        title: "TachyonCommand",
         definitions: definitionsMap,
     });
     mapRefs(compiledSchema, (ref) =>

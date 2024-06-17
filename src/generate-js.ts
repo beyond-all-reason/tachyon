@@ -1,7 +1,6 @@
-import fs from "node:fs";
-import path from "node:path";
+import fs from "node:fs/promises";
 
-import { build } from "tsup";
+import { build as tsupBuild } from "tsup";
 
 import { generateValidators as generateJsValidators } from "@/generate-js-validators.js";
 import { TachyonConfig } from "@/generate-json-schemas";
@@ -10,38 +9,32 @@ import { generateTSDefs } from "@/generate-ts-defs";
 // eslint-disable-next-line no-restricted-imports
 import packageJson from "../package.json";
 
-export async function generateJs(tachyonConfig: TachyonConfig) {
+async function generateTempIndex(tachyonConfig: TachyonConfig) {
     const meta = {
         version: packageJson.version,
         schema: tachyonConfig.schemaMeta,
     };
-
-    const tempFilePath = path.join("dist", "temp.ts");
-    let tempFileContent = "";
-    tempFileContent += `export const tachyonMeta = ${JSON.stringify(meta, null, 4)} as const;\n\n`;
-
-    const typeHelpers = await fs.promises.readFile("src/type-helpers.ts", "utf-8");
-    tempFileContent += typeHelpers;
-
-    await fs.promises.mkdir("dist", { recursive: true });
-
-    await fs.promises.writeFile(tempFilePath, tempFileContent);
-
-    await buildTs(tempFilePath);
-
-    await fs.promises.rm(tempFilePath, { force: true });
-
-    await generateJsValidators();
-
-    process.stdout.write("Generating TS Defs...");
-    await generateTSDefs(tachyonConfig);
-    process.stdout.write("✔️\n");
+    const indexContents = `
+        export const tachyonMeta = ${JSON.stringify(meta, null, 4)} as const;
+        import { TachyonCommand } from "./types.js";
+        ${await fs.readFile("src/type-helpers.ts", "utf-8")}`;
+    await fs.writeFile("dist/index.ts", indexContents);
 }
 
-export async function buildTs(tsPath: string) {
-    await build({
+export async function generateJs(tachyonConfig: TachyonConfig) {
+    await fs.mkdir("dist", { recursive: true });
+
+    await generateJsValidators();
+    process.stdout.write("Generating TS Defs...");
+    await generateTSDefs();
+    process.stdout.write("✔️\n");
+
+    process.stdout.write("Build bundle...\n");
+    await generateTempIndex(tachyonConfig);
+    await tsupBuild({
         entry: {
-            index: tsPath,
+            index: "dist/index.ts",
+            types: "dist/types.ts",
         },
         bundle: true,
         outDir: "dist",
@@ -49,4 +42,7 @@ export async function buildTs(tsPath: string) {
         format: ["cjs", "esm"],
         silent: false,
     });
+    await fs.rm("dist/index.ts", { force: true });
+    await fs.rm("dist/types.ts", { force: true });
+    process.stdout.write("✔️\n");
 }
