@@ -14,10 +14,14 @@ async function generateTempIndex(tachyonConfig: TachyonConfig) {
         version: packageJson.version,
         schema: tachyonConfig.schemaMeta,
     };
+
+    const typeHelpers = (await fs.readFile("src/type-helpers.ts", "utf-8")).split(
+        "//--DIST-START--\n"
+    )[1];
     const indexContents = `
         export const tachyonMeta = ${JSON.stringify(meta, null, 4)} as const;
         import { TachyonCommand } from "./types.js";
-        ${await fs.readFile("src/type-helpers.ts", "utf-8")}`;
+        ${typeHelpers}`;
     await fs.writeFile("dist/index.ts", indexContents);
 }
 

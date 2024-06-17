@@ -9,7 +9,7 @@ import {
 } from "@sinclair/typebox";
 import { SetOptional } from "type-fest";
 
-import { TachyonActor } from "@/type-helpers";
+import { TachyonActor } from "@/tachyon-constants";
 
 export type EndpointConfig = {
     /** Where the command should be sent from */

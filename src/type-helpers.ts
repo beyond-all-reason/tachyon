@@ -1,3 +1,9 @@
+// eslint-disable-next-line no-restricted-imports
+import { tachyonMeta } from "../dist/index.js";
+// eslint-disable-next-line no-restricted-imports
+import { TachyonCommand } from "../dist/types.js";
+
+//--DIST-START--
 export type TachyonMeta = typeof tachyonMeta.schema;
 export type TachyonActor = keyof TachyonMeta["actors"];
 export type TachyonCommandType = TachyonCommand["type"];

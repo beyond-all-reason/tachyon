@@ -14,7 +14,7 @@ jobs:
                   cache: "npm"
             - run: npm ci
             - run: npm run format:check
-            - run: npm run typecheck
             - run: npm run lint
             - run: npm run build:clean && git diff --exit-code
+            - run: npm run typecheck # typecheck depends on the `dist` directory for type-helpers.ts
             - run: npm test

@@ -1,6 +1,7 @@
 import { TObject, TSchema, TUnion } from "@sinclair/typebox";
 import fs from "fs";
 import { objectKeys, titleCase } from "jaz-ts-utils";
+// @ts-ignore
 import { JSONSchemaFaker } from "json-schema-faker";
 import { compile } from "json-schema-to-typescript";
 

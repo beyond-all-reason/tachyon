@@ -8,7 +8,7 @@ import { pathToFileURL } from "url";
 
 import { FailedResponseSchema, SuccessResponseSchema } from "@/generator-helpers";
 import { EndpointConfig } from "@/generator-helpers.js";
-import { TachyonActor } from "@/type-helpers";
+import { TachyonActor } from "@/tachyon-constants";
 import { UnionEnum } from "@/union-enum";
 
 const schemaBaseUri = "https://schema.beyondallreason.dev/tachyon";
