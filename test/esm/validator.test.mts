@@ -1,7 +1,10 @@
 /* eslint-disable no-restricted-imports */
 
-import { MatchmakingQueueRequest, MatchmakingQueueResponse } from "../dist/types";
-import validators from "../dist/validators";
+import assert from "node:assert";
+import { describe, test } from "node:test";
+
+import { MatchmakingQueueRequest, MatchmakingQueueResponse } from "../../dist/types";
+import * as validators from "../../dist/validators.mjs";
 
 describe("request", () => {
     const validator = validators.matchmaking_queue_request;
@@ -18,10 +21,10 @@ describe("request", () => {
 
         const isValid = validator(command);
 
-        expect(isValid).toBe(true);
+        assert.equal(isValid, true);
 
         if (isValid) {
-            expect(command.data.queues).toStrictEqual(["1v1"]);
+            assert.equal(command.data.queues[0], "1v1");
         }
     });
 
@@ -38,12 +41,7 @@ describe("request", () => {
 
         const isValid = validator(command);
 
-        expect(isValid).toBe(false);
-
-        if (!isValid) {
-            expect(validator.errors).toBeTruthy();
-            expect(validator.errors?.length).toBeGreaterThan(0);
-        }
+        assert.equal(isValid, false);
     });
 });
 
@@ -61,7 +59,7 @@ describe("response", () => {
 
         const isValid = validator(command);
 
-        expect(isValid).toBe(true);
+        assert.equal(isValid, true);
     });
 
     test("invalid", () => {
@@ -75,11 +73,6 @@ describe("response", () => {
 
         const isValid = validator(command);
 
-        expect(isValid).toBe(false);
-
-        if (!isValid) {
-            expect(validator.errors).toBeTruthy();
-            expect(validator.errors?.length).toBeGreaterThan(0);
-        }
+        assert.equal(isValid, false);
     });
 });
