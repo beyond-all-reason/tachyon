@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "@sinclair/typebox": "^0.32.32",
+    "@types/node": "^20.14.2",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
     "ajv-formats": "^3.0.1",
