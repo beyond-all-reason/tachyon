@@ -39,7 +39,7 @@ export async function generateValidators() {
             source: true,
             esm: true,
         },
-        keywords: ["scopes"],
+        keywords: ["tachyon"],
     });
     addFormats(ajvEsm);
     let moduleCode = `"use strict"
@@ -78,7 +78,7 @@ function ucs2length(str) {
             source: true,
             esm: false,
         },
-        keywords: ["scopes"],
+        keywords: ["tachyon"],
     });
     addFormats(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap);

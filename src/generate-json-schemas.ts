@@ -8,7 +8,7 @@ import { pathToFileURL } from "url";
 
 import { FailedResponseSchema, SuccessResponseSchema } from "@/generator-helpers";
 import { EndpointConfig } from "@/generator-helpers.js";
-import { TachyonActor } from "@/tachyon-constants";
+import { TachyonActor, TachyonMessageType } from "@/tachyon-constants";
 import { UnionEnum } from "@/union-enum";
 
 const schemaBaseUri = "https://schema.beyondallreason.dev/tachyon";
@@ -20,10 +20,7 @@ export type TachyonConfig = {
 };
 
 type SchemaMeta = {
-    actors: Record<
-        TachyonActor,
-        Record<"request" | "response" | "event", { send: string[]; receive: string[] }>
-    >;
+    actors: Record<TachyonActor, Record<TachyonMessageType, { send: string[]; receive: string[] }>>;
     serviceIds: Record<string, string[]>;
 };
 
@@ -128,7 +125,11 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     $schema: "http://json-schema.org/draft-07/schema#",
                     $id: `${schemaBaseUri}/${commandId}/request.json`,
                     title: baseTypeName + "Request",
-                    scopes: schemaConfig.scopes,
+                    tachyon: {
+                        source: schemaConfig.source,
+                        target: schemaConfig.target,
+                        scopes: schemaConfig.scopes,
+                    },
                 });
                 mapRefs(requestSchema, (ref) => `../../definitions/${ref}.json`);
                 const requestSchemaStr = JSON.stringify(requestSchema, null, 4);
@@ -196,7 +197,11 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                         $schema: "http://json-schema.org/draft-07/schema#",
                         $id: `${schemaBaseUri}/${commandId}/response.json`,
                         title: baseTypeName + "Response",
-                        scopes: schemaConfig.scopes,
+                        tachyon: {
+                            source: schemaConfig.target,
+                            target: schemaConfig.source,
+                            scopes: schemaConfig.scopes,
+                        },
                     }
                 );
                 mapRefs(responseSchema, (ref) => `../../definitions/${ref}.json`);
@@ -228,7 +233,11 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     $schema: "http://json-schema.org/draft-07/schema#",
                     $id: `${schemaBaseUri}/${commandId}/event.json`,
                     title: baseTypeName + "Event",
-                    scopes: schemaConfig.scopes,
+                    tachyon: {
+                        source: schemaConfig.source,
+                        target: schemaConfig.target,
+                        scopes: schemaConfig.scopes,
+                    },
                 });
                 mapRefs(eventSchema, (ref) => `../../definitions/${ref}.json`);
                 const schemaStr = JSON.stringify(eventSchema, null, 4);

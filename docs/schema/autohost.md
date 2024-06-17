@@ -76,9 +76,13 @@ Request to kill a battle.
 ```json
 {
     "title": "AutohostAddPlayerRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -171,9 +175,13 @@ export interface AutohostAddPlayerRequestData {
 ```json
 {
     "title": "AutohostAddPlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostAddPlayerOkResponse",
@@ -286,9 +294,13 @@ Kick a player from a battle.
 ```json
 {
     "title": "AutohostKickPlayerRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -369,9 +381,13 @@ export interface AutohostKickPlayerRequestData {
 ```json
 {
     "title": "AutohostKickPlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostKickPlayerOkResponse",
@@ -484,9 +500,13 @@ Request to kill a battle.
 ```json
 {
     "title": "AutohostKillRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -559,9 +579,13 @@ export interface AutohostKillRequestData {
 ```json
 {
     "title": "AutohostKillResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostKillOkResponse",
@@ -674,9 +698,13 @@ Mute a player in a battle.
 ```json
 {
     "title": "AutohostMutePlayerRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -757,9 +785,13 @@ export interface AutohostMutePlayerRequestData {
 ```json
 {
     "title": "AutohostMutePlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostMutePlayerOkResponse",
@@ -872,9 +904,13 @@ Send a custom command for the autohost to execute.
 ```json
 {
     "title": "AutohostSendCommandRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -960,9 +996,13 @@ export interface AutohostSendCommandRequestData {
 ```json
 {
     "title": "AutohostSendCommandResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostSendCommandOkResponse",
@@ -1075,9 +1115,13 @@ Send a message for the autohost to display to players.
 ```json
 {
     "title": "AutohostSendMessageRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -1157,9 +1201,13 @@ export interface AutohostSendMessageRequestData {
 ```json
 {
     "title": "AutohostSendMessageResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostSendMessageOkResponse",
@@ -1272,9 +1320,13 @@ Force players to become spectators in a battle.
 ```json
 {
     "title": "AutohostSpecPlayersRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -1360,9 +1412,13 @@ export interface AutohostSpecPlayersRequestData {
 ```json
 {
     "title": "AutohostSpecPlayersResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostSpecPlayersOkResponse",
@@ -1475,9 +1531,13 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 ```json
 {
     "title": "AutohostStartRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -1765,9 +1825,13 @@ export interface Spectator {
 ```json
 {
     "title": "AutohostStartResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostStartOkResponse",
@@ -1925,9 +1989,13 @@ This event should be sent to the server on connection and whenever any of the st
 ```json
 {
     "title": "AutohostStatusEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -2018,9 +2086,13 @@ Ask the autohost to send us updates about its battles.
 ```json
 {
     "title": "AutohostSubscribeUpdatesRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -2094,9 +2166,13 @@ export interface AutohostSubscribeUpdatesRequestData {
 ```json
 {
     "title": "AutohostSubscribeUpdatesResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostSubscribeUpdatesOkResponse",
@@ -2209,9 +2285,13 @@ Inform the server of battle updates.
 ```json
 {
     "title": "AutohostUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {

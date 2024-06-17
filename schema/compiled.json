@@ -358,9 +358,13 @@
     "anyOf": [
         {
             "title": "AutohostAddPlayerRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -409,9 +413,13 @@
         },
         {
             "title": "AutohostAddPlayerResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostAddPlayerOkResponse",
@@ -480,9 +488,13 @@
         },
         {
             "title": "AutohostKickPlayerRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -523,9 +535,13 @@
         },
         {
             "title": "AutohostKickPlayerResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostKickPlayerOkResponse",
@@ -594,9 +610,13 @@
         },
         {
             "title": "AutohostKillRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -633,9 +653,13 @@
         },
         {
             "title": "AutohostKillResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostKillOkResponse",
@@ -704,9 +728,13 @@
         },
         {
             "title": "AutohostMutePlayerRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -747,9 +775,13 @@
         },
         {
             "title": "AutohostMutePlayerResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostMutePlayerOkResponse",
@@ -818,9 +850,13 @@
         },
         {
             "title": "AutohostSendCommandRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -867,9 +903,13 @@
         },
         {
             "title": "AutohostSendCommandResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostSendCommandOkResponse",
@@ -938,9 +978,13 @@
         },
         {
             "title": "AutohostSendMessageRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -982,9 +1026,13 @@
         },
         {
             "title": "AutohostSendMessageResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostSendMessageOkResponse",
@@ -1053,9 +1101,13 @@
         },
         {
             "title": "AutohostSpecPlayersRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1099,9 +1151,13 @@
         },
         {
             "title": "AutohostSpecPlayersResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostSpecPlayersOkResponse",
@@ -1170,9 +1226,13 @@
         },
         {
             "title": "AutohostStartRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1288,9 +1348,13 @@
         },
         {
             "title": "AutohostStartResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostStartOkResponse",
@@ -1393,9 +1457,13 @@
         },
         {
             "title": "AutohostStatusEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1437,9 +1505,13 @@
         },
         {
             "title": "AutohostSubscribeUpdatesRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "autohost",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1475,9 +1547,13 @@
         },
         {
             "title": "AutohostSubscribeUpdatesResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "AutohostSubscribeUpdatesOkResponse",
@@ -1546,9 +1622,13 @@
         },
         {
             "title": "AutohostUpdateEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "autohost",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1721,9 +1801,13 @@
         },
         {
             "title": "BattleStartRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1771,9 +1855,13 @@
         },
         {
             "title": "BattleStartResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "BattleStartOkResponse",
@@ -1842,9 +1930,13 @@
         },
         {
             "title": "MatchmakingCancelRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1867,9 +1959,13 @@
         },
         {
             "title": "MatchmakingCancelResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "MatchmakingCancelOkResponse",
@@ -1939,9 +2035,13 @@
         },
         {
             "title": "MatchmakingFoundEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -1981,9 +2081,13 @@
         },
         {
             "title": "MatchmakingFoundUpdateEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2019,9 +2123,13 @@
         },
         {
             "title": "MatchmakingListRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2044,9 +2152,13 @@
         },
         {
             "title": "MatchmakingListResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "MatchmakingListOkResponse",
@@ -2175,9 +2287,13 @@
         },
         {
             "title": "MatchmakingLostEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2200,9 +2316,13 @@
         },
         {
             "title": "MatchmakingQueueRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2242,9 +2362,13 @@
         },
         {
             "title": "MatchmakingQueueResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "MatchmakingQueueOkResponse",
@@ -2316,9 +2440,13 @@
         },
         {
             "title": "MatchmakingQueueUpdateEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2354,9 +2482,13 @@
         },
         {
             "title": "MatchmakingReadyRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2379,9 +2511,13 @@
         },
         {
             "title": "MatchmakingReadyResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "MatchmakingReadyOkResponse",
@@ -2451,9 +2587,13 @@
         },
         {
             "title": "MatchmakingReadyUpdateEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2493,9 +2633,13 @@
         },
         {
             "title": "SystemDisconnectRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2530,9 +2674,13 @@
         },
         {
             "title": "SystemDisconnectResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "SystemDisconnectOkResponse",
@@ -2601,9 +2749,13 @@
         },
         {
             "title": "SystemServerStatsRequest",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {
@@ -2626,9 +2778,13 @@
         },
         {
             "title": "SystemServerStatsResponse",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "anyOf": [
                 {
                     "title": "SystemServerStatsOkResponse",
@@ -2710,9 +2866,13 @@
         },
         {
             "title": "UserUpdatedEvent",
-            "scopes": [
-                "tachyon.lobby"
-            ],
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": [
+                    "tachyon.lobby"
+                ]
+            },
             "type": "object",
             "properties": {
                 "type": {

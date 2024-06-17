@@ -2,9 +2,13 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/autohost/sendMessage/response.json",
     "title": "AutohostSendMessageResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostSendMessageOkResponse",

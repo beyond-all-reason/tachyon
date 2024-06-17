@@ -2,9 +2,13 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/system/disconnect/request.json",
     "title": "SystemDisconnectRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {

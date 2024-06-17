@@ -22,9 +22,13 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "title": "UserUpdatedEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {

@@ -2,9 +2,13 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/autohost/kickPlayer/response.json",
     "title": "AutohostKickPlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostKickPlayerOkResponse",

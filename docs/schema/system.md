@@ -23,9 +23,13 @@ Ask the server to terminate the connection.
 ```json
 {
     "title": "SystemDisconnectRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -96,9 +100,13 @@ export interface SystemDisconnectRequestData {
 ```json
 {
     "title": "SystemDisconnectResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "SystemDisconnectOkResponse",
@@ -211,9 +219,13 @@ Get server stats such as user count.
 ```json
 {
     "title": "SystemServerStatsRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -265,9 +277,13 @@ export interface SystemServerStatsRequest {
 ```json
 {
     "title": "SystemServerStatsResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "SystemServerStatsOkResponse",

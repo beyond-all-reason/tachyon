@@ -2,9 +2,13 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/queueUpdate/event.json",
     "title": "MatchmakingQueueUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {

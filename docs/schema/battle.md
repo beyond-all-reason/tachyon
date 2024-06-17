@@ -22,9 +22,13 @@ When a user client receives this response it should launch the game (spring.exe)
 ```json
 {
     "title": "BattleStartRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -114,9 +118,13 @@ export interface BattleStartRequestData {
 ```json
 {
     "title": "BattleStartResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "BattleStartOkResponse",

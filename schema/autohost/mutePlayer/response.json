@@ -2,9 +2,13 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://schema.beyondallreason.dev/tachyon/autohost/mutePlayer/response.json",
     "title": "AutohostMutePlayerResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "AutohostMutePlayerOkResponse",

@@ -42,9 +42,13 @@ Cancel queueing for matchmaking.
 ```json
 {
     "title": "MatchmakingCancelRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -96,9 +100,13 @@ export interface MatchmakingCancelRequest {
 ```json
 {
     "title": "MatchmakingCancelResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "MatchmakingCancelOkResponse",
@@ -212,9 +220,13 @@ Server should send this when there are enough queued players to form a valid bat
 ```json
 {
     "title": "MatchmakingFoundEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -303,9 +315,13 @@ Server should send this when players ready up using [ready](#ready).
 ```json
 {
     "title": "MatchmakingFoundUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -388,9 +404,13 @@ Returns all available matchmaking playlists.
 ```json
 {
     "title": "MatchmakingListRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -442,9 +462,13 @@ export interface MatchmakingListRequest {
 ```json
 {
     "title": "MatchmakingListResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "MatchmakingListOkResponse",
@@ -645,9 +669,13 @@ Sent when a found match gets disbanded because a client failed to ready up.
 ```json
 {
     "title": "MatchmakingLostEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -710,9 +738,13 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 ```json
 {
     "title": "MatchmakingQueueRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -791,9 +823,13 @@ export interface MatchmakingQueueRequestData {
 ```json
 {
     "title": "MatchmakingQueueResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "MatchmakingQueueOkResponse",
@@ -909,9 +945,13 @@ Contains some info about the state of the current queue.
 ```json
 {
     "title": "MatchmakingQueueUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -994,9 +1034,13 @@ Clients should send this when they are ready to proceed with the found match. If
 ```json
 {
     "title": "MatchmakingReadyRequest",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
@@ -1048,9 +1092,13 @@ export interface MatchmakingReadyRequest {
 ```json
 {
     "title": "MatchmakingReadyResponse",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "anyOf": [
         {
             "title": "MatchmakingReadyOkResponse",
@@ -1164,9 +1212,13 @@ Sent when a client in a found match readies up.
 ```json
 {
     "title": "MatchmakingReadyUpdateEvent",
-    "scopes": [
-        "tachyon.lobby"
-    ],
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": [
+            "tachyon.lobby"
+        ]
+    },
     "type": "object",
     "properties": {
         "type": {
