@@ -1310,11 +1310,11 @@ export interface Player {
 }
 export interface Bot {
     hostUserId: string;
-    name: string;
+    name?: string;
     aiShortName: string;
-    aiVersion: string;
-    customOptions: {
-        [k: string]: unknown;
+    aiVersion?: string;
+    aiOptions?: {
+        [k: string]: string;
     };
 }
 export interface StartBox {
