@@ -1144,7 +1144,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
             "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "type": "string", "format": "uuid" },
                 "engineVersion": {
                     "type": "string",
                     "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -1196,12 +1196,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 "engineVersion",
                 "gameName",
                 "mapName",
-                "gameArchiveHash",
-                "mapArchiveHash",
-                "startDelay",
                 "startPosType",
-                "allyTeams",
-                "spectators"
+                "allyTeams"
             ]
         }
     },
@@ -1220,12 +1216,10 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
     "messageId": "dolor",
     "commandId": "autohost/start",
     "data": {
-        "battleId": "dolor",
+        "battleId": "22222222-2222-2222-2222-222222222222",
         "engineVersion": "99",
         "gameName": "dolor",
         "mapName": "dolor",
-        "gameArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-        "mapArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         "startDelay": -70000000,
         "startPosType": "fixed",
         "allyTeams": [
@@ -1268,10 +1262,6 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 }
             }
         ],
-        "spectators": [],
-        "gameOptions": {
-            ".": "dolor"
-        },
         "restrictions": [
             {
                 "unitId": "dolor",
@@ -1309,12 +1299,12 @@ export interface AutohostStartRequestData {
     engineVersion: string;
     gameName: string;
     mapName: string;
-    gameArchiveHash: string;
-    mapArchiveHash: string;
-    startDelay: number;
+    gameArchiveHash?: string;
+    mapArchiveHash?: string;
+    startDelay?: number;
     startPosType: StartPosType;
     allyTeams: AllyTeam[];
-    spectators: Spectator[];
+    spectators?: Spectator[];
     mapOptions?: {
         [k: string]: string;
     };

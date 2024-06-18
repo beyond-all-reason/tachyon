@@ -16,7 +16,7 @@
             "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "type": "string", "format": "uuid" },
                 "engineVersion": {
                     "type": "string",
                     "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -68,12 +68,8 @@
                 "engineVersion",
                 "gameName",
                 "mapName",
-                "gameArchiveHash",
-                "mapArchiveHash",
-                "startDelay",
                 "startPosType",
-                "allyTeams",
-                "spectators"
+                "allyTeams"
             ]
         }
     },
