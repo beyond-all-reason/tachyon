@@ -1246,13 +1246,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                             "b": 0.15
                         }
                     }
-                ],
-                "startBox": {
-                    "top": 30,
-                    "bottom": 30,
-                    "left": 30,
-                    "right": 30
-                }
+                ]
             }
         ],
         "restrictions": {
@@ -1297,7 +1291,8 @@ export interface AutohostStartRequestData {
 }
 export interface AllyTeam {
     teams: Team[];
-    startBox: StartBox;
+    startBox?: StartBox;
+    allies?: number[];
     options?: {
         [k: string]: string;
     };

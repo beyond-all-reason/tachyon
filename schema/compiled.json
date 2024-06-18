@@ -11,12 +11,17 @@
                     "items": { "$ref": "#/definitions/team" }
                 },
                 "startBox": { "$ref": "#/definitions/startBox" },
+                "allies": {
+                    "description": "0-based indexes into of the other allyteams to ally with",
+                    "type": "array",
+                    "items": { "type": "integer" }
+                },
                 "options": {
                     "type": "object",
                     "patternProperties": { "^(.*)$": { "type": "string" } }
                 }
             },
-            "required": ["teams", "startBox"]
+            "required": ["teams"]
         },
         "bot": {
             "type": "object",
