@@ -1564,7 +1564,7 @@ Ask the autohost to send us updates about its battles.
     "messageId": "ullamco",
     "commandId": "autohost/subscribeUpdates",
     "data": {
-        "since": 1705432698
+        "since": 1705432698000000
     }
 }
 ```
@@ -1793,7 +1793,7 @@ Inform the server of battle updates.
     "commandId": "autohost/update",
     "data": {
         "battleId": "33333333-3333-3333-3333-333333333333",
-        "time": 1705432698,
+        "time": 1705432698000000,
         "update": {
             "type": "finished",
             "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
