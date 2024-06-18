@@ -1180,14 +1180,10 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                     "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "unitId": { "type": "string" },
-                            "limit": { "type": "integer", "minimum": 0 }
-                        },
-                        "required": ["unitId", "limit"]
+                    "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": { "type": "integer", "minimum": 0 }
                     }
                 }
             },
@@ -1262,12 +1258,9 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 }
             }
         ],
-        "restrictions": [
-            {
-                "unitId": "dolor",
-                "limit": 15000000
-            }
-        ]
+        "restrictions": {
+            ".": 15000000
+        }
     }
 }
 ```
@@ -1312,9 +1305,8 @@ export interface AutohostStartRequestData {
         [k: string]: string;
     };
     restrictions?: {
-        unitId: string;
-        limit: number;
-    }[];
+        [k: string]: number;
+    };
 }
 export interface AllyTeam {
     teams: Team[];

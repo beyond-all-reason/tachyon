@@ -751,14 +751,10 @@
                             }
                         },
                         "restrictions": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "unitId": { "type": "string" },
-                                    "limit": { "type": "integer", "minimum": 0 }
-                                },
-                                "required": ["unitId", "limit"]
+                            "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": { "type": "integer", "minimum": 0 }
                             }
                         }
                     },

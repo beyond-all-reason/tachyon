@@ -25,12 +25,10 @@ export default defineEndpoint({
             mapOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
             gameOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
             restrictions: Type.Optional(
-                Type.Array(
-                    Type.Object({
-                        unitId: Type.String(),
-                        limit: Type.Integer({ minimum: 0 }),
-                    })
-                )
+                Type.Record(Type.String(), Type.Integer({ minimum: 0 }), {
+                    description:
+                        "Mapping from unitDefId to the maximum number of units of that type that can be built.",
+                })
             ),
         }),
     },
