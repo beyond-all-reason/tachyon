@@ -30,6 +30,13 @@ export default defineEndpoint({
                         "Mapping from unitDefId to the maximum number of units of that type that can be built.",
                 })
             ),
+            luamsgRegexp: Type.Optional(
+                Type.String({
+                    format: "regex",
+                    description:
+                        "When set, battle will generate updates for luamsgs matching this regexp. No updates will be generated if this is not set.",
+                })
+            ),
         }),
     },
     response: [

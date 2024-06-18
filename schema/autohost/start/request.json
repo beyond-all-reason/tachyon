@@ -58,6 +58,11 @@
                     "patternProperties": {
                         "^(.*)$": { "type": "integer", "minimum": 0 }
                     }
+                },
+                "luamsgRegexp": {
+                    "description": "When set, battle will generate updates for luamsgs matching this regexp. No updates will be generated if this is not set.",
+                    "type": "string",
+                    "format": "regex"
                 }
             },
             "required": [

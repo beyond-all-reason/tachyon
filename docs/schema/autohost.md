@@ -1192,6 +1192,11 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                     "patternProperties": {
                         "^(.*)$": { "type": "integer", "minimum": 0 }
                     }
+                },
+                "luamsgRegexp": {
+                    "description": "When set, battle will generate updates for luamsgs matching this regexp. No updates will be generated if this is not set.",
+                    "type": "string",
+                    "format": "regex"
                 }
             },
             "required": [
@@ -1277,6 +1282,7 @@ export interface AutohostStartRequestData {
     restrictions?: {
         [k: string]: number;
     };
+    luamsgRegexp?: string;
 }
 export interface AllyTeam {
     teams: [Team, ...Team[]];
@@ -1754,22 +1760,128 @@ Inform the server of battle updates.
                             "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                             "type": "object",
                             "properties": {
-                                "type": { "const": "engine_crash" }
+                                "type": { "const": "engine_crash" },
+                                "details": {
+                                    "description": "Optional, short, details of the crash.",
+                                    "type": "string"
+                                }
                             },
                             "required": ["type"]
                         },
                         {
                             "title": "PlayerJoinedUpdate",
-                            "description": "Player number in the game, can be useful for custom commands.",
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player_joined" },
                                 "userId": {
                                     "$ref": "../../definitions/userId.json"
                                 },
-                                "playerNumber": { "type": "integer" }
+                                "playerNumber": {
+                                    "description": "Player number in the game, can be useful for custom commands",
+                                    "type": "integer"
+                                }
                             },
                             "required": ["type", "userId", "playerNumber"]
+                        },
+                        {
+                            "title": "PlayerLeftUpdate",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player_left" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "reason": {
+                                    "enum": [
+                                        "lost_connection",
+                                        "left",
+                                        "kicked"
+                                    ]
+                                }
+                            },
+                            "required": ["type", "userId", "reason"]
+                        },
+                        {
+                            "title": "PlayerChatUpdate",
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_chat" },
+                                        "userId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
+                                        "message": { "type": "string" },
+                                        "destination": {
+                                            "enum": [
+                                                "allies",
+                                                "all",
+                                                "spectators"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "message",
+                                        "destination"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_chat" },
+                                        "userId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
+                                        "message": { "type": "string" },
+                                        "destination": { "const": "player" },
+                                        "toUserId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "message",
+                                        "destination",
+                                        "toUserId"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "PlayerDefeatedUpdate",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player_defeated" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
+                            },
+                            "required": ["type", "userId"]
+                        },
+                        {
+                            "title": "LuaMsgUpdate",
+                            "description": "This update is generated only for messages matching luamsgRegexp set in the battle start script.",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "luamsg" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "script": { "enum": ["ui", "game", "rules"] },
+                                "uiMode": {
+                                    "description": "Set when script is 'ui'",
+                                    "enum": ["all", "allies", "spectators"]
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "contentEncoding": "base64",
+                                    "contentMediaType": "application/octet-stream"
+                                }
+                            },
+                            "required": ["type", "userId", "script", "data"]
                         }
                     ]
                 }
@@ -1795,12 +1907,8 @@ Inform the server of battle updates.
         "battleId": "33333333-3333-3333-3333-333333333333",
         "time": 1705432698000000,
         "update": {
-            "type": "finished",
-            "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-            "winningAllyTeams": [
-                -60000000,
-                -60000000
-            ]
+            "type": "engine_message",
+            "message": "Ut velit"
         }
     }
 }
@@ -1811,6 +1919,20 @@ Inform the server of battle updates.
 ```ts
 export type UnixTime = number;
 export type UserId = string;
+export type PlayerChatUpdate =
+    | {
+          type: "player_chat";
+          userId: UserId;
+          message: string;
+          destination: "allies" | "all" | "spectators";
+      }
+    | {
+          type: "player_chat";
+          userId: UserId;
+          message: string;
+          destination: "player";
+          toUserId: UserId;
+      };
 
 export interface AutohostUpdateEvent {
     type: "event";
@@ -1828,7 +1950,11 @@ export interface AutohostUpdateEventData {
         | EngineWarningUpdate
         | EngineQuitUpdate
         | EngineCrashUpdate
-        | PlayerJoinedUpdate;
+        | PlayerJoinedUpdate
+        | PlayerLeftUpdate
+        | PlayerChatUpdate
+        | PlayerDefeatedUpdate
+        | LuaMsgUpdate;
 }
 export interface StartUpdate {
     type: "start";
@@ -1851,10 +1977,27 @@ export interface EngineQuitUpdate {
 }
 export interface EngineCrashUpdate {
     type: "engine_crash";
+    details?: string;
 }
 export interface PlayerJoinedUpdate {
     type: "player_joined";
     userId: UserId;
     playerNumber: number;
+}
+export interface PlayerLeftUpdate {
+    type: "player_left";
+    userId: UserId;
+    reason: "lost_connection" | "left" | "kicked";
+}
+export interface PlayerDefeatedUpdate {
+    type: "player_defeated";
+    userId: UserId;
+}
+export interface LuaMsgUpdate {
+    type: "luamsg";
+    userId: UserId;
+    script: "ui" | "game" | "rules";
+    uiMode?: "all" | "allies" | "spectators";
+    data: string;
 }
 ```
