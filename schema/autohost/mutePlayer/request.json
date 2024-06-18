@@ -17,9 +17,11 @@
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "userId": { "$ref": "../../definitions/userId.json" }
+                "userId": { "$ref": "../../definitions/userId.json" },
+                "chat": { "type": "boolean" },
+                "draw": { "type": "boolean" }
             },
-            "required": ["battleId", "userId"]
+            "required": ["battleId", "userId", "chat", "draw"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

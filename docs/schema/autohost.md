@@ -542,9 +542,11 @@ Mute a player in a battle.
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "userId": { "$ref": "../../definitions/userId.json" }
+                "userId": { "$ref": "../../definitions/userId.json" },
+                "chat": { "type": "boolean" },
+                "draw": { "type": "boolean" }
             },
-            "required": ["battleId", "userId"]
+            "required": ["battleId", "userId", "chat", "draw"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -563,7 +565,9 @@ Mute a player in a battle.
     "commandId": "autohost/mutePlayer",
     "data": {
         "battleId": "11111111-1111-1111-1111-111111111111",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+        "chat": false,
+        "draw": false
     }
 }
 ```
@@ -582,6 +586,8 @@ export interface AutohostMutePlayerRequest {
 export interface AutohostMutePlayerRequestData {
     battleId: string;
     userId: UserId;
+    chat: boolean;
+    draw: boolean;
 }
 ```
 ### Response

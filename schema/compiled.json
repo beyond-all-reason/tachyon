@@ -422,9 +422,11 @@
                     "type": "object",
                     "properties": {
                         "battleId": { "type": "string", "format": "uuid" },
-                        "userId": { "$ref": "#/definitions/userId" }
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "chat": { "type": "boolean" },
+                        "draw": { "type": "boolean" }
                     },
-                    "required": ["battleId", "userId"]
+                    "required": ["battleId", "userId", "chat", "draw"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

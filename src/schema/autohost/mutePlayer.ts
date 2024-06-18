@@ -11,6 +11,8 @@ export default defineEndpoint({
         data: Type.Object({
             battleId: Type.String({ format: "uuid" }),
             userId: Type.Ref(userId),
+            chat: Type.Boolean(),
+            draw: Type.Boolean(),
         }),
     },
     response: [
