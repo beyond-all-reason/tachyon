@@ -1275,9 +1275,7 @@ export interface AllyTeam {
     teams: Team[];
     startBox?: StartBox;
     allies?: number[];
-    options?: {
-        [k: string]: string;
-    };
+    customProperties?: CustomStartScriptProperties;
 }
 export interface Team {
     players?: Player[];
@@ -1294,9 +1292,7 @@ export interface Team {
         x: number;
         y: number;
     };
-    options?: {
-        [k: string]: string;
-    };
+    customProperties?: CustomStartScriptProperties;
 }
 export interface Player {
     userId: UserId;
@@ -1304,9 +1300,10 @@ export interface Player {
     password: string;
     rank?: number;
     countryCode?: string;
-    customOptions?: {
-        [k: string]: string;
-    };
+    customProperties?: CustomStartScriptProperties;
+}
+export interface CustomStartScriptProperties {
+    [k: string]: string;
 }
 export interface Bot {
     hostUserId: string;
@@ -1316,6 +1313,7 @@ export interface Bot {
     aiOptions?: {
         [k: string]: string;
     };
+    customProperties?: CustomStartScriptProperties;
 }
 export interface StartBox {
     top: number;

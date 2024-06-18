@@ -31,9 +31,8 @@
             },
             "required": ["x", "y"]
         },
-        "options": {
-            "type": "object",
-            "patternProperties": { "^(.*)$": { "type": "string" } }
+        "customProperties": {
+            "$ref": "../definitions/customStartScriptProperties.json"
         }
     }
 }

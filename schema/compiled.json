@@ -16,9 +16,8 @@
                     "type": "array",
                     "items": { "type": "integer" }
                 },
-                "options": {
-                    "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
             },
             "required": ["teams"]
@@ -41,9 +40,17 @@
                     "description": "AI-specific options",
                     "type": "object",
                     "patternProperties": { "^(.*)$": { "type": "string" } }
+                },
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
             },
             "required": ["hostUserId", "aiShortName"]
+        },
+        "customStartScriptProperties": {
+            "description": "Additional custom properties to set in engine StartScript for this object, must not collide with existing properties",
+            "type": "object",
+            "patternProperties": { "^[a-zA-Z0-9_-]$": { "type": "string" } }
         },
         "player": {
             "type": "object",
@@ -56,9 +63,8 @@
                 "password": { "type": "string" },
                 "rank": { "type": "integer" },
                 "countryCode": { "type": "string" },
-                "customOptions": {
-                    "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
             },
             "required": ["userId", "name", "password"]
@@ -137,9 +143,8 @@
                     },
                     "required": ["x", "y"]
                 },
-                "options": {
-                    "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                "customProperties": {
+                    "$ref": "#/definitions/customStartScriptProperties"
                 }
             }
         },

@@ -13,9 +13,8 @@
             "type": "array",
             "items": { "type": "integer" }
         },
-        "options": {
-            "type": "object",
-            "patternProperties": { "^(.*)$": { "type": "string" } }
+        "customProperties": {
+            "$ref": "../definitions/customStartScriptProperties.json"
         }
     },
     "required": ["teams"]

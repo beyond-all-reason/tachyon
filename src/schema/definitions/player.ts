@@ -1,5 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
+import { customStartScriptProperties } from "@/schema/definitions/customStartScriptProperties";
 import { userId } from "@/schema/definitions/userId";
 
 export const player = Type.Object(
@@ -9,7 +10,7 @@ export const player = Type.Object(
         password: Type.String(),
         rank: Type.Optional(Type.Integer()),
         countryCode: Type.Optional(Type.String()),
-        customOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
+        customProperties: Type.Optional(Type.Ref(customStartScriptProperties)),
     },
     { $id: "player" }
 );

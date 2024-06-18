@@ -1,6 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
 import { bot } from "@/schema/definitions/bot";
+import { customStartScriptProperties } from "@/schema/definitions/customStartScriptProperties";
 import { player } from "@/schema/definitions/player";
 
 export const team = Type.Object(
@@ -23,7 +24,7 @@ export const team = Type.Object(
                 y: Type.Integer(),
             })
         ),
-        options: Type.Optional(Type.Record(Type.String(), Type.String())),
+        customProperties: Type.Optional(Type.Ref(customStartScriptProperties)),
     },
     { $id: "team" }
 );
