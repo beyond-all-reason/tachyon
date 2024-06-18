@@ -1222,28 +1222,10 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
             {
                 "teams": [
                     {
-                        "players": [
-                            {
-                                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                                "name": "dolor",
-                                "password": "dolor",
-                                "countryCode": "dolor"
-                            }
-                        ],
-                        "bots": [
-                            {
-                                "hostUserId": "22222222-2222-2222-2222-222222222222",
-                                "name": "dolor",
-                                "aiShortName": "dolor",
-                                "aiVersion": "dolor"
-                            }
-                        ],
-                        "incomeMultiplier": 15000000,
-                        "faction": "dolor",
-                        "color": {
-                            "r": 0.15,
-                            "g": 0.15,
-                            "b": 0.15
+                        "dolorb": -70000000,
+                        "startPos": {
+                            "x": -70000000,
+                            "y": -70000000
                         }
                     }
                 ]
@@ -1298,12 +1280,12 @@ export interface AllyTeam {
     };
 }
 export interface Team {
-    players: Player[];
-    bots: Bot[];
+    players?: Player[];
+    bots?: Bot[];
     advantage?: number;
     incomeMultiplier?: number;
-    faction: string;
-    color: {
+    faction?: string;
+    color?: {
         r: number;
         g: number;
         b: number;
