@@ -44,15 +44,11 @@ export default defineEndpoint({
         },
         {
             status: "failed",
-            reason: "invalid_script",
+            reason: "battle_already_exists",
         },
         {
             status: "failed",
-            reason: "server_already_running",
-        },
-        {
-            status: "failed",
-            reason: "server_failed_to_start",
+            reason: "engine_version_not_available",
         },
     ],
 });

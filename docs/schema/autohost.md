@@ -1412,9 +1412,8 @@ export interface Spectator {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "invalid_script",
-                        "server_already_running",
-                        "server_failed_to_start",
+                        "battle_already_exists",
+                        "engine_version_not_available",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1463,7 +1462,7 @@ export interface AutohostStartOkResponseData {
     port: number;
 }
 ```
-Possible Failed Reasons: `invalid_script`, `server_already_running`, `server_failed_to_start`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `battle_already_exists`, `engine_version_not_available`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 

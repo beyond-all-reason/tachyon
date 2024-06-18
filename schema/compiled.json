@@ -832,9 +832,8 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "invalid_script",
-                                "server_already_running",
-                                "server_failed_to_start",
+                                "battle_already_exists",
+                                "engine_version_not_available",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
