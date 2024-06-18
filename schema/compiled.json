@@ -43,20 +43,22 @@
             ]
         },
         "player": {
-            "allOf": [
-                { "$ref": "#/definitions/spectator" },
-                {
+            "type": "object",
+            "properties": {
+                "userId": { "$ref": "#/definitions/userId" },
+                "name": {
+                    "description": "Name of the player, must be unique just like userId",
+                    "type": "string"
+                },
+                "password": { "type": "string" },
+                "rank": { "type": "integer" },
+                "countryCode": { "type": "string" },
+                "customOptions": {
                     "type": "object",
-                    "properties": {
-                        "customOptions": {
-                            "type": "object",
-                            "patternProperties": {
-                                "^(.*)$": { "type": "string" }
-                            }
-                        }
-                    }
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
                 }
-            ]
+            },
+            "required": ["userId", "name", "password"]
         },
         "privateUser": {
             "allOf": [
@@ -89,19 +91,6 @@
                     ]
                 }
             ]
-        },
-        "spectator": {
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "#/definitions/userId" },
-                "name": {
-                    "description": "Name of the player, must be unique just like userId",
-                    "type": "string"
-                },
-                "rank": { "type": "integer" },
-                "countryCode": { "type": "string" }
-            },
-            "required": ["userId", "name", "rank", "countryCode"]
         },
         "startBox": {
             "type": "object",
@@ -736,7 +725,7 @@
                         },
                         "spectators": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/spectator" }
+                            "items": { "$ref": "#/definitions/player" }
                         },
                         "mapOptions": {
                             "type": "object",

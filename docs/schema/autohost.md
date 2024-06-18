@@ -1169,7 +1169,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/spectator.json" }
+                    "items": { "$ref": "../../definitions/player.json" }
                 },
                 "mapOptions": {
                     "type": "object",
@@ -1226,11 +1226,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                             {
                                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
                                 "name": "dolor",
-                                "rank": -70000000,
-                                "countryCode": "dolor",
-                                "customOptions": {
-                                    ".": "dolor"
-                                }
+                                "password": "dolor",
+                                "countryCode": "dolor"
                             }
                         ],
                         "bots": [
@@ -1269,16 +1266,6 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 #### TypeScript Definition
 ```ts
 export type StartPosType = "fixed" | "random" | "ingame" | "beforegame";
-export type Player = {
-    userId: UserId;
-    name: string;
-    rank: number;
-    countryCode: string;
-} & {
-    customOptions?: {
-        [k: string]: string;
-    };
-};
 export type UserId = string;
 
 export interface AutohostStartRequest {
@@ -1297,7 +1284,7 @@ export interface AutohostStartRequestData {
     startDelay?: number;
     startPosType: StartPosType;
     allyTeams: AllyTeam[];
-    spectators?: Spectator[];
+    spectators?: Player[];
     mapOptions?: {
         [k: string]: string;
     };
@@ -1334,6 +1321,16 @@ export interface Team {
         [k: string]: string;
     };
 }
+export interface Player {
+    userId: UserId;
+    name: string;
+    password: string;
+    rank?: number;
+    countryCode?: string;
+    customOptions?: {
+        [k: string]: string;
+    };
+}
 export interface Bot {
     hostUserId: string;
     name: string;
@@ -1348,12 +1345,6 @@ export interface StartBox {
     bottom: number;
     left: number;
     right: number;
-}
-export interface Spectator {
-    userId: UserId;
-    name: string;
-    rank: number;
-    countryCode: string;
 }
 ```
 ### Response

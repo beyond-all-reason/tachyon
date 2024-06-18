@@ -2,7 +2,7 @@ import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
 import { allyTeam } from "@/schema/definitions/allyTeam";
-import { spectator } from "@/schema/definitions/spectator";
+import { player } from "@/schema/definitions/player";
 import { startPosType } from "@/schema/definitions/startPosType";
 
 export default defineEndpoint({
@@ -21,7 +21,7 @@ export default defineEndpoint({
             startDelay: Type.Optional(Type.Integer()),
             startPosType: Type.Ref(startPosType),
             allyTeams: Type.Array(Type.Ref(allyTeam)),
-            spectators: Type.Optional(Type.Array(Type.Ref(spectator))),
+            spectators: Type.Optional(Type.Array(Type.Ref(player))),
             mapOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
             gameOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
             restrictions: Type.Optional(

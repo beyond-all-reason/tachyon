@@ -41,7 +41,7 @@
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/spectator.json" }
+                    "items": { "$ref": "../../definitions/player.json" }
                 },
                 "mapOptions": {
                     "type": "object",
