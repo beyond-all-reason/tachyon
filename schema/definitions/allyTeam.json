@@ -5,7 +5,8 @@
     "properties": {
         "teams": {
             "type": "array",
-            "items": { "$ref": "../definitions/team.json" }
+            "items": { "$ref": "../definitions/team.json" },
+            "minItems": 1
         },
         "startBox": { "$ref": "../definitions/startBox.json" },
         "allies": {

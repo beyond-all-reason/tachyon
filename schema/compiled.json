@@ -8,7 +8,8 @@
             "properties": {
                 "teams": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/team" }
+                    "items": { "$ref": "#/definitions/team" },
+                    "minItems": 1
                 },
                 "startBox": { "$ref": "#/definitions/startBox" },
                 "allies": {
@@ -728,7 +729,8 @@
                         },
                         "allyTeams": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/allyTeam" }
+                            "items": { "$ref": "#/definitions/allyTeam" },
+                            "minItems": 1
                         },
                         "spectators": {
                             "type": "array",

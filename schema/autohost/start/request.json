@@ -37,7 +37,8 @@
                 },
                 "allyTeams": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/allyTeam.json" }
+                    "items": { "$ref": "../../definitions/allyTeam.json" },
+                    "minItems": 1
                 },
                 "spectators": {
                     "type": "array",

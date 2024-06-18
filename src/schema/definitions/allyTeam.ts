@@ -6,7 +6,7 @@ import { team } from "@/schema/definitions/team";
 
 export const allyTeam = Type.Object(
     {
-        teams: Type.Array(Type.Ref(team)),
+        teams: Type.Array(Type.Ref(team), { minItems: 1 }),
         startBox: Type.Optional(Type.Ref(startBox)),
         allies: Type.Optional(
             Type.Array(Type.Integer(), {

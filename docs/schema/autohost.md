@@ -1165,7 +1165,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 },
                 "allyTeams": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/allyTeam.json" }
+                    "items": { "$ref": "../../definitions/allyTeam.json" },
+                    "minItems": 1
                 },
                 "spectators": {
                     "type": "array",
@@ -1259,7 +1260,7 @@ export interface AutohostStartRequestData {
     mapArchiveHash?: string;
     startDelay?: number;
     startPosType: StartPosType;
-    allyTeams: AllyTeam[];
+    allyTeams: [AllyTeam, ...AllyTeam[]];
     spectators?: Player[];
     mapOptions?: {
         [k: string]: string;
@@ -1272,7 +1273,7 @@ export interface AutohostStartRequestData {
     };
 }
 export interface AllyTeam {
-    teams: Team[];
+    teams: [Team, ...Team[]];
     startBox?: StartBox;
     allies?: number[];
     customProperties?: CustomStartScriptProperties;

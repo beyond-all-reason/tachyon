@@ -20,7 +20,7 @@ export default defineEndpoint({
             mapArchiveHash: Type.Optional(Type.String({ pattern: "^[a-fA-F0-9]{128}$" })),
             startDelay: Type.Optional(Type.Integer()),
             startPosType: Type.Ref(startPosType),
-            allyTeams: Type.Array(Type.Ref(allyTeam)),
+            allyTeams: Type.Array(Type.Ref(allyTeam), { minItems: 1 }),
             spectators: Type.Optional(Type.Array(Type.Ref(player))),
             mapOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
             gameOptions: Type.Optional(Type.Record(Type.String(), Type.String())),
