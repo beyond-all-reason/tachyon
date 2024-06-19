@@ -16,7 +16,7 @@
             "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "type": "string", "format": "uuid" },
                 "engineVersion": {
                     "type": "string",
                     "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -37,11 +37,12 @@
                 },
                 "allyTeams": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/allyTeam.json" }
+                    "items": { "$ref": "../../definitions/allyTeam.json" },
+                    "minItems": 1
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/spectator.json" }
+                    "items": { "$ref": "../../definitions/player.json" }
                 },
                 "mapOptions": {
                     "type": "object",
@@ -52,15 +53,16 @@
                     "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "unitId": { "type": "string" },
-                            "limit": { "type": "integer", "minimum": 0 }
-                        },
-                        "required": ["unitId", "limit"]
+                    "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": { "type": "integer", "minimum": 0 }
                     }
+                },
+                "luamsgRegexp": {
+                    "description": "When set, battle will generate updates for luamsgs matching this regexp. No updates will be generated if this is not set.",
+                    "type": "string",
+                    "format": "regex"
                 }
             },
             "required": [
@@ -68,12 +70,8 @@
                 "engineVersion",
                 "gameName",
                 "mapName",
-                "gameArchiveHash",
-                "mapArchiveHash",
-                "startDelay",
                 "startPosType",
-                "allyTeams",
-                "spectators"
+                "allyTeams"
             ]
         }
     },

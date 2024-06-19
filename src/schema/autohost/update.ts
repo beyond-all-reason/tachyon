@@ -3,6 +3,7 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 import { unixTime } from "@/schema/definitions/unixTime";
 import { userId } from "@/schema/definitions/userId";
+import { UnionEnum } from "@/union-enum";
 
 export default defineEndpoint({
     source: "autohost",
@@ -71,6 +72,9 @@ export default defineEndpoint({
                 Type.Object(
                     {
                         type: Type.Const("engine_crash"),
+                        details: Type.Optional(
+                            Type.String({ description: "Optional, short, details of the crash." })
+                        ),
                     },
                     {
                         description:
@@ -82,12 +86,71 @@ export default defineEndpoint({
                     {
                         type: Type.Const("player_joined"),
                         userId: Type.Ref(userId),
-                        playerNumber: Type.Integer(),
+                        playerNumber: Type.Integer({
+                            description:
+                                "Player number in the game, can be useful for custom commands",
+                        }),
                     },
                     {
-                        description:
-                            "Player number in the game, can be useful for custom commands.",
                         title: "PlayerJoinedUpdate",
+                    }
+                ),
+                Type.Object(
+                    {
+                        type: Type.Const("player_left"),
+                        userId: Type.Ref(userId),
+                        reason: UnionEnum(["lost_connection", "left", "kicked"]),
+                    },
+                    {
+                        title: "PlayerLeftUpdate",
+                    }
+                ),
+                Type.Union(
+                    [
+                        Type.Object({
+                            type: Type.Const("player_chat"),
+                            userId: Type.Ref(userId),
+                            message: Type.String(),
+                            destination: UnionEnum(["allies", "all", "spectators"]),
+                        }),
+                        Type.Object({
+                            type: Type.Const("player_chat"),
+                            userId: Type.Ref(userId),
+                            message: Type.String(),
+                            destination: Type.Const("player"),
+                            toUserId: Type.Ref(userId),
+                        }),
+                    ],
+                    { title: "PlayerChatUpdate" }
+                ),
+                Type.Object(
+                    {
+                        type: Type.Const("player_defeated"),
+                        userId: Type.Ref(userId),
+                    },
+                    {
+                        title: "PlayerDefeatedUpdate",
+                    }
+                ),
+                Type.Object(
+                    {
+                        type: Type.Const("luamsg"),
+                        userId: Type.Ref(userId),
+                        script: UnionEnum(["ui", "game", "rules"]),
+                        uiMode: Type.Optional(
+                            UnionEnum(["all", "allies", "spectators"], {
+                                description: "Set when script is 'ui'",
+                            })
+                        ),
+                        data: Type.String({
+                            contentEncoding: "base64",
+                            contentMediaType: "application/octet-stream",
+                        }),
+                    },
+                    {
+                        title: "LuaMsgUpdate",
+                        description:
+                            "This update is generated only for messages matching luamsgRegexp set in the battle start script.",
                     }
                 ),
             ]),

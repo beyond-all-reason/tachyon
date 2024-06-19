@@ -542,9 +542,11 @@ Mute a player in a battle.
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "userId": { "$ref": "../../definitions/userId.json" }
+                "userId": { "$ref": "../../definitions/userId.json" },
+                "chat": { "type": "boolean" },
+                "draw": { "type": "boolean" }
             },
-            "required": ["battleId", "userId"]
+            "required": ["battleId", "userId", "chat", "draw"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -563,7 +565,9 @@ Mute a player in a battle.
     "commandId": "autohost/mutePlayer",
     "data": {
         "battleId": "11111111-1111-1111-1111-111111111111",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+        "chat": false,
+        "draw": false
     }
 }
 ```
@@ -582,6 +586,8 @@ export interface AutohostMutePlayerRequest {
 export interface AutohostMutePlayerRequestData {
     battleId: string;
     userId: UserId;
+    chat: boolean;
+    draw: boolean;
 }
 ```
 ### Response
@@ -1144,7 +1150,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
             "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "type": "string", "format": "uuid" },
                 "engineVersion": {
                     "type": "string",
                     "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -1165,11 +1171,12 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 },
                 "allyTeams": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/allyTeam.json" }
+                    "items": { "$ref": "../../definitions/allyTeam.json" },
+                    "minItems": 1
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/spectator.json" }
+                    "items": { "$ref": "../../definitions/player.json" }
                 },
                 "mapOptions": {
                     "type": "object",
@@ -1180,15 +1187,16 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                     "patternProperties": { "^(.*)$": { "type": "string" } }
                 },
                 "restrictions": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "unitId": { "type": "string" },
-                            "limit": { "type": "integer", "minimum": 0 }
-                        },
-                        "required": ["unitId", "limit"]
+                    "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": { "type": "integer", "minimum": 0 }
                     }
+                },
+                "luamsgRegexp": {
+                    "description": "When set, battle will generate updates for luamsgs matching this regexp. No updates will be generated if this is not set.",
+                    "type": "string",
+                    "format": "regex"
                 }
             },
             "required": [
@@ -1196,12 +1204,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 "engineVersion",
                 "gameName",
                 "mapName",
-                "gameArchiveHash",
-                "mapArchiveHash",
-                "startDelay",
                 "startPosType",
-                "allyTeams",
-                "spectators"
+                "allyTeams"
             ]
         }
     },
@@ -1220,64 +1224,28 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
     "messageId": "dolor",
     "commandId": "autohost/start",
     "data": {
-        "battleId": "dolor",
+        "battleId": "22222222-2222-2222-2222-222222222222",
         "engineVersion": "99",
         "gameName": "dolor",
         "mapName": "dolor",
-        "gameArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
-        "mapArchiveHash": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
         "startDelay": -70000000,
         "startPosType": "fixed",
         "allyTeams": [
             {
                 "teams": [
                     {
-                        "players": [
-                            {
-                                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                                "name": "dolor",
-                                "rank": -70000000,
-                                "countryCode": "dolor",
-                                "customOptions": {
-                                    ".": "dolor"
-                                }
-                            }
-                        ],
-                        "bots": [
-                            {
-                                "hostUserId": "22222222-2222-2222-2222-222222222222",
-                                "name": "dolor",
-                                "aiShortName": "dolor",
-                                "aiVersion": "dolor"
-                            }
-                        ],
-                        "incomeMultiplier": 15000000,
-                        "faction": "dolor",
-                        "color": {
-                            "r": 0.15,
-                            "g": 0.15,
-                            "b": 0.15
+                        "dolorb": -70000000,
+                        "startPos": {
+                            "x": -70000000,
+                            "y": -70000000
                         }
                     }
-                ],
-                "startBox": {
-                    "top": 30,
-                    "bottom": 30,
-                    "left": 30,
-                    "right": 30
-                }
+                ]
             }
         ],
-        "spectators": [],
-        "gameOptions": {
-            ".": "dolor"
-        },
-        "restrictions": [
-            {
-                "unitId": "dolor",
-                "limit": 15000000
-            }
-        ]
+        "restrictions": {
+            ".": 15000000
+        }
     }
 }
 ```
@@ -1286,16 +1254,6 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 #### TypeScript Definition
 ```ts
 export type StartPosType = "fixed" | "random" | "ingame" | "beforegame";
-export type Player = {
-    userId: UserId;
-    name: string;
-    rank: number;
-    countryCode: string;
-} & {
-    customOptions?: {
-        [k: string]: string;
-    };
-};
 export type UserId = string;
 
 export interface AutohostStartRequest {
@@ -1309,12 +1267,12 @@ export interface AutohostStartRequestData {
     engineVersion: string;
     gameName: string;
     mapName: string;
-    gameArchiveHash: string;
-    mapArchiveHash: string;
-    startDelay: number;
+    gameArchiveHash?: string;
+    mapArchiveHash?: string;
+    startDelay?: number;
     startPosType: StartPosType;
-    allyTeams: AllyTeam[];
-    spectators: Spectator[];
+    allyTeams: [AllyTeam, ...AllyTeam[]];
+    spectators?: Player[];
     mapOptions?: {
         [k: string]: string;
     };
@@ -1322,24 +1280,23 @@ export interface AutohostStartRequestData {
         [k: string]: string;
     };
     restrictions?: {
-        unitId: string;
-        limit: number;
-    }[];
+        [k: string]: number;
+    };
+    luamsgRegexp?: string;
 }
 export interface AllyTeam {
-    teams: Team[];
-    startBox: StartBox;
-    options?: {
-        [k: string]: string;
-    };
+    teams: [Team, ...Team[]];
+    startBox?: StartBox;
+    allies?: number[];
+    customProperties?: CustomStartScriptProperties;
 }
 export interface Team {
-    players: Player[];
-    bots: Bot[];
+    players?: Player[];
+    bots?: Bot[];
     advantage?: number;
     incomeMultiplier?: number;
-    faction: string;
-    color: {
+    faction?: string;
+    color?: {
         r: number;
         g: number;
         b: number;
@@ -1348,30 +1305,34 @@ export interface Team {
         x: number;
         y: number;
     };
-    options?: {
-        [k: string]: string;
-    };
+    customProperties?: CustomStartScriptProperties;
+}
+export interface Player {
+    userId: UserId;
+    name: string;
+    password: string;
+    rank?: number;
+    countryCode?: string;
+    customProperties?: CustomStartScriptProperties;
+}
+export interface CustomStartScriptProperties {
+    [k: string]: string;
 }
 export interface Bot {
     hostUserId: string;
-    name: string;
+    name?: string;
     aiShortName: string;
-    aiVersion: string;
-    customOptions: {
-        [k: string]: unknown;
+    aiVersion?: string;
+    aiOptions?: {
+        [k: string]: string;
     };
+    customProperties?: CustomStartScriptProperties;
 }
 export interface StartBox {
     top: number;
     bottom: number;
     left: number;
     right: number;
-}
-export interface Spectator {
-    userId: UserId;
-    name: string;
-    rank: number;
-    countryCode: string;
 }
 ```
 ### Response
@@ -1430,9 +1391,8 @@ export interface Spectator {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "invalid_script",
-                        "server_already_running",
-                        "server_failed_to_start",
+                        "battle_already_exists",
+                        "engine_version_not_available",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1481,7 +1441,7 @@ export interface AutohostStartOkResponseData {
     port: number;
 }
 ```
-Possible Failed Reasons: `invalid_script`, `server_already_running`, `server_failed_to_start`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `battle_already_exists`, `engine_version_not_available`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1610,7 +1570,7 @@ Ask the autohost to send us updates about its battles.
     "messageId": "ullamco",
     "commandId": "autohost/subscribeUpdates",
     "data": {
-        "since": 1705432698
+        "since": 1705432698000000
     }
 }
 ```
@@ -1800,22 +1760,128 @@ Inform the server of battle updates.
                             "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                             "type": "object",
                             "properties": {
-                                "type": { "const": "engine_crash" }
+                                "type": { "const": "engine_crash" },
+                                "details": {
+                                    "description": "Optional, short, details of the crash.",
+                                    "type": "string"
+                                }
                             },
                             "required": ["type"]
                         },
                         {
                             "title": "PlayerJoinedUpdate",
-                            "description": "Player number in the game, can be useful for custom commands.",
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player_joined" },
                                 "userId": {
                                     "$ref": "../../definitions/userId.json"
                                 },
-                                "playerNumber": { "type": "integer" }
+                                "playerNumber": {
+                                    "description": "Player number in the game, can be useful for custom commands",
+                                    "type": "integer"
+                                }
                             },
                             "required": ["type", "userId", "playerNumber"]
+                        },
+                        {
+                            "title": "PlayerLeftUpdate",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player_left" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "reason": {
+                                    "enum": [
+                                        "lost_connection",
+                                        "left",
+                                        "kicked"
+                                    ]
+                                }
+                            },
+                            "required": ["type", "userId", "reason"]
+                        },
+                        {
+                            "title": "PlayerChatUpdate",
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_chat" },
+                                        "userId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
+                                        "message": { "type": "string" },
+                                        "destination": {
+                                            "enum": [
+                                                "allies",
+                                                "all",
+                                                "spectators"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "message",
+                                        "destination"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_chat" },
+                                        "userId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
+                                        "message": { "type": "string" },
+                                        "destination": { "const": "player" },
+                                        "toUserId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "message",
+                                        "destination",
+                                        "toUserId"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "PlayerDefeatedUpdate",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player_defeated" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
+                            },
+                            "required": ["type", "userId"]
+                        },
+                        {
+                            "title": "LuaMsgUpdate",
+                            "description": "This update is generated only for messages matching luamsgRegexp set in the battle start script.",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "luamsg" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "script": { "enum": ["ui", "game", "rules"] },
+                                "uiMode": {
+                                    "description": "Set when script is 'ui'",
+                                    "enum": ["all", "allies", "spectators"]
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "contentEncoding": "base64",
+                                    "contentMediaType": "application/octet-stream"
+                                }
+                            },
+                            "required": ["type", "userId", "script", "data"]
                         }
                     ]
                 }
@@ -1839,14 +1905,10 @@ Inform the server of battle updates.
     "commandId": "autohost/update",
     "data": {
         "battleId": "33333333-3333-3333-3333-333333333333",
-        "time": 1705432698,
+        "time": 1705432698000000,
         "update": {
-            "type": "finished",
-            "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-            "winningAllyTeams": [
-                -60000000,
-                -60000000
-            ]
+            "type": "engine_message",
+            "message": "Ut velit"
         }
     }
 }
@@ -1857,6 +1919,20 @@ Inform the server of battle updates.
 ```ts
 export type UnixTime = number;
 export type UserId = string;
+export type PlayerChatUpdate =
+    | {
+          type: "player_chat";
+          userId: UserId;
+          message: string;
+          destination: "allies" | "all" | "spectators";
+      }
+    | {
+          type: "player_chat";
+          userId: UserId;
+          message: string;
+          destination: "player";
+          toUserId: UserId;
+      };
 
 export interface AutohostUpdateEvent {
     type: "event";
@@ -1874,7 +1950,11 @@ export interface AutohostUpdateEventData {
         | EngineWarningUpdate
         | EngineQuitUpdate
         | EngineCrashUpdate
-        | PlayerJoinedUpdate;
+        | PlayerJoinedUpdate
+        | PlayerLeftUpdate
+        | PlayerChatUpdate
+        | PlayerDefeatedUpdate
+        | LuaMsgUpdate;
 }
 export interface StartUpdate {
     type: "start";
@@ -1897,10 +1977,27 @@ export interface EngineQuitUpdate {
 }
 export interface EngineCrashUpdate {
     type: "engine_crash";
+    details?: string;
 }
 export interface PlayerJoinedUpdate {
     type: "player_joined";
     userId: UserId;
     playerNumber: number;
+}
+export interface PlayerLeftUpdate {
+    type: "player_left";
+    userId: UserId;
+    reason: "lost_connection" | "left" | "kicked";
+}
+export interface PlayerDefeatedUpdate {
+    type: "player_defeated";
+    userId: UserId;
+}
+export interface LuaMsgUpdate {
+    type: "luamsg";
+    userId: UserId;
+    script: "ui" | "game" | "rules";
+    uiMode?: "all" | "allies" | "spectators";
+    data: string;
 }
 ```

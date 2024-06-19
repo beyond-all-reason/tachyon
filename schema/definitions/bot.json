@@ -9,18 +9,19 @@
             "format": "uuid"
         },
         "name": { "type": "string" },
-        "aiShortName": { "type": "string" },
+        "aiShortName": {
+            "description": "Short name of the AI library",
+            "type": "string"
+        },
         "aiVersion": { "type": "string" },
-        "customOptions": {
+        "aiOptions": {
+            "description": "AI-specific options",
             "type": "object",
-            "patternProperties": { "^(.*)$": {} }
+            "patternProperties": { "^(.*)$": { "type": "string" } }
+        },
+        "customProperties": {
+            "$ref": "../definitions/customStartScriptProperties.json"
         }
     },
-    "required": [
-        "hostUserId",
-        "name",
-        "aiShortName",
-        "aiVersion",
-        "customOptions"
-    ]
+    "required": ["hostUserId", "aiShortName"]
 }

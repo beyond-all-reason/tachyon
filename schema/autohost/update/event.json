@@ -79,22 +79,128 @@
                             "description": "The engine process for battle has crashed, no more updates will be sent for this battle.",
                             "type": "object",
                             "properties": {
-                                "type": { "const": "engine_crash" }
+                                "type": { "const": "engine_crash" },
+                                "details": {
+                                    "description": "Optional, short, details of the crash.",
+                                    "type": "string"
+                                }
                             },
                             "required": ["type"]
                         },
                         {
                             "title": "PlayerJoinedUpdate",
-                            "description": "Player number in the game, can be useful for custom commands.",
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player_joined" },
                                 "userId": {
                                     "$ref": "../../definitions/userId.json"
                                 },
-                                "playerNumber": { "type": "integer" }
+                                "playerNumber": {
+                                    "description": "Player number in the game, can be useful for custom commands",
+                                    "type": "integer"
+                                }
                             },
                             "required": ["type", "userId", "playerNumber"]
+                        },
+                        {
+                            "title": "PlayerLeftUpdate",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player_left" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "reason": {
+                                    "enum": [
+                                        "lost_connection",
+                                        "left",
+                                        "kicked"
+                                    ]
+                                }
+                            },
+                            "required": ["type", "userId", "reason"]
+                        },
+                        {
+                            "title": "PlayerChatUpdate",
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_chat" },
+                                        "userId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
+                                        "message": { "type": "string" },
+                                        "destination": {
+                                            "enum": [
+                                                "allies",
+                                                "all",
+                                                "spectators"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "message",
+                                        "destination"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player_chat" },
+                                        "userId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
+                                        "message": { "type": "string" },
+                                        "destination": { "const": "player" },
+                                        "toUserId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "userId",
+                                        "message",
+                                        "destination",
+                                        "toUserId"
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "PlayerDefeatedUpdate",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player_defeated" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
+                            },
+                            "required": ["type", "userId"]
+                        },
+                        {
+                            "title": "LuaMsgUpdate",
+                            "description": "This update is generated only for messages matching luamsgRegexp set in the battle start script.",
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "luamsg" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "script": { "enum": ["ui", "game", "rules"] },
+                                "uiMode": {
+                                    "description": "Set when script is 'ui'",
+                                    "enum": ["all", "allies", "spectators"]
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "contentEncoding": "base64",
+                                    "contentMediaType": "application/octet-stream"
+                                }
+                            },
+                            "required": ["type", "userId", "script", "data"]
                         }
                     ]
                 }
