@@ -179,7 +179,8 @@ export interface AutohostAddPlayerRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -329,7 +330,8 @@ export interface AutohostKickPlayerRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -474,7 +476,8 @@ export interface AutohostKillRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -630,7 +633,8 @@ export interface AutohostMutePlayerRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -780,7 +784,8 @@ export interface AutohostSendCommandRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -928,7 +933,8 @@ export interface AutohostSendMessageRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -1083,7 +1089,8 @@ export interface AutohostSpecPlayersRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -1398,7 +1405,8 @@ export interface StartBox {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -1630,7 +1638,8 @@ export interface AutohostSubscribeUpdatesRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }

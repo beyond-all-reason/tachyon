@@ -120,7 +120,8 @@ export interface MatchmakingCancelRequest {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -440,7 +441,8 @@ export interface MatchmakingListRequest {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -679,7 +681,8 @@ export interface MatchmakingQueueRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -879,7 +882,8 @@ export interface MatchmakingReadyRequest {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }

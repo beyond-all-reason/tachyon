@@ -254,7 +254,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -324,7 +325,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -393,7 +395,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -465,7 +468,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -539,7 +543,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -609,7 +614,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -682,7 +688,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -844,7 +851,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -937,7 +945,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1246,7 +1255,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1308,7 +1318,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1467,7 +1478,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1558,7 +1570,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1641,7 +1654,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1732,7 +1746,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",
@@ -1807,7 +1822,8 @@
                                 "invalid_request",
                                 "command_unimplemented"
                             ]
-                        }
+                        },
+                        "details": { "type": "string" }
                     },
                     "required": [
                         "type",

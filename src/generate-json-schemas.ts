@@ -188,6 +188,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                                     reason: UnionEnum(
                                         failedResponses.map((schema) => schema.reason)
                                     ),
+                                    details: Type.Optional(Type.String()),
                                 },
                                 { title: baseTypeName + "FailResponse" }
                             ),

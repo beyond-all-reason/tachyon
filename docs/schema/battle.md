@@ -123,7 +123,8 @@ export interface BattleStartRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }

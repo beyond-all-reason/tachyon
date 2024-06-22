@@ -113,7 +113,8 @@ export interface SystemDisconnectRequestData {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
@@ -249,7 +250,8 @@ export interface SystemServerStatsRequest {
                         "invalid_request",
                         "command_unimplemented"
                     ]
-                }
+                },
+                "details": { "type": "string" }
             },
             "required": ["type", "messageId", "commandId", "status", "reason"]
         }
