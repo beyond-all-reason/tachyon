@@ -22,6 +22,7 @@ export type TachyonConfig = {
 type SchemaMeta = {
     actors: Record<TachyonActor, Record<TachyonMessageType, { send: string[]; receive: string[] }>>;
     serviceIds: Record<string, string[]>;
+    failedReasons: Record<string, string[]>;
 };
 
 export type CommandConfig = {
@@ -34,6 +35,7 @@ export type CommandConfig = {
               request: TSchema;
               response: TSchema;
           };
+          failedReasons: string[];
       }
     | {
           type: "event";
@@ -162,6 +164,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     );
                 }
 
+                const failedReasons = failedResponses.map((schema) => schema.reason);
                 const responseSchema = Type.Union(
                     successResponses
                         .map((schema) => {
@@ -185,9 +188,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                                     messageId: Type.String(),
                                     commandId: Type.Literal(commandId),
                                     status: Type.Literal("failed"),
-                                    reason: UnionEnum(
-                                        failedResponses.map((schema) => schema.reason)
-                                    ),
+                                    reason: UnionEnum(failedReasons),
                                     details: Type.Optional(Type.String()),
                                 },
                                 { title: baseTypeName + "FailResponse" }
@@ -214,6 +215,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     commandId,
                     schema: { request: requestSchema, response: responseSchema },
                     config: schemaConfig,
+                    failedReasons,
                     type: "requestResponse",
                 };
             }
@@ -305,6 +307,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
             },
         },
         serviceIds: {},
+        failedReasons: {},
     };
 
     const individualSchemas: TSchema[] = [];
@@ -329,6 +332,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
 
             individualSchemas.push(commandConfig.schema.request);
             individualSchemas.push(commandConfig.schema.response);
+            schemaMeta.failedReasons[commandConfig.commandId] = commandConfig.failedReasons;
         } else if ("event" in commandConfig.config) {
             schemaMeta.actors[commandConfig.config.source].event.send.push(commandConfig.commandId);
             schemaMeta.actors[commandConfig.config.target].event.receive.push(
