@@ -1521,14 +1521,8 @@
                 "data": {
                     "title": "MatchmakingQueueRequestData",
                     "type": "object",
-                    "properties": {
-                        "queues": {
-                            "type": "array",
-                            "items": { "type": "string" },
-                            "minItems": 1
-                        }
-                    },
-                    "required": ["queues"]
+                    "properties": { "queue": { "type": "string" } },
+                    "required": ["queue"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
