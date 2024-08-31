@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Queue up for matchmaking on the specific queue id.",
     request: {
         data: Type.Object({
-            queue: Type.String(),
+            queueId: Type.String(),
         }),
     },
     response: [

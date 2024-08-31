@@ -593,8 +593,8 @@ Queue up for matchmaking on the specific queue id.
         "data": {
             "title": "MatchmakingQueueRequestData",
             "type": "object",
-            "properties": { "queue": { "type": "string" } },
-            "required": ["queue"]
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -612,7 +612,7 @@ Queue up for matchmaking on the specific queue id.
     "messageId": "nisi deserunt",
     "commandId": "matchmaking/queue",
     "data": {
-        "queue": "nisi deserunt"
+        "queueId": "nisi deserunt"
     }
 }
 ```
@@ -627,7 +627,7 @@ export interface MatchmakingQueueRequest {
     data: MatchmakingQueueRequestData;
 }
 export interface MatchmakingQueueRequestData {
-    queue: string;
+    queueId: string;
 }
 ```
 ### Response

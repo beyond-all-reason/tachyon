@@ -15,8 +15,8 @@
         "data": {
             "title": "MatchmakingQueueRequestData",
             "type": "object",
-            "properties": { "queue": { "type": "string" } },
-            "required": ["queue"]
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
