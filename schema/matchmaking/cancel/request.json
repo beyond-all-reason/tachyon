@@ -11,7 +11,13 @@
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/cancel" }
+        "commandId": { "const": "matchmaking/cancel" },
+        "data": {
+            "title": "MatchmakingCancelRequestData",
+            "type": "object",
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
+        }
     },
-    "required": ["type", "messageId", "commandId"]
+    "required": ["type", "messageId", "commandId", "data"]
 }

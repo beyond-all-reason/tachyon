@@ -8,6 +8,7 @@ export default defineEndpoint({
     description: "Server should send this when players ready up using [ready](#ready).",
     event: {
         data: Type.Object({
+            queueId: Type.String(),
             readyCount: Type.Integer(),
         }),
     },

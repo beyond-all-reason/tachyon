@@ -52,9 +52,15 @@ Cancel queueing for matchmaking.
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/cancel" }
+        "commandId": { "const": "matchmaking/cancel" },
+        "data": {
+            "title": "MatchmakingCancelRequestData",
+            "type": "object",
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
+        }
     },
-    "required": ["type", "messageId", "commandId"]
+    "required": ["type", "messageId", "commandId", "data"]
 }
 
 ```
@@ -67,7 +73,10 @@ Cancel queueing for matchmaking.
 {
     "type": "request",
     "messageId": "magna commodo",
-    "commandId": "matchmaking/cancel"
+    "commandId": "matchmaking/cancel",
+    "data": {
+        "queueId": "magna commodo"
+    }
 }
 ```
 </details>
@@ -78,6 +87,10 @@ export interface MatchmakingCancelRequest {
     type: "request";
     messageId: string;
     commandId: "matchmaking/cancel";
+    data: MatchmakingCancelRequestData;
+}
+export interface MatchmakingCancelRequestData {
+    queueId: string;
 }
 ```
 ### Response
@@ -262,8 +275,11 @@ Server should send this when players ready up using [ready](#ready).
         "data": {
             "title": "MatchmakingFoundUpdateEventData",
             "type": "object",
-            "properties": { "readyCount": { "type": "integer" } },
-            "required": ["readyCount"]
+            "properties": {
+                "queueId": { "type": "string" },
+                "readyCount": { "type": "integer" }
+            },
+            "required": ["queueId", "readyCount"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -281,6 +297,7 @@ Server should send this when players ready up using [ready](#ready).
     "messageId": "in exercitation",
     "commandId": "matchmaking/foundUpdate",
     "data": {
+        "queueId": "in exercitation",
         "readyCount": -48000000
     }
 }
@@ -296,6 +313,7 @@ export interface MatchmakingFoundUpdateEvent {
     data: MatchmakingFoundUpdateEventData;
 }
 export interface MatchmakingFoundUpdateEventData {
+    queueId: string;
     readyCount: number;
 }
 ```
@@ -510,6 +528,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 ## Lost
 
 Sent when a found match gets disbanded because a client failed to ready up.
+      The player is put back into the queue when this happen.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -533,9 +552,15 @@ Sent when a found match gets disbanded because a client failed to ready up.
     "properties": {
         "type": { "const": "event" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/lost" }
+        "commandId": { "const": "matchmaking/lost" },
+        "data": {
+            "title": "MatchmakingLostEventData",
+            "type": "object",
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
+        }
     },
-    "required": ["type", "messageId", "commandId"]
+    "required": ["type", "messageId", "commandId", "data"]
 }
 
 ```
@@ -548,7 +573,10 @@ Sent when a found match gets disbanded because a client failed to ready up.
 {
     "type": "event",
     "messageId": "commodo laborum",
-    "commandId": "matchmaking/lost"
+    "commandId": "matchmaking/lost",
+    "data": {
+        "queueId": "commodo laborum"
+    }
 }
 ```
 </details>
@@ -559,6 +587,10 @@ export interface MatchmakingLostEvent {
     type: "event";
     messageId: string;
     commandId: "matchmaking/lost";
+    data: MatchmakingLostEventData;
+}
+export interface MatchmakingLostEventData {
+    queueId: string;
 }
 ```
 ---
@@ -740,8 +772,11 @@ Contains some info about the state of the current queue.
         "data": {
             "title": "MatchmakingQueueUpdateEventData",
             "type": "object",
-            "properties": { "playersQueued": { "type": "string" } },
-            "required": ["playersQueued"]
+            "properties": {
+                "queueId": { "type": "string" },
+                "playersQueued": { "type": "string" }
+            },
+            "required": ["queueId", "playersQueued"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -759,6 +794,7 @@ Contains some info about the state of the current queue.
     "messageId": "laboris non",
     "commandId": "matchmaking/queueUpdate",
     "data": {
+        "queueId": "laboris non",
         "playersQueued": "laboris non"
     }
 }
@@ -774,6 +810,7 @@ export interface MatchmakingQueueUpdateEvent {
     data: MatchmakingQueueUpdateEventData;
 }
 export interface MatchmakingQueueUpdateEventData {
+    queueId: string;
     playersQueued: string;
 }
 ```
@@ -805,9 +842,15 @@ Clients should send this when they are ready to proceed with the found match. If
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/ready" }
+        "commandId": { "const": "matchmaking/ready" },
+        "data": {
+            "title": "MatchmakingReadyRequestData",
+            "type": "object",
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
+        }
     },
-    "required": ["type", "messageId", "commandId"]
+    "required": ["type", "messageId", "commandId", "data"]
 }
 
 ```
@@ -820,7 +863,10 @@ Clients should send this when they are ready to proceed with the found match. If
 {
     "type": "request",
     "messageId": "ullamco occaecat",
-    "commandId": "matchmaking/ready"
+    "commandId": "matchmaking/ready",
+    "data": {
+        "queueId": "ullamco occaecat"
+    }
 }
 ```
 </details>
@@ -831,6 +877,10 @@ export interface MatchmakingReadyRequest {
     type: "request";
     messageId: string;
     commandId: "matchmaking/ready";
+    data: MatchmakingReadyRequestData;
+}
+export interface MatchmakingReadyRequestData {
+    queueId: string;
 }
 ```
 ### Response
@@ -869,6 +919,7 @@ export interface MatchmakingReadyRequest {
                 "reason": {
                     "enum": [
                         "no_match",
+                        "invalid_queue_specified",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -907,7 +958,7 @@ export interface MatchmakingReadyOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `no_match`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `no_match`, `invalid_queue_specified`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -942,10 +993,11 @@ Sent when a client in a found match readies up.
             "title": "MatchmakingReadyUpdateEventData",
             "type": "object",
             "properties": {
+                "queueId": { "type": "integer" },
                 "readyMax": { "type": "integer" },
                 "readyCurrent": { "type": "integer" }
             },
-            "required": ["readyMax", "readyCurrent"]
+            "required": ["queueId", "readyMax", "readyCurrent"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -963,6 +1015,7 @@ Sent when a client in a found match readies up.
     "messageId": "dolor Lorem",
     "commandId": "matchmaking/readyUpdate",
     "data": {
+        "queueId": -30000000,
         "readyMax": -30000000,
         "readyCurrent": -30000000
     }
@@ -979,6 +1032,7 @@ export interface MatchmakingReadyUpdateEvent {
     data: MatchmakingReadyUpdateEventData;
 }
 export interface MatchmakingReadyUpdateEventData {
+    queueId: number;
     readyMax: number;
     readyCurrent: number;
 }

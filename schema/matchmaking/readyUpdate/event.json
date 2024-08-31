@@ -16,10 +16,11 @@
             "title": "MatchmakingReadyUpdateEventData",
             "type": "object",
             "properties": {
+                "queueId": { "type": "integer" },
                 "readyMax": { "type": "integer" },
                 "readyCurrent": { "type": "integer" }
             },
-            "required": ["readyMax", "readyCurrent"]
+            "required": ["queueId", "readyMax", "readyCurrent"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

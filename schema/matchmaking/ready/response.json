@@ -30,6 +30,7 @@
                 "reason": {
                     "enum": [
                         "no_match",
+                        "invalid_queue_specified",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

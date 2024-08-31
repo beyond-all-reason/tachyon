@@ -11,7 +11,13 @@
     "properties": {
         "type": { "const": "event" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/lost" }
+        "commandId": { "const": "matchmaking/lost" },
+        "data": {
+            "title": "MatchmakingLostEventData",
+            "type": "object",
+            "properties": { "queueId": { "type": "string" } },
+            "required": ["queueId"]
+        }
     },
-    "required": ["type", "messageId", "commandId"]
+    "required": ["type", "messageId", "commandId", "data"]
 }

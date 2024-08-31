@@ -8,6 +8,7 @@ export default defineEndpoint({
     description: "Contains some info about the state of the current queue.",
     event: {
         data: Type.Object({
+            queueId: Type.String(),
             playersQueued: Type.String(),
         }),
     },

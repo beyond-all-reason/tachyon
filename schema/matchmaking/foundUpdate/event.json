@@ -15,8 +15,11 @@
         "data": {
             "title": "MatchmakingFoundUpdateEventData",
             "type": "object",
-            "properties": { "readyCount": { "type": "integer" } },
-            "required": ["readyCount"]
+            "properties": {
+                "queueId": { "type": "string" },
+                "readyCount": { "type": "integer" }
+            },
+            "required": ["queueId", "readyCount"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

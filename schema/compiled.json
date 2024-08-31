@@ -1279,9 +1279,15 @@
             "properties": {
                 "type": { "const": "request" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "matchmaking/cancel" }
+                "commandId": { "const": "matchmaking/cancel" },
+                "data": {
+                    "title": "MatchmakingCancelRequestData",
+                    "type": "object",
+                    "properties": { "queueId": { "type": "string" } },
+                    "required": ["queueId"]
+                }
             },
-            "required": ["type", "messageId", "commandId"]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingCancelResponse",
@@ -1370,8 +1376,11 @@
                 "data": {
                     "title": "MatchmakingFoundUpdateEventData",
                     "type": "object",
-                    "properties": { "readyCount": { "type": "integer" } },
-                    "required": ["readyCount"]
+                    "properties": {
+                        "queueId": { "type": "string" },
+                        "readyCount": { "type": "integer" }
+                    },
+                    "required": ["queueId", "readyCount"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1502,9 +1511,15 @@
             "properties": {
                 "type": { "const": "event" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "matchmaking/lost" }
+                "commandId": { "const": "matchmaking/lost" },
+                "data": {
+                    "title": "MatchmakingLostEventData",
+                    "type": "object",
+                    "properties": { "queueId": { "type": "string" } },
+                    "required": ["queueId"]
+                }
             },
-            "required": ["type", "messageId", "commandId"]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingQueueRequest",
@@ -1592,8 +1607,11 @@
                 "data": {
                     "title": "MatchmakingQueueUpdateEventData",
                     "type": "object",
-                    "properties": { "playersQueued": { "type": "string" } },
-                    "required": ["playersQueued"]
+                    "properties": {
+                        "queueId": { "type": "string" },
+                        "playersQueued": { "type": "string" }
+                    },
+                    "required": ["queueId", "playersQueued"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1609,9 +1627,15 @@
             "properties": {
                 "type": { "const": "request" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "matchmaking/ready" }
+                "commandId": { "const": "matchmaking/ready" },
+                "data": {
+                    "title": "MatchmakingReadyRequestData",
+                    "type": "object",
+                    "properties": { "queueId": { "type": "string" } },
+                    "required": ["queueId"]
+                }
             },
-            "required": ["type", "messageId", "commandId"]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingReadyResponse",
@@ -1643,6 +1667,7 @@
                         "reason": {
                             "enum": [
                                 "no_match",
+                                "invalid_queue_specified",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -1677,10 +1702,11 @@
                     "title": "MatchmakingReadyUpdateEventData",
                     "type": "object",
                     "properties": {
+                        "queueId": { "type": "integer" },
                         "readyMax": { "type": "integer" },
                         "readyCurrent": { "type": "integer" }
                     },
-                    "required": ["readyMax", "readyCurrent"]
+                    "required": ["queueId", "readyMax", "readyCurrent"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
