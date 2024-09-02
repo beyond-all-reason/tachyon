@@ -5,10 +5,10 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "user",
     target: "server",
-    description: "Queue up for matchmaking on the specific queue id.",
+    description: "Queue up for matchmaking. Should cancel the previous queue if already in one.",
     request: {
         data: Type.Object({
-            queue: Type.String(),
+            queues: Type.Array(Type.String(), { minItems: 1 }),
         }),
     },
     response: [
