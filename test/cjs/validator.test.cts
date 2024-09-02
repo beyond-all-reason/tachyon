@@ -15,7 +15,7 @@ describe("request", () => {
             commandId: "matchmaking/queue",
             messageId: "123",
             data: {
-                queue: "1v1",
+                queues: ["1v1"],
             },
         };
 
@@ -24,7 +24,7 @@ describe("request", () => {
         assert.equal(isValid, true);
 
         if (isValid) {
-            assert.equal(command.data.queue, "1v1");
+            assert.equal(command.data.queues[0], "1v1");
         }
     });
 
@@ -35,7 +35,7 @@ describe("request", () => {
             messageId: "123",
             data: {
                 // @ts-expect-error
-                queue: 123,
+                queues: [],
             },
         };
 
