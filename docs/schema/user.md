@@ -120,59 +120,59 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
+    "messageId": "pariatur Lorem reprehenderit",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
+                "username": "pariatur Lorem reprehenderit",
                 "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "occaecat Lorem in",
+                "countryCode": "pariatur Lorem reprehenderit",
                 "status": "menu",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
+                "username": "pariatur Lorem reprehenderit",
                 "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "occaecat Lorem in",
+                "countryCode": "pariatur Lorem reprehenderit",
                 "status": "menu",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
-                "username": "occaecat Lorem in",
+                "username": "pariatur Lorem reprehenderit",
                 "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ],
-                "countryCode": "occaecat Lorem in",
+                "countryCode": "pariatur Lorem reprehenderit",
                 "status": "menu",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit",
+                    "pariatur Lorem reprehenderit"
                 ]
             }
         ]
