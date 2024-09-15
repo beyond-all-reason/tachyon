@@ -1332,6 +1332,35 @@
             ]
         },
         {
+            "title": "MatchmakingCancelledEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/cancelled" },
+                "data": {
+                    "title": "MatchmakingCancelledEventData",
+                    "type": "object",
+                    "properties": {
+                        "reason": {
+                            "anyOf": [
+                                { "const": "intentional" },
+                                { "const": "server_error" },
+                                { "const": "party_user_left" }
+                            ]
+                        }
+                    },
+                    "required": ["reason"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "MatchmakingFoundEvent",
             "tachyon": {
                 "source": "server",
