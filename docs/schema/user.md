@@ -71,11 +71,11 @@ Sent by the server to inform the client when subscribed users get updated in som
                                     },
                                     "countryCode": { "type": "string" },
                                     "status": {
-                                        "anyOf": [
-                                            { "const": "offline" },
-                                            { "const": "menu" },
-                                            { "const": "playing" },
-                                            { "const": "lobby" }
+                                        "enum": [
+                                            "offline",
+                                            "menu",
+                                            "playing",
+                                            "lobby"
                                         ]
                                     }
                                 }

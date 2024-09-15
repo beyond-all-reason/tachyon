@@ -51,11 +51,11 @@
                                     },
                                     "countryCode": { "type": "string" },
                                     "status": {
-                                        "anyOf": [
-                                            { "const": "offline" },
-                                            { "const": "menu" },
-                                            { "const": "playing" },
-                                            { "const": "lobby" }
+                                        "enum": [
+                                            "offline",
+                                            "menu",
+                                            "playing",
+                                            "lobby"
                                         ]
                                     }
                                 }

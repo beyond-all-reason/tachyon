@@ -17,11 +17,7 @@
             "type": "object",
             "properties": {
                 "reason": {
-                    "anyOf": [
-                        { "const": "intentional" },
-                        { "const": "server_error" },
-                        { "const": "party_user_left" }
-                    ]
+                    "enum": ["intentional", "server_error", "party_user_left"]
                 }
             },
             "required": ["reason"]

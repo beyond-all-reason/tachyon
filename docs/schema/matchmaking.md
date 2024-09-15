@@ -193,11 +193,7 @@ Server may send this event at any point when the user is queuing to indicate tha
             "type": "object",
             "properties": {
                 "reason": {
-                    "anyOf": [
-                        { "const": "intentional" },
-                        { "const": "server_error" },
-                        { "const": "party_user_left" }
-                    ]
+                    "enum": ["intentional", "server_error", "party_user_left"]
                 }
             },
             "required": ["reason"]

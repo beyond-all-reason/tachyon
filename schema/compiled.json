@@ -168,14 +168,7 @@
                 },
                 "scopes": { "type": "array", "items": { "type": "string" } },
                 "countryCode": { "type": "string" },
-                "status": {
-                    "anyOf": [
-                        { "const": "offline" },
-                        { "const": "menu" },
-                        { "const": "playing" },
-                        { "const": "lobby" }
-                    ]
-                }
+                "status": { "enum": ["offline", "menu", "playing", "lobby"] }
             },
             "required": [
                 "userId",
@@ -1348,10 +1341,10 @@
                     "type": "object",
                     "properties": {
                         "reason": {
-                            "anyOf": [
-                                { "const": "intentional" },
-                                { "const": "server_error" },
-                                { "const": "party_user_left" }
+                            "enum": [
+                                "intentional",
+                                "server_error",
+                                "party_user_left"
                             ]
                         }
                     },
@@ -1915,11 +1908,11 @@
                                             },
                                             "countryCode": { "type": "string" },
                                             "status": {
-                                                "anyOf": [
-                                                    { "const": "offline" },
-                                                    { "const": "menu" },
-                                                    { "const": "playing" },
-                                                    { "const": "lobby" }
+                                                "enum": [
+                                                    "offline",
+                                                    "menu",
+                                                    "playing",
+                                                    "lobby"
                                                 ]
                                             }
                                         }

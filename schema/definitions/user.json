@@ -10,14 +10,7 @@
         "partyId": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
         "scopes": { "type": "array", "items": { "type": "string" } },
         "countryCode": { "type": "string" },
-        "status": {
-            "anyOf": [
-                { "const": "offline" },
-                { "const": "menu" },
-                { "const": "playing" },
-                { "const": "lobby" }
-            ]
-        }
+        "status": { "enum": ["offline", "menu", "playing", "lobby"] }
     },
     "required": [
         "userId",
