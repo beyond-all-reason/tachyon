@@ -193,7 +193,12 @@ Server may send this event at any point when the user is queuing to indicate tha
             "type": "object",
             "properties": {
                 "reason": {
-                    "enum": ["intentional", "server_error", "party_user_left"]
+                    "enum": [
+                        "intentional",
+                        "server_error",
+                        "party_user_left",
+                        "ready_timeout"
+                    ]
                 }
             },
             "required": ["reason"]
@@ -214,7 +219,7 @@ Server may send this event at any point when the user is queuing to indicate tha
     "messageId": "voluptate ullamco",
     "commandId": "matchmaking/cancelled",
     "data": {
-        "reason": "intentional"
+        "reason": "server_error"
     }
 }
 ```
@@ -229,7 +234,7 @@ export interface MatchmakingCancelledEvent {
     data: MatchmakingCancelledEventData;
 }
 export interface MatchmakingCancelledEventData {
-    reason: "intentional" | "server_error" | "party_user_left";
+    reason: "intentional" | "server_error" | "party_user_left" | "ready_timeout";
 }
 ```
 ---

@@ -1344,7 +1344,8 @@
                             "enum": [
                                 "intentional",
                                 "server_error",
-                                "party_user_left"
+                                "party_user_left",
+                                "ready_timeout"
                             ]
                         }
                     },
