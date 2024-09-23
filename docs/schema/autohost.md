@@ -4,7 +4,9 @@
 
 ## Modes
 
-For now, we're only caring about the slaved mode, as it's a lot more work to implement dedicated mode and might not be necessary until we get a lot more players.
+For now, we're only caring about the slaved mode, as it's a lot more work to implement dedicated mode and might not be necessary until we get a lot more players. Dedicated mode might not be ever realized.
+
+All commands that are currenty defined are for the slaved mode of operation, there is nothing in place for dedicated one.
 
 ### Dedicated
 
@@ -37,7 +39,7 @@ The Tachyon server acts as a middleman to broker messages between players and th
 
 ## Matchmaking
 
-Autohosts used for matchmaking should use the slaved mode as no pregame communication between players and the autohost is required. The Tachyon server can dictate the battle's settings and send the final script.txt file straight to the autohost and players.
+Autohosts used for matchmaking should use the slaved mode as no pregame communication between players and the autohost is required. The Tachyon server can dictate the battle's settings, start new game on autohost with those parameters and send connetion details to players.
 
 ## Custom Battles
 
