@@ -3,6 +3,7 @@ import { Type } from "@sinclair/typebox";
 import { battleStatus } from "@/schema/definitions/battleStatus";
 import { userId } from "@/schema/definitions/userId";
 import { Nullable } from "@/typebox-utils";
+import { UnionEnum } from "@/union-enum";
 
 export const user = Type.Object(
     {
@@ -13,12 +14,7 @@ export const user = Type.Object(
         partyId: Nullable(Type.String()),
         scopes: Type.Array(Type.String()),
         countryCode: Type.Optional(Type.String()),
-        status: Type.Union([
-            Type.Literal("offline"),
-            Type.Literal("menu"),
-            Type.Literal("playing"),
-            Type.Literal("lobby"),
-        ]),
+        status: UnionEnum(["offline", "menu", "playing", "lobby"]),
         battleStatus: Type.Ref(battleStatus),
     },
     { $id: "user" }

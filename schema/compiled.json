@@ -194,14 +194,7 @@
                 },
                 "scopes": { "type": "array", "items": { "type": "string" } },
                 "countryCode": { "type": "string" },
-                "status": {
-                    "anyOf": [
-                        { "const": "offline" },
-                        { "const": "menu" },
-                        { "const": "playing" },
-                        { "const": "lobby" }
-                    ]
-                },
+                "status": { "enum": ["offline", "menu", "playing", "lobby"] },
                 "battleStatus": { "$ref": "#/definitions/battleStatus" }
             },
             "required": [
@@ -1360,6 +1353,35 @@
             ]
         },
         {
+            "title": "MatchmakingCancelledEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/cancelled" },
+                "data": {
+                    "title": "MatchmakingCancelledEventData",
+                    "type": "object",
+                    "properties": {
+                        "reason": {
+                            "enum": [
+                                "intentional",
+                                "server_error",
+                                "party_user_left"
+                            ]
+                        }
+                    },
+                    "required": ["reason"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "MatchmakingFoundEvent",
             "tachyon": {
                 "source": "server",
@@ -2006,11 +2028,11 @@
                                     },
                                     "countryCode": { "type": "string" },
                                     "status": {
-                                        "anyOf": [
-                                            { "const": "offline" },
-                                            { "const": "menu" },
-                                            { "const": "playing" },
-                                            { "const": "lobby" }
+                                        "enum": [
+                                            "offline",
+                                            "menu",
+                                            "playing",
+                                            "lobby"
                                         ]
                                     },
                                     "battleStatus": {
