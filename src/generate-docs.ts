@@ -113,7 +113,7 @@ export async function generateEndpointMarkdown(
 
     markdown += `- Endpoint Type: `;
 
-    if ("request" in commandConfig) {
+    if (commandConfig.type === "requestResponse") {
         markdown += `**Request** -> **Response**\n`;
     } else {
         markdown += `**Event**\n`;

@@ -41,7 +41,7 @@ The server may send [matchmaking/cancelled](#cancelled) event at any point after
 
 Cancel queueing for matchmaking.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
 - Required Scopes: `tachyon.lobby`
@@ -394,7 +394,7 @@ export interface MatchmakingFoundUpdateEventData {
 
 Returns all available matchmaking playlists.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
 - Required Scopes: `tachyon.lobby`
@@ -656,7 +656,7 @@ export interface MatchmakingLostEvent {
 
 Queue up for matchmaking. Should cancel the previous queue if already in one.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
 - Required Scopes: `tachyon.lobby`
@@ -881,7 +881,7 @@ export interface MatchmakingQueueUpdateEventData {
 
 Clients should send this when they are ready to proceed with the found match. If not sent within 10s of the [found](#found) response then queue should be cancelled.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
 - Required Scopes: `tachyon.lobby`

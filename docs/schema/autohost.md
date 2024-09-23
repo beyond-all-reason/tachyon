@@ -63,7 +63,7 @@ Autohosts used for custom games should use the dedicated mode as lots of pregame
 
 Request to add a new player to the battle.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -220,7 +220,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Kick a player from a battle.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -371,7 +371,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Request to kill a battle.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -517,7 +517,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Mute a player in a battle.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -674,7 +674,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Send a custom command for the autohost to execute.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -825,7 +825,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Send a message for the autohost to display to players.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -974,7 +974,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Force players to become spectators in a battle.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -1130,7 +1130,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`
@@ -1531,7 +1531,7 @@ export interface AutohostStatusEventData {
 
 Ask the autohost to send us updates about its battles.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
 - Required Scopes: `tachyon.lobby`

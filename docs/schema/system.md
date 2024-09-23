@@ -10,7 +10,7 @@
 
 Ask the server to terminate the connection.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
 - Required Scopes: `tachyon.lobby`
@@ -154,7 +154,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Get server stats such as user count.
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **User**
 - Target: **Server**
 - Required Scopes: `tachyon.lobby`
