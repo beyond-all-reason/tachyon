@@ -6,7 +6,7 @@ import { userId } from "@/schema/definitions/userId";
 export default defineEndpoint({
     source: "server",
     target: "autohost",
-    description: "Request to kill a battle.",
+    description: "Request to add a new player to the battle.",
     request: {
         data: Type.Object({
             battleId: Type.String({ format: "uuid" }),

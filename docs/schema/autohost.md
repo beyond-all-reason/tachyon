@@ -61,7 +61,7 @@ Autohosts used for custom games should use the dedicated mode as lots of pregame
 
 ## AddPlayer
 
-Request to kill a battle.
+Request to add a new player to the battle.
 
 - Endpoint Type: **Event**
 - Source: **Server**
