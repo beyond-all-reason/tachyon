@@ -11,3 +11,12 @@ The matchmaking cycle works as follows:
 9. Once the autohost has successfully started the battle, the server should then send [battle/battleStart](#battle/battleStart) requests to the users.
 
 The server may send [matchmaking/cancelled](#cancelled) event at any point after the client sent a [queue](#queue) request with a reason. This means the client has been booted out the matchmaking system. It can happen for example when a party member leaves, or in case of a server error that needs to reset the matchmaking state. This event is also sent after a successful [cancel](#cancel) request.
+
+[matchmaking/cancelled](#cancelled) can have the following reasons:
+* `intentional`: the player left matchmaking
+* `server_error`: something bad happended and the server couldn't maintain
+  state so it booted the player out. Retrying may fix the issue.
+* `party_user_left`: a member of the player's party left matchmaking, thus
+  forcing the entire party to withdraw
+* `ready_timeout`: The player failed to accept a match within the given
+  time window and is thus removed from the matchmaking system.

@@ -16,6 +16,15 @@ The matchmaking cycle works as follows:
 
 The server may send [matchmaking/cancelled](#cancelled) event at any point after the client sent a [queue](#queue) request with a reason. This means the client has been booted out the matchmaking system. It can happen for example when a party member leaves, or in case of a server error that needs to reset the matchmaking state. This event is also sent after a successful [cancel](#cancel) request.
 
+[matchmaking/cancelled](#cancelled) can have the following reasons:
+* `intentional`: the player left matchmaking
+* `server_error`: something bad happended and the server couldn't maintain
+  state so it booted the player out. Retrying may fix the issue.
+* `party_user_left`: a member of the player's party left matchmaking, thus
+  forcing the entire party to withdraw
+* `ready_timeout`: The player failed to accept a match within the given
+  time window and is thus removed from the matchmaking system.
+
 ---
 - [cancel](#cancel)
 - [cancelled](#cancelled)
@@ -193,7 +202,12 @@ Server may send this event at any point when the user is queuing to indicate tha
             "type": "object",
             "properties": {
                 "reason": {
-                    "enum": ["intentional", "server_error", "party_user_left"]
+                    "enum": [
+                        "intentional",
+                        "server_error",
+                        "party_user_left",
+                        "ready_timeout"
+                    ]
                 }
             },
             "required": ["reason"]
@@ -214,7 +228,7 @@ Server may send this event at any point when the user is queuing to indicate tha
     "messageId": "voluptate ullamco",
     "commandId": "matchmaking/cancelled",
     "data": {
-        "reason": "intentional"
+        "reason": "server_error"
     }
 }
 ```
@@ -229,7 +243,7 @@ export interface MatchmakingCancelledEvent {
     data: MatchmakingCancelledEventData;
 }
 export interface MatchmakingCancelledEventData {
-    reason: "intentional" | "server_error" | "party_user_left";
+    reason: "intentional" | "server_error" | "party_user_left" | "ready_timeout";
 }
 ```
 ---
