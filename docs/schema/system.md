@@ -52,10 +52,10 @@ Ask the server to terminate the connection.
 ```json
 {
     "type": "request",
-    "messageId": "consequat Lorem",
+    "messageId": "Duis Lorem",
     "commandId": "system/disconnect",
     "data": {
-        "reason": "consequat Lorem"
+        "reason": "Duis Lorem"
     }
 }
 ```
@@ -130,7 +130,7 @@ export interface SystemDisconnectRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "commodo Lorem",
+    "messageId": "consequat Lorem",
     "commandId": "system/disconnect",
     "status": "success"
 }
@@ -190,7 +190,7 @@ Get server stats such as user count.
 ```json
 {
     "type": "request",
-    "messageId": "ut Lorem",
+    "messageId": "commodo Lorem",
     "commandId": "system/serverStats"
 }
 ```
@@ -267,11 +267,11 @@ export interface SystemServerStatsRequest {
 ```json
 {
     "type": "response",
-    "messageId": "occaecat Lorem in",
+    "messageId": "ut Lorem",
     "commandId": "system/serverStats",
     "status": "success",
     "data": {
-        "userCount": -20000000
+        "userCount": -22000000
     }
 }
 ```

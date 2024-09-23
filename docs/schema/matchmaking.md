@@ -8,7 +8,7 @@ The matchmaking cycle works as follows:
 2. Clients should then queue for one or more of these queues by sending an array of the queue ids in a [queue](#queue) request.
 3. The server can send periodic updates about the status of the search as a [queueUpdate](#queueupdate) event.
 4. When a match is found, the server should send a [found](#found) event along with the id of the queue of the found match.
-5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [readyUpdate](#readyupdate) event.
+5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [foundUpdate](#foundupdate) event.
 6. To cancel queueing, or to decline a found match, clients should send a [cancel](#cancel) request. After a successful `cancel` response, the server will also send a [cancelled](#cancelled) event.
 7. If a client fails to ready up for a found match, the server should send a [lost](#lost) event, and the queueing phase should resume.
 8. Once all players are ready, the server should send a [autohost/battleStart](#autohost/battleStart) request to a suitable autohost client. If the autohost doesn't respond quickly, or if it sends a failed response, the server should repeat this step.
@@ -26,7 +26,6 @@ The server may send [matchmaking/cancelled](#cancelled) event at any point after
 - [queue](#queue)
 - [queueUpdate](#queueupdate)
 - [ready](#ready)
-- [readyUpdate](#readyupdate)
 ---
 
 ## Cancel
@@ -994,77 +993,3 @@ export interface MatchmakingReadyOkResponse {
 ```
 Possible Failed Reasons: `no_match`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
----
-
-## ReadyUpdate
-
-Sent when a client in a found match readies up.
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **User**
-- Required Scopes: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "MatchmakingReadyUpdateEvent",
-    "tachyon": {
-        "source": "server",
-        "target": "user",
-        "scopes": ["tachyon.lobby"]
-    },
-    "type": "object",
-    "properties": {
-        "type": { "const": "event" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/readyUpdate" },
-        "data": {
-            "title": "MatchmakingReadyUpdateEventData",
-            "type": "object",
-            "properties": {
-                "readyMax": { "type": "integer" },
-                "readyCurrent": { "type": "integer" }
-            },
-            "required": ["readyMax", "readyCurrent"]
-        }
-    },
-    "required": ["type", "messageId", "commandId", "data"]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "Duis Lorem",
-    "commandId": "matchmaking/readyUpdate",
-    "data": {
-        "readyMax": -28000000,
-        "readyCurrent": -28000000
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface MatchmakingReadyUpdateEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/readyUpdate";
-    data: MatchmakingReadyUpdateEventData;
-}
-export interface MatchmakingReadyUpdateEventData {
-    readyMax: number;
-    readyCurrent: number;
-}
-```

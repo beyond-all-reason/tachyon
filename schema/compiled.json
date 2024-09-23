@@ -1690,30 +1690,6 @@
             ]
         },
         {
-            "title": "MatchmakingReadyUpdateEvent",
-            "tachyon": {
-                "source": "server",
-                "target": "user",
-                "scopes": ["tachyon.lobby"]
-            },
-            "type": "object",
-            "properties": {
-                "type": { "const": "event" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "matchmaking/readyUpdate" },
-                "data": {
-                    "title": "MatchmakingReadyUpdateEventData",
-                    "type": "object",
-                    "properties": {
-                        "readyMax": { "type": "integer" },
-                        "readyCurrent": { "type": "integer" }
-                    },
-                    "required": ["readyMax", "readyCurrent"]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "data"]
-        },
-        {
             "title": "SystemDisconnectRequest",
             "tachyon": {
                 "source": "user",
