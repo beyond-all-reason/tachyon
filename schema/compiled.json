@@ -180,11 +180,7 @@
                 "status"
             ]
         },
-        "userId": {
-            "type": "string",
-            "format": "uuid",
-            "examples": ["f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"]
-        }
+        "userId": { "type": "string", "examples": ["351"] }
     },
     "anyOf": [
         {
@@ -1860,10 +1856,7 @@
                                         "properties": {
                                             "userId": {
                                                 "type": "string",
-                                                "format": "uuid",
-                                                "examples": [
-                                                    "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-                                                ]
+                                                "examples": ["351"]
                                             },
                                             "username": { "type": "string" },
                                             "displayName": { "type": "string" },
