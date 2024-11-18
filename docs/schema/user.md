@@ -46,10 +46,7 @@ Sent by the server to inform the client when subscribed users get updated in som
                                 "properties": {
                                     "userId": {
                                         "type": "string",
-                                        "format": "uuid",
-                                        "examples": [
-                                            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
-                                        ]
+                                        "examples": ["351"]
                                     },
                                     "username": { "type": "string" },
                                     "displayName": { "type": "string" },
@@ -126,7 +123,7 @@ Sent by the server to inform the client when subscribed users get updated in som
         "users": [
             {
                 "occaecatff": -19999999.999999955,
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "userId": "351",
                 "username": "occaecat Lorem in",
                 "scopes": [
                     "occaecat Lorem in",
@@ -143,7 +140,7 @@ Sent by the server to inform the client when subscribed users get updated in som
             },
             {
                 "occaecatff": -19999999.999999955,
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "userId": "351",
                 "username": "occaecat Lorem in",
                 "scopes": [
                     "occaecat Lorem in",
@@ -160,7 +157,7 @@ Sent by the server to inform the client when subscribed users get updated in som
             },
             {
                 "occaecatff": -19999999.999999955,
-                "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+                "userId": "351",
                 "username": "occaecat Lorem in",
                 "scopes": [
                     "occaecat Lorem in",

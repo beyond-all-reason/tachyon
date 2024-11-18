@@ -114,7 +114,7 @@ Request to add a new player to the battle.
     "commandId": "autohost/addPlayer",
     "data": {
         "battleId": "00000000-0000-0000-0000-000000000000",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+        "userId": "351",
         "name": "ipsum",
         "password": "ipsum"
     }
@@ -269,7 +269,7 @@ Kick a player from a battle.
     "commandId": "autohost/kickPlayer",
     "data": {
         "battleId": "00000000-0000-0000-0000-000000000000",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+        "userId": "351"
     }
 }
 ```
@@ -568,7 +568,7 @@ Mute a player in a battle.
     "commandId": "autohost/mutePlayer",
     "data": {
         "battleId": "11111111-1111-1111-1111-111111111111",
-        "userId": "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e",
+        "userId": "351",
         "chat": false,
         "draw": false
     }
@@ -1027,7 +1027,7 @@ Force players to become spectators in a battle.
     "data": {
         "battleId": "22222222-2222-2222-2222-222222222222",
         "userIds": [
-            "f47a7e1e-4b2f-4d3d-3f3c-1f0f0e4b7e1e"
+            "351"
         ]
     }
 }
