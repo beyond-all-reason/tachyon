@@ -35,6 +35,15 @@ The server must use the WebSocket built-in ping/pong mechanism to keep the conne
 
 The frequency of pings must be at least 1 every 10 seconds, and preferably randomized to some degree.
 
+## Connection termination
+
+In case something goes wrong and the connection has to be terminated, the peer should
+close the connection with the code `1008` for [policy violation](https://www.rfc-editor.org/rfc/rfc6455.html#section-7.4).
+The peer should also send a short description of the error as a simple string in the [close frame body](https://www.rfc-editor.org/rfc/rfc6455.html#section-5.5.1).
+
+Some example of errors: a peer cannot parsed the received json, the connection times out, the peer crashed with an unrecoverable error and so on.
+
+
 ## Messages encoding
 
 The JSON messages sent over the WebSocket connection must be encoded using UTF-8 framing.
