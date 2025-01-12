@@ -1529,7 +1529,7 @@ export interface AutohostStatusEventData {
 
 ## SubscribeUpdates
 
-Ask the autohost to send us updates about its battles.
+Ask the autohost to send us updates about its battles. Autohost will send all updates with time > since (not >= but >)
 
 - Endpoint Type: **Request** -> **Response**
 - Source: **Server**
