@@ -5,7 +5,6 @@ import { customStartScriptProperties } from "@/schema/definitions/customStartScr
 export const bot = Type.Object(
     {
         hostUserId: Type.String({
-            format: "uuid",
             description: "UserId of the player hosting this AI",
         }),
         name: Type.Optional(Type.String()),
