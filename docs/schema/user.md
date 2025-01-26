@@ -117,59 +117,59 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
+    "messageId": "cillum Lorem ut",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "occaecatff": -19999999.999999955,
+                "cillum00": -13999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
+                "username": "cillum Lorem ut",
+                "displayName": "cillum Lorem ut",
+                "countryCode": "cillum Lorem ut",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
+                ],
+                "ignoreIds": [
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
+                "cillum00": -13999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
+                "username": "cillum Lorem ut",
+                "displayName": "cillum Lorem ut",
+                "countryCode": "cillum Lorem ut",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
+                ],
+                "ignoreIds": [
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
+                "cillum00": -13999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
+                "username": "cillum Lorem ut",
+                "displayName": "cillum Lorem ut",
+                "countryCode": "cillum Lorem ut",
                 "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
+                ],
+                "ignoreIds": [
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
                 ]
             }
         ]
