@@ -1,7 +1,7 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/received/event.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/received/request.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "MessagingReceivedEvent",
+    "title": "MessagingReceivedRequest",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -9,11 +9,11 @@
     },
     "type": "object",
     "properties": {
-        "type": { "const": "event" },
+        "type": { "const": "request" },
         "messageId": { "type": "string" },
         "commandId": { "const": "messaging/received" },
         "data": {
-            "title": "MessagingReceivedEventData",
+            "title": "MessagingReceivedRequestData",
             "type": "object",
             "properties": {
                 "message": { "type": "string" },

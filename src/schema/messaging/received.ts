@@ -6,7 +6,7 @@ export default defineEndpoint({
     source: "server",
     target: "user",
     description: "Notify the player a message has been received",
-    event: {
+    request: {
         data: Type.Object({
             message: Type.String(),
             source: Type.Union([
@@ -17,4 +17,5 @@ export default defineEndpoint({
             ]),
         }),
     },
+    response: [{ status: "success" }, { status: "failed", reason: "not_connected" }],
 });

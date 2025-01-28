@@ -7,8 +7,8 @@ All things about messages, typically chats between players.
 Sending a message is done with the `messaging/send` request. When the sender
 gets a successful response that means the message has been acked by the server
 and it'll do its best to send it to the recipient(s).
-The server will then send an event `messaging/received` to the recipient(s).
 If the recipient is not online, the sender gets the error response `not_connected`.
+The server will then send a request `messaging/received` to the recipient(s).
 
 There is no guarantee that the message has been actually received by the other
 player, if, for example, the recipient disconnects at the same time the message
@@ -25,19 +25,19 @@ whatsapp or discord.
 
 Notify the player a message has been received
 
-- Endpoint Type: **Event**
+- Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **User**
 - Required Scopes: `tachyon.lobby`
 
-### Event
+### Request
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "title": "MessagingReceivedEvent",
+    "title": "MessagingReceivedRequest",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -45,11 +45,11 @@ Notify the player a message has been received
     },
     "type": "object",
     "properties": {
-        "type": { "const": "event" },
+        "type": { "const": "request" },
         "messageId": { "type": "string" },
         "commandId": { "const": "messaging/received" },
         "data": {
-            "title": "MessagingReceivedEventData",
+            "title": "MessagingReceivedRequestData",
             "type": "object",
             "properties": {
                 "message": { "type": "string" },
@@ -76,7 +76,7 @@ Notify the player a message has been received
 
 ```json
 {
-    "type": "event",
+    "type": "request",
     "messageId": "Duis Lorem",
     "commandId": "messaging/received",
     "data": {
@@ -92,13 +92,13 @@ Notify the player a message has been received
 
 #### TypeScript Definition
 ```ts
-export interface MessagingReceivedEvent {
-    type: "event";
+export interface MessagingReceivedRequest {
+    type: "request";
     messageId: string;
     commandId: "messaging/received";
-    data: MessagingReceivedEventData;
+    data: MessagingReceivedRequestData;
 }
-export interface MessagingReceivedEventData {
+export interface MessagingReceivedRequestData {
     message: string;
     source: {
         type: "player";
@@ -106,6 +106,82 @@ export interface MessagingReceivedEventData {
     };
 }
 ```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MessagingReceivedResponse",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "MessagingReceivedOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "messaging/received" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "MessagingReceivedFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "messaging/received" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_connected",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "consequat Lorem",
+    "commandId": "messaging/received",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MessagingReceivedOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "messaging/received";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_connected`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## Send
@@ -164,14 +240,14 @@ Send a simple message to the given target.
 ```json
 {
     "type": "request",
-    "messageId": "consequat Lorem",
+    "messageId": "commodo Lorem",
     "commandId": "messaging/send",
     "data": {
         "target": {
             "type": "player",
-            "player_id": "consequat Lorem"
+            "player_id": "commodo Lorem"
         },
-        "message": "consequat Lorem"
+        "message": "commodo Lorem"
     }
 }
 ```
@@ -252,7 +328,7 @@ export interface MessagingSendRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "commodo Lorem",
+    "messageId": "ut Lorem",
     "commandId": "messaging/send",
     "status": "success"
 }
