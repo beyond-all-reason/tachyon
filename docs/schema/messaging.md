@@ -7,8 +7,6 @@ All things about messages, typically chats between players.
 Sending a message is done with the `messaging/send` request. When the sender
 gets a successful response that means the message has been acked by the server
 and it'll do its best to send it to the recipient(s).
-If the recipient is not online, the sender gets the error response `not_connected`.
-The server will then send a request `messaging/received` to the recipient(s).
 
 There is no guarantee that the message has been actually received by the other
 player, if, for example, the recipient disconnects at the same time the message
@@ -16,28 +14,45 @@ is received. A message can only be sent to online players. There is no support
 to store messages to be then delivered later. In short, we're not building
 whatsapp or discord.
 
+Message are received through an event `messaging/received`. This means the server
+has no way to guarantee a client acked a message. Each message contains a
+special `marker` to allow some form of history seeking.
+
+To receive messages, a client first has to subsribe to a given source. For now
+the only supported source is `player` and means direct message from other
+players.
+The argument `since` is there as an option to ask the server some historical
+events.
+* `from_start` means the server will send its entire buffer.
+* `latest` means the server will not send any potentially stored messages, only
+  messages delivered after the subscription takes effect.
+* `marker` with a corresponding value means the server will deliver all stored
+  messages that have been sent *after* the message designated by the marker.
+  This marker should be treated as an opaque value.
+
 ---
 - [received](#received)
 - [send](#send)
+- [subscribeReceived](#subscribereceived)
 ---
 
 ## Received
 
 Notify the player a message has been received
 
-- Endpoint Type: **Request** -> **Response**
+- Endpoint Type: **Event**
 - Source: **Server**
 - Target: **User**
 - Required Scopes: `tachyon.lobby`
 
-### Request
+### Event
 
 <details>
 <summary>JSONSchema</summary>
 
 ```json
 {
-    "title": "MessagingReceivedRequest",
+    "title": "MessagingReceivedEvent",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -45,11 +60,11 @@ Notify the player a message has been received
     },
     "type": "object",
     "properties": {
-        "type": { "const": "request" },
+        "type": { "const": "event" },
         "messageId": { "type": "string" },
         "commandId": { "const": "messaging/received" },
         "data": {
-            "title": "MessagingReceivedRequestData",
+            "title": "MessagingReceivedEventData",
             "type": "object",
             "properties": {
                 "message": { "type": "string" },
@@ -60,9 +75,10 @@ Notify the player a message has been received
                         "player_id": { "type": "string" }
                     },
                     "required": ["type", "player_id"]
-                }
+                },
+                "marker": { "$ref": "../../definitions/unixTime.json" }
             },
-            "required": ["message", "source"]
+            "required": ["message", "source", "marker"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -76,7 +92,7 @@ Notify the player a message has been received
 
 ```json
 {
-    "type": "request",
+    "type": "event",
     "messageId": "Duis Lorem",
     "commandId": "messaging/received",
     "data": {
@@ -84,7 +100,8 @@ Notify the player a message has been received
         "source": {
             "type": "player",
             "player_id": "Duis Lorem"
-        }
+        },
+        "marker": 1705432698000000
     }
 }
 ```
@@ -92,96 +109,23 @@ Notify the player a message has been received
 
 #### TypeScript Definition
 ```ts
-export interface MessagingReceivedRequest {
-    type: "request";
+export type UnixTime = number;
+
+export interface MessagingReceivedEvent {
+    type: "event";
     messageId: string;
     commandId: "messaging/received";
-    data: MessagingReceivedRequestData;
+    data: MessagingReceivedEventData;
 }
-export interface MessagingReceivedRequestData {
+export interface MessagingReceivedEventData {
     message: string;
     source: {
         type: "player";
         player_id: string;
     };
+    marker: UnixTime;
 }
 ```
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "MessagingReceivedResponse",
-    "tachyon": {
-        "source": "user",
-        "target": "server",
-        "scopes": ["tachyon.lobby"]
-    },
-    "anyOf": [
-        {
-            "title": "MessagingReceivedOkResponse",
-            "type": "object",
-            "properties": {
-                "type": { "const": "response" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "messaging/received" },
-                "status": { "const": "success" }
-            },
-            "required": ["type", "messageId", "commandId", "status"]
-        },
-        {
-            "title": "MessagingReceivedFailResponse",
-            "type": "object",
-            "properties": {
-                "type": { "const": "response" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "messaging/received" },
-                "status": { "const": "failed" },
-                "reason": {
-                    "enum": [
-                        "not_connected",
-                        "internal_error",
-                        "unauthorized",
-                        "invalid_request",
-                        "command_unimplemented"
-                    ]
-                },
-                "details": { "type": "string" }
-            },
-            "required": ["type", "messageId", "commandId", "status", "reason"]
-        }
-    ]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "consequat Lorem",
-    "commandId": "messaging/received",
-    "status": "success"
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface MessagingReceivedOkResponse {
-    type: "response";
-    messageId: string;
-    commandId: "messaging/received";
-    status: "success";
-}
-```
-Possible Failed Reasons: `not_connected`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
-
 ---
 
 ## Send
@@ -240,14 +184,14 @@ Send a simple message to the given target.
 ```json
 {
     "type": "request",
-    "messageId": "commodo Lorem",
+    "messageId": "consequat Lorem",
     "commandId": "messaging/send",
     "data": {
         "target": {
             "type": "player",
-            "player_id": "commodo Lorem"
+            "player_id": "consequat Lorem"
         },
-        "message": "commodo Lorem"
+        "message": "consequat Lorem"
     }
 }
 ```
@@ -305,7 +249,7 @@ export interface MessagingSendRequestData {
                 "reason": {
                     "enum": [
                         "message_too_long",
-                        "not_connected",
+                        "invalid_target",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -328,7 +272,7 @@ export interface MessagingSendRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "ut Lorem",
+    "messageId": "commodo Lorem",
     "commandId": "messaging/send",
     "status": "success"
 }
@@ -344,5 +288,251 @@ export interface MessagingSendOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `message_too_long`, `not_connected`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `message_too_long`, `invalid_target`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## SubscribeReceived
+
+Ask the server to send events for relevant messages
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MessagingSubscribeReceivedRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "messaging/subscribeReceived" },
+        "data": {
+            "title": "MessagingSubscribeReceivedRequestData",
+            "type": "object",
+            "properties": {
+                "source": {
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "player" },
+                        "player_id": { "type": "string" }
+                    },
+                    "required": ["type", "player_id"]
+                },
+                "since": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": { "type": { "const": "from_start" } },
+                            "required": ["type"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": { "type": { "const": "latest" } },
+                            "required": ["type"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "marker" },
+                                "value": { "type": "integer" }
+                            },
+                            "required": ["type", "value"]
+                        }
+                    ]
+                }
+            },
+            "required": ["source"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ut Lorem",
+    "commandId": "messaging/subscribeReceived",
+    "data": {
+        "source": {
+            "type": "player",
+            "player_id": "ut Lorem"
+        },
+        "since": {
+            "type": "latest"
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MessagingSubscribeReceivedRequest {
+    type: "request";
+    messageId: string;
+    commandId: "messaging/subscribeReceived";
+    data: MessagingSubscribeReceivedRequestData;
+}
+export interface MessagingSubscribeReceivedRequestData {
+    source: {
+        type: "player";
+        player_id: string;
+    };
+    since?:
+        | {
+              type: "from_start";
+          }
+        | {
+              type: "latest";
+          }
+        | {
+              type: "marker";
+              value: number;
+          };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MessagingSubscribeReceivedResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "MessagingSubscribeReceivedOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "messaging/subscribeReceived" },
+                "status": { "const": "success" },
+                "data": {
+                    "title": "MessagingSubscribeReceivedOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "history": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "message": { "type": "string" },
+                                    "marker": {
+                                        "$ref": "../../definitions/unixTime.json"
+                                    }
+                                },
+                                "required": ["message", "marker"]
+                            }
+                        },
+                        "has_missed_messages": {
+                            "description": "set to true when the marker sent doesn't match any message stored by the server.",
+                            "type": "boolean"
+                        }
+                    },
+                    "required": ["history", "has_missed_messages"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "MessagingSubscribeReceivedFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "messaging/subscribeReceived" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "occaecat Lorem in",
+    "commandId": "messaging/subscribeReceived",
+    "status": "success",
+    "data": {
+        "history": [
+            {
+                "message": "occaecat Lorem in",
+                "marker": 1705432698000000
+            },
+            {
+                "message": "occaecat Lorem in",
+                "marker": 1705432698000000
+            },
+            {
+                "message": "occaecat Lorem in",
+                "marker": 1705432698000000
+            }
+        ],
+        "has_missed_messages": false
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UnixTime = number;
+
+export interface MessagingSubscribeReceivedOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "messaging/subscribeReceived";
+    status: "success";
+    data?: MessagingSubscribeReceivedOkResponseData;
+}
+export interface MessagingSubscribeReceivedOkResponseData {
+    history: {
+        message: string;
+        marker: UnixTime;
+    }[];
+    has_missed_messages: boolean;
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 

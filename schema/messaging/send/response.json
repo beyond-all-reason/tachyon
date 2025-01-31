@@ -30,7 +30,7 @@
                 "reason": {
                     "enum": [
                         "message_too_long",
-                        "not_connected",
+                        "invalid_target",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

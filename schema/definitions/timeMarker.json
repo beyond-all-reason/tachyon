@@ -1,0 +1,7 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/timeMarker.json",
+    "title": "TimeMarker",
+    "description": "an opaque value to represent a point in time",
+    "type": "integer",
+    "examples": [-576460745805023]
+}

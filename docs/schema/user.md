@@ -117,59 +117,59 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "esse Lorem anim",
+    "messageId": "aute Lorem officia",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
                 "userId": "351",
-                "username": "esse Lorem anim",
-                "displayName": "esse Lorem anim",
-                "countryCode": "esse Lorem anim",
+                "username": "aute Lorem officia",
+                "displayName": "aute Lorem officia",
+                "countryCode": "aute Lorem officia",
                 "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                "friendIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ],
                 "ignoreIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ]
             },
             {
                 "userId": "351",
-                "username": "esse Lorem anim",
-                "displayName": "esse Lorem anim",
-                "countryCode": "esse Lorem anim",
+                "username": "aute Lorem officia",
+                "displayName": "aute Lorem officia",
+                "countryCode": "aute Lorem officia",
                 "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                "friendIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ],
                 "ignoreIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ]
             },
             {
                 "userId": "351",
-                "username": "esse Lorem anim",
-                "displayName": "esse Lorem anim",
-                "countryCode": "esse Lorem anim",
+                "username": "aute Lorem officia",
+                "displayName": "aute Lorem officia",
+                "countryCode": "aute Lorem officia",
                 "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                "friendIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ],
                 "ignoreIds": [
-                    "esse Lorem anim",
-                    "esse Lorem anim",
-                    "esse Lorem anim"
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ]
             }
         ]

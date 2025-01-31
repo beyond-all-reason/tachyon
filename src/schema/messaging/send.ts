@@ -21,6 +21,6 @@ export default defineEndpoint({
     response: [
         { status: "success" },
         { status: "failed", reason: "message_too_long" },
-        { status: "failed", reason: "not_connected" },
+        { status: "failed", reason: "invalid_target" },
     ],
 });

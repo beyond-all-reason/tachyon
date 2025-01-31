@@ -1,12 +1,13 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
+import { unixTime } from "@/schema/definitions/unixTime";
 
 export default defineEndpoint({
     source: "server",
     target: "user",
     description: "Notify the player a message has been received",
-    request: {
+    event: {
         data: Type.Object({
             message: Type.String(),
             source: Type.Union([
@@ -15,7 +16,7 @@ export default defineEndpoint({
                     player_id: Type.String(),
                 }),
             ]),
+            marker: Type.Ref(unixTime),
         }),
     },
-    response: [{ status: "success" }, { status: "failed", reason: "not_connected" }],
 });
