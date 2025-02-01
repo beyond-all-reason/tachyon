@@ -19,6 +19,11 @@ export default defineEndpoint({
                             numOfTeams: Type.Integer(),
                             teamSize: Type.Integer(),
                             ranked: Type.Boolean(),
+                            engine: Type.String(),
+                            game: Type.String(),
+                            data: Type.Object({
+                                mapPool: Type.Array(Type.Object({ id: Type.String() })),
+                            }),
                         })
                     ),
                 },
@@ -32,6 +37,15 @@ export default defineEndpoint({
                                     numOfTeams: 2,
                                     teamSize: 1,
                                     ranked: true,
+                                    engine: "2025.01.6",
+                                    game: "Beyond All Reason test-27414-a84d7e6",
+                                    data: {
+                                        mapPool: [
+                                            { id: "Theta Crystals 1.3" },
+                                            { id: "Comet Catcher Remake 1.8" },
+                                            { id: "Aurelia v4.1" },
+                                        ],
+                                    },
                                 },
                                 {
                                     id: "1v1v1",
@@ -39,6 +53,11 @@ export default defineEndpoint({
                                     numOfTeams: 3,
                                     teamSize: 1,
                                     ranked: true,
+                                    engine: "2025.01.6",
+                                    game: "Beyond All Reason test-27414-a84d7e6",
+                                    data: {
+                                        mapPool: [{ id: "Ghenna Rising 4.0.1" }],
+                                    },
                                 },
                             ],
                         },
