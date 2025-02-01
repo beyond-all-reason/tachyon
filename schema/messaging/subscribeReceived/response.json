@@ -20,25 +20,12 @@
                     "title": "MessagingSubscribeReceivedOkResponseData",
                     "type": "object",
                     "properties": {
-                        "history": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "message": { "type": "string" },
-                                    "marker": {
-                                        "$ref": "../../definitions/unixTime.json"
-                                    }
-                                },
-                                "required": ["message", "marker"]
-                            }
-                        },
-                        "has_missed_messages": {
+                        "hasMissedMessages": {
                             "description": "set to true when the marker sent doesn't match any message stored by the server.",
                             "type": "boolean"
                         }
                     },
-                    "required": ["history", "has_missed_messages"]
+                    "required": ["hasMissedMessages"]
                 }
             },
             "required": ["type", "messageId", "commandId", "status"]

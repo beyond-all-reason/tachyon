@@ -18,10 +18,13 @@ To receive messages, a client first has to subsribe to a given source. For now
 the only supported source is `player` and means direct message from other
 players.
 The argument `since` is there as an option to ask the server some historical
-events.
+events. There will be sent as regular `messaging/received` event straight after
+the response. If `since` is not provided, the default is `latest`.
 * `from_start` means the server will send its entire buffer.
 * `latest` means the server will not send any potentially stored messages, only
-  messages delivered after the subscription takes effect.
+  messages delivered after the subscription will be sent.
 * `marker` with a corresponding value means the server will deliver all stored
   messages that have been sent *after* the message designated by the marker.
   This marker should be treated as an opaque value.
+  This should typically used by clients when they reconnect after a crash to
+  make sure they are not missing any messages.

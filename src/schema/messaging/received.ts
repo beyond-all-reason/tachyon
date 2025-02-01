@@ -1,7 +1,9 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
+import { historyMarker } from "@/schema/definitions/historyMarker";
 import { unixTime } from "@/schema/definitions/unixTime";
+import { userId } from "@/schema/definitions/userId";
 
 export default defineEndpoint({
     source: "server",
@@ -13,10 +15,13 @@ export default defineEndpoint({
             source: Type.Union([
                 Type.Object({
                     type: Type.Literal("player"),
-                    player_id: Type.String(),
+                    userId: Type.Ref(userId),
                 }),
             ]),
-            marker: Type.Ref(unixTime),
+            timestamp: Type.Ref(unixTime, {
+                description: "time at which the message was received by the server",
+            }),
+            marker: Type.Ref(historyMarker),
         }),
     },
 });

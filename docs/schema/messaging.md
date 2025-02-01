@@ -22,13 +22,16 @@ To receive messages, a client first has to subsribe to a given source. For now
 the only supported source is `player` and means direct message from other
 players.
 The argument `since` is there as an option to ask the server some historical
-events.
+events. There will be sent as regular `messaging/received` event straight after
+the response. If `since` is not provided, the default is `latest`.
 * `from_start` means the server will send its entire buffer.
 * `latest` means the server will not send any potentially stored messages, only
-  messages delivered after the subscription takes effect.
+  messages delivered after the subscription will be sent.
 * `marker` with a corresponding value means the server will deliver all stored
   messages that have been sent *after* the message designated by the marker.
   This marker should be treated as an opaque value.
+  This should typically used by clients when they reconnect after a crash to
+  make sure they are not missing any messages.
 
 ---
 - [received](#received)
@@ -72,13 +75,17 @@ Notify the player a message has been received
                     "type": "object",
                     "properties": {
                         "type": { "const": "player" },
-                        "player_id": { "type": "string" }
+                        "userId": { "$ref": "../../definitions/userId.json" }
                     },
-                    "required": ["type", "player_id"]
+                    "required": ["type", "userId"]
                 },
-                "marker": { "$ref": "../../definitions/unixTime.json" }
+                "timestamp": {
+                    "$ref": "../../definitions/unixTime.json",
+                    "description": "time at which the message was received by the server"
+                },
+                "marker": { "$ref": "../../definitions/historyMarker.json" }
             },
-            "required": ["message", "source", "marker"]
+            "required": ["message", "source", "timestamp", "marker"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -99,9 +106,10 @@ Notify the player a message has been received
         "message": "Duis Lorem",
         "source": {
             "type": "player",
-            "player_id": "Duis Lorem"
+            "userId": "351"
         },
-        "marker": 1705432698000000
+        "timestamp": 1705432698000000,
+        "marker": "-576460745805023"
     }
 }
 ```
@@ -109,7 +117,8 @@ Notify the player a message has been received
 
 #### TypeScript Definition
 ```ts
-export type UnixTime = number;
+export type UserId = string;
+export type HistoryMarker = string;
 
 export interface MessagingReceivedEvent {
     type: "event";
@@ -121,9 +130,10 @@ export interface MessagingReceivedEventData {
     message: string;
     source: {
         type: "player";
-        player_id: string;
+        userId: UserId;
     };
-    marker: UnixTime;
+    timestamp: number;
+    marker: HistoryMarker;
 }
 ```
 ---
@@ -163,9 +173,9 @@ Send a simple message to the given target.
                     "type": "object",
                     "properties": {
                         "type": { "const": "player" },
-                        "player_id": { "type": "string" }
+                        "userId": { "$ref": "../../definitions/userId.json" }
                     },
-                    "required": ["type", "player_id"]
+                    "required": ["type", "userId"]
                 },
                 "message": { "type": "string", "maxLength": 512 }
             },
@@ -189,7 +199,7 @@ Send a simple message to the given target.
     "data": {
         "target": {
             "type": "player",
-            "player_id": "consequat Lorem"
+            "userId": "351"
         },
         "message": "consequat Lorem"
     }
@@ -199,6 +209,8 @@ Send a simple message to the given target.
 
 #### TypeScript Definition
 ```ts
+export type UserId = string;
+
 export interface MessagingSendRequest {
     type: "request";
     messageId: string;
@@ -208,7 +220,7 @@ export interface MessagingSendRequest {
 export interface MessagingSendRequestData {
     target: {
         type: "player";
-        player_id: string;
+        userId: UserId;
     };
     message: string;
 }
@@ -323,14 +335,6 @@ Ask the server to send events for relevant messages
             "title": "MessagingSubscribeReceivedRequestData",
             "type": "object",
             "properties": {
-                "source": {
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "player" },
-                        "player_id": { "type": "string" }
-                    },
-                    "required": ["type", "player_id"]
-                },
                 "since": {
                     "anyOf": [
                         {
@@ -347,14 +351,15 @@ Ask the server to send events for relevant messages
                             "type": "object",
                             "properties": {
                                 "type": { "const": "marker" },
-                                "value": { "type": "integer" }
+                                "value": {
+                                    "$ref": "../../definitions/historyMarker.json"
+                                }
                             },
                             "required": ["type", "value"]
                         }
                     ]
                 }
-            },
-            "required": ["source"]
+            }
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -372,10 +377,7 @@ Ask the server to send events for relevant messages
     "messageId": "ut Lorem",
     "commandId": "messaging/subscribeReceived",
     "data": {
-        "source": {
-            "type": "player",
-            "player_id": "ut Lorem"
-        },
+        "utff": -21999999.99999997,
         "since": {
             "type": "latest"
         }
@@ -386,6 +388,8 @@ Ask the server to send events for relevant messages
 
 #### TypeScript Definition
 ```ts
+export type HistoryMarker = string;
+
 export interface MessagingSubscribeReceivedRequest {
     type: "request";
     messageId: string;
@@ -393,10 +397,6 @@ export interface MessagingSubscribeReceivedRequest {
     data: MessagingSubscribeReceivedRequestData;
 }
 export interface MessagingSubscribeReceivedRequestData {
-    source: {
-        type: "player";
-        player_id: string;
-    };
     since?:
         | {
               type: "from_start";
@@ -406,7 +406,7 @@ export interface MessagingSubscribeReceivedRequestData {
           }
         | {
               type: "marker";
-              value: number;
+              value: HistoryMarker;
           };
 }
 ```
@@ -436,25 +436,12 @@ export interface MessagingSubscribeReceivedRequestData {
                     "title": "MessagingSubscribeReceivedOkResponseData",
                     "type": "object",
                     "properties": {
-                        "history": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "message": { "type": "string" },
-                                    "marker": {
-                                        "$ref": "../../definitions/unixTime.json"
-                                    }
-                                },
-                                "required": ["message", "marker"]
-                            }
-                        },
-                        "has_missed_messages": {
+                        "hasMissedMessages": {
                             "description": "set to true when the marker sent doesn't match any message stored by the server.",
                             "type": "boolean"
                         }
                     },
-                    "required": ["history", "has_missed_messages"]
+                    "required": ["hasMissedMessages"]
                 }
             },
             "required": ["type", "messageId", "commandId", "status"]
@@ -495,21 +482,7 @@ export interface MessagingSubscribeReceivedRequestData {
     "commandId": "messaging/subscribeReceived",
     "status": "success",
     "data": {
-        "history": [
-            {
-                "message": "occaecat Lorem in",
-                "marker": 1705432698000000
-            },
-            {
-                "message": "occaecat Lorem in",
-                "marker": 1705432698000000
-            },
-            {
-                "message": "occaecat Lorem in",
-                "marker": 1705432698000000
-            }
-        ],
-        "has_missed_messages": false
+        "hasMissedMessages": false
     }
 }
 ```
@@ -517,8 +490,6 @@ export interface MessagingSubscribeReceivedRequestData {
 
 #### TypeScript Definition
 ```ts
-export type UnixTime = number;
-
 export interface MessagingSubscribeReceivedOkResponse {
     type: "response";
     messageId: string;
@@ -527,11 +498,7 @@ export interface MessagingSubscribeReceivedOkResponse {
     data?: MessagingSubscribeReceivedOkResponseData;
 }
 export interface MessagingSubscribeReceivedOkResponseData {
-    history: {
-        message: string;
-        marker: UnixTime;
-    }[];
-    has_missed_messages: boolean;
+    hasMissedMessages: boolean;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`

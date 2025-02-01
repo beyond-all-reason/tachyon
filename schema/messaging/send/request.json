@@ -20,9 +20,9 @@
                     "type": "object",
                     "properties": {
                         "type": { "const": "player" },
-                        "player_id": { "type": "string" }
+                        "userId": { "$ref": "../../definitions/userId.json" }
                     },
-                    "required": ["type", "player_id"]
+                    "required": ["type", "userId"]
                 },
                 "message": { "type": "string", "maxLength": 512 }
             },

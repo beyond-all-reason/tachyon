@@ -21,13 +21,17 @@
                     "type": "object",
                     "properties": {
                         "type": { "const": "player" },
-                        "player_id": { "type": "string" }
+                        "userId": { "$ref": "../../definitions/userId.json" }
                     },
-                    "required": ["type", "player_id"]
+                    "required": ["type", "userId"]
                 },
-                "marker": { "$ref": "../../definitions/unixTime.json" }
+                "timestamp": {
+                    "$ref": "../../definitions/unixTime.json",
+                    "description": "time at which the message was received by the server"
+                },
+                "marker": { "$ref": "../../definitions/historyMarker.json" }
             },
-            "required": ["message", "source", "marker"]
+            "required": ["message", "source", "timestamp", "marker"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

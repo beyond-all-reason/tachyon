@@ -16,14 +16,6 @@
             "title": "MessagingSubscribeReceivedRequestData",
             "type": "object",
             "properties": {
-                "source": {
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "player" },
-                        "player_id": { "type": "string" }
-                    },
-                    "required": ["type", "player_id"]
-                },
                 "since": {
                     "anyOf": [
                         {
@@ -40,14 +32,15 @@
                             "type": "object",
                             "properties": {
                                 "type": { "const": "marker" },
-                                "value": { "type": "integer" }
+                                "value": {
+                                    "$ref": "../../definitions/historyMarker.json"
+                                }
                             },
                             "required": ["type", "value"]
                         }
                     ]
                 }
-            },
-            "required": ["source"]
+            }
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

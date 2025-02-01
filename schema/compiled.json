@@ -52,6 +52,11 @@
             "type": "object",
             "patternProperties": { "^[a-zA-Z0-9_-]$": { "type": "string" } }
         },
+        "historyMarker": {
+            "description": "an opaque value to allow history retrieval",
+            "type": "string",
+            "examples": ["-576460745805023"]
+        },
         "player": {
             "type": "object",
             "properties": {
@@ -147,11 +152,6 @@
                     "$ref": "#/definitions/customStartScriptProperties"
                 }
             }
-        },
-        "timeMarker": {
-            "description": "an opaque value to represent a point in time",
-            "type": "integer",
-            "examples": [-576460745805023]
         },
         "unixTime": {
             "description": "Unix timestamp in microseconds",
@@ -1711,13 +1711,17 @@
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player" },
-                                "player_id": { "type": "string" }
+                                "userId": { "$ref": "#/definitions/userId" }
                             },
-                            "required": ["type", "player_id"]
+                            "required": ["type", "userId"]
                         },
-                        "marker": { "$ref": "#/definitions/unixTime" }
+                        "timestamp": {
+                            "$ref": "#/definitions/unixTime",
+                            "description": "time at which the message was received by the server"
+                        },
+                        "marker": { "$ref": "#/definitions/historyMarker" }
                     },
-                    "required": ["message", "source", "marker"]
+                    "required": ["message", "source", "timestamp", "marker"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1742,9 +1746,9 @@
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player" },
-                                "player_id": { "type": "string" }
+                                "userId": { "$ref": "#/definitions/userId" }
                             },
-                            "required": ["type", "player_id"]
+                            "required": ["type", "userId"]
                         },
                         "message": { "type": "string", "maxLength": 512 }
                     },
@@ -1818,14 +1822,6 @@
                     "title": "MessagingSubscribeReceivedRequestData",
                     "type": "object",
                     "properties": {
-                        "source": {
-                            "type": "object",
-                            "properties": {
-                                "type": { "const": "player" },
-                                "player_id": { "type": "string" }
-                            },
-                            "required": ["type", "player_id"]
-                        },
                         "since": {
                             "anyOf": [
                                 {
@@ -1846,14 +1842,15 @@
                                     "type": "object",
                                     "properties": {
                                         "type": { "const": "marker" },
-                                        "value": { "type": "integer" }
+                                        "value": {
+                                            "$ref": "#/definitions/historyMarker"
+                                        }
                                     },
                                     "required": ["type", "value"]
                                 }
                             ]
                         }
-                    },
-                    "required": ["source"]
+                    }
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1878,25 +1875,12 @@
                             "title": "MessagingSubscribeReceivedOkResponseData",
                             "type": "object",
                             "properties": {
-                                "history": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "message": { "type": "string" },
-                                            "marker": {
-                                                "$ref": "#/definitions/unixTime"
-                                            }
-                                        },
-                                        "required": ["message", "marker"]
-                                    }
-                                },
-                                "has_missed_messages": {
+                                "hasMissedMessages": {
                                     "description": "set to true when the marker sent doesn't match any message stored by the server.",
                                     "type": "boolean"
                                 }
                             },
-                            "required": ["history", "has_missed_messages"]
+                            "required": ["hasMissedMessages"]
                         }
                     },
                     "required": ["type", "messageId", "commandId", "status"]
