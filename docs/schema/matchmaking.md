@@ -480,8 +480,20 @@ export interface MatchmakingListRequest {
                                     "numOfTeams": { "type": "integer" },
                                     "teamSize": { "type": "integer" },
                                     "ranked": { "type": "boolean" },
-                                    "engine": { "type": "string" },
-                                    "game": { "type": "string" },
+                                    "engine": {
+                                        "type": "object",
+                                        "properties": {
+                                            "version": { "type": "string" }
+                                        },
+                                        "required": ["version"]
+                                    },
+                                    "game": {
+                                        "type": "object",
+                                        "properties": {
+                                            "version": { "type": "string" }
+                                        },
+                                        "required": ["version"]
+                                    },
                                     "data": {
                                         "type": "object",
                                         "properties": {
@@ -524,8 +536,10 @@ export interface MatchmakingListRequest {
                                     "numOfTeams": 2,
                                     "teamSize": 1,
                                     "ranked": true,
-                                    "engine": "2025.01.6",
-                                    "game": "Beyond All Reason test-27414-a84d7e6",
+                                    "engine": { "version": "2025.01.6" },
+                                    "game": {
+                                        "version": "Beyond All Reason test-27414-a84d7e6"
+                                    },
                                     "data": {
                                         "mapPool": [
                                             { "id": "Theta Crystals 1.3" },
@@ -542,8 +556,10 @@ export interface MatchmakingListRequest {
                                     "numOfTeams": 3,
                                     "teamSize": 1,
                                     "ranked": true,
-                                    "engine": "2025.01.6",
-                                    "game": "Beyond All Reason test-27414-a84d7e6",
+                                    "engine": { "version": "2025.01.6" },
+                                    "game": {
+                                        "version": "Beyond All Reason test-27414-a84d7e6"
+                                    },
                                     "data": {
                                         "mapPool": [
                                             { "id": "Ghenna Rising 4.0.1" }
@@ -600,8 +616,12 @@ export interface MatchmakingListRequest {
                 "numOfTeams": 2,
                 "teamSize": 1,
                 "ranked": true,
-                "engine": "2025.01.6",
-                "game": "Beyond All Reason test-27414-a84d7e6",
+                "engine": {
+                    "version": "2025.01.6"
+                },
+                "game": {
+                    "version": "Beyond All Reason test-27414-a84d7e6"
+                },
                 "data": {
                     "mapPool": [
                         {
@@ -622,8 +642,12 @@ export interface MatchmakingListRequest {
                 "numOfTeams": 3,
                 "teamSize": 1,
                 "ranked": true,
-                "engine": "2025.01.6",
-                "game": "Beyond All Reason test-27414-a84d7e6",
+                "engine": {
+                    "version": "2025.01.6"
+                },
+                "game": {
+                    "version": "Beyond All Reason test-27414-a84d7e6"
+                },
                 "data": {
                     "mapPool": [
                         {
@@ -654,8 +678,12 @@ export interface MatchmakingListOkResponseData {
         numOfTeams: number;
         teamSize: number;
         ranked: boolean;
-        engine: string;
-        game: string;
+        engine: {
+            version: string;
+        };
+        game: {
+            version: string;
+        };
         data: {
             mapPool: {
                 id: string;
