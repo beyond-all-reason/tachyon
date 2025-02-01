@@ -480,37 +480,35 @@ export interface MatchmakingListRequest {
                                     "numOfTeams": { "type": "integer" },
                                     "teamSize": { "type": "integer" },
                                     "ranked": { "type": "boolean" },
-                                    "engine": {
-                                        "type": "object",
-                                        "properties": {
-                                            "version": { "type": "string" }
-                                        },
-                                        "required": ["version"]
+                                    "engines": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": { "type": "string" }
+                                            },
+                                            "required": ["version"]
+                                        }
                                     },
-                                    "game": {
-                                        "type": "object",
-                                        "properties": {
-                                            "version": { "type": "string" }
-                                        },
-                                        "required": ["version"]
+                                    "games": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "version": { "type": "string" }
+                                            },
+                                            "required": ["version"]
+                                        }
                                     },
-                                    "data": {
-                                        "type": "object",
-                                        "properties": {
-                                            "mapPool": {
-                                                "type": "array",
-                                                "items": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "id": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": ["id"]
-                                                }
-                                            }
-                                        },
-                                        "required": ["mapPool"]
+                                    "maps": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": { "type": "string" }
+                                            },
+                                            "required": ["id"]
+                                        }
                                     }
                                 },
                                 "required": [
@@ -519,9 +517,9 @@ export interface MatchmakingListRequest {
                                     "numOfTeams",
                                     "teamSize",
                                     "ranked",
-                                    "engine",
-                                    "game",
-                                    "data"
+                                    "engines",
+                                    "games",
+                                    "maps"
                                 ]
                             }
                         }
@@ -536,19 +534,17 @@ export interface MatchmakingListRequest {
                                     "numOfTeams": 2,
                                     "teamSize": 1,
                                     "ranked": true,
-                                    "engine": { "version": "2025.01.6" },
-                                    "game": {
-                                        "version": "Beyond All Reason test-27414-a84d7e6"
-                                    },
-                                    "data": {
-                                        "mapPool": [
-                                            { "id": "Theta Crystals 1.3" },
-                                            {
-                                                "id": "Comet Catcher Remake 1.8"
-                                            },
-                                            { "id": "Aurelia v4.1" }
-                                        ]
-                                    }
+                                    "engines": [{ "version": "2025.01.6" }],
+                                    "games": [
+                                        {
+                                            "version": "Beyond All Reason test-27414-a84d7e6"
+                                        }
+                                    ],
+                                    "maps": [
+                                        { "id": "Theta Crystals 1.3" },
+                                        { "id": "Comet Catcher Remake 1.8" },
+                                        { "id": "Aurelia v4.1" }
+                                    ]
                                 },
                                 {
                                     "id": "1v1v1",
@@ -556,15 +552,13 @@ export interface MatchmakingListRequest {
                                     "numOfTeams": 3,
                                     "teamSize": 1,
                                     "ranked": true,
-                                    "engine": { "version": "2025.01.6" },
-                                    "game": {
-                                        "version": "Beyond All Reason test-27414-a84d7e6"
-                                    },
-                                    "data": {
-                                        "mapPool": [
-                                            { "id": "Ghenna Rising 4.0.1" }
-                                        ]
-                                    }
+                                    "engines": [{ "version": "2025.01.6" }],
+                                    "games": [
+                                        {
+                                            "version": "Beyond All Reason test-27414-a84d7e6"
+                                        }
+                                    ],
+                                    "maps": [{ "id": "Ghenna Rising 4.0.1" }]
                                 }
                             ]
                         }
@@ -616,25 +610,27 @@ export interface MatchmakingListRequest {
                 "numOfTeams": 2,
                 "teamSize": 1,
                 "ranked": true,
-                "engine": {
-                    "version": "2025.01.6"
-                },
-                "game": {
-                    "version": "Beyond All Reason test-27414-a84d7e6"
-                },
-                "data": {
-                    "mapPool": [
-                        {
-                            "id": "Theta Crystals 1.3"
-                        },
-                        {
-                            "id": "Comet Catcher Remake 1.8"
-                        },
-                        {
-                            "id": "Aurelia v4.1"
-                        }
-                    ]
-                }
+                "engines": [
+                    {
+                        "version": "2025.01.6"
+                    }
+                ],
+                "games": [
+                    {
+                        "version": "Beyond All Reason test-27414-a84d7e6"
+                    }
+                ],
+                "maps": [
+                    {
+                        "id": "Theta Crystals 1.3"
+                    },
+                    {
+                        "id": "Comet Catcher Remake 1.8"
+                    },
+                    {
+                        "id": "Aurelia v4.1"
+                    }
+                ]
             },
             {
                 "id": "1v1v1",
@@ -642,19 +638,21 @@ export interface MatchmakingListRequest {
                 "numOfTeams": 3,
                 "teamSize": 1,
                 "ranked": true,
-                "engine": {
-                    "version": "2025.01.6"
-                },
-                "game": {
-                    "version": "Beyond All Reason test-27414-a84d7e6"
-                },
-                "data": {
-                    "mapPool": [
-                        {
-                            "id": "Ghenna Rising 4.0.1"
-                        }
-                    ]
-                }
+                "engines": [
+                    {
+                        "version": "2025.01.6"
+                    }
+                ],
+                "games": [
+                    {
+                        "version": "Beyond All Reason test-27414-a84d7e6"
+                    }
+                ],
+                "maps": [
+                    {
+                        "id": "Ghenna Rising 4.0.1"
+                    }
+                ]
             }
         ]
     }
@@ -678,17 +676,15 @@ export interface MatchmakingListOkResponseData {
         numOfTeams: number;
         teamSize: number;
         ranked: boolean;
-        engine: {
+        engines: {
             version: string;
-        };
-        game: {
+        }[];
+        games: {
             version: string;
-        };
-        data: {
-            mapPool: {
-                id: string;
-            }[];
-        };
+        }[];
+        maps: {
+            id: string;
+        }[];
     }[];
 }
 ```
