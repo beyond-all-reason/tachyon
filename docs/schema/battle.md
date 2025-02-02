@@ -56,13 +56,13 @@ When a user client receives this response it should launch the game (spring.exe)
 ```json
 {
     "type": "request",
-    "messageId": "Ut in",
+    "messageId": "minim sed tempor Excepteur ea",
     "commandId": "battle/start",
     "data": {
-        "username": "Ut in",
-        "password": "Ut in",
-        "ip": "Ut in",
-        "port": -57999999.99999999
+        "username": "qui et in",
+        "password": "Excepteur id",
+        "ip": "est dolore ipsum et Duis",
+        "port": 4897737.503051758
     }
 }
 ```
@@ -140,7 +140,7 @@ export interface BattleStartRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "aliqua in",
+    "messageId": "mollit reprehenderit",
     "commandId": "battle/start",
     "status": "success"
 }

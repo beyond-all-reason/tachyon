@@ -117,59 +117,153 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "aute Lorem officia",
+    "messageId": "ad",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
+                "cillum_f": true,
+                "aliquip_a": 60256111,
+                "dolor444": 63100135,
+                "exa1": true,
+                "do_52c": true,
+                "ut_72": 54802572,
+                "quiscc7": false,
+                "eiusmod_920": -80478084.08737183,
+                "eu0e0": 9139358,
                 "userId": "351",
-                "username": "aute Lorem officia",
-                "displayName": "aute Lorem officia",
-                "countryCode": "aute Lorem officia",
-                "status": "menu",
+                "displayName": "dolor",
+                "partyId": null,
+                "countryCode": "irure commodo ipsum nulla",
                 "friendIds": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "voluptate labore",
+                    "in Duis irure minim",
+                    "exercitation",
+                    "eu",
+                    "elit cillum ipsum proident"
+                ],
+                "outgoingFriendRequestIds": [
+                    "anim dolore tempor officia Duis",
+                    "ex in aliqua",
+                    "in dolore amet mollit",
+                    "occaecat",
+                    "Ut anim"
+                ],
+                "incomingFriendRequestIds": [
+                    "nisi nulla",
+                    "officia qui",
+                    "officia",
+                    "non reprehenderit veniam velit"
                 ],
                 "ignoreIds": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "et qui"
                 ]
             },
             {
+                "laborum_8": false,
+                "culpa8_1": "enim dolor",
+                "voluptate37": 20425212,
+                "Lorem_6": "officia labore",
+                "commodo82": -61093414,
+                "sint_5dd": "in reprehenderit Excepteur incididunt",
+                "mollit_09a": 37580025,
+                "amet_9f0": -80199075,
+                "veniam_e4": 96144151,
+                "non_d": true,
+                "reprehenderit6f": "dolor eiusmod ipsum consequat",
+                "anim_1": -27228404,
+                "laborum_b14": "est cupidatat irure",
+                "consequat_b9": 52584636.21139526,
+                "et118": false
+            },
+            {
+                "dolor_288": "laboris cupidatat deserunt",
+                "qui5": -12187887,
+                "sint__44": -18664825,
+                "et_ff": -74906194.21005249,
+                "ea_27": -36343670,
+                "est_1": 75909245.01419067,
                 "userId": "351",
-                "username": "aute Lorem officia",
-                "displayName": "aute Lorem officia",
-                "countryCode": "aute Lorem officia",
-                "status": "menu",
-                "friendIds": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                "username": "tempor",
+                "displayName": "culpa pariatur",
+                "partyId": "nulla dolor irure reprehenderit in",
+                "scopes": [
+                    "quis ex officia do",
+                    "dolore officia Excepteur",
+                    "ex dolor est cillum laborum",
+                    "elit Lorem",
+                    "exercitation eiusmod veniam ea ut"
+                ],
+                "countryCode": "culpa sit",
+                "outgoingFriendRequestIds": [
+                    "anim cupidatat in eu consequat",
+                    "in ipsum nisi in nulla",
+                    "cillum"
+                ],
+                "incomingFriendRequestIds": [
+                    "laborum esse",
+                    "adipisicing",
+                    "nisi ut tempor",
+                    "Lorem ipsum enim",
+                    "eu aute Ut ut"
                 ],
                 "ignoreIds": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "in minim Duis est velit",
+                    "Duis nostrud aute quis magna"
                 ]
             },
             {
+                "elit_ca6": true,
+                "sint514": -49259937,
+                "seda98": "quis sit",
+                "Duis39": true,
+                "sit_ae": "laboris",
                 "userId": "351",
-                "username": "aute Lorem officia",
-                "displayName": "aute Lorem officia",
-                "countryCode": "aute Lorem officia",
-                "status": "menu",
+                "username": "dolore exercitation ipsum",
+                "displayName": "qui ad dolore consequat",
+                "clanId": null,
+                "status": "lobby",
                 "friendIds": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "in deserunt magna ipsum cillum"
                 ],
-                "ignoreIds": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                "outgoingFriendRequestIds": [
+                    "voluptate consequat sint proident",
+                    "cupidatat ea amet et",
+                    "nulla anim minim ullamco",
+                    "dolore",
+                    "enim"
+                ],
+                "incomingFriendRequestIds": [
+                    "aliqua incididunt",
+                    "incididunt dolore officia labore dolor",
+                    "velit dolor",
+                    "culpa nostrud exercitation minim",
+                    "cillum Excepteur nostrud occaecat"
+                ]
+            },
+            {
+                "Lorem_8": true,
+                "veniam7f3": "et enim",
+                "magna_3f": -90849852.56195068,
+                "nostrud9ae": false,
+                "username": "commodo non",
+                "displayName": "dolor laborum",
+                "clanId": null,
+                "partyId": "nulla veniam culpa",
+                "countryCode": "ut",
+                "status": "offline",
+                "outgoingFriendRequestIds": [
+                    "dolore consequat",
+                    "elit dolor voluptate",
+                    "labore dolor laborum",
+                    "Excepteur reprehenderit fugiat",
+                    "exercitation cillum ullamco sint"
+                ],
+                "incomingFriendRequestIds": [
+                    "deserunt laboris aliqua",
+                    "nulla tempor cupidatat",
+                    "nisi exercitation",
+                    "qui ut in sint dolore"
                 ]
             }
         ]
