@@ -19,6 +19,21 @@ export default defineEndpoint({
                             numOfTeams: Type.Integer(),
                             teamSize: Type.Integer(),
                             ranked: Type.Boolean(),
+                            engines: Type.Array(
+                                Type.Object({
+                                    version: Type.String(),
+                                })
+                            ),
+                            games: Type.Array(
+                                Type.Object({
+                                    springName: Type.String(),
+                                })
+                            ),
+                            maps: Type.Array(
+                                Type.Object({
+                                    springName: Type.String(),
+                                })
+                            ),
                         })
                     ),
                 },
@@ -32,6 +47,13 @@ export default defineEndpoint({
                                     numOfTeams: 2,
                                     teamSize: 1,
                                     ranked: true,
+                                    engines: [{ version: "2025.01.6" }],
+                                    games: [{ springName: "Beyond All Reason test-27414-a84d7e6" }],
+                                    maps: [
+                                        { springName: "Theta Crystals 1.3" },
+                                        { springName: "Comet Catcher Remake 1.8" },
+                                        { springName: "Aurelia v4.1" },
+                                    ],
                                 },
                                 {
                                     id: "1v1v1",
@@ -39,6 +61,9 @@ export default defineEndpoint({
                                     numOfTeams: 3,
                                     teamSize: 1,
                                     ranked: true,
+                                    engines: [{ version: "2025.01.6" }],
+                                    games: [{ springName: "Beyond All Reason test-27414-a84d7e6" }],
+                                    maps: [{ springName: "Ghenna Rising 4.0.1" }],
                                 },
                             ],
                         },

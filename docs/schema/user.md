@@ -56,55 +56,55 @@ Sent by the server to inform the client of its own user state. This event should
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
+    "messageId": "aute Lorem officia",
     "commandId": "user/self",
     "data": {
         "user": {
             "userId": "351",
-            "username": "occaecat Lorem in",
-            "displayName": "occaecat Lorem in",
-            "clanId": "occaecat Lorem in",
-            "partyId": "occaecat Lorem in",
+            "username": "aute Lorem officia",
+            "displayName": "aute Lorem officia",
+            "clanId": "aute Lorem officia",
+            "partyId": "aute Lorem officia",
             "scopes": [
-                "occaecat Lorem in",
-                "occaecat Lorem in",
-                "occaecat Lorem in"
+                "aute Lorem officia",
+                "aute Lorem officia",
+                "aute Lorem officia"
             ],
-            "countryCode": "occaecat Lorem in",
+            "countryCode": "aute Lorem officia",
             "status": "menu",
             "friendIds": [
-                "occaecat Lorem in",
-                "occaecat Lorem in",
-                "occaecat Lorem in"
+                "aute Lorem officia",
+                "aute Lorem officia",
+                "aute Lorem officia"
             ],
             "outgoingFriendRequestIds": [
-                "occaecat Lorem in",
-                "occaecat Lorem in",
-                "occaecat Lorem in"
+                "aute Lorem officia",
+                "aute Lorem officia",
+                "aute Lorem officia"
             ],
             "incomingFriendRequestIds": [
-                "occaecat Lorem in",
-                "occaecat Lorem in",
-                "occaecat Lorem in"
+                "aute Lorem officia",
+                "aute Lorem officia",
+                "aute Lorem officia"
             ],
             "ignoreIds": [
-                "occaecat Lorem in",
-                "occaecat Lorem in",
-                "occaecat Lorem in"
+                "aute Lorem officia",
+                "aute Lorem officia",
+                "aute Lorem officia"
             ],
             "currentBattle": {
-                "username": "occaecat Lorem in",
-                "password": "occaecat Lorem in",
-                "ip": "occaecat Lorem in",
-                "port": -19999999.999999955,
+                "username": "aute Lorem officia",
+                "password": "aute Lorem officia",
+                "ip": "aute Lorem officia",
+                "port": -9999999.999999955,
                 "engine": {
-                    "version": "occaecat Lorem in"
+                    "version": "aute Lorem officia"
                 },
                 "game": {
-                    "springName": "occaecat Lorem in"
+                    "springName": "aute Lorem officia"
                 },
                 "map": {
-                    "springName": "occaecat Lorem in"
+                    "springName": "aute Lorem officia"
                 }
             }
         }
@@ -217,10 +217,15 @@ Ask the server to send updates about theses users.
 ```json
 {
     "type": "request",
-    "messageId": "pariatur Lorem reprehenderit",
+    "messageId": "Duis Lorem culpa",
     "commandId": "user/subscribeUpdates",
     "data": {
         "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
             "351",
             "351",
             "351",
@@ -341,7 +346,7 @@ export interface UserSubscribeUpdatesRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "fugiat Lorem irure",
+    "messageId": "Duis Lorem sint",
     "commandId": "user/subscribeUpdates",
     "status": "success"
 }
@@ -418,10 +423,15 @@ Ask the server to stop sending user updates for the given set of userId. This sh
 ```json
 {
     "type": "request",
-    "messageId": "cillum Lorem ut",
+    "messageId": "laborum Lorem fugiat",
     "commandId": "user/unsubscribeUpdates",
     "data": {
         "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
             "351",
             "351",
             "351",
@@ -543,7 +553,7 @@ export interface UserUnsubscribeUpdatesRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "esse Lorem anim",
+    "messageId": "anim Lorem eu",
     "commandId": "user/unsubscribeUpdates",
     "status": "success"
 }
@@ -641,42 +651,45 @@ Sent by the server to inform the client of user state changes. User objects shou
 ```json
 {
     "type": "event",
-    "messageId": "aute Lorem officia",
+    "messageId": "Lorem anim ipsum",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
                 "userId": "351",
-                "username": "aute Lorem officia",
-                "partyId": "aute Lorem officia",
+                "username": "Lorem anim ipsum",
+                "displayName": "Lorem anim ipsum",
                 "scopes": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum"
                 ],
-                "countryCode": "aute Lorem officia"
+                "countryCode": "Lorem anim ipsum",
+                "status": "playing"
             },
             {
                 "userId": "351",
-                "username": "aute Lorem officia",
-                "partyId": "aute Lorem officia",
+                "username": "Lorem anim ipsum",
+                "displayName": "Lorem anim ipsum",
                 "scopes": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum"
                 ],
-                "countryCode": "aute Lorem officia"
+                "countryCode": "Lorem anim ipsum",
+                "status": "playing"
             },
             {
                 "userId": "351",
-                "username": "aute Lorem officia",
-                "partyId": "aute Lorem officia",
+                "username": "Lorem anim ipsum",
+                "displayName": "Lorem anim ipsum",
                 "scopes": [
-                    "aute Lorem officia",
-                    "aute Lorem officia",
-                    "aute Lorem officia"
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum",
+                    "Lorem anim ipsum"
                 ],
-                "countryCode": "aute Lorem officia"
+                "countryCode": "Lorem anim ipsum",
+                "status": "playing"
             }
         ]
     }
