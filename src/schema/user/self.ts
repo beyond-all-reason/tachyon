@@ -12,7 +12,7 @@ export default defineEndpoint({
         "Sent by the server to inform the client of its own user state. This event should be sent to a user when they login.",
     event: {
         data: Type.Object({
-            user: Type.Deref(privateUser, [user, userId]),
+            user: Type.Ref(privateUser, [user, userId]),
         }),
     },
 });
