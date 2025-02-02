@@ -1,0 +1,13 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/privateBattle.json",
+    "title": "BattleStartRequestData",
+    "description": "Secret battle information to pass to spring.",
+    "type": "object",
+    "properties": {
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "ip": { "type": "string" },
+        "port": { "type": "number" }
+    },
+    "required": ["username", "password", "ip", "port"]
+}

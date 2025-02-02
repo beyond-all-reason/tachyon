@@ -3,12 +3,13 @@
 # User
 
 - [self](#self)
+- [subscribeUpdates](#subscribeupdates)
 - [updated](#updated)
 ---
 
 ## Self
 
-Sent by the server to inform the client of its own user state / user state changes. This event should be sent to a user when they login.
+Sent by the server to inform the client of its own user state. This event should be sent to a user when they login.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -38,7 +39,7 @@ Sent by the server to inform the client of its own user state / user state chang
             "type": "object",
             "properties": {
                 "user": {
-                    "type": "object",
+                    "$id": "privateUser",
                     "allOf": [
                         {
                             "type": "object",
@@ -74,7 +75,16 @@ Sent by the server to inform the client of its own user state / user state chang
                                         "lobby"
                                     ]
                                 }
-                            }
+                            },
+                            "required": [
+                                "userId",
+                                "username",
+                                "displayName",
+                                "clanId",
+                                "partyId",
+                                "scopes",
+                                "status"
+                            ]
                         },
                         {
                             "type": "object",
@@ -94,8 +104,32 @@ Sent by the server to inform the client of its own user state / user state chang
                                 "ignoreIds": {
                                     "type": "array",
                                     "items": { "type": "string" }
+                                },
+                                "currentBattle": {
+                                    "$id": "privateBattle",
+                                    "title": "BattleStartRequestData",
+                                    "description": "Secret battle information to pass to spring.",
+                                    "type": "object",
+                                    "properties": {
+                                        "username": { "type": "string" },
+                                        "password": { "type": "string" },
+                                        "ip": { "type": "string" },
+                                        "port": { "type": "number" }
+                                    },
+                                    "required": [
+                                        "username",
+                                        "password",
+                                        "ip",
+                                        "port"
+                                    ]
                                 }
-                            }
+                            },
+                            "required": [
+                                "friendIds",
+                                "outgoingFriendRequestIds",
+                                "incomingFriendRequestIds",
+                                "ignoreIds"
+                            ]
                         }
                     ]
                 }
@@ -119,9 +153,11 @@ Sent by the server to inform the client of its own user state / user state chang
     "commandId": "user/self",
     "data": {
         "user": {
-            "occaecatff": -19999999.999999955,
             "userId": "351",
             "username": "occaecat Lorem in",
+            "displayName": "occaecat Lorem in",
+            "clanId": "occaecat Lorem in",
+            "partyId": "occaecat Lorem in",
             "scopes": [
                 "occaecat Lorem in",
                 "occaecat Lorem in",
@@ -129,11 +165,32 @@ Sent by the server to inform the client of its own user state / user state chang
             ],
             "countryCode": "occaecat Lorem in",
             "status": "menu",
+            "friendIds": [
+                "occaecat Lorem in",
+                "occaecat Lorem in",
+                "occaecat Lorem in"
+            ],
             "outgoingFriendRequestIds": [
                 "occaecat Lorem in",
                 "occaecat Lorem in",
                 "occaecat Lorem in"
-            ]
+            ],
+            "incomingFriendRequestIds": [
+                "occaecat Lorem in",
+                "occaecat Lorem in",
+                "occaecat Lorem in"
+            ],
+            "ignoreIds": [
+                "occaecat Lorem in",
+                "occaecat Lorem in",
+                "occaecat Lorem in"
+            ],
+            "currentBattle": {
+                "username": "occaecat Lorem in",
+                "password": "occaecat Lorem in",
+                "ip": "occaecat Lorem in",
+                "port": -19999999.999999955
+            }
         }
     }
 }
@@ -142,6 +199,23 @@ Sent by the server to inform the client of its own user state / user state chang
 
 #### TypeScript Definition
 ```ts
+export type PrivateUser = {
+    userId: string;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+} & {
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
+    currentBattle?: BattleStartRequestData;
+};
+
 export interface UserSelfEvent {
     type: "event";
     messageId: string;
@@ -149,28 +223,221 @@ export interface UserSelfEvent {
     data: UserSelfEventData;
 }
 export interface UserSelfEventData {
-    user: {
-        userId?: string;
-        username?: string;
-        displayName?: string;
-        clanId?: string | null;
-        partyId?: string | null;
-        scopes?: string[];
-        countryCode?: string;
-        status?: "offline" | "menu" | "playing" | "lobby";
-    } & {
-        friendIds?: string[];
-        outgoingFriendRequestIds?: string[];
-        incomingFriendRequestIds?: string[];
-        ignoreIds?: string[];
-    };
+    user: PrivateUser;
+}
+export interface BattleStartRequestData {
+    username: string;
+    password: string;
+    ip: string;
+    port: number;
 }
 ```
 ---
 
+## SubscribeUpdates
+
+Ask the server to send updates about theses users.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserSubscribeUpdatesRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/subscribeUpdates" },
+        "data": {
+            "title": "UserSubscribeUpdatesRequestData",
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "$id": "userId",
+                        "type": "string",
+                        "examples": ["351"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                }
+            },
+            "required": ["userIds"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "pariatur Lorem reprehenderit",
+    "commandId": "user/subscribeUpdates",
+    "data": {
+        "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface UserSubscribeUpdatesRequest {
+    type: "request";
+    messageId: string;
+    commandId: "user/subscribeUpdates";
+    data: UserSubscribeUpdatesRequestData;
+}
+export interface UserSubscribeUpdatesRequestData {
+    userIds: [UserId, ...UserId[]];
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserSubscribeUpdatesResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "UserSubscribeUpdatesOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/subscribeUpdates" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "UserSubscribeUpdatesFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/subscribeUpdates" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "limit_reached",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "fugiat Lorem irure",
+    "commandId": "user/subscribeUpdates",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserSubscribeUpdatesOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/subscribeUpdates";
+    status: "success";
+}
+```
+Possible Failed Reasons: `limit_reached`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## Updated
 
-Sent by the server to inform the client of subscribed users state changes. The root object of each array element in `users` is partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.
+Sent by the server to inform the client of user state changes. User objects should be full when first sent, then only updates gets sent.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -246,30 +513,42 @@ Sent by the server to inform the client of subscribed users state changes. The r
 ```json
 {
     "type": "event",
-    "messageId": "pariatur Lorem reprehenderit",
+    "messageId": "cillum Lorem ut",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "pariaturff": -17999999.999999955,
                 "userId": "351",
-                "username": "pariatur Lorem reprehenderit",
-                "partyId": "pariatur Lorem reprehenderit",
-                "status": "menu"
+                "username": "cillum Lorem ut",
+                "partyId": "cillum Lorem ut",
+                "scopes": [
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
+                ],
+                "countryCode": "cillum Lorem ut"
             },
             {
-                "pariaturff": -17999999.999999955,
                 "userId": "351",
-                "username": "pariatur Lorem reprehenderit",
-                "partyId": "pariatur Lorem reprehenderit",
-                "status": "menu"
+                "username": "cillum Lorem ut",
+                "partyId": "cillum Lorem ut",
+                "scopes": [
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
+                ],
+                "countryCode": "cillum Lorem ut"
             },
             {
-                "pariaturff": -17999999.999999955,
                 "userId": "351",
-                "username": "pariatur Lorem reprehenderit",
-                "partyId": "pariatur Lorem reprehenderit",
-                "status": "menu"
+                "username": "cillum Lorem ut",
+                "partyId": "cillum Lorem ut",
+                "scopes": [
+                    "cillum Lorem ut",
+                    "cillum Lorem ut",
+                    "cillum Lorem ut"
+                ],
+                "countryCode": "cillum Lorem ut"
             }
         ]
     }

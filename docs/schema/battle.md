@@ -33,7 +33,9 @@ When a user client receives this response it should launch the game (spring.exe)
         "messageId": { "type": "string" },
         "commandId": { "const": "battle/start" },
         "data": {
+            "$id": "privateBattle",
             "title": "BattleStartRequestData",
+            "description": "Secret battle information to pass to spring.",
             "type": "object",
             "properties": {
                 "username": { "type": "string" },

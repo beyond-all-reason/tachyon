@@ -13,7 +13,9 @@
         "messageId": { "type": "string" },
         "commandId": { "const": "battle/start" },
         "data": {
+            "$id": "privateBattle",
             "title": "BattleStartRequestData",
+            "description": "Secret battle information to pass to spring.",
             "type": "object",
             "properties": {
                 "username": { "type": "string" },
