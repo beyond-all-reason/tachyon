@@ -20,65 +20,31 @@
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "allOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "type": "string",
-                                        "examples": ["351"]
-                                    },
-                                    "username": { "type": "string" },
-                                    "displayName": { "type": "string" },
-                                    "clanId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "scopes": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "countryCode": { "type": "string" },
-                                    "status": {
-                                        "enum": [
-                                            "offline",
-                                            "menu",
-                                            "playing",
-                                            "lobby"
-                                        ]
-                                    }
-                                }
+                        "properties": {
+                            "userId": { "type": "string", "examples": ["351"] },
+                            "username": { "type": "string" },
+                            "displayName": { "type": "string" },
+                            "clanId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
                             },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "friendIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "outgoingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "incomingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "ignoreIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    }
-                                }
+                            "partyId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            },
+                            "countryCode": { "type": "string" },
+                            "status": {
+                                "enum": ["offline", "menu", "playing", "lobby"]
                             }
-                        ]
+                        }
                     }
                 }
             },

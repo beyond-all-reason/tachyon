@@ -2,12 +2,175 @@
 
 # User
 
+- [self](#self)
 - [updated](#updated)
+---
+
+## Self
+
+Sent by the server to inform the client of its own user state / user state changes. This event should be sent to a user when they login.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserSelfEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/self" },
+        "data": {
+            "title": "UserSelfEventData",
+            "type": "object",
+            "properties": {
+                "user": {
+                    "type": "object",
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "userId": {
+                                    "type": "string",
+                                    "examples": ["351"]
+                                },
+                                "username": { "type": "string" },
+                                "displayName": { "type": "string" },
+                                "clanId": {
+                                    "anyOf": [
+                                        { "type": "string" },
+                                        { "type": "null" }
+                                    ]
+                                },
+                                "partyId": {
+                                    "anyOf": [
+                                        { "type": "string" },
+                                        { "type": "null" }
+                                    ]
+                                },
+                                "scopes": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "countryCode": { "type": "string" },
+                                "status": {
+                                    "enum": [
+                                        "offline",
+                                        "menu",
+                                        "playing",
+                                        "lobby"
+                                    ]
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "friendIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "outgoingFriendRequestIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "incomingFriendRequestIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                },
+                                "ignoreIds": {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            "required": ["user"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "occaecat Lorem in",
+    "commandId": "user/self",
+    "data": {
+        "user": {
+            "occaecatff": -19999999.999999955,
+            "userId": "351",
+            "username": "occaecat Lorem in",
+            "scopes": [
+                "occaecat Lorem in",
+                "occaecat Lorem in",
+                "occaecat Lorem in"
+            ],
+            "countryCode": "occaecat Lorem in",
+            "status": "menu",
+            "outgoingFriendRequestIds": [
+                "occaecat Lorem in",
+                "occaecat Lorem in",
+                "occaecat Lorem in"
+            ]
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserSelfEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/self";
+    data: UserSelfEventData;
+}
+export interface UserSelfEventData {
+    user: {
+        userId?: string;
+        username?: string;
+        displayName?: string;
+        clanId?: string | null;
+        partyId?: string | null;
+        scopes?: string[];
+        countryCode?: string;
+        status?: "offline" | "menu" | "playing" | "lobby";
+    } & {
+        friendIds?: string[];
+        outgoingFriendRequestIds?: string[];
+        incomingFriendRequestIds?: string[];
+        ignoreIds?: string[];
+    };
+}
+```
 ---
 
 ## Updated
 
-Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged. This event should be sent to a user when they login to inform them about their own user data.
+Sent by the server to inform the client of subscribed users state changes. The root object of each array element in `users` is partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -40,65 +203,31 @@ Sent by the server to inform the client when subscribed users get updated in som
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "allOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "type": "string",
-                                        "examples": ["351"]
-                                    },
-                                    "username": { "type": "string" },
-                                    "displayName": { "type": "string" },
-                                    "clanId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "scopes": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "countryCode": { "type": "string" },
-                                    "status": {
-                                        "enum": [
-                                            "offline",
-                                            "menu",
-                                            "playing",
-                                            "lobby"
-                                        ]
-                                    }
-                                }
+                        "properties": {
+                            "userId": { "type": "string", "examples": ["351"] },
+                            "username": { "type": "string" },
+                            "displayName": { "type": "string" },
+                            "clanId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
                             },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "friendIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "outgoingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "incomingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "ignoreIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    }
-                                }
+                            "partyId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            },
+                            "countryCode": { "type": "string" },
+                            "status": {
+                                "enum": ["offline", "menu", "playing", "lobby"]
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -117,60 +246,30 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
+    "messageId": "pariatur Lorem reprehenderit",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ]
+                "username": "pariatur Lorem reprehenderit",
+                "partyId": "pariatur Lorem reprehenderit",
+                "status": "menu"
             },
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ]
+                "username": "pariatur Lorem reprehenderit",
+                "partyId": "pariatur Lorem reprehenderit",
+                "status": "menu"
             },
             {
-                "occaecatff": -19999999.999999955,
+                "pariaturff": -17999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
-                "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ]
+                "username": "pariatur Lorem reprehenderit",
+                "partyId": "pariatur Lorem reprehenderit",
+                "status": "menu"
             }
         ]
     }
@@ -187,7 +286,7 @@ export interface UserUpdatedEvent {
     data: UserUpdatedEventData;
 }
 export interface UserUpdatedEventData {
-    users: ({
+    users: {
         userId?: string;
         username?: string;
         displayName?: string;
@@ -196,11 +295,6 @@ export interface UserUpdatedEventData {
         scopes?: string[];
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
-    } & {
-        friendIds?: string[];
-        outgoingFriendRequestIds?: string[];
-        incomingFriendRequestIds?: string[];
-        ignoreIds?: string[];
-    })[];
+    }[];
 }
 ```
