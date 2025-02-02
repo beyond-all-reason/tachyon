@@ -38,101 +38,7 @@ Sent by the server to inform the client of its own user state. This event should
             "title": "UserSelfEventData",
             "type": "object",
             "properties": {
-                "user": {
-                    "$id": "privateUser",
-                    "allOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "userId": {
-                                    "type": "string",
-                                    "examples": ["351"]
-                                },
-                                "username": { "type": "string" },
-                                "displayName": { "type": "string" },
-                                "clanId": {
-                                    "anyOf": [
-                                        { "type": "string" },
-                                        { "type": "null" }
-                                    ]
-                                },
-                                "partyId": {
-                                    "anyOf": [
-                                        { "type": "string" },
-                                        { "type": "null" }
-                                    ]
-                                },
-                                "scopes": {
-                                    "type": "array",
-                                    "items": { "type": "string" }
-                                },
-                                "countryCode": { "type": "string" },
-                                "status": {
-                                    "enum": [
-                                        "offline",
-                                        "menu",
-                                        "playing",
-                                        "lobby"
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "userId",
-                                "username",
-                                "displayName",
-                                "clanId",
-                                "partyId",
-                                "scopes",
-                                "status"
-                            ]
-                        },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "friendIds": {
-                                    "type": "array",
-                                    "items": { "type": "string" }
-                                },
-                                "outgoingFriendRequestIds": {
-                                    "type": "array",
-                                    "items": { "type": "string" }
-                                },
-                                "incomingFriendRequestIds": {
-                                    "type": "array",
-                                    "items": { "type": "string" }
-                                },
-                                "ignoreIds": {
-                                    "type": "array",
-                                    "items": { "type": "string" }
-                                },
-                                "currentBattle": {
-                                    "$id": "privateBattle",
-                                    "title": "BattleStartRequestData",
-                                    "description": "Secret battle information to pass to spring.",
-                                    "type": "object",
-                                    "properties": {
-                                        "username": { "type": "string" },
-                                        "password": { "type": "string" },
-                                        "ip": { "type": "string" },
-                                        "port": { "type": "number" }
-                                    },
-                                    "required": [
-                                        "username",
-                                        "password",
-                                        "ip",
-                                        "port"
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "friendIds",
-                                "outgoingFriendRequestIds",
-                                "incomingFriendRequestIds",
-                                "ignoreIds"
-                            ]
-                        }
-                    ]
-                }
+                "user": { "$ref": "../../definitions/privateUser.json" }
             },
             "required": ["user"]
         }
@@ -200,7 +106,7 @@ Sent by the server to inform the client of its own user state. This event should
 #### TypeScript Definition
 ```ts
 export type PrivateUser = {
-    userId: string;
+    userId: UserId;
     username: string;
     displayName: string;
     clanId: string | null;
@@ -215,6 +121,7 @@ export type PrivateUser = {
     ignoreIds: string[];
     currentBattle?: BattleStartRequestData;
 };
+export type UserId = string;
 
 export interface UserSelfEvent {
     type: "event";
