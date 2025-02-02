@@ -117,59 +117,59 @@ Sent by the server to inform the client when subscribed users get updated in som
 ```json
 {
     "type": "event",
-    "messageId": "occaecat Lorem in",
+    "messageId": "aute Lorem officia",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
-                "occaecatff": -19999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
+                "username": "aute Lorem officia",
+                "displayName": "aute Lorem officia",
+                "countryCode": "aute Lorem officia",
                 "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                "friendIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
+                ],
+                "ignoreIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
+                "username": "aute Lorem officia",
+                "displayName": "aute Lorem officia",
+                "countryCode": "aute Lorem officia",
                 "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                "friendIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
+                ],
+                "ignoreIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ]
             },
             {
-                "occaecatff": -19999999.999999955,
                 "userId": "351",
-                "username": "occaecat Lorem in",
-                "scopes": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
-                ],
-                "countryCode": "occaecat Lorem in",
+                "username": "aute Lorem officia",
+                "displayName": "aute Lorem officia",
+                "countryCode": "aute Lorem officia",
                 "status": "menu",
-                "outgoingFriendRequestIds": [
-                    "occaecat Lorem in",
-                    "occaecat Lorem in",
-                    "occaecat Lorem in"
+                "friendIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
+                ],
+                "ignoreIds": [
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ]
             }
         ]
