@@ -8,7 +8,7 @@ export default defineEndpoint({
     source: "server",
     target: "user",
     description:
-        "Sent by the server to inform the client of subscribed users state changes. The root object of each array element in `users` is partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged.",
+        "Sent by the server to inform the client of user state changes. User objects should be full when first sent, then only updates gets sent.",
     event: {
         data: Type.Object({
             users: Type.Array(Type.Partial(Type.Deref(user, [user, userId]))),
