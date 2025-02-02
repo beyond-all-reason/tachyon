@@ -1940,7 +1940,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "limit_reached",
+                                "subscription_limit_reached",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",

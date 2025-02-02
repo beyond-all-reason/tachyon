@@ -300,7 +300,7 @@ export interface UserSubscribeUpdatesRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "limit_reached",
+                        "subscription_limit_reached",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -339,7 +339,7 @@ export interface UserSubscribeUpdatesOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `limit_reached`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `subscription_limit_reached`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 

@@ -18,7 +18,7 @@ export default defineEndpoint({
         },
         {
             status: "failed",
-            reason: "limit_reached",
+            reason: "subscription_limit_reached",
         },
     ],
 });
