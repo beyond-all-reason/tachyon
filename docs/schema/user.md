@@ -2,12 +2,536 @@
 
 # User
 
+- [self](#self)
+- [subscribeUpdates](#subscribeupdates)
+- [unsubscribeUpdates](#unsubscribeupdates)
 - [updated](#updated)
+---
+
+## Self
+
+Sent by the server to inform the client of its own user state. This event should be sent to a user when they login.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserSelfEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/self" },
+        "data": {
+            "title": "UserSelfEventData",
+            "type": "object",
+            "properties": {
+                "user": { "$ref": "../../definitions/privateUser.json" }
+            },
+            "required": ["user"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "veniam ut ad cillum quis",
+    "commandId": "user/self",
+    "data": {
+        "user": {
+            "userId": "351",
+            "username": "dolore magna veniam cillum laboris",
+            "displayName": "occaecat nisi veniam cupidatat",
+            "clanId": null,
+            "partyId": null,
+            "scopes": [
+                "ipsum eiusmod",
+                "nulla officia pariatur magna occaecat",
+                "sint mollit",
+                "deserunt in ullamco culpa"
+            ],
+            "countryCode": "amet labore commodo",
+            "status": "lobby",
+            "friendIds": [
+                "laboris aliquip ut",
+                "dolor sed incididunt aute id"
+            ],
+            "outgoingFriendRequestIds": [
+                "culpa labore Excepteur",
+                "dolor voluptate nostrud",
+                "ipsum irure quis",
+                "voluptate anim"
+            ],
+            "incomingFriendRequestIds": [
+                "cillum in",
+                "Excepteur ad consectetur dolor velit",
+                "elit ut ullamco deserunt",
+                "dolore",
+                "reprehenderit non"
+            ],
+            "ignoreIds": [
+                "sint in Duis id proident",
+                "laborum ad sit voluptate eiusmod",
+                "nulla dolor",
+                "proident labore enim aute voluptate"
+            ],
+            "currentBattle": {
+                "username": "dolore commodo elit",
+                "password": "consequat magna",
+                "ip": "consectetur aliquip aliqua et",
+                "port": -23547494.411468506,
+                "engine": {
+                    "version": "reprehenderit ut laboris ea"
+                },
+                "game": {
+                    "springName": "esse minim et cillum"
+                },
+                "map": {
+                    "springName": "commodo incididunt"
+                }
+            }
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type PrivateUser = {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    partyId: string | null;
+    scopes: string[];
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+} & {
+    friendIds: string[];
+    outgoingFriendRequestIds: string[];
+    incomingFriendRequestIds: string[];
+    ignoreIds: string[];
+    currentBattle?: PrivateBattle;
+};
+export type UserId = string;
+
+export interface UserSelfEvent {
+    type: "event";
+    messageId: string;
+    commandId: "user/self";
+    data: UserSelfEventData;
+}
+export interface UserSelfEventData {
+    user: PrivateUser;
+}
+export interface PrivateBattle {
+    username: string;
+    password: string;
+    ip: string;
+    port: number;
+    engine: {
+        version: string;
+    };
+    game: {
+        springName: string;
+    };
+    map: {
+        springName: string;
+    };
+}
+```
+---
+
+## SubscribeUpdates
+
+Ask the server to send updates about theses users.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserSubscribeUpdatesRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/subscribeUpdates" },
+        "data": {
+            "title": "UserSubscribeUpdatesRequestData",
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "$id": "userId",
+                        "type": "string",
+                        "examples": ["351"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                }
+            },
+            "required": ["userIds"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "aute mollit proident sunt dolore",
+    "commandId": "user/subscribeUpdates",
+    "data": {
+        "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface UserSubscribeUpdatesRequest {
+    type: "request";
+    messageId: string;
+    commandId: "user/subscribeUpdates";
+    data: UserSubscribeUpdatesRequestData;
+}
+export interface UserSubscribeUpdatesRequestData {
+    userIds: [UserId, ...UserId[]];
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserSubscribeUpdatesResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "UserSubscribeUpdatesOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/subscribeUpdates" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "UserSubscribeUpdatesFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/subscribeUpdates" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "subscription_limit_reached",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "ullamco eiusmod cillum Excepteur",
+    "commandId": "user/subscribeUpdates",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserSubscribeUpdatesOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/subscribeUpdates";
+    status: "success";
+}
+```
+Possible Failed Reasons: `subscription_limit_reached`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## UnsubscribeUpdates
+
+Ask the server to stop sending user updates for the given set of userId. This should always succeed.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserUnsubscribeUpdatesRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/unsubscribeUpdates" },
+        "data": {
+            "title": "UserUnsubscribeUpdatesRequestData",
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "$id": "userId",
+                        "type": "string",
+                        "examples": ["351"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                }
+            },
+            "required": ["userIds"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "commodo aute eiusmod adipisicing anim",
+    "commandId": "user/unsubscribeUpdates",
+    "data": {
+        "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface UserUnsubscribeUpdatesRequest {
+    type: "request";
+    messageId: string;
+    commandId: "user/unsubscribeUpdates";
+    data: UserUnsubscribeUpdatesRequestData;
+}
+export interface UserUnsubscribeUpdatesRequestData {
+    userIds: [UserId, ...UserId[]];
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserUnsubscribeUpdatesResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "UserUnsubscribeUpdatesOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/unsubscribeUpdates" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "UserUnsubscribeUpdatesFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/unsubscribeUpdates" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "minim adipisicing",
+    "commandId": "user/unsubscribeUpdates",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserUnsubscribeUpdatesOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/unsubscribeUpdates";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## Updated
 
-Sent by the server to inform the client when subscribed users get updated in some way. The root object of each array element in `users` are partial, meaning only the elements present have changed, and anything missing is assumed to be unchanged. This event should be sent to a user when they login to inform them about their own user data.
+Sent by the server to inform the client of user state changes. User objects should be full when first sent, then only updates gets sent.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -40,65 +564,31 @@ Sent by the server to inform the client when subscribed users get updated in som
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "allOf": [
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "type": "string",
-                                        "examples": ["351"]
-                                    },
-                                    "username": { "type": "string" },
-                                    "displayName": { "type": "string" },
-                                    "clanId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "scopes": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "countryCode": { "type": "string" },
-                                    "status": {
-                                        "enum": [
-                                            "offline",
-                                            "menu",
-                                            "playing",
-                                            "lobby"
-                                        ]
-                                    }
-                                }
+                        "properties": {
+                            "userId": { "type": "string", "examples": ["351"] },
+                            "username": { "type": "string" },
+                            "displayName": { "type": "string" },
+                            "clanId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
                             },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "friendIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "outgoingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "incomingFriendRequestIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    },
-                                    "ignoreIds": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
-                                    }
-                                }
+                            "partyId": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "scopes": {
+                                "type": "array",
+                                "items": { "type": "string" }
+                            },
+                            "countryCode": { "type": "string" },
+                            "status": {
+                                "enum": ["offline", "menu", "playing", "lobby"]
                             }
-                        ]
+                        }
                     }
                 }
             },
@@ -122,149 +612,66 @@ Sent by the server to inform the client when subscribed users get updated in som
     "data": {
         "users": [
             {
-                "cillum_f": true,
-                "aliquip_a": 60256111,
-                "dolor444": 63100135,
-                "exa1": true,
-                "do_52c": true,
-                "ut_72": 54802572,
-                "quiscc7": false,
-                "eiusmod_920": -80478084.08737183,
-                "eu0e0": 9139358,
+                "reprehenderit_1": -70320141.3154602,
+                "eiusmod_9_1": -33229495,
+                "exd": "voluptate velit Duis",
+                "Excepteurc1": 65691375,
+                "mollit_b": 85934126.37710571,
+                "voluptate8a3": -56213463,
                 "userId": "351",
-                "displayName": "dolor",
-                "partyId": null,
-                "countryCode": "irure commodo ipsum nulla",
-                "friendIds": [
-                    "voluptate labore",
-                    "in Duis irure minim",
-                    "exercitation",
-                    "eu",
-                    "elit cillum ipsum proident"
-                ],
-                "outgoingFriendRequestIds": [
-                    "anim dolore tempor officia Duis",
-                    "ex in aliqua",
-                    "in dolore amet mollit",
-                    "occaecat",
-                    "Ut anim"
-                ],
-                "incomingFriendRequestIds": [
-                    "nisi nulla",
-                    "officia qui",
-                    "officia",
-                    "non reprehenderit veniam velit"
-                ],
-                "ignoreIds": [
-                    "et qui"
-                ]
-            },
-            {
-                "laborum_8": false,
-                "culpa8_1": "enim dolor",
-                "voluptate37": 20425212,
-                "Lorem_6": "officia labore",
-                "commodo82": -61093414,
-                "sint_5dd": "in reprehenderit Excepteur incididunt",
-                "mollit_09a": 37580025,
-                "amet_9f0": -80199075,
-                "veniam_e4": 96144151,
-                "non_d": true,
-                "reprehenderit6f": "dolor eiusmod ipsum consequat",
-                "anim_1": -27228404,
-                "laborum_b14": "est cupidatat irure",
-                "consequat_b9": 52584636.21139526,
-                "et118": false
-            },
-            {
-                "dolor_288": "laboris cupidatat deserunt",
-                "qui5": -12187887,
-                "sint__44": -18664825,
-                "et_ff": -74906194.21005249,
-                "ea_27": -36343670,
-                "est_1": 75909245.01419067,
-                "userId": "351",
-                "username": "tempor",
-                "displayName": "culpa pariatur",
-                "partyId": "nulla dolor irure reprehenderit in",
                 "scopes": [
-                    "quis ex officia do",
-                    "dolore officia Excepteur",
-                    "ex dolor est cillum laborum",
-                    "elit Lorem",
-                    "exercitation eiusmod veniam ea ut"
+                    "sunt dolor",
+                    "eu culpa laboris",
+                    "voluptate officia nostrud laborum",
+                    "Duis",
+                    "dolore enim minim Lorem ipsum"
                 ],
-                "countryCode": "culpa sit",
-                "outgoingFriendRequestIds": [
-                    "anim cupidatat in eu consequat",
-                    "in ipsum nisi in nulla",
-                    "cillum"
-                ],
-                "incomingFriendRequestIds": [
-                    "laborum esse",
-                    "adipisicing",
-                    "nisi ut tempor",
-                    "Lorem ipsum enim",
-                    "eu aute Ut ut"
-                ],
-                "ignoreIds": [
-                    "in minim Duis est velit",
-                    "Duis nostrud aute quis magna"
-                ]
+                "countryCode": "nisi laborum dolore ad non"
             },
             {
-                "elit_ca6": true,
-                "sint514": -49259937,
-                "seda98": "quis sit",
-                "Duis39": true,
-                "sit_ae": "laboris",
+                "aliqua_71": false,
+                "id_86": true,
+                "aliqua_08": -87862707,
+                "dolore807": -92575871.94442749,
+                "voluptate6": false,
+                "username": "non"
+            },
+            {
                 "userId": "351",
-                "username": "dolore exercitation ipsum",
-                "displayName": "qui ad dolore consequat",
-                "clanId": null,
-                "status": "lobby",
-                "friendIds": [
-                    "in deserunt magna ipsum cillum"
+                "username": "consectetur ut ea sunt",
+                "displayName": "Duis magna veniam",
+                "clanId": "eiusmod reprehenderit",
+                "partyId": null,
+                "scopes": [
+                    "in"
                 ],
-                "outgoingFriendRequestIds": [
-                    "voluptate consequat sint proident",
-                    "cupidatat ea amet et",
-                    "nulla anim minim ullamco",
-                    "dolore",
-                    "enim"
-                ],
-                "incomingFriendRequestIds": [
-                    "aliqua incididunt",
-                    "incididunt dolore officia labore dolor",
-                    "velit dolor",
-                    "culpa nostrud exercitation minim",
-                    "cillum Excepteur nostrud occaecat"
-                ]
+                "countryCode": "qui pariatur Duis adipisicing cillum",
+                "status": "lobby"
             },
             {
-                "Lorem_8": true,
-                "veniam7f3": "et enim",
-                "magna_3f": -90849852.56195068,
-                "nostrud9ae": false,
-                "username": "commodo non",
-                "displayName": "dolor laborum",
-                "clanId": null,
-                "partyId": "nulla veniam culpa",
-                "countryCode": "ut",
-                "status": "offline",
-                "outgoingFriendRequestIds": [
-                    "dolore consequat",
-                    "elit dolor voluptate",
-                    "labore dolor laborum",
-                    "Excepteur reprehenderit fugiat",
-                    "exercitation cillum ullamco sint"
+                "userId": "351",
+                "username": "laborum aliquip elit id",
+                "displayName": "nostrud",
+                "clanId": "amet eu elit",
+                "partyId": "ex Duis amet",
+                "scopes": [
+                    "elit"
                 ],
-                "incomingFriendRequestIds": [
-                    "deserunt laboris aliqua",
-                    "nulla tempor cupidatat",
-                    "nisi exercitation",
-                    "qui ut in sint dolore"
-                ]
+                "countryCode": "id esse non Excepteur",
+                "status": "playing"
+            },
+            {
+                "aliquip8": 92414712,
+                "aliqua_c": "occaecat magna sint",
+                "culpa1": "dolor adipisicing sint",
+                "magna_8": 71706581,
+                "dolore_f": "et ullamco incididunt",
+                "ut_468": 22630894,
+                "nisi_ca1": "quis in labore qui",
+                "cupidatat55": false,
+                "aliquip50": "cupidatat adipisicing id",
+                "est0e5": -45328463,
+                "aute_198": 52629327
             }
         ]
     }
@@ -281,7 +688,7 @@ export interface UserUpdatedEvent {
     data: UserUpdatedEventData;
 }
 export interface UserUpdatedEventData {
-    users: ({
+    users: {
         userId?: string;
         username?: string;
         displayName?: string;
@@ -290,11 +697,6 @@ export interface UserUpdatedEventData {
         scopes?: string[];
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
-    } & {
-        friendIds?: string[];
-        outgoingFriendRequestIds?: string[];
-        incomingFriendRequestIds?: string[];
-        ignoreIds?: string[];
-    })[];
+    }[];
 }
 ```
