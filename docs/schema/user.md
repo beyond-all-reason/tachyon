@@ -64,51 +64,45 @@ Sent by the server to inform the client of its own user state. This event should
             "username": "dolore magna veniam cillum laboris",
             "displayName": "occaecat nisi veniam cupidatat",
             "clanId": null,
+            "countryCode": "sint proident ipsum officia",
+            "status": "offline",
             "partyId": null,
-            "scopes": [
-                "ipsum eiusmod",
-                "nulla officia pariatur magna occaecat",
-                "sint mollit",
-                "deserunt in ullamco culpa"
-            ],
-            "countryCode": "amet labore commodo",
-            "status": "lobby",
             "friendIds": [
+                "deserunt",
+                "esse sunt anim dolor dolore",
+                "tempor"
+            ],
+            "outgoingFriendRequestIds": [
+                "nisi non",
                 "laboris aliquip ut",
                 "dolor sed incididunt aute id"
             ],
-            "outgoingFriendRequestIds": [
+            "incomingFriendRequestIds": [
                 "culpa labore Excepteur",
                 "dolor voluptate nostrud",
                 "ipsum irure quis",
                 "voluptate anim"
             ],
-            "incomingFriendRequestIds": [
+            "ignoreIds": [
                 "cillum in",
                 "Excepteur ad consectetur dolor velit",
                 "elit ut ullamco deserunt",
                 "dolore",
                 "reprehenderit non"
             ],
-            "ignoreIds": [
-                "sint in Duis id proident",
-                "laborum ad sit voluptate eiusmod",
-                "nulla dolor",
-                "proident labore enim aute voluptate"
-            ],
             "currentBattle": {
-                "username": "dolore commodo elit",
-                "password": "consequat magna",
-                "ip": "consectetur aliquip aliqua et",
-                "port": -23547494.411468506,
+                "username": "quis nostrud laboris aute Lorem",
+                "password": "aliquip esse labore",
+                "ip": "in",
+                "port": 97886848.44970703,
                 "engine": {
-                    "version": "reprehenderit ut laboris ea"
+                    "version": "minim nisi nulla tempor"
                 },
                 "game": {
-                    "springName": "esse minim et cillum"
+                    "springName": "ullamco voluptate aliqua labore officia"
                 },
                 "map": {
-                    "springName": "commodo incididunt"
+                    "springName": "in incididunt enim Ut"
                 }
             }
         }
@@ -124,11 +118,10 @@ export type PrivateUser = {
     username: string;
     displayName: string;
     clanId: string | null;
-    partyId: string | null;
-    scopes: string[];
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
 } & {
+    partyId: string | null;
     friendIds: string[];
     outgoingFriendRequestIds: string[];
     incomingFriendRequestIds: string[];
@@ -574,16 +567,6 @@ Sent by the server to inform the client of user state changes. User objects shou
                                     { "type": "null" }
                                 ]
                             },
-                            "partyId": {
-                                "anyOf": [
-                                    { "type": "string" },
-                                    { "type": "null" }
-                                ]
-                            },
-                            "scopes": {
-                                "type": "array",
-                                "items": { "type": "string" }
-                            },
                             "countryCode": { "type": "string" },
                             "status": {
                                 "enum": ["offline", "menu", "playing", "lobby"]
@@ -612,66 +595,48 @@ Sent by the server to inform the client of user state changes. User objects shou
     "data": {
         "users": [
             {
-                "reprehenderit_1": -70320141.3154602,
-                "eiusmod_9_1": -33229495,
-                "exd": "voluptate velit Duis",
-                "Excepteurc1": 65691375,
-                "mollit_b": 85934126.37710571,
-                "voluptate8a3": -56213463,
+                "ince7": true,
+                "id_4": -25186110,
+                "ullamco_8b_": true,
+                "quif2c": "ut non",
+                "incididuntabb": true,
                 "userId": "351",
-                "scopes": [
-                    "sunt dolor",
-                    "eu culpa laboris",
-                    "voluptate officia nostrud laborum",
-                    "Duis",
-                    "dolore enim minim Lorem ipsum"
-                ],
-                "countryCode": "nisi laborum dolore ad non"
+                "clanId": null
             },
             {
-                "aliqua_71": false,
-                "id_86": true,
-                "aliqua_08": -87862707,
-                "dolore807": -92575871.94442749,
-                "voluptate6": false,
-                "username": "non"
+                "infe4": 51101136.20758057,
+                "aliquip64": -10159337.520599365,
+                "anim_6": -22766137.12310791,
+                "sint7a": true,
+                "aliqua_b08": "quis consectetur ea",
+                "ut_430": true,
+                "do_e6_": false,
+                "exercitatione": true,
+                "userId": "351",
+                "countryCode": "ad eu anim"
             },
             {
                 "userId": "351",
-                "username": "consectetur ut ea sunt",
-                "displayName": "Duis magna veniam",
-                "clanId": "eiusmod reprehenderit",
-                "partyId": null,
-                "scopes": [
-                    "in"
-                ],
-                "countryCode": "qui pariatur Duis adipisicing cillum",
-                "status": "lobby"
+                "username": "nulla ex velit in",
+                "displayName": "minim in ut nisi sed",
+                "clanId": "ex mollit",
+                "countryCode": "consectetur sint fugiat sunt"
+            },
+            {
+                "do_c2": true,
+                "Ut4a9": -37927055.35888672,
+                "voluptatebbf": "ut consequat laborum esse",
+                "username": "labore et",
+                "clanId": null,
+                "countryCode": "Lorem qui"
             },
             {
                 "userId": "351",
-                "username": "laborum aliquip elit id",
-                "displayName": "nostrud",
-                "clanId": "amet eu elit",
-                "partyId": "ex Duis amet",
-                "scopes": [
-                    "elit"
-                ],
-                "countryCode": "id esse non Excepteur",
-                "status": "playing"
-            },
-            {
-                "aliquip8": 92414712,
-                "aliqua_c": "occaecat magna sint",
-                "culpa1": "dolor adipisicing sint",
-                "magna_8": 71706581,
-                "dolore_f": "et ullamco incididunt",
-                "ut_468": 22630894,
-                "nisi_ca1": "quis in labore qui",
-                "cupidatat55": false,
-                "aliquip50": "cupidatat adipisicing id",
-                "est0e5": -45328463,
-                "aute_198": 52629327
+                "username": "dolor ut Ut cupidatat aliquip",
+                "displayName": "amet nostrud irure eiusmod Duis",
+                "clanId": "enim officia aute veniam labore",
+                "countryCode": "cillum",
+                "status": "menu"
             }
         ]
     }
@@ -693,8 +658,6 @@ export interface UserUpdatedEventData {
         username?: string;
         displayName?: string;
         clanId?: string | null;
-        partyId?: string | null;
-        scopes?: string[];
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
     }[];

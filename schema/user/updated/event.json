@@ -30,16 +30,6 @@
                                     { "type": "null" }
                                 ]
                             },
-                            "partyId": {
-                                "anyOf": [
-                                    { "type": "string" },
-                                    { "type": "null" }
-                                ]
-                            },
-                            "scopes": {
-                                "type": "array",
-                                "items": { "type": "string" }
-                            },
                             "countryCode": { "type": "string" },
                             "status": {
                                 "enum": ["offline", "menu", "playing", "lobby"]
