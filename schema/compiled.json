@@ -1443,14 +1443,53 @@
                                             "name": { "type": "string" },
                                             "numOfTeams": { "type": "integer" },
                                             "teamSize": { "type": "integer" },
-                                            "ranked": { "type": "boolean" }
+                                            "ranked": { "type": "boolean" },
+                                            "engines": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "version": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": ["version"]
+                                                }
+                                            },
+                                            "games": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "springName": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": ["springName"]
+                                                }
+                                            },
+                                            "maps": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "springName": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": ["springName"]
+                                                }
+                                            }
                                         },
                                         "required": [
                                             "id",
                                             "name",
                                             "numOfTeams",
                                             "teamSize",
-                                            "ranked"
+                                            "ranked",
+                                            "engines",
+                                            "games",
+                                            "maps"
                                         ]
                                     }
                                 }
@@ -1464,14 +1503,44 @@
                                             "name": "Duel",
                                             "numOfTeams": 2,
                                             "teamSize": 1,
-                                            "ranked": true
+                                            "ranked": true,
+                                            "engines": [
+                                                { "version": "2025.01.6" }
+                                            ],
+                                            "games": [
+                                                {
+                                                    "springName": "Beyond All Reason test-27414-a84d7e6"
+                                                }
+                                            ],
+                                            "maps": [
+                                                {
+                                                    "springName": "Theta Crystals 1.3"
+                                                },
+                                                {
+                                                    "springName": "Comet Catcher Remake 1.8"
+                                                },
+                                                { "springName": "Aurelia v4.1" }
+                                            ]
                                         },
                                         {
                                             "id": "1v1v1",
                                             "name": "3 Way FFA",
                                             "numOfTeams": 3,
                                             "teamSize": 1,
-                                            "ranked": true
+                                            "ranked": true,
+                                            "engines": [
+                                                { "version": "2025.01.6" }
+                                            ],
+                                            "games": [
+                                                {
+                                                    "springName": "Beyond All Reason test-27414-a84d7e6"
+                                                }
+                                            ],
+                                            "maps": [
+                                                {
+                                                    "springName": "Ghenna Rising 4.0.1"
+                                                }
+                                            ]
                                         }
                                     ]
                                 }
