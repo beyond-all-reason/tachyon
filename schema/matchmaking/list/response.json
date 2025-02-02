@@ -45,9 +45,11 @@
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "version": { "type": "string" }
+                                                "springName": {
+                                                    "type": "string"
+                                                }
                                             },
-                                            "required": ["version"]
+                                            "required": ["springName"]
                                         }
                                     },
                                     "maps": {
@@ -55,9 +57,11 @@
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "id": { "type": "string" }
+                                                "springName": {
+                                                    "type": "string"
+                                                }
                                             },
-                                            "required": ["id"]
+                                            "required": ["springName"]
                                         }
                                     }
                                 },

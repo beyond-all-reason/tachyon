@@ -1456,11 +1456,11 @@
                                                 "items": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "version": {
+                                                        "springName": {
                                                             "type": "string"
                                                         }
                                                     },
-                                                    "required": ["version"]
+                                                    "required": ["springName"]
                                                 }
                                             },
                                             "maps": {
@@ -1468,11 +1468,11 @@
                                                 "items": {
                                                     "type": "object",
                                                     "properties": {
-                                                        "id": {
+                                                        "springName": {
                                                             "type": "string"
                                                         }
                                                     },
-                                                    "required": ["id"]
+                                                    "required": ["springName"]
                                                 }
                                             }
                                         },

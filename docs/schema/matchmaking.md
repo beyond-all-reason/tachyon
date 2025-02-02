@@ -495,9 +495,11 @@ export interface MatchmakingListRequest {
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "version": { "type": "string" }
+                                                "springName": {
+                                                    "type": "string"
+                                                }
                                             },
-                                            "required": ["version"]
+                                            "required": ["springName"]
                                         }
                                     },
                                     "maps": {
@@ -505,9 +507,11 @@ export interface MatchmakingListRequest {
                                         "items": {
                                             "type": "object",
                                             "properties": {
-                                                "id": { "type": "string" }
+                                                "springName": {
+                                                    "type": "string"
+                                                }
                                             },
-                                            "required": ["id"]
+                                            "required": ["springName"]
                                         }
                                     }
                                 },
@@ -680,10 +684,10 @@ export interface MatchmakingListOkResponseData {
             version: string;
         }[];
         games: {
-            version: string;
+            springName: string;
         }[];
         maps: {
-            id: string;
+            springName: string;
         }[];
     }[];
 }
