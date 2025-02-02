@@ -6,6 +6,9 @@
         {
             "type": "object",
             "properties": {
+                "partyId": {
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
+                },
                 "friendIds": { "type": "array", "items": { "type": "string" } },
                 "outgoingFriendRequestIds": {
                     "type": "array",
@@ -19,6 +22,7 @@
                 "currentBattle": { "$ref": "../definitions/privateBattle.json" }
             },
             "required": [
+                "partyId",
                 "friendIds",
                 "outgoingFriendRequestIds",
                 "incomingFriendRequestIds",

@@ -114,6 +114,9 @@
                 {
                     "type": "object",
                     "properties": {
+                        "partyId": {
+                            "anyOf": [{ "type": "string" }, { "type": "null" }]
+                        },
                         "friendIds": {
                             "type": "array",
                             "items": { "type": "string" }
@@ -135,6 +138,7 @@
                         }
                     },
                     "required": [
+                        "partyId",
                         "friendIds",
                         "outgoingFriendRequestIds",
                         "incomingFriendRequestIds",
@@ -204,10 +208,6 @@
                 "clanId": {
                     "anyOf": [{ "type": "string" }, { "type": "null" }]
                 },
-                "partyId": {
-                    "anyOf": [{ "type": "string" }, { "type": "null" }]
-                },
-                "scopes": { "type": "array", "items": { "type": "string" } },
                 "countryCode": { "type": "string" },
                 "status": { "enum": ["offline", "menu", "playing", "lobby"] }
             },
@@ -216,8 +216,6 @@
                 "username",
                 "displayName",
                 "clanId",
-                "partyId",
-                "scopes",
                 "status"
             ]
         },
@@ -2472,16 +2470,6 @@
                                             { "type": "string" },
                                             { "type": "null" }
                                         ]
-                                    },
-                                    "partyId": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "scopes": {
-                                        "type": "array",
-                                        "items": { "type": "string" }
                                     },
                                     "countryCode": { "type": "string" },
                                     "status": {
