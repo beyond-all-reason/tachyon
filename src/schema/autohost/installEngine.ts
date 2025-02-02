@@ -5,7 +5,8 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "server",
     target: "autohost",
-    description: "Ask the autohost to install specified engine version.",
+    description:
+        "Ask the autohost to install specified engine version.\n\nReturn success when version installed successfully. If the engine is already installed autohost returns success instantly. When new engine is installed autohost will also then send a `status` event with the new available engine versions.",
     request: {
         data: Type.Object(
             {

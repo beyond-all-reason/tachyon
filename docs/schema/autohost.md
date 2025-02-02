@@ -221,6 +221,8 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Ask the autohost to install specified engine version.
 
+Return success when version installed successfully. If the engine is already installed autohost returns success instantly. When new engine is installed autohost will also then send a `status` event with the new available engine versions.
+
 - Endpoint Type: **Request** -> **Response**
 - Source: **Server**
 - Target: **Autohost**
