@@ -4,6 +4,7 @@
 
 - [self](#self)
 - [subscribeUpdates](#subscribeupdates)
+- [unsubscribeUpdates](#unsubscribeupdates)
 - [updated](#updated)
 ---
 
@@ -342,6 +343,208 @@ Possible Failed Reasons: `limit_reached`, `internal_error`, `unauthorized`, `inv
 
 ---
 
+## UnsubscribeUpdates
+
+Ask the server to stop sending user updates for the given set of userId. This should always succeed.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserUnsubscribeUpdatesRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/unsubscribeUpdates" },
+        "data": {
+            "title": "UserUnsubscribeUpdatesRequestData",
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": {
+                        "$id": "userId",
+                        "type": "string",
+                        "examples": ["351"]
+                    },
+                    "minItems": 1,
+                    "maxItems": 100
+                }
+            },
+            "required": ["userIds"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "cillum Lorem ut",
+    "commandId": "user/unsubscribeUpdates",
+    "data": {
+        "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface UserUnsubscribeUpdatesRequest {
+    type: "request";
+    messageId: string;
+    commandId: "user/unsubscribeUpdates";
+    data: UserUnsubscribeUpdatesRequestData;
+}
+export interface UserUnsubscribeUpdatesRequestData {
+    userIds: [UserId, ...UserId[]];
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserUnsubscribeUpdatesResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "UserUnsubscribeUpdatesOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/unsubscribeUpdates" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "UserUnsubscribeUpdatesFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/unsubscribeUpdates" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "esse Lorem anim",
+    "commandId": "user/unsubscribeUpdates",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserUnsubscribeUpdatesOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/unsubscribeUpdates";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## Updated
 
 Sent by the server to inform the client of user state changes. User objects should be full when first sent, then only updates gets sent.
@@ -420,42 +623,42 @@ Sent by the server to inform the client of user state changes. User objects shou
 ```json
 {
     "type": "event",
-    "messageId": "cillum Lorem ut",
+    "messageId": "aute Lorem officia",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
                 "userId": "351",
-                "username": "cillum Lorem ut",
-                "partyId": "cillum Lorem ut",
+                "username": "aute Lorem officia",
+                "partyId": "aute Lorem officia",
                 "scopes": [
-                    "cillum Lorem ut",
-                    "cillum Lorem ut",
-                    "cillum Lorem ut"
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ],
-                "countryCode": "cillum Lorem ut"
+                "countryCode": "aute Lorem officia"
             },
             {
                 "userId": "351",
-                "username": "cillum Lorem ut",
-                "partyId": "cillum Lorem ut",
+                "username": "aute Lorem officia",
+                "partyId": "aute Lorem officia",
                 "scopes": [
-                    "cillum Lorem ut",
-                    "cillum Lorem ut",
-                    "cillum Lorem ut"
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ],
-                "countryCode": "cillum Lorem ut"
+                "countryCode": "aute Lorem officia"
             },
             {
                 "userId": "351",
-                "username": "cillum Lorem ut",
-                "partyId": "cillum Lorem ut",
+                "username": "aute Lorem officia",
+                "partyId": "aute Lorem officia",
                 "scopes": [
-                    "cillum Lorem ut",
-                    "cillum Lorem ut",
-                    "cillum Lorem ut"
+                    "aute Lorem officia",
+                    "aute Lorem officia",
+                    "aute Lorem officia"
                 ],
-                "countryCode": "cillum Lorem ut"
+                "countryCode": "aute Lorem officia"
             }
         ]
     }
