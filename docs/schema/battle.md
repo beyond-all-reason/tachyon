@@ -49,21 +49,21 @@ When a user client receives this response it should launch the game (spring.exe)
 ```json
 {
     "type": "request",
-    "messageId": "Ut in",
+    "messageId": "qui incididunt",
     "commandId": "battle/start",
     "data": {
-        "username": "Ut in",
-        "password": "Ut in",
-        "ip": "Ut in",
-        "port": -57999999.99999999,
+        "username": "anim",
+        "password": "dolore",
+        "ip": "ipsum magna exercitation esse dolore",
+        "port": 18847608.56628418,
         "engine": {
-            "version": "Ut in"
+            "version": "sit dolor"
         },
         "game": {
-            "springName": "Ut in"
+            "springName": "ex id aliqua consectetur"
         },
         "map": {
-            "springName": "Ut in"
+            "springName": "non deserunt velit"
         }
     }
 }
@@ -151,7 +151,7 @@ export interface BattleStartRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "aliqua in",
+    "messageId": "mollit reprehenderit",
     "commandId": "battle/start",
     "status": "success"
 }

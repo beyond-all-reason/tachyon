@@ -56,55 +56,59 @@ Sent by the server to inform the client of its own user state. This event should
 ```json
 {
     "type": "event",
-    "messageId": "aute Lorem officia",
+    "messageId": "veniam ut ad cillum quis",
     "commandId": "user/self",
     "data": {
         "user": {
             "userId": "351",
-            "username": "aute Lorem officia",
-            "displayName": "aute Lorem officia",
-            "clanId": "aute Lorem officia",
-            "partyId": "aute Lorem officia",
+            "username": "dolore magna veniam cillum laboris",
+            "displayName": "occaecat nisi veniam cupidatat",
+            "clanId": null,
+            "partyId": null,
             "scopes": [
-                "aute Lorem officia",
-                "aute Lorem officia",
-                "aute Lorem officia"
+                "ipsum eiusmod",
+                "nulla officia pariatur magna occaecat",
+                "sint mollit",
+                "deserunt in ullamco culpa"
             ],
-            "countryCode": "aute Lorem officia",
-            "status": "menu",
+            "countryCode": "amet labore commodo",
+            "status": "lobby",
             "friendIds": [
-                "aute Lorem officia",
-                "aute Lorem officia",
-                "aute Lorem officia"
+                "laboris aliquip ut",
+                "dolor sed incididunt aute id"
             ],
             "outgoingFriendRequestIds": [
-                "aute Lorem officia",
-                "aute Lorem officia",
-                "aute Lorem officia"
+                "culpa labore Excepteur",
+                "dolor voluptate nostrud",
+                "ipsum irure quis",
+                "voluptate anim"
             ],
             "incomingFriendRequestIds": [
-                "aute Lorem officia",
-                "aute Lorem officia",
-                "aute Lorem officia"
+                "cillum in",
+                "Excepteur ad consectetur dolor velit",
+                "elit ut ullamco deserunt",
+                "dolore",
+                "reprehenderit non"
             ],
             "ignoreIds": [
-                "aute Lorem officia",
-                "aute Lorem officia",
-                "aute Lorem officia"
+                "sint in Duis id proident",
+                "laborum ad sit voluptate eiusmod",
+                "nulla dolor",
+                "proident labore enim aute voluptate"
             ],
             "currentBattle": {
-                "username": "aute Lorem officia",
-                "password": "aute Lorem officia",
-                "ip": "aute Lorem officia",
-                "port": -9999999.999999955,
+                "username": "dolore commodo elit",
+                "password": "consequat magna",
+                "ip": "consectetur aliquip aliqua et",
+                "port": -23547494.411468506,
                 "engine": {
-                    "version": "aute Lorem officia"
+                    "version": "reprehenderit ut laboris ea"
                 },
                 "game": {
-                    "springName": "aute Lorem officia"
+                    "springName": "esse minim et cillum"
                 },
                 "map": {
-                    "springName": "aute Lorem officia"
+                    "springName": "commodo incididunt"
                 }
             }
         }
@@ -217,25 +221,10 @@ Ask the server to send updates about theses users.
 ```json
 {
     "type": "request",
-    "messageId": "Duis Lorem culpa",
+    "messageId": "aute mollit proident sunt dolore",
     "commandId": "user/subscribeUpdates",
     "data": {
         "userIds": [
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
             "351",
             "351",
             "351",
@@ -346,7 +335,7 @@ export interface UserSubscribeUpdatesRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "Duis Lorem sint",
+    "messageId": "ullamco eiusmod cillum Excepteur",
     "commandId": "user/subscribeUpdates",
     "status": "success"
 }
@@ -423,43 +412,10 @@ Ask the server to stop sending user updates for the given set of userId. This sh
 ```json
 {
     "type": "request",
-    "messageId": "laborum Lorem fugiat",
+    "messageId": "commodo aute eiusmod adipisicing anim",
     "commandId": "user/unsubscribeUpdates",
     "data": {
         "userIds": [
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
-            "351",
             "351",
             "351",
             "351",
@@ -553,7 +509,7 @@ export interface UserUnsubscribeUpdatesRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "anim Lorem eu",
+    "messageId": "minim adipisicing",
     "commandId": "user/unsubscribeUpdates",
     "status": "success"
 }
@@ -651,45 +607,71 @@ Sent by the server to inform the client of user state changes. User objects shou
 ```json
 {
     "type": "event",
-    "messageId": "Lorem anim ipsum",
+    "messageId": "ad",
     "commandId": "user/updated",
     "data": {
         "users": [
             {
+                "reprehenderit_1": -70320141.3154602,
+                "eiusmod_9_1": -33229495,
+                "exd": "voluptate velit Duis",
+                "Excepteurc1": 65691375,
+                "mollit_b": 85934126.37710571,
+                "voluptate8a3": -56213463,
                 "userId": "351",
-                "username": "Lorem anim ipsum",
-                "displayName": "Lorem anim ipsum",
                 "scopes": [
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum"
+                    "sunt dolor",
+                    "eu culpa laboris",
+                    "voluptate officia nostrud laborum",
+                    "Duis",
+                    "dolore enim minim Lorem ipsum"
                 ],
-                "countryCode": "Lorem anim ipsum",
-                "status": "playing"
+                "countryCode": "nisi laborum dolore ad non"
+            },
+            {
+                "aliqua_71": false,
+                "id_86": true,
+                "aliqua_08": -87862707,
+                "dolore807": -92575871.94442749,
+                "voluptate6": false,
+                "username": "non"
             },
             {
                 "userId": "351",
-                "username": "Lorem anim ipsum",
-                "displayName": "Lorem anim ipsum",
+                "username": "consectetur ut ea sunt",
+                "displayName": "Duis magna veniam",
+                "clanId": "eiusmod reprehenderit",
+                "partyId": null,
                 "scopes": [
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum"
+                    "in"
                 ],
-                "countryCode": "Lorem anim ipsum",
-                "status": "playing"
+                "countryCode": "qui pariatur Duis adipisicing cillum",
+                "status": "lobby"
             },
             {
                 "userId": "351",
-                "username": "Lorem anim ipsum",
-                "displayName": "Lorem anim ipsum",
+                "username": "laborum aliquip elit id",
+                "displayName": "nostrud",
+                "clanId": "amet eu elit",
+                "partyId": "ex Duis amet",
                 "scopes": [
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum",
-                    "Lorem anim ipsum"
+                    "elit"
                 ],
-                "countryCode": "Lorem anim ipsum",
+                "countryCode": "id esse non Excepteur",
                 "status": "playing"
+            },
+            {
+                "aliquip8": 92414712,
+                "aliqua_c": "occaecat magna sint",
+                "culpa1": "dolor adipisicing sint",
+                "magna_8": 71706581,
+                "dolore_f": "et ullamco incididunt",
+                "ut_468": 22630894,
+                "nisi_ca1": "quis in labore qui",
+                "cupidatat55": false,
+                "aliquip50": "cupidatat adipisicing id",
+                "est0e5": -45328463,
+                "aute_198": 52629327
             }
         ]
     }
