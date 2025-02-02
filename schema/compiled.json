@@ -1848,7 +1848,8 @@
                                     },
                                     "required": ["type", "value"]
                                 }
-                            ]
+                            ],
+                            "default": { "type": "latest" }
                         }
                     }
                 }
@@ -1883,7 +1884,13 @@
                             "required": ["hasMissedMessages"]
                         }
                     },
-                    "required": ["type", "messageId", "commandId", "status"]
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
                 },
                 {
                     "title": "MessagingSubscribeReceivedFailResponse",

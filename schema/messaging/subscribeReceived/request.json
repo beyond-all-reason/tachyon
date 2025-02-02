@@ -38,7 +38,8 @@
                             },
                             "required": ["type", "value"]
                         }
-                    ]
+                    ],
+                    "default": { "type": "latest" }
                 }
             }
         }

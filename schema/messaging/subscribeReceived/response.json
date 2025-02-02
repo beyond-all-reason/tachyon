@@ -28,7 +28,7 @@
                     "required": ["hasMissedMessages"]
                 }
             },
-            "required": ["type", "messageId", "commandId", "status"]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "MessagingSubscribeReceivedFailResponse",

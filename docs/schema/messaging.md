@@ -357,7 +357,8 @@ Ask the server to send events for relevant messages
                             },
                             "required": ["type", "value"]
                         }
-                    ]
+                    ],
+                    "default": { "type": "latest" }
                 }
             }
         }
@@ -444,7 +445,7 @@ export interface MessagingSubscribeReceivedRequestData {
                     "required": ["hasMissedMessages"]
                 }
             },
-            "required": ["type", "messageId", "commandId", "status"]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "MessagingSubscribeReceivedFailResponse",
@@ -495,7 +496,7 @@ export interface MessagingSubscribeReceivedOkResponse {
     messageId: string;
     commandId: "messaging/subscribeReceived";
     status: "success";
-    data?: MessagingSubscribeReceivedOkResponseData;
+    data: MessagingSubscribeReceivedOkResponseData;
 }
 export interface MessagingSubscribeReceivedOkResponseData {
     hasMissedMessages: boolean;
