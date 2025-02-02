@@ -100,10 +100,10 @@ Notify the player a message has been received
 ```json
 {
     "type": "event",
-    "messageId": "Duis Lorem",
+    "messageId": "eu",
     "commandId": "messaging/received",
     "data": {
-        "message": "Duis Lorem",
+        "message": "cupidatat Ut velit",
         "source": {
             "type": "player",
             "userId": "351"
@@ -194,14 +194,14 @@ Send a simple message to the given target.
 ```json
 {
     "type": "request",
-    "messageId": "consequat Lorem",
+    "messageId": "proident ullamco enim ad",
     "commandId": "messaging/send",
     "data": {
         "target": {
             "type": "player",
             "userId": "351"
         },
-        "message": "consequat Lorem"
+        "message": "dolore adipisicing fugiat"
     }
 }
 ```
@@ -284,7 +284,7 @@ export interface MessagingSendRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "commodo Lorem",
+    "messageId": "Duis dolore labore",
     "commandId": "messaging/send",
     "status": "success"
 }
@@ -375,13 +375,11 @@ Ask the server to send events for relevant messages
 ```json
 {
     "type": "request",
-    "messageId": "ut Lorem",
+    "messageId": "nostrud dolore elit reprehenderit",
     "commandId": "messaging/subscribeReceived",
     "data": {
-        "utff": -21999999.99999997,
-        "since": {
-            "type": "latest"
-        }
+        "ut_9ee": -81368696.68960571,
+        "fugiat_b": 26924455
     }
 }
 ```
@@ -479,7 +477,7 @@ export interface MessagingSubscribeReceivedRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "occaecat Lorem in",
+    "messageId": "qui ut Excepteur mollit",
     "commandId": "messaging/subscribeReceived",
     "status": "success",
     "data": {
