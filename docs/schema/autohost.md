@@ -47,6 +47,7 @@ Autohosts used for custom games should use the dedicated mode as lots of pregame
 
 ---
 - [addPlayer](#addplayer)
+- [installEngine](#installengine)
 - [kickPlayer](#kickplayer)
 - [kill](#kill)
 - [mutePlayer](#muteplayer)
@@ -213,6 +214,157 @@ export interface AutohostAddPlayerOkResponse {
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## InstallEngine
+
+Ask the autohost to install specified engine version.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **Server**
+- Target: **Autohost**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "AutohostInstallEngineRequest",
+    "tachyon": {
+        "source": "server",
+        "target": "autohost",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "autohost/installEngine" },
+        "data": {
+            "title": "AutohostInstallEngineRequestData",
+            "type": "object",
+            "properties": {
+                "version": {
+                    "description": "Version of the engine to install",
+                    "type": "string"
+                }
+            },
+            "required": ["version"],
+            "examples": [{ "version": "2025.01.5" }]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "sunt anim elit fugiat esse",
+    "commandId": "autohost/installEngine",
+    "data": {
+        "version": "2025.01.5"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostInstallEngineRequest {
+    type: "request";
+    messageId: string;
+    commandId: "autohost/installEngine";
+    data: AutohostInstallEngineRequestData;
+}
+export interface AutohostInstallEngineRequestData {
+    version: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "AutohostInstallEngineResponse",
+    "tachyon": {
+        "source": "autohost",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "AutohostInstallEngineOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/installEngine" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "AutohostInstallEngineFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "autohost/installEngine" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_found",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "nostrud sit nisi voluptate",
+    "commandId": "autohost/installEngine",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface AutohostInstallEngineOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "autohost/installEngine";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_found`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2405,10 +2557,26 @@ This event should be sent to the server on connection and whenever any of the st
             "title": "AutohostStatusEventData",
             "type": "object",
             "properties": {
-                "maxBattles": { "type": "integer", "minimum": 0 },
-                "currentBattles": { "type": "integer", "minimum": 0 }
+                "maxBattles": {
+                    "description": "The maxBattles might be reported lower (e.g. 0) then currentBattles. Example: autohost is shutting down and doesn't want to accept any new battles.",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "currentBattles": { "type": "integer", "minimum": 0 },
+                "availableEngines": {
+                    "description": "List of available engine versions on autohost",
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
             },
-            "required": ["maxBattles", "currentBattles"]
+            "required": ["maxBattles", "currentBattles", "availableEngines"],
+            "examples": [
+                {
+                    "maxBattles": 10,
+                    "currentBattles": 5,
+                    "availableEngines": ["2025.01.5"]
+                }
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -2426,8 +2594,11 @@ This event should be sent to the server on connection and whenever any of the st
     "messageId": "nisi ipsum Duis fugiat sint",
     "commandId": "autohost/status",
     "data": {
-        "maxBattles": 55836511,
-        "currentBattles": 93056459
+        "maxBattles": 10,
+        "currentBattles": 5,
+        "availableEngines": [
+            "2025.01.5"
+        ]
     }
 }
 ```
@@ -2444,6 +2615,7 @@ export interface AutohostStatusEvent {
 export interface AutohostStatusEventData {
     maxBattles: number;
     currentBattles: number;
+    availableEngines: string[];
 }
 ```
 ---
