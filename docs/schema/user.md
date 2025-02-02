@@ -96,7 +96,16 @@ Sent by the server to inform the client of its own user state. This event should
                 "username": "occaecat Lorem in",
                 "password": "occaecat Lorem in",
                 "ip": "occaecat Lorem in",
-                "port": -19999999.999999955
+                "port": -19999999.999999955,
+                "engine": {
+                    "version": "occaecat Lorem in"
+                },
+                "game": {
+                    "springName": "occaecat Lorem in"
+                },
+                "map": {
+                    "springName": "occaecat Lorem in"
+                }
             }
         }
     }
@@ -138,6 +147,15 @@ export interface PrivateBattle {
     password: string;
     ip: string;
     port: number;
+    engine: {
+        version: string;
+    };
+    game: {
+        springName: string;
+    };
+    map: {
+        springName: string;
+    };
 }
 ```
 ---

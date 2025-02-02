@@ -55,7 +55,16 @@ When a user client receives this response it should launch the game (spring.exe)
         "username": "Ut in",
         "password": "Ut in",
         "ip": "Ut in",
-        "port": -57999999.99999999
+        "port": -57999999.99999999,
+        "engine": {
+            "version": "Ut in"
+        },
+        "game": {
+            "springName": "Ut in"
+        },
+        "map": {
+            "springName": "Ut in"
+        }
     }
 }
 ```
@@ -74,6 +83,15 @@ export interface BattleStartRequestData {
     password: string;
     ip: string;
     port: number;
+    engine: {
+        version: string;
+    };
+    game: {
+        springName: string;
+    };
+    map: {
+        springName: string;
+    };
 }
 ```
 ### Response

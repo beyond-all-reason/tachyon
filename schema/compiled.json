@@ -70,15 +70,38 @@
             "required": ["userId", "name", "password"]
         },
         "privateBattle": {
-            "description": "Secret battle information to pass to spring.",
+            "description": "Battle informations including secrets to pass to spring for joining the game server. Don't expose secrets to other players.",
             "type": "object",
             "properties": {
                 "username": { "type": "string" },
                 "password": { "type": "string" },
                 "ip": { "type": "string" },
-                "port": { "type": "number" }
+                "port": { "type": "number" },
+                "engine": {
+                    "type": "object",
+                    "properties": { "version": { "type": "string" } },
+                    "required": ["version"]
+                },
+                "game": {
+                    "type": "object",
+                    "properties": { "springName": { "type": "string" } },
+                    "required": ["springName"]
+                },
+                "map": {
+                    "type": "object",
+                    "properties": { "springName": { "type": "string" } },
+                    "required": ["springName"]
+                }
             },
-            "required": ["username", "password", "ip", "port"]
+            "required": [
+                "username",
+                "password",
+                "ip",
+                "port",
+                "engine",
+                "game",
+                "map"
+            ]
         },
         "privateUser": {
             "allOf": [

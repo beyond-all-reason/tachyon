@@ -6,9 +6,19 @@ export const privateBattle = Type.Object(
         password: Type.String(),
         ip: Type.String(),
         port: Type.Number(),
+        engine: Type.Object({
+            version: Type.String(),
+        }),
+        game: Type.Object({
+            springName: Type.String(),
+        }),
+        map: Type.Object({
+            springName: Type.String(),
+        }),
     },
     {
         $id: "privateBattle",
-        description: "Secret battle information to pass to spring.",
+        description:
+            "Battle informations including secrets to pass to spring for joining the game server. Don't expose secrets to other players.",
     }
 );
