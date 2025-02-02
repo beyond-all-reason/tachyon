@@ -120,7 +120,7 @@ export type PrivateUser = {
     outgoingFriendRequestIds: string[];
     incomingFriendRequestIds: string[];
     ignoreIds: string[];
-    currentBattle?: BattleStartRequestData;
+    currentBattle?: PrivateBattle;
 };
 export type UserId = string;
 
@@ -133,7 +133,7 @@ export interface UserSelfEvent {
 export interface UserSelfEventData {
     user: PrivateUser;
 }
-export interface BattleStartRequestData {
+export interface PrivateBattle {
     username: string;
     password: string;
     ip: string;

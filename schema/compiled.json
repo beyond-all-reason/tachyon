@@ -70,7 +70,6 @@
             "required": ["userId", "name", "password"]
         },
         "privateBattle": {
-            "title": "BattleStartRequestData",
             "description": "Secret battle information to pass to spring.",
             "type": "object",
             "properties": {
@@ -104,17 +103,7 @@
                             "items": { "type": "string" }
                         },
                         "currentBattle": {
-                            "$id": "privateBattle",
-                            "title": "BattleStartRequestData",
-                            "description": "Secret battle information to pass to spring.",
-                            "type": "object",
-                            "properties": {
-                                "username": { "type": "string" },
-                                "password": { "type": "string" },
-                                "ip": { "type": "string" },
-                                "port": { "type": "number" }
-                            },
-                            "required": ["username", "password", "ip", "port"]
+                            "$ref": "#/definitions/privateBattle"
                         }
                     },
                     "required": [
@@ -1221,17 +1210,8 @@
                 "messageId": { "type": "string" },
                 "commandId": { "const": "battle/start" },
                 "data": {
-                    "$id": "privateBattle",
-                    "title": "BattleStartRequestData",
-                    "description": "Secret battle information to pass to spring.",
-                    "type": "object",
-                    "properties": {
-                        "username": { "type": "string" },
-                        "password": { "type": "string" },
-                        "ip": { "type": "string" },
-                        "port": { "type": "number" }
-                    },
-                    "required": ["username", "password", "ip", "port"]
+                    "$ref": "#/definitions/privateBattle",
+                    "title": "BattleStartRequestData"
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

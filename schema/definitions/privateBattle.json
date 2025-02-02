@@ -1,6 +1,6 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/privateBattle.json",
-    "title": "BattleStartRequestData",
+    "title": "PrivateBattle",
     "description": "Secret battle information to pass to spring.",
     "type": "object",
     "properties": {

@@ -11,7 +11,7 @@ export const privateUser = Type.Intersect(
             outgoingFriendRequestIds: Type.Array(Type.String()),
             incomingFriendRequestIds: Type.Array(Type.String()),
             ignoreIds: Type.Array(Type.String()),
-            currentBattle: Type.Optional(privateBattle),
+            currentBattle: Type.Optional(Type.Ref(privateBattle)),
         }),
     ],
     { $id: "privateUser" }
