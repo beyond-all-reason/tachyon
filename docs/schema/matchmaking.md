@@ -541,13 +541,15 @@ export interface MatchmakingListRequest {
                                     "engines": [{ "version": "2025.01.6" }],
                                     "games": [
                                         {
-                                            "version": "Beyond All Reason test-27414-a84d7e6"
+                                            "springName": "Beyond All Reason test-27414-a84d7e6"
                                         }
                                     ],
                                     "maps": [
-                                        { "id": "Theta Crystals 1.3" },
-                                        { "id": "Comet Catcher Remake 1.8" },
-                                        { "id": "Aurelia v4.1" }
+                                        { "springName": "Theta Crystals 1.3" },
+                                        {
+                                            "springName": "Comet Catcher Remake 1.8"
+                                        },
+                                        { "springName": "Aurelia v4.1" }
                                     ]
                                 },
                                 {
@@ -559,10 +561,12 @@ export interface MatchmakingListRequest {
                                     "engines": [{ "version": "2025.01.6" }],
                                     "games": [
                                         {
-                                            "version": "Beyond All Reason test-27414-a84d7e6"
+                                            "springName": "Beyond All Reason test-27414-a84d7e6"
                                         }
                                     ],
-                                    "maps": [{ "id": "Ghenna Rising 4.0.1" }]
+                                    "maps": [
+                                        { "springName": "Ghenna Rising 4.0.1" }
+                                    ]
                                 }
                             ]
                         }
@@ -621,18 +625,18 @@ export interface MatchmakingListRequest {
                 ],
                 "games": [
                     {
-                        "version": "Beyond All Reason test-27414-a84d7e6"
+                        "springName": "Beyond All Reason test-27414-a84d7e6"
                     }
                 ],
                 "maps": [
                     {
-                        "id": "Theta Crystals 1.3"
+                        "springName": "Theta Crystals 1.3"
                     },
                     {
-                        "id": "Comet Catcher Remake 1.8"
+                        "springName": "Comet Catcher Remake 1.8"
                     },
                     {
-                        "id": "Aurelia v4.1"
+                        "springName": "Aurelia v4.1"
                     }
                 ]
             },
@@ -649,12 +653,12 @@ export interface MatchmakingListRequest {
                 ],
                 "games": [
                     {
-                        "version": "Beyond All Reason test-27414-a84d7e6"
+                        "springName": "Beyond All Reason test-27414-a84d7e6"
                     }
                 ],
                 "maps": [
                     {
-                        "id": "Ghenna Rising 4.0.1"
+                        "springName": "Ghenna Rising 4.0.1"
                     }
                 ]
             }

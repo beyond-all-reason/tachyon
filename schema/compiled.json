@@ -1509,15 +1509,17 @@
                                             ],
                                             "games": [
                                                 {
-                                                    "version": "Beyond All Reason test-27414-a84d7e6"
+                                                    "springName": "Beyond All Reason test-27414-a84d7e6"
                                                 }
                                             ],
                                             "maps": [
-                                                { "id": "Theta Crystals 1.3" },
                                                 {
-                                                    "id": "Comet Catcher Remake 1.8"
+                                                    "springName": "Theta Crystals 1.3"
                                                 },
-                                                { "id": "Aurelia v4.1" }
+                                                {
+                                                    "springName": "Comet Catcher Remake 1.8"
+                                                },
+                                                { "springName": "Aurelia v4.1" }
                                             ]
                                         },
                                         {
@@ -1531,11 +1533,13 @@
                                             ],
                                             "games": [
                                                 {
-                                                    "version": "Beyond All Reason test-27414-a84d7e6"
+                                                    "springName": "Beyond All Reason test-27414-a84d7e6"
                                                 }
                                             ],
                                             "maps": [
-                                                { "id": "Ghenna Rising 4.0.1" }
+                                                {
+                                                    "springName": "Ghenna Rising 4.0.1"
+                                                }
                                             ]
                                         }
                                     ]
