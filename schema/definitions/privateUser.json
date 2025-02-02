@@ -15,7 +15,8 @@
                     "type": "array",
                     "items": { "type": "string" }
                 },
-                "ignoreIds": { "type": "array", "items": { "type": "string" } }
+                "ignoreIds": { "type": "array", "items": { "type": "string" } },
+                "currentBattle": { "$ref": "../definitions/privateBattle.json" }
             },
             "required": [
                 "friendIds",

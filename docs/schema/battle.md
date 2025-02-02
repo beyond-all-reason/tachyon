@@ -33,15 +33,8 @@ When a user client receives this response it should launch the game (spring.exe)
         "messageId": { "type": "string" },
         "commandId": { "const": "battle/start" },
         "data": {
-            "title": "BattleStartRequestData",
-            "type": "object",
-            "properties": {
-                "username": { "type": "string" },
-                "password": { "type": "string" },
-                "ip": { "type": "string" },
-                "port": { "type": "number" }
-            },
-            "required": ["username", "password", "ip", "port"]
+            "$ref": "../../definitions/privateBattle.json",
+            "title": "BattleStartRequestData"
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -56,13 +49,22 @@ When a user client receives this response it should launch the game (spring.exe)
 ```json
 {
     "type": "request",
-    "messageId": "minim sed tempor Excepteur ea",
+    "messageId": "qui incididunt",
     "commandId": "battle/start",
     "data": {
-        "username": "qui et in",
-        "password": "Excepteur id",
-        "ip": "est dolore ipsum et Duis",
-        "port": 4897737.503051758
+        "username": "anim",
+        "password": "dolore",
+        "ip": "ipsum magna exercitation esse dolore",
+        "port": 18847608.56628418,
+        "engine": {
+            "version": "sit dolor"
+        },
+        "game": {
+            "springName": "ex id aliqua consectetur"
+        },
+        "map": {
+            "springName": "non deserunt velit"
+        }
     }
 }
 ```
@@ -81,6 +83,15 @@ export interface BattleStartRequestData {
     password: string;
     ip: string;
     port: number;
+    engine: {
+        version: string;
+    };
+    game: {
+        springName: string;
+    };
+    map: {
+        springName: string;
+    };
 }
 ```
 ### Response
