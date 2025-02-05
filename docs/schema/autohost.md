@@ -221,7 +221,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 Ask the autohost to install specified engine version.
 
-Return success when version installed successfully. If the engine is already installed autohost returns success instantly. When new engine is installed autohost will also then send a `status` event with the new available engine versions.
+Return success instantly and autohost triggers the installation of the engine in background. It's fine to call this method repeatedly and autohost must deduplicate requests internally. When new engine is installed autohost send a `status` event with the new available engine versions.
 
 - Endpoint Type: **Request** -> **Response**
 - Source: **Server**
@@ -327,7 +327,6 @@ export interface AutohostInstallEngineRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "not_found",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -366,7 +365,7 @@ export interface AutohostInstallEngineOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `not_found`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 

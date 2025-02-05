@@ -6,7 +6,7 @@ export default defineEndpoint({
     source: "server",
     target: "autohost",
     description:
-        "Ask the autohost to install specified engine version.\n\nReturn success when version installed successfully. If the engine is already installed autohost returns success instantly. When new engine is installed autohost will also then send a `status` event with the new available engine versions.",
+        "Ask the autohost to install specified engine version.\n\nReturn success instantly and autohost triggers the installation of the engine in background. It's fine to call this method repeatedly and autohost must deduplicate requests internally. When new engine is installed autohost send a `status` event with the new available engine versions.",
     request: {
         data: Type.Object(
             {
@@ -24,11 +24,6 @@ export default defineEndpoint({
     response: [
         {
             status: "success",
-        },
-        {
-            status: "failed",
-            reason: "not_found",
-            description: "Engine version not found on the assets server",
         },
     ],
 });
