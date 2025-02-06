@@ -62,6 +62,7 @@ export type SuccessResponseSchema = {
 export type FailedResponseSchema = {
     status: "failed";
     reason: string;
+    description?: string;
 };
 
 export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {
