@@ -10,7 +10,7 @@ export default defineEndpoint({
     description: "Fetch user info from the server.",
     request: {
         data: Type.Object({
-            userId: userId,
+            userId: Type.Ref(userId),
         }),
     },
     response: [

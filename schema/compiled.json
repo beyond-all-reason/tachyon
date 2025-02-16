@@ -2271,11 +2271,7 @@
                     "title": "UserInfoRequestData",
                     "type": "object",
                     "properties": {
-                        "userId": {
-                            "$id": "userId",
-                            "type": "string",
-                            "examples": ["351"]
-                        }
+                        "userId": { "$ref": "#/definitions/userId" }
                     },
                     "required": ["userId"]
                 }

@@ -40,11 +40,7 @@ Fetch user info from the server.
             "title": "UserInfoRequestData",
             "type": "object",
             "properties": {
-                "userId": {
-                    "$id": "userId",
-                    "type": "string",
-                    "examples": ["351"]
-                }
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
             "required": ["userId"]
         }
