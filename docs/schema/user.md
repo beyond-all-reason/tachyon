@@ -2,10 +2,207 @@
 
 # User
 
+- [info](#info)
 - [self](#self)
 - [subscribeUpdates](#subscribeupdates)
 - [unsubscribeUpdates](#unsubscribeupdates)
 - [updated](#updated)
+---
+
+## Info
+
+Fetch user info from the server.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserInfoRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/info" },
+        "data": {
+            "title": "UserInfoRequestData",
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "$id": "userId",
+                    "type": "string",
+                    "examples": ["351"]
+                }
+            },
+            "required": ["userId"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "Lorem nulla sed aute",
+    "commandId": "user/info",
+    "data": {
+        "userId": "351"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface UserInfoRequest {
+    type: "request";
+    messageId: string;
+    commandId: "user/info";
+    data: UserInfoRequestData;
+}
+export interface UserInfoRequestData {
+    userId: UserId;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserInfoResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "UserInfoOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/info" },
+                "status": { "const": "success" },
+                "data": {
+                    "$id": "user",
+                    "title": "UserInfoOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "../../definitions/userId.json" },
+                        "username": { "type": "string" },
+                        "displayName": { "type": "string" },
+                        "clanId": {
+                            "anyOf": [{ "type": "string" }, { "type": "null" }]
+                        },
+                        "countryCode": { "type": "string" },
+                        "status": {
+                            "enum": ["offline", "menu", "playing", "lobby"]
+                        }
+                    },
+                    "required": [
+                        "userId",
+                        "username",
+                        "displayName",
+                        "clanId",
+                        "status"
+                    ]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status", "data"]
+        },
+        {
+            "title": "UserInfoFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/info" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "unknown_user",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "nulla aute aliquip enim",
+    "commandId": "user/info",
+    "status": "success",
+    "data": {
+        "userId": "351",
+        "username": "est ut tempor",
+        "displayName": "fugiat Lorem",
+        "clanId": "Duis",
+        "countryCode": "ut et consectetur aliquip",
+        "status": "offline"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface UserInfoOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/info";
+    status: "success";
+    data: UserInfoOkResponseData;
+}
+export interface UserInfoOkResponseData {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+}
+```
+Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## Self
@@ -113,14 +310,7 @@ Sent by the server to inform the client of its own user state. This event should
 
 #### TypeScript Definition
 ```ts
-export type PrivateUser = {
-    userId: UserId;
-    username: string;
-    displayName: string;
-    clanId: string | null;
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
-} & {
+export type PrivateUser = UserInfoOkResponseData & {
     partyId: string | null;
     friendIds: string[];
     outgoingFriendRequestIds: string[];
@@ -138,6 +328,14 @@ export interface UserSelfEvent {
 }
 export interface UserSelfEventData {
     user: PrivateUser;
+}
+export interface UserInfoOkResponseData {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
 }
 export interface PrivateBattle {
     username: string;
@@ -556,6 +754,7 @@ Sent by the server to inform the client of user state changes. User objects shou
                 "users": {
                     "type": "array",
                     "items": {
+                        "title": "UserInfoOkResponseData",
                         "type": "object",
                         "properties": {
                             "userId": { "type": "string", "examples": ["351"] },
@@ -653,13 +852,14 @@ export interface UserUpdatedEvent {
     data: UserUpdatedEventData;
 }
 export interface UserUpdatedEventData {
-    users: {
-        userId?: string;
-        username?: string;
-        displayName?: string;
-        clanId?: string | null;
-        countryCode?: string;
-        status?: "offline" | "menu" | "playing" | "lobby";
-    }[];
+    users: UserInfoOkResponseData[];
+}
+export interface UserInfoOkResponseData {
+    userId?: string;
+    username?: string;
+    displayName?: string;
+    clanId?: string | null;
+    countryCode?: string;
+    status?: "offline" | "menu" | "playing" | "lobby";
 }
 ```

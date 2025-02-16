@@ -200,6 +200,7 @@
             "examples": [1705432698000000]
         },
         "user": {
+            "title": "UserInfoOkResponseData",
             "type": "object",
             "properties": {
                 "userId": { "$ref": "#/definitions/userId" },
@@ -2256,6 +2257,119 @@
             ]
         },
         {
+            "title": "UserInfoRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/info" },
+                "data": {
+                    "title": "UserInfoRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": {
+                            "$id": "userId",
+                            "type": "string",
+                            "examples": ["351"]
+                        }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "UserInfoResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "UserInfoOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "user/info" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "$id": "user",
+                            "title": "UserInfoOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "userId": { "$ref": "#/definitions/userId" },
+                                "username": { "type": "string" },
+                                "displayName": { "type": "string" },
+                                "clanId": {
+                                    "anyOf": [
+                                        { "type": "string" },
+                                        { "type": "null" }
+                                    ]
+                                },
+                                "countryCode": { "type": "string" },
+                                "status": {
+                                    "enum": [
+                                        "offline",
+                                        "menu",
+                                        "playing",
+                                        "lobby"
+                                    ]
+                                }
+                            },
+                            "required": [
+                                "userId",
+                                "username",
+                                "displayName",
+                                "clanId",
+                                "status"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "UserInfoFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "user/info" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "unknown_user",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "UserSelfEvent",
             "tachyon": {
                 "source": "server",
@@ -2456,6 +2570,7 @@
                         "users": {
                             "type": "array",
                             "items": {
+                                "title": "UserInfoOkResponseData",
                                 "type": "object",
                                 "properties": {
                                     "userId": {
