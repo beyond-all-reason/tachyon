@@ -16,7 +16,7 @@ export default defineEndpoint({
     response: [
         {
             status: "success",
-            data: user,
+            data: Type.Ref(user),
         },
         {
             status: "failed",

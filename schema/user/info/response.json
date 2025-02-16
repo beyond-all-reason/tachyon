@@ -17,28 +17,8 @@
                 "commandId": { "const": "user/info" },
                 "status": { "const": "success" },
                 "data": {
-                    "$id": "user",
-                    "title": "UserInfoOkResponseData",
-                    "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "../../definitions/userId.json" },
-                        "username": { "type": "string" },
-                        "displayName": { "type": "string" },
-                        "clanId": {
-                            "anyOf": [{ "type": "string" }, { "type": "null" }]
-                        },
-                        "countryCode": { "type": "string" },
-                        "status": {
-                            "enum": ["offline", "menu", "playing", "lobby"]
-                        }
-                    },
-                    "required": [
-                        "userId",
-                        "username",
-                        "displayName",
-                        "clanId",
-                        "status"
-                    ]
+                    "$ref": "../../definitions/user.json",
+                    "title": "UserInfoOkResponseData"
                 }
             },
             "required": ["type", "messageId", "commandId", "status", "data"]
