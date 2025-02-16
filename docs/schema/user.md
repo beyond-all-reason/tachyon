@@ -40,11 +40,7 @@ Fetch user info from the server.
             "title": "UserInfoRequestData",
             "type": "object",
             "properties": {
-                "userId": {
-                    "$id": "userId",
-                    "type": "string",
-                    "examples": ["351"]
-                }
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
             "required": ["userId"]
         }
@@ -107,28 +103,8 @@ export interface UserInfoRequestData {
                 "commandId": { "const": "user/info" },
                 "status": { "const": "success" },
                 "data": {
-                    "$id": "user",
-                    "title": "UserInfoOkResponseData",
-                    "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "../../definitions/userId.json" },
-                        "username": { "type": "string" },
-                        "displayName": { "type": "string" },
-                        "clanId": {
-                            "anyOf": [{ "type": "string" }, { "type": "null" }]
-                        },
-                        "countryCode": { "type": "string" },
-                        "status": {
-                            "enum": ["offline", "menu", "playing", "lobby"]
-                        }
-                    },
-                    "required": [
-                        "userId",
-                        "username",
-                        "displayName",
-                        "clanId",
-                        "status"
-                    ]
+                    "$ref": "../../definitions/user.json",
+                    "title": "UserInfoOkResponseData"
                 }
             },
             "required": ["type", "messageId", "commandId", "status", "data"]
@@ -166,16 +142,16 @@ export interface UserInfoRequestData {
 ```json
 {
     "type": "response",
-    "messageId": "nulla aute aliquip enim",
+    "messageId": "ex pariatur deserunt mollit ad",
     "commandId": "user/info",
     "status": "success",
     "data": {
         "userId": "351",
-        "username": "est ut tempor",
-        "displayName": "fugiat Lorem",
-        "clanId": "Duis",
-        "countryCode": "ut et consectetur aliquip",
-        "status": "offline"
+        "username": "minim laborum magna nostrud",
+        "displayName": "nulla",
+        "clanId": null,
+        "countryCode": "Ut",
+        "status": "playing"
     }
 }
 ```
@@ -310,7 +286,14 @@ Sent by the server to inform the client of its own user state. This event should
 
 #### TypeScript Definition
 ```ts
-export type PrivateUser = UserInfoOkResponseData & {
+export type PrivateUser = {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+} & {
     partyId: string | null;
     friendIds: string[];
     outgoingFriendRequestIds: string[];
@@ -328,14 +311,6 @@ export interface UserSelfEvent {
 }
 export interface UserSelfEventData {
     user: PrivateUser;
-}
-export interface UserInfoOkResponseData {
-    userId: UserId;
-    username: string;
-    displayName: string;
-    clanId: string | null;
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
 }
 export interface PrivateBattle {
     username: string;
@@ -754,7 +729,6 @@ Sent by the server to inform the client of user state changes. User objects shou
                 "users": {
                     "type": "array",
                     "items": {
-                        "title": "UserInfoOkResponseData",
                         "type": "object",
                         "properties": {
                             "userId": { "type": "string", "examples": ["351"] },
@@ -852,14 +826,13 @@ export interface UserUpdatedEvent {
     data: UserUpdatedEventData;
 }
 export interface UserUpdatedEventData {
-    users: UserInfoOkResponseData[];
-}
-export interface UserInfoOkResponseData {
-    userId?: string;
-    username?: string;
-    displayName?: string;
-    clanId?: string | null;
-    countryCode?: string;
-    status?: "offline" | "menu" | "playing" | "lobby";
+    users: {
+        userId?: string;
+        username?: string;
+        displayName?: string;
+        clanId?: string | null;
+        countryCode?: string;
+        status?: "offline" | "menu" | "playing" | "lobby";
+    }[];
 }
 ```

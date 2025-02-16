@@ -19,7 +19,6 @@
                 "users": {
                     "type": "array",
                     "items": {
-                        "title": "UserInfoOkResponseData",
                         "type": "object",
                         "properties": {
                             "userId": { "type": "string", "examples": ["351"] },

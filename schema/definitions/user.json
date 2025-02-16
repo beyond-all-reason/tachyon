@@ -1,6 +1,6 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/user.json",
-    "title": "UserInfoOkResponseData",
+    "title": "User",
     "type": "object",
     "properties": {
         "userId": { "$ref": "../definitions/userId.json" },

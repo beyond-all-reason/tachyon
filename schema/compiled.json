@@ -200,7 +200,6 @@
             "examples": [1705432698000000]
         },
         "user": {
-            "title": "UserInfoOkResponseData",
             "type": "object",
             "properties": {
                 "userId": { "$ref": "#/definitions/userId" },
@@ -2272,11 +2271,7 @@
                     "title": "UserInfoRequestData",
                     "type": "object",
                     "properties": {
-                        "userId": {
-                            "$id": "userId",
-                            "type": "string",
-                            "examples": ["351"]
-                        }
+                        "userId": { "$ref": "#/definitions/userId" }
                     },
                     "required": ["userId"]
                 }
@@ -2300,36 +2295,8 @@
                         "commandId": { "const": "user/info" },
                         "status": { "const": "success" },
                         "data": {
-                            "$id": "user",
-                            "title": "UserInfoOkResponseData",
-                            "type": "object",
-                            "properties": {
-                                "userId": { "$ref": "#/definitions/userId" },
-                                "username": { "type": "string" },
-                                "displayName": { "type": "string" },
-                                "clanId": {
-                                    "anyOf": [
-                                        { "type": "string" },
-                                        { "type": "null" }
-                                    ]
-                                },
-                                "countryCode": { "type": "string" },
-                                "status": {
-                                    "enum": [
-                                        "offline",
-                                        "menu",
-                                        "playing",
-                                        "lobby"
-                                    ]
-                                }
-                            },
-                            "required": [
-                                "userId",
-                                "username",
-                                "displayName",
-                                "clanId",
-                                "status"
-                            ]
+                            "$ref": "#/definitions/user",
+                            "title": "UserInfoOkResponseData"
                         }
                     },
                     "required": [
@@ -2570,7 +2537,6 @@
                         "users": {
                             "type": "array",
                             "items": {
-                                "title": "UserInfoOkResponseData",
                                 "type": "object",
                                 "properties": {
                                     "userId": {
