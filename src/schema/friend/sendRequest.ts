@@ -16,6 +16,7 @@ export default defineEndpoint({
         { status: "success" },
         { status: "failed", reason: "invalid_user" },
         { status: "failed", reason: "already_in_friendlist" },
-        { status: "failed", reason: "capacity_reached" },
+        { status: "failed", reason: "outgoing_capacity_reached" },
+        { status: "failed", reason: "incoming_capacity_reached" },
     ],
 });

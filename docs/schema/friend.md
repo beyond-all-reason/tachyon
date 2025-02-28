@@ -1332,7 +1332,8 @@ export interface FriendSendRequestRequestData {
                     "enum": [
                         "invalid_user",
                         "already_in_friendlist",
-                        "capacity_reached",
+                        "outgoing_capacity_reached",
+                        "incoming_capacity_reached",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1371,5 +1372,5 @@ export interface FriendSendRequestOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_user`, `already_in_friendlist`, `capacity_reached`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_user`, `already_in_friendlist`, `outgoing_capacity_reached`, `incoming_capacity_reached`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
