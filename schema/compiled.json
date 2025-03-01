@@ -121,13 +121,31 @@
                             "type": "array",
                             "items": { "type": "string" }
                         },
-                        "outgoingFriendRequestIds": {
+                        "outgoingFriendRequest": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "to": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["to", "sentAt"]
+                            }
                         },
-                        "incomingFriendRequestIds": {
+                        "incomingFriendRequest": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "from": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["from", "sentAt"]
+                            }
                         },
                         "ignoreIds": {
                             "type": "array",
@@ -140,8 +158,8 @@
                     "required": [
                         "partyId",
                         "friendIds",
-                        "outgoingFriendRequestIds",
-                        "incomingFriendRequestIds",
+                        "outgoingFriendRequest",
+                        "incomingFriendRequest",
                         "ignoreIds"
                     ]
                 }
@@ -1560,9 +1578,12 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "to": { "$ref": "#/definitions/userId" }
+                                    "to": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
                                 },
-                                "required": ["to"]
+                                "required": ["to", "sentAt"]
                             }
                         },
                         "incoming_pending_requests": {
@@ -1570,9 +1591,12 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "from": { "$ref": "#/definitions/userId" }
+                                    "from": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
                                 },
-                                "required": ["from"]
+                                "required": ["from", "sentAt"]
                             }
                         }
                     },

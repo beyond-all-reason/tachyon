@@ -245,37 +245,42 @@ Sent by the server to inform the client of its own user state. This event should
                 "esse sunt anim dolor dolore",
                 "tempor"
             ],
-            "outgoingFriendRequestIds": [
-                "nisi non",
-                "laboris aliquip ut",
-                "dolor sed incididunt aute id"
+            "outgoingFriendRequest": [
+                {
+                    "to": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "to": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "to": "351",
+                    "sentAt": 1705432698000000
+                }
             ],
-            "incomingFriendRequestIds": [
-                "culpa labore Excepteur",
-                "dolor voluptate nostrud",
-                "ipsum irure quis",
-                "voluptate anim"
+            "incomingFriendRequest": [
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
+                }
             ],
             "ignoreIds": [
-                "cillum in",
-                "Excepteur ad consectetur dolor velit",
-                "elit ut ullamco deserunt",
-                "dolore",
-                "reprehenderit non"
+                "do"
             ],
             "currentBattle": {
-                "username": "quis nostrud laboris aute Lorem",
-                "password": "aliquip esse labore",
-                "ip": "in",
-                "port": 97886848.44970703,
+                "username": "laboris exercitation tempor est Lorem",
+                "password": "ea dolor",
+                "ip": "sit consequat sint",
+                "port": 21259891.986846924,
                 "engine": {
-                    "version": "minim nisi nulla tempor"
+                    "version": "reprehenderit"
                 },
                 "game": {
-                    "springName": "ullamco voluptate aliqua labore officia"
+                    "springName": "laboris aliqua"
                 },
                 "map": {
-                    "springName": "in incididunt enim Ut"
+                    "springName": "aliquip non"
                 }
             }
         }
@@ -296,12 +301,19 @@ export type PrivateUser = {
 } & {
     partyId: string | null;
     friendIds: string[];
-    outgoingFriendRequestIds: string[];
-    incomingFriendRequestIds: string[];
+    outgoingFriendRequest: {
+        to: UserId;
+        sentAt: UnixTime;
+    }[];
+    incomingFriendRequest: {
+        from: UserId;
+        sentAt: UnixTime;
+    }[];
     ignoreIds: string[];
     currentBattle?: PrivateBattle;
 };
 export type UserId = string;
+export type UnixTime = number;
 
 export interface UserSelfEvent {
     type: "event";

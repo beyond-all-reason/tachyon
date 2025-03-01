@@ -374,9 +374,12 @@ Retrieve the status of your friendlist
                     "items": {
                         "type": "object",
                         "properties": {
-                            "to": { "$ref": "../../definitions/userId.json" }
+                            "to": { "$ref": "../../definitions/userId.json" },
+                            "sentAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
                         },
-                        "required": ["to"]
+                        "required": ["to", "sentAt"]
                     }
                 },
                 "incoming_pending_requests": {
@@ -384,9 +387,12 @@ Retrieve the status of your friendlist
                     "items": {
                         "type": "object",
                         "properties": {
-                            "from": { "$ref": "../../definitions/userId.json" }
+                            "from": { "$ref": "../../definitions/userId.json" },
+                            "sentAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
                         },
-                        "required": ["from"]
+                        "required": ["from", "sentAt"]
                     }
                 }
             },
@@ -432,27 +438,30 @@ Retrieve the status of your friendlist
         ],
         "outgoing_pending_requests": [
             {
-                "to": "351"
+                "to": "351",
+                "sentAt": 1705432698000000
             },
             {
-                "to": "351"
+                "to": "351",
+                "sentAt": 1705432698000000
             },
             {
-                "to": "351"
+                "to": "351",
+                "sentAt": 1705432698000000
             },
             {
-                "to": "351"
+                "to": "351",
+                "sentAt": 1705432698000000
             },
             {
-                "to": "351"
+                "to": "351",
+                "sentAt": 1705432698000000
             }
         ],
         "incoming_pending_requests": [
             {
-                "from": "351"
-            },
-            {
-                "from": "351"
+                "from": "351",
+                "sentAt": 1705432698000000
             }
         ]
     }
@@ -478,9 +487,11 @@ export interface FriendListRequestData {
     }[];
     outgoing_pending_requests: {
         to: UserId;
+        sentAt: UnixTime;
     }[];
     incoming_pending_requests: {
         from: UserId;
+        sentAt: UnixTime;
     }[];
 }
 ```

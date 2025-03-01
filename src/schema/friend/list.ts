@@ -19,11 +19,13 @@ export default defineEndpoint({
             outgoing_pending_requests: Type.Array(
                 Type.Object({
                     to: Type.Ref(userId),
+                    sentAt: Type.Ref(unixTime),
                 })
             ),
             incoming_pending_requests: Type.Array(
                 Type.Object({
                     from: Type.Ref(userId),
+                    sentAt: Type.Ref(unixTime),
                 })
             ),
         }),

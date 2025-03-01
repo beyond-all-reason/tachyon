@@ -36,9 +36,12 @@
                     "items": {
                         "type": "object",
                         "properties": {
-                            "to": { "$ref": "../../definitions/userId.json" }
+                            "to": { "$ref": "../../definitions/userId.json" },
+                            "sentAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
                         },
-                        "required": ["to"]
+                        "required": ["to", "sentAt"]
                     }
                 },
                 "incoming_pending_requests": {
@@ -46,9 +49,12 @@
                     "items": {
                         "type": "object",
                         "properties": {
-                            "from": { "$ref": "../../definitions/userId.json" }
+                            "from": { "$ref": "../../definitions/userId.json" },
+                            "sentAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
                         },
-                        "required": ["from"]
+                        "required": ["from", "sentAt"]
                     }
                 }
             },
