@@ -1,0 +1,69 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/list/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "FriendListRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "friend/list" },
+        "data": {
+            "title": "FriendListRequestData",
+            "type": "object",
+            "properties": {
+                "friends": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "addedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "addedAt"]
+                    }
+                },
+                "outgoing_pending_requests": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "to": { "$ref": "../../definitions/userId.json" },
+                            "sentAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["to", "sentAt"]
+                    }
+                },
+                "incoming_pending_requests": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "from": { "$ref": "../../definitions/userId.json" },
+                            "sentAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["from", "sentAt"]
+                    }
+                }
+            },
+            "required": [
+                "friends",
+                "outgoing_pending_requests",
+                "incoming_pending_requests"
+            ]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}

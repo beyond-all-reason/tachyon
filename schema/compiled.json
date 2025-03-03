@@ -121,13 +121,31 @@
                             "type": "array",
                             "items": { "type": "string" }
                         },
-                        "outgoingFriendRequestIds": {
+                        "outgoingFriendRequest": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "to": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["to", "sentAt"]
+                            }
                         },
-                        "incomingFriendRequestIds": {
+                        "incomingFriendRequest": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "from": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["from", "sentAt"]
+                            }
                         },
                         "ignoreIds": {
                             "type": "array",
@@ -140,8 +158,8 @@
                     "required": [
                         "partyId",
                         "friendIds",
-                        "outgoingFriendRequestIds",
-                        "incomingFriendRequestIds",
+                        "outgoingFriendRequest",
+                        "incomingFriendRequest",
                         "ignoreIds"
                     ]
                 }
@@ -1365,6 +1383,592 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FriendAcceptRequestRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/acceptRequest" },
+                "data": {
+                    "title": "FriendAcceptRequestRequestData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendAcceptRequestResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "FriendAcceptRequestOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/acceptRequest" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "FriendAcceptRequestFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/acceptRequest" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "invalid_user",
+                                "no_pending_request",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FriendCancelRequestRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/cancelRequest" },
+                "data": {
+                    "title": "FriendCancelRequestRequestData",
+                    "type": "object",
+                    "properties": { "to": { "$ref": "#/definitions/userId" } },
+                    "required": ["to"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendCancelRequestResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "FriendCancelRequestOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/cancelRequest" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "FriendCancelRequestFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/cancelRequest" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "invalid_user",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FriendListRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/list" },
+                "data": {
+                    "title": "FriendListRequestData",
+                    "type": "object",
+                    "properties": {
+                        "friends": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "addedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["userId", "addedAt"]
+                            }
+                        },
+                        "outgoing_pending_requests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "to": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["to", "sentAt"]
+                            }
+                        },
+                        "incoming_pending_requests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "from": { "$ref": "#/definitions/userId" },
+                                    "sentAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["from", "sentAt"]
+                            }
+                        }
+                    },
+                    "required": [
+                        "friends",
+                        "outgoing_pending_requests",
+                        "incoming_pending_requests"
+                    ]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendListResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "FriendListOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/list" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "FriendListFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/list" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FriendRejectRequestRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/rejectRequest" },
+                "data": {
+                    "title": "FriendRejectRequestRequestData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendRejectRequestResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "FriendRejectRequestOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/rejectRequest" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "FriendRejectRequestFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/rejectRequest" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "invalid_user",
+                                "no_pending_request",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FriendRemoveRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/remove" },
+                "data": {
+                    "title": "FriendRemoveRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendRemoveResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "FriendRemoveOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/remove" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "FriendRemoveFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/remove" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "invalid_user",
+                                "not_in_friendlist",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "FriendRemovedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/removed" },
+                "data": {
+                    "title": "FriendRemovedEventData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendRequestAcceptedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/requestAccepted" },
+                "data": {
+                    "title": "FriendRequestAcceptedEventData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendRequestCancelledEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/requestCancelled" },
+                "data": {
+                    "title": "FriendRequestCancelledEventData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendRequestReceivedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/requestReceived" },
+                "data": {
+                    "title": "FriendRequestReceivedEventData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendRequestRejectedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/requestRejected" },
+                "data": {
+                    "title": "FriendRequestRejectedEventData",
+                    "type": "object",
+                    "properties": {
+                        "from": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["from"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendSendRequestRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "friend/sendRequest" },
+                "data": {
+                    "title": "FriendSendRequestRequestData",
+                    "type": "object",
+                    "properties": { "to": { "$ref": "#/definitions/userId" } },
+                    "required": ["to"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "FriendSendRequestResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "FriendSendRequestOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/sendRequest" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "FriendSendRequestFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "friend/sendRequest" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "invalid_user",
+                                "already_in_friendlist",
+                                "outgoing_capacity_reached",
+                                "incoming_capacity_reached",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",

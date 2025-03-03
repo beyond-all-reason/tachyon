@@ -94,6 +94,7 @@ Every event command contains these additional properties:
 <!-- COMMAND_SCHEMA_PLACEHOLDER_START_DO_NOT_REMOVE -->
   - [autohost](docs/schema/autohost.md)
   - [battle](docs/schema/battle.md)
+  - [friend](docs/schema/friend.md)
   - [matchmaking](docs/schema/matchmaking.md)
   - [messaging](docs/schema/messaging.md)
   - [system](docs/schema/system.md)
