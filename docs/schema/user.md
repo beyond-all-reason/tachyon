@@ -299,7 +299,7 @@ export type PrivateUser = {
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
 } & {
-    partyId: string | null;
+    partyId: PartyId | null;
     friendIds: string[];
     outgoingFriendRequest: {
         to: UserId;
@@ -313,6 +313,7 @@ export type PrivateUser = {
     currentBattle?: PrivateBattle;
 };
 export type UserId = string;
+export type PartyId = string;
 export type UnixTime = number;
 
 export interface UserSelfEvent {
