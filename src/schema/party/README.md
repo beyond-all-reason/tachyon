@@ -1,0 +1,25 @@
+# Party
+
+Parties are groups of connected players. They are used to join matchmaking
+together and during lobby balancing.
+
+A player can only be in at most one party at any given time.
+
+Any player in a party can invite any other connected player. When an invite is
+sent, the target player as well as every party member gets an event
+[party/invited](#invited).
+
+Any pending invite can be cancelled by any member in the party with the request
+[party/cancelInvite](#cancelInvite). Afterward, an event [party/inviteCancelled](#inviteCancelled) will be sent
+to all party members and invited players.
+
+Accepting an invite can be done with [party/acceptInvite](#acceptInvite), and will be followed
+by an event [party/memberJoined](#memberJoined) sent to all members and players with pending
+invites. Declining is done with [party/declineInvite](#declineInvite) and will be followed by
+[party/inviteDeclined](#inviteDeclined).
+
+Any member in a party can kick any other member with the request [party/kickMember](#kickMember).
+An event [party/memberLeft](#memberLeft) with the reason `kicked` will then be sent to all members and invited players.
+
+Similarly, any member can leave the party they are currently in with [party/leave](#leave),
+and the event [party/left](#left) will follow for all remaining members.
