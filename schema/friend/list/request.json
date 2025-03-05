@@ -31,7 +31,7 @@
                         "required": ["userId", "addedAt"]
                     }
                 },
-                "outgoing_pending_requests": {
+                "outgoingPendingRequests": {
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -44,7 +44,7 @@
                         "required": ["to", "sentAt"]
                     }
                 },
-                "incoming_pending_requests": {
+                "incomingPendingRequests": {
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -60,8 +60,8 @@
             },
             "required": [
                 "friends",
-                "outgoing_pending_requests",
-                "incoming_pending_requests"
+                "outgoingPendingRequests",
+                "incomingPendingRequests"
             ]
         }
     },

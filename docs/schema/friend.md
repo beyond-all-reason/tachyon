@@ -369,7 +369,7 @@ Retrieve the status of your friendlist
                         "required": ["userId", "addedAt"]
                     }
                 },
-                "outgoing_pending_requests": {
+                "outgoingPendingRequests": {
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -382,7 +382,7 @@ Retrieve the status of your friendlist
                         "required": ["to", "sentAt"]
                     }
                 },
-                "incoming_pending_requests": {
+                "incomingPendingRequests": {
                     "type": "array",
                     "items": {
                         "type": "object",
@@ -398,8 +398,8 @@ Retrieve the status of your friendlist
             },
             "required": [
                 "friends",
-                "outgoing_pending_requests",
-                "incoming_pending_requests"
+                "outgoingPendingRequests",
+                "incomingPendingRequests"
             ]
         }
     },
@@ -436,7 +436,7 @@ Retrieve the status of your friendlist
                 "addedAt": 1705432698000000
             }
         ],
-        "outgoing_pending_requests": [
+        "outgoingPendingRequests": [
             {
                 "to": "351",
                 "sentAt": 1705432698000000
@@ -458,7 +458,7 @@ Retrieve the status of your friendlist
                 "sentAt": 1705432698000000
             }
         ],
-        "incoming_pending_requests": [
+        "incomingPendingRequests": [
             {
                 "from": "351",
                 "sentAt": 1705432698000000
@@ -485,11 +485,11 @@ export interface FriendListRequestData {
         userId: UserId;
         addedAt: UnixTime;
     }[];
-    outgoing_pending_requests: {
+    outgoingPendingRequests: {
         to: UserId;
         sentAt: UnixTime;
     }[];
-    incoming_pending_requests: {
+    incomingPendingRequests: {
         from: UserId;
         sentAt: UnixTime;
     }[];
