@@ -868,7 +868,7 @@ export interface MatchmakingQueueRequestData {
                     "enum": [
                         "invalid_queue_specified",
                         "already_queued",
-                        "already_inbattle",
+                        "already_in_battle",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -907,7 +907,7 @@ export interface MatchmakingQueueOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_inbattle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_in_battle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
