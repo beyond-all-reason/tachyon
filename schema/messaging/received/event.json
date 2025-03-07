@@ -18,12 +18,23 @@
             "properties": {
                 "message": { "type": "string" },
                 "source": {
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "player" },
-                        "userId": { "$ref": "../../definitions/userId.json" }
-                    },
-                    "required": ["type", "userId"]
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
+                            },
+                            "required": ["type", "userId"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": { "type": { "const": "party" } },
+                            "required": ["type"]
+                        }
+                    ]
                 },
                 "timestamp": {
                     "$ref": "../../definitions/unixTime.json",

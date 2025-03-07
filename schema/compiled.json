@@ -2510,12 +2510,25 @@
                     "properties": {
                         "message": { "type": "string" },
                         "source": {
-                            "type": "object",
-                            "properties": {
-                                "type": { "const": "player" },
-                                "userId": { "$ref": "#/definitions/userId" }
-                            },
-                            "required": ["type", "userId"]
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        }
+                                    },
+                                    "required": ["type", "userId"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "party" }
+                                    },
+                                    "required": ["type"]
+                                }
+                            ]
                         },
                         "timestamp": {
                             "$ref": "#/definitions/unixTime",
@@ -2545,12 +2558,25 @@
                     "type": "object",
                     "properties": {
                         "target": {
-                            "type": "object",
-                            "properties": {
-                                "type": { "const": "player" },
-                                "userId": { "$ref": "#/definitions/userId" }
-                            },
-                            "required": ["type", "userId"]
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        }
+                                    },
+                                    "required": ["type", "userId"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "party" }
+                                    },
+                                    "required": ["type"]
+                                }
+                            ]
                         },
                         "message": { "type": "string", "maxLength": 512 }
                     },
