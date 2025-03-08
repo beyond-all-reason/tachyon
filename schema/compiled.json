@@ -2440,6 +2440,33 @@
             "required": ["type", "messageId", "commandId", "data"]
         },
         {
+            "title": "MatchmakingQueuesJoinedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/queuesJoined" },
+                "data": {
+                    "title": "MatchmakingQueuesJoinedEventData",
+                    "type": "object",
+                    "properties": {
+                        "queues": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "minItems": 1
+                        }
+                    },
+                    "required": ["queues"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "MatchmakingReadyRequest",
             "tachyon": {
                 "source": "user",
