@@ -11,59 +11,7 @@
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "friend/list" },
-        "data": {
-            "title": "FriendListRequestData",
-            "type": "object",
-            "properties": {
-                "friends": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "addedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["userId", "addedAt"]
-                    }
-                },
-                "outgoingPendingRequests": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "to": { "$ref": "../../definitions/userId.json" },
-                            "sentAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["to", "sentAt"]
-                    }
-                },
-                "incomingPendingRequests": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "from": { "$ref": "../../definitions/userId.json" },
-                            "sentAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["from", "sentAt"]
-                    }
-                }
-            },
-            "required": [
-                "friends",
-                "outgoingPendingRequests",
-                "incomingPendingRequests"
-            ]
-        }
+        "commandId": { "const": "friend/list" }
     },
-    "required": ["type", "messageId", "commandId", "data"]
+    "required": ["type", "messageId", "commandId"]
 }

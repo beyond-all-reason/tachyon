@@ -349,61 +349,9 @@ Retrieve the status of your friendlist
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "friend/list" },
-        "data": {
-            "title": "FriendListRequestData",
-            "type": "object",
-            "properties": {
-                "friends": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "addedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["userId", "addedAt"]
-                    }
-                },
-                "outgoingPendingRequests": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "to": { "$ref": "../../definitions/userId.json" },
-                            "sentAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["to", "sentAt"]
-                    }
-                },
-                "incomingPendingRequests": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "from": { "$ref": "../../definitions/userId.json" },
-                            "sentAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["from", "sentAt"]
-                    }
-                }
-            },
-            "required": [
-                "friends",
-                "outgoingPendingRequests",
-                "incomingPendingRequests"
-            ]
-        }
+        "commandId": { "const": "friend/list" }
     },
-    "required": ["type", "messageId", "commandId", "data"]
+    "required": ["type", "messageId", "commandId"]
 }
 
 ```
@@ -416,83 +364,17 @@ Retrieve the status of your friendlist
 {
     "type": "request",
     "messageId": "aliquip",
-    "commandId": "friend/list",
-    "data": {
-        "friends": [
-            {
-                "userId": "351",
-                "addedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "addedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "addedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "addedAt": 1705432698000000
-            }
-        ],
-        "outgoingPendingRequests": [
-            {
-                "to": "351",
-                "sentAt": 1705432698000000
-            },
-            {
-                "to": "351",
-                "sentAt": 1705432698000000
-            },
-            {
-                "to": "351",
-                "sentAt": 1705432698000000
-            },
-            {
-                "to": "351",
-                "sentAt": 1705432698000000
-            },
-            {
-                "to": "351",
-                "sentAt": 1705432698000000
-            }
-        ],
-        "incomingPendingRequests": [
-            {
-                "from": "351",
-                "sentAt": 1705432698000000
-            }
-        ]
-    }
+    "commandId": "friend/list"
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type UserId = string;
-export type UnixTime = number;
-
 export interface FriendListRequest {
     type: "request";
     messageId: string;
     commandId: "friend/list";
-    data: FriendListRequestData;
-}
-export interface FriendListRequestData {
-    friends: {
-        userId: UserId;
-        addedAt: UnixTime;
-    }[];
-    outgoingPendingRequests: {
-        to: UserId;
-        sentAt: UnixTime;
-    }[];
-    incomingPendingRequests: {
-        from: UserId;
-        sentAt: UnixTime;
-    }[];
 }
 ```
 ### Response
@@ -516,9 +398,65 @@ export interface FriendListRequestData {
                 "type": { "const": "response" },
                 "messageId": { "type": "string" },
                 "commandId": { "const": "friend/list" },
-                "status": { "const": "success" }
+                "status": { "const": "success" },
+                "data": {
+                    "title": "FriendListOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "friends": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "../../definitions/userId.json"
+                                    },
+                                    "addedAt": {
+                                        "$ref": "../../definitions/unixTime.json"
+                                    }
+                                },
+                                "required": ["userId", "addedAt"]
+                            }
+                        },
+                        "outgoingPendingRequests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "to": {
+                                        "$ref": "../../definitions/userId.json"
+                                    },
+                                    "sentAt": {
+                                        "$ref": "../../definitions/unixTime.json"
+                                    }
+                                },
+                                "required": ["to", "sentAt"]
+                            }
+                        },
+                        "incomingPendingRequests": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "from": {
+                                        "$ref": "../../definitions/userId.json"
+                                    },
+                                    "sentAt": {
+                                        "$ref": "../../definitions/unixTime.json"
+                                    }
+                                },
+                                "required": ["from", "sentAt"]
+                            }
+                        }
+                    },
+                    "required": [
+                        "friends",
+                        "outgoingPendingRequests",
+                        "incomingPendingRequests"
+                    ]
+                }
             },
-            "required": ["type", "messageId", "commandId", "status"]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
             "title": "FriendListFailResponse",
@@ -554,18 +492,76 @@ export interface FriendListRequestData {
     "type": "response",
     "messageId": "nulla eiusmod amet adipisicing enim",
     "commandId": "friend/list",
-    "status": "success"
+    "status": "success",
+    "data": {
+        "friends": [
+            {
+                "userId": "351",
+                "addedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "addedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "addedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "addedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "addedAt": 1705432698000000
+            }
+        ],
+        "outgoingPendingRequests": [
+            {
+                "to": "351",
+                "sentAt": 1705432698000000
+            }
+        ],
+        "incomingPendingRequests": [
+            {
+                "from": "351",
+                "sentAt": 1705432698000000
+            },
+            {
+                "from": "351",
+                "sentAt": 1705432698000000
+            }
+        ]
+    }
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
+export type UserId = string;
+export type UnixTime = number;
+
 export interface FriendListOkResponse {
     type: "response";
     messageId: string;
     commandId: "friend/list";
     status: "success";
+    data: FriendListOkResponseData;
+}
+export interface FriendListOkResponseData {
+    friends: {
+        userId: UserId;
+        addedAt: UnixTime;
+    }[];
+    outgoingPendingRequests: {
+        to: UserId;
+        sentAt: UnixTime;
+    }[];
+    incomingPendingRequests: {
+        from: UserId;
+        sentAt: UnixTime;
+    }[];
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
