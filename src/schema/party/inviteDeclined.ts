@@ -10,6 +10,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             userId: Type.Ref(userId),
+            reason: Type.Union([Type.Literal("declined"), Type.Literal("timed_out")]),
         }),
     },
 });
