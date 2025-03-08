@@ -16,7 +16,7 @@ to all party members and invited players.
 Accepting an invite can be done with [party/acceptInvite](#acceptInvite), and will be followed
 by an event [party/memberJoined](#memberJoined) sent to all members and players with pending
 invites. Declining is done with [party/declineInvite](#declineInvite) and will be followed by
-[party/inviteDeclined](#inviteDeclined).
+[party/inviteDeclined](#inviteDeclined). Invites will time out after a while.
 
 Any member in a party can kick any other member with the request [party/kickMember](#kickMember).
 An event [party/memberLeft](#memberLeft) with the reason `kicked` will then be sent to all members and invited players.

@@ -16,9 +16,12 @@
             "title": "PartyInviteDeclinedEventData",
             "type": "object",
             "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
+                "userId": { "$ref": "../../definitions/userId.json" },
+                "reason": {
+                    "anyOf": [{ "const": "declined" }, { "const": "timed_out" }]
+                }
             },
-            "required": ["userId"]
+            "required": ["userId", "reason"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

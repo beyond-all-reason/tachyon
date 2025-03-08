@@ -3302,9 +3302,15 @@
                     "title": "PartyInviteDeclinedEventData",
                     "type": "object",
                     "properties": {
-                        "userId": { "$ref": "#/definitions/userId" }
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "reason": {
+                            "anyOf": [
+                                { "const": "declined" },
+                                { "const": "timed_out" }
+                            ]
+                        }
                     },
-                    "required": ["userId"]
+                    "required": ["userId", "reason"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
