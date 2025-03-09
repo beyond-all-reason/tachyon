@@ -97,6 +97,7 @@ Every event command contains these additional properties:
   - [friend](docs/schema/friend.md)
   - [matchmaking](docs/schema/matchmaking.md)
   - [messaging](docs/schema/messaging.md)
+  - [party](docs/schema/party.md)
   - [system](docs/schema/system.md)
   - [user](docs/schema/user.md)
 <!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
