@@ -16,5 +16,6 @@ export default defineEndpoint({
         { status: "success" },
         { status: "failed", reason: "not_in_party" },
         { status: "failed", reason: "invalid_user" },
+        { status: "failed", reason: "party_full" },
     ],
 });

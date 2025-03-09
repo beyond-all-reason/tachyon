@@ -31,6 +31,7 @@
                     "enum": [
                         "not_in_party",
                         "invalid_user",
+                        "party_full",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
