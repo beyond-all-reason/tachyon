@@ -11,7 +11,8 @@ sent, the target player as well as every party member gets an event
 
 Any pending invite can be cancelled by any member in the party with the request
 [party/cancelInvite](#cancelInvite). Afterward, an event [party/inviteCancelled](#inviteCancelled) will be sent
-to all party members and invited players.
+to all party members and invited players. When the last member of a party leaves, the party
+is disbanded and the cancelInvite event is sent to all players with a pending invite.
 
 Accepting an invite can be done with [party/acceptInvite](#acceptInvite), and will be followed
 by an event [party/memberJoined](#memberJoined) sent to all members and players with pending
