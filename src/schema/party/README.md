@@ -24,3 +24,12 @@ An event [party/memberLeft](#memberLeft) with the reason `kicked` will then be s
 
 Similarly, any member can leave the party they are currently in with [party/leave](#leave),
 and the event [party/left](#left) will follow for all remaining members.
+
+# Limitations and expansions
+
+As time of writing, this spec doesn't have any concept of leader, any party member can do all actions.
+Maybe in the future, we may want to restrict some things, like only leader can join games/matchmaking
+or invite/cancel invites.
+
+We also discussed a concept of public parties, where anyone could join. This may be a future extension
+but is out of scope for now.
