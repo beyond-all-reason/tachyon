@@ -239,7 +239,7 @@ Sent by the server to inform the client of its own user state. This event should
             "clanId": null,
             "countryCode": "sint proident ipsum officia",
             "status": "offline",
-            "partyId": null,
+            "party": null,
             "friendIds": [
                 "deserunt",
                 "esse sunt anim dolor dolore",
@@ -299,7 +299,7 @@ export type PrivateUser = {
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
 } & {
-    partyId: string | null;
+    party: PartyState | null;
     friendIds: string[];
     outgoingFriendRequest: {
         to: UserId;
@@ -313,6 +313,7 @@ export type PrivateUser = {
     currentBattle?: PrivateBattle;
 };
 export type UserId = string;
+export type PartyId = string;
 export type UnixTime = number;
 
 export interface UserSelfEvent {
@@ -323,6 +324,17 @@ export interface UserSelfEvent {
 }
 export interface UserSelfEventData {
     user: PrivateUser;
+}
+export interface PartyState {
+    id: PartyId;
+    members: {
+        userId: UserId;
+        joinedAt: UnixTime;
+    }[];
+    invited: {
+        userId: UserId;
+        invitedAt: UnixTime;
+    }[];
 }
 export interface PrivateBattle {
     username: string;
