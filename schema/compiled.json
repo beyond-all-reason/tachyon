@@ -61,6 +61,35 @@
             "type": "string",
             "examples": ["1882f6b2e3a4d14f24acb7aa"]
         },
+        "partyState": {
+            "type": "object",
+            "properties": {
+                "id": { "$ref": "#/definitions/partyId" },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "joinedAt": { "$ref": "#/definitions/unixTime" }
+                        },
+                        "required": ["userId", "joinedAt"]
+                    }
+                },
+                "invited": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "invitedAt": { "$ref": "#/definitions/unixTime" }
+                        },
+                        "required": ["userId", "invitedAt"]
+                    }
+                }
+            },
+            "required": ["id", "members", "invited"]
+        },
         "player": {
             "type": "object",
             "properties": {
@@ -118,9 +147,9 @@
                 {
                     "type": "object",
                     "properties": {
-                        "partyId": {
+                        "party": {
                             "anyOf": [
-                                { "$ref": "#/definitions/partyId" },
+                                { "$ref": "#/definitions/partyState" },
                                 { "type": "null" }
                             ]
                         },
@@ -163,7 +192,7 @@
                         }
                     },
                     "required": [
-                        "partyId",
+                        "party",
                         "friendIds",
                         "outgoingFriendRequest",
                         "incomingFriendRequest",
@@ -3078,120 +3107,6 @@
             ]
         },
         {
-            "title": "PartyGetRequest",
-            "tachyon": {
-                "source": "user",
-                "target": "server",
-                "scopes": ["tachyon.lobby"]
-            },
-            "type": "object",
-            "properties": {
-                "type": { "const": "request" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/get" },
-                "data": {
-                    "title": "PartyGetRequestData",
-                    "type": "object",
-                    "properties": {
-                        "partyId": { "$ref": "#/definitions/partyId" }
-                    },
-                    "required": ["partyId"]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "data"]
-        },
-        {
-            "title": "PartyGetResponse",
-            "tachyon": {
-                "source": "server",
-                "target": "user",
-                "scopes": ["tachyon.lobby"]
-            },
-            "anyOf": [
-                {
-                    "title": "PartyGetOkResponse",
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "response" },
-                        "messageId": { "type": "string" },
-                        "commandId": { "const": "party/get" },
-                        "status": { "const": "success" },
-                        "data": {
-                            "title": "PartyGetOkResponseData",
-                            "type": "object",
-                            "properties": {
-                                "members": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "userId": {
-                                                "$ref": "#/definitions/userId"
-                                            },
-                                            "joinedAt": {
-                                                "$ref": "#/definitions/unixTime"
-                                            }
-                                        },
-                                        "required": ["userId", "joinedAt"]
-                                    }
-                                },
-                                "invited": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "userId": {
-                                                "$ref": "#/definitions/userId"
-                                            },
-                                            "invitedAt": {
-                                                "$ref": "#/definitions/unixTime"
-                                            }
-                                        },
-                                        "required": ["userId", "invitedAt"]
-                                    }
-                                }
-                            },
-                            "required": ["members", "invited"]
-                        }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "data"
-                    ]
-                },
-                {
-                    "title": "PartyGetFailResponse",
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "response" },
-                        "messageId": { "type": "string" },
-                        "commandId": { "const": "party/get" },
-                        "status": { "const": "failed" },
-                        "reason": {
-                            "enum": [
-                                "invalid_party",
-                                "internal_error",
-                                "unauthorized",
-                                "invalid_request",
-                                "command_unimplemented"
-                            ]
-                        },
-                        "details": { "type": "string" }
-                    },
-                    "required": [
-                        "type",
-                        "messageId",
-                        "commandId",
-                        "status",
-                        "reason"
-                    ]
-                }
-            ]
-        },
-        {
             "title": "PartyInviteRequest",
             "tachyon": {
                 "source": "user",
@@ -3333,9 +3248,46 @@
                     "type": "object",
                     "properties": {
                         "invitedUserId": { "$ref": "#/definitions/userId" },
-                        "invitedAt": { "$ref": "#/definitions/unixTime" }
+                        "invitedAt": { "$ref": "#/definitions/unixTime" },
+                        "id": { "$ref": "#/definitions/partyId" },
+                        "members": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "joinedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["userId", "joinedAt"]
+                            }
+                        },
+                        "invited": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "invitedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["userId", "invitedAt"]
+                            }
+                        }
                     },
-                    "required": ["invitedUserId", "invitedAt"]
+                    "required": [
+                        "invitedUserId",
+                        "invitedAt",
+                        "id",
+                        "members",
+                        "invited"
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -3491,9 +3443,46 @@
                     "type": "object",
                     "properties": {
                         "userId": { "$ref": "#/definitions/userId" },
-                        "joinedAt": { "$ref": "#/definitions/unixTime" }
+                        "joinedAt": { "$ref": "#/definitions/unixTime" },
+                        "id": { "$ref": "#/definitions/partyId" },
+                        "members": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "joinedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["userId", "joinedAt"]
+                            }
+                        },
+                        "invited": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "invitedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["userId", "invitedAt"]
+                            }
+                        }
                     },
-                    "required": ["userId", "joinedAt"]
+                    "required": [
+                        "userId",
+                        "joinedAt",
+                        "id",
+                        "members",
+                        "invited"
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

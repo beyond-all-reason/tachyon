@@ -17,9 +17,40 @@
             "type": "object",
             "properties": {
                 "userId": { "$ref": "../../definitions/userId.json" },
-                "joinedAt": { "$ref": "../../definitions/unixTime.json" }
+                "joinedAt": { "$ref": "../../definitions/unixTime.json" },
+                "id": { "$ref": "../../definitions/partyId.json" },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "joinedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "joinedAt"]
+                    }
+                },
+                "invited": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "invitedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "invitedAt"]
+                    }
+                }
             },
-            "required": ["userId", "joinedAt"]
+            "required": ["userId", "joinedAt", "id", "members", "invited"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

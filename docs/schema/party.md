@@ -43,7 +43,6 @@ but is out of scope for now.
 - [cancelInvite](#cancelinvite)
 - [create](#create)
 - [declineInvite](#declineinvite)
-- [get](#get)
 - [invite](#invite)
 - [inviteCancelled](#invitecancelled)
 - [inviteDeclined](#invitedeclined)
@@ -652,232 +651,6 @@ Possible Failed Reasons: `invalid_party`, `internal_error`, `unauthorized`, `inv
 
 ---
 
-## Get
-
-query party information. Only members and invited players can query the party.
-
-- Endpoint Type: **Request** -> **Response**
-- Source: **User**
-- Target: **Server**
-- Required Scopes: `tachyon.lobby`
-
-### Request
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "PartyGetRequest",
-    "tachyon": {
-        "source": "user",
-        "target": "server",
-        "scopes": ["tachyon.lobby"]
-    },
-    "type": "object",
-    "properties": {
-        "type": { "const": "request" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "party/get" },
-        "data": {
-            "title": "PartyGetRequestData",
-            "type": "object",
-            "properties": {
-                "partyId": { "$ref": "../../definitions/partyId.json" }
-            },
-            "required": ["partyId"]
-        }
-    },
-    "required": ["type", "messageId", "commandId", "data"]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "request",
-    "messageId": "dolor nulla sunt laborum irure",
-    "commandId": "party/get",
-    "data": {
-        "partyId": "1882f6b2e3a4d14f24acb7aa"
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export type PartyId = string;
-
-export interface PartyGetRequest {
-    type: "request";
-    messageId: string;
-    commandId: "party/get";
-    data: PartyGetRequestData;
-}
-export interface PartyGetRequestData {
-    partyId: PartyId;
-}
-```
-### Response
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "PartyGetResponse",
-    "tachyon": {
-        "source": "server",
-        "target": "user",
-        "scopes": ["tachyon.lobby"]
-    },
-    "anyOf": [
-        {
-            "title": "PartyGetOkResponse",
-            "type": "object",
-            "properties": {
-                "type": { "const": "response" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/get" },
-                "status": { "const": "success" },
-                "data": {
-                    "title": "PartyGetOkResponseData",
-                    "type": "object",
-                    "properties": {
-                        "members": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "../../definitions/userId.json"
-                                    },
-                                    "joinedAt": {
-                                        "$ref": "../../definitions/unixTime.json"
-                                    }
-                                },
-                                "required": ["userId", "joinedAt"]
-                            }
-                        },
-                        "invited": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "../../definitions/userId.json"
-                                    },
-                                    "invitedAt": {
-                                        "$ref": "../../definitions/unixTime.json"
-                                    }
-                                },
-                                "required": ["userId", "invitedAt"]
-                            }
-                        }
-                    },
-                    "required": ["members", "invited"]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "status", "data"]
-        },
-        {
-            "title": "PartyGetFailResponse",
-            "type": "object",
-            "properties": {
-                "type": { "const": "response" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/get" },
-                "status": { "const": "failed" },
-                "reason": {
-                    "enum": [
-                        "invalid_party",
-                        "internal_error",
-                        "unauthorized",
-                        "invalid_request",
-                        "command_unimplemented"
-                    ]
-                },
-                "details": { "type": "string" }
-            },
-            "required": ["type", "messageId", "commandId", "status", "reason"]
-        }
-    ]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "response",
-    "messageId": "ullamco ut Excepteur consectetur",
-    "commandId": "party/get",
-    "status": "success",
-    "data": {
-        "members": [
-            {
-                "userId": "351",
-                "joinedAt": 1705432698000000
-            }
-        ],
-        "invited": [
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            }
-        ]
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export type UserId = string;
-export type UnixTime = number;
-
-export interface PartyGetOkResponse {
-    type: "response";
-    messageId: string;
-    commandId: "party/get";
-    status: "success";
-    data: PartyGetOkResponseData;
-}
-export interface PartyGetOkResponseData {
-    members: {
-        userId: UserId;
-        joinedAt: UnixTime;
-    }[];
-    invited: {
-        userId: UserId;
-        invitedAt: UnixTime;
-    }[];
-}
-```
-Possible Failed Reasons: `invalid_party`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
-
----
-
 ## Invite
 
 invite the target player to your current party
@@ -1212,9 +985,46 @@ A player has been invited to the party. Sent to the invited player and all party
             "type": "object",
             "properties": {
                 "invitedUserId": { "$ref": "../../definitions/userId.json" },
-                "invitedAt": { "$ref": "../../definitions/unixTime.json" }
+                "invitedAt": { "$ref": "../../definitions/unixTime.json" },
+                "id": { "$ref": "../../definitions/partyId.json" },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "joinedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "joinedAt"]
+                    }
+                },
+                "invited": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "invitedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "invitedAt"]
+                    }
+                }
             },
-            "required": ["invitedUserId", "invitedAt"]
+            "required": [
+                "invitedUserId",
+                "invitedAt",
+                "id",
+                "members",
+                "invited"
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1233,7 +1043,40 @@ A player has been invited to the party. Sent to the invited player and all party
     "commandId": "party/invited",
     "data": {
         "invitedUserId": "351",
-        "invitedAt": 1705432698000000
+        "invitedAt": 1705432698000000,
+        "id": "1882f6b2e3a4d14f24acb7aa",
+        "members": [
+            {
+                "userId": "351",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "joinedAt": 1705432698000000
+            }
+        ],
+        "invited": [
+            {
+                "userId": "351",
+                "invitedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "invitedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "invitedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "invitedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "invitedAt": 1705432698000000
+            }
+        ]
     }
 }
 ```
@@ -1243,6 +1086,7 @@ A player has been invited to the party. Sent to the invited player and all party
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type PartyId = string;
 
 export interface PartyInvitedEvent {
     type: "event";
@@ -1253,6 +1097,15 @@ export interface PartyInvitedEvent {
 export interface PartyInvitedEventData {
     invitedUserId: UserId;
     invitedAt: UnixTime;
+    id: PartyId;
+    members: {
+        userId: UserId;
+        joinedAt: UnixTime;
+    }[];
+    invited: {
+        userId: UserId;
+        invitedAt: UnixTime;
+    }[];
 }
 ```
 ---
@@ -1570,9 +1423,40 @@ New player joined the party (accepted an invite)
             "type": "object",
             "properties": {
                 "userId": { "$ref": "../../definitions/userId.json" },
-                "joinedAt": { "$ref": "../../definitions/unixTime.json" }
+                "joinedAt": { "$ref": "../../definitions/unixTime.json" },
+                "id": { "$ref": "../../definitions/partyId.json" },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "joinedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "joinedAt"]
+                    }
+                },
+                "invited": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
+                            "invitedAt": {
+                                "$ref": "../../definitions/unixTime.json"
+                            }
+                        },
+                        "required": ["userId", "invitedAt"]
+                    }
+                }
             },
-            "required": ["userId", "joinedAt"]
+            "required": ["userId", "joinedAt", "id", "members", "invited"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1591,7 +1475,28 @@ New player joined the party (accepted an invite)
     "commandId": "party/memberJoined",
     "data": {
         "userId": "351",
-        "joinedAt": 1705432698000000
+        "joinedAt": 1705432698000000,
+        "id": "1882f6b2e3a4d14f24acb7aa",
+        "members": [
+            {
+                "userId": {},
+                "joinedAt": {}
+            }
+        ],
+        "invited": [
+            {
+                "userId": {},
+                "invitedAt": {}
+            },
+            {
+                "userId": {},
+                "invitedAt": {}
+            },
+            {
+                "userId": {},
+                "invitedAt": {}
+            }
+        ]
     }
 }
 ```
@@ -1601,6 +1506,7 @@ New player joined the party (accepted an invite)
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type PartyId = string;
 
 export interface PartyMemberJoinedEvent {
     type: "event";
@@ -1611,6 +1517,15 @@ export interface PartyMemberJoinedEvent {
 export interface PartyMemberJoinedEventData {
     userId: UserId;
     joinedAt: UnixTime;
+    id: PartyId;
+    members: {
+        userId: UserId;
+        joinedAt: UnixTime;
+    }[];
+    invited: {
+        userId: UserId;
+        invitedAt: UnixTime;
+    }[];
 }
 ```
 ---

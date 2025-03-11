@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-import { partyId } from "@/schema/definitions/partyId";
+import { partyState } from "@/schema/definitions/partyState";
 import { privateBattle } from "@/schema/definitions/privateBattle";
 import { unixTime } from "@/schema/definitions/unixTime";
 import { user } from "@/schema/definitions/user";
@@ -11,7 +11,7 @@ export const privateUser = Type.Intersect(
     [
         Type.Ref(user),
         Type.Object({
-            partyId: Nullable(Type.Ref(partyId)),
+            party: Nullable(Type.Ref(partyState)),
             friendIds: Type.Array(Type.String()),
             outgoingFriendRequest: Type.Array(
                 Type.Object({
