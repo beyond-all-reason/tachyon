@@ -153,6 +153,10 @@
                                 { "type": "null" }
                             ]
                         },
+                        "invitedToParties": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/partyState" }
+                        },
                         "friendIds": {
                             "type": "array",
                             "items": { "type": "string" }
@@ -193,6 +197,7 @@
                     },
                     "required": [
                         "party",
+                        "invitedToParties",
                         "friendIds",
                         "outgoingFriendRequest",
                         "incomingFriendRequest",
@@ -3245,48 +3250,20 @@
                 "commandId": { "const": "party/invited" },
                 "data": {
                     "title": "PartyInvitedEventData",
-                    "type": "object",
-                    "properties": {
-                        "invitedUserId": { "$ref": "#/definitions/userId" },
-                        "invitedAt": { "$ref": "#/definitions/unixTime" },
-                        "id": { "$ref": "#/definitions/partyId" },
-                        "members": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "#/definitions/userId"
-                                    },
-                                    "joinedAt": {
-                                        "$ref": "#/definitions/unixTime"
-                                    }
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "invitedUserId": {
+                                    "$ref": "#/definitions/userId"
                                 },
-                                "required": ["userId", "joinedAt"]
-                            }
+                                "invitedAt": {
+                                    "$ref": "#/definitions/unixTime"
+                                }
+                            },
+                            "required": ["invitedUserId", "invitedAt"]
                         },
-                        "invited": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "#/definitions/userId"
-                                    },
-                                    "invitedAt": {
-                                        "$ref": "#/definitions/unixTime"
-                                    }
-                                },
-                                "required": ["userId", "invitedAt"]
-                            }
-                        }
-                    },
-                    "required": [
-                        "invitedUserId",
-                        "invitedAt",
-                        "id",
-                        "members",
-                        "invited"
+                        { "$ref": "#/definitions/partyState" }
                     ]
                 }
             },
@@ -3512,6 +3489,25 @@
                         }
                     },
                     "required": ["userId", "reason"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyUpdatedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/updated" },
+                "data": {
+                    "$ref": "#/definitions/partyState",
+                    "title": "PartyUpdatedEventData"
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

@@ -12,6 +12,7 @@ export const privateUser = Type.Intersect(
         Type.Ref(user),
         Type.Object({
             party: Nullable(Type.Ref(partyState)),
+            invitedToParties: Type.Array(Type.Ref(partyState)),
             friendIds: Type.Array(Type.String()),
             outgoingFriendRequest: Type.Array(
                 Type.Object({

@@ -240,22 +240,125 @@ Sent by the server to inform the client of its own user state. This event should
             "countryCode": "sint proident ipsum officia",
             "status": "offline",
             "party": null,
+            "invitedToParties": [
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                }
+            ],
             "friendIds": [
-                "deserunt",
-                "esse sunt anim dolor dolore",
-                "tempor"
+                "veniam mollit officia Lorem enim",
+                "esse",
+                "do"
             ],
             "outgoingFriendRequest": [
                 {
-                    "to": "351",
+                    "to": {},
                     "sentAt": 1705432698000000
                 },
                 {
-                    "to": "351",
+                    "to": {},
                     "sentAt": 1705432698000000
                 },
                 {
-                    "to": "351",
+                    "to": {},
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "to": {},
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "to": {},
                     "sentAt": 1705432698000000
                 }
             ],
@@ -263,24 +366,39 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": "351",
                     "sentAt": 1705432698000000
+                },
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
                 }
             ],
             "ignoreIds": [
-                "do"
+                "dolore quis incididunt nisi sit",
+                "magna cupidatat sunt sint in",
+                "consequat occaecat",
+                "nulla fugiat reprehenderit dolor"
             ],
             "currentBattle": {
-                "username": "laboris exercitation tempor est Lorem",
-                "password": "ea dolor",
-                "ip": "sit consequat sint",
-                "port": 21259891.986846924,
+                "username": "consectetur proident sit aute",
+                "password": "minim consequat adipisicing commodo aute",
+                "ip": "Duis",
+                "port": -7403433.322906494,
                 "engine": {
-                    "version": "reprehenderit"
+                    "version": "do commodo anim in occaecat"
                 },
                 "game": {
-                    "springName": "laboris aliqua"
+                    "springName": "dolore laboris in elit eiusmod"
                 },
                 "map": {
-                    "springName": "aliquip non"
+                    "springName": "sit Excepteur eu magna ex"
                 }
             }
         }
@@ -300,6 +418,7 @@ export type PrivateUser = {
     status: "offline" | "menu" | "playing" | "lobby";
 } & {
     party: PartyState | null;
+    invitedToParties: PartyState[];
     friendIds: string[];
     outgoingFriendRequest: {
         to: UserId;

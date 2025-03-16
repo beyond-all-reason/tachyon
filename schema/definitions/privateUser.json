@@ -12,6 +12,10 @@
                         { "type": "null" }
                     ]
                 },
+                "invitedToParties": {
+                    "type": "array",
+                    "items": { "$ref": "../definitions/partyState.json" }
+                },
                 "friendIds": { "type": "array", "items": { "type": "string" } },
                 "outgoingFriendRequest": {
                     "type": "array",
@@ -40,6 +44,7 @@
             },
             "required": [
                 "party",
+                "invitedToParties",
                 "friendIds",
                 "outgoingFriendRequest",
                 "incomingFriendRequest",
