@@ -57,6 +57,39 @@
             "type": "string",
             "examples": ["-576460745805023"]
         },
+        "partyId": {
+            "type": "string",
+            "examples": ["1882f6b2e3a4d14f24acb7aa"]
+        },
+        "partyState": {
+            "type": "object",
+            "properties": {
+                "id": { "$ref": "#/definitions/partyId" },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "joinedAt": { "$ref": "#/definitions/unixTime" }
+                        },
+                        "required": ["userId", "joinedAt"]
+                    }
+                },
+                "invited": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "invitedAt": { "$ref": "#/definitions/unixTime" }
+                        },
+                        "required": ["userId", "invitedAt"]
+                    }
+                }
+            },
+            "required": ["id", "members", "invited"]
+        },
         "player": {
             "type": "object",
             "properties": {
@@ -114,8 +147,15 @@
                 {
                     "type": "object",
                     "properties": {
-                        "partyId": {
-                            "anyOf": [{ "type": "string" }, { "type": "null" }]
+                        "party": {
+                            "anyOf": [
+                                { "$ref": "#/definitions/partyState" },
+                                { "type": "null" }
+                            ]
+                        },
+                        "invitedToParties": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/partyState" }
                         },
                         "friendIds": {
                             "type": "array",
@@ -156,7 +196,8 @@
                         }
                     },
                     "required": [
-                        "partyId",
+                        "party",
+                        "invitedToParties",
                         "friendIds",
                         "outgoingFriendRequest",
                         "incomingFriendRequest",
@@ -2392,7 +2433,7 @@
                             "enum": [
                                 "invalid_queue_specified",
                                 "already_queued",
-                                "already_inbattle",
+                                "already_in_battle",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -2428,6 +2469,33 @@
                     "type": "object",
                     "properties": { "playersQueued": { "type": "string" } },
                     "required": ["playersQueued"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "MatchmakingQueuesJoinedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/queuesJoined" },
+                "data": {
+                    "title": "MatchmakingQueuesJoinedEventData",
+                    "type": "object",
+                    "properties": {
+                        "queues": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "minItems": 1
+                        }
+                    },
+                    "required": ["queues"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2513,12 +2581,25 @@
                     "properties": {
                         "message": { "type": "string" },
                         "source": {
-                            "type": "object",
-                            "properties": {
-                                "type": { "const": "player" },
-                                "userId": { "$ref": "#/definitions/userId" }
-                            },
-                            "required": ["type", "userId"]
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        }
+                                    },
+                                    "required": ["type", "userId"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "party" }
+                                    },
+                                    "required": ["type"]
+                                }
+                            ]
                         },
                         "timestamp": {
                             "$ref": "#/definitions/unixTime",
@@ -2548,12 +2629,25 @@
                     "type": "object",
                     "properties": {
                         "target": {
-                            "type": "object",
-                            "properties": {
-                                "type": { "const": "player" },
-                                "userId": { "$ref": "#/definitions/userId" }
-                            },
-                            "required": ["type", "userId"]
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player" },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        }
+                                    },
+                                    "required": ["type", "userId"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "party" }
+                                    },
+                                    "required": ["type"]
+                                }
+                            ]
                         },
                         "message": { "type": "string", "maxLength": 512 }
                     },
@@ -2724,6 +2818,548 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "PartyAcceptInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/acceptInvite" },
+                "data": {
+                    "title": "PartyAcceptInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "partyId": { "$ref": "#/definitions/partyId" }
+                    },
+                    "required": ["partyId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyAcceptInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyAcceptInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/acceptInvite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "PartyAcceptInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/acceptInvite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyCancelInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/cancelInvite" },
+                "data": {
+                    "title": "PartyCancelInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyCancelInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyCancelInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/cancelInvite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "PartyCancelInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/cancelInvite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_party",
+                                "invalid_invite",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyCreateRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/create" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "PartyCreateResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyCreateOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/create" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "title": "PartyCreateOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "partyId": { "$ref": "#/definitions/partyId" }
+                            },
+                            "required": ["partyId"]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "PartyCreateFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/create" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyDeclineInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/declineInvite" },
+                "data": {
+                    "title": "PartyDeclineInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "partyId": { "$ref": "#/definitions/partyId" }
+                    },
+                    "required": ["partyId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyDeclineInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyDeclineInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/declineInvite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "PartyDeclineInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/declineInvite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/invite" },
+                "data": {
+                    "title": "PartyInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/invite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "PartyInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/invite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyInvitedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/invited" },
+                "data": {
+                    "title": "PartyInvitedEventData",
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "invitedUserId": {
+                                    "$ref": "#/definitions/userId"
+                                },
+                                "invitedAt": {
+                                    "$ref": "#/definitions/unixTime"
+                                }
+                            },
+                            "required": ["invitedUserId", "invitedAt"]
+                        },
+                        { "$ref": "#/definitions/partyState" }
+                    ]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyKickMemberRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/kickMember" },
+                "data": {
+                    "title": "PartyKickMemberRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "PartyKickMemberResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyKickMemberOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/kickMember" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "PartyKickMemberFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/kickMember" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyLeaveRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/leave" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "PartyLeaveResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "PartyLeaveOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/leave" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "PartyLeaveFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "party/leave" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "PartyUpdatedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/updated" },
+                "data": {
+                    "$ref": "#/definitions/partyState",
+                    "title": "PartyUpdatedEventData"
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "SystemDisconnectRequest",

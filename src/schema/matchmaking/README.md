@@ -20,3 +20,5 @@ The server may send [matchmaking/cancelled](#cancelled) event at any point after
   forcing the entire party to withdraw
 * `ready_timeout`: The player failed to accept a match within the given
   time window and is thus removed from the matchmaking system.
+
+When a player is in a party and a member of the party queues for matchmaking, all other member of the party will receive a [matchmaking/queuesJoined](#queuesJoined) event to let them know they are now in queue. This event is not sent to the player who originally joined the queues.

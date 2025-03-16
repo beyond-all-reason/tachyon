@@ -17,6 +17,9 @@ export default defineEndpoint({
                     type: Type.Literal("player"),
                     userId: Type.Ref(userId),
                 }),
+                Type.Object({
+                    type: Type.Literal("party"),
+                }),
             ]),
             timestamp: Type.Ref(unixTime, {
                 description: "time at which the message was received by the server",
