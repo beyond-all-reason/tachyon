@@ -8,26 +8,18 @@ Parties are groups of connected players. They are used to join matchmaking
 together and during lobby balancing.
 
 A player can only be in at most one party at any given time.
+When the last member of a party leaves, the party is disbanded.
 
-Any player in a party can invite any other connected player. When an invite is
-sent, the target player as well as every party member gets an event
-[party/invited](#invited). If the party is at capacity, sending an invite will fail.
+Any change to the party member or the pending invites is propagated with a [party/updated](#updated) event sent
+to all connected members and invited players.
 
+Any player in a party can invite any other connected player with [party/invite](#invite). If the party is at capacity, sending an invite will fail.
 Any pending invite can be cancelled by any member in the party with the request
-[party/cancelInvite](#cancelInvite). Afterward, an event [party/inviteCancelled](#inviteCancelled) will be sent
-to all party members and invited players. When the last member of a party leaves, the party
-is disbanded and the cancelInvite event is sent to all players with a pending invite.
-
-Accepting an invite can be done with [party/acceptInvite](#acceptInvite), and will be followed
-by an event [party/memberJoined](#memberJoined) sent to all members and players with pending
-invites. Declining is done with [party/declineInvite](#declineInvite) and will be followed by
-[party/inviteDeclined](#inviteDeclined). Invites will time out after a while.
+[party/cancelInvite](#cancelInvite).
+Accepting an invite can be done with [party/acceptInvite](#acceptInvite). Declining is done with [party/declineInvite](#declineInvite). Invites will time out after a while.
 
 Any member in a party can kick any other member with the request [party/kickMember](#kickMember).
-An event [party/memberLeft](#memberLeft) with the reason `kicked` will then be sent to all members and invited players.
-
-Similarly, any member can leave the party they are currently in with [party/leave](#leave),
-and the event [party/left](#left) will follow for all remaining members.
+Similarly, any member can leave the party they are currently in with [party/leave](#leave).
 
 # Limitations and expansions
 
@@ -44,13 +36,10 @@ but is out of scope for now.
 - [create](#create)
 - [declineInvite](#declineinvite)
 - [invite](#invite)
-- [inviteCancelled](#invitecancelled)
-- [inviteDeclined](#invitedeclined)
 - [invited](#invited)
 - [kickMember](#kickmember)
 - [leave](#leave)
-- [memberJoined](#memberjoined)
-- [memberLeft](#memberleft)
+- [updated](#updated)
 ---
 
 ## AcceptInvite
@@ -795,157 +784,6 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 ---
 
-## InviteCancelled
-
-An invite has been cancelled
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **User**
-- Required Scopes: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "PartyInviteCancelledEvent",
-    "tachyon": {
-        "source": "server",
-        "target": "user",
-        "scopes": ["tachyon.lobby"]
-    },
-    "type": "object",
-    "properties": {
-        "type": { "const": "event" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "party/inviteCancelled" },
-        "data": {
-            "title": "PartyInviteCancelledEventData",
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
-            },
-            "required": ["userId"]
-        }
-    },
-    "required": ["type", "messageId", "commandId", "data"]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "consectetur nostrud",
-    "commandId": "party/inviteCancelled",
-    "data": {
-        "userId": "351"
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export type UserId = string;
-
-export interface PartyInviteCancelledEvent {
-    type: "event";
-    messageId: string;
-    commandId: "party/inviteCancelled";
-    data: PartyInviteCancelledEventData;
-}
-export interface PartyInviteCancelledEventData {
-    userId: UserId;
-}
-```
----
-
-## InviteDeclined
-
-An invite has been declined
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **User**
-- Required Scopes: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "PartyInviteDeclinedEvent",
-    "tachyon": {
-        "source": "server",
-        "target": "user",
-        "scopes": ["tachyon.lobby"]
-    },
-    "type": "object",
-    "properties": {
-        "type": { "const": "event" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "party/inviteDeclined" },
-        "data": {
-            "title": "PartyInviteDeclinedEventData",
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" },
-                "reason": {
-                    "anyOf": [{ "const": "declined" }, { "const": "timed_out" }]
-                }
-            },
-            "required": ["userId", "reason"]
-        }
-    },
-    "required": ["type", "messageId", "commandId", "data"]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "sed eiusmod do Duis amet",
-    "commandId": "party/inviteDeclined",
-    "data": {
-        "userId": "351",
-        "reason": "declined"
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export type UserId = string;
-
-export interface PartyInviteDeclinedEvent {
-    type: "event";
-    messageId: string;
-    commandId: "party/inviteDeclined";
-    data: PartyInviteDeclinedEventData;
-}
-export interface PartyInviteDeclinedEventData {
-    userId: UserId;
-    reason: "declined" | "timed_out";
-}
-```
----
-
 ## Invited
 
 A player has been invited to the party. Sent to the invited player and all party members.
@@ -975,48 +813,20 @@ A player has been invited to the party. Sent to the invited player and all party
         "commandId": { "const": "party/invited" },
         "data": {
             "title": "PartyInvitedEventData",
-            "type": "object",
-            "properties": {
-                "invitedUserId": { "$ref": "../../definitions/userId.json" },
-                "invitedAt": { "$ref": "../../definitions/unixTime.json" },
-                "id": { "$ref": "../../definitions/partyId.json" },
-                "members": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "joinedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "invitedUserId": {
+                            "$ref": "../../definitions/userId.json"
                         },
-                        "required": ["userId", "joinedAt"]
-                    }
+                        "invitedAt": {
+                            "$ref": "../../definitions/unixTime.json"
+                        }
+                    },
+                    "required": ["invitedUserId", "invitedAt"]
                 },
-                "invited": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "invitedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["userId", "invitedAt"]
-                    }
-                }
-            },
-            "required": [
-                "invitedUserId",
-                "invitedAt",
-                "id",
-                "members",
-                "invited"
+                { "$ref": "../../definitions/partyState.json" }
             ]
         }
     },
@@ -1032,7 +842,7 @@ A player has been invited to the party. Sent to the invited player and all party
 ```json
 {
     "type": "event",
-    "messageId": "culpa velit nulla",
+    "messageId": "qui",
     "commandId": "party/invited",
     "data": {
         "invitedUserId": "351",
@@ -1042,25 +852,9 @@ A player has been invited to the party. Sent to the invited player and all party
             {
                 "userId": "351",
                 "joinedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "joinedAt": 1705432698000000
             }
         ],
         "invited": [
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
             {
                 "userId": "351",
                 "invitedAt": 1705432698000000
@@ -1077,6 +871,10 @@ A player has been invited to the party. Sent to the invited player and all party
 
 #### TypeScript Definition
 ```ts
+export type PartyInvitedEventData = {
+    invitedUserId: UserId;
+    invitedAt: UnixTime;
+} & PartyState;
 export type UserId = string;
 export type UnixTime = number;
 export type PartyId = string;
@@ -1087,9 +885,7 @@ export interface PartyInvitedEvent {
     commandId: "party/invited";
     data: PartyInvitedEventData;
 }
-export interface PartyInvitedEventData {
-    invitedUserId: UserId;
-    invitedAt: UnixTime;
+export interface PartyState {
     id: PartyId;
     members: {
         userId: UserId;
@@ -1382,7 +1178,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 ---
 
-## MemberJoined
+## Updated
 
 New player joined the party (accepted an invite)
 
@@ -1398,7 +1194,7 @@ New player joined the party (accepted an invite)
 
 ```json
 {
-    "title": "PartyMemberJoinedEvent",
+    "title": "PartyUpdatedEvent",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -1408,46 +1204,10 @@ New player joined the party (accepted an invite)
     "properties": {
         "type": { "const": "event" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "party/memberJoined" },
+        "commandId": { "const": "party/updated" },
         "data": {
-            "title": "PartyMemberJoinedEventData",
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" },
-                "joinedAt": { "$ref": "../../definitions/unixTime.json" },
-                "id": { "$ref": "../../definitions/partyId.json" },
-                "members": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "joinedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["userId", "joinedAt"]
-                    }
-                },
-                "invited": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "invitedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["userId", "invitedAt"]
-                    }
-                }
-            },
-            "required": ["userId", "joinedAt", "id", "members", "invited"]
+            "$ref": "../../definitions/partyState.json",
+            "title": "PartyUpdatedEventData"
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1462,30 +1222,44 @@ New player joined the party (accepted an invite)
 ```json
 {
     "type": "event",
-    "messageId": "adipisicing ut eu",
-    "commandId": "party/memberJoined",
+    "messageId": "aute adipisicing ut",
+    "commandId": "party/updated",
     "data": {
-        "userId": "351",
-        "joinedAt": 1705432698000000,
         "id": "1882f6b2e3a4d14f24acb7aa",
         "members": [
             {
-                "userId": {},
-                "joinedAt": {}
+                "userId": "351",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "joinedAt": 1705432698000000
             }
         ],
         "invited": [
             {
-                "userId": {},
-                "invitedAt": {}
+                "userId": "351",
+                "invitedAt": 1705432698000000
             },
             {
-                "userId": {},
-                "invitedAt": {}
+                "userId": "351",
+                "invitedAt": 1705432698000000
             },
             {
-                "userId": {},
-                "invitedAt": {}
+                "userId": "351",
+                "invitedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "invitedAt": 1705432698000000
             }
         ]
     }
@@ -1495,19 +1269,17 @@ New player joined the party (accepted an invite)
 
 #### TypeScript Definition
 ```ts
+export type PartyId = string;
 export type UserId = string;
 export type UnixTime = number;
-export type PartyId = string;
 
-export interface PartyMemberJoinedEvent {
+export interface PartyUpdatedEvent {
     type: "event";
     messageId: string;
-    commandId: "party/memberJoined";
-    data: PartyMemberJoinedEventData;
+    commandId: "party/updated";
+    data: PartyUpdatedEventData;
 }
-export interface PartyMemberJoinedEventData {
-    userId: UserId;
-    joinedAt: UnixTime;
+export interface PartyUpdatedEventData {
     id: PartyId;
     members: {
         userId: UserId;
@@ -1517,83 +1289,5 @@ export interface PartyMemberJoinedEventData {
         userId: UserId;
         invitedAt: UnixTime;
     }[];
-}
-```
----
-
-## MemberLeft
-
-A member has left the party
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **User**
-- Required Scopes: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "PartyMemberLeftEvent",
-    "tachyon": {
-        "source": "server",
-        "target": "user",
-        "scopes": ["tachyon.lobby"]
-    },
-    "type": "object",
-    "properties": {
-        "type": { "const": "event" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "party/memberLeft" },
-        "data": {
-            "title": "PartyMemberLeftEventData",
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" },
-                "reason": {
-                    "anyOf": [{ "const": "left" }, { "const": "kicked" }]
-                }
-            },
-            "required": ["userId", "reason"]
-        }
-    },
-    "required": ["type", "messageId", "commandId", "data"]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "tempor amet",
-    "commandId": "party/memberLeft",
-    "data": {
-        "userId": "351",
-        "reason": "kicked"
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export type UserId = string;
-
-export interface PartyMemberLeftEvent {
-    type: "event";
-    messageId: string;
-    commandId: "party/memberLeft";
-    data: PartyMemberLeftEventData;
-}
-export interface PartyMemberLeftEventData {
-    userId: UserId;
-    reason: "left" | "kicked";
 }
 ```

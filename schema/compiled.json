@@ -3178,58 +3178,6 @@
             ]
         },
         {
-            "title": "PartyInviteCancelledEvent",
-            "tachyon": {
-                "source": "server",
-                "target": "user",
-                "scopes": ["tachyon.lobby"]
-            },
-            "type": "object",
-            "properties": {
-                "type": { "const": "event" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/inviteCancelled" },
-                "data": {
-                    "title": "PartyInviteCancelledEventData",
-                    "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "#/definitions/userId" }
-                    },
-                    "required": ["userId"]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "data"]
-        },
-        {
-            "title": "PartyInviteDeclinedEvent",
-            "tachyon": {
-                "source": "server",
-                "target": "user",
-                "scopes": ["tachyon.lobby"]
-            },
-            "type": "object",
-            "properties": {
-                "type": { "const": "event" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/inviteDeclined" },
-                "data": {
-                    "title": "PartyInviteDeclinedEventData",
-                    "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "#/definitions/userId" },
-                        "reason": {
-                            "anyOf": [
-                                { "const": "declined" },
-                                { "const": "timed_out" }
-                            ]
-                        }
-                    },
-                    "required": ["userId", "reason"]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "data"]
-        },
-        {
             "title": "PartyInvitedEvent",
             "tachyon": {
                 "source": "server",
@@ -3243,48 +3191,20 @@
                 "commandId": { "const": "party/invited" },
                 "data": {
                     "title": "PartyInvitedEventData",
-                    "type": "object",
-                    "properties": {
-                        "invitedUserId": { "$ref": "#/definitions/userId" },
-                        "invitedAt": { "$ref": "#/definitions/unixTime" },
-                        "id": { "$ref": "#/definitions/partyId" },
-                        "members": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "#/definitions/userId"
-                                    },
-                                    "joinedAt": {
-                                        "$ref": "#/definitions/unixTime"
-                                    }
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "invitedUserId": {
+                                    "$ref": "#/definitions/userId"
                                 },
-                                "required": ["userId", "joinedAt"]
-                            }
+                                "invitedAt": {
+                                    "$ref": "#/definitions/unixTime"
+                                }
+                            },
+                            "required": ["invitedUserId", "invitedAt"]
                         },
-                        "invited": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "#/definitions/userId"
-                                    },
-                                    "invitedAt": {
-                                        "$ref": "#/definitions/unixTime"
-                                    }
-                                },
-                                "required": ["userId", "invitedAt"]
-                            }
-                        }
-                    },
-                    "required": [
-                        "invitedUserId",
-                        "invitedAt",
-                        "id",
-                        "members",
-                        "invited"
+                        { "$ref": "#/definitions/partyState" }
                     ]
                 }
             },
@@ -3423,7 +3343,7 @@
             ]
         },
         {
-            "title": "PartyMemberJoinedEvent",
+            "title": "PartyUpdatedEvent",
             "tachyon": {
                 "source": "server",
                 "target": "user",
@@ -3433,81 +3353,10 @@
             "properties": {
                 "type": { "const": "event" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "party/memberJoined" },
+                "commandId": { "const": "party/updated" },
                 "data": {
-                    "title": "PartyMemberJoinedEventData",
-                    "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "#/definitions/userId" },
-                        "joinedAt": { "$ref": "#/definitions/unixTime" },
-                        "id": { "$ref": "#/definitions/partyId" },
-                        "members": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "#/definitions/userId"
-                                    },
-                                    "joinedAt": {
-                                        "$ref": "#/definitions/unixTime"
-                                    }
-                                },
-                                "required": ["userId", "joinedAt"]
-                            }
-                        },
-                        "invited": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "userId": {
-                                        "$ref": "#/definitions/userId"
-                                    },
-                                    "invitedAt": {
-                                        "$ref": "#/definitions/unixTime"
-                                    }
-                                },
-                                "required": ["userId", "invitedAt"]
-                            }
-                        }
-                    },
-                    "required": [
-                        "userId",
-                        "joinedAt",
-                        "id",
-                        "members",
-                        "invited"
-                    ]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "data"]
-        },
-        {
-            "title": "PartyMemberLeftEvent",
-            "tachyon": {
-                "source": "server",
-                "target": "user",
-                "scopes": ["tachyon.lobby"]
-            },
-            "type": "object",
-            "properties": {
-                "type": { "const": "event" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/memberLeft" },
-                "data": {
-                    "title": "PartyMemberLeftEventData",
-                    "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "#/definitions/userId" },
-                        "reason": {
-                            "anyOf": [
-                                { "const": "left" },
-                                { "const": "kicked" }
-                            ]
-                        }
-                    },
-                    "required": ["userId", "reason"]
+                    "$ref": "#/definitions/partyState",
+                    "title": "PartyUpdatedEventData"
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

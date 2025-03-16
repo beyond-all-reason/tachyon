@@ -11,12 +11,12 @@ export default defineEndpoint({
     description:
         "A player has been invited to the party. Sent to the invited player and all party members.",
     event: {
-        data: Type.Composite([
+        data: Type.Intersect([
             Type.Object({
                 invitedUserId: Type.Ref(userId),
                 invitedAt: Type.Ref(unixTime),
             }),
-            partyState,
+            Type.Ref(partyState),
         ]),
     },
 });

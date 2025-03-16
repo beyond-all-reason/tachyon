@@ -14,48 +14,20 @@
         "commandId": { "const": "party/invited" },
         "data": {
             "title": "PartyInvitedEventData",
-            "type": "object",
-            "properties": {
-                "invitedUserId": { "$ref": "../../definitions/userId.json" },
-                "invitedAt": { "$ref": "../../definitions/unixTime.json" },
-                "id": { "$ref": "../../definitions/partyId.json" },
-                "members": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "joinedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "invitedUserId": {
+                            "$ref": "../../definitions/userId.json"
                         },
-                        "required": ["userId", "joinedAt"]
-                    }
+                        "invitedAt": {
+                            "$ref": "../../definitions/unixTime.json"
+                        }
+                    },
+                    "required": ["invitedUserId", "invitedAt"]
                 },
-                "invited": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "userId": {
-                                "$ref": "../../definitions/userId.json"
-                            },
-                            "invitedAt": {
-                                "$ref": "../../definitions/unixTime.json"
-                            }
-                        },
-                        "required": ["userId", "invitedAt"]
-                    }
-                }
-            },
-            "required": [
-                "invitedUserId",
-                "invitedAt",
-                "id",
-                "members",
-                "invited"
+                { "$ref": "../../definitions/partyState.json" }
             ]
         }
     },
