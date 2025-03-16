@@ -159,8 +159,6 @@ export interface PartyAcceptInviteRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "invalid_party",
-                        "already_in_party",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -199,7 +197,7 @@ export interface PartyAcceptInviteOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_party`, `already_in_party`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -450,7 +448,6 @@ export interface PartyCreateRequest {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "already_in_party",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -498,7 +495,7 @@ export interface PartyCreateOkResponseData {
     partyId: PartyId;
 }
 ```
-Possible Failed Reasons: `already_in_party`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -608,7 +605,6 @@ export interface PartyDeclineInviteRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "invalid_party",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -647,7 +643,7 @@ export interface PartyDeclineInviteOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_party`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -757,9 +753,6 @@ export interface PartyInviteRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "not_in_party",
-                        "invalid_user",
-                        "party_full",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -798,7 +791,7 @@ export interface PartyInviteOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `not_in_party`, `invalid_user`, `party_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1216,8 +1209,6 @@ export interface PartyKickMemberRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "not_in_party",
-                        "target_not_in_party",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1256,7 +1247,7 @@ export interface PartyKickMemberOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `not_in_party`, `target_not_in_party`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 

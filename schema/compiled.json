@@ -2871,8 +2871,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "invalid_party",
-                                "already_in_party",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -3021,7 +3019,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "already_in_party",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -3092,7 +3089,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "invalid_party",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -3163,9 +3159,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "not_in_party",
-                                "invalid_user",
-                                "party_full",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -3250,20 +3243,48 @@
                 "commandId": { "const": "party/invited" },
                 "data": {
                     "title": "PartyInvitedEventData",
-                    "allOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "invitedUserId": {
-                                    "$ref": "#/definitions/userId"
+                    "type": "object",
+                    "properties": {
+                        "invitedUserId": { "$ref": "#/definitions/userId" },
+                        "invitedAt": { "$ref": "#/definitions/unixTime" },
+                        "id": { "$ref": "#/definitions/partyId" },
+                        "members": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "joinedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
                                 },
-                                "invitedAt": {
-                                    "$ref": "#/definitions/unixTime"
-                                }
-                            },
-                            "required": ["invitedUserId", "invitedAt"]
+                                "required": ["userId", "joinedAt"]
+                            }
                         },
-                        { "$ref": "#/definitions/partyState" }
+                        "invited": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "invitedAt": {
+                                        "$ref": "#/definitions/unixTime"
+                                    }
+                                },
+                                "required": ["userId", "invitedAt"]
+                            }
+                        }
+                    },
+                    "required": [
+                        "invitedUserId",
+                        "invitedAt",
+                        "id",
+                        "members",
+                        "invited"
                     ]
                 }
             },
@@ -3321,8 +3342,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "not_in_party",
-                                "target_not_in_party",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -3489,25 +3508,6 @@
                         }
                     },
                     "required": ["userId", "reason"]
-                }
-            },
-            "required": ["type", "messageId", "commandId", "data"]
-        },
-        {
-            "title": "PartyUpdatedEvent",
-            "tachyon": {
-                "source": "server",
-                "target": "user",
-                "scopes": ["tachyon.lobby"]
-            },
-            "type": "object",
-            "properties": {
-                "type": { "const": "event" },
-                "messageId": { "type": "string" },
-                "commandId": { "const": "party/updated" },
-                "data": {
-                    "$ref": "#/definitions/partyState",
-                    "title": "PartyUpdatedEventData"
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

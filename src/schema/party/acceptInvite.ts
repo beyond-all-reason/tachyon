@@ -12,9 +12,5 @@ export default defineEndpoint({
             partyId: Type.Ref(partyId),
         }),
     },
-    response: [
-        { status: "success" },
-        { status: "failed", reason: "invalid_party" },
-        { status: "failed", reason: "already_in_party" },
-    ],
+    response: [{ status: "success" }],
 });

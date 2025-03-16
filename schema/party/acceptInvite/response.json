@@ -29,8 +29,6 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "invalid_party",
-                        "already_in_party",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
