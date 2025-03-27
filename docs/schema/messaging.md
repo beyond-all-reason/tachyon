@@ -72,12 +72,23 @@ Notify the player a message has been received
             "properties": {
                 "message": { "type": "string" },
                 "source": {
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "player" },
-                        "userId": { "$ref": "../../definitions/userId.json" }
-                    },
-                    "required": ["type", "userId"]
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
+                            },
+                            "required": ["type", "userId"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": { "type": { "const": "party" } },
+                            "required": ["type"]
+                        }
+                    ]
                 },
                 "timestamp": {
                     "$ref": "../../definitions/unixTime.json",
@@ -128,10 +139,14 @@ export interface MessagingReceivedEvent {
 }
 export interface MessagingReceivedEventData {
     message: string;
-    source: {
-        type: "player";
-        userId: UserId;
-    };
+    source:
+        | {
+              type: "player";
+              userId: UserId;
+          }
+        | {
+              type: "party";
+          };
     timestamp: number;
     marker: HistoryMarker;
 }
@@ -170,12 +185,23 @@ Send a simple message to the given target.
             "type": "object",
             "properties": {
                 "target": {
-                    "type": "object",
-                    "properties": {
-                        "type": { "const": "player" },
-                        "userId": { "$ref": "../../definitions/userId.json" }
-                    },
-                    "required": ["type", "userId"]
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "player" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
+                            },
+                            "required": ["type", "userId"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": { "type": { "const": "party" } },
+                            "required": ["type"]
+                        }
+                    ]
                 },
                 "message": { "type": "string", "maxLength": 512 }
             },
@@ -198,10 +224,9 @@ Send a simple message to the given target.
     "commandId": "messaging/send",
     "data": {
         "target": {
-            "type": "player",
-            "userId": "351"
+            "type": "party"
         },
-        "message": "dolore adipisicing fugiat"
+        "message": "nostrud consectetur cupidatat dolore Lorem"
     }
 }
 ```
@@ -218,10 +243,14 @@ export interface MessagingSendRequest {
     data: MessagingSendRequestData;
 }
 export interface MessagingSendRequestData {
-    target: {
-        type: "player";
-        userId: UserId;
-    };
+    target:
+        | {
+              type: "player";
+              userId: UserId;
+          }
+        | {
+              type: "party";
+          };
     message: string;
 }
 ```

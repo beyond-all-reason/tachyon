@@ -1,0 +1,35 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/invited/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "PartyInvitedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "party/invited" },
+        "data": {
+            "title": "PartyInvitedEventData",
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "invitedUserId": {
+                            "$ref": "../../definitions/userId.json"
+                        },
+                        "invitedAt": {
+                            "$ref": "../../definitions/unixTime.json"
+                        }
+                    },
+                    "required": ["invitedUserId", "invitedAt"]
+                },
+                { "$ref": "../../definitions/partyState.json" }
+            ]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}

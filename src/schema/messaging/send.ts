@@ -14,6 +14,9 @@ export default defineEndpoint({
                     type: Type.Literal("player"),
                     userId: Type.Ref(userId),
                 }),
+                Type.Object({
+                    type: Type.Literal("party"),
+                }),
             ]),
             // somewhat arbitrary maxLength, but we need one
             message: Type.String({ maxLength: 512 }),

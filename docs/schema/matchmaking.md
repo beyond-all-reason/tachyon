@@ -25,6 +25,8 @@ The server may send [matchmaking/cancelled](#cancelled) event at any point after
 * `ready_timeout`: The player failed to accept a match within the given
   time window and is thus removed from the matchmaking system.
 
+When a player is in a party and a member of the party queues for matchmaking, all other member of the party will receive a [matchmaking/queuesJoined](#queuesJoined) event to let them know they are now in queue. This event is not sent to the player who originally joined the queues.
+
 ---
 - [cancel](#cancel)
 - [cancelled](#cancelled)
@@ -34,6 +36,7 @@ The server may send [matchmaking/cancelled](#cancelled) event at any point after
 - [lost](#lost)
 - [queue](#queue)
 - [queueUpdate](#queueupdate)
+- [queuesJoined](#queuesjoined)
 - [ready](#ready)
 ---
 
@@ -868,7 +871,7 @@ export interface MatchmakingQueueRequestData {
                     "enum": [
                         "invalid_queue_specified",
                         "already_queued",
-                        "already_inbattle",
+                        "already_in_battle",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -907,7 +910,7 @@ export interface MatchmakingQueueOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_inbattle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_in_battle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -976,6 +979,87 @@ export interface MatchmakingQueueUpdateEvent {
 }
 export interface MatchmakingQueueUpdateEventData {
     playersQueued: string;
+}
+```
+---
+
+## QueuesJoined
+
+Indicate the player has been added to some queues by someone else. This happens in a party settings.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MatchmakingQueuesJoinedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/queuesJoined" },
+        "data": {
+            "title": "MatchmakingQueuesJoinedEventData",
+            "type": "object",
+            "properties": {
+                "queues": {
+                    "type": "array",
+                    "items": { "type": "string" },
+                    "minItems": 1
+                }
+            },
+            "required": ["queues"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "culpa tempor labore cillum",
+    "commandId": "matchmaking/queuesJoined",
+    "data": {
+        "queues": [
+            "magna enim ex adipisicing",
+            "tempor consectetur adipisicing",
+            "in Duis",
+            "et nostrud ipsum",
+            "do laboris magna"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueuesJoinedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/queuesJoined";
+    data: MatchmakingQueuesJoinedEventData;
+}
+export interface MatchmakingQueuesJoinedEventData {
+    queues: [string, ...string[]];
 }
 ```
 ---
