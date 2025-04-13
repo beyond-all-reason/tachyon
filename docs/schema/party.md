@@ -813,21 +813,11 @@ A player has been invited to the party. Sent to the invited player and all party
         "commandId": { "const": "party/invited" },
         "data": {
             "title": "PartyInvitedEventData",
-            "allOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "invitedUserId": {
-                            "$ref": "../../definitions/userId.json"
-                        },
-                        "invitedAt": {
-                            "$ref": "../../definitions/unixTime.json"
-                        }
-                    },
-                    "required": ["invitedUserId", "invitedAt"]
-                },
-                { "$ref": "../../definitions/partyState.json" }
-            ]
+            "type": "object",
+            "properties": {
+                "party": { "$ref": "../../definitions/partyState.json" }
+            },
+            "required": ["party"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -842,28 +832,36 @@ A player has been invited to the party. Sent to the invited player and all party
 ```json
 {
     "type": "event",
-    "messageId": "qui",
+    "messageId": "culpa velit nulla",
     "commandId": "party/invited",
     "data": {
-        "invitedUserId": "351",
-        "invitedAt": 1705432698000000,
-        "id": "1882f6b2e3a4d14f24acb7aa",
-        "members": [
-            {
-                "userId": "351",
-                "joinedAt": 1705432698000000
-            }
-        ],
-        "invited": [
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            }
-        ]
+        "party": {
+            "id": "1882f6b2e3a4d14f24acb7aa",
+            "members": [
+                {
+                    "userId": "351",
+                    "joinedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "joinedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "joinedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "joinedAt": 1705432698000000
+                }
+            ],
+            "invited": [
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                }
+            ]
+        }
     }
 }
 ```
@@ -871,19 +869,18 @@ A player has been invited to the party. Sent to the invited player and all party
 
 #### TypeScript Definition
 ```ts
-export type PartyInvitedEventData = {
-    invitedUserId: UserId;
-    invitedAt: UnixTime;
-} & PartyState;
+export type PartyId = string;
 export type UserId = string;
 export type UnixTime = number;
-export type PartyId = string;
 
 export interface PartyInvitedEvent {
     type: "event";
     messageId: string;
     commandId: "party/invited";
     data: PartyInvitedEventData;
+}
+export interface PartyInvitedEventData {
+    party: PartyState;
 }
 export interface PartyState {
     id: PartyId;

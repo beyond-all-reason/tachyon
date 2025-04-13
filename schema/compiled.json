@@ -3191,21 +3191,11 @@
                 "commandId": { "const": "party/invited" },
                 "data": {
                     "title": "PartyInvitedEventData",
-                    "allOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "invitedUserId": {
-                                    "$ref": "#/definitions/userId"
-                                },
-                                "invitedAt": {
-                                    "$ref": "#/definitions/unixTime"
-                                }
-                            },
-                            "required": ["invitedUserId", "invitedAt"]
-                        },
-                        { "$ref": "#/definitions/partyState" }
-                    ]
+                    "type": "object",
+                    "properties": {
+                        "party": { "$ref": "#/definitions/partyState" }
+                    },
+                    "required": ["party"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

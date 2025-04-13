@@ -14,21 +14,11 @@
         "commandId": { "const": "party/invited" },
         "data": {
             "title": "PartyInvitedEventData",
-            "allOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "invitedUserId": {
-                            "$ref": "../../definitions/userId.json"
-                        },
-                        "invitedAt": {
-                            "$ref": "../../definitions/unixTime.json"
-                        }
-                    },
-                    "required": ["invitedUserId", "invitedAt"]
-                },
-                { "$ref": "../../definitions/partyState.json" }
-            ]
+            "type": "object",
+            "properties": {
+                "party": { "$ref": "../../definitions/partyState.json" }
+            },
+            "required": ["party"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
