@@ -3333,6 +3333,29 @@
             ]
         },
         {
+            "title": "PartyRemovedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "party/removed" },
+                "data": {
+                    "title": "PartyRemovedEventData",
+                    "type": "object",
+                    "properties": {
+                        "partyId": { "$ref": "#/definitions/partyId" }
+                    },
+                    "required": ["partyId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "PartyUpdatedEvent",
             "tachyon": {
                 "source": "server",

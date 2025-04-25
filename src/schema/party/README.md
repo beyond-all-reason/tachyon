@@ -17,6 +17,11 @@ Accepting an invite can be done with [party/acceptInvite](#acceptInvite). Declin
 Any member in a party can kick any other member with the request [party/kickMember](#kickMember).
 Similarly, any member can leave the party they are currently in with [party/leave](#leave).
 
+Any player member or invited to a party can receive the event [party/removed](#removed) to
+signal that they are no longer in this party. This can happen when the invite is cancelled
+or times out, when the player is kicked out from the party or when the party dies (crash or
+last member leaves).
+
 # Limitations and expansions
 
 As time of writing, this spec doesn't have any concept of leader, any party member can do all actions.

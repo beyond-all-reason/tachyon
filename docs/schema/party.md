@@ -21,6 +21,11 @@ Accepting an invite can be done with [party/acceptInvite](#acceptInvite). Declin
 Any member in a party can kick any other member with the request [party/kickMember](#kickMember).
 Similarly, any member can leave the party they are currently in with [party/leave](#leave).
 
+Any player member or invited to a party can receive the event [party/removed](#removed) to
+signal that they are no longer in this party. This can happen when the invite is cancelled
+or times out, when the player is kicked out from the party or when the party dies (crash or
+last member leaves).
+
 # Limitations and expansions
 
 As time of writing, this spec doesn't have any concept of leader, any party member can do all actions.
@@ -39,6 +44,7 @@ but is out of scope for now.
 - [invited](#invited)
 - [kickMember](#kickmember)
 - [leave](#leave)
+- [removed](#removed)
 - [updated](#updated)
 ---
 
@@ -1173,6 +1179,79 @@ export interface PartyLeaveOkResponse {
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
+---
+
+## Removed
+
+Client has been removed from the party. Either kicked, the invite was cancelled or the party disapeared.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "PartyRemovedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "party/removed" },
+        "data": {
+            "title": "PartyRemovedEventData",
+            "type": "object",
+            "properties": {
+                "partyId": { "$ref": "../../definitions/partyId.json" }
+            },
+            "required": ["partyId"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "sit ad proident",
+    "commandId": "party/removed",
+    "data": {
+        "partyId": "1882f6b2e3a4d14f24acb7aa"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type PartyId = string;
+
+export interface PartyRemovedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "party/removed";
+    data: PartyRemovedEventData;
+}
+export interface PartyRemovedEventData {
+    partyId: PartyId;
+}
+```
 ---
 
 ## Updated
