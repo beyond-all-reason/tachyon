@@ -1,7 +1,7 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/party/invited/event.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/removed/event.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "PartyInvitedEvent",
+    "title": "PartyRemovedEvent",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -11,14 +11,14 @@
     "properties": {
         "type": { "const": "event" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "party/invited" },
+        "commandId": { "const": "party/removed" },
         "data": {
-            "title": "PartyInvitedEventData",
+            "title": "PartyRemovedEventData",
             "type": "object",
             "properties": {
-                "party": { "$ref": "../../definitions/partyState.json" }
+                "partyId": { "$ref": "../../definitions/partyId.json" }
             },
-            "required": ["party"]
+            "required": ["partyId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
