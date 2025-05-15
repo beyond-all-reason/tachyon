@@ -85,8 +85,13 @@ Notify the player a message has been received
                         },
                         {
                             "type": "object",
-                            "properties": { "type": { "const": "party" } },
-                            "required": ["type"]
+                            "properties": {
+                                "type": { "const": "party" },
+                                "partyId": {
+                                    "$ref": "../../definitions/partyId.json"
+                                }
+                            },
+                            "required": ["type", "partyId"]
                         }
                     ]
                 },
@@ -129,6 +134,7 @@ Notify the player a message has been received
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type PartyId = string;
 export type HistoryMarker = string;
 
 export interface MessagingReceivedEvent {
@@ -146,6 +152,7 @@ export interface MessagingReceivedEventData {
           }
         | {
               type: "party";
+              partyId: PartyId;
           };
     timestamp: number;
     marker: HistoryMarker;
