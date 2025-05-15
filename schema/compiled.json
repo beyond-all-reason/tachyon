@@ -2595,9 +2595,12 @@
                                 {
                                     "type": "object",
                                     "properties": {
-                                        "type": { "const": "party" }
+                                        "type": { "const": "party" },
+                                        "partyId": {
+                                            "$ref": "#/definitions/partyId"
+                                        }
                                     },
-                                    "required": ["type"]
+                                    "required": ["type", "partyId"]
                                 }
                             ]
                         },
