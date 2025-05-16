@@ -89,9 +89,12 @@ Notify the player a message has been received
                                 "type": { "const": "party" },
                                 "partyId": {
                                     "$ref": "../../definitions/partyId.json"
+                                },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
                                 }
                             },
-                            "required": ["type", "partyId"]
+                            "required": ["type", "partyId", "userId"]
                         }
                     ]
                 },
@@ -153,6 +156,7 @@ export interface MessagingReceivedEventData {
         | {
               type: "party";
               partyId: PartyId;
+              userId: UserId;
           };
     timestamp: number;
     marker: HistoryMarker;
