@@ -21,6 +21,7 @@ export default defineEndpoint({
                 Type.Object({
                     type: Type.Literal("party"),
                     partyId: Type.Ref(partyId),
+                    userId: Type.Ref(userId),
                 }),
             ]),
             timestamp: Type.Ref(unixTime, {
