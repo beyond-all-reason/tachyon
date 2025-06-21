@@ -147,11 +147,14 @@ export interface UserInfoRequestData {
     "status": "success",
     "data": {
         "userId": "351",
-        "username": "minim laborum magna nostrud",
-        "displayName": "nulla",
-        "clanId": null,
-        "countryCode": "Ut",
-        "status": "playing"
+        "username": "aliqua eu sit laborum",
+        "displayName": "ad enim dolor",
+        "clanId": "consequat cupidatat nisi ex ullamco",
+        "countryCode": "dolore adipisicing Duis deserunt",
+        "status": "lobby",
+        "rating": {
+            "value": -60768973.82736206
+        }
     }
 }
 ```
@@ -175,6 +178,9 @@ export interface UserInfoOkResponseData {
     clanId: string | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
+    rating?: {
+        value: number;
+    };
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -234,26 +240,26 @@ Sent by the server to inform the client of its own user state. This event should
     "data": {
         "user": {
             "userId": "351",
-            "username": "dolore magna veniam cillum laboris",
-            "displayName": "occaecat nisi veniam cupidatat",
+            "username": "aliqua ut",
+            "displayName": "ad dolore non occaecat velit",
             "clanId": null,
-            "countryCode": "sint proident ipsum officia",
-            "status": "offline",
+            "countryCode": "ipsum eiusmod",
+            "status": "menu",
+            "rating": {
+                "value": -21196556.091308594
+            },
             "party": null,
             "invitedToParties": [
                 {
                     "id": "1882f6b2e3a4d14f24acb7aa",
                     "members": [
                         {
-                            "userId": "351",
                             "joinedAt": 1705432698000000
                         },
                         {
-                            "userId": "351",
                             "joinedAt": 1705432698000000
                         },
                         {
-                            "userId": "351",
                             "joinedAt": 1705432698000000
                         }
                     ],
@@ -272,27 +278,18 @@ Sent by the server to inform the client of its own user state. This event should
                     "id": "1882f6b2e3a4d14f24acb7aa",
                     "members": [
                         {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
                             "joinedAt": 1705432698000000
                         }
                     ],
                     "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
                         {
                             "userId": "351",
                             "invitedAt": 1705432698000000
@@ -311,19 +308,16 @@ Sent by the server to inform the client of its own user state. This event should
                     "id": "1882f6b2e3a4d14f24acb7aa",
                     "members": [
                         {
-                            "userId": "351",
                             "joinedAt": 1705432698000000
                         },
                         {
-                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
                             "joinedAt": 1705432698000000
                         }
                     ],
                     "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
                         {
                             "userId": "351",
                             "invitedAt": 1705432698000000
@@ -336,27 +330,10 @@ Sent by the server to inform the client of its own user state. This event should
                 }
             ],
             "friendIds": [
-                "veniam mollit officia Lorem enim",
-                "esse",
-                "do"
+                "in",
+                "laboris sed culpa proident elit"
             ],
             "outgoingFriendRequest": [
-                {
-                    "to": {},
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "to": {},
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "to": {},
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "to": {},
-                    "sentAt": 1705432698000000
-                },
                 {
                     "to": {},
                     "sentAt": 1705432698000000
@@ -366,39 +343,24 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": "351",
                     "sentAt": 1705432698000000
-                },
-                {
-                    "from": "351",
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "from": "351",
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "from": "351",
-                    "sentAt": 1705432698000000
                 }
             ],
             "ignoreIds": [
-                "dolore quis incididunt nisi sit",
-                "magna cupidatat sunt sint in",
-                "consequat occaecat",
-                "nulla fugiat reprehenderit dolor"
+                "do"
             ],
             "currentBattle": {
-                "username": "consectetur proident sit aute",
-                "password": "minim consequat adipisicing commodo aute",
-                "ip": "Duis",
-                "port": -7403433.322906494,
+                "username": "laboris exercitation tempor est Lorem",
+                "password": "ea dolor",
+                "ip": "sit consequat sint",
+                "port": 21259891.986846924,
                 "engine": {
-                    "version": "do commodo anim in occaecat"
+                    "version": "reprehenderit"
                 },
                 "game": {
-                    "springName": "dolore laboris in elit eiusmod"
+                    "springName": "laboris aliqua"
                 },
                 "map": {
-                    "springName": "sit Excepteur eu magna ex"
+                    "springName": "aliquip non"
                 }
             }
         }
@@ -416,6 +378,9 @@ export type PrivateUser = {
     clanId: string | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
+    rating?: {
+        value: number;
+    };
 } & {
     party: PartyState | null;
     invitedToParties: PartyState[];
@@ -886,6 +851,16 @@ Sent by the server to inform the client of user state changes. User objects shou
                             "countryCode": { "type": "string" },
                             "status": {
                                 "enum": ["offline", "menu", "playing", "lobby"]
+                            },
+                            "rating": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "description": "Key is omitted when the player isn't rated yet.",
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["value"]
                             }
                         }
                     }
@@ -911,48 +886,51 @@ Sent by the server to inform the client of user state changes. User objects shou
     "data": {
         "users": [
             {
-                "ince7": true,
-                "id_4": -25186110,
-                "ullamco_8b_": true,
-                "quif2c": "ut non",
-                "incididuntabb": true,
                 "userId": "351",
-                "clanId": null
-            },
-            {
-                "infe4": 51101136.20758057,
-                "aliquip64": -10159337.520599365,
-                "anim_6": -22766137.12310791,
-                "sint7a": true,
-                "aliqua_b08": "quis consectetur ea",
-                "ut_430": true,
-                "do_e6_": false,
-                "exercitatione": true,
-                "userId": "351",
-                "countryCode": "ad eu anim"
+                "displayName": "amet commodo Excepteur cillum",
+                "clanId": "laborum tempor in esse et",
+                "countryCode": "eu Duis anim fugiat velit",
+                "status": "lobby",
+                "rating": {
+                    "value": -59126496.31500244
+                }
             },
             {
                 "userId": "351",
-                "username": "nulla ex velit in",
-                "displayName": "minim in ut nisi sed",
-                "clanId": "ex mollit",
-                "countryCode": "consectetur sint fugiat sunt"
-            },
-            {
-                "do_c2": true,
-                "Ut4a9": -37927055.35888672,
-                "voluptatebbf": "ut consequat laborum esse",
-                "username": "labore et",
+                "username": "Excepteur qui ipsum irure id",
                 "clanId": null,
-                "countryCode": "Lorem qui"
+                "countryCode": "culpa",
+                "status": "lobby",
+                "rating": {
+                    "value": 13128161.430358887
+                }
             },
             {
-                "userId": "351",
-                "username": "dolor ut Ut cupidatat aliquip",
-                "displayName": "amet nostrud irure eiusmod Duis",
-                "clanId": "enim officia aute veniam labore",
-                "countryCode": "cillum",
-                "status": "menu"
+                "reprehenderitd": -89731503,
+                "in2c": -15727437,
+                "id7d": "voluptate aute Excepteur sit proident",
+                "proident__84": -64103364.94445801,
+                "username": "mollit veniam sit cillum id",
+                "displayName": "nulla ullamco tempor",
+                "clanId": "aute dolor nostrud dolore consequat",
+                "rating": {
+                    "value": -74396514.89257812
+                }
+            },
+            {
+                "incididunt_1": true
+            },
+            {
+                "in31d": 26873326,
+                "aliqua16c": false,
+                "username": "ea",
+                "displayName": "enim magna eu incididunt",
+                "clanId": null,
+                "countryCode": "est veniam",
+                "status": "lobby",
+                "rating": {
+                    "value": 63302350.04425049
+                }
             }
         ]
     }
@@ -976,6 +954,9 @@ export interface UserUpdatedEventData {
         clanId?: string | null;
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
+        rating?: {
+            value: number;
+        };
     }[];
 }
 ```

@@ -33,6 +33,16 @@
                             "countryCode": { "type": "string" },
                             "status": {
                                 "enum": ["offline", "menu", "playing", "lobby"]
+                            },
+                            "rating": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "description": "Key is omitted when the player isn't rated yet.",
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["value"]
                             }
                         }
                     }
