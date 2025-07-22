@@ -147,14 +147,21 @@ export interface UserInfoRequestData {
     "status": "success",
     "data": {
         "userId": "351",
-        "username": "aliqua eu sit laborum",
-        "displayName": "ad enim dolor",
-        "clanId": "consequat cupidatat nisi ex ullamco",
-        "countryCode": "dolore adipisicing Duis deserunt",
-        "status": "lobby",
+        "username": "enim ad in minim est",
+        "displayName": "culpa exercitation Lorem cillum fugiat",
+        "clanId": null,
+        "countryCode": "incididunt dolore est enim",
+        "status": "offline",
         "rating": {
-            "value": -60768973.82736206
-        }
+            "value": -90001225.47149658
+        },
+        "roles": [
+            "contributor",
+            "tournament_winner",
+            "admin",
+            "tournament_caster",
+            "moderator"
+        ]
     }
 }
 ```
@@ -181,6 +188,7 @@ export interface UserInfoOkResponseData {
     rating?: {
         value: number;
     };
+    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -240,127 +248,85 @@ Sent by the server to inform the client of its own user state. This event should
     "data": {
         "user": {
             "userId": "351",
-            "username": "aliqua ut",
-            "displayName": "ad dolore non occaecat velit",
-            "clanId": null,
-            "countryCode": "ipsum eiusmod",
-            "status": "menu",
-            "rating": {
-                "value": -21196556.091308594
+            "username": "amet qui cillum occaecat",
+            "displayName": "Lorem pariatur anim minim in",
+            "clanId": "culpa id",
+            "countryCode": "dolore veniam",
+            "status": "lobby",
+            "party": {
+                "id": "1882f6b2e3a4d14f24acb7aa",
+                "members": [
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    }
+                ],
+                "invited": [
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    }
+                ]
             },
-            "party": null,
-            "invitedToParties": [
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                }
-            ],
+            "invitedToParties": [],
             "friendIds": [
-                "in",
-                "laboris sed culpa proident elit"
+                "commodo et",
+                "quis in",
+                "est id eu dolore proident",
+                "nisi sint ea esse",
+                "ut deserunt eiusmod dolor culpa"
             ],
             "outgoingFriendRequest": [
                 {
                     "to": {},
-                    "sentAt": 1705432698000000
+                    "sentAt": {}
+                },
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
+                {
+                    "to": {},
+                    "sentAt": {}
                 }
             ],
             "incomingFriendRequest": [
                 {
-                    "from": "351",
-                    "sentAt": 1705432698000000
+                    "from": {},
+                    "sentAt": {}
                 }
             ],
             "ignoreIds": [
-                "do"
+                "ut nulla et consectetur sint",
+                "exercitation velit Ut sed",
+                "reprehenderit",
+                "adipisicing sit"
             ],
             "currentBattle": {
-                "username": "laboris exercitation tempor est Lorem",
-                "password": "ea dolor",
-                "ip": "sit consequat sint",
-                "port": 21259891.986846924,
+                "username": "fugiat",
+                "password": "nostrud dolor dolor tempor ut",
+                "ip": "sed amet",
+                "port": 53443002.700805664,
                 "engine": {
-                    "version": "reprehenderit"
+                    "version": "tempor"
                 },
                 "game": {
-                    "springName": "laboris aliqua"
+                    "springName": "deserunt et nulla Lorem quis"
                 },
                 "map": {
-                    "springName": "aliquip non"
+                    "springName": "aliqua dolor reprehenderit fugiat"
                 }
             }
         }
@@ -381,6 +347,7 @@ export type PrivateUser = {
     rating?: {
         value: number;
     };
+    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
 } & {
     party: PartyState | null;
     invitedToParties: PartyState[];
@@ -861,6 +828,18 @@ Sent by the server to inform the client of user state changes. User objects shou
                                     }
                                 },
                                 "required": ["value"]
+                            },
+                            "roles": {
+                                "type": "array",
+                                "items": {
+                                    "enum": [
+                                        "contributor",
+                                        "admin",
+                                        "moderator",
+                                        "tournament_winner",
+                                        "tournament_caster"
+                                    ]
+                                }
                             }
                         }
                     }
@@ -886,51 +865,62 @@ Sent by the server to inform the client of user state changes. User objects shou
     "data": {
         "users": [
             {
+                "reprehenderit_1": -70320141.3154602,
+                "eiusmod_9_1": -33229495,
+                "exd": "voluptate velit Duis",
+                "Excepteurc1": 65691375,
+                "mollit_b": 85934126.37710571,
+                "voluptate8a3": -56213463,
                 "userId": "351",
-                "displayName": "amet commodo Excepteur cillum",
-                "clanId": "laborum tempor in esse et",
-                "countryCode": "eu Duis anim fugiat velit",
                 "status": "lobby",
                 "rating": {
-                    "value": -59126496.31500244
+                    "value": 93225550.6515503
                 }
             },
             {
+                "laboris_2": 91202688.21716309,
+                "fugiat99": true,
+                "ullamco_33b": -23010028,
                 "userId": "351",
-                "username": "Excepteur qui ipsum irure id",
+                "displayName": "mollit veniam sit cillum id",
+                "roles": [
+                    "moderator",
+                    "tournament_winner",
+                    "admin",
+                    "tournament_winner"
+                ]
+            },
+            {
+                "exercitation_48": 8203125,
+                "occaecate": true,
+                "dolor91": -2573359.0126037598,
+                "Lorem2": true,
+                "sunt_1_": -96174371.2425232,
+                "fugiat_4": false,
+                "clanId": null
+            },
+            {
+                "in_d": 48489606.38046265,
+                "aliquae0": 57236921,
+                "aliqua_336": "proident velit in sit",
+                "magna2b_": 35578644,
+                "minim_a": 48529505.72967529,
+                "in6c": false,
+                "sunt5c": 77533793.44940186,
+                "mollit2": 9191179,
+                "dolor_29": -76369930,
+                "username": "ea amet occaecat tempor"
+            },
+            {
+                "euf23": "non voluptate dolor aliquip",
+                "displayName": "aute",
                 "clanId": null,
-                "countryCode": "culpa",
-                "status": "lobby",
-                "rating": {
-                    "value": 13128161.430358887
-                }
-            },
-            {
-                "reprehenderitd": -89731503,
-                "in2c": -15727437,
-                "id7d": "voluptate aute Excepteur sit proident",
-                "proident__84": -64103364.94445801,
-                "username": "mollit veniam sit cillum id",
-                "displayName": "nulla ullamco tempor",
-                "clanId": "aute dolor nostrud dolore consequat",
-                "rating": {
-                    "value": -74396514.89257812
-                }
-            },
-            {
-                "incididunt_1": true
-            },
-            {
-                "in31d": 26873326,
-                "aliqua16c": false,
-                "username": "ea",
-                "displayName": "enim magna eu incididunt",
-                "clanId": null,
-                "countryCode": "est veniam",
-                "status": "lobby",
-                "rating": {
-                    "value": 63302350.04425049
-                }
+                "countryCode": "laborum sit",
+                "status": "menu",
+                "roles": [
+                    "tournament_caster",
+                    "tournament_winner"
+                ]
             }
         ]
     }
@@ -957,6 +947,7 @@ export interface UserUpdatedEventData {
         rating?: {
             value: number;
         };
+        roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
     }[];
 }
 ```

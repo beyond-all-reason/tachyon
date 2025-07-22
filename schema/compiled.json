@@ -278,6 +278,18 @@
                         }
                     },
                     "required": ["value"]
+                },
+                "roles": {
+                    "type": "array",
+                    "items": {
+                        "enum": [
+                            "contributor",
+                            "admin",
+                            "moderator",
+                            "tournament_winner",
+                            "tournament_caster"
+                        ]
+                    }
                 }
             },
             "required": [
@@ -3848,6 +3860,18 @@
                                             }
                                         },
                                         "required": ["value"]
+                                    },
+                                    "roles": {
+                                        "type": "array",
+                                        "items": {
+                                            "enum": [
+                                                "contributor",
+                                                "admin",
+                                                "moderator",
+                                                "tournament_winner",
+                                                "tournament_caster"
+                                            ]
+                                        }
                                     }
                                 }
                             }

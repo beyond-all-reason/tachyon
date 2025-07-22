@@ -19,6 +19,17 @@ export const user = Type.Object(
                 }),
             })
         ),
+        roles: Type.Optional(
+            Type.Array(
+                UnionEnum([
+                    "contributor",
+                    "admin",
+                    "moderator",
+                    "tournament_winner",
+                    "tournament_caster",
+                ])
+            )
+        ),
     },
     { $id: "user" }
 );
