@@ -839,7 +839,8 @@ Sent by the server to inform the client of user state changes. User objects shou
                                         "tournament_winner",
                                         "tournament_caster"
                                     ]
-                                }
+                                },
+                                "uniqueItems": true
                             }
                         }
                     }
@@ -887,39 +888,37 @@ Sent by the server to inform the client of user state changes. User objects shou
                     "moderator",
                     "tournament_winner",
                     "admin",
-                    "tournament_winner"
+                    "tournament_caster"
                 ]
             },
             {
-                "exercitation_48": 8203125,
-                "occaecate": true,
-                "dolor91": -2573359.0126037598,
-                "Lorem2": true,
-                "sunt_1_": -96174371.2425232,
-                "fugiat_4": false,
-                "clanId": null
+                "userId": "351",
+                "username": "dolore amet",
+                "displayName": "Ut sunt aliqua ut",
+                "clanId": "cillum ullamco elit",
+                "countryCode": "dolore in"
             },
             {
-                "in_d": 48489606.38046265,
-                "aliquae0": 57236921,
-                "aliqua_336": "proident velit in sit",
-                "magna2b_": 35578644,
-                "minim_a": 48529505.72967529,
-                "in6c": false,
-                "sunt5c": 77533793.44940186,
-                "mollit2": 9191179,
-                "dolor_29": -76369930,
-                "username": "ea amet occaecat tempor"
+                "tempora": -87156487,
+                "consequat_8b": false,
+                "userId": "351",
+                "displayName": "amet officia eiusmod"
             },
             {
-                "euf23": "non voluptate dolor aliquip",
-                "displayName": "aute",
-                "clanId": null,
-                "countryCode": "laborum sit",
-                "status": "menu",
+                "userId": "351",
+                "username": "eiusmod sunt id exercitation",
+                "displayName": "eu",
+                "clanId": "qui",
+                "countryCode": "commodo minim eu",
+                "status": "playing",
+                "rating": {
+                    "value": -3484141.8266296387
+                },
                 "roles": [
-                    "tournament_caster",
-                    "tournament_winner"
+                    "admin",
+                    "moderator",
+                    "tournament_winner",
+                    "tournament_caster"
                 ]
             }
         ]

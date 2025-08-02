@@ -27,7 +27,8 @@ export const user = Type.Object(
                     "moderator",
                     "tournament_winner",
                     "tournament_caster",
-                ])
+                ]),
+                { uniqueItems: true }
             )
         ),
     },

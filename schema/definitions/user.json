@@ -29,7 +29,8 @@
                     "tournament_winner",
                     "tournament_caster"
                 ]
-            }
+            },
+            "uniqueItems": true
         }
     },
     "required": ["userId", "username", "displayName", "clanId", "status"]

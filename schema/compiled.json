@@ -289,7 +289,8 @@
                             "tournament_winner",
                             "tournament_caster"
                         ]
-                    }
+                    },
+                    "uniqueItems": true
                 }
             },
             "required": [
@@ -3871,7 +3872,8 @@
                                                 "tournament_winner",
                                                 "tournament_caster"
                                             ]
-                                        }
+                                        },
+                                        "uniqueItems": true
                                     }
                                 }
                             }
