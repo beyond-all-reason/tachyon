@@ -71,6 +71,7 @@ export async function generateValidators() {
     addFormats(ajvEsm);
     let moduleCode = `"use strict"
 import * as ajvFormats from "ajv-formats/dist/formats.js";
+import * as runtimeEqual from "ajv/dist/runtime/equal.js";
 function ucs2length(str) {
     const len = str.length;
     let length = 0;
@@ -95,6 +96,7 @@ function ucs2length(str) {
         "ucs2length"
     );
     moduleCode = moduleCode.replaceAll('require("ajv-formats/dist/formats").', "ajvFormats.");
+    moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/equal").default', "runtimeEqual");
     moduleCode += "export const " + validator.replaceAll("exports.", "");
     await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
     process.stdout.write("✔️\n");
