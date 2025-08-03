@@ -407,7 +407,7 @@ export interface PrivateBattle {
 
 ## SubscribeUpdates
 
-Ask the server to send updates about theses users.
+Ask the server to send updates about theses users. A maximum of 100 userIds can be subscribed to at any given time.
 
 - Endpoint Type: **Request** -> **Response**
 - Source: **User**
@@ -438,11 +438,7 @@ Ask the server to send updates about theses users.
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": {
-                        "$id": "userId",
-                        "type": "string",
-                        "examples": ["351"]
-                    },
+                    "items": { "$ref": "../../definitions/userId.json" },
                     "minItems": 1,
                     "maxItems": 100
                 }
@@ -629,11 +625,7 @@ Ask the server to stop sending user updates for the given set of userId. This sh
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": {
-                        "$id": "userId",
-                        "type": "string",
-                        "examples": ["351"]
-                    },
+                    "items": { "$ref": "../../definitions/userId.json" },
                     "minItems": 1,
                     "maxItems": 100
                 }

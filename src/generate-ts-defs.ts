@@ -14,6 +14,7 @@ export async function generateTSDefs() {
             tabWidth: 4,
             semi: true,
         },
+        ignoreMinAndMaxItems: true,
     });
 
     await fs.writeFile(`dist/types.ts`, typings);
