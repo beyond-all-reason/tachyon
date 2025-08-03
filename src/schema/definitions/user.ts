@@ -12,6 +12,25 @@ export const user = Type.Object(
         clanId: Nullable(Type.String()),
         countryCode: Type.Optional(Type.String()),
         status: UnionEnum(["offline", "menu", "playing", "lobby"]),
+        rating: Type.Optional(
+            Type.Object({
+                value: Type.Number({
+                    description: "Key is omitted when the player isn't rated yet.",
+                }),
+            })
+        ),
+        roles: Type.Optional(
+            Type.Array(
+                UnionEnum([
+                    "contributor",
+                    "admin",
+                    "moderator",
+                    "tournament_winner",
+                    "tournament_caster",
+                ]),
+                { uniqueItems: true }
+            )
+        ),
     },
     { $id: "user" }
 );

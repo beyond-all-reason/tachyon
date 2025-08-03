@@ -147,11 +147,21 @@ export interface UserInfoRequestData {
     "status": "success",
     "data": {
         "userId": "351",
-        "username": "minim laborum magna nostrud",
-        "displayName": "nulla",
+        "username": "enim ad in minim est",
+        "displayName": "culpa exercitation Lorem cillum fugiat",
         "clanId": null,
-        "countryCode": "Ut",
-        "status": "playing"
+        "countryCode": "incididunt dolore est enim",
+        "status": "offline",
+        "rating": {
+            "value": -90001225.47149658
+        },
+        "roles": [
+            "contributor",
+            "tournament_winner",
+            "admin",
+            "tournament_caster",
+            "moderator"
+        ]
     }
 }
 ```
@@ -175,6 +185,10 @@ export interface UserInfoOkResponseData {
     clanId: string | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
+    rating?: {
+        value: number;
+    };
+    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -234,171 +248,85 @@ Sent by the server to inform the client of its own user state. This event should
     "data": {
         "user": {
             "userId": "351",
-            "username": "dolore magna veniam cillum laboris",
-            "displayName": "occaecat nisi veniam cupidatat",
-            "clanId": null,
-            "countryCode": "sint proident ipsum officia",
-            "status": "offline",
-            "party": null,
-            "invitedToParties": [
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                }
-            ],
+            "username": "amet qui cillum occaecat",
+            "displayName": "Lorem pariatur anim minim in",
+            "clanId": "culpa id",
+            "countryCode": "dolore veniam",
+            "status": "lobby",
+            "party": {
+                "id": "1882f6b2e3a4d14f24acb7aa",
+                "members": [
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    }
+                ],
+                "invited": [
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    }
+                ]
+            },
+            "invitedToParties": [],
             "friendIds": [
-                "veniam mollit officia Lorem enim",
-                "esse",
-                "do"
+                "commodo et",
+                "quis in",
+                "est id eu dolore proident",
+                "nisi sint ea esse",
+                "ut deserunt eiusmod dolor culpa"
             ],
             "outgoingFriendRequest": [
                 {
                     "to": {},
-                    "sentAt": 1705432698000000
+                    "sentAt": {}
                 },
                 {
                     "to": {},
-                    "sentAt": 1705432698000000
+                    "sentAt": {}
                 },
                 {
                     "to": {},
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "to": {},
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "to": {},
-                    "sentAt": 1705432698000000
+                    "sentAt": {}
                 }
             ],
             "incomingFriendRequest": [
                 {
-                    "from": "351",
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "from": "351",
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "from": "351",
-                    "sentAt": 1705432698000000
-                },
-                {
-                    "from": "351",
-                    "sentAt": 1705432698000000
+                    "from": {},
+                    "sentAt": {}
                 }
             ],
             "ignoreIds": [
-                "dolore quis incididunt nisi sit",
-                "magna cupidatat sunt sint in",
-                "consequat occaecat",
-                "nulla fugiat reprehenderit dolor"
+                "ut nulla et consectetur sint",
+                "exercitation velit Ut sed",
+                "reprehenderit",
+                "adipisicing sit"
             ],
             "currentBattle": {
-                "username": "consectetur proident sit aute",
-                "password": "minim consequat adipisicing commodo aute",
-                "ip": "Duis",
-                "port": -7403433.322906494,
+                "username": "fugiat",
+                "password": "nostrud dolor dolor tempor ut",
+                "ip": "sed amet",
+                "port": 53443002.700805664,
                 "engine": {
-                    "version": "do commodo anim in occaecat"
+                    "version": "tempor"
                 },
                 "game": {
-                    "springName": "dolore laboris in elit eiusmod"
+                    "springName": "deserunt et nulla Lorem quis"
                 },
                 "map": {
-                    "springName": "sit Excepteur eu magna ex"
+                    "springName": "aliqua dolor reprehenderit fugiat"
                 }
             }
         }
@@ -416,6 +344,10 @@ export type PrivateUser = {
     clanId: string | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
+    rating?: {
+        value: number;
+    };
+    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
 } & {
     party: PartyState | null;
     invitedToParties: PartyState[];
@@ -878,6 +810,29 @@ Sent by the server to inform the client of user state changes. User objects shou
                             "countryCode": { "type": "string" },
                             "status": {
                                 "enum": ["offline", "menu", "playing", "lobby"]
+                            },
+                            "rating": {
+                                "type": "object",
+                                "properties": {
+                                    "value": {
+                                        "description": "Key is omitted when the player isn't rated yet.",
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["value"]
+                            },
+                            "roles": {
+                                "type": "array",
+                                "items": {
+                                    "enum": [
+                                        "contributor",
+                                        "admin",
+                                        "moderator",
+                                        "tournament_winner",
+                                        "tournament_caster"
+                                    ]
+                                },
+                                "uniqueItems": true
                             }
                         }
                     }
@@ -903,48 +858,60 @@ Sent by the server to inform the client of user state changes. User objects shou
     "data": {
         "users": [
             {
-                "ince7": true,
-                "id_4": -25186110,
-                "ullamco_8b_": true,
-                "quif2c": "ut non",
-                "incididuntabb": true,
+                "reprehenderit_1": -70320141.3154602,
+                "eiusmod_9_1": -33229495,
+                "exd": "voluptate velit Duis",
+                "Excepteurc1": 65691375,
+                "mollit_b": 85934126.37710571,
+                "voluptate8a3": -56213463,
                 "userId": "351",
-                "clanId": null
+                "status": "lobby",
+                "rating": {
+                    "value": 93225550.6515503
+                }
             },
             {
-                "infe4": 51101136.20758057,
-                "aliquip64": -10159337.520599365,
-                "anim_6": -22766137.12310791,
-                "sint7a": true,
-                "aliqua_b08": "quis consectetur ea",
-                "ut_430": true,
-                "do_e6_": false,
-                "exercitatione": true,
+                "laboris_2": 91202688.21716309,
+                "fugiat99": true,
+                "ullamco_33b": -23010028,
                 "userId": "351",
-                "countryCode": "ad eu anim"
-            },
-            {
-                "userId": "351",
-                "username": "nulla ex velit in",
-                "displayName": "minim in ut nisi sed",
-                "clanId": "ex mollit",
-                "countryCode": "consectetur sint fugiat sunt"
-            },
-            {
-                "do_c2": true,
-                "Ut4a9": -37927055.35888672,
-                "voluptatebbf": "ut consequat laborum esse",
-                "username": "labore et",
-                "clanId": null,
-                "countryCode": "Lorem qui"
+                "displayName": "mollit veniam sit cillum id",
+                "roles": [
+                    "moderator",
+                    "tournament_winner",
+                    "admin",
+                    "tournament_caster"
+                ]
             },
             {
                 "userId": "351",
-                "username": "dolor ut Ut cupidatat aliquip",
-                "displayName": "amet nostrud irure eiusmod Duis",
-                "clanId": "enim officia aute veniam labore",
-                "countryCode": "cillum",
-                "status": "menu"
+                "username": "dolore amet",
+                "displayName": "Ut sunt aliqua ut",
+                "clanId": "cillum ullamco elit",
+                "countryCode": "dolore in"
+            },
+            {
+                "tempora": -87156487,
+                "consequat_8b": false,
+                "userId": "351",
+                "displayName": "amet officia eiusmod"
+            },
+            {
+                "userId": "351",
+                "username": "eiusmod sunt id exercitation",
+                "displayName": "eu",
+                "clanId": "qui",
+                "countryCode": "commodo minim eu",
+                "status": "playing",
+                "rating": {
+                    "value": -3484141.8266296387
+                },
+                "roles": [
+                    "admin",
+                    "moderator",
+                    "tournament_winner",
+                    "tournament_caster"
+                ]
             }
         ]
     }
@@ -968,6 +935,10 @@ export interface UserUpdatedEventData {
         clanId?: string | null;
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
+        rating?: {
+            value: number;
+        };
+        roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
     }[];
 }
 ```
