@@ -21,7 +21,9 @@
                     "items": {
                         "type": "object",
                         "properties": {
-                            "userId": { "type": "string", "examples": ["351"] },
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
                             "clanId": {

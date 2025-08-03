@@ -3824,8 +3824,7 @@
                                 "type": "object",
                                 "properties": {
                                     "userId": {
-                                        "type": "string",
-                                        "examples": ["351"]
+                                        "$ref": "#/definitions/userId"
                                     },
                                     "username": { "type": "string" },
                                     "displayName": { "type": "string" },

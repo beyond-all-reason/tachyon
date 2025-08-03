@@ -1,7 +1,5 @@
 import { Type } from "@sinclair/typebox";
 
-import { customStartScriptProperties } from "@/schema/definitions/customStartScriptProperties";
-
 export const bot = Type.Object(
     {
         hostUserId: Type.String({
@@ -13,7 +11,7 @@ export const bot = Type.Object(
         aiOptions: Type.Optional(
             Type.Record(Type.String(), Type.String(), { description: "AI-specific options" })
         ),
-        customProperties: Type.Optional(Type.Ref(customStartScriptProperties)),
+        customProperties: Type.Optional(Type.Ref("customStartScriptProperties")),
     },
     { $id: "bot" }
 );

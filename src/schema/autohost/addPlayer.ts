@@ -1,7 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { userId } from "@/schema/definitions/userId";
 
 export default defineEndpoint({
     source: "server",
@@ -10,7 +9,7 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             battleId: Type.String({ format: "uuid" }),
-            userId: Type.Ref(userId),
+            userId: Type.Ref("userId"),
             name: Type.String(),
             password: Type.String(),
         }),

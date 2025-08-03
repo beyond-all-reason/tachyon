@@ -56,9 +56,7 @@ Accept an incoming friend request
         "data": {
             "title": "FriendAcceptRequestRequestData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -206,7 +204,7 @@ Cancel an invite sent to someone
         "data": {
             "title": "FriendCancelRequestRequestData",
             "type": "object",
-            "properties": { "to": { "$ref": "../../definitions/userId.json" } },
+            "properties": { "to": { "$ref": "#/definitions/userId" } },
             "required": ["to"]
         }
     },
@@ -409,10 +407,10 @@ export interface FriendListRequest {
                                 "type": "object",
                                 "properties": {
                                     "userId": {
-                                        "$ref": "../../definitions/userId.json"
+                                        "$ref": "#/definitions/userId"
                                     },
                                     "addedAt": {
-                                        "$ref": "../../definitions/unixTime.json"
+                                        "$ref": "#/definitions/unixTime"
                                     }
                                 },
                                 "required": ["userId", "addedAt"]
@@ -423,11 +421,9 @@ export interface FriendListRequest {
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "to": {
-                                        "$ref": "../../definitions/userId.json"
-                                    },
+                                    "to": { "$ref": "#/definitions/userId" },
                                     "sentAt": {
-                                        "$ref": "../../definitions/unixTime.json"
+                                        "$ref": "#/definitions/unixTime"
                                     }
                                 },
                                 "required": ["to", "sentAt"]
@@ -438,11 +434,9 @@ export interface FriendListRequest {
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "from": {
-                                        "$ref": "../../definitions/userId.json"
-                                    },
+                                    "from": { "$ref": "#/definitions/userId" },
                                     "sentAt": {
-                                        "$ref": "../../definitions/unixTime.json"
+                                        "$ref": "#/definitions/unixTime"
                                     }
                                 },
                                 "required": ["from", "sentAt"]
@@ -598,9 +592,7 @@ Reject a friend request
         "data": {
             "title": "FriendRejectRequestRequestData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -748,9 +740,7 @@ Remove a player from your friendlist
         "data": {
             "title": "FriendRemoveRequestData",
             "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "userId": { "$ref": "#/definitions/userId" } },
             "required": ["userId"]
         }
     },
@@ -898,9 +888,7 @@ Notify the player that they are no longer friend with a player. Typically, that 
         "data": {
             "title": "FriendRemovedEventData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -971,9 +959,7 @@ Notify the player that their friend request has been accepted
         "data": {
             "title": "FriendRequestAcceptedEventData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -1044,9 +1030,7 @@ Notify the player that a friend request they received is no longer valid
         "data": {
             "title": "FriendRequestCancelledEventData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -1117,9 +1101,7 @@ Notify the player that someone sent them a friend request
         "data": {
             "title": "FriendRequestReceivedEventData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -1190,9 +1172,7 @@ Notify the player that their friend request has been rejected
         "data": {
             "title": "FriendRequestRejectedEventData",
             "type": "object",
-            "properties": {
-                "from": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "from": { "$ref": "#/definitions/userId" } },
             "required": ["from"]
         }
     },
@@ -1263,7 +1243,7 @@ Send a friend request to the target player
         "data": {
             "title": "FriendSendRequestRequestData",
             "type": "object",
-            "properties": { "to": { "$ref": "../../definitions/userId.json" } },
+            "properties": { "to": { "$ref": "#/definitions/userId" } },
             "required": ["to"]
         }
     },

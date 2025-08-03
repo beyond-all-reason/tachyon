@@ -77,9 +77,7 @@ Notify the player a message has been received
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player" },
-                                "userId": {
-                                    "$ref": "../../definitions/userId.json"
-                                }
+                                "userId": { "$ref": "#/definitions/userId" }
                             },
                             "required": ["type", "userId"]
                         },
@@ -87,22 +85,18 @@ Notify the player a message has been received
                             "type": "object",
                             "properties": {
                                 "type": { "const": "party" },
-                                "partyId": {
-                                    "$ref": "../../definitions/partyId.json"
-                                },
-                                "userId": {
-                                    "$ref": "../../definitions/userId.json"
-                                }
+                                "partyId": { "$ref": "#/definitions/partyId" },
+                                "userId": { "$ref": "#/definitions/userId" }
                             },
                             "required": ["type", "partyId", "userId"]
                         }
                     ]
                 },
                 "timestamp": {
-                    "$ref": "../../definitions/unixTime.json",
+                    "$ref": "#/definitions/unixTime",
                     "description": "time at which the message was received by the server"
                 },
-                "marker": { "$ref": "../../definitions/historyMarker.json" }
+                "marker": { "$ref": "#/definitions/historyMarker" }
             },
             "required": ["message", "source", "timestamp", "marker"]
         }
@@ -201,9 +195,7 @@ Send a simple message to the given target.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player" },
-                                "userId": {
-                                    "$ref": "../../definitions/userId.json"
-                                }
+                                "userId": { "$ref": "#/definitions/userId" }
                             },
                             "required": ["type", "userId"]
                         },
@@ -392,7 +384,7 @@ Ask the server to send events for relevant messages
                             "properties": {
                                 "type": { "const": "marker" },
                                 "value": {
-                                    "$ref": "../../definitions/historyMarker.json"
+                                    "$ref": "#/definitions/historyMarker"
                                 }
                             },
                             "required": ["type", "value"]

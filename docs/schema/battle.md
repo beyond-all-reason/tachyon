@@ -33,7 +33,7 @@ When a user client receives this response it should launch the game (spring.exe)
         "messageId": { "type": "string" },
         "commandId": { "const": "battle/start" },
         "data": {
-            "$ref": "../../definitions/privateBattle.json",
+            "$ref": "#/definitions/privateBattle",
             "title": "BattleStartRequestData"
         }
     },

@@ -39,9 +39,7 @@ Fetch user info from the server.
         "data": {
             "title": "UserInfoRequestData",
             "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "userId": { "$ref": "#/definitions/userId" } },
             "required": ["userId"]
         }
     },
@@ -103,7 +101,7 @@ export interface UserInfoRequestData {
                 "commandId": { "const": "user/info" },
                 "status": { "const": "success" },
                 "data": {
-                    "$ref": "../../definitions/user.json",
+                    "$ref": "#/definitions/user",
                     "title": "UserInfoOkResponseData"
                 }
             },
@@ -225,9 +223,7 @@ Sent by the server to inform the client of its own user state. This event should
         "data": {
             "title": "UserSelfEventData",
             "type": "object",
-            "properties": {
-                "user": { "$ref": "../../definitions/privateUser.json" }
-            },
+            "properties": { "user": { "$ref": "#/definitions/privateUser" } },
             "required": ["user"]
         }
     },
@@ -273,22 +269,21 @@ Sent by the server to inform the client of its own user state. This event should
                     {
                         "userId": "351",
                         "invitedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
                     }
                 ]
             },
             "invitedToParties": [],
             "friendIds": [
-                "commodo et",
-                "quis in",
-                "est id eu dolore proident",
-                "nisi sint ea esse",
-                "ut deserunt eiusmod dolor culpa"
+                "sit cupidatat nisi irure",
+                "non ullamco dolor dolore elit",
+                "aliqua labore ipsum amet",
+                "elit do proident reprehenderit eiusmod"
             ],
             "outgoingFriendRequest": [
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -306,27 +301,30 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": {},
                     "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
                 }
             ],
-            "ignoreIds": [
-                "ut nulla et consectetur sint",
-                "exercitation velit Ut sed",
-                "reprehenderit",
-                "adipisicing sit"
-            ],
+            "ignoreIds": [],
             "currentBattle": {
-                "username": "fugiat",
-                "password": "nostrud dolor dolor tempor ut",
-                "ip": "sed amet",
-                "port": 53443002.700805664,
+                "username": "elit magna Excepteur et",
+                "password": "minim non sint",
+                "ip": "ad nostrud",
+                "port": -94831848.14453125,
                 "engine": {
-                    "version": "tempor"
+                    "version": "irure"
                 },
                 "game": {
-                    "springName": "deserunt et nulla Lorem quis"
+                    "springName": "reprehenderit ad est"
                 },
                 "map": {
-                    "springName": "aliqua dolor reprehenderit fugiat"
+                    "springName": "tempor irure Lorem"
                 }
             }
         }
@@ -438,7 +436,7 @@ Ask the server to send updates about theses users. A maximum of 100 userIds can 
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/userId.json" },
+                    "items": { "$ref": "#/definitions/userId" },
                     "minItems": 1,
                     "maxItems": 100
                 }
@@ -625,7 +623,7 @@ Ask the server to stop sending user updates for the given set of userId. This sh
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/userId.json" },
+                    "items": { "$ref": "#/definitions/userId" },
                     "minItems": 1,
                     "maxItems": 100
                 }
@@ -798,7 +796,7 @@ Sent by the server to inform the client of user state changes. User objects shou
                     "items": {
                         "type": "object",
                         "properties": {
-                            "userId": { "type": "string", "examples": ["351"] },
+                            "userId": { "$ref": "#/definitions/userId" },
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
                             "clanId": {
@@ -858,59 +856,37 @@ Sent by the server to inform the client of user state changes. User objects shou
     "data": {
         "users": [
             {
-                "reprehenderit_1": -70320141.3154602,
-                "eiusmod_9_1": -33229495,
-                "exd": "voluptate velit Duis",
-                "Excepteurc1": 65691375,
-                "mollit_b": 85934126.37710571,
-                "voluptate8a3": -56213463,
+                "reprehenderit_1": -69989050,
+                "eiusmod_9_1": 27231049.53765869,
+                "exd": true,
+                "Excepteurc1": true,
+                "mollit_b": false,
+                "voluptate8a3": 84426176.54800415,
                 "userId": "351",
                 "status": "lobby",
                 "rating": {
-                    "value": 93225550.6515503
+                    "value": -7566881.17980957
                 }
             },
             {
-                "laboris_2": 91202688.21716309,
-                "fugiat99": true,
-                "ullamco_33b": -23010028,
-                "userId": "351",
-                "displayName": "mollit veniam sit cillum id",
-                "roles": [
-                    "moderator",
-                    "tournament_winner",
-                    "admin",
-                    "tournament_caster"
-                ]
+                "displayName": "dolore laboris non pariatur"
             },
             {
-                "userId": "351",
-                "username": "dolore amet",
-                "displayName": "Ut sunt aliqua ut",
-                "clanId": "cillum ullamco elit",
-                "countryCode": "dolore in"
-            },
-            {
-                "tempora": -87156487,
-                "consequat_8b": false,
-                "userId": "351",
-                "displayName": "amet officia eiusmod"
-            },
-            {
-                "userId": "351",
-                "username": "eiusmod sunt id exercitation",
-                "displayName": "eu",
-                "clanId": "qui",
-                "countryCode": "commodo minim eu",
-                "status": "playing",
+                "do_afe": 77962529,
+                "cupidatat__6": 47290003.299713135,
+                "countryCode": "id",
                 "rating": {
-                    "value": -3484141.8266296387
-                },
+                    "value": 40300142.765045166
+                }
+            },
+            {
+                "adipisicing_8e1": 97860765,
+                "labore_3f7": -1436126.2321472168,
+                "nisie79": "nostrud Lorem laborum tempor magna",
+                "ipsum_286": "nulla quis anim esse",
+                "userId": "351",
                 "roles": [
-                    "admin",
-                    "moderator",
-                    "tournament_winner",
-                    "tournament_caster"
+                    "moderator"
                 ]
             }
         ]
@@ -921,6 +897,8 @@ Sent by the server to inform the client of user state changes. User objects shou
 
 #### TypeScript Definition
 ```ts
+export type UserId = string;
+
 export interface UserUpdatedEvent {
     type: "event";
     messageId: string;
@@ -929,7 +907,7 @@ export interface UserUpdatedEvent {
 }
 export interface UserUpdatedEventData {
     users: {
-        userId?: string;
+        userId?: UserId;
         username?: string;
         displayName?: string;
         clanId?: string | null;

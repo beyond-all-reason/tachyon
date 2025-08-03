@@ -21,45 +21,46 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "default": {
-        "default": "./dist/index.mjs",
-        "types": "./dist/index.d.mts"
-      },
       "import": {
-        "default": "./dist/index.mjs",
-        "types": "./dist/index.d.mts"
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
       },
       "require": {
-        "default": "./dist/index.js",
-        "types": "./dist/index.d.ts"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+
+      },
+      "default": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
       }
     },
     "./validators": {
-      "default": {
-        "default": "./dist/validators.mjs",
-        "types": "./dist/validators.d.mts"
-      },
       "import": {
-        "default": "./dist/validators.mjs",
-        "types": "./dist/validators.d.mts"
+        "types": "./dist/validators.d.mts",
+        "default": "./dist/validators.mjs"
       },
       "require": {
-        "default": "./dist/validators.js",
-        "types": "./dist/validators.d.ts"
+        "types": "./dist/validators.d.ts",
+        "default": "./dist/validators.js"
+      },
+      "default": {
+        "types": "./dist/validators.d.mts",
+        "default": "./dist/validators.mjs"
       }
     },
     "./types": {
-      "default": {
-        "default": "./dist/types.mjs",
-        "types": "./dist/types.d.mts"
-      },
       "import": {
-        "default": "./dist/types.mjs",
-        "types": "./dist/types.d.mts"
+        "types": "./dist/types.d.mts",
+        "default": "./dist/types.mjs"
       },
       "require": {
-        "default": "./dist/types.js",
-        "types": "./dist/types.d.ts"
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
+      },
+      "default": {
+        "types": "./dist/types.d.mts",
+        "default": "./dist/types.mjs"
       }
     }
   },
@@ -77,11 +78,11 @@
   },
   "homepage": "https://github.com/beyond-all-reason/tachyon#readme",
   "dependencies": {
-    "ajv": "^8.16.0",
+    "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1"
   },
   "devDependencies": {
-    "@sinclair/typebox": "^0.32.32",
+    "@sinclair/typebox": "^0.34.38",
     "@types/node": "^22.13.0",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
@@ -89,13 +90,13 @@
     "eslint-plugin-simple-import-sort": "^12.1.0",
     "eslint-plugin-unused-imports": "^3.2.0",
     "jaz-ts-utils": "^7.10.0",
-    "json-schema-faker": "^0.5.6",
-    "json-schema-to-typescript": "^14.0.5",
-    "nodemon": "^3.1.3",
-    "pure-rand": "^6.1.0",
-    "tsup": "^8.1.0",
-    "tsx": "^4.15.5",
-    "type-fest": "^4.14.0",
-    "typescript": "^5.4.5"
+    "json-schema-faker": "^0.5.9",
+    "json-schema-to-typescript": "^15.0.4",
+    "nodemon": "^3.1.10",
+    "pure-rand": "^7.0.1",
+    "tsup": "^8.5.0",
+    "tsx": "^4.20.3",
+    "type-fest": "^4.41.0",
+    "typescript": "~5.5.0"
   }
 }

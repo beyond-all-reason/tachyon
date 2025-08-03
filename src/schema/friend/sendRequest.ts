@@ -1,7 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { userId } from "@/schema/definitions/userId";
 
 export default defineEndpoint({
     source: "user",
@@ -9,7 +8,7 @@ export default defineEndpoint({
     description: "Send a friend request to the target player",
     request: {
         data: Type.Object({
-            to: Type.Ref(userId),
+            to: Type.Ref("userId"),
         }),
     },
     response: [

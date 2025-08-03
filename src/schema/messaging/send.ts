@@ -1,7 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { userId } from "@/schema/definitions/userId";
 
 export default defineEndpoint({
     source: "user",
@@ -12,7 +11,7 @@ export default defineEndpoint({
             target: Type.Union([
                 Type.Object({
                     type: Type.Literal("player"),
-                    userId: Type.Ref(userId),
+                    userId: Type.Ref("userId"),
                 }),
                 Type.Object({
                     type: Type.Literal("party"),

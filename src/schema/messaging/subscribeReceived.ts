@@ -1,7 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { historyMarker } from "@/schema/definitions/historyMarker";
 
 export default defineEndpoint({
     source: "user",
@@ -20,7 +19,7 @@ export default defineEndpoint({
                         }),
                         Type.Object({
                             type: Type.Literal("marker"),
-                            value: Type.Ref(historyMarker),
+                            value: Type.Ref("historyMarker"),
                         }),
                     ],
                     { default: { type: "latest" } }

@@ -1,8 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { user } from "@/schema/definitions/user";
-import { userId } from "@/schema/definitions/userId";
 
 export default defineEndpoint({
     source: "user",
@@ -10,13 +8,13 @@ export default defineEndpoint({
     description: "Fetch user info from the server.",
     request: {
         data: Type.Object({
-            userId: Type.Ref(userId),
+            userId: Type.Ref("userId"),
         }),
     },
     response: [
         {
             status: "success",
-            data: Type.Ref(user),
+            data: Type.Ref("user"),
         },
         {
             status: "failed",

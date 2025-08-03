@@ -1,7 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { userId } from "@/schema/definitions/userId";
 
 export default defineEndpoint({
     source: "user",
@@ -9,7 +8,7 @@ export default defineEndpoint({
     description: "cancel a pending invite for the given player",
     request: {
         data: Type.Object({
-            userId: Type.Ref(userId),
+            userId: Type.Ref("userId"),
         }),
     },
     response: [

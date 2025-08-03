@@ -49,7 +49,7 @@ export type EndpointConfig = {
 );
 
 export type DataSchema = {
-    data?: TObject | TUnion | TIntersect | TRef<TObject | TUnion | TIntersect>;
+    data?: TObject | TUnion | TIntersect | TRef;
 };
 
 export type ResponseSchema = Array<SuccessResponseSchema | FailedResponseSchema>;

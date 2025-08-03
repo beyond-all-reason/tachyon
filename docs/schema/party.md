@@ -78,9 +78,7 @@ Accept the invite to the party
         "data": {
             "title": "PartyAcceptInviteRequestData",
             "type": "object",
-            "properties": {
-                "partyId": { "$ref": "../../definitions/partyId.json" }
-            },
+            "properties": { "partyId": { "$ref": "#/definitions/partyId" } },
             "required": ["partyId"]
         }
     },
@@ -226,9 +224,7 @@ cancel a pending invite for the given player
         "data": {
             "title": "PartyCancelInviteRequestData",
             "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "userId": { "$ref": "#/definitions/userId" } },
             "required": ["userId"]
         }
     },
@@ -426,7 +422,7 @@ export interface PartyCreateRequest {
                     "title": "PartyCreateOkResponseData",
                     "type": "object",
                     "properties": {
-                        "partyId": { "$ref": "../../definitions/partyId.json" }
+                        "partyId": { "$ref": "#/definitions/partyId" }
                     },
                     "required": ["partyId"]
                 }
@@ -524,9 +520,7 @@ Decline the invite to a party
         "data": {
             "title": "PartyDeclineInviteRequestData",
             "type": "object",
-            "properties": {
-                "partyId": { "$ref": "../../definitions/partyId.json" }
-            },
+            "properties": { "partyId": { "$ref": "#/definitions/partyId" } },
             "required": ["partyId"]
         }
     },
@@ -672,9 +666,7 @@ invite the target player to your current party
         "data": {
             "title": "PartyInviteRequestData",
             "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "userId": { "$ref": "#/definitions/userId" } },
             "required": ["userId"]
         }
     },
@@ -820,9 +812,7 @@ A player has been invited to the party. Sent to the invited player and all party
         "data": {
             "title": "PartyInvitedEventData",
             "type": "object",
-            "properties": {
-                "party": { "$ref": "../../definitions/partyState.json" }
-            },
+            "properties": { "party": { "$ref": "#/definitions/partyState" } },
             "required": ["party"]
         }
     },
@@ -855,13 +845,17 @@ A player has been invited to the party. Sent to the invited player and all party
                 {
                     "userId": "351",
                     "joinedAt": 1705432698000000
-                },
-                {
-                    "userId": "351",
-                    "joinedAt": 1705432698000000
                 }
             ],
             "invited": [
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                },
                 {
                     "userId": "351",
                     "invitedAt": 1705432698000000
@@ -932,9 +926,7 @@ Kick the target player from the party
         "data": {
             "title": "PartyKickMemberRequestData",
             "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" }
-            },
+            "properties": { "userId": { "$ref": "#/definitions/userId" } },
             "required": ["userId"]
         }
     },
@@ -1211,9 +1203,7 @@ Client has been removed from the party. Either kicked, the invite was cancelled 
         "data": {
             "title": "PartyRemovedEventData",
             "type": "object",
-            "properties": {
-                "partyId": { "$ref": "../../definitions/partyId.json" }
-            },
+            "properties": { "partyId": { "$ref": "#/definitions/partyId" } },
             "required": ["partyId"]
         }
     },
@@ -1282,7 +1272,7 @@ New player joined the party (accepted an invite)
         "messageId": { "type": "string" },
         "commandId": { "const": "party/updated" },
         "data": {
-            "$ref": "../../definitions/partyState.json",
+            "$ref": "#/definitions/partyState",
             "title": "PartyUpdatedEventData"
         }
     },
@@ -1321,10 +1311,6 @@ New player joined the party (accepted an invite)
             }
         ],
         "invited": [
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
             {
                 "userId": "351",
                 "invitedAt": 1705432698000000
