@@ -18,13 +18,7 @@
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": {
-                        "$id": "userId",
-                        "type": "string",
-                        "examples": ["351"]
-                    },
-                    "minItems": 1,
-                    "maxItems": 100
+                    "items": { "$ref": "../../definitions/userId.json" }
                 }
             },
             "required": ["userIds"]

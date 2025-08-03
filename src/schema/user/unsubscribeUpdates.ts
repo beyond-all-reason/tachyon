@@ -10,7 +10,7 @@ export default defineEndpoint({
         "Ask the server to stop sending user updates for the given set of userId. This should always succeed.",
     request: {
         data: Type.Object({
-            userIds: Type.Array(userId, { minItems: 1, maxItems: 100 }),
+            userIds: Type.Array(Type.Ref(userId)),
         }),
     },
     response: [
