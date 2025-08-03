@@ -3646,11 +3646,7 @@
                     "properties": {
                         "userIds": {
                             "type": "array",
-                            "items": {
-                                "$id": "userId",
-                                "type": "string",
-                                "examples": ["351"]
-                            },
+                            "items": { "$ref": "#/definitions/userId" },
                             "minItems": 1,
                             "maxItems": 100
                         }
@@ -3726,7 +3722,9 @@
                     "properties": {
                         "userIds": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/userId" }
+                            "items": { "$ref": "#/definitions/userId" },
+                            "minItems": 1,
+                            "maxItems": 100
                         }
                     },
                     "required": ["userIds"]

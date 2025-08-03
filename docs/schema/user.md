@@ -506,11 +506,7 @@ Ask the server to send updates about theses users. A maximum of 100 userIds can 
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": {
-                        "$id": "userId",
-                        "type": "string",
-                        "examples": ["351"]
-                    },
+                    "items": { "$ref": "../../definitions/userId.json" },
                     "minItems": 1,
                     "maxItems": 100
                 }
@@ -697,7 +693,9 @@ Ask the server to stop sending user updates for the given set of userId. This sh
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/userId.json" }
+                    "items": { "$ref": "../../definitions/userId.json" },
+                    "minItems": 1,
+                    "maxItems": 100
                 }
             },
             "required": ["userIds"]
@@ -719,6 +717,21 @@ Ask the server to stop sending user updates for the given set of userId. This sh
     "commandId": "user/unsubscribeUpdates",
     "data": {
         "userIds": [
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
+            "351",
             "351"
         ]
     }
@@ -737,7 +750,7 @@ export interface UserUnsubscribeUpdatesRequest {
     data: UserUnsubscribeUpdatesRequestData;
 }
 export interface UserUnsubscribeUpdatesRequestData {
-    userIds: UserId[];
+    userIds: [UserId, ...UserId[]];
 }
 ```
 ### Response
