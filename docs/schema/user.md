@@ -326,7 +326,8 @@ Sent by the server to inform the client of its own user state. This event should
                 "map": {
                     "springName": "tempor irure Lorem"
                 }
-            }
+            },
+            "currentLobby": null
         }
     }
 }
@@ -360,6 +361,7 @@ export type PrivateUser = {
     }[];
     ignoreIds: string[];
     currentBattle?: PrivateBattle;
+    currentLobby: string | null;
 };
 export type UserId = string;
 export type PartyId = string;
