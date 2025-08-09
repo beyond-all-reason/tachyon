@@ -57,6 +57,94 @@
             "type": "string",
             "examples": ["-576460745805023"]
         },
+        "lobbyDetails": {
+            "description": "The full state of a lobby",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "mapName": { "type": "string" },
+                "engineVersion": { "type": "string" },
+                "gameVersion": { "type": "string" },
+                "allyTeams": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "description": "this represent an array, items should be sorted lexicographically on their keys",
+                            "type": "object",
+                            "properties": {
+                                "startBox": {
+                                    "$ref": "#/definitions/startBox"
+                                },
+                                "teams": {
+                                    "type": "object",
+                                    "patternProperties": {
+                                        "^(.*)$": {
+                                            "type": "object",
+                                            "properties": {
+                                                "players": {
+                                                    "type": "object",
+                                                    "patternProperties": {
+                                                        "^(.*)$": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "id": {
+                                                                    "$ref": "#/definitions/userId"
+                                                                }
+                                                            },
+                                                            "required": ["id"]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "required": ["players"]
+                                        }
+                                    }
+                                }
+                            },
+                            "required": ["startBox", "teams"]
+                        }
+                    }
+                },
+                "currentBattle": {
+                    "description": "If a battle is currently happening, here are the info",
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "startedAt": { "$ref": "#/definitions/unixTime" }
+                    },
+                    "required": ["id", "startedAt"]
+                }
+            },
+            "required": [
+                "id",
+                "mapName",
+                "engineVersion",
+                "gameVersion",
+                "allyTeams"
+            ]
+        },
+        "lobbyOverview": {
+            "description": "Simplified view of a lobby for list display purposes.",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "playerCount": { "type": "integer" },
+                "maxPlayerCount": { "type": "integer" },
+                "mapName": { "type": "string" },
+                "engineVersion": { "type": "string" },
+                "gameVersion": { "type": "string" }
+            },
+            "required": [
+                "id",
+                "name",
+                "playerCount",
+                "maxPlayerCount",
+                "mapName",
+                "engineVersion",
+                "gameVersion"
+            ]
+        },
         "partyId": {
             "type": "string",
             "examples": ["1882f6b2e3a4d14f24acb7aa"]
@@ -193,6 +281,9 @@
                         },
                         "currentBattle": {
                             "$ref": "#/definitions/privateBattle"
+                        },
+                        "currentLobby": {
+                            "anyOf": [{ "type": "string" }, { "type": "null" }]
                         }
                     },
                     "required": [
@@ -201,7 +292,8 @@
                         "friendIds",
                         "outgoingFriendRequest",
                         "incomingFriendRequest",
-                        "ignoreIds"
+                        "ignoreIds",
+                        "currentLobby"
                     ]
                 }
             ]
@@ -2060,6 +2152,641 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "LobbyCreateRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/create" },
+                "data": {
+                    "title": "LobbyCreateRequestData",
+                    "type": "object",
+                    "properties": {
+                        "name": { "type": "string" },
+                        "mapName": { "type": "string" },
+                        "allyTeamConfig": {
+                            "description": "each object describes an ally team",
+                            "type": "array",
+                            "items": {
+                                "description": "config for this ally team",
+                                "type": "object",
+                                "properties": {
+                                    "maxTeams": {
+                                        "type": "integer",
+                                        "minimum": 1
+                                    },
+                                    "startBox": {
+                                        "$ref": "#/definitions/startBox"
+                                    },
+                                    "teams": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "maxPlayers": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                }
+                                            },
+                                            "required": ["maxPlayers"]
+                                        }
+                                    }
+                                },
+                                "required": ["maxTeams", "startBox", "teams"]
+                            }
+                        }
+                    },
+                    "required": ["name", "mapName", "allyTeamConfig"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyCreateResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyCreateOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/create" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "$ref": "#/definitions/lobbyDetails",
+                            "title": "LobbyCreateOkResponseData"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "LobbyCreateFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/create" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbyJoinRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/join" },
+                "data": {
+                    "title": "LobbyJoinRequestData",
+                    "type": "object",
+                    "properties": { "id": { "type": "string" } },
+                    "required": ["id"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyJoinResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyJoinOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/join" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "$ref": "#/definitions/lobbyDetails",
+                            "title": "LobbyJoinOkResponseData"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "LobbyJoinFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/join" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbyLeaveRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/leave" },
+                "data": {
+                    "title": "LobbyLeaveRequestData",
+                    "type": "object",
+                    "properties": { "id": { "type": "string" } },
+                    "required": ["id"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyLeaveResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyLeaveOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/leave" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyLeaveFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/leave" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbyListUpdatedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/listUpdated" },
+                "data": {
+                    "title": "LobbyListUpdatedEventData",
+                    "type": "object",
+                    "properties": {
+                        "updates": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    {
+                                        "description": "this lobby is no more",
+                                        "type": "object",
+                                        "properties": {
+                                            "type": { "const": "removed" },
+                                            "id": { "type": "string" }
+                                        },
+                                        "required": ["type", "id"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": { "const": "added" },
+                                            "overview": {
+                                                "$ref": "#/definitions/lobbyOverview"
+                                            }
+                                        },
+                                        "required": ["type", "overview"]
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": { "const": "updated" },
+                                            "overview": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": { "type": "string" },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "playerCount": {
+                                                        "type": "integer"
+                                                    },
+                                                    "maxPlayerCount": {
+                                                        "type": "integer"
+                                                    },
+                                                    "mapName": {
+                                                        "type": "string"
+                                                    },
+                                                    "engineVersion": {
+                                                        "type": "string"
+                                                    },
+                                                    "gameVersion": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": ["id"]
+                                            }
+                                        },
+                                        "required": ["type", "overview"]
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "required": ["updates"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyStartBattleRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/startBattle" },
+                "data": {
+                    "title": "LobbyStartBattleRequestData",
+                    "type": "object",
+                    "properties": { "id": { "type": "string" } },
+                    "required": ["id"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyStartBattleResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyStartBattleOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/startBattle" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyStartBattleFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/startBattle" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbySubscribeListRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/subscribeList" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "LobbySubscribeListResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbySubscribeListOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/subscribeList" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbySubscribeListFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/subscribeList" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbyUnsubscribeListRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/unsubscribeList" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "LobbyUnsubscribeListResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyUnsubscribeListOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/unsubscribeList" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyUnsubscribeListFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/unsubscribeList" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbyUpdatedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updated" },
+                "data": {
+                    "title": "LobbyUpdatedEventData",
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "mapName": { "type": "string" },
+                        "engineVersion": { "type": "string" },
+                        "gameVersion": { "type": "string" },
+                        "allyTeams": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": {
+                                    "anyOf": [
+                                        {
+                                            "description": "this represent an array, items should be sorted lexicographically on their keys",
+                                            "type": "object",
+                                            "properties": {
+                                                "startBox": {
+                                                    "$ref": "#/definitions/startBox"
+                                                },
+                                                "teams": {
+                                                    "type": "object",
+                                                    "patternProperties": {
+                                                        "^(.*)$": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                        "players": {
+                                                                            "type": "object",
+                                                                            "patternProperties": {
+                                                                                "^(.*)$": {
+                                                                                    "anyOf": [
+                                                                                        {
+                                                                                            "type": "object",
+                                                                                            "properties": {
+                                                                                                "id": {
+                                                                                                    "$ref": "#/definitions/userId"
+                                                                                                }
+                                                                                            },
+                                                                                            "required": [
+                                                                                                "id"
+                                                                                            ]
+                                                                                        },
+                                                                                        {
+                                                                                            "type": "null"
+                                                                                        }
+                                                                                    ]
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "required": [
+                                                                        "players"
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "required": ["teams"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "currentBattle": {
+                            "anyOf": [
+                                {
+                                    "description": "If a battle is currently happening, here are the info",
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "startedAt": {
+                                            "$ref": "#/definitions/unixTime"
+                                        }
+                                    },
+                                    "required": ["id", "startedAt"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    },
+                    "required": ["id"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "MatchmakingCancelRequest",

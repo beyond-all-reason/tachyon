@@ -1,0 +1,60 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/lobbyDetails.json",
+    "title": "LobbyDetails",
+    "description": "The full state of a lobby",
+    "type": "object",
+    "properties": {
+        "id": { "type": "string" },
+        "mapName": { "type": "string" },
+        "engineVersion": { "type": "string" },
+        "gameVersion": { "type": "string" },
+        "allyTeams": {
+            "type": "object",
+            "patternProperties": {
+                "^(.*)$": {
+                    "description": "this represent an array, items should be sorted lexicographically on their keys",
+                    "type": "object",
+                    "properties": {
+                        "startBox": { "$ref": "../definitions/startBox.json" },
+                        "teams": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": {
+                                    "type": "object",
+                                    "properties": {
+                                        "players": {
+                                            "type": "object",
+                                            "patternProperties": {
+                                                "^(.*)$": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "$ref": "../definitions/userId.json"
+                                                        }
+                                                    },
+                                                    "required": ["id"]
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "required": ["players"]
+                                }
+                            }
+                        }
+                    },
+                    "required": ["startBox", "teams"]
+                }
+            }
+        },
+        "currentBattle": {
+            "description": "If a battle is currently happening, here are the info",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "startedAt": { "$ref": "../definitions/unixTime.json" }
+            },
+            "required": ["id", "startedAt"]
+        }
+    },
+    "required": ["id", "mapName", "engineVersion", "gameVersion", "allyTeams"]
+}
