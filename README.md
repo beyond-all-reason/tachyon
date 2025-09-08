@@ -95,6 +95,7 @@ Every event command contains these additional properties:
   - [autohost](docs/schema/autohost.md)
   - [battle](docs/schema/battle.md)
   - [friend](docs/schema/friend.md)
+  - [lobby](docs/schema/lobby.md)
   - [matchmaking](docs/schema/matchmaking.md)
   - [messaging](docs/schema/messaging.md)
   - [party](docs/schema/party.md)
