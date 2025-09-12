@@ -17,6 +17,7 @@
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
+                "name": { "type": "string" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },

@@ -3,6 +3,7 @@ import { Type } from "@sinclair/typebox";
 export const lobbyDetails = Type.Object(
     {
         id: Type.String(),
+        name: Type.String(),
         mapName: Type.String(),
         engineVersion: Type.String(),
         gameVersion: Type.String(),

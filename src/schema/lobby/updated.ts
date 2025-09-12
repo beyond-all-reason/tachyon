@@ -14,6 +14,7 @@ export default defineEndpoint({
             // not all types are nullable because in the context of lobbies, it
             // makes no sense to clear some propreties. For example, a map
             // must always be set.
+            name: Type.Optional(Type.String()),
             mapName: Type.Optional(Type.String()),
             engineVersion: Type.Optional(Type.String()),
             gameVersion: Type.Optional(Type.String()),
