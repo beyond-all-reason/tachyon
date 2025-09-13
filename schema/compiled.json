@@ -62,6 +62,7 @@
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
+                "name": { "type": "string" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
@@ -129,6 +130,7 @@
             },
             "required": [
                 "id",
+                "name",
                 "mapName",
                 "engineVersion",
                 "gameVersion",
@@ -2771,6 +2773,7 @@
                     "type": "object",
                     "properties": {
                         "id": { "type": "string" },
+                        "name": { "type": "string" },
                         "mapName": { "type": "string" },
                         "engineVersion": { "type": "string" },
                         "gameVersion": { "type": "string" },
