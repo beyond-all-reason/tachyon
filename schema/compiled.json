@@ -2461,6 +2461,36 @@
             "required": ["type", "messageId", "commandId", "data"]
         },
         {
+            "title": "LobbyListResetEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/listReset" },
+                "data": {
+                    "title": "LobbyListResetEventData",
+                    "type": "object",
+                    "properties": {
+                        "lobbies": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": {
+                                    "$ref": "#/definitions/lobbyOverview"
+                                }
+                            }
+                        }
+                    },
+                    "required": ["lobbies"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "LobbyListUpdatedEvent",
             "tachyon": {
                 "source": "server",
@@ -2476,96 +2506,55 @@
                     "title": "LobbyListUpdatedEventData",
                     "type": "object",
                     "properties": {
-                        "updates": {
-                            "type": "array",
-                            "items": {
-                                "anyOf": [
-                                    {
-                                        "description": "this lobby is no more",
-                                        "type": "object",
-                                        "properties": {
-                                            "type": { "const": "removed" },
-                                            "id": { "type": "string" }
-                                        },
-                                        "required": ["type", "id"]
-                                    },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": { "const": "added" },
-                                            "overview": {
-                                                "$ref": "#/definitions/lobbyOverview"
-                                            }
-                                        },
-                                        "required": ["type", "overview"]
-                                    },
-                                    {
-                                        "description": "reset the list of lobby",
-                                        "type": "object",
-                                        "properties": {
-                                            "type": { "const": "setList" },
-                                            "overviews": {
-                                                "type": "array",
-                                                "items": {
-                                                    "$ref": "#/definitions/lobbyOverview"
-                                                }
-                                            }
-                                        },
-                                        "required": ["type", "overviews"]
-                                    },
-                                    {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": { "const": "updated" },
-                                            "overview": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "id": { "type": "string" },
-                                                    "name": {
-                                                        "type": "string"
-                                                    },
-                                                    "playerCount": {
-                                                        "type": "integer"
-                                                    },
-                                                    "maxPlayerCount": {
-                                                        "type": "integer"
-                                                    },
-                                                    "mapName": {
-                                                        "type": "string"
-                                                    },
-                                                    "engineVersion": {
-                                                        "type": "string"
-                                                    },
-                                                    "gameVersion": {
-                                                        "type": "string"
-                                                    },
-                                                    "currentBattle": {
-                                                        "anyOf": [
-                                                            {
-                                                                "type": "object",
-                                                                "properties": {
-                                                                    "startedAt": {
-                                                                        "$ref": "#/definitions/unixTime"
-                                                                    }
-                                                                },
-                                                                "required": [
-                                                                    "startedAt"
-                                                                ]
-                                                            },
-                                                            { "type": "null" }
-                                                        ]
-                                                    }
+                        "lobbies": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": { "type": "string" },
+                                                "name": { "type": "string" },
+                                                "playerCount": {
+                                                    "type": "integer"
                                                 },
-                                                "required": ["id"]
-                                            }
+                                                "maxPlayerCount": {
+                                                    "type": "integer"
+                                                },
+                                                "mapName": { "type": "string" },
+                                                "engineVersion": {
+                                                    "type": "string"
+                                                },
+                                                "gameVersion": {
+                                                    "type": "string"
+                                                },
+                                                "currentBattle": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "startedAt": {
+                                                                    "$ref": "#/definitions/unixTime"
+                                                                }
+                                                            },
+                                                            "required": [
+                                                                "startedAt"
+                                                            ]
+                                                        },
+                                                        { "type": "null" }
+                                                    ]
+                                                }
+                                            },
+                                            "required": ["id"]
                                         },
-                                        "required": ["type", "overview"]
-                                    }
-                                ]
+                                        { "type": "null" }
+                                    ]
+                                }
                             }
                         }
                     },
-                    "required": ["updates"]
+                    "required": ["lobbies"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
