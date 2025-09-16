@@ -101,20 +101,37 @@
                     "type": "object",
                     "patternProperties": {
                         "^(.*)$": {
-                            "type": "object",
-                            "properties": {
-                                "type": { "const": "player" },
-                                "id": { "$ref": "#/definitions/userId" },
-                                "allyTeam": { "type": "string" },
-                                "team": { "type": "string" },
-                                "player": { "type": "string" }
-                            },
-                            "required": [
-                                "type",
-                                "id",
-                                "allyTeam",
-                                "team",
-                                "player"
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "player" },
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "allyTeam": { "type": "string" },
+                                        "team": { "type": "string" },
+                                        "player": { "type": "string" }
+                                    },
+                                    "required": [
+                                        "type",
+                                        "id",
+                                        "allyTeam",
+                                        "team",
+                                        "player"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "spec" },
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "queuePosition": { "type": "number" }
+                                    },
+                                    "required": ["type", "id", "queuePosition"]
+                                }
                             ]
                         }
                     }
@@ -2375,6 +2392,76 @@
             ]
         },
         {
+            "title": "LobbyJoinAllyTeamRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinAllyTeam" },
+                "data": {
+                    "title": "LobbyJoinAllyTeamRequestData",
+                    "type": "object",
+                    "properties": { "allyTeam": { "type": "string" } },
+                    "required": ["allyTeam"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyJoinAllyTeamResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyJoinAllyTeamOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinAllyTeam" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyJoinAllyTeamFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinAllyTeam" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_lobby",
+                                "ally_team_full",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyLeaveRequest",
             "tachyon": {
                 "source": "user",
@@ -2558,6 +2645,69 @@
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbySpectateRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/spectate" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "LobbySpectateResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbySpectateOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/spectate" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbySpectateFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/spectate" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_lobby",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
         },
         {
             "title": "LobbyStartBattleRequest",
@@ -2817,19 +2967,44 @@
                                 "^(.*)$": {
                                     "anyOf": [
                                         {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "player" },
-                                                "id": {
-                                                    "$ref": "#/definitions/userId"
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "const": "player"
+                                                        },
+                                                        "id": {
+                                                            "$ref": "#/definitions/userId"
+                                                        },
+                                                        "allyTeam": {
+                                                            "type": "string"
+                                                        },
+                                                        "team": {
+                                                            "type": "string"
+                                                        },
+                                                        "player": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": ["type", "id"]
                                                 },
-                                                "allyTeam": {
-                                                    "type": "string"
-                                                },
-                                                "team": { "type": "string" },
-                                                "player": { "type": "string" }
-                                            },
-                                            "required": ["type", "id"]
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "type": {
+                                                            "const": "spec"
+                                                        },
+                                                        "id": {
+                                                            "$ref": "#/definitions/userId"
+                                                        },
+                                                        "queuePosition": {
+                                                            "type": "number"
+                                                        }
+                                                    },
+                                                    "required": ["type", "id"]
+                                                }
+                                            ]
                                         },
                                         { "type": "null" }
                                     ]
