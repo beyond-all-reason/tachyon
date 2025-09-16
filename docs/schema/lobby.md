@@ -1555,13 +1555,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         "team": { "type": "string" },
                                         "player": { "type": "string" }
                                     },
-                                    "required": [
-                                        "type",
-                                        "id",
-                                        "allyTeam",
-                                        "team",
-                                        "player"
-                                    ]
+                                    "required": ["type", "id"]
                                 },
                                 { "type": "null" }
                             ]
@@ -1615,16 +1609,13 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
             "(:&D": {
                 "type": "player",
                 "id": "351",
-                "allyTeam": "voluptate dolore sed esse",
-                "team": "Ut anim Duis proident",
-                "player": "dolor"
+                "allyTeam": "tempor exercitation mollit laboris",
+                "team": "laboris magna eiusmod quis",
+                "player": "officia"
             },
             "XjKt": null
         },
-        "currentBattle": {
-            "id": "ipsum consequat adipisicing quis eu",
-            "startedAt": 1705432698000000
-        }
+        "currentBattle": null
     }
 }
 ```
@@ -1662,9 +1653,9 @@ export interface LobbyUpdatedEventData {
         [k: string]: {
             type: "player";
             id: UserId;
-            allyTeam: string;
-            team: string;
-            player: string;
+            allyTeam?: string;
+            team?: string;
+            player?: string;
         } | null;
     };
     currentBattle?: {
