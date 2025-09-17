@@ -6,8 +6,12 @@ A player can only be in at most one lobby at a time.
 [lobby/create](#create) is used to create and join a lobby. Creating a lobby also
 implicitely joins it.
 Other players can get the list of lobbies through [lobby/subscribeList](#subscribeList). After being
-subscribed they receive [lobby/listUpdated](#listUpdated) events. This allow clients
-to maintain a list of lobbies on their side.
+subscribed they receive [lobby/listUpdated](#listUpdated) events. These events
+follow json merge patch [RFC 7386](https://www.rfc-editor.org/rfc/rfc7386.html).
+This allow clients to maintain a list of lobbies on their side.
+The event [lobby/listReset](#listReset) holds the full list of lobbies. Upon receiving this
+event, a client should set its internal list of lobbies according to this event.
+In practice, this event should rarely be seen.
 
 
 For other player to join a lobby, they need the lobby ID with [lobby/join](#join),
@@ -15,7 +19,7 @@ this operation is idempotent. Attempting to join a different lobby while being
 in a lobby will fail with `invalid_request`.
 Upon joining, clients receive the full state of the lobby as
 response and will automatically get [lobby/updated](#updated) events when
-something changes. The updated events follow json merge patch [RFC 7386](https://www.rfc-editor.org/rfc/rfc7386.html)
+something changes. Similar to the listUpdated events, these follow the same json merge patch
 structure. As such, arrays like teams are represented using objects, where the items
 are ordered based on their keys.
 For example:
