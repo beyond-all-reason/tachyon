@@ -7,8 +7,8 @@
 A lobby is a place where players can chat and setup a game before going into it.
 A player can only be in at most one lobby at a time.
 
-[lobby/create](#create) is used to create and join a lobby. Creating a lobby also
-implicitely joins it.
+[lobby/create](#create) is used to create and join a lobby. When you create a lobby
+you also automatically becomes the first player in the first allyTeam.
 Other players can get the list of lobbies through [lobby/subscribeList](#subscribeList). After being
 subscribed they receive [lobby/listUpdated](#listUpdated) events. This allow clients
 to maintain a list of lobbies on their side.
@@ -16,7 +16,9 @@ to maintain a list of lobbies on their side.
 
 For other player to join a lobby, they need the lobby ID with [lobby/join](#join),
 this operation is idempotent. Attempting to join a different lobby while being
-in a lobby will fail with `invalid_request`.
+in a lobby will fail with `invalid_request`. Joining a lobby puts you in the spectator
+queue by default. Use [lobby/joinAllyTeam](#joinAllyTeam) and [lobby/spectate](#spectate)
+to move between ally teams and spectator queue.
 Upon joining, clients receive the full state of the lobby as
 response and will automatically get [lobby/updated](#updated) events when
 something changes. The updated events follow json merge patch [RFC 7386](https://www.rfc-editor.org/rfc/rfc7386.html)
@@ -62,12 +64,31 @@ happen when the player is kicked, or if the lobby crashed. In this case, the cli
 consider no longer in the lobby. This event is only sent to the player that was removed.
 It will not be sent when the client leave using [lobby/leave](#leave).
 
+When a lobby is empty, it is automatically disposed off.
+
+
+### Lobby members
+
+A lobby has a list of members, that can be either `player` or `spec` (spectator).
+The list of member is an object keyed by the member's id. Any update to members
+follow json patch approach.
+For spectator, the clients should order them by increasing `queuePosition`. There
+is no guarantee that these positions are consecutives. The following is possible:
+
+`members: {
+    "123": {"type": "spec", "queuePosition": 3}
+    "456": {"type": "spec", "queuePosition": 1}
+    "789": {"type": "spec", "queuePosition": 10}
+}`
+
 ---
 - [create](#create)
 - [join](#join)
+- [joinAllyTeam](#joinallyteam)
 - [leave](#leave)
 - [left](#left)
 - [listUpdated](#listupdated)
+- [spectate](#spectate)
 - [startBattle](#startbattle)
 - [subscribeList](#subscribelist)
 - [unsubscribeList](#unsubscribelist)
@@ -279,30 +300,28 @@ export interface StartBox {
             "{BT": {
                 "type": "player",
                 "id": "351",
-                "allyTeam": "irure ut exercitation minim sit",
-                "team": "Ut proident ex dolore aute",
-                "player": "in occaecat commodo nisi deserunt"
+                "allyTeam": "nulla proident qui Ut",
+                "team": "nostrud deserunt",
+                "player": "dolor consequat quis aliquip"
             },
             "g*~": {
-                "type": "player",
+                "type": "spec",
                 "id": "351",
-                "allyTeam": "deserunt",
-                "team": "mollit officia ea",
-                "player": "occaecat mollit consectetur Excepteur deserunt"
+                "queuePosition": 95854270.45822144
             },
             "Vt55^^F": {
                 "type": "player",
                 "id": "351",
-                "allyTeam": "deserunt et in dolor",
-                "team": "elit veniam",
-                "player": "cillum aliquip"
+                "allyTeam": "aliquip",
+                "team": "magna dolor Lorem ea voluptate",
+                "player": "et cillum dolor irure"
             },
             ">": {
                 "type": "player",
                 "id": "351",
-                "allyTeam": "quis proident amet consequat minim",
-                "team": "nulla sit in",
-                "player": "Duis velit eiusmod anim est"
+                "allyTeam": "consectetur quis eiusmod",
+                "team": "aute quis in",
+                "player": "consequat laboris adipisicing"
             }
         },
         "currentBattle": {
@@ -343,13 +362,19 @@ export interface LobbyCreateOkResponseData {
         };
     };
     members: {
-        [k: string]: {
-            type: "player";
-            id: UserId;
-            allyTeam: string;
-            team: string;
-            player: string;
-        };
+        [k: string]:
+            | {
+                  type: "player";
+                  id: UserId;
+                  allyTeam: string;
+                  team: string;
+                  player: string;
+              }
+            | {
+                  type: "spec";
+                  id: UserId;
+                  queuePosition: number;
+              };
     };
     currentBattle?: {
         startedAt: UnixTime;
@@ -576,9 +601,9 @@ export interface LobbyJoinRequestData {
             "2b": {
                 "type": "player",
                 "id": "351",
-                "allyTeam": "Duis tempor non ad",
-                "team": "anim in",
-                "player": "cupidatat"
+                "allyTeam": "id incididunt officia",
+                "team": "in fugiat",
+                "player": "consequat nisi"
             }
         },
         "currentBattle": {
@@ -619,13 +644,19 @@ export interface LobbyJoinOkResponseData {
         };
     };
     members: {
-        [k: string]: {
-            type: "player";
-            id: UserId;
-            allyTeam: string;
-            team: string;
-            player: string;
-        };
+        [k: string]:
+            | {
+                  type: "player";
+                  id: UserId;
+                  allyTeam: string;
+                  team: string;
+                  player: string;
+              }
+            | {
+                  type: "spec";
+                  id: UserId;
+                  queuePosition: number;
+              };
     };
     currentBattle?: {
         startedAt: UnixTime;
@@ -639,6 +670,152 @@ export interface StartBox {
 }
 ```
 Possible Failed Reasons: `lobby_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## JoinAllyTeam
+
+Joins the given ally team in an empty team.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyJoinAllyTeamRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/joinAllyTeam" },
+        "data": {
+            "title": "LobbyJoinAllyTeamRequestData",
+            "type": "object",
+            "properties": { "allyTeam": { "type": "string" } },
+            "required": ["allyTeam"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "anim deserunt do",
+    "commandId": "lobby/joinAllyTeam",
+    "data": {
+        "allyTeam": "Excepteur est officia"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinAllyTeamRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/joinAllyTeam";
+    data: LobbyJoinAllyTeamRequestData;
+}
+export interface LobbyJoinAllyTeamRequestData {
+    allyTeam: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyJoinAllyTeamResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyJoinAllyTeamOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinAllyTeam" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyJoinAllyTeamFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinAllyTeam" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "ally_team_full",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "tempor elit eiusmod",
+    "commandId": "lobby/joinAllyTeam",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinAllyTeamOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/joinAllyTeam";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `ally_team_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1065,6 +1242,138 @@ export interface LobbyOverview {
     } | null;
 }
 ```
+---
+
+## Spectate
+
+Move the client to the spectator queue. If already in spectator queue, has no effect (but still succeed).
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbySpectateRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/spectate" }
+    },
+    "required": ["type", "messageId", "commandId"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ut pariatur",
+    "commandId": "lobby/spectate"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySpectateRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/spectate";
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbySpectateResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbySpectateOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/spectate" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbySpectateFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/spectate" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "mollit id",
+    "commandId": "lobby/spectate",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbySpectateOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/spectate";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## StartBattle
@@ -1545,17 +1854,38 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                         "^(.*)$": {
                             "anyOf": [
                                 {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": { "const": "player" },
-                                        "id": {
-                                            "$ref": "#/definitions/userId"
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": { "const": "player" },
+                                                "id": {
+                                                    "$ref": "#/definitions/userId"
+                                                },
+                                                "allyTeam": {
+                                                    "type": "string"
+                                                },
+                                                "team": { "type": "string" },
+                                                "player": { "type": "string" }
+                                            },
+                                            "required": ["type", "id"]
                                         },
-                                        "allyTeam": { "type": "string" },
-                                        "team": { "type": "string" },
-                                        "player": { "type": "string" }
-                                    },
-                                    "required": ["type", "id"]
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "type": {
+                                                    "const": "spectator"
+                                                },
+                                                "id": {
+                                                    "$ref": "#/definitions/userId"
+                                                },
+                                                "queuePosition": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "required": ["type", "id"]
+                                        }
+                                    ]
                                 },
                                 { "type": "null" }
                             ]
@@ -1607,15 +1937,16 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
         },
         "members": {
             "(:&D": {
-                "type": "player",
+                "type": "spectator",
                 "id": "351",
-                "allyTeam": "tempor exercitation mollit laboris",
-                "team": "laboris magna eiusmod quis",
-                "player": "officia"
+                "queuePosition": 91638481.61697388
             },
             "XjKt": null
         },
-        "currentBattle": null
+        "currentBattle": {
+            "id": "anim velit incididunt",
+            "startedAt": 1705432698000000
+        }
     }
 }
 ```
@@ -1650,13 +1981,22 @@ export interface LobbyUpdatedEventData {
         } | null;
     };
     members?: {
-        [k: string]: {
-            type: "player";
-            id: UserId;
-            allyTeam?: string;
-            team?: string;
-            player?: string;
-        } | null;
+        [k: string]:
+            | (
+                  | {
+                        type: "player";
+                        id: UserId;
+                        allyTeam?: string;
+                        team?: string;
+                        player?: string;
+                    }
+                  | {
+                        type: "spectator";
+                        id: UserId;
+                        queuePosition?: number;
+                    }
+              )
+            | null;
     };
     currentBattle?: {
         id: string;
