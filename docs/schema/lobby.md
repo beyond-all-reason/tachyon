@@ -10,8 +10,12 @@ A player can only be in at most one lobby at a time.
 [lobby/create](#create) is used to create and join a lobby. Creating a lobby also
 implicitely joins it.
 Other players can get the list of lobbies through [lobby/subscribeList](#subscribeList). After being
-subscribed they receive [lobby/listUpdated](#listUpdated) events. This allow clients
-to maintain a list of lobbies on their side.
+subscribed they receive [lobby/listUpdated](#listUpdated) events. These events
+follow json merge patch [RFC 7386](https://www.rfc-editor.org/rfc/rfc7386.html).
+This allow clients to maintain a list of lobbies on their side.
+The event [lobby/listReset](#listReset) holds the full list of lobbies. Upon receiving this
+event, a client should set its internal list of lobbies according to this event.
+In practice, this event should rarely be seen.
 
 
 For other player to join a lobby, they need the lobby ID with [lobby/join](#join),
@@ -19,7 +23,7 @@ this operation is idempotent. Attempting to join a different lobby while being
 in a lobby will fail with `invalid_request`.
 Upon joining, clients receive the full state of the lobby as
 response and will automatically get [lobby/updated](#updated) events when
-something changes. The updated events follow json merge patch [RFC 7386](https://www.rfc-editor.org/rfc/rfc7386.html)
+something changes. Similar to the listUpdated events, these follow the same json merge patch
 structure. As such, arrays like teams are represented using objects, where the items
 are ordered based on their keys.
 For example:
@@ -67,6 +71,7 @@ It will not be sent when the client leave using [lobby/leave](#leave).
 - [join](#join)
 - [leave](#leave)
 - [left](#left)
+- [listReset](#listreset)
 - [listUpdated](#listupdated)
 - [startBattle](#startbattle)
 - [subscribeList](#subscribelist)
@@ -847,9 +852,112 @@ export interface LobbyLeftEventData {
 ```
 ---
 
+## ListReset
+
+Sent by the server to give the client the full list of all lobbies
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyListResetEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/listReset" },
+        "data": {
+            "title": "LobbyListResetEventData",
+            "type": "object",
+            "properties": {
+                "lobbies": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": { "$ref": "#/definitions/lobbyOverview" }
+                    }
+                }
+            },
+            "required": ["lobbies"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "sint",
+    "commandId": "lobby/listReset",
+    "data": {
+        "lobbies": {
+            "JH+": {
+                "id": "nulla eiusmod",
+                "name": "ad ullamco sunt ipsum proident",
+                "playerCount": 26791585,
+                "maxPlayerCount": -87375796,
+                "mapName": "amet proident non elit",
+                "engineVersion": "in nostrud",
+                "gameVersion": "ullamco esse cillum enim",
+                "currentBattle": null
+            }
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UnixTime = number;
+
+export interface LobbyListResetEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/listReset";
+    data: LobbyListResetEventData;
+}
+export interface LobbyListResetEventData {
+    lobbies: {
+        [k: string]: LobbyOverview;
+    };
+}
+export interface LobbyOverview {
+    id: string;
+    name: string;
+    playerCount: number;
+    maxPlayerCount: number;
+    mapName: string;
+    engineVersion: string;
+    gameVersion: string;
+    currentBattle: {
+        startedAt: UnixTime;
+    } | null;
+}
+```
+---
+
 ## ListUpdated
 
-Sent by the server whenever a lobby is added, removed or modified
+Sent by the server whenever some lobbies are added, removed or modified.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -878,90 +986,45 @@ Sent by the server whenever a lobby is added, removed or modified
             "title": "LobbyListUpdatedEventData",
             "type": "object",
             "properties": {
-                "updates": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            {
-                                "description": "this lobby is no more",
-                                "type": "object",
-                                "properties": {
-                                    "type": { "const": "removed" },
-                                    "id": { "type": "string" }
-                                },
-                                "required": ["type", "id"]
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "type": { "const": "added" },
-                                    "overview": {
-                                        "$ref": "#/definitions/lobbyOverview"
-                                    }
-                                },
-                                "required": ["type", "overview"]
-                            },
-                            {
-                                "description": "reset the list of lobby",
-                                "type": "object",
-                                "properties": {
-                                    "type": { "const": "setList" },
-                                    "overviews": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/definitions/lobbyOverview"
-                                        }
-                                    }
-                                },
-                                "required": ["type", "overviews"]
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "type": { "const": "updated" },
-                                    "overview": {
-                                        "type": "object",
-                                        "properties": {
-                                            "id": { "type": "string" },
-                                            "name": { "type": "string" },
-                                            "playerCount": {
-                                                "type": "integer"
-                                            },
-                                            "maxPlayerCount": {
-                                                "type": "integer"
-                                            },
-                                            "mapName": { "type": "string" },
-                                            "engineVersion": {
-                                                "type": "string"
-                                            },
-                                            "gameVersion": { "type": "string" },
-                                            "currentBattle": {
-                                                "anyOf": [
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "startedAt": {
-                                                                "$ref": "#/definitions/unixTime"
-                                                            }
-                                                        },
-                                                        "required": [
-                                                            "startedAt"
-                                                        ]
+                "lobbies": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "name": { "type": "string" },
+                                        "playerCount": { "type": "integer" },
+                                        "maxPlayerCount": { "type": "integer" },
+                                        "mapName": { "type": "string" },
+                                        "engineVersion": { "type": "string" },
+                                        "gameVersion": { "type": "string" },
+                                        "currentBattle": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "startedAt": {
+                                                            "$ref": "#/definitions/unixTime"
+                                                        }
                                                     },
-                                                    { "type": "null" }
-                                                ]
-                                            }
-                                        },
-                                        "required": ["id"]
-                                    }
+                                                    "required": ["startedAt"]
+                                                },
+                                                { "type": "null" }
+                                            ]
+                                        }
+                                    },
+                                    "required": ["id"]
                                 },
-                                "required": ["type", "overview"]
-                            }
-                        ]
+                                { "type": "null" }
+                            ]
+                        }
                     }
                 }
             },
-            "required": ["updates"]
+            "required": ["lobbies"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -979,33 +1042,21 @@ Sent by the server whenever a lobby is added, removed or modified
     "messageId": "in dolore",
     "commandId": "lobby/listUpdated",
     "data": {
-        "updates": [
-            {
-                "type": "added",
-                "overview": {
-                    "id": "et fugiat mollit",
-                    "name": "Excepteur dolor ut voluptate",
-                    "playerCount": 5762029,
-                    "maxPlayerCount": -97152877,
-                    "mapName": "et est deserunt incididunt",
-                    "engineVersion": "aliqua in",
-                    "gameVersion": "do consequat",
-                    "currentBattle": {
-                        "startedAt": 1705432698000000
-                    }
-                }
+        "lobbies": {
+            "^-S:": {
+                "id": "incididunt consectetur dolor",
+                "name": "ex sed anim",
+                "playerCount": 7251906,
+                "maxPlayerCount": -89825213,
+                "mapName": "id pariatur tempor ullamco",
+                "engineVersion": "magna",
+                "currentBattle": null
             },
-            {
-                "type": "updated",
-                "overview": {
-                    "id": "Excepteur laborum enim"
-                }
-            },
-            {
-                "type": "setList",
-                "overviews": []
+            "N <": {
+                "id": "proident quis",
+                "gameVersion": "adipisicing ipsum aute officia"
             }
-        ]
+        }
     }
 }
 ```
@@ -1022,47 +1073,20 @@ export interface LobbyListUpdatedEvent {
     data: LobbyListUpdatedEventData;
 }
 export interface LobbyListUpdatedEventData {
-    updates: (
-        | {
-              type: "removed";
-              id: string;
-          }
-        | {
-              type: "added";
-              overview: LobbyOverview;
-          }
-        | {
-              type: "setList";
-              overviews: LobbyOverview[];
-          }
-        | {
-              type: "updated";
-              overview: {
-                  id: string;
-                  name?: string;
-                  playerCount?: number;
-                  maxPlayerCount?: number;
-                  mapName?: string;
-                  engineVersion?: string;
-                  gameVersion?: string;
-                  currentBattle?: {
-                      startedAt: UnixTime;
-                  } | null;
-              };
-          }
-    )[];
-}
-export interface LobbyOverview {
-    id: string;
-    name: string;
-    playerCount: number;
-    maxPlayerCount: number;
-    mapName: string;
-    engineVersion: string;
-    gameVersion: string;
-    currentBattle: {
-        startedAt: UnixTime;
-    } | null;
+    lobbies: {
+        [k: string]: {
+            id: string;
+            name?: string;
+            playerCount?: number;
+            maxPlayerCount?: number;
+            mapName?: string;
+            engineVersion?: string;
+            gameVersion?: string;
+            currentBattle?: {
+                startedAt: UnixTime;
+            } | null;
+        } | null;
+    };
 }
 ```
 ---
