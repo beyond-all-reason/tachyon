@@ -2829,13 +2829,7 @@
                                                 "team": { "type": "string" },
                                                 "player": { "type": "string" }
                                             },
-                                            "required": [
-                                                "type",
-                                                "id",
-                                                "allyTeam",
-                                                "team",
-                                                "player"
-                                            ]
+                                            "required": ["type", "id"]
                                         },
                                         { "type": "null" }
                                     ]

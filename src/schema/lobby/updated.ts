@@ -58,9 +58,9 @@ export default defineEndpoint({
                             Type.Object({
                                 type: Type.Const("player"),
                                 id: Type.Ref("userId"),
-                                allyTeam: Type.String(),
-                                team: Type.String(),
-                                player: Type.String(),
+                                allyTeam: Type.Optional(Type.String()),
+                                team: Type.Optional(Type.String()),
+                                player: Type.Optional(Type.String()),
                             }),
                         ])
                     )
