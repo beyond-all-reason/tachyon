@@ -1,0 +1,32 @@
+name: Deploy New Version
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: "What new version to release"
+                type: choice
+                required: true
+                options:
+                    - patch
+                    - minor
+                    - major
+jobs:
+    deployment:
+        permissions:
+            id-token: write
+        runs-on: ubuntu-latest
+        environment: npm
+        steps:
+            - name: Checkout master branch
+              uses: actions/checkout@v5
+              with:
+                  ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+            - uses: chainguard-dev/actions/setup-gitsign@de56c2728beb0a0f371bff2ce2ee4b8afee4b5e8 # v1.5.1
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 24
+                  registry-url: "https://registry.npmjs.org"
+            - run: npm ci
+            - run: npm version --sign-git-tag ${{ inputs.version }}
+            - run: npm publish
+            - run: git push --follow-tags

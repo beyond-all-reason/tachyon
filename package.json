@@ -14,8 +14,7 @@
     "test": "npm run test:cjs && npm run test:esm",
     "test:cjs": "node --require tsx/cjs --test ./test/cjs/**/*.cts",
     "test:esm": "node --import tsx/esm --test ./test/esm/**/*.mts",
-    "prepublishOnly": "npm run build:clean && npm run test",
-    "postversion": "npm run build"
+    "prepublishOnly": "npm run build:clean && npm run test"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
