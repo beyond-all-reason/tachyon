@@ -1,6 +1,6 @@
 {
   "name": "tachyon-protocol",
-  "version": "1.14.1",
+  "version": "1.14.2",
   "description": "",
   "scripts": {
     "dev": "nodemon --watch \"src/**\" --ext ts --ignore src/meta.ts --exec npm run build",
@@ -27,7 +27,6 @@
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
-
       },
       "default": {
         "types": "./dist/index.d.mts",
