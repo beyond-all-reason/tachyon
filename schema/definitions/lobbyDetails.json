@@ -65,9 +65,9 @@
                             "properties": {
                                 "type": { "const": "spec" },
                                 "id": { "$ref": "../definitions/userId.json" },
-                                "queuePosition": { "type": "number" }
+                                "joinQueuePosition": { "type": "number" }
                             },
-                            "required": ["type", "id", "queuePosition"]
+                            "required": ["type", "id"]
                         }
                     ]
                 }

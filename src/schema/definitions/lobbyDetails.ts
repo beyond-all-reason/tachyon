@@ -39,7 +39,7 @@ export const lobbyDetails = Type.Object(
                 Type.Object({
                     type: Type.Const("spec"),
                     id: Type.Ref("userId"),
-                    queuePosition: Type.Number(),
+                    joinQueuePosition: Type.Optional(Type.Number()),
                 }),
             ])
         ),

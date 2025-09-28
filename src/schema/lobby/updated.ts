@@ -65,7 +65,7 @@ export default defineEndpoint({
                             Type.Object({
                                 type: Type.Const("spec"),
                                 id: Type.Ref("userId"),
-                                queuePosition: Type.Optional(Type.Number()),
+                                joinQueuePosition: Type.Optional(Nullable(Type.Number())),
                             }),
                         ])
                     )

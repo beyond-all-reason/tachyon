@@ -128,9 +128,11 @@
                                         "id": {
                                             "$ref": "#/definitions/userId"
                                         },
-                                        "queuePosition": { "type": "number" }
+                                        "joinQueuePosition": {
+                                            "type": "number"
+                                        }
                                     },
-                                    "required": ["type", "id", "queuePosition"]
+                                    "required": ["type", "id"]
                                 }
                             ]
                         }
@@ -2462,6 +2464,69 @@
             ]
         },
         {
+            "title": "LobbyJoinQueueRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinQueue" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "LobbyJoinQueueResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyJoinQueueOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinQueue" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyJoinQueueFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinQueue" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_lobby",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyLeaveRequest",
             "tachyon": {
                 "source": "user",
@@ -2998,8 +3063,15 @@
                                                         "id": {
                                                             "$ref": "#/definitions/userId"
                                                         },
-                                                        "queuePosition": {
-                                                            "type": "number"
+                                                        "joinQueuePosition": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "number"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
                                                         }
                                                     },
                                                     "required": ["type", "id"]

@@ -93,8 +93,11 @@
                                                 "id": {
                                                     "$ref": "../../definitions/userId.json"
                                                 },
-                                                "queuePosition": {
-                                                    "type": "number"
+                                                "joinQueuePosition": {
+                                                    "anyOf": [
+                                                        { "type": "number" },
+                                                        { "type": "null" }
+                                                    ]
                                                 }
                                             },
                                             "required": ["type", "id"]
