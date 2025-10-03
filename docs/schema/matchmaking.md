@@ -35,8 +35,8 @@ When a player is in a party and a member of the party queues for matchmaking, al
 - [list](#list)
 - [lost](#lost)
 - [queue](#queue)
-- [queuesJoined](#queuesjoined)
 - [queueUpdate](#queueupdate)
+- [queuesJoined](#queuesjoined)
 - [ready](#ready)
 ---
 
@@ -914,6 +914,75 @@ Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_i
 
 ---
 
+## QueueUpdate
+
+Contains some info about the state of the current queue.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MatchmakingQueueUpdateEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/queueUpdate" },
+        "data": {
+            "title": "MatchmakingQueueUpdateEventData",
+            "type": "object",
+            "properties": { "playersQueued": { "type": "integer" } },
+            "required": ["playersQueued"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "voluptate amet nostrud culpa enim",
+    "commandId": "matchmaking/queueUpdate",
+    "data": {
+        "playersQueued": 87917257
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingQueueUpdateEvent {
+    type: "event";
+    messageId: string;
+    commandId: "matchmaking/queueUpdate";
+    data: MatchmakingQueueUpdateEventData;
+}
+export interface MatchmakingQueueUpdateEventData {
+    playersQueued: number;
+}
+```
+---
+
 ## QueuesJoined
 
 Indicate the player has been added to some queues by someone else. This happens in a party settings.
@@ -991,75 +1060,6 @@ export interface MatchmakingQueuesJoinedEvent {
 }
 export interface MatchmakingQueuesJoinedEventData {
     queues: [string, ...string[]];
-}
-```
----
-
-## QueueUpdate
-
-Contains some info about the state of the current queue.
-
-- Endpoint Type: **Event**
-- Source: **Server**
-- Target: **User**
-- Required Scopes: `tachyon.lobby`
-
-### Event
-
-<details>
-<summary>JSONSchema</summary>
-
-```json
-{
-    "title": "MatchmakingQueueUpdateEvent",
-    "tachyon": {
-        "source": "server",
-        "target": "user",
-        "scopes": ["tachyon.lobby"]
-    },
-    "type": "object",
-    "properties": {
-        "type": { "const": "event" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "matchmaking/queueUpdate" },
-        "data": {
-            "title": "MatchmakingQueueUpdateEventData",
-            "type": "object",
-            "properties": { "playersQueued": { "type": "integer" } },
-            "required": ["playersQueued"]
-        }
-    },
-    "required": ["type", "messageId", "commandId", "data"]
-}
-
-```
-</details>
-
-<details>
-<summary>Example</summary>
-
-```json
-{
-    "type": "event",
-    "messageId": "voluptate amet nostrud culpa enim",
-    "commandId": "matchmaking/queueUpdate",
-    "data": {
-        "playersQueued": 87917257
-    }
-}
-```
-</details>
-
-#### TypeScript Definition
-```ts
-export interface MatchmakingQueueUpdateEvent {
-    type: "event";
-    messageId: string;
-    commandId: "matchmaking/queueUpdate";
-    data: MatchmakingQueueUpdateEventData;
-}
-export interface MatchmakingQueueUpdateEventData {
-    playersQueued: number;
 }
 ```
 ---
