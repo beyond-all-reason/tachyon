@@ -53,24 +53,22 @@ function capitalize(s: string): string {
 
 export async function generateJsonSchemas(): Promise<TachyonConfig> {
     const serviceDirs = path.join(__dirname, "schema");
-    const serviceHandlerDirs = await fs.promises.readdir(serviceDirs);
+    const serviceHandlerDirs = (await fs.promises.readdir(serviceDirs)).sort();
 
     for (const serviceId of serviceHandlerDirs) {
         if (serviceId.includes(".") || serviceId === "definitions") {
             continue;
         }
         const endpointDir = path.join(serviceDirs, serviceId);
-        const endpointSchemaModules = await fs.promises.readdir(endpointDir, {
-            withFileTypes: true,
-        });
+        const endpointSchemaModules = (await fs.promises.readdir(endpointDir)).sort();
 
         for (const endpointSchemaPath of endpointSchemaModules) {
-            if (endpointSchemaPath.name.endsWith(".md")) {
+            if (endpointSchemaPath.endsWith(".md")) {
                 continue;
             }
-            const endpointId = path.parse(endpointSchemaPath.name).name;
+            const endpointId = path.parse(endpointSchemaPath).name;
             const endpoint = await import(
-                pathToFileURL(path.join(endpointDir, endpointSchemaPath.name)).toString()
+                pathToFileURL(path.join(endpointDir, endpointSchemaPath)).toString()
             );
             const schemaConfig = endpoint.default as EndpointConfig;
 
@@ -256,7 +254,8 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
     await fs.promises.mkdir("schema/definitions", { recursive: true });
     const definitionsMap: Record<string, TSchema> = {};
     const definitionsPath = path.join(__dirname, "schema", "definitions");
-    for (const definitionFile of await fs.promises.readdir(definitionsPath)) {
+    const definitionFiles = (await fs.promises.readdir(definitionsPath)).sort();
+    for (const definitionFile of definitionFiles) {
         if (!definitionFile.endsWith(".ts")) {
             continue;
         }
