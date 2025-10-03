@@ -944,7 +944,7 @@ Contains some info about the state of the current queue.
         "data": {
             "title": "MatchmakingQueueUpdateEventData",
             "type": "object",
-            "properties": { "playersQueued": { "type": "string" } },
+            "properties": { "playersQueued": { "type": "integer" } },
             "required": ["playersQueued"]
         }
     },
@@ -963,7 +963,7 @@ Contains some info about the state of the current queue.
     "messageId": "voluptate amet nostrud culpa enim",
     "commandId": "matchmaking/queueUpdate",
     "data": {
-        "playersQueued": "nostrud adipisicing"
+        "playersQueued": 87917257
     }
 }
 ```
@@ -978,7 +978,7 @@ export interface MatchmakingQueueUpdateEvent {
     data: MatchmakingQueueUpdateEventData;
 }
 export interface MatchmakingQueueUpdateEventData {
-    playersQueued: string;
+    playersQueued: number;
 }
 ```
 ---

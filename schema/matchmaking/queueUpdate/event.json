@@ -15,7 +15,7 @@
         "data": {
             "title": "MatchmakingQueueUpdateEventData",
             "type": "object",
-            "properties": { "playersQueued": { "type": "string" } },
+            "properties": { "playersQueued": { "type": "integer" } },
             "required": ["playersQueued"]
         }
     },
