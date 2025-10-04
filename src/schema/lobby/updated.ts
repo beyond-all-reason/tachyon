@@ -62,6 +62,11 @@ export default defineEndpoint({
                                 team: Type.Optional(Type.String()),
                                 player: Type.Optional(Type.String()),
                             }),
+                            Type.Object({
+                                type: Type.Const("spec"),
+                                id: Type.Ref("userId"),
+                                joinQueuePosition: Type.Optional(Nullable(Type.Number())),
+                            }),
                         ])
                     )
                 )

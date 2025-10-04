@@ -36,6 +36,11 @@ export const lobbyDetails = Type.Object(
                     team: Type.String(),
                     player: Type.String(),
                 }),
+                Type.Object({
+                    type: Type.Const("spec"),
+                    id: Type.Ref("userId"),
+                    joinQueuePosition: Type.Optional(Type.Number()),
+                }),
             ])
         ),
         currentBattle: Type.Optional(
