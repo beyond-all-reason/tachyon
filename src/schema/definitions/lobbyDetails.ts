@@ -3,6 +3,10 @@ import { Type } from "@sinclair/typebox";
 export const lobbyDetails = Type.Object(
     {
         id: Type.String(),
+        bossId: Type.Ref("userId", {
+            description:
+                "User ID of the lobby boss (creator). Boss can change lobby settings like mods.",
+        }),
         name: Type.String(),
         mapName: Type.String(),
         engineVersion: Type.String(),
@@ -26,6 +30,11 @@ export const lobbyDetails = Type.Object(
                 }
             )
         ),
+        mods: Type.Array(Type.Ref("mod"), {
+            description:
+                "Ordered list of mods/mutators to apply. Order matters - later mods override earlier ones.",
+            maxItems: 10,
+        }),
         members: Type.Record(
             Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
             Type.Union([
@@ -35,11 +44,21 @@ export const lobbyDetails = Type.Object(
                     allyTeam: Type.String(),
                     team: Type.String(),
                     player: Type.String(),
+                    sync: Type.Optional(
+                        Type.Ref("memberSyncStatus", {
+                            description: "Tracks which resources this member has downloaded",
+                        })
+                    ),
                 }),
                 Type.Object({
                     type: Type.Const("spec"),
                     id: Type.Ref("userId"),
                     joinQueuePosition: Type.Optional(Type.Number()),
+                    sync: Type.Optional(
+                        Type.Ref("memberSyncStatus", {
+                            description: "Tracks which resources this member has downloaded",
+                        })
+                    ),
                 }),
             ])
         ),

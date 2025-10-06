@@ -1,0 +1,46 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateMods/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "LobbyUpdateModsResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUpdateModsOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateMods" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUpdateModsFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateMods" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "insufficient_permissions",
+                        "not_in_lobby",
+                        "too_many_mods",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}

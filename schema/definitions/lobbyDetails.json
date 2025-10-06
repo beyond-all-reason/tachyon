@@ -5,6 +5,10 @@
     "type": "object",
     "properties": {
         "id": { "type": "string" },
+        "bossId": {
+            "$ref": "../definitions/userId.json",
+            "description": "User ID of the lobby boss (creator). Boss can change lobby settings like mods."
+        },
         "name": { "type": "string" },
         "mapName": { "type": "string" },
         "engineVersion": { "type": "string" },
@@ -38,6 +42,12 @@
                 }
             }
         },
+        "mods": {
+            "description": "Ordered list of mods/mutators to apply. Order matters - later mods override earlier ones.",
+            "type": "array",
+            "items": { "$ref": "../definitions/mod.json" },
+            "maxItems": 10
+        },
         "members": {
             "type": "object",
             "patternProperties": {
@@ -50,7 +60,11 @@
                                 "id": { "$ref": "../definitions/userId.json" },
                                 "allyTeam": { "type": "string" },
                                 "team": { "type": "string" },
-                                "player": { "type": "string" }
+                                "player": { "type": "string" },
+                                "sync": {
+                                    "$ref": "../definitions/memberSyncStatus.json",
+                                    "description": "Tracks which resources this member has downloaded"
+                                }
                             },
                             "required": [
                                 "type",
@@ -65,7 +79,11 @@
                             "properties": {
                                 "type": { "const": "spec" },
                                 "id": { "$ref": "../definitions/userId.json" },
-                                "joinQueuePosition": { "type": "number" }
+                                "joinQueuePosition": { "type": "number" },
+                                "sync": {
+                                    "$ref": "../definitions/memberSyncStatus.json",
+                                    "description": "Tracks which resources this member has downloaded"
+                                }
                             },
                             "required": ["type", "id"]
                         }
@@ -84,11 +102,13 @@
     },
     "required": [
         "id",
+        "bossId",
         "name",
         "mapName",
         "engineVersion",
         "gameVersion",
         "allyTeamConfig",
+        "mods",
         "members"
     ]
 }

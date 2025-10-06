@@ -1,0 +1,26 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateSync/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "LobbyUpdateSyncRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/updateSync" },
+        "data": {
+            "title": "LobbyUpdateSyncRequestData",
+            "type": "object",
+            "properties": {
+                "lobbyId": { "type": "string" },
+                "sync": { "$ref": "../../definitions/memberSyncStatus.json" }
+            },
+            "required": ["lobbyId", "sync"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}

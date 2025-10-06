@@ -1,0 +1,29 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/mod.json",
+    "title": "Mod",
+    "description": "A mod/mutator that can be applied to a game. Order matters - mods are loaded in sequence and later mods can override earlier ones.",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "Human-readable name (e.g., 'Sphere Spawner')",
+            "type": "string"
+        },
+        "archiveName": {
+            "description": "Archive filename from modinfo.lua (e.g., 'sphere-spawner.sdd'). Required for Spring script MUTATOR entries.",
+            "type": "string"
+        },
+        "gitRef": {
+            "description": "Git commit hash or tag for precise version control. Used to verify exact version.",
+            "type": "string"
+        },
+        "repository": {
+            "description": "GitHub repository URL (e.g., 'https://github.com/user/repo'). Used for downloading.",
+            "type": "string"
+        },
+        "type": {
+            "description": "Source type. Currently only GitHub is supported.",
+            "const": "github"
+        }
+    },
+    "required": ["name", "archiveName", "gitRef", "repository", "type"]
+}
