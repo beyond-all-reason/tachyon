@@ -83,14 +83,16 @@ If the target ally team is full, the request fails and nothing happen. `joinAlly
 to change team. Similarly, if the ally team is full, the request fails and nothing happen.
 
 A member can also choose to join the waiting queue of the lobby with [lobby/joinQueue](#joinQueue). This can be used when all ally teams are full, and/or when the user doesn't care which ally team they should join.
-A member in the join queue is represented with `{type: "spec", joinQueuePosition: number()}`. The join queue
+A member in the join queue is represented as a spectator with `{joinQueuePosition: number()}`. The join queue
 positions may not be consecutive. The following is possible:
 
-`members: {
-    "123": {"type": "spec", "joinQueuePosition": 3}
-    "456": {"type": "spec", "joinQueuePosition": 1}
-    "789": {"type": "spec", "joinQueuePosition": 10}
-}`
+```
+spectators: {
+    "123": {"id": "123", "joinQueuePosition": 3}
+    "456": {"id": "456", "joinQueuePosition": 1}
+    "789": {"id": "789", "joinQueuePosition": 10}
+}
+```
 
 When a suitable ally team has a free spot for a waiting player, the server will automatically put them
 in that spot and update its state through [lobby/updated](#updated).
@@ -325,27 +327,43 @@ export interface StartBox {
                 }
             }
         },
-        "members": {
+        "players": {
             "{BT": {
-                "type": "player",
                 "id": "351",
-                "allyTeam": "nulla proident qui Ut",
-                "team": "nostrud deserunt",
-                "player": "dolor consequat quis aliquip"
+                "allyTeam": "irure ut exercitation minim sit",
+                "team": "Ut proident ex dolore aute",
+                "player": "in occaecat commodo nisi deserunt"
             },
             "g*~": {
-                "type": "spec",
                 "id": "351",
-                "joinQueuePosition": 34999549.3888855
+                "allyTeam": "deserunt",
+                "team": "mollit officia ea",
+                "player": "occaecat mollit consectetur Excepteur deserunt"
             },
             "Vt55^^F": {
-                "type": "spec",
-                "id": "351"
+                "id": "351",
+                "allyTeam": "deserunt et in dolor",
+                "team": "elit veniam",
+                "player": "cillum aliquip"
             },
             ">": {
-                "type": "spec",
                 "id": "351",
-                "joinQueuePosition": 38802242.279052734
+                "allyTeam": "quis proident amet consequat minim",
+                "team": "nulla sit in",
+                "player": "Duis velit eiusmod anim est"
+            }
+        },
+        "spectators": {
+            "=g%TQ": {
+                "id": "351",
+                "joinQueuePosition": -91048336.02905273
+            },
+            "QRim": {
+                "id": "351",
+                "joinQueuePosition": -1201987.2665405273
+            },
+            "X<[Qjj]O^I": {
+                "id": "351"
             }
         },
         "currentBattle": {
@@ -385,20 +403,19 @@ export interface LobbyCreateOkResponseData {
             };
         };
     };
-    members: {
-        [k: string]:
-            | {
-                  type: "player";
-                  id: UserId;
-                  allyTeam: string;
-                  team: string;
-                  player: string;
-              }
-            | {
-                  type: "spec";
-                  id: UserId;
-                  joinQueuePosition?: number;
-              };
+    players: {
+        [k: string]: {
+            id: UserId;
+            allyTeam: string;
+            team: string;
+            player: string;
+        };
+    };
+    spectators: {
+        [k: string]: {
+            id: UserId;
+            joinQueuePosition?: number;
+        };
     };
     currentBattle?: {
         startedAt: UnixTime;
@@ -621,13 +638,29 @@ export interface LobbyJoinRequestData {
                 }
             }
         },
-        "members": {
+        "players": {
             "2b": {
-                "type": "player",
                 "id": "351",
-                "allyTeam": "id incididunt officia",
-                "team": "in fugiat",
-                "player": "consequat nisi"
+                "allyTeam": "Duis tempor non ad",
+                "team": "anim in",
+                "player": "cupidatat"
+            }
+        },
+        "spectators": {
+            "R~c/=rGp": {
+                "id": "351",
+                "joinQueuePosition": 17248785.495758057
+            },
+            "": {
+                "id": "351",
+                "joinQueuePosition": -81065165.99655151
+            },
+            "f+": {
+                "id": "351",
+                "joinQueuePosition": -55711638.92745972
+            },
+            "'~cRGw>+": {
+                "id": "351"
             }
         },
         "currentBattle": {
@@ -667,20 +700,19 @@ export interface LobbyJoinOkResponseData {
             };
         };
     };
-    members: {
-        [k: string]:
-            | {
-                  type: "player";
-                  id: UserId;
-                  allyTeam: string;
-                  team: string;
-                  player: string;
-              }
-            | {
-                  type: "spec";
-                  id: UserId;
-                  joinQueuePosition?: number;
-              };
+    players: {
+        [k: string]: {
+            id: UserId;
+            allyTeam: string;
+            team: string;
+            player: string;
+        };
+    };
+    spectators: {
+        [k: string]: {
+            id: UserId;
+            joinQueuePosition?: number;
+        };
     };
     currentBattle?: {
         startedAt: UnixTime;
@@ -2023,45 +2055,47 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                         }
                     }
                 },
-                "members": {
+                "players": {
                     "type": "object",
                     "patternProperties": {
                         "^(.*)$": {
                             "anyOf": [
                                 {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "player" },
-                                                "id": {
-                                                    "$ref": "#/definitions/userId"
-                                                },
-                                                "allyTeam": {
-                                                    "type": "string"
-                                                },
-                                                "team": { "type": "string" },
-                                                "player": { "type": "string" }
-                                            },
-                                            "required": ["type", "id"]
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
                                         },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "spec" },
-                                                "id": {
-                                                    "$ref": "#/definitions/userId"
-                                                },
-                                                "joinQueuePosition": {
-                                                    "anyOf": [
-                                                        { "type": "number" },
-                                                        { "type": "null" }
-                                                    ]
-                                                }
-                                            },
-                                            "required": ["type", "id"]
+                                        "allyTeam": { "type": "string" },
+                                        "team": { "type": "string" },
+                                        "player": { "type": "string" }
+                                    },
+                                    "required": ["id"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
+                },
+                "spectators": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "joinQueuePosition": {
+                                            "anyOf": [
+                                                { "type": "number" },
+                                                { "type": "null" }
+                                            ]
                                         }
-                                    ]
+                                    },
+                                    "required": ["id"]
                                 },
                                 { "type": "null" }
                             ]
@@ -2103,19 +2137,18 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "nulla occaecat adipisicing in",
-        "name": "in mollit qui consectetur",
-        "mapName": "incididunt id",
-        "gameVersion": "nostrud laborum deserunt",
-        "allyTeams": {
-            "Kl+": null,
+        "id": "aliquip cupidatat cillum sunt dolor",
+        "name": "laborum consequat proident id",
+        "mapName": "qui sint eu anim mollit",
+        "gameVersion": "enim Ut consectetur dolor",
+        "players": {
+            "T": null,
             "rc": null
         },
-        "members": {
+        "spectators": {
             "(:&D": {
-                "type": "spec",
                 "id": "351",
-                "joinQueuePosition": null
+                "joinQueuePosition": 91638481.61697388
             },
             "XjKt": null
         },
@@ -2156,23 +2189,19 @@ export interface LobbyUpdatedEventData {
             };
         } | null;
     };
-    members?: {
-        [k: string]:
-            | (
-                  | {
-                        type: "player";
-                        id: UserId;
-                        allyTeam?: string;
-                        team?: string;
-                        player?: string;
-                    }
-                  | {
-                        type: "spec";
-                        id: UserId;
-                        joinQueuePosition?: number | null;
-                    }
-              )
-            | null;
+    players?: {
+        [k: string]: {
+            id: UserId;
+            allyTeam?: string;
+            team?: string;
+            player?: string;
+        } | null;
+    };
+    spectators?: {
+        [k: string]: {
+            id: UserId;
+            joinQueuePosition?: number | null;
+        } | null;
     };
     currentBattle?: {
         id: string;

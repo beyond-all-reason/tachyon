@@ -79,14 +79,16 @@ If the target ally team is full, the request fails and nothing happen. `joinAlly
 to change team. Similarly, if the ally team is full, the request fails and nothing happen.
 
 A member can also choose to join the waiting queue of the lobby with [lobby/joinQueue](#joinQueue). This can be used when all ally teams are full, and/or when the user doesn't care which ally team they should join.
-A member in the join queue is represented with `{type: "spec", joinQueuePosition: number()}`. The join queue
+A member in the join queue is represented as a spectator with `{joinQueuePosition: number()}`. The join queue
 positions may not be consecutive. The following is possible:
 
-`members: {
-    "123": {"type": "spec", "joinQueuePosition": 3}
-    "456": {"type": "spec", "joinQueuePosition": 1}
-    "789": {"type": "spec", "joinQueuePosition": 10}
-}`
+```
+spectators: {
+    "123": {"id": "123", "joinQueuePosition": 3}
+    "456": {"id": "456", "joinQueuePosition": 1}
+    "789": {"id": "789", "joinQueuePosition": 10}
+}
+```
 
 When a suitable ally team has a free spot for a waiting player, the server will automatically put them
 in that spot and update its state through [lobby/updated](#updated).
