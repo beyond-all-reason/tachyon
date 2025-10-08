@@ -97,44 +97,31 @@
                         }
                     }
                 },
-                "members": {
+                "players": {
                     "type": "object",
                     "patternProperties": {
                         "^(.*)$": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": { "const": "player" },
-                                        "id": {
-                                            "$ref": "#/definitions/userId"
-                                        },
-                                        "allyTeam": { "type": "string" },
-                                        "team": { "type": "string" },
-                                        "player": { "type": "string" }
-                                    },
-                                    "required": [
-                                        "type",
-                                        "id",
-                                        "allyTeam",
-                                        "team",
-                                        "player"
-                                    ]
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "type": { "const": "spec" },
-                                        "id": {
-                                            "$ref": "#/definitions/userId"
-                                        },
-                                        "joinQueuePosition": {
-                                            "type": "number"
-                                        }
-                                    },
-                                    "required": ["type", "id"]
-                                }
-                            ]
+                            "type": "object",
+                            "properties": {
+                                "id": { "$ref": "#/definitions/userId" },
+                                "allyTeam": { "type": "string" },
+                                "team": { "type": "string" },
+                                "player": { "type": "string" }
+                            },
+                            "required": ["id", "allyTeam", "team", "player"]
+                        }
+                    }
+                },
+                "spectators": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "object",
+                            "properties": {
+                                "id": { "$ref": "#/definitions/userId" },
+                                "joinQueuePosition": { "type": "number" }
+                            },
+                            "required": ["id"]
                         }
                     }
                 },
@@ -154,7 +141,8 @@
                 "engineVersion",
                 "gameVersion",
                 "allyTeamConfig",
-                "members"
+                "players",
+                "spectators"
             ]
         },
         "lobbyOverview": {
@@ -3026,57 +3014,49 @@
                                 }
                             }
                         },
-                        "members": {
+                        "players": {
                             "type": "object",
                             "patternProperties": {
                                 "^(.*)$": {
                                     "anyOf": [
                                         {
-                                            "anyOf": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "const": "player"
-                                                        },
-                                                        "id": {
-                                                            "$ref": "#/definitions/userId"
-                                                        },
-                                                        "allyTeam": {
-                                                            "type": "string"
-                                                        },
-                                                        "team": {
-                                                            "type": "string"
-                                                        },
-                                                        "player": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": ["type", "id"]
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "$ref": "#/definitions/userId"
                                                 },
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "type": {
-                                                            "const": "spec"
-                                                        },
-                                                        "id": {
-                                                            "$ref": "#/definitions/userId"
-                                                        },
-                                                        "joinQueuePosition": {
-                                                            "anyOf": [
-                                                                {
-                                                                    "type": "number"
-                                                                },
-                                                                {
-                                                                    "type": "null"
-                                                                }
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": ["type", "id"]
+                                                "allyTeam": {
+                                                    "type": "string"
+                                                },
+                                                "team": { "type": "string" },
+                                                "player": { "type": "string" }
+                                            },
+                                            "required": ["id"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "spectators": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^(.*)$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "$ref": "#/definitions/userId"
+                                                },
+                                                "joinQueuePosition": {
+                                                    "anyOf": [
+                                                        { "type": "number" },
+                                                        { "type": "null" }
+                                                    ]
                                                 }
-                                            ]
+                                            },
+                                            "required": ["id"]
                                         },
                                         { "type": "null" }
                                     ]

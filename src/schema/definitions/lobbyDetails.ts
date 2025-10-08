@@ -26,22 +26,21 @@ export const lobbyDetails = Type.Object(
                 }
             )
         ),
-        members: Type.Record(
+        players: Type.Record(
             Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
-            Type.Union([
-                Type.Object({
-                    type: Type.Const("player"),
-                    id: Type.Ref("userId"),
-                    allyTeam: Type.String(),
-                    team: Type.String(),
-                    player: Type.String(),
-                }),
-                Type.Object({
-                    type: Type.Const("spec"),
-                    id: Type.Ref("userId"),
-                    joinQueuePosition: Type.Optional(Type.Number()),
-                }),
-            ])
+            Type.Object({
+                id: Type.Ref("userId"),
+                allyTeam: Type.String(),
+                team: Type.String(),
+                player: Type.String(),
+            })
+        ),
+        spectators: Type.Record(
+            Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
+            Type.Object({
+                id: Type.Ref("userId"),
+                joinQueuePosition: Type.Optional(Type.Number()),
+            })
         ),
         currentBattle: Type.Optional(
             Type.Object(

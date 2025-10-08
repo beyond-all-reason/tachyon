@@ -49,25 +49,29 @@ export default defineEndpoint({
                     )
                 )
             ),
-            members: Type.Optional(
+            players: Type.Optional(
                 Type.Record(
                     // this is a userId, but using Type.Ref("userId") leads to a schema with only: `not: {}`
                     Type.String(),
                     Nullable(
-                        Type.Union([
-                            Type.Object({
-                                type: Type.Const("player"),
-                                id: Type.Ref("userId"),
-                                allyTeam: Type.Optional(Type.String()),
-                                team: Type.Optional(Type.String()),
-                                player: Type.Optional(Type.String()),
-                            }),
-                            Type.Object({
-                                type: Type.Const("spec"),
-                                id: Type.Ref("userId"),
-                                joinQueuePosition: Type.Optional(Nullable(Type.Number())),
-                            }),
-                        ])
+                        Type.Object({
+                            id: Type.Ref("userId"),
+                            allyTeam: Type.Optional(Type.String()),
+                            team: Type.Optional(Type.String()),
+                            player: Type.Optional(Type.String()),
+                        })
+                    )
+                )
+            ),
+            spectators: Type.Optional(
+                Type.Record(
+                    // this is a userId, but using Type.Ref("userId") leads to a schema with only: `not: {}`
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            id: Type.Ref("userId"),
+                            joinQueuePosition: Type.Optional(Nullable(Type.Number())),
+                        })
                     )
                 )
             ),
