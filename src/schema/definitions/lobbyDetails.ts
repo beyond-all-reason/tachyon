@@ -42,6 +42,29 @@ export const lobbyDetails = Type.Object(
                 joinQueuePosition: Type.Optional(Type.Number()),
             })
         ),
+        bots: Type.Record(
+            Type.String(),
+            Type.Object({
+                id: Type.String({ description: "server assigned unique identifier for the bot" }),
+                hostUserId: Type.Ref("userId", {
+                    description:
+                        "which player will run the bot. It is the same as the player that added the bot.",
+                }),
+                allyTeam: Type.String(),
+                team: Type.String(),
+                player: Type.String(),
+                name: Type.Optional(
+                    Type.String({ maxLength: 20, description: "name to display in the lobby" })
+                ),
+                shortName: Type.String({
+                    maxLength: 20,
+                    description:
+                        "short name of the bot. Used to uniquely identify which bot to run",
+                }),
+                version: Type.Optional(Type.String()),
+                options: Type.Optional(Type.Record(Type.String(), Type.String())),
+            })
+        ),
         currentBattle: Type.Optional(
             Type.Object(
                 {

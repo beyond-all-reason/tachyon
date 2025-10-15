@@ -75,6 +75,34 @@ export default defineEndpoint({
                     )
                 )
             ),
+            bots: Type.Optional(
+                Type.Record(
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            id: Type.String(),
+                            allyTeam: Type.Optional(Type.String()),
+                            team: Type.Optional(Type.String()),
+                            player: Type.Optional(Type.String()),
+                            name: Type.Optional(
+                                Nullable(
+                                    Type.String({ description: "name to display in the lobby" })
+                                )
+                            ),
+                            shortName: Type.Optional(
+                                Type.String({
+                                    description:
+                                        "Short name of the bot. Used to uniquely identify which bot to run",
+                                })
+                            ),
+                            version: Nullable(Type.Optional(Type.String())),
+                            options: Nullable(
+                                Type.Optional(Type.Record(Type.String(), Nullable(Type.String())))
+                            ),
+                        })
+                    )
+                )
+            ),
             currentBattle: Type.Optional(
                 Nullable(
                     Type.Object(
