@@ -357,32 +357,7 @@ Create a lobby
             "properties": {
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
-                "allyTeamConfig": {
-                    "description": "each object describes an ally team",
-                    "type": "array",
-                    "items": {
-                        "description": "config for this ally team",
-                        "type": "object",
-                        "properties": {
-                            "maxTeams": { "type": "integer", "minimum": 1 },
-                            "startBox": { "$ref": "#/definitions/startBox" },
-                            "teams": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "maxPlayers": {
-                                            "type": "integer",
-                                            "minimum": 1
-                                        }
-                                    },
-                                    "required": ["maxPlayers"]
-                                }
-                            }
-                        },
-                        "required": ["maxTeams", "startBox", "teams"]
-                    }
-                }
+                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" }
             },
             "required": ["name", "mapName", "allyTeamConfig"]
         }
@@ -402,9 +377,36 @@ Create a lobby
     "messageId": "exercitation",
     "commandId": "lobby/create",
     "data": {
-        "name": "fugiat id aute",
-        "mapName": "labore consequat tempor adipisicing ullamco",
-        "allyTeamConfig": []
+        "name": "laboris Duis",
+        "mapName": "pariatur sint sed",
+        "allyTeamConfig": {
+            "allyTeamConfig": [
+                {
+                    "maxTeams": 55784673,
+                    "startBox": {
+                        "top": 0.83367520570755,
+                        "bottom": 0.38755643367767334,
+                        "left": 0.10872387886047363,
+                        "right": 0.008953571319580078
+                    },
+                    "teams": [
+                        {
+                            "maxPlayers": 72347010
+                        }
+                    ]
+                },
+                {
+                    "maxTeams": 92397923,
+                    "startBox": {
+                        "top": 0.7260354161262512,
+                        "bottom": 0.6565085649490356,
+                        "left": 0.9442912936210632,
+                        "right": 0.1183784008026123
+                    },
+                    "teams": []
+                }
+            ]
+        }
     }
 }
 ```
@@ -421,6 +423,9 @@ export interface LobbyCreateRequest {
 export interface LobbyCreateRequestData {
     name: string;
     mapName: string;
+    allyTeamConfig: AllyTeamConfig;
+}
+export interface AllyTeamConfig {
     allyTeamConfig: {
         maxTeams: number;
         startBox: StartBox;
