@@ -48,7 +48,7 @@
             "items": { "$ref": "../definitions/mod.json" },
             "maxItems": 10
         },
-        "members": {
+        "players": {
             "type": "object",
             "patternProperties": {
                 "^(.*)$": {
@@ -56,7 +56,6 @@
                         {
                             "type": "object",
                             "properties": {
-                                "type": { "const": "player" },
                                 "id": { "$ref": "../definitions/userId.json" },
                                 "allyTeam": { "type": "string" },
                                 "team": { "type": "string" },
@@ -66,24 +65,14 @@
                                     "description": "Tracks which resources this member has downloaded"
                                 }
                             },
-                            "required": [
-                                "type",
-                                "id",
-                                "allyTeam",
-                                "team",
-                                "player"
-                            ]
+                            "required": ["id", "allyTeam", "team", "player"]
                         },
                         {
                             "type": "object",
                             "properties": {
                                 "type": { "const": "spec" },
                                 "id": { "$ref": "../definitions/userId.json" },
-                                "joinQueuePosition": { "type": "number" },
-                                "sync": {
-                                    "$ref": "../definitions/memberSyncStatus.json",
-                                    "description": "Tracks which resources this member has downloaded"
-                                }
+                                "joinQueuePosition": { "type": "number" }
                             },
                             "required": ["type", "id"]
                         }
@@ -109,6 +98,6 @@
         "gameVersion",
         "allyTeamConfig",
         "mods",
-        "members"
+        "players"
     ]
 }

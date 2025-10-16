@@ -83,14 +83,16 @@ If the target ally team is full, the request fails and nothing happen. `joinAlly
 to change team. Similarly, if the ally team is full, the request fails and nothing happen.
 
 A member can also choose to join the waiting queue of the lobby with [lobby/joinQueue](#joinQueue). This can be used when all ally teams are full, and/or when the user doesn't care which ally team they should join.
-A member in the join queue is represented with `{type: "spec", joinQueuePosition: number()}`. The join queue
+A member in the join queue is represented as a spectator with `{joinQueuePosition: number()}`. The join queue
 positions may not be consecutive. The following is possible:
 
-`members: {
-    "123": {"type": "spec", "joinQueuePosition": 3}
-    "456": {"type": "spec", "joinQueuePosition": 1}
-    "789": {"type": "spec", "joinQueuePosition": 10}
-}`
+```
+spectators: {
+    "123": {"id": "123", "joinQueuePosition": 3}
+    "456": {"id": "456", "joinQueuePosition": 1}
+    "789": {"id": "789", "joinQueuePosition": 10}
+}
+```
 
 When a suitable ally team has a free spot for a waiting player, the server will automatically put them
 in that spot and update its state through [lobby/updated](#updated).
@@ -109,6 +111,7 @@ event, a client should set its internal list of lobbies according to this event.
 In practice, this event should rarely be seen.
 
 ---
+- [addBot](#addbot)
 - [create](#create)
 - [join](#join)
 - [joinAllyTeam](#joinallyteam)
@@ -117,13 +120,210 @@ In practice, this event should rarely be seen.
 - [left](#left)
 - [listReset](#listreset)
 - [listUpdated](#listupdated)
+- [removeBot](#removebot)
 - [spectate](#spectate)
 - [startBattle](#startbattle)
 - [subscribeList](#subscribelist)
 - [unsubscribeList](#unsubscribelist)
+- [updateBot](#updatebot)
 - [updateMods](#updatemods)
 - [updateSync](#updatesync)
 - [updated](#updated)
+---
+
+## AddBot
+
+Add a bot to the specified ally team
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyAddBotRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/addBot" },
+        "data": {
+            "title": "LobbyAddBotRequestData",
+            "type": "object",
+            "properties": {
+                "allyTeam": { "type": "string" },
+                "name": {
+                    "description": "name to display in the lobby",
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "shortName": {
+                    "description": "Short name of the bot. Used to uniquely identify which bot to run",
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "version": { "type": "string" },
+                "options": {
+                    "type": "object",
+                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                }
+            },
+            "required": ["allyTeam", "shortName"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "dolor aute ea in",
+    "commandId": "lobby/addBot",
+    "data": {
+        "allyTeam": "laborum voluptate",
+        "name": "fugiat",
+        "shortName": "au",
+        "version": "magna veniam sed",
+        "options": {
+            "8wOU!a": "aliquip",
+            "": "magna dolore eu",
+            "2K": "irure"
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyAddBotRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/addBot";
+    data: LobbyAddBotRequestData;
+}
+export interface LobbyAddBotRequestData {
+    allyTeam: string;
+    name?: string;
+    shortName: string;
+    version?: string;
+    options?: {
+        [k: string]: string;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyAddBotResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyAddBotOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/addBot" },
+                "status": { "const": "success" },
+                "data": {
+                    "title": "LobbyAddBotOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "description": "The id the server generated for this bot",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["id"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status", "data"]
+        },
+        {
+            "title": "LobbyAddBotFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/addBot" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "ally_team_full",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "nisi ut commodo",
+    "commandId": "lobby/addBot",
+    "status": "success",
+    "data": {
+        "id": "in"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyAddBotOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/addBot";
+    status: "success";
+    data: LobbyAddBotOkResponseData;
+}
+export interface LobbyAddBotOkResponseData {
+    id: string;
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `ally_team_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## Create
@@ -380,9 +580,8 @@ export interface StartBox {
                 "type": "github"
             }
         ],
-        "members": {
+        "players": {
             "G] d5": {
-                "type": "player",
                 "allyTeam": "sunt consectetur quis dolore",
                 "team": "exercitation",
                 "player": "nisi consequat",
@@ -402,15 +601,7 @@ export interface StartBox {
             "hO*;8OjE.": {
                 "type": "spec",
                 "id": "351",
-                "joinQueuePosition": -50456011.2953186,
-                "sync": {
-                    "map": false,
-                    "engine": false,
-                    "game": false,
-                    "mods": [
-                        "adipisicing laborum"
-                    ]
-                }
+                "joinQueuePosition": -4660582.542419434
             }
         },
         "currentBattle": {
@@ -463,10 +654,9 @@ export interface LobbyCreateOkResponseData {
         | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
         | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
         | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod];
-    members: {
+    players: {
         [k: string]:
             | {
-                  type: "player";
                   id: UserId;
                   allyTeam: string;
                   team: string;
@@ -477,7 +667,6 @@ export interface LobbyCreateOkResponseData {
                   type: "spec";
                   id: UserId;
                   joinQueuePosition?: number;
-                  sync?: MemberSyncStatus1;
               };
     };
     currentBattle?: {
@@ -498,12 +687,6 @@ export interface Mod {
     type: "github";
 }
 export interface MemberSyncStatus {
-    map: boolean;
-    engine: boolean;
-    game: boolean;
-    mods: string[];
-}
-export interface MemberSyncStatus1 {
     map: boolean;
     engine: boolean;
     game: boolean;
@@ -725,9 +908,8 @@ export interface LobbyJoinRequestData {
             }
         },
         "mods": [],
-        "members": {
+        "players": {
             "Tz": {
-                "type": "player",
                 "id": "351",
                 "allyTeam": "nisi fugiat eu nostrud anim",
                 "team": "proident nostrud ullamco sint",
@@ -740,7 +922,6 @@ export interface LobbyJoinRequestData {
                 }
             },
             "\\h(!G,Ia8V": {
-                "type": "player",
                 "id": "351",
                 "allyTeam": "tempor",
                 "team": "ipsum exercitation aute dolore sed",
@@ -808,10 +989,9 @@ export interface LobbyJoinOkResponseData {
         | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
         | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
         | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod];
-    members: {
+    players: {
         [k: string]:
             | {
-                  type: "player";
                   id: UserId;
                   allyTeam: string;
                   team: string;
@@ -822,7 +1002,6 @@ export interface LobbyJoinOkResponseData {
                   type: "spec";
                   id: UserId;
                   joinQueuePosition?: number;
-                  sync?: MemberSyncStatus1;
               };
     };
     currentBattle?: {
@@ -843,12 +1022,6 @@ export interface Mod {
     type: "github";
 }
 export interface MemberSyncStatus {
-    map: boolean;
-    engine: boolean;
-    game: boolean;
-    mods: string[];
-}
-export interface MemberSyncStatus1 {
     map: boolean;
     engine: boolean;
     game: boolean;
@@ -1581,6 +1754,152 @@ export interface LobbyListUpdatedEventData {
 ```
 ---
 
+## RemoveBot
+
+Remove the specified bot from the lobby
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyRemoveBotRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/removeBot" },
+        "data": {
+            "title": "LobbyRemoveBotRequestData",
+            "type": "object",
+            "properties": { "id": { "type": "string" } },
+            "required": ["id"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "sed Lorem",
+    "commandId": "lobby/removeBot",
+    "data": {
+        "id": "Excepteur esse exercitation incididunt"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyRemoveBotRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/removeBot";
+    data: LobbyRemoveBotRequestData;
+}
+export interface LobbyRemoveBotRequestData {
+    id: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyRemoveBotResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyRemoveBotOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/removeBot" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyRemoveBotFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/removeBot" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "invalid_bot",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "esse eiusmod",
+    "commandId": "lobby/removeBot",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyRemoveBotOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/removeBot";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `invalid_bot`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## Spectate
 
 Move the client to the spectator queue. If already in spectator queue, has no effect (but still succeed).
@@ -2106,6 +2425,189 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 ---
 
+## UpdateBot
+
+Change a bot properties. Some properties like ID and allyTeam can't be changed.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateBotRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/updateBot" },
+        "data": {
+            "title": "LobbyUpdateBotRequestData",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "name": {
+                    "description": "name to display in the lobby",
+                    "type": "string",
+                    "maxLength": 20
+                },
+                "shortName": {
+                    "description": "short name of the bot. Used to uniquely identify which bot to run",
+                    "type": "string"
+                },
+                "version": {
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
+                },
+                "options": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "anyOf": [{ "type": "string" }, { "type": "null" }]
+                        }
+                    }
+                }
+            },
+            "required": ["id"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "dolor veniam amet",
+    "commandId": "lobby/updateBot",
+    "data": {
+        "id": "Duis proident adipisicing",
+        "name": "commodo",
+        "shortName": "exercitation elit",
+        "version": "do esse irure culpa",
+        "options": {
+            "D(Rt$sQ4J": null,
+            "[+[K`k": null,
+            "h_\"%rV7e": "ad dolore in enim",
+            ",j$$^@": null
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateBotRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/updateBot";
+    data: LobbyUpdateBotRequestData;
+}
+export interface LobbyUpdateBotRequestData {
+    id: string;
+    name?: string;
+    shortName?: string;
+    version?: string | null;
+    options?: {
+        [k: string]: string | null;
+    };
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateBotResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUpdateBotOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateBot" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUpdateBotFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateBot" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "invalid_bot",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "in voluptate elit culpa occaecat",
+    "commandId": "lobby/updateBot",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateBotOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/updateBot";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `invalid_bot`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## UpdateMods
 
 Update the mods for the lobby. Only the lobby boss can change mods. Order matters!
@@ -2603,51 +3105,112 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                         }
                     }
                 },
-                "members": {
+                "players": {
                     "type": "object",
                     "patternProperties": {
                         "^(.*)$": {
                             "anyOf": [
                                 {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "player" },
-                                                "id": {
-                                                    "$ref": "#/definitions/userId"
-                                                },
-                                                "allyTeam": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "allyTeam": { "type": "string" },
+                                        "team": { "type": "string" },
+                                        "player": { "type": "string" },
+                                        "sync": {
+                                            "$ref": "#/definitions/memberSyncStatus"
+                                        }
+                                    },
+                                    "required": ["id"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
+                },
+                "spectators": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "joinQueuePosition": {
+                                            "anyOf": [
+                                                { "type": "number" },
+                                                { "type": "null" }
+                                            ]
+                                        },
+                                        "sync": {
+                                            "$ref": "#/definitions/memberSyncStatus"
+                                        }
+                                    },
+                                    "required": ["id"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
+                },
+                "bots": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "type": "string" },
+                                        "allyTeam": { "type": "string" },
+                                        "team": { "type": "string" },
+                                        "player": { "type": "string" },
+                                        "name": {
+                                            "anyOf": [
+                                                {
+                                                    "description": "name to display in the lobby",
                                                     "type": "string"
                                                 },
-                                                "team": { "type": "string" },
-                                                "player": { "type": "string" },
-                                                "sync": {
-                                                    "$ref": "#/definitions/memberSyncStatus"
-                                                }
-                                            },
-                                            "required": ["type", "id"]
+                                                { "type": "null" }
+                                            ]
                                         },
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "type": { "const": "spec" },
-                                                "id": {
-                                                    "$ref": "#/definitions/userId"
+                                        "shortName": {
+                                            "description": "Short name of the bot. Used to uniquely identify which bot to run",
+                                            "type": "string"
+                                        },
+                                        "version": {
+                                            "anyOf": [
+                                                { "type": "string" },
+                                                { "type": "null" }
+                                            ]
+                                        },
+                                        "options": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "patternProperties": {
+                                                        "^(.*)$": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "string"
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
                                                 },
-                                                "joinQueuePosition": {
-                                                    "anyOf": [
-                                                        { "type": "number" },
-                                                        { "type": "null" }
-                                                    ]
-                                                },
-                                                "sync": {
-                                                    "$ref": "#/definitions/memberSyncStatus"
-                                                }
-                                            },
-                                            "required": ["type", "id"]
+                                                { "type": "null" }
+                                            ]
                                         }
-                                    ]
+                                    },
+                                    "required": ["id", "version", "options"]
                                 },
                                 { "type": "null" }
                             ]
@@ -2689,12 +3252,160 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "deserunt adipisicing enim tempor reprehenderit",
+        "id": "minim esse",
         "bossId": "351",
-        "name": "aliquip culpa cillum mollit",
-        "gameVersion": "eiusmod",
+        "name": "fugiat esse",
+        "mapName": "culpa consequat tempor voluptate aute",
+        "engineVersion": "sit minim consectetur",
+        "gameVersion": "in nulla",
+        "mods": [
+            {
+                "name": "veniam elit",
+                "archiveName": "quis",
+                "gitRef": "aliquip non id in voluptate",
+                "repository": "nulla aliqua enim",
+                "type": "github"
+            },
+            {
+                "name": "aliqua eiusmod",
+                "archiveName": "ullamco velit",
+                "gitRef": "reprehenderit eiusmod officia",
+                "repository": "dolor ut nostrud voluptate ullamco",
+                "type": "github"
+            },
+            {
+                "name": "adipisicing fugiat est exercitation labore",
+                "archiveName": "cupidatat",
+                "gitRef": "dolore sint aute quis non",
+                "repository": "ut Duis exercitation et dolore",
+                "type": "github"
+            },
+            {
+                "name": "ullamco id",
+                "archiveName": "Ut ut est",
+                "gitRef": "ut consectetur aute pariatur",
+                "repository": "officia pariatur",
+                "type": "github"
+            }
+        ],
+        "allyTeams": {
+            "n>": null,
+            "C.oJ<qw": {
+                "startBox": {
+                    "top": 0.8249186277389526,
+                    "bottom": 0.8546968698501587,
+                    "left": 0.7409643530845642,
+                    "right": 0.013458192348480225
+                },
+                "maxTeams": 67248643,
+                "teams": {
+                    "yAu7y": null,
+                    "'' sy": null,
+                    ".RnMjrS,?g": {
+                        "non_5f8": 51066958,
+                        "maxPlayers": 9549004
+                    },
+                    "x=!pH^)|WT": {
+                        "deserunt_e": "dolor velit dolore sed",
+                        "eiusmodf23": 22960388.66043091,
+                        "maxPlayers": 42529840
+                    }
+                }
+            },
+            "z^X": null,
+            "}3o&f6": null,
+            "-rT": {
+                "startBox": {
+                    "top": 0.5350343585014343,
+                    "bottom": 0.9353530406951904,
+                    "left": 0.4637300968170166,
+                    "right": 0.34767723083496094
+                },
+                "teams": {
+                    "2f": null,
+                    "\"5*": null
+                }
+            },
+            "#<\"%&w<}c3": null
+        },
+        "players": {
+            "6!.tw_%s": {
+                "id": "351",
+                "sync": {
+                    "map": false,
+                    "engine": false,
+                    "game": true,
+                    "mods": [
+                        "cupidatat nisi commodo",
+                        "ullamco cillum in"
+                    ]
+                }
+            },
+            "#nxqkvS8": {
+                "id": "351"
+            },
+            "XN=+r78-*": {
+                "id": "351",
+                "player": "do",
+                "sync": {
+                    "map": true,
+                    "engine": false,
+                    "game": false,
+                    "mods": [
+                        "ad dolor Ut sed",
+                        "ea sunt cupidatat",
+                        "sint"
+                    ]
+                }
+            }
+        },
+        "spectators": {
+            "%u7": {
+                "id": "351",
+                "joinQueuePosition": -2487063.407897949,
+                "sync": {
+                    "map": true,
+                    "engine": false,
+                    "game": true,
+                    "mods": [
+                        "nulla ipsum",
+                        "ex non nisi consectetur sit",
+                        "cillum laboris Ut exercitation dolore",
+                        "occaecat nostrud elit id",
+                        "laborum aliqua occaecat ullamco"
+                    ]
+                }
+            },
+            "n3": {
+                "id": "351",
+                "joinQueuePosition": null,
+                "sync": {
+                    "map": false,
+                    "engine": false,
+                    "game": true,
+                    "mods": []
+                }
+            },
+            "YvXQd": null,
+            "*4zL.;g": {
+                "id": "351",
+                "sync": {
+                    "map": true,
+                    "engine": true,
+                    "game": false,
+                    "mods": [
+                        "dolor commodo amet",
+                        "dolore aute ut nulla non",
+                        "aliquip laborum ut in"
+                    ]
+                }
+            }
+        },
+        "bots": {
+            "}a>]HolO%": null
+        },
         "currentBattle": {
-            "id": "sit minim consectetur",
+            "id": "ut esse est",
             "startedAt": 1705432698000000
         }
     }
@@ -2743,25 +3454,35 @@ export interface LobbyUpdatedEventData {
             };
         } | null;
     };
-    members?: {
-        [k: string]:
-            | (
-                  | {
-                        type: "player";
-                        id: UserId;
-                        allyTeam?: string;
-                        team?: string;
-                        player?: string;
-                        sync?: MemberSyncStatus;
-                    }
-                  | {
-                        type: "spec";
-                        id: UserId;
-                        joinQueuePosition?: number | null;
-                        sync?: MemberSyncStatus;
-                    }
-              )
-            | null;
+    players?: {
+        [k: string]: {
+            id: UserId;
+            allyTeam?: string;
+            team?: string;
+            player?: string;
+            sync?: MemberSyncStatus;
+        } | null;
+    };
+    spectators?: {
+        [k: string]: {
+            id: UserId;
+            joinQueuePosition?: number | null;
+            sync?: MemberSyncStatus;
+        } | null;
+    };
+    bots?: {
+        [k: string]: {
+            id: string;
+            allyTeam?: string;
+            team?: string;
+            player?: string;
+            name?: string | null;
+            shortName?: string;
+            version: string | null;
+            options: {
+                [k: string]: string | null;
+            } | null;
+        } | null;
     };
     currentBattle?: {
         id: string;

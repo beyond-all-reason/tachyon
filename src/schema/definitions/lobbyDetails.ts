@@ -35,11 +35,10 @@ export const lobbyDetails = Type.Object(
                 "Ordered list of mods/mutators to apply. Order matters - later mods override earlier ones.",
             maxItems: 10,
         }),
-        members: Type.Record(
+        players: Type.Record(
             Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
             Type.Union([
                 Type.Object({
-                    type: Type.Const("player"),
                     id: Type.Ref("userId"),
                     allyTeam: Type.String(),
                     team: Type.String(),
@@ -54,11 +53,6 @@ export const lobbyDetails = Type.Object(
                     type: Type.Const("spec"),
                     id: Type.Ref("userId"),
                     joinQueuePosition: Type.Optional(Type.Number()),
-                    sync: Type.Optional(
-                        Type.Ref("memberSyncStatus", {
-                            description: "Tracks which resources this member has downloaded",
-                        })
-                    ),
                 }),
             ])
         ),

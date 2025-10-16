@@ -57,27 +57,59 @@ export default defineEndpoint({
                     )
                 )
             ),
-            members: Type.Optional(
+            players: Type.Optional(
                 Type.Record(
                     // this is a userId, but using Type.Ref("userId") leads to a schema with only: `not: {}`
                     Type.String(),
                     Nullable(
-                        Type.Union([
-                            Type.Object({
-                                type: Type.Const("player"),
-                                id: Type.Ref("userId"),
-                                allyTeam: Type.Optional(Type.String()),
-                                team: Type.Optional(Type.String()),
-                                player: Type.Optional(Type.String()),
-                                sync: Type.Optional(Type.Ref("memberSyncStatus")),
-                            }),
-                            Type.Object({
-                                type: Type.Const("spec"),
-                                id: Type.Ref("userId"),
-                                joinQueuePosition: Type.Optional(Nullable(Type.Number())),
-                                sync: Type.Optional(Type.Ref("memberSyncStatus")),
-                            }),
-                        ])
+                        Type.Object({
+                            id: Type.Ref("userId"),
+                            allyTeam: Type.Optional(Type.String()),
+                            team: Type.Optional(Type.String()),
+                            player: Type.Optional(Type.String()),
+                            sync: Type.Optional(Type.Ref("memberSyncStatus")),
+                        })
+                    )
+                )
+            ),
+            spectators: Type.Optional(
+                Type.Record(
+                    // this is a userId, but using Type.Ref("userId") leads to a schema with only: `not: {}`
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            id: Type.Ref("userId"),
+                            joinQueuePosition: Type.Optional(Nullable(Type.Number())),
+                            sync: Type.Optional(Type.Ref("memberSyncStatus")),
+                        })
+                    )
+                )
+            ),
+            bots: Type.Optional(
+                Type.Record(
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            id: Type.String(),
+                            allyTeam: Type.Optional(Type.String()),
+                            team: Type.Optional(Type.String()),
+                            player: Type.Optional(Type.String()),
+                            name: Type.Optional(
+                                Nullable(
+                                    Type.String({ description: "name to display in the lobby" })
+                                )
+                            ),
+                            shortName: Type.Optional(
+                                Type.String({
+                                    description:
+                                        "Short name of the bot. Used to uniquely identify which bot to run",
+                                })
+                            ),
+                            version: Nullable(Type.Optional(Type.String())),
+                            options: Nullable(
+                                Type.Optional(Type.Record(Type.String(), Nullable(Type.String())))
+                            ),
+                        })
                     )
                 )
             ),
