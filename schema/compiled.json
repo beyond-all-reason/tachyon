@@ -3390,6 +3390,9 @@
                                             "type": "object",
                                             "properties": {
                                                 "id": { "type": "string" },
+                                                "hostUserId": {
+                                                    "$ref": "#/definitions/userId"
+                                                },
                                                 "allyTeam": {
                                                     "type": "string"
                                                 },
