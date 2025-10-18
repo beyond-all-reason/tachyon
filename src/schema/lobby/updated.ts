@@ -81,6 +81,7 @@ export default defineEndpoint({
                     Nullable(
                         Type.Object({
                             id: Type.String(),
+                            hostUserId: Type.Optional(Type.Ref("userId")),
                             allyTeam: Type.Optional(Type.String()),
                             team: Type.Optional(Type.String()),
                             player: Type.Optional(Type.String()),
