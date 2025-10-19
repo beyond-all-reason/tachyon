@@ -5,8 +5,7 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "user",
     target: "server",
-    description:
-        "Update the mods for the lobby. Only the lobby boss can change mods. Order matters!",
+    description: "Update the mods for the lobby. Only the lobby boss can change mods.",
     request: {
         data: Type.Object({
             lobbyId: Type.String(),

@@ -12,7 +12,7 @@ export default defineEndpoint({
         data: Type.Object({
             id: Type.String(),
             // not all types are nullable because in the context of lobbies, it
-            // makes no sense to clear some propreties. For example, a map
+            // makes no sense to clear some properties. For example, a map
             // must always be set.
             bossId: Type.Optional(Type.Ref("userId")),
             name: Type.Optional(Type.String()),
