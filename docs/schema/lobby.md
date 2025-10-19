@@ -3167,6 +3167,9 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                     "type": "object",
                                     "properties": {
                                         "id": { "type": "string" },
+                                        "hostUserId": {
+                                            "$ref": "#/definitions/userId"
+                                        },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
                                         "player": { "type": "string" },
@@ -3473,6 +3476,7 @@ export interface LobbyUpdatedEventData {
     bots?: {
         [k: string]: {
             id: string;
+            hostUserId?: UserId;
             allyTeam?: string;
             team?: string;
             player?: string;
