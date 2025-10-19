@@ -2610,7 +2610,7 @@ Possible Failed Reasons: `not_in_lobby`, `invalid_bot`, `internal_error`, `unaut
 
 ## UpdateMods
 
-Update the mods for the lobby. Only the lobby boss can change mods. Order matters!
+Update the mods for the lobby. Only the lobby boss can change mods.
 
 - Endpoint Type: **Request** -> **Response**
 - Source: **User**
