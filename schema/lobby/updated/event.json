@@ -120,6 +120,9 @@
                                     "type": "object",
                                     "properties": {
                                         "id": { "type": "string" },
+                                        "hostUserId": {
+                                            "$ref": "../../definitions/userId.json"
+                                        },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
                                         "player": { "type": "string" },
