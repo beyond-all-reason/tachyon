@@ -96,6 +96,12 @@ A member simply spectating and not waiting to play will have a null `joinQueuePo
 To leave an ally team or the join queue and become a spectator, a user should use [lobby/spectate](#spectate).
 
 
+### Lobby updates
+
+Any member can update most (any?) property of the lobby. Updates are all or nothing, if updating a proprety
+is not possible (invalid or forbidden), then no update take place.
+The result of the updates is then transmitted to all members via `lobby/updated` events.
+
 
 ## List of all lobbies
 

@@ -100,6 +100,12 @@ A member simply spectating and not waiting to play will have a null `joinQueuePo
 To leave an ally team or the join queue and become a spectator, a user should use [lobby/spectate](#spectate).
 
 
+### Lobby updates
+
+Any member can update most (any?) property of the lobby. Updates are all or nothing, if updating a proprety
+is not possible (invalid or forbidden), then no update take place.
+The result of the updates is then transmitted to all members via `lobby/updated` events.
+
 
 ## List of all lobbies
 
@@ -125,6 +131,7 @@ In practice, this event should rarely be seen.
 - [startBattle](#startbattle)
 - [subscribeList](#subscribelist)
 - [unsubscribeList](#unsubscribelist)
+- [update](#update)
 - [updateBot](#updatebot)
 - [updated](#updated)
 ---
@@ -357,32 +364,7 @@ Create a lobby
             "properties": {
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
-                "allyTeamConfig": {
-                    "description": "each object describes an ally team",
-                    "type": "array",
-                    "items": {
-                        "description": "config for this ally team",
-                        "type": "object",
-                        "properties": {
-                            "maxTeams": { "type": "integer", "minimum": 1 },
-                            "startBox": { "$ref": "#/definitions/startBox" },
-                            "teams": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "properties": {
-                                        "maxPlayers": {
-                                            "type": "integer",
-                                            "minimum": 1
-                                        }
-                                    },
-                                    "required": ["maxPlayers"]
-                                }
-                            }
-                        },
-                        "required": ["maxTeams", "startBox", "teams"]
-                    }
-                }
+                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" }
             },
             "required": ["name", "mapName", "allyTeamConfig"]
         }
@@ -402,9 +384,36 @@ Create a lobby
     "messageId": "exercitation",
     "commandId": "lobby/create",
     "data": {
-        "name": "fugiat id aute",
-        "mapName": "labore consequat tempor adipisicing ullamco",
-        "allyTeamConfig": []
+        "name": "laboris Duis",
+        "mapName": "pariatur sint sed",
+        "allyTeamConfig": {
+            "allyTeamConfig": [
+                {
+                    "maxTeams": 55784673,
+                    "startBox": {
+                        "top": 0.83367520570755,
+                        "bottom": 0.38755643367767334,
+                        "left": 0.10872387886047363,
+                        "right": 0.008953571319580078
+                    },
+                    "teams": [
+                        {
+                            "maxPlayers": 72347010
+                        }
+                    ]
+                },
+                {
+                    "maxTeams": 92397923,
+                    "startBox": {
+                        "top": 0.7260354161262512,
+                        "bottom": 0.6565085649490356,
+                        "left": 0.9442912936210632,
+                        "right": 0.1183784008026123
+                    },
+                    "teams": []
+                }
+            ]
+        }
     }
 }
 ```
@@ -421,6 +430,9 @@ export interface LobbyCreateRequest {
 export interface LobbyCreateRequestData {
     name: string;
     mapName: string;
+    allyTeamConfig: AllyTeamConfig;
+}
+export interface AllyTeamConfig {
     allyTeamConfig: {
         maxTeams: number;
         startBox: StartBox;
@@ -2382,6 +2394,221 @@ export interface LobbyUnsubscribeListOkResponse {
     type: "response";
     messageId: string;
     commandId: "lobby/unsubscribeList";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## Update
+
+Update some properties of the lobby the player is in.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/update" },
+        "data": {
+            "title": "LobbyUpdateRequestData",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "to rename the lobby",
+                    "type": "string"
+                },
+                "mapName": { "type": "string" },
+                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" }
+            }
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ad cillum sed cupidatat",
+    "commandId": "lobby/update",
+    "data": {
+        "in70a": true,
+        "name": "minim magna eu mollit adipisicing",
+        "allyTeamConfig": {
+            "allyTeamConfig": [
+                {
+                    "maxTeams": 59587259,
+                    "startBox": {
+                        "top": 0.6672755479812622,
+                        "bottom": 0.24469232559204102,
+                        "left": 0.4230235815048218,
+                        "right": 0.6949964165687561
+                    },
+                    "teams": [
+                        {
+                            "maxPlayers": 76444245
+                        },
+                        {
+                            "maxPlayers": 90514327
+                        },
+                        {
+                            "maxPlayers": 39670963
+                        }
+                    ]
+                },
+                {
+                    "maxTeams": 18390632,
+                    "startBox": {
+                        "top": 0.135168194770813,
+                        "bottom": 0.9982828497886658,
+                        "left": 0.13284897804260254,
+                        "right": 0.527115523815155
+                    },
+                    "teams": [
+                        {
+                            "maxPlayers": 54420454
+                        },
+                        {
+                            "maxPlayers": 73657555
+                        },
+                        {
+                            "maxPlayers": 32825918
+                        },
+                        {
+                            "maxPlayers": 13397533
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/update";
+    data: LobbyUpdateRequestData;
+}
+export interface LobbyUpdateRequestData {
+    name?: string;
+    mapName?: string;
+    allyTeamConfig?: AllyTeamConfig;
+}
+export interface AllyTeamConfig {
+    allyTeamConfig: {
+        maxTeams: number;
+        startBox: StartBox;
+        teams: {
+            maxPlayers: number;
+        }[];
+    }[];
+}
+export interface StartBox {
+    top: number;
+    bottom: number;
+    left: number;
+    right: number;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUpdateOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/update" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUpdateFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/update" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "in Ut ad aute voluptate",
+    "commandId": "lobby/update",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/update";
     status: "success";
 }
 ```
