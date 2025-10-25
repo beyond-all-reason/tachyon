@@ -386,34 +386,45 @@ Create a lobby
     "data": {
         "name": "laboris Duis",
         "mapName": "pariatur sint sed",
-        "allyTeamConfig": {
-            "allyTeamConfig": [
-                {
-                    "maxTeams": 55784673,
-                    "startBox": {
-                        "top": 0.83367520570755,
-                        "bottom": 0.38755643367767334,
-                        "left": 0.10872387886047363,
-                        "right": 0.008953571319580078
-                    },
-                    "teams": [
-                        {
-                            "maxPlayers": 72347010
-                        }
-                    ]
+        "allyTeamConfig": [
+            {
+                "maxTeams": 10584546,
+                "startBox": {
+                    "top": 0.2692078948020935,
+                    "bottom": 0.5980529189109802,
+                    "left": 0.83367520570755,
+                    "right": 0.38755643367767334
                 },
-                {
-                    "maxTeams": 92397923,
-                    "startBox": {
-                        "top": 0.7260354161262512,
-                        "bottom": 0.6565085649490356,
-                        "left": 0.9442912936210632,
-                        "right": 0.1183784008026123
+                "teams": []
+            },
+            {
+                "maxTeams": 45991004,
+                "startBox": {
+                    "top": 0.47580695152282715,
+                    "bottom": 0.7716678380966187,
+                    "left": 0.9239792227745056,
+                    "right": 0.6328656673431396
+                },
+                "teams": [
+                    {
+                        "maxPlayers": 94429130
                     },
-                    "teams": []
-                }
-            ]
-        }
+                    {
+                        "maxPlayers": 43390680
+                    }
+                ]
+            },
+            {
+                "maxTeams": 67363990,
+                "startBox": {
+                    "top": 0.832726240158081,
+                    "bottom": 0.8541895151138306,
+                    "left": 0.6024702787399292,
+                    "right": 0.414419949054718
+                },
+                "teams": []
+            }
+        ]
     }
 }
 ```
@@ -421,6 +432,14 @@ Create a lobby
 
 #### TypeScript Definition
 ```ts
+export type AllyTeamConfig = {
+    maxTeams: number;
+    startBox: StartBox;
+    teams: {
+        maxPlayers: number;
+    }[];
+}[];
+
 export interface LobbyCreateRequest {
     type: "request";
     messageId: string;
@@ -431,15 +450,6 @@ export interface LobbyCreateRequestData {
     name: string;
     mapName: string;
     allyTeamConfig: AllyTeamConfig;
-}
-export interface AllyTeamConfig {
-    allyTeamConfig: {
-        maxTeams: number;
-        startBox: StartBox;
-        teams: {
-            maxPlayers: number;
-        }[];
-    }[];
 }
 export interface StartBox {
     top: number;
@@ -2458,53 +2468,53 @@ Update some properties of the lobby the player is in.
     "data": {
         "in70a": true,
         "name": "minim magna eu mollit adipisicing",
-        "allyTeamConfig": {
-            "allyTeamConfig": [
-                {
-                    "maxTeams": 59587259,
-                    "startBox": {
-                        "top": 0.6672755479812622,
-                        "bottom": 0.24469232559204102,
-                        "left": 0.4230235815048218,
-                        "right": 0.6949964165687561
-                    },
-                    "teams": [
-                        {
-                            "maxPlayers": 76444245
-                        },
-                        {
-                            "maxPlayers": 90514327
-                        },
-                        {
-                            "maxPlayers": 39670963
-                        }
-                    ]
+        "allyTeamConfig": [
+            {
+                "maxTeams": 60585350,
+                "startBox": {
+                    "top": 0.09639787673950195,
+                    "bottom": 0.5077924132347107,
+                    "left": 0.6672755479812622,
+                    "right": 0.24469232559204102
                 },
-                {
-                    "maxTeams": 18390632,
-                    "startBox": {
-                        "top": 0.135168194770813,
-                        "bottom": 0.9982828497886658,
-                        "left": 0.13284897804260254,
-                        "right": 0.527115523815155
+                "teams": [
+                    {
+                        "maxPlayers": 81391311
                     },
-                    "teams": [
-                        {
-                            "maxPlayers": 54420454
-                        },
-                        {
-                            "maxPlayers": 73657555
-                        },
-                        {
-                            "maxPlayers": 32825918
-                        },
-                        {
-                            "maxPlayers": 13397533
-                        }
-                    ]
-                }
-            ]
-        }
+                    {
+                        "maxPlayers": 85315747
+                    }
+                ]
+            },
+            {
+                "maxTeams": 21366853,
+                "startBox": {
+                    "top": 0.9255445599555969,
+                    "bottom": 0.7585924863815308,
+                    "left": 0.18390631675720215,
+                    "right": 0.7069403529167175
+                },
+                "teams": [
+                    {
+                        "maxPlayers": 13284898
+                    }
+                ]
+            },
+            {
+                "maxTeams": 92354984,
+                "startBox": {
+                    "top": 0.6213186383247375,
+                    "bottom": 0.7227727770805359,
+                    "left": 0.7365755438804626,
+                    "right": 0.1030048131942749
+                },
+                "teams": [
+                    {
+                        "maxPlayers": 18122399
+                    }
+                ]
+            }
+        ]
     }
 }
 ```
@@ -2512,6 +2522,14 @@ Update some properties of the lobby the player is in.
 
 #### TypeScript Definition
 ```ts
+export type AllyTeamConfig = {
+    maxTeams: number;
+    startBox: StartBox;
+    teams: {
+        maxPlayers: number;
+    }[];
+}[];
+
 export interface LobbyUpdateRequest {
     type: "request";
     messageId: string;
@@ -2522,15 +2540,6 @@ export interface LobbyUpdateRequestData {
     name?: string;
     mapName?: string;
     allyTeamConfig?: AllyTeamConfig;
-}
-export interface AllyTeamConfig {
-    allyTeamConfig: {
-        maxTeams: number;
-        startBox: StartBox;
-        teams: {
-            maxPlayers: number;
-        }[];
-    }[];
 }
 export interface StartBox {
     top: number;
