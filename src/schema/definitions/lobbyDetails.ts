@@ -3,6 +3,10 @@ import { Type } from "@sinclair/typebox";
 export const lobbyDetails = Type.Object(
     {
         id: Type.String(),
+        bossId: Type.Ref("userId", {
+            description:
+                "User ID of the lobby boss (creator). Boss can change lobby settings like mods.",
+        }),
         name: Type.String(),
         mapName: Type.String(),
         engineVersion: Type.String(),
@@ -26,44 +30,31 @@ export const lobbyDetails = Type.Object(
                 }
             )
         ),
+        mods: Type.Array(Type.Ref("mod"), {
+            description:
+                "Ordered list of mods/mutators to apply. Order matters - later mods override earlier ones.",
+            maxItems: 10,
+        }),
         players: Type.Record(
             Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
-            Type.Object({
-                id: Type.Ref("userId"),
-                allyTeam: Type.String(),
-                team: Type.String(),
-                player: Type.String(),
-            })
-        ),
-        spectators: Type.Record(
-            Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
-            Type.Object({
-                id: Type.Ref("userId"),
-                joinQueuePosition: Type.Optional(Type.Number()),
-            })
-        ),
-        bots: Type.Record(
-            Type.String(),
-            Type.Object({
-                id: Type.String({ description: "server assigned unique identifier for the bot" }),
-                hostUserId: Type.Ref("userId", {
-                    description:
-                        "which player will run the bot. It is the same as the player that added the bot.",
+            Type.Union([
+                Type.Object({
+                    id: Type.Ref("userId"),
+                    allyTeam: Type.String(),
+                    team: Type.String(),
+                    player: Type.String(),
+                    sync: Type.Optional(
+                        Type.Ref("memberSyncStatus", {
+                            description: "Tracks which resources this member has downloaded",
+                        })
+                    ),
                 }),
-                allyTeam: Type.String(),
-                team: Type.String(),
-                player: Type.String(),
-                name: Type.Optional(
-                    Type.String({ maxLength: 20, description: "name to display in the lobby" })
-                ),
-                shortName: Type.String({
-                    maxLength: 20,
-                    description:
-                        "short name of the bot. Used to uniquely identify which bot to run",
+                Type.Object({
+                    type: Type.Const("spec"),
+                    id: Type.Ref("userId"),
+                    joinQueuePosition: Type.Optional(Type.Number()),
                 }),
-                version: Type.Optional(Type.String()),
-                options: Type.Optional(Type.Record(Type.String(), Type.String())),
-            })
+            ])
         ),
         currentBattle: Type.Optional(
             Type.Object(

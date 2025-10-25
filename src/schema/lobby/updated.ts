@@ -12,12 +12,20 @@ export default defineEndpoint({
         data: Type.Object({
             id: Type.String(),
             // not all types are nullable because in the context of lobbies, it
-            // makes no sense to clear some propreties. For example, a map
+            // makes no sense to clear some properties. For example, a map
             // must always be set.
+            bossId: Type.Optional(Type.Ref("userId")),
             name: Type.Optional(Type.String()),
             mapName: Type.Optional(Type.String()),
             engineVersion: Type.Optional(Type.String()),
             gameVersion: Type.Optional(Type.String()),
+            mods: Type.Optional(
+                Type.Array(Type.Ref("mod"), {
+                    description:
+                        "Ordered list of mods. Order matters - later mods override earlier ones.",
+                    maxItems: 10,
+                })
+            ),
             allyTeams: Type.Optional(
                 Type.Record(
                     Type.String(),
@@ -59,6 +67,7 @@ export default defineEndpoint({
                             allyTeam: Type.Optional(Type.String()),
                             team: Type.Optional(Type.String()),
                             player: Type.Optional(Type.String()),
+                            sync: Type.Optional(Type.Ref("memberSyncStatus")),
                         })
                     )
                 )
@@ -71,6 +80,7 @@ export default defineEndpoint({
                         Type.Object({
                             id: Type.Ref("userId"),
                             joinQueuePosition: Type.Optional(Nullable(Type.Number())),
+                            sync: Type.Optional(Type.Ref("memberSyncStatus")),
                         })
                     )
                 )

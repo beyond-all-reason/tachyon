@@ -133,6 +133,8 @@ In practice, this event should rarely be seen.
 - [unsubscribeList](#unsubscribelist)
 - [update](#update)
 - [updateBot](#updatebot)
+- [updateMods](#updatemods)
+- [updateSync](#updatesync)
 - [updated](#updated)
 ---
 
@@ -523,85 +525,105 @@ export interface StartBox {
     "commandId": "lobby/create",
     "status": "success",
     "data": {
-        "id": "velit eu sunt",
-        "name": "minim sint aliqua dolor reprehenderit",
-        "mapName": "ut",
-        "engineVersion": "qui id nisi sed",
-        "gameVersion": "pariatur sunt Duis",
+        "id": "ut fugiat esse in",
+        "bossId": "351",
+        "name": "nulla culpa aliquip exercitation",
+        "mapName": "in",
+        "engineVersion": "laborum est cupidatat",
+        "gameVersion": "sunt ut incididunt",
         "allyTeamConfig": {
-            "hj2": {
+            "'zA": {
                 "startBox": {
-                    "top": 0.054356932640075684,
-                    "bottom": 0.9855321049690247,
-                    "left": 0.3289511203765869,
-                    "right": 0.16059565544128418
+                    "top": 0.6702225208282471,
+                    "bottom": 0.08513057231903076,
+                    "left": 0.6979477405548096,
+                    "right": 0.39217686653137207
                 },
-                "maxTeams": 12871945,
+                "maxTeams": 49125404,
                 "teams": {
-                    "P?{-}&": {
-                        "maxPlayers": 98656160
+                    "&Z`y[~1<$\"": {
+                        "maxPlayers": 93489022
                     },
-                    "`y[~1<": {
-                        "maxPlayers": 60614247
+                    "YJn&cu:{BT": {
+                        "maxPlayers": 94367475
+                    },
+                    "p>g": {
+                        "maxPlayers": 83924681
+                    },
+                    "bVt55^^F+)": {
+                        "maxPlayers": 22539419
+                    },
+                    ";": {
+                        "maxPlayers": 86343200
+                    }
+                }
+            },
+            "%}": {
+                "startBox": {
+                    "top": 0.575905978679657,
+                    "bottom": 0.04219859838485718,
+                    "left": 0.48406165838241577,
+                    "right": 0.6355019807815552
+                },
+                "maxTeams": 31750095,
+                "teams": {
+                    "": {
+                        "maxPlayers": 58379370
+                    },
+                    "Di#gQz": {
+                        "maxPlayers": 11101032
+                    },
+                    "sK": {
+                        "maxPlayers": 32934458
                     }
                 }
             }
         },
+        "mods": [
+            {
+                "name": "tempor",
+                "archiveName": "elit dolor dolor ut in",
+                "gitRef": "aliquip consequat adipisicing amet qui",
+                "repository": "dolor mollit labore",
+                "type": "github"
+            },
+            {
+                "name": "Ut mollit sit veniam",
+                "archiveName": "do in officia anim tempor",
+                "gitRef": "culpa aute adipisicing velit",
+                "repository": "dolore minim",
+                "type": "github"
+            },
+            {
+                "name": "consequat nisi ullamco mollit",
+                "archiveName": "dolore",
+                "gitRef": "consectetur elit proident Lorem",
+                "repository": "pariatur reprehenderit cillum in",
+                "type": "github"
+            }
+        ],
         "players": {
-            "{BT": {
-                "id": "351",
-                "allyTeam": "irure ut exercitation minim sit",
-                "team": "Ut proident ex dolore aute",
-                "player": "in occaecat commodo nisi deserunt"
-            },
-            "g*~": {
-                "id": "351",
-                "allyTeam": "deserunt",
-                "team": "mollit officia ea",
-                "player": "occaecat mollit consectetur Excepteur deserunt"
-            },
-            "Vt55^^F": {
-                "id": "351",
-                "allyTeam": "deserunt et in dolor",
-                "team": "elit veniam",
-                "player": "cillum aliquip"
-            },
-            ">": {
-                "id": "351",
-                "allyTeam": "quis proident amet consequat minim",
-                "team": "nulla sit in",
-                "player": "Duis velit eiusmod anim est"
-            }
-        },
-        "spectators": {
-            "=g%TQ": {
-                "id": "351",
-                "joinQueuePosition": -91048336.02905273
-            },
-            "QRim": {
-                "id": "351",
-                "joinQueuePosition": -1201987.2665405273
-            },
-            "X<[Qjj]O^I": {
-                "id": "351"
-            }
-        },
-        "bots": {
-            "M-@fAM": {
-                "id": "in",
-                "hostUserId": "351",
-                "allyTeam": "et minim voluptate in culpa",
-                "team": "laboris ipsum dolore enim ut",
-                "player": "est in enim",
-                "name": "commo",
-                "shortName": "occaeca",
-                "version": "dolor culpa",
-                "options": {
-                    "Fx_K8": "reprehenderit magna eu occaecat id",
-                    "": "velit nisi officia irure",
-                    "c+": "voluptate do nisi",
-                    "I2'b!lI ": "in aute anim et proident"
+            "G] d5": {
+                "allyTeam": "sunt consectetur quis dolore",
+                "team": "exercitation",
+                "player": "nisi consequat",
+                "sync": {
+                    "map": false,
+                    "engine": false,
+                    "game": true,
+                    "mods": [
+                        "pariatur",
+                        "id consequat magna in",
+                        "dolore sed et veniam proident",
+                        "cillum labore dolor laboris",
+                        "labore et ea"
+                    ]
                 }
+            },
+            "hO*;8OjE.": {
+                "type": "spec",
+                "id": "351",
+                "joinQueuePosition": -4660582.542419434
             }
         },
         "currentBattle": {
@@ -626,6 +648,7 @@ export interface LobbyCreateOkResponse {
 }
 export interface LobbyCreateOkResponseData {
     id: string;
+    bossId: string;
     name: string;
     mapName: string;
     engineVersion: string;
@@ -641,34 +664,32 @@ export interface LobbyCreateOkResponseData {
             };
         };
     };
+    mods:
+        | []
+        | [Mod]
+        | [Mod, Mod]
+        | [Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod];
     players: {
-        [k: string]: {
-            id: UserId;
-            allyTeam: string;
-            team: string;
-            player: string;
-        };
-    };
-    spectators: {
-        [k: string]: {
-            id: UserId;
-            joinQueuePosition?: number;
-        };
-    };
-    bots: {
-        [k: string]: {
-            id: string;
-            hostUserId: string;
-            allyTeam: string;
-            team: string;
-            player: string;
-            name?: string;
-            shortName: string;
-            version?: string;
-            options?: {
-                [k: string]: string;
-            };
-        };
+        [k: string]:
+            | {
+                  id: UserId;
+                  allyTeam: string;
+                  team: string;
+                  player: string;
+                  sync?: MemberSyncStatus;
+              }
+            | {
+                  type: "spec";
+                  id: UserId;
+                  joinQueuePosition?: number;
+              };
     };
     currentBattle?: {
         startedAt: UnixTime;
@@ -679,6 +700,19 @@ export interface StartBox {
     bottom: number;
     left: number;
     right: number;
+}
+export interface Mod {
+    name: string;
+    archiveName: string;
+    gitRef: string;
+    repository: string;
+    type: "github";
+}
+export interface MemberSyncStatus {
+    map: boolean;
+    engine: boolean;
+    game: boolean;
+    mods: string[];
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -818,123 +852,113 @@ export interface LobbyJoinRequestData {
     "commandId": "lobby/join",
     "status": "success",
     "data": {
-        "id": "commodo Duis dolore consequat",
-        "name": "id ex occaecat exercitation",
-        "mapName": "adipisicing reprehenderit ipsum",
-        "engineVersion": "nisi",
-        "gameVersion": "amet",
+        "id": "officia",
+        "bossId": "351",
+        "name": "culpa ea cillum sed",
+        "mapName": "cupidatat fugiat",
+        "engineVersion": "nostrud",
+        "gameVersion": "consectetur nulla",
         "allyTeamConfig": {
             "W |:KuOk/x": {
                 "startBox": {
-                    "top": 0.369232177734375,
-                    "bottom": 0.9725453853607178,
-                    "left": 0.46052515506744385,
-                    "right": 0.9408383369445801
+                    "top": 0.9852176904678345,
+                    "bottom": 0.8239824771881104,
+                    "left": 0.1293366551399231,
+                    "right": 0.4055666923522949
                 },
-                "maxTeams": 19888574,
+                "maxTeams": 37898821,
                 "teams": {
-                    "*1j6/#\\": {
-                        "maxPlayers": 93780059
+                    "/#": {
+                        "maxPlayers": 10862983
                     },
-                    "|Tg": {
-                        "maxPlayers": 62605191
+                    "Tgi:=W1e[l": {
+                        "maxPlayers": 89296908
                     },
-                    "=W1": {
-                        "maxPlayers": 38869948
+                    "k": {
+                        "maxPlayers": 52734781
                     },
-                    "[l.kg|.?": {
-                        "maxPlayers": 11333126
-                    },
-                    "": {
-                        "maxPlayers": 85529680
-                    },
-                    ",!?5'c": {
-                        "maxPlayers": 71038718
+                    ".?P!U,!?5'": {
+                        "maxPlayers": 3402854
                     }
                 }
             },
-            "roho": {
+            "hoF5u}Kzr": {
                 "startBox": {
-                    "top": 0.7876737117767334,
-                    "bottom": 0.6124547719955444,
-                    "left": 0.16075611114501953,
-                    "right": 0.6785145401954651
+                    "top": 0.6892774701118469,
+                    "bottom": 0.8497186899185181,
+                    "left": 0.7103871703147888,
+                    "right": 0.9681347608566284
                 },
-                "maxTeams": 9858573,
+                "maxTeams": 96600134,
                 "teams": {
-                    "p$V'o%8'": {
-                        "maxPlayers": 40755708
+                    ")([kEBk": {
+                        "maxPlayers": 71045322
                     },
-                    "d": {
-                        "maxPlayers": 95084745
+                    "'o%8'^": {
+                        "maxPlayers": 91175366
+                    },
+                    ".dL{FOk": {
+                        "maxPlayers": 73071063
+                    },
+                    "Ao": {
+                        "maxPlayers": 1691151
                     }
                 }
             },
-            "u}": {
+            "C": {
                 "startBox": {
-                    "top": 0.19229495525360107,
-                    "bottom": 0.7104532122612,
-                    "left": 0.7016656994819641,
-                    "right": 0.272929310798645
+                    "top": 0.03288298845291138,
+                    "bottom": 0.4155328869819641,
+                    "left": 0.1541842818260193,
+                    "right": 0.964246928691864
                 },
-                "maxTeams": 91175366,
+                "maxTeams": 61257262,
                 "teams": {
                     "": {
-                        "maxPlayers": 80739517
+                        "maxPlayers": 23848182
                     },
-                    "_#G.{": {
-                        "maxPlayers": 18993098
+                    "lTI2\\_;`#": {
+                        "maxPlayers": 91612584
                     },
-                    "~!PP%W": {
-                        "maxPlayers": 28960121
+                    "Io6": {
+                        "maxPlayers": 79138524
+                    },
+                    "$IZK?A^": {
+                        "maxPlayers": 73491222
                     }
                 }
             }
         },
+        "mods": [],
         "players": {
-            "2b": {
+            "Tz": {
                 "id": "351",
-                "allyTeam": "Duis tempor non ad",
-                "team": "anim in",
-                "player": "cupidatat"
-            }
-        },
-        "spectators": {
-            "R~c/=rGp": {
+                "allyTeam": "nisi fugiat eu nostrud anim",
+                "team": "proident nostrud ullamco sint",
+                "player": "sint",
+                "sync": {
+                    "map": true,
+                    "engine": false,
+                    "game": false,
+                    "mods": []
+                }
+            },
+            "\\h(!G,Ia8V": {
                 "id": "351",
-                "joinQueuePosition": 17248785.495758057
-            },
-            "": {
-                "id": "351",
-                "joinQueuePosition": -81065165.99655151
-            },
-            "f+": {
-                "id": "351",
-                "joinQueuePosition": -55711638.92745972
-            },
-            "'~cRGw>+": {
-                "id": "351"
-            }
-        },
-        "bots": {
-            "/.j": {
-                "id": "exercitation tempor ad",
-                "hostUserId": "351",
-                "allyTeam": "consectetur sint",
-                "team": "aliquip",
-                "player": "deserunt",
-                "name": "consectetur",
-                "shortName": "in in ",
-                "version": "reprehenderit"
-            },
-            "l!L": {
-                "id": "Lorem est",
-                "hostUserId": "351",
-                "allyTeam": "dolore laboris non aliquip ex",
-                "team": "cillum",
-                "player": "nostrud",
-                "shortName": "irure",
-                "version": "anim id ad"
+                "allyTeam": "tempor",
+                "team": "ipsum exercitation aute dolore sed",
+                "player": "Duis velit Excepteur",
+                "sync": {
+                    "map": false,
+                    "engine": true,
+                    "game": false,
+                    "mods": [
+                        "et adipisicing dolore dolor",
+                        "cillum in anim deserunt",
+                        "est",
+                        "dolore magna exercitation proident sint"
+                    ]
+                }
             }
         },
         "currentBattle": {
@@ -959,6 +983,7 @@ export interface LobbyJoinOkResponse {
 }
 export interface LobbyJoinOkResponseData {
     id: string;
+    bossId: string;
     name: string;
     mapName: string;
     engineVersion: string;
@@ -974,34 +999,32 @@ export interface LobbyJoinOkResponseData {
             };
         };
     };
+    mods:
+        | []
+        | [Mod]
+        | [Mod, Mod]
+        | [Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod];
     players: {
-        [k: string]: {
-            id: UserId;
-            allyTeam: string;
-            team: string;
-            player: string;
-        };
-    };
-    spectators: {
-        [k: string]: {
-            id: UserId;
-            joinQueuePosition?: number;
-        };
-    };
-    bots: {
-        [k: string]: {
-            id: string;
-            hostUserId: string;
-            allyTeam: string;
-            team: string;
-            player: string;
-            name?: string;
-            shortName: string;
-            version?: string;
-            options?: {
-                [k: string]: string;
-            };
-        };
+        [k: string]:
+            | {
+                  id: UserId;
+                  allyTeam: string;
+                  team: string;
+                  player: string;
+                  sync?: MemberSyncStatus;
+              }
+            | {
+                  type: "spec";
+                  id: UserId;
+                  joinQueuePosition?: number;
+              };
     };
     currentBattle?: {
         startedAt: UnixTime;
@@ -1012,6 +1035,19 @@ export interface StartBox {
     bottom: number;
     left: number;
     right: number;
+}
+export interface Mod {
+    name: string;
+    archiveName: string;
+    gitRef: string;
+    repository: string;
+    type: "github";
+}
+export interface MemberSyncStatus {
+    map: boolean;
+    engine: boolean;
+    game: boolean;
+    mods: string[];
 }
 ```
 Possible Failed Reasons: `lobby_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -2808,6 +2844,417 @@ Possible Failed Reasons: `not_in_lobby`, `invalid_bot`, `internal_error`, `unaut
 
 ---
 
+## UpdateMods
+
+Update the mods for the lobby. Only the lobby boss can change mods.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateModsRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/updateMods" },
+        "data": {
+            "title": "LobbyUpdateModsRequestData",
+            "type": "object",
+            "properties": {
+                "lobbyId": { "type": "string" },
+                "mods": {
+                    "description": "Ordered list of mods. Later mods override earlier ones.",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/mod" },
+                    "maxItems": 10
+                }
+            },
+            "required": ["lobbyId", "mods"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "occaecat labore",
+    "commandId": "lobby/updateMods",
+    "data": {
+        "lobbyId": "quis aliquip laborum dolor eiusmod",
+        "mods": [
+            {
+                "name": "labore magna in id",
+                "archiveName": "incididunt Lorem",
+                "gitRef": "dolore",
+                "repository": "dolor sed Ut tempor veniam",
+                "type": "github"
+            },
+            {
+                "name": "ut et irure Ut",
+                "archiveName": "anim id esse Duis",
+                "gitRef": "sunt",
+                "repository": "consequat do laboris",
+                "type": "github"
+            },
+            {
+                "name": "reprehenderit mollit",
+                "archiveName": "est mollit consectetur nisi",
+                "gitRef": "eiusmod",
+                "repository": "Excepteur quis",
+                "type": "github"
+            },
+            {
+                "name": "ullamco amet aute commodo nisi",
+                "archiveName": "veniam",
+                "gitRef": "nostrud do dolore consectetur",
+                "repository": "dolor ipsum exercitation",
+                "type": "github"
+            },
+            {
+                "name": "nulla mollit",
+                "archiveName": "ipsum in incididunt",
+                "gitRef": "incididunt minim do deserunt",
+                "repository": "sint",
+                "type": "github"
+            },
+            {
+                "name": "in veniam",
+                "archiveName": "magna est non in ut",
+                "gitRef": "consectetur",
+                "repository": "aliqua cillum",
+                "type": "github"
+            },
+            {
+                "name": "ex elit in commodo",
+                "archiveName": "Excepteur dolor",
+                "gitRef": "aliqua",
+                "repository": "mollit in ad in Ut",
+                "type": "github"
+            },
+            {
+                "name": "ex dolor nulla",
+                "archiveName": "pariatur adipisicing officia sint",
+                "gitRef": "elit",
+                "repository": "in nisi veniam irure sit",
+                "type": "github"
+            },
+            {
+                "name": "dolore",
+                "archiveName": "Lorem",
+                "gitRef": "laboris culpa Excepteur",
+                "repository": "ullamco nostrud",
+                "type": "github"
+            },
+            {
+                "name": "fugiat commodo ipsum do",
+                "archiveName": "commodo aliquip nostrud ea",
+                "gitRef": "incididunt dolor ex",
+                "repository": "consequat ut",
+                "type": "github"
+            }
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateModsRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/updateMods";
+    data: LobbyUpdateModsRequestData;
+}
+export interface LobbyUpdateModsRequestData {
+    lobbyId: string;
+    mods:
+        | []
+        | [Mod]
+        | [Mod, Mod]
+        | [Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod];
+}
+export interface Mod {
+    name: string;
+    archiveName: string;
+    gitRef: string;
+    repository: string;
+    type: "github";
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateModsResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUpdateModsOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateMods" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUpdateModsFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateMods" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "insufficient_permissions",
+                        "not_in_lobby",
+                        "too_many_mods",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "in eiusmod aliqua",
+    "commandId": "lobby/updateMods",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateModsOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/updateMods";
+    status: "success";
+}
+```
+Possible Failed Reasons: `insufficient_permissions`, `not_in_lobby`, `too_many_mods`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## UpdateSync
+
+Report the member's sync status - which resources they have downloaded and are ready to use.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateSyncRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/updateSync" },
+        "data": {
+            "title": "LobbyUpdateSyncRequestData",
+            "type": "object",
+            "properties": {
+                "lobbyId": { "type": "string" },
+                "sync": { "$ref": "#/definitions/memberSyncStatus" }
+            },
+            "required": ["lobbyId", "sync"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "dolore",
+    "commandId": "lobby/updateSync",
+    "data": {
+        "lobbyId": "non do dolore",
+        "sync": {
+            "map": false,
+            "engine": false,
+            "game": false,
+            "mods": [
+                "nostrud",
+                "aliquip proident ex",
+                "officia sit non voluptate"
+            ]
+        }
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateSyncRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/updateSync";
+    data: LobbyUpdateSyncRequestData;
+}
+export interface LobbyUpdateSyncRequestData {
+    lobbyId: string;
+    sync: MemberSyncStatus;
+}
+export interface MemberSyncStatus {
+    map: boolean;
+    engine: boolean;
+    game: boolean;
+    mods: string[];
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateSyncResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUpdateSyncOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateSync" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUpdateSyncFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateSync" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "ipsum",
+    "commandId": "lobby/updateSync",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateSyncOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/updateSync";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## Updated
 
 Sent by the server whenever something in the lobby changes. Uses json patch (RFC-7386)
@@ -2840,10 +3287,17 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
+                "bossId": { "$ref": "#/definitions/userId" },
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
+                "mods": {
+                    "description": "Ordered list of mods. Order matters - later mods override earlier ones.",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/mod" },
+                    "maxItems": 10
+                },
                 "allyTeams": {
                     "type": "object",
                     "patternProperties": {
@@ -2900,7 +3354,10 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
-                                        "player": { "type": "string" }
+                                        "player": { "type": "string" },
+                                        "sync": {
+                                            "$ref": "#/definitions/memberSyncStatus"
+                                        }
                                     },
                                     "required": ["id"]
                                 },
@@ -2925,6 +3382,9 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                                 { "type": "number" },
                                                 { "type": "null" }
                                             ]
+                                        },
+                                        "sync": {
+                                            "$ref": "#/definitions/memberSyncStatus"
                                         }
                                     },
                                     "required": ["id"]
@@ -3031,60 +3491,162 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "adipisicing officia eiusmod in dolore",
-        "name": "Excepteur magna amet commodo velit",
-        "mapName": "Duis nostrud dolore dolor ut",
+        "id": "minim esse",
+        "bossId": "351",
+        "name": "fugiat esse",
+        "mapName": "culpa consequat tempor voluptate aute",
+        "engineVersion": "sit minim consectetur",
+        "gameVersion": "in nulla",
+        "mods": [
+            {
+                "name": "veniam elit",
+                "archiveName": "quis",
+                "gitRef": "aliquip non id in voluptate",
+                "repository": "nulla aliqua enim",
+                "type": "github"
+            },
+            {
+                "name": "aliqua eiusmod",
+                "archiveName": "ullamco velit",
+                "gitRef": "reprehenderit eiusmod officia",
+                "repository": "dolor ut nostrud voluptate ullamco",
+                "type": "github"
+            },
+            {
+                "name": "adipisicing fugiat est exercitation labore",
+                "archiveName": "cupidatat",
+                "gitRef": "dolore sint aute quis non",
+                "repository": "ut Duis exercitation et dolore",
+                "type": "github"
+            },
+            {
+                "name": "ullamco id",
+                "archiveName": "Ut ut est",
+                "gitRef": "ut consectetur aute pariatur",
+                "repository": "officia pariatur",
+                "type": "github"
+            }
+        ],
         "allyTeams": {
-            "W8m3D": {
+            "n>": null,
+            "C.oJ<qw": {
                 "startBox": {
-                    "top": 0.38843363523483276,
-                    "bottom": 0.7097047567367554,
-                    "left": 0.26567769050598145,
-                    "right": 0.029768764972686768
+                    "top": 0.8249186277389526,
+                    "bottom": 0.8546968698501587,
+                    "left": 0.7409643530845642,
+                    "right": 0.013458192348480225
                 },
-                "maxTeams": 79185772,
+                "maxTeams": 67248643,
                 "teams": {
-                    "E[Sva": null,
-                    "Nf!z?+*Tc": {
-                        "nisi4cd": "dolore",
-                        "dolore_e95": -18286658,
-                        "voluptate880": 10259258,
-                        "ipsum_3de": "qui esse dolor Excepteur",
-                        "maxPlayers": 32589031
+                    "yAu7y": null,
+                    "'' sy": null,
+                    ".RnMjrS,?g": {
+                        "non_5f8": 51066958,
+                        "maxPlayers": 9549004
                     },
-                    "\\|8P \\C=Kl": null,
-                    ")": {
-                        "cillum_7b": false,
-                        "aute_": -76915443,
-                        "cupidatatb1": -76946818.82858276,
-                        "exa4": "veniam",
-                        "maxPlayers": 15148336
+                    "x=!pH^)|WT": {
+                        "deserunt_e": "dolor velit dolore sed",
+                        "eiusmodf23": 22960388.66043091,
+                        "maxPlayers": 42529840
                     }
                 }
             },
-            "": null,
-            "9x2X:\\": null,
-            "7D": {
+            "z^X": null,
+            "}3o&f6": null,
+            "-rT": {
                 "startBox": {
-                    "top": 0.22380495071411133,
-                    "bottom": 0.3090400695800781,
-                    "left": 0.42553818225860596,
-                    "right": 0.9208085536956787
+                    "top": 0.5350343585014343,
+                    "bottom": 0.9353530406951904,
+                    "left": 0.4637300968170166,
+                    "right": 0.34767723083496094
                 },
                 "teams": {
-                    "l": {
-                        "enim__f": true,
-                        "consectetur_e": -19333387
-                    },
-                    "+x-K0vzp": {
-                        "pariatur_0cb": false,
-                        "Excepteur_9e": "ex ut laborum Lorem magna",
-                        "maxPlayers": 14232487
-                    }
+                    "2f": null,
+                    "\"5*": null
+                }
+            },
+            "#<\"%&w<}c3": null
+        },
+        "players": {
+            "6!.tw_%s": {
+                "id": "351",
+                "sync": {
+                    "map": false,
+                    "engine": false,
+                    "game": true,
+                    "mods": [
+                        "cupidatat nisi commodo",
+                        "ullamco cillum in"
+                    ]
+                }
+            },
+            "#nxqkvS8": {
+                "id": "351"
+            },
+            "XN=+r78-*": {
+                "id": "351",
+                "player": "do",
+                "sync": {
+                    "map": true,
+                    "engine": false,
+                    "game": false,
+                    "mods": [
+                        "ad dolor Ut sed",
+                        "ea sunt cupidatat",
+                        "sint"
+                    ]
                 }
             }
         },
-        "currentBattle": null
+        "spectators": {
+            "%u7": {
+                "id": "351",
+                "joinQueuePosition": -2487063.407897949,
+                "sync": {
+                    "map": true,
+                    "engine": false,
+                    "game": true,
+                    "mods": [
+                        "nulla ipsum",
+                        "ex non nisi consectetur sit",
+                        "cillum laboris Ut exercitation dolore",
+                        "occaecat nostrud elit id",
+                        "laborum aliqua occaecat ullamco"
+                    ]
+                }
+            },
+            "n3": {
+                "id": "351",
+                "joinQueuePosition": null,
+                "sync": {
+                    "map": false,
+                    "engine": false,
+                    "game": true,
+                    "mods": []
+                }
+            },
+            "YvXQd": null,
+            "*4zL.;g": {
+                "id": "351",
+                "sync": {
+                    "map": true,
+                    "engine": true,
+                    "game": false,
+                    "mods": [
+                        "dolor commodo amet",
+                        "dolore aute ut nulla non",
+                        "aliquip laborum ut in"
+                    ]
+                }
+            }
+        },
+        "bots": {
+            "}a>]HolO%": null
+        },
+        "currentBattle": {
+            "id": "ut esse est",
+            "startedAt": 1705432698000000
+        }
     }
 }
 ```
@@ -3103,10 +3665,23 @@ export interface LobbyUpdatedEvent {
 }
 export interface LobbyUpdatedEventData {
     id: string;
+    bossId?: UserId;
     name?: string;
     mapName?: string;
     engineVersion?: string;
     gameVersion?: string;
+    mods?:
+        | []
+        | [Mod]
+        | [Mod, Mod]
+        | [Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod]
+        | [Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod, Mod];
     allyTeams?: {
         [k: string]: {
             startBox?: StartBox;
@@ -3124,12 +3699,14 @@ export interface LobbyUpdatedEventData {
             allyTeam?: string;
             team?: string;
             player?: string;
+            sync?: MemberSyncStatus;
         } | null;
     };
     spectators?: {
         [k: string]: {
             id: UserId;
             joinQueuePosition?: number | null;
+            sync?: MemberSyncStatus;
         } | null;
     };
     bots?: {
@@ -3152,10 +3729,23 @@ export interface LobbyUpdatedEventData {
         startedAt: UnixTime;
     } | null;
 }
+export interface Mod {
+    name: string;
+    archiveName: string;
+    gitRef: string;
+    repository: string;
+    type: "github";
+}
 export interface StartBox {
     top: number;
     bottom: number;
     left: number;
     right: number;
+}
+export interface MemberSyncStatus {
+    map: boolean;
+    engine: boolean;
+    game: boolean;
+    mods: string[];
 }
 ```

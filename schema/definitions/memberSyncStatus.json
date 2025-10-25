@@ -1,0 +1,26 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/memberSyncStatus.json",
+    "title": "MemberSyncStatus",
+    "description": "Tracks which resources a lobby member has downloaded and is ready to use.",
+    "type": "object",
+    "properties": {
+        "map": {
+            "description": "True if the member has the required map",
+            "type": "boolean"
+        },
+        "engine": {
+            "description": "True if the member has the required engine version",
+            "type": "boolean"
+        },
+        "game": {
+            "description": "True if the member has the required game version",
+            "type": "boolean"
+        },
+        "mods": {
+            "description": "Array of gitRefs for mods the member has downloaded",
+            "type": "array",
+            "items": { "type": "string" }
+        }
+    },
+    "required": ["map", "engine", "game", "mods"]
+}

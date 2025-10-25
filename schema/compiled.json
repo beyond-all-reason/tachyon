@@ -88,6 +88,10 @@
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
+                "bossId": {
+                    "$ref": "#/definitions/userId",
+                    "description": "User ID of the lobby boss (creator). Boss can change lobby settings like mods."
+                },
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
@@ -123,76 +127,51 @@
                         }
                     }
                 },
+                "mods": {
+                    "description": "Ordered list of mods/mutators to apply. Order matters - later mods override earlier ones.",
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/mod" },
+                    "maxItems": 10
+                },
                 "players": {
                     "type": "object",
                     "patternProperties": {
                         "^(.*)$": {
-                            "type": "object",
-                            "properties": {
-                                "id": { "$ref": "#/definitions/userId" },
-                                "allyTeam": { "type": "string" },
-                                "team": { "type": "string" },
-                                "player": { "type": "string" }
-                            },
-                            "required": ["id", "allyTeam", "team", "player"]
-                        }
-                    }
-                },
-                "spectators": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "object",
-                            "properties": {
-                                "id": { "$ref": "#/definitions/userId" },
-                                "joinQueuePosition": { "type": "number" }
-                            },
-                            "required": ["id"]
-                        }
-                    }
-                },
-                "bots": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^(.*)$": {
-                            "type": "object",
-                            "properties": {
-                                "id": {
-                                    "description": "server assigned unique identifier for the bot",
-                                    "type": "string"
-                                },
-                                "hostUserId": {
-                                    "$ref": "#/definitions/userId",
-                                    "description": "which player will run the bot. It is the same as the player that added the bot."
-                                },
-                                "allyTeam": { "type": "string" },
-                                "team": { "type": "string" },
-                                "player": { "type": "string" },
-                                "name": {
-                                    "description": "name to display in the lobby",
-                                    "type": "string",
-                                    "maxLength": 20
-                                },
-                                "shortName": {
-                                    "description": "short name of the bot. Used to uniquely identify which bot to run",
-                                    "type": "string",
-                                    "maxLength": 20
-                                },
-                                "version": { "type": "string" },
-                                "options": {
+                            "anyOf": [
+                                {
                                     "type": "object",
-                                    "patternProperties": {
-                                        "^(.*)$": { "type": "string" }
-                                    }
+                                    "properties": {
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "allyTeam": { "type": "string" },
+                                        "team": { "type": "string" },
+                                        "player": { "type": "string" },
+                                        "sync": {
+                                            "$ref": "#/definitions/memberSyncStatus",
+                                            "description": "Tracks which resources this member has downloaded"
+                                        }
+                                    },
+                                    "required": [
+                                        "id",
+                                        "allyTeam",
+                                        "team",
+                                        "player"
+                                    ]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "spec" },
+                                        "id": {
+                                            "$ref": "#/definitions/userId"
+                                        },
+                                        "joinQueuePosition": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": ["type", "id"]
                                 }
-                            },
-                            "required": [
-                                "id",
-                                "hostUserId",
-                                "allyTeam",
-                                "team",
-                                "player",
-                                "shortName"
                             ]
                         }
                     }
@@ -208,14 +187,14 @@
             },
             "required": [
                 "id",
+                "bossId",
                 "name",
                 "mapName",
                 "engineVersion",
                 "gameVersion",
                 "allyTeamConfig",
-                "players",
-                "spectators",
-                "bots"
+                "mods",
+                "players"
             ]
         },
         "lobbyOverview": {
@@ -254,6 +233,57 @@
                 "gameVersion",
                 "currentBattle"
             ]
+        },
+        "memberSyncStatus": {
+            "description": "Tracks which resources a lobby member has downloaded and is ready to use.",
+            "type": "object",
+            "properties": {
+                "map": {
+                    "description": "True if the member has the required map",
+                    "type": "boolean"
+                },
+                "engine": {
+                    "description": "True if the member has the required engine version",
+                    "type": "boolean"
+                },
+                "game": {
+                    "description": "True if the member has the required game version",
+                    "type": "boolean"
+                },
+                "mods": {
+                    "description": "Array of gitRefs for mods the member has downloaded",
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
+            },
+            "required": ["map", "engine", "game", "mods"]
+        },
+        "mod": {
+            "description": "A mod/mutator that can be applied to a game. Order matters - mods are loaded in sequence and later mods can override earlier ones.",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "description": "Human-readable name (e.g., 'Sphere Spawner')",
+                    "type": "string"
+                },
+                "archiveName": {
+                    "description": "Archive filename from modinfo.lua (e.g., 'sphere-spawner.sdd'). Required for Spring script MUTATOR entries.",
+                    "type": "string"
+                },
+                "gitRef": {
+                    "description": "Git commit hash or tag for precise version control. Used to verify exact version.",
+                    "type": "string"
+                },
+                "repository": {
+                    "description": "GitHub repository URL (e.g., 'https://github.com/user/repo'). Used for downloading.",
+                    "type": "string"
+                },
+                "type": {
+                    "description": "Source type. Currently only GitHub is supported.",
+                    "const": "github"
+                }
+            },
+            "required": ["name", "archiveName", "gitRef", "repository", "type"]
         },
         "partyId": {
             "type": "string",
@@ -3341,6 +3371,157 @@
             ]
         },
         {
+            "title": "LobbyUpdateModsRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateMods" },
+                "data": {
+                    "title": "LobbyUpdateModsRequestData",
+                    "type": "object",
+                    "properties": {
+                        "lobbyId": { "type": "string" },
+                        "mods": {
+                            "description": "Ordered list of mods. Later mods override earlier ones.",
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/mod" },
+                            "maxItems": 10
+                        }
+                    },
+                    "required": ["lobbyId", "mods"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyUpdateModsResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyUpdateModsOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/updateMods" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyUpdateModsFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/updateMods" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "insufficient_permissions",
+                                "not_in_lobby",
+                                "too_many_mods",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "LobbyUpdateSyncRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateSync" },
+                "data": {
+                    "title": "LobbyUpdateSyncRequestData",
+                    "type": "object",
+                    "properties": {
+                        "lobbyId": { "type": "string" },
+                        "sync": { "$ref": "#/definitions/memberSyncStatus" }
+                    },
+                    "required": ["lobbyId", "sync"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyUpdateSyncResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyUpdateSyncOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/updateSync" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyUpdateSyncFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/updateSync" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_lobby",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyUpdatedEvent",
             "tachyon": {
                 "source": "server",
@@ -3357,10 +3538,17 @@
                     "type": "object",
                     "properties": {
                         "id": { "type": "string" },
+                        "bossId": { "$ref": "#/definitions/userId" },
                         "name": { "type": "string" },
                         "mapName": { "type": "string" },
                         "engineVersion": { "type": "string" },
                         "gameVersion": { "type": "string" },
+                        "mods": {
+                            "description": "Ordered list of mods. Order matters - later mods override earlier ones.",
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/mod" },
+                            "maxItems": 10
+                        },
                         "allyTeams": {
                             "type": "object",
                             "patternProperties": {
@@ -3421,7 +3609,10 @@
                                                     "type": "string"
                                                 },
                                                 "team": { "type": "string" },
-                                                "player": { "type": "string" }
+                                                "player": { "type": "string" },
+                                                "sync": {
+                                                    "$ref": "#/definitions/memberSyncStatus"
+                                                }
                                             },
                                             "required": ["id"]
                                         },
@@ -3446,6 +3637,9 @@
                                                         { "type": "number" },
                                                         { "type": "null" }
                                                     ]
+                                                },
+                                                "sync": {
+                                                    "$ref": "#/definitions/memberSyncStatus"
                                                 }
                                             },
                                             "required": ["id"]

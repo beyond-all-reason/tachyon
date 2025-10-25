@@ -17,10 +17,17 @@
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
+                "bossId": { "$ref": "../../definitions/userId.json" },
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
+                "mods": {
+                    "description": "Ordered list of mods. Order matters - later mods override earlier ones.",
+                    "type": "array",
+                    "items": { "$ref": "../../definitions/mod.json" },
+                    "maxItems": 10
+                },
                 "allyTeams": {
                     "type": "object",
                     "patternProperties": {
@@ -77,7 +84,10 @@
                                         },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
-                                        "player": { "type": "string" }
+                                        "player": { "type": "string" },
+                                        "sync": {
+                                            "$ref": "../../definitions/memberSyncStatus.json"
+                                        }
                                     },
                                     "required": ["id"]
                                 },
@@ -102,6 +112,9 @@
                                                 { "type": "number" },
                                                 { "type": "null" }
                                             ]
+                                        },
+                                        "sync": {
+                                            "$ref": "../../definitions/memberSyncStatus.json"
                                         }
                                     },
                                     "required": ["id"]

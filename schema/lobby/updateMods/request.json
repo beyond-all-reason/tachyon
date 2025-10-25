@@ -1,0 +1,31 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateMods/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "LobbyUpdateModsRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/updateMods" },
+        "data": {
+            "title": "LobbyUpdateModsRequestData",
+            "type": "object",
+            "properties": {
+                "lobbyId": { "type": "string" },
+                "mods": {
+                    "description": "Ordered list of mods. Later mods override earlier ones.",
+                    "type": "array",
+                    "items": { "$ref": "../../definitions/mod.json" },
+                    "maxItems": 10
+                }
+            },
+            "required": ["lobbyId", "mods"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
