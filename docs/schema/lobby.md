@@ -2844,7 +2844,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
-                "allyTeams": {
+                "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
                         "^(.*)$": {
@@ -3034,7 +3034,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
         "id": "adipisicing officia eiusmod in dolore",
         "name": "Excepteur magna amet commodo velit",
         "mapName": "Duis nostrud dolore dolor ut",
-        "allyTeams": {
+        "allyTeamConfig": {
             "W8m3D": {
                 "startBox": {
                     "top": 0.38843363523483276,
@@ -3107,7 +3107,7 @@ export interface LobbyUpdatedEventData {
     mapName?: string;
     engineVersion?: string;
     gameVersion?: string;
-    allyTeams?: {
+    allyTeamConfig?: {
         [k: string]: {
             startBox?: StartBox;
             maxTeams?: number;
