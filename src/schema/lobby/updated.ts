@@ -18,7 +18,7 @@ export default defineEndpoint({
             mapName: Type.Optional(Type.String()),
             engineVersion: Type.Optional(Type.String()),
             gameVersion: Type.Optional(Type.String()),
-            allyTeams: Type.Optional(
+            allyTeamConfig: Type.Optional(
                 Type.Record(
                     Type.String(),
                     Type.Optional(
