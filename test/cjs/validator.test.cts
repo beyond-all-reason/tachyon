@@ -15,7 +15,12 @@ describe("request", () => {
             commandId: "matchmaking/queue",
             messageId: "123",
             data: {
-                queues: ["1v1"],
+                queues: [
+                    {
+                        id: "1v1",
+                        version: "238949234",
+                    },
+                ],
             },
         };
 
@@ -24,7 +29,7 @@ describe("request", () => {
         assert.equal(isValid, true);
 
         if (isValid) {
-            assert.equal(command.data.queues[0], "1v1");
+            assert.equal(command.data.queues[0].id, "1v1");
         }
     });
 
