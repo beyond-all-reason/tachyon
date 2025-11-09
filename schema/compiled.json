@@ -3629,7 +3629,8 @@
                                 "intentional",
                                 "server_error",
                                 "party_user_left",
-                                "ready_timeout"
+                                "ready_timeout",
+                                "version_changed"
                             ]
                         }
                     },
@@ -3724,6 +3725,10 @@
                                         "type": "object",
                                         "properties": {
                                             "id": { "type": "string" },
+                                            "version": {
+                                                "description": "Opaque version string that uniquely identifies the properties of the queue with this id, including list of required assets versions",
+                                                "type": "string"
+                                            },
                                             "name": { "type": "string" },
                                             "numOfTeams": { "type": "integer" },
                                             "teamSize": { "type": "integer" },
@@ -3767,6 +3772,7 @@
                                         },
                                         "required": [
                                             "id",
+                                            "version",
                                             "name",
                                             "numOfTeams",
                                             "teamSize",
@@ -3784,6 +3790,7 @@
                                     "playlists": [
                                         {
                                             "id": "1v1",
+                                            "version": "27n6cr76nyfqic73647c1328c94",
                                             "name": "Duel",
                                             "numOfTeams": 2,
                                             "teamSize": 1,
@@ -3900,11 +3907,28 @@
                     "properties": {
                         "queues": {
                             "type": "array",
-                            "items": { "type": "string" },
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "id": { "type": "string" },
+                                    "version": { "type": "string" }
+                                },
+                                "required": ["id", "version"]
+                            },
                             "minItems": 1
                         }
                     },
-                    "required": ["queues"]
+                    "required": ["queues"],
+                    "examples": [
+                        {
+                            "queues": [
+                                {
+                                    "id": "1v1",
+                                    "version": "27n6cr76nyfqic73647c1328c94"
+                                }
+                            ]
+                        }
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -3941,6 +3965,7 @@
                                 "invalid_queue_specified",
                                 "already_queued",
                                 "already_in_battle",
+                                "version_mismatch",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",

@@ -15,6 +15,10 @@ export default defineEndpoint({
                     playlists: Type.Array(
                         Type.Object({
                             id: Type.String(),
+                            version: Type.String({
+                                description:
+                                    "Opaque version string that uniquely identifies the properties of the queue with this id, including list of required assets versions",
+                            }),
                             name: Type.String(),
                             numOfTeams: Type.Integer(),
                             teamSize: Type.Integer(),
@@ -43,6 +47,7 @@ export default defineEndpoint({
                             playlists: [
                                 {
                                     id: "1v1",
+                                    version: "27n6cr76nyfqic73647c1328c94",
                                     name: "Duel",
                                     numOfTeams: 2,
                                     teamSize: 1,

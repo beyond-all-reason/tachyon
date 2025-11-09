@@ -10,7 +10,13 @@ export default defineEndpoint({
         "Server may send this event at any point when the user is queuing to indicate that the user has been booted out the matchmaking system.",
     event: {
         data: Type.Object({
-            reason: UnionEnum(["intentional", "server_error", "party_user_left", "ready_timeout"]),
+            reason: UnionEnum([
+                "intentional",
+                "server_error",
+                "party_user_left",
+                "ready_timeout",
+                "version_changed",
+            ]),
         }),
     },
 });

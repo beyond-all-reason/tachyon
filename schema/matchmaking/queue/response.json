@@ -32,6 +32,7 @@
                         "invalid_queue_specified",
                         "already_queued",
                         "already_in_battle",
+                        "version_mismatch",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

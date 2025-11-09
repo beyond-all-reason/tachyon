@@ -5,7 +5,7 @@
 The matchmaking cycle works as follows:
 
 1. Clients should first retrieve a list of all the available queues from the server using [list](#list).
-2. Clients should then queue for one or more of these queues by sending an array of the queue ids in a [queue](#queue) request.
+2. Clients should then queue for one or more of these queues by sending an array of the queue ids in a [queue](#queue) request. Before joining the queue, the client needs to download all required assets to make sure that `ready` can be send instantly.
 3. The server can send periodic updates about the status of the search as a [queueUpdate](#queueupdate) event.
 4. When a match is found, the server should send a [found](#found) event along with the id of the queue of the found match.
 5. Clients can then ready up by sending a [ready](#ready) request. The number of readied players should be sent to clients via the [foundUpdate](#foundupdate) event.
@@ -14,7 +14,7 @@ The matchmaking cycle works as follows:
 8. Once all players are ready, the server should send a [autohost/battleStart](#autohost/battleStart) request to a suitable autohost client. If the autohost doesn't respond quickly, or if it sends a failed response, the server should repeat this step.
 9. Once the autohost has successfully started the battle, the server should then send [battle/battleStart](#battle/battleStart) requests to the users.
 
-The server may send [matchmaking/cancelled](#cancelled) event at any point after the client sent a [queue](#queue) request with a reason. This means the client has been booted out the matchmaking system. It can happen for example when a party member leaves, or in case of a server error that needs to reset the matchmaking state. This event is also sent after a successful [cancel](#cancel) request.
+The server may send [matchmaking/cancelled](#cancelled) event at any point after the client sent a [queue](#queue) request with a reason. This means the client has been booted out the matchmaking system. It can happen for example when a party member leaves, or in case of a server error that needs to reset the matchmaking state, or if list of required assets changed. This event is also sent after a successful [cancel](#cancel) request.
 
 [matchmaking/cancelled](#cancelled) can have the following reasons:
 * `intentional`: the player left matchmaking
@@ -208,7 +208,8 @@ Server may send this event at any point when the user is queuing to indicate tha
                         "intentional",
                         "server_error",
                         "party_user_left",
-                        "ready_timeout"
+                        "ready_timeout",
+                        "version_changed"
                     ]
                 }
             },
@@ -245,7 +246,7 @@ export interface MatchmakingCancelledEvent {
     data: MatchmakingCancelledEventData;
 }
 export interface MatchmakingCancelledEventData {
-    reason: "intentional" | "server_error" | "party_user_left" | "ready_timeout";
+    reason: "intentional" | "server_error" | "party_user_left" | "ready_timeout" | "version_changed";
 }
 ```
 ---
@@ -479,6 +480,10 @@ export interface MatchmakingListRequest {
                                 "type": "object",
                                 "properties": {
                                     "id": { "type": "string" },
+                                    "version": {
+                                        "description": "Opaque version string that uniquely identifies the properties of the queue with this id, including list of required assets versions",
+                                        "type": "string"
+                                    },
                                     "name": { "type": "string" },
                                     "numOfTeams": { "type": "integer" },
                                     "teamSize": { "type": "integer" },
@@ -520,6 +525,7 @@ export interface MatchmakingListRequest {
                                 },
                                 "required": [
                                     "id",
+                                    "version",
                                     "name",
                                     "numOfTeams",
                                     "teamSize",
@@ -537,6 +543,7 @@ export interface MatchmakingListRequest {
                             "playlists": [
                                 {
                                     "id": "1v1",
+                                    "version": "27n6cr76nyfqic73647c1328c94",
                                     "name": "Duel",
                                     "numOfTeams": 2,
                                     "teamSize": 1,
@@ -617,6 +624,7 @@ export interface MatchmakingListRequest {
         "playlists": [
             {
                 "id": "1v1",
+                "version": "27n6cr76nyfqic73647c1328c94",
                 "name": "Duel",
                 "numOfTeams": 2,
                 "teamSize": 1,
@@ -683,6 +691,7 @@ export interface MatchmakingListOkResponse {
 export interface MatchmakingListOkResponseData {
     playlists: {
         id: string;
+        version: string;
         name: string;
         numOfTeams: number;
         teamSize: number;
@@ -792,11 +801,28 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
             "properties": {
                 "queues": {
                     "type": "array",
-                    "items": { "type": "string" },
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "id": { "type": "string" },
+                            "version": { "type": "string" }
+                        },
+                        "required": ["id", "version"]
+                    },
                     "minItems": 1
                 }
             },
-            "required": ["queues"]
+            "required": ["queues"],
+            "examples": [
+                {
+                    "queues": [
+                        {
+                            "id": "1v1",
+                            "version": "27n6cr76nyfqic73647c1328c94"
+                        }
+                    ]
+                }
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -815,7 +841,10 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
     "commandId": "matchmaking/queue",
     "data": {
         "queues": [
-            "dolor dolor occaecat ea"
+            {
+                "id": "1v1",
+                "version": "27n6cr76nyfqic73647c1328c94"
+            }
         ]
     }
 }
@@ -831,7 +860,16 @@ export interface MatchmakingQueueRequest {
     data: MatchmakingQueueRequestData;
 }
 export interface MatchmakingQueueRequestData {
-    queues: [string, ...string[]];
+    queues: [
+        {
+            id: string;
+            version: string;
+        },
+        ...{
+            id: string;
+            version: string;
+        }[]
+    ];
 }
 ```
 ### Response
@@ -872,6 +910,7 @@ export interface MatchmakingQueueRequestData {
                         "invalid_queue_specified",
                         "already_queued",
                         "already_in_battle",
+                        "version_mismatch",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -910,7 +949,7 @@ export interface MatchmakingQueueOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_in_battle`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_in_battle`, `version_mismatch`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
