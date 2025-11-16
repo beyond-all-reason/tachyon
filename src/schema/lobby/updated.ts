@@ -60,6 +60,10 @@ export default defineEndpoint({
                             allyTeam: Type.Optional(Type.String()),
                             team: Type.Optional(Type.String()),
                             player: Type.Optional(Type.String()),
+                            isReady: Type.Optional(Type.Boolean()),
+                            assetStatus: Type.Optional(
+                                UnionEnum(["missing", "downloading", "ready"])
+                            ),
                         })
                     )
                 )
