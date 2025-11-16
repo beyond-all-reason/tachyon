@@ -2,6 +2,7 @@ import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
 import { Nullable } from "@/typebox-utils";
+import { UnionEnum } from "@/union-enum";
 
 export default defineEndpoint({
     source: "server",
@@ -59,6 +60,10 @@ export default defineEndpoint({
                             allyTeam: Type.Optional(Type.String()),
                             team: Type.Optional(Type.String()),
                             player: Type.Optional(Type.String()),
+                            isReady: Type.Optional(Type.Boolean()),
+                            assetStatus: Type.Optional(
+                                UnionEnum(["missing", "downloading", "ready"])
+                            ),
                         })
                     )
                 )
