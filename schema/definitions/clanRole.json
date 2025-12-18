@@ -1,0 +1,9 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/clanRole.json",
+    "title": "ClanRole",
+    "anyOf": [
+        { "const": "member" },
+        { "const": "coLeader" },
+        { "const": "leader" }
+    ]
+}

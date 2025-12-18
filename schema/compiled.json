@@ -73,6 +73,64 @@
             },
             "required": ["hostUserId", "aiShortName"]
         },
+        "clan": {
+            "type": "object",
+            "properties": {
+                "clanId": { "$ref": "#/definitions/clanId" },
+                "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
+                "name": { "type": "string", "maxLength": 30 },
+                "description": { "type": "string", "maxLength": 500 },
+                "logoUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "websiteUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "discordUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "teamspeakUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "twitchUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "youtubeUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "facebookUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                },
+                "twitterUrl": {
+                    "type": "string",
+                    "format": "uri",
+                    "maxLength": 200
+                }
+            },
+            "required": ["clanId", "tag", "name"]
+        },
+        "clanId": { "type": "string", "examples": ["12345"] },
+        "clanRole": {
+            "anyOf": [
+                { "const": "member" },
+                { "const": "coLeader" },
+                { "const": "leader" }
+            ]
+        },
         "customStartScriptProperties": {
             "description": "Additional custom properties to set in engine StartScript for this object, must not collide with existing properties",
             "type": "object",
@@ -1666,6 +1724,928 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "ClanAcceptInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/acceptInvite" },
+                "data": {
+                    "title": "ClanAcceptInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanAcceptInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanAcceptInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/acceptInvite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanAcceptInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/acceptInvite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanCancelInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/cancelInvite" },
+                "data": {
+                    "title": "ClanCancelInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanCancelInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanCancelInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/cancelInvite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanCancelInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/cancelInvite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanCreateRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/create" },
+                "data": {
+                    "title": "ClanCreateRequestData",
+                    "type": "object",
+                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
+                    "required": ["clan"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanCreateResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanCreateOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/create" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanCreateFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/create" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "tag_already_exists",
+                                "name_already_exists",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanDeclineInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/declineInvite" },
+                "data": {
+                    "title": "ClanDeclineInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanDeclineInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanDeclineInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/declineInvite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanDeclineInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/declineInvite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanGetRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/get" },
+                "data": {
+                    "title": "ClanGetRequestData",
+                    "type": "object",
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanGetResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanGetOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/get" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "$ref": "#/definitions/clan",
+                            "title": "ClanGetOkResponseData"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "ClanGetFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/get" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "clan_does_not_exist",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanGetListRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/getList" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "ClanGetListResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanGetListOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/getList" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "title": "ClanGetListOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "clans": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/definitions/clan" }
+                                }
+                            },
+                            "required": ["clans"]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "ClanGetListFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/getList" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanInviteRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/invite" },
+                "data": {
+                    "title": "ClanInviteRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanInviteResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanInviteOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/invite" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanInviteFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/invite" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_available",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanInvitedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/invited" },
+                "data": {
+                    "title": "ClanInvitedEventData",
+                    "type": "object",
+                    "properties": { "party": { "$ref": "#/definitions/clan" } },
+                    "required": ["party"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanKickMemberRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/kickMember" },
+                "data": {
+                    "title": "ClanKickMemberRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanKickMemberResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanKickMemberOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/kickMember" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanKickMemberFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/kickMember" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "no_member",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanLeaveRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/leave" },
+                "data": {
+                    "title": "ClanLeaveRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanLeaveResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanLeaveOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/leave" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanLeaveFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/leave" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "no_member",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanRemoveRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/remove" },
+                "data": {
+                    "title": "ClanRemoveRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["userId", "clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanRemoveResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanRemoveOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/remove" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanRemoveFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/remove" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "no_member",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanSetRoleRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/setRole" },
+                "data": {
+                    "title": "ClanSetRoleRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" },
+                        "targetRole": { "$ref": "#/definitions/clanRole" }
+                    },
+                    "required": ["userId", "clanId", "targetRole"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanSetRoleResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanSetRoleOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/setRole" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanSetRoleFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/setRole" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "only_one_leader",
+                                "insufficient_permissions",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanUpdateRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/update" },
+                "data": {
+                    "title": "ClanUpdateRequestData",
+                    "type": "object",
+                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
+                    "required": ["clan"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanUpdateResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanUpdateOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/update" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "ClanUpdateFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/update" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "tag_already_exists",
+                                "name_already_exists",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanUpdateListEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/updateList" },
+                "data": {
+                    "title": "ClanUpdateListEventData",
+                    "type": "object",
+                    "properties": {
+                        "clans": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/clan" }
+                        }
+                    },
+                    "required": ["clans"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "FriendAcceptRequestRequest",

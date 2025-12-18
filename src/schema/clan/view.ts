@@ -16,6 +16,6 @@ export default defineEndpoint({
             status: "success",
             data: Type.Ref("clan"),
         },
-        { status: "failed", reason: "clan_does_not_exist" },
+        { status: "failed", reason: "clan_not_available" },
     ],
 });

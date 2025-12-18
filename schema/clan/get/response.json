@@ -1,0 +1,48 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/get/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ClanGetResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "ClanGetOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/get" },
+                "status": { "const": "success" },
+                "data": {
+                    "$ref": "../../definitions/clan.json",
+                    "title": "ClanGetOkResponseData"
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status", "data"]
+        },
+        {
+            "title": "ClanGetFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/get" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "clan_does_not_exist",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}

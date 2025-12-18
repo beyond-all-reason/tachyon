@@ -5,7 +5,7 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "server",
     target: "user",
-    description: "A player has been invited to a clan. Sent to the invited player.",
+    description: "The invitation to a clan has been canceled. Sent to the invited player.",
     event: {
         data: Type.Object({
             userId: Type.Ref("userId"),

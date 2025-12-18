@@ -12,5 +12,10 @@ export default defineEndpoint({
             clanId: Type.Ref("clanId"),
         }),
     },
-    response: [{ status: "success" }, { status: "failed", reason: "no_member" }],
+    response: [
+        { status: "success" },
+        { status: "failed", reason: "no_member" },
+        { status: "failed", reason: "permission_denied" },
+        { status: "failed", reason: "clan_not_found" },
+    ],
 });

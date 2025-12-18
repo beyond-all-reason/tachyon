@@ -5,20 +5,18 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "user",
     target: "server",
-    description: "Set the target player's role in your clan.",
+    description: "Cancel an invite to your clan.",
     request: {
         data: Type.Object({
             userId: Type.Ref("userId"),
             clanId: Type.Ref("clanId"),
-            targetRole: Type.Ref("clanRole"),
         }),
     },
     response: [
         { status: "success" },
-        { status: "failed", reason: "only_one_leader" },
-        { status: "failed", reason: "insufficient_permissions" },
-        { status: "failed", reason: "clan_not_found" },
-        { status: "failed", reason: "user_not_in_clan" },
+        { status: "failed", reason: "clan_not_available" },
         { status: "failed", reason: "user_not_available" },
+        { status: "failed", reason: "no_permission" },
+        { status: "failed", reason: "already_member" },
     ],
 });

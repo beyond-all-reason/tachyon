@@ -1,6 +1,6 @@
 import { Type } from "@sinclair/typebox";
 
-export const clan = Type.Enum(
+export const clanRole = Type.Enum(
     {
         Member: "member",
         CoLeader: "coLeader",

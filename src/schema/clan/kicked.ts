@@ -3,14 +3,13 @@ import { Type } from "@sinclair/typebox";
 import { defineEndpoint } from "@/generator-helpers.js";
 
 export default defineEndpoint({
-    source: "user",
-    target: "server",
-    description: "Cancel an invite to your clan.",
-    request: {
+    source: "server",
+    target: "user",
+    description: "A player was kicked from a clan. Sent to the kicked player.",
+    event: {
         data: Type.Object({
             userId: Type.Ref("userId"),
             clanId: Type.Ref("clanId"),
         }),
     },
-    response: [{ status: "success" }],
 });
