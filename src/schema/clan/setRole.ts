@@ -13,12 +13,5 @@ export default defineEndpoint({
             targetRole: Type.Ref("clanRole"),
         }),
     },
-    response: [
-        { status: "success" },
-        { status: "failed", reason: "only_one_leader" },
-        { status: "failed", reason: "insufficient_permissions" },
-        { status: "failed", reason: "clan_not_found" },
-        { status: "failed", reason: "user_not_in_clan" },
-        { status: "failed", reason: "user_not_available" },
-    ],
+    response: [{ status: "success" }],
 });

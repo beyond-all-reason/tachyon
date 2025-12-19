@@ -11,7 +11,7 @@ export default defineEndpoint({
     },
     response: [
         { status: "success" },
-        { status: "failed", reason: "tag_already_exists" },
+        { status: "failed", reason: "invalid_request", details: "Clan-Tag already exists." },
         { status: "failed", reason: "name_already_exists" },
         { status: "failed", reason: "invalid_tag_length" },
         { status: "failed", reason: "invalid_name_length" },

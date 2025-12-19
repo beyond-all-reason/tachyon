@@ -14,9 +14,5 @@ export default defineEndpoint({
                 clans: Type.Array(Type.Ref("clan")),
             }),
         },
-        { status: "failed", reason: "no_clans_available" },
-        { status: "failed", reason: "internal_error" },
-        { status: "failed", reason: "service_unavailable" },
-        { status: "failed", reason: "timeout" },
     ],
 });
