@@ -8,7 +8,7 @@ export const clan = Type.Object(
         description: Type.Optional(Type.String({ maxLength: 500 })),
         logoUrl: Type.Optional(Type.String({ format: "uri", maxLength: 200 })),
         externalUrl: Type.Optional(Type.String({ format: "uri", maxLength: 200 })),
-        memberCount: Type.Number({ minimum: 0 }),
+        clanMembers: Type.Array(Type.Ref("clanMember")),
     },
     { $id: "clan" }
 );

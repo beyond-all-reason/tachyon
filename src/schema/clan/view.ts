@@ -9,7 +9,6 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             clanId: Type.Ref("clanId"),
-            members: Type.Array(Type.Ref("user")),
         }),
     },
     response: [

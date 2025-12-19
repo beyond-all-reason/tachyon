@@ -8,8 +8,8 @@ export default defineEndpoint({
     description: "Set the target player's role in your clan.",
     request: {
         data: Type.Object({
-            userId: Type.Ref("userId"),
-            clanId: Type.Ref("clanId"),
+            clan: Type.Ref("clan"),
+            clanMember: Type.Ref("clanMember"),
             targetRole: Type.Ref("clanRole"),
         }),
     },

@@ -8,8 +8,8 @@ export default defineEndpoint({
     description: "A player has been invited to a clan. Sent to the invited player.",
     event: {
         data: Type.Object({
-            userId: Type.Ref("userId"),
-            clanId: Type.Ref("clanId"),
+            user: Type.Ref("user"),
+            clan: Type.Ref("clan"),
         }),
     },
 });
