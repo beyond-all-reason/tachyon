@@ -1,7 +1,7 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/clan/invited/event.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/viewListChanged/event.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "ClanInvitedEvent",
+    "title": "ClanViewListChangedEvent",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -11,15 +11,17 @@
     "properties": {
         "type": { "const": "event" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "clan/invited" },
+        "commandId": { "const": "clan/viewListChanged" },
         "data": {
-            "title": "ClanInvitedEventData",
+            "title": "ClanViewListChangedEventData",
             "type": "object",
             "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" },
-                "clanId": { "$ref": "../../definitions/clanId.json" }
+                "clans": {
+                    "type": "array",
+                    "items": { "$ref": "../../definitions/clan.json" }
+                }
             },
-            "required": ["userId", "clanId"]
+            "required": ["clans"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

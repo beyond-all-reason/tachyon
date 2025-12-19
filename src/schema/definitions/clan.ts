@@ -14,6 +14,7 @@ export const clan = Type.Object(
         youtubeUrl: Type.Optional(Type.String({ format: "uri", maxLength: 200 })),
         facebookUrl: Type.Optional(Type.String({ format: "uri", maxLength: 200 })),
         twitterUrl: Type.Optional(Type.String({ format: "uri", maxLength: 200 })),
+        memberCount: Type.Number({ minimum: 0 }),
     },
     { $id: "clan" }
 );

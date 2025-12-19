@@ -30,6 +30,8 @@
                 "reason": {
                     "enum": [
                         "no_member",
+                        "permission_denied",
+                        "clan_not_found",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

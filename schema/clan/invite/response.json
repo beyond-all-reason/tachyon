@@ -29,7 +29,11 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "not_available",
+                        "clan_not_available",
+                        "user_not_available",
+                        "no_permission",
+                        "already_invited",
+                        "already_member",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

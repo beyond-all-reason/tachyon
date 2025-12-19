@@ -1,7 +1,7 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/clan/create/response.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/cancel/response.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "ClanCreateResponse",
+    "title": "ClanCancelResponse",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -9,39 +9,30 @@
     },
     "anyOf": [
         {
-            "title": "ClanCreateOkResponse",
+            "title": "ClanCancelOkResponse",
             "type": "object",
             "properties": {
                 "type": { "const": "response" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "clan/create" },
+                "commandId": { "const": "clan/cancel" },
                 "status": { "const": "success" }
             },
             "required": ["type", "messageId", "commandId", "status"]
         },
         {
-            "title": "ClanCreateFailResponse",
+            "title": "ClanCancelFailResponse",
             "type": "object",
             "properties": {
                 "type": { "const": "response" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "clan/create" },
+                "commandId": { "const": "clan/cancel" },
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "tag_already_exists",
-                        "name_already_exists",
-                        "invalid_tag_length",
-                        "invalid_name_length",
-                        "invalid_description_length",
-                        "invalid_logo_url",
-                        "invalid_website_url",
-                        "invalid_discord_url",
-                        "invalid_teamspeak_url",
-                        "invalid_twitch_url",
-                        "invalid_youtube_url",
-                        "invalid_facebook_url",
-                        "invalid_twitter_url",
+                        "clan_not_available",
+                        "user_not_available",
+                        "no_permission",
+                        "already_member",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

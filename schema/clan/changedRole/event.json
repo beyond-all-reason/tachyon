@@ -1,7 +1,7 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/clan/invited/event.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/changedRole/event.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "ClanInvitedEvent",
+    "title": "ClanChangedRoleEvent",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -11,15 +11,16 @@
     "properties": {
         "type": { "const": "event" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "clan/invited" },
+        "commandId": { "const": "clan/changedRole" },
         "data": {
-            "title": "ClanInvitedEventData",
+            "title": "ClanChangedRoleEventData",
             "type": "object",
             "properties": {
                 "userId": { "$ref": "../../definitions/userId.json" },
-                "clanId": { "$ref": "../../definitions/clanId.json" }
+                "clanId": { "$ref": "../../definitions/clanId.json" },
+                "role": { "$ref": "../../definitions/clanRole.json" }
             },
-            "required": ["userId", "clanId"]
+            "required": ["userId", "clanId", "role"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

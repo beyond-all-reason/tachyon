@@ -14,7 +14,8 @@
         "twitchUrl": { "type": "string", "format": "uri", "maxLength": 200 },
         "youtubeUrl": { "type": "string", "format": "uri", "maxLength": 200 },
         "facebookUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "twitterUrl": { "type": "string", "format": "uri", "maxLength": 200 }
+        "twitterUrl": { "type": "string", "format": "uri", "maxLength": 200 },
+        "memberCount": { "type": "number", "minimum": 0 }
     },
-    "required": ["clanId", "tag", "name"]
+    "required": ["clanId", "tag", "name", "memberCount"]
 }

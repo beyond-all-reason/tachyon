@@ -1,19 +1,19 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/clan/invited/event.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/decline/request.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "ClanInvitedEvent",
+    "title": "ClanDeclineRequest",
     "tachyon": {
-        "source": "server",
-        "target": "user",
+        "source": "user",
+        "target": "server",
         "scopes": ["tachyon.lobby"]
     },
     "type": "object",
     "properties": {
-        "type": { "const": "event" },
+        "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "clan/invited" },
+        "commandId": { "const": "clan/decline" },
         "data": {
-            "title": "ClanInvitedEventData",
+            "title": "ClanDeclineRequestData",
             "type": "object",
             "properties": {
                 "userId": { "$ref": "../../definitions/userId.json" },
