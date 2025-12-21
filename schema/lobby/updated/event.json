@@ -188,6 +188,44 @@
                         },
                         { "type": "null" }
                     ]
+                },
+                "currentVote": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "message": { "type": "string" },
+                                "initiator": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "voters": {
+                                    "type": "object",
+                                    "patternProperties": {
+                                        "^(.*)$": {
+                                            "type": "object",
+                                            "properties": {
+                                                "vote": {
+                                                    "enum": [
+                                                        "pending",
+                                                        "yes",
+                                                        "no",
+                                                        "abstain"
+                                                    ]
+                                                }
+                                            },
+                                            "required": ["vote"]
+                                        }
+                                    }
+                                },
+                                "until": {
+                                    "$ref": "../../definitions/unixTime.json"
+                                }
+                            },
+                            "required": ["id"]
+                        },
+                        { "type": "null" }
+                    ]
                 }
             },
             "required": ["id"]

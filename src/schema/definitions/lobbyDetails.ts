@@ -1,5 +1,7 @@
 import { Type } from "@sinclair/typebox";
 
+import { UnionEnum } from "@/union-enum";
+
 export const lobbyDetails = Type.Object(
     {
         id: Type.String(),
@@ -72,6 +74,24 @@ export const lobbyDetails = Type.Object(
                 },
                 { description: "If a battle is currently happening, here are the info" }
             )
+        ),
+        currentVote: Type.Optional(
+            Type.Object({
+                id: Type.String(),
+                message: Type.String({
+                    description: "Human readable message about what is the vote for?",
+                }),
+                initiator: Type.Ref("userId"),
+                voters: Type.Record(
+                    Type.String(), // this is the userId
+                    Type.Object({ vote: UnionEnum(["pending", "yes", "no", "abstain"]) }),
+                    {
+                        description:
+                            "indexed by the userId. The initiator is also included in this object",
+                    }
+                ),
+                until: Type.Ref("unixTime"),
+            })
         ),
     },
     { description: "The full state of a lobby", $id: "lobbyDetails" }

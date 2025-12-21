@@ -100,8 +100,11 @@ To leave an ally team or the join queue and become a spectator, a user should us
 
 Any member can update most (any?) property of the lobby. Updates are all or nothing, if updating a proprety
 is not possible (invalid or forbidden), then no update take place.
-The result of the updates is then transmitted to all members via `lobby/updated` events.
+The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 
+When an operation requires a vote, the vote data is also transmitted with [lobby/updated](#updated) events.
+And when the vote ends, a [lobby/voteEnded][#voteEnded] event is sent to all lobby members. This is to simplify
+client logic if they want to show a notification in addition to the updated state.
 
 ## List of all lobbies
 

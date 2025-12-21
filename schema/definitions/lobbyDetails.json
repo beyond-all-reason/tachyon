@@ -119,6 +119,34 @@
                 "startedAt": { "$ref": "../definitions/unixTime.json" }
             },
             "required": ["startedAt"]
+        },
+        "currentVote": {
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "message": {
+                    "description": "Human readable message about what is the vote for?",
+                    "type": "string"
+                },
+                "initiator": { "$ref": "../definitions/userId.json" },
+                "voters": {
+                    "description": "indexed by the userId. The initiator is also included in this object",
+                    "type": "object",
+                    "patternProperties": {
+                        "^(.*)$": {
+                            "type": "object",
+                            "properties": {
+                                "vote": {
+                                    "enum": ["pending", "yes", "no", "abstain"]
+                                }
+                            },
+                            "required": ["vote"]
+                        }
+                    }
+                },
+                "until": { "$ref": "../definitions/unixTime.json" }
+            },
+            "required": ["id", "message", "initiator", "voters", "until"]
         }
     },
     "required": [
