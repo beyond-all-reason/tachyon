@@ -9,7 +9,6 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             user: Type.Ref("user"),
-            clan: Type.Ref("clan"),
         }),
     },
     response: [{ status: "success" }],

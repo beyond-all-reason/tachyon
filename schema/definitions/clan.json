@@ -8,14 +8,11 @@
         "name": { "type": "string", "maxLength": 30 },
         "description": { "type": "string", "maxLength": 500 },
         "logoUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "websiteUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "discordUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "teamspeakUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "twitchUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "youtubeUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "facebookUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "twitterUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "memberCount": { "type": "number", "minimum": 0 }
+        "externalUrl": { "type": "string", "format": "uri", "maxLength": 200 },
+        "clanMembers": {
+            "type": "array",
+            "items": { "$ref": "../definitions/clanMember.json" }
+        }
     },
-    "required": ["clanId", "tag", "name", "memberCount"]
+    "required": ["clanId", "tag", "name", "clanMembers"]
 }
