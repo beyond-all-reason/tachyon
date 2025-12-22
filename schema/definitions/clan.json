@@ -7,8 +7,6 @@
         "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
         "name": { "type": "string", "maxLength": 30 },
         "description": { "type": "string", "maxLength": 500 },
-        "logoUrl": { "type": "string", "format": "uri", "maxLength": 200 },
-        "externalUrl": { "type": "string", "format": "uri", "maxLength": 200 },
         "clanMembers": {
             "type": "array",
             "items": { "$ref": "../definitions/clanMember.json" }

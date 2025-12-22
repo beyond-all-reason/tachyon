@@ -80,16 +80,6 @@
                 "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
                 "name": { "type": "string", "maxLength": 30 },
                 "description": { "type": "string", "maxLength": 500 },
-                "logoUrl": {
-                    "type": "string",
-                    "format": "uri",
-                    "maxLength": 200
-                },
-                "externalUrl": {
-                    "type": "string",
-                    "format": "uri",
-                    "maxLength": 200
-                },
                 "clanMembers": {
                     "type": "array",
                     "items": { "$ref": "#/definitions/clanMember" }
@@ -435,6 +425,10 @@
                         },
                         "currentLobby": {
                             "anyOf": [{ "type": "string" }, { "type": "null" }]
+                        },
+                        "clanInvites": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/clan" }
                         }
                     },
                     "required": [
@@ -444,7 +438,8 @@
                         "outgoingFriendRequest",
                         "incomingFriendRequest",
                         "ignoreIds",
-                        "currentLobby"
+                        "currentLobby",
+                        "clanInvites"
                     ]
                 }
             ]
@@ -510,6 +505,12 @@
                 "clanId": {
                     "anyOf": [{ "type": "string" }, { "type": "null" }]
                 },
+                "clanTag": {
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
+                },
+                "clanName": {
+                    "anyOf": [{ "type": "string" }, { "type": "null" }]
+                },
                 "countryCode": { "type": "string" },
                 "status": { "enum": ["offline", "menu", "playing", "lobby"] },
                 "rating": {
@@ -541,6 +542,8 @@
                 "username",
                 "displayName",
                 "clanId",
+                "clanTag",
+                "clanName",
                 "status"
             ]
         },
@@ -1900,7 +1903,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "invalid_request",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -6300,6 +6302,18 @@
                                     "username": { "type": "string" },
                                     "displayName": { "type": "string" },
                                     "clanId": {
+                                        "anyOf": [
+                                            { "type": "string" },
+                                            { "type": "null" }
+                                        ]
+                                    },
+                                    "clanTag": {
+                                        "anyOf": [
+                                            { "type": "string" },
+                                            { "type": "null" }
+                                        ]
+                                    },
+                                    "clanName": {
                                         "anyOf": [
                                             { "type": "string" },
                                             { "type": "null" }

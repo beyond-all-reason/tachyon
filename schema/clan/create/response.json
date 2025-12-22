@@ -29,7 +29,6 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "invalid_request",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

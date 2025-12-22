@@ -32,6 +32,18 @@
                                     { "type": "null" }
                                 ]
                             },
+                            "clanTag": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
+                            "clanName": {
+                                "anyOf": [
+                                    { "type": "string" },
+                                    { "type": "null" }
+                                ]
+                            },
                             "countryCode": { "type": "string" },
                             "status": {
                                 "enum": ["offline", "menu", "playing", "lobby"]
