@@ -195,7 +195,14 @@
                             "type": "object",
                             "properties": {
                                 "id": { "type": "string" },
-                                "message": { "type": "string" },
+                                "action": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "../../definitions/voteActions.json"
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                },
                                 "initiator": {
                                     "$ref": "../../definitions/userId.json"
                                 },

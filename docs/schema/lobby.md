@@ -653,14 +653,16 @@ export interface StartBox {
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "veniam",
-            "message": "aliqua reprehenderit laboris",
+            "id": "sed ea occaecat Ut",
+            "action": {
+                "type": "start"
+            },
             "initiator": "351",
             "voters": {
-                "jG[=a": {
+                "Ry;": {
                     "vote": "pending"
                 },
-                "}O>fNb7sk": {
+                "vR]g~&z<n": {
                     "vote": "no"
                 }
             },
@@ -675,6 +677,14 @@ export interface StartBox {
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type VoteActions =
+    | {
+          type: "start";
+      }
+    | {
+          type: "changeMap";
+          newMapName: string;
+      };
 
 export interface LobbyCreateOkResponse {
     type: "response";
@@ -734,7 +744,7 @@ export interface LobbyCreateOkResponseData {
     };
     currentVote?: {
         id: string;
-        message: string;
+        action: VoteActions;
         initiator: UserId;
         voters: {
             [k: string]: {
@@ -1049,18 +1059,21 @@ export interface LobbyJoinRequestData {
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "dolor dolor",
-            "message": "consequat cillum sed Excepteur",
+            "id": "occaecat amet",
+            "action": {
+                "type": "changeMap",
+                "newMapName": "in"
+            },
             "initiator": "351",
             "voters": {
-                "U?C": {
+                "f^&=z\\": {
+                    "vote": "no"
+                },
+                "NB^}3R": {
                     "vote": "yes"
                 },
-                "&=z\\rjS": {
-                    "vote": "pending"
-                },
-                "B^}3R": {
-                    "vote": "abstain"
+                "KR(#.qkj<8": {
+                    "vote": "yes"
                 }
             },
             "until": 1705432698000000
@@ -1074,6 +1087,14 @@ export interface LobbyJoinRequestData {
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type VoteActions =
+    | {
+          type: "start";
+      }
+    | {
+          type: "changeMap";
+          newMapName: string;
+      };
 
 export interface LobbyJoinOkResponse {
     type: "response";
@@ -1133,7 +1154,7 @@ export interface LobbyJoinOkResponseData {
     };
     currentVote?: {
         id: string;
-        message: string;
+        action: VoteActions;
         initiator: UserId;
         voters: {
             [k: string]: {
@@ -3154,7 +3175,12 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                             "type": "object",
                             "properties": {
                                 "id": { "type": "string" },
-                                "message": { "type": "string" },
+                                "action": {
+                                    "anyOf": [
+                                        { "$ref": "#/definitions/voteActions" },
+                                        { "type": "null" }
+                                    ]
+                                },
                                 "initiator": { "$ref": "#/definitions/userId" },
                                 "voters": {
                                     "type": "object",
@@ -3276,6 +3302,14 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type VoteActions =
+    | {
+          type: "start";
+      }
+    | {
+          type: "changeMap";
+          newMapName: string;
+      };
 
 export interface LobbyUpdatedEvent {
     type: "event";
@@ -3335,7 +3369,7 @@ export interface LobbyUpdatedEventData {
     } | null;
     currentVote?: {
         id: string;
-        message?: string;
+        action?: VoteActions | null;
         initiator?: UserId;
         voters?: {
             [k: string]: {

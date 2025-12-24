@@ -78,9 +78,7 @@ export const lobbyDetails = Type.Object(
         currentVote: Type.Optional(
             Type.Object({
                 id: Type.String(),
-                message: Type.String({
-                    description: "Human readable message about what is the vote for?",
-                }),
+                action: Type.Ref("voteActions"),
                 initiator: Type.Ref("userId"),
                 voters: Type.Record(
                     Type.String(), // this is the userId

@@ -209,10 +209,7 @@
                     "type": "object",
                     "properties": {
                         "id": { "type": "string" },
-                        "message": {
-                            "description": "Human readable message about what is the vote for?",
-                            "type": "string"
-                        },
+                        "action": { "$ref": "#/definitions/voteActions" },
                         "initiator": { "$ref": "#/definitions/userId" },
                         "voters": {
                             "description": "indexed by the userId. The initiator is also included in this object",
@@ -236,13 +233,7 @@
                         },
                         "until": { "$ref": "#/definitions/unixTime" }
                     },
-                    "required": [
-                        "id",
-                        "message",
-                        "initiator",
-                        "voters",
-                        "until"
-                    ]
+                    "required": ["id", "action", "initiator", "voters", "until"]
                 }
             },
             "required": [
@@ -542,7 +533,24 @@
                 "status"
             ]
         },
-        "userId": { "type": "string", "examples": ["351"] }
+        "userId": { "type": "string", "examples": ["351"] },
+        "voteActions": {
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": { "type": { "const": "start" } },
+                    "required": ["type"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "changeMap" },
+                        "newMapName": { "type": "string" }
+                    },
+                    "required": ["type", "newMapName"]
+                }
+            ]
+        }
     },
     "anyOf": [
         {
@@ -3584,7 +3592,14 @@
                                     "type": "object",
                                     "properties": {
                                         "id": { "type": "string" },
-                                        "message": { "type": "string" },
+                                        "action": {
+                                            "anyOf": [
+                                                {
+                                                    "$ref": "#/definitions/voteActions"
+                                                },
+                                                { "type": "null" }
+                                            ]
+                                        },
                                         "initiator": {
                                             "$ref": "#/definitions/userId"
                                         },
