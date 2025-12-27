@@ -104,8 +104,11 @@ To leave an ally team or the join queue and become a spectator, a user should us
 
 Any member can update most (any?) property of the lobby. Updates are all or nothing, if updating a proprety
 is not possible (invalid or forbidden), then no update take place.
-The result of the updates is then transmitted to all members via `lobby/updated` events.
+The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 
+When an operation requires a vote, the vote data is also transmitted with [lobby/updated](#updated) events.
+And when the vote ends, a [lobby/voteEnded][#voteEnded] event is sent to all lobby members. This is to simplify
+client logic if they want to show a notification in addition to the updated state.
 
 ## List of all lobbies
 
@@ -134,6 +137,8 @@ In practice, this event should rarely be seen.
 - [update](#update)
 - [updateBot](#updatebot)
 - [updated](#updated)
+- [voteEnded](#voteended)
+- [voteSubmit](#votesubmit)
 ---
 
 ## AddBot
@@ -523,89 +528,145 @@ export interface StartBox {
     "commandId": "lobby/create",
     "status": "success",
     "data": {
-        "id": "velit eu sunt",
-        "name": "minim sint aliqua dolor reprehenderit",
-        "mapName": "ut",
-        "engineVersion": "qui id nisi sed",
-        "gameVersion": "pariatur sunt Duis",
+        "id": "dolore do labore mollit culpa",
+        "name": "nulla culpa aliquip exercitation",
+        "mapName": "in",
+        "engineVersion": "laborum est cupidatat",
+        "gameVersion": "sunt ut incididunt",
         "allyTeamConfig": {
-            "hj2": {
+            "'zA": {
                 "startBox": {
-                    "top": 0.054356932640075684,
-                    "bottom": 0.9855321049690247,
-                    "left": 0.3289511203765869,
-                    "right": 0.16059565544128418
+                    "top": 0.6702225208282471,
+                    "bottom": 0.08513057231903076,
+                    "left": 0.6979477405548096,
+                    "right": 0.39217686653137207
                 },
-                "maxTeams": 12871945,
+                "maxTeams": 49125404,
                 "teams": {
-                    "P?{-}&": {
-                        "maxPlayers": 98656160
+                    "&Z`y[~1<$\"": {
+                        "maxPlayers": 93489022
                     },
-                    "`y[~1<": {
-                        "maxPlayers": 60614247
+                    "YJn&cu:{BT": {
+                        "maxPlayers": 94367475
+                    },
+                    "p>g": {
+                        "maxPlayers": 83924681
+                    },
+                    "bVt55^^F+)": {
+                        "maxPlayers": 22539419
+                    },
+                    ";": {
+                        "maxPlayers": 86343200
+                    }
+                }
+            },
+            "%}": {
+                "startBox": {
+                    "top": 0.575905978679657,
+                    "bottom": 0.04219859838485718,
+                    "left": 0.48406165838241577,
+                    "right": 0.6355019807815552
+                },
+                "maxTeams": 31750095,
+                "teams": {
+                    "": {
+                        "maxPlayers": 58379370
+                    },
+                    "Di#gQz": {
+                        "maxPlayers": 11101032
+                    },
+                    "sK": {
+                        "maxPlayers": 32934458
                     }
                 }
             }
         },
         "players": {
-            "{BT": {
+            "": {
                 "id": "351",
-                "allyTeam": "irure ut exercitation minim sit",
-                "team": "Ut proident ex dolore aute",
-                "player": "in occaecat commodo nisi deserunt"
+                "allyTeam": "aliquip deserunt non ad",
+                "team": "enim incididunt eu amet",
+                "player": "aliqua"
             },
-            "g*~": {
+            ")=ZhY": {
                 "id": "351",
-                "allyTeam": "deserunt",
-                "team": "mollit officia ea",
-                "player": "occaecat mollit consectetur Excepteur deserunt"
+                "allyTeam": "in",
+                "team": "dolor mollit quis",
+                "player": "laboris consectetur nulla"
             },
-            "Vt55^^F": {
+            "*7xwD}:?w\"": {
                 "id": "351",
-                "allyTeam": "deserunt et in dolor",
-                "team": "elit veniam",
-                "player": "cillum aliquip"
-            },
-            ">": {
-                "id": "351",
-                "allyTeam": "quis proident amet consequat minim",
-                "team": "nulla sit in",
-                "player": "Duis velit eiusmod anim est"
+                "allyTeam": "non Lorem velit",
+                "team": "mollit Lorem",
+                "player": "labore voluptate"
             }
         },
         "spectators": {
-            "=g%TQ": {
-                "id": "351",
-                "joinQueuePosition": -91048336.02905273
-            },
-            "QRim": {
-                "id": "351",
-                "joinQueuePosition": -1201987.2665405273
-            },
-            "X<[Qjj]O^I": {
+            "p,D5.Teb": {
                 "id": "351"
+            },
+            "hWMW": {
+                "id": "351",
+                "joinQueuePosition": -56940078.73535156
+            },
+            "MJ6}R/~9w": {
+                "id": "351",
+                "joinQueuePosition": -90729725.36087036
             }
         },
         "bots": {
-            "M-@fAM": {
-                "id": "in",
+            "Y<o7D5hOp": {
+                "id": "aliqua ipsum officia ut",
                 "hostUserId": "351",
-                "allyTeam": "et minim voluptate in culpa",
-                "team": "laboris ipsum dolore enim ut",
-                "player": "est in enim",
-                "name": "commo",
-                "shortName": "occaeca",
-                "version": "dolor culpa",
+                "allyTeam": "est consequat in qui",
+                "team": "ex amet elit",
+                "player": "amet",
+                "name": "ipsum ex",
+                "shortName": "ut do c",
+                "version": "Ut ullamco culpa aliqua",
                 "options": {
-                    "Fx_K8": "reprehenderit magna eu occaecat id",
-                    "": "velit nisi officia irure",
-                    "c+": "voluptate do nisi",
-                    "I2'b!lI ": "in aute anim et proident"
+                    "R.q": "Lorem",
+                    "": "pariatur fugiat laboris",
+                    "|n": "velit voluptate laboris labore sint",
+                    "UUL=uo": "anim in aliquip aute dolor",
+                    "2FVIf": "anim aliqua veniam"
+                }
+            },
+            "tl8<Sm": {
+                "id": "ut cillum",
+                "hostUserId": "351",
+                "allyTeam": "ut velit in Excepteur occaecat",
+                "team": "Duis velit",
+                "player": "consequat sunt enim ullamco amet",
+                "name": "consectet",
+                "shortName": "amet",
+                "version": "ipsum sunt ut esse",
+                "options": {
+                    "3kG82": "occaecat officia",
+                    "Mg": "aliqua ut do",
+                    "b2,\\1UU": "qui Excepteur",
+                    "2XK!)K": "in do minim Ut"
                 }
             }
         },
         "currentBattle": {
             "startedAt": 1705432698000000
+        },
+        "currentVote": {
+            "id": "sed ea occaecat Ut",
+            "action": {
+                "type": "start"
+            },
+            "initiator": "351",
+            "voters": {
+                "Ry;": {
+                    "vote": "pending"
+                },
+                "vR]g~&z<n": {
+                    "vote": "no"
+                }
+            },
+            "until": 1705432698000000
         }
     }
 }
@@ -616,6 +677,14 @@ export interface StartBox {
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type VoteActions =
+    | {
+          type: "start";
+      }
+    | {
+          type: "changeMap";
+          newMapName: string;
+      };
 
 export interface LobbyCreateOkResponse {
     type: "response";
@@ -672,6 +741,17 @@ export interface LobbyCreateOkResponseData {
     };
     currentBattle?: {
         startedAt: UnixTime;
+    };
+    currentVote?: {
+        id: string;
+        action: VoteActions;
+        initiator: UserId;
+        voters: {
+            [k: string]: {
+                vote: "pending" | "yes" | "no" | "abstain";
+            };
+        };
+        until: UnixTime;
     };
 }
 export interface StartBox {
@@ -818,127 +898,185 @@ export interface LobbyJoinRequestData {
     "commandId": "lobby/join",
     "status": "success",
     "data": {
-        "id": "commodo Duis dolore consequat",
-        "name": "id ex occaecat exercitation",
-        "mapName": "adipisicing reprehenderit ipsum",
-        "engineVersion": "nisi",
-        "gameVersion": "amet",
+        "id": "aliqua deserunt sit",
+        "name": "culpa ea cillum sed",
+        "mapName": "cupidatat fugiat",
+        "engineVersion": "nostrud",
+        "gameVersion": "consectetur nulla",
         "allyTeamConfig": {
             "W |:KuOk/x": {
                 "startBox": {
-                    "top": 0.369232177734375,
-                    "bottom": 0.9725453853607178,
-                    "left": 0.46052515506744385,
-                    "right": 0.9408383369445801
+                    "top": 0.9852176904678345,
+                    "bottom": 0.8239824771881104,
+                    "left": 0.1293366551399231,
+                    "right": 0.4055666923522949
                 },
-                "maxTeams": 19888574,
+                "maxTeams": 37898821,
                 "teams": {
-                    "*1j6/#\\": {
-                        "maxPlayers": 93780059
+                    "/#": {
+                        "maxPlayers": 10862983
                     },
-                    "|Tg": {
-                        "maxPlayers": 62605191
+                    "Tgi:=W1e[l": {
+                        "maxPlayers": 89296908
                     },
-                    "=W1": {
-                        "maxPlayers": 38869948
+                    "k": {
+                        "maxPlayers": 52734781
                     },
-                    "[l.kg|.?": {
-                        "maxPlayers": 11333126
-                    },
-                    "": {
-                        "maxPlayers": 85529680
-                    },
-                    ",!?5'c": {
-                        "maxPlayers": 71038718
+                    ".?P!U,!?5'": {
+                        "maxPlayers": 3402854
                     }
                 }
             },
-            "roho": {
+            "hoF5u}Kzr": {
                 "startBox": {
-                    "top": 0.7876737117767334,
-                    "bottom": 0.6124547719955444,
-                    "left": 0.16075611114501953,
-                    "right": 0.6785145401954651
+                    "top": 0.6892774701118469,
+                    "bottom": 0.8497186899185181,
+                    "left": 0.7103871703147888,
+                    "right": 0.9681347608566284
                 },
-                "maxTeams": 9858573,
+                "maxTeams": 96600134,
                 "teams": {
-                    "p$V'o%8'": {
-                        "maxPlayers": 40755708
+                    ")([kEBk": {
+                        "maxPlayers": 71045322
                     },
-                    "d": {
-                        "maxPlayers": 95084745
+                    "'o%8'^": {
+                        "maxPlayers": 91175366
+                    },
+                    ".dL{FOk": {
+                        "maxPlayers": 73071063
+                    },
+                    "Ao": {
+                        "maxPlayers": 1691151
                     }
                 }
             },
-            "u}": {
+            "C": {
                 "startBox": {
-                    "top": 0.19229495525360107,
-                    "bottom": 0.7104532122612,
-                    "left": 0.7016656994819641,
-                    "right": 0.272929310798645
+                    "top": 0.03288298845291138,
+                    "bottom": 0.4155328869819641,
+                    "left": 0.1541842818260193,
+                    "right": 0.964246928691864
                 },
-                "maxTeams": 91175366,
+                "maxTeams": 61257262,
                 "teams": {
                     "": {
-                        "maxPlayers": 80739517
+                        "maxPlayers": 23848182
                     },
-                    "_#G.{": {
-                        "maxPlayers": 18993098
+                    "lTI2\\_;`#": {
+                        "maxPlayers": 91612584
                     },
-                    "~!PP%W": {
-                        "maxPlayers": 28960121
+                    "Io6": {
+                        "maxPlayers": 79138524
+                    },
+                    "$IZK?A^": {
+                        "maxPlayers": 73491222
                     }
                 }
             }
         },
         "players": {
-            "2b": {
+            "": {
                 "id": "351",
-                "allyTeam": "Duis tempor non ad",
-                "team": "anim in",
-                "player": "cupidatat"
+                "allyTeam": "nostrud labore aliquip ut",
+                "team": "eiusmod adipisicing",
+                "player": "Excepteur sint pariatur"
             }
         },
         "spectators": {
-            "R~c/=rGp": {
+            ".": {
                 "id": "351",
-                "joinQueuePosition": 17248785.495758057
+                "joinQueuePosition": 95674633.97979736
             },
-            "": {
-                "id": "351",
-                "joinQueuePosition": -81065165.99655151
-            },
-            "f+": {
-                "id": "351",
-                "joinQueuePosition": -55711638.92745972
-            },
-            "'~cRGw>+": {
+            "Wl\\kK": {
                 "id": "351"
             }
         },
         "bots": {
-            "/.j": {
-                "id": "exercitation tempor ad",
+            "": {
+                "id": "in velit",
                 "hostUserId": "351",
-                "allyTeam": "consectetur sint",
-                "team": "aliquip",
-                "player": "deserunt",
-                "name": "consectetur",
-                "shortName": "in in ",
-                "version": "reprehenderit"
+                "allyTeam": "veniam",
+                "team": "nisi pariatur magna",
+                "player": "dolore sunt dolore velit",
+                "name": "si",
+                "shortName": "dolore fugiat u",
+                "version": "consectetur eiusmod est",
+                "options": {
+                    "/~%4": "dolore adipisicing ad do",
+                    "Z\\2{[74": "do reprehenderit deserunt"
+                }
             },
-            "l!L": {
-                "id": "Lorem est",
+            ";/.": {
+                "id": "Ut culpa laboris ex esse",
                 "hostUserId": "351",
-                "allyTeam": "dolore laboris non aliquip ex",
-                "team": "cillum",
-                "player": "nostrud",
-                "shortName": "irure",
-                "version": "anim id ad"
+                "allyTeam": "anim commodo",
+                "team": "Lorem cupidatat enim id",
+                "player": "dolor consequat",
+                "name": "ad Excepteur",
+                "shortName": "esse aliqua deser",
+                "version": "et Duis",
+                "options": {
+                    "tIG9t~": "voluptate minim enim eiusmod sint",
+                    "48.`M'Vz;": "veniam",
+                    "z+": "id",
+                    "e_8ld90": "Ut qui reprehenderit nostrud"
+                }
+            },
+            ";l!LuIaV": {
+                "id": "do proident",
+                "hostUserId": "351",
+                "allyTeam": "Excepteur et do officia nisi",
+                "team": "in",
+                "player": "sunt eiusmod ex elit",
+                "name": "aliquip c",
+                "shortName": "in culpa Lor",
+                "version": "commodo ex deserunt dolore",
+                "options": {
+                    "3lk8;s!L": "in nostrud laboris ex esse",
+                    "tE9/": "culpa commodo nisi",
+                    "`)k_gP": "aliquip Ut Excepteur cillum ad",
+                    "Mx[9": "ad in laborum",
+                    "([\\rNq": "id voluptate sit ullamco"
+                }
+            },
+            "Q~`SovAi": {
+                "id": "ad sint sed incididunt enim",
+                "hostUserId": "351",
+                "allyTeam": "dolore dolore exercitation reprehenderit",
+                "team": "enim consectetur incididunt irure",
+                "player": "Ut",
+                "name": "voluptate",
+                "shortName": "laborum proident in ",
+                "version": "dolor",
+                "options": {
+                    "": "enim esse non",
+                    "t": "dolore Duis occaecat cupidatat non",
+                    "R`|B": "in"
+                }
             }
         },
         "currentBattle": {
             "startedAt": 1705432698000000
+        },
+        "currentVote": {
+            "id": "occaecat amet",
+            "action": {
+                "type": "changeMap",
+                "newMapName": "in"
+            },
+            "initiator": "351",
+            "voters": {
+                "f^&=z\\": {
+                    "vote": "no"
+                },
+                "NB^}3R": {
+                    "vote": "yes"
+                },
+                "KR(#.qkj<8": {
+                    "vote": "yes"
+                }
+            },
+            "until": 1705432698000000
         }
     }
 }
@@ -949,6 +1087,14 @@ export interface LobbyJoinRequestData {
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type VoteActions =
+    | {
+          type: "start";
+      }
+    | {
+          type: "changeMap";
+          newMapName: string;
+      };
 
 export interface LobbyJoinOkResponse {
     type: "response";
@@ -1005,6 +1151,17 @@ export interface LobbyJoinOkResponseData {
     };
     currentBattle?: {
         startedAt: UnixTime;
+    };
+    currentVote?: {
+        id: string;
+        action: VoteActions;
+        initiator: UserId;
+        voters: {
+            [k: string]: {
+                vote: "pending" | "yes" | "no" | "abstain";
+            };
+        };
+        until: UnixTime;
     };
 }
 export interface StartBox {
@@ -3011,6 +3168,45 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                         },
                         { "type": "null" }
                     ]
+                },
+                "currentVote": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "action": {
+                                    "anyOf": [
+                                        { "$ref": "#/definitions/voteActions" },
+                                        { "type": "null" }
+                                    ]
+                                },
+                                "initiator": { "$ref": "#/definitions/userId" },
+                                "voters": {
+                                    "type": "object",
+                                    "patternProperties": {
+                                        "^(.*)$": {
+                                            "type": "object",
+                                            "properties": {
+                                                "vote": {
+                                                    "enum": [
+                                                        "pending",
+                                                        "yes",
+                                                        "no",
+                                                        "abstain"
+                                                    ]
+                                                }
+                                            },
+                                            "required": ["vote"]
+                                        }
+                                    }
+                                },
+                                "until": { "$ref": "#/definitions/unixTime" }
+                            },
+                            "required": ["id"]
+                        },
+                        { "type": "null" }
+                    ]
                 }
             },
             "required": ["id"]
@@ -3031,60 +3227,72 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "adipisicing officia eiusmod in dolore",
-        "name": "Excepteur magna amet commodo velit",
-        "mapName": "Duis nostrud dolore dolor ut",
+        "id": "non",
+        "name": "aliquip culpa cillum mollit",
+        "mapName": "eiusmod",
+        "engineVersion": "in",
+        "gameVersion": "ullamco sint reprehenderit dolor amet",
         "allyTeamConfig": {
-            "W8m3D": {
-                "startBox": {
-                    "top": 0.38843363523483276,
-                    "bottom": 0.7097047567367554,
-                    "left": 0.26567769050598145,
-                    "right": 0.029768764972686768
-                },
-                "maxTeams": 79185772,
-                "teams": {
-                    "E[Sva": null,
-                    "Nf!z?+*Tc": {
-                        "nisi4cd": "dolore",
-                        "dolore_e95": -18286658,
-                        "voluptate880": 10259258,
-                        "ipsum_3de": "qui esse dolor Excepteur",
-                        "maxPlayers": 32589031
-                    },
-                    "\\|8P \\C=Kl": null,
-                    ")": {
-                        "cillum_7b": false,
-                        "aute_": -76915443,
-                        "cupidatatb1": -76946818.82858276,
-                        "exa4": "veniam",
-                        "maxPlayers": 15148336
-                    }
+            "q(": null,
+            "": null
+        },
+        "players": {
+            "|-$!Sr>/": null
+        },
+        "spectators": {
+            "}68%d5": {
+                "id": "351",
+                "joinQueuePosition": -81725800.03738403
+            },
+            "f_XxC$3": {
+                "id": "351",
+                "joinQueuePosition": 72971963.88244629
+            },
+            "0UfeO:bH)": {
+                "id": "351",
+                "joinQueuePosition": null
+            }
+        },
+        "bots": {
+            "jF[A|;Jh(": {
+                "id": "Ut",
+                "hostUserId": "351",
+                "allyTeam": "veniam sint qui",
+                "team": "irure magna consectetur",
+                "player": "ea in nulla",
+                "name": null,
+                "shortName": "occaecat quis irure Lorem Duis",
+                "version": null,
+                "options": null
+            },
+            "/}3kum,Mh!": {
+                "id": "aute Duis commodo",
+                "hostUserId": "351",
+                "allyTeam": "laborum reprehenderit veniam nisi aute",
+                "team": "est nulla",
+                "player": "et",
+                "name": null,
+                "shortName": "commodo et incididunt",
+                "version": null,
+                "options": {
+                    "N}E#D": "tempor",
+                    "h+*": "labore"
                 }
             },
-            "": null,
-            "9x2X:\\": null,
-            "7D": {
-                "startBox": {
-                    "top": 0.22380495071411133,
-                    "bottom": 0.3090400695800781,
-                    "left": 0.42553818225860596,
-                    "right": 0.9208085536956787
-                },
-                "teams": {
-                    "l": {
-                        "enim__f": true,
-                        "consectetur_e": -19333387
-                    },
-                    "+x-K0vzp": {
-                        "pariatur_0cb": false,
-                        "Excepteur_9e": "ex ut laborum Lorem magna",
-                        "maxPlayers": 14232487
-                    }
+            "n": {
+                "id": "qui ad commodo voluptate aute",
+                "hostUserId": "351",
+                "player": "tempor",
+                "version": null,
+                "options": {
+                    "}c3": null
                 }
             }
         },
-        "currentBattle": null
+        "currentBattle": {
+            "id": "laborum ullamco",
+            "startedAt": 1705432698000000
+        }
     }
 }
 ```
@@ -3094,6 +3302,14 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type VoteActions =
+    | {
+          type: "start";
+      }
+    | {
+          type: "changeMap";
+          newMapName: string;
+      };
 
 export interface LobbyUpdatedEvent {
     type: "event";
@@ -3151,6 +3367,17 @@ export interface LobbyUpdatedEventData {
         id: string;
         startedAt: UnixTime;
     } | null;
+    currentVote?: {
+        id: string;
+        action?: VoteActions | null;
+        initiator?: UserId;
+        voters?: {
+            [k: string]: {
+                vote: "pending" | "yes" | "no" | "abstain";
+            };
+        };
+        until?: UnixTime;
+    } | null;
 }
 export interface StartBox {
     top: number;
@@ -3159,3 +3386,226 @@ export interface StartBox {
     right: number;
 }
 ```
+---
+
+## VoteEnded
+
+To let clients know a vote has finished and its outcome
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteEndedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/voteEnded" },
+        "data": {
+            "title": "LobbyVoteEndedEventData",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "outcome": {
+                    "enum": ["passed", "failed", "cancelled", "timeout"]
+                }
+            },
+            "required": ["id", "outcome"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "fugiat",
+    "commandId": "lobby/voteEnded",
+    "data": {
+        "id": "Ut ullamco irure",
+        "outcome": "passed"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteEndedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "lobby/voteEnded";
+    data: LobbyVoteEndedEventData;
+}
+export interface LobbyVoteEndedEventData {
+    id: string;
+    outcome: "passed" | "failed" | "cancelled" | "timeout";
+}
+```
+---
+
+## VoteSubmit
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteSubmitRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/voteSubmit" },
+        "data": {
+            "title": "LobbyVoteSubmitRequestData",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string" },
+                "vote": { "enum": ["yes", "no", "abstain"] }
+            },
+            "required": ["id", "vote"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "in",
+    "commandId": "lobby/voteSubmit",
+    "data": {
+        "id": "nisi esse",
+        "vote": "abstain"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteSubmitRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/voteSubmit";
+    data: LobbyVoteSubmitRequestData;
+}
+export interface LobbyVoteSubmitRequestData {
+    id: string;
+    vote: "yes" | "no" | "abstain";
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteSubmitResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyVoteSubmitOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteSubmit" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyVoteSubmitFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteSubmit" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "elit in Duis in",
+    "commandId": "lobby/voteSubmit",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteSubmitOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/voteSubmit";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+

@@ -2,6 +2,7 @@ import { Type } from "@sinclair/typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
 import { Nullable } from "@/typebox-utils";
+import { UnionEnum } from "@/union-enum";
 
 export default defineEndpoint({
     source: "server",
@@ -113,6 +114,24 @@ export default defineEndpoint({
                         },
                         { description: "If a battle is currently happening, here are the info" }
                     )
+                )
+            ),
+            currentVote: Type.Optional(
+                Nullable(
+                    Type.Object({
+                        id: Type.String(),
+                        action: Type.Optional(Nullable(Type.Ref("voteActions"))),
+                        initiator: Type.Optional(Type.Ref("userId")),
+                        voters: Type.Optional(
+                            Type.Record(
+                                Type.String(),
+                                Type.Object({
+                                    vote: UnionEnum(["pending", "yes", "no", "abstain"]),
+                                })
+                            )
+                        ),
+                        until: Type.Optional(Type.Ref("unixTime")),
+                    })
                 )
             ),
         }),
