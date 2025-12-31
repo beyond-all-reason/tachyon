@@ -99,6 +99,11 @@ in that spot and update its state through [lobby/updated](#updated).
 A member simply spectating and not waiting to play will have a null `joinQueuePosition`.
 To leave an ally team or the join queue and become a spectator, a user should use [lobby/spectate](#spectate).
 
+Clients can send a [lobby/updateClientStatus](#updateClientStatus) request to notify others if they are ready
+and if they need to download some assets, like engine, map or game. When a user becomes a player (at lobby creation,
+through `joinAllyTeam` or with the join queue), the server will automatically assign them a default status
+`{"isReady": false, "assetStatus": "ready"}`. If this is incorrect the client should send a request to correct it.
+
 
 ### Lobby updates
 
@@ -136,6 +141,7 @@ In practice, this event should rarely be seen.
 - [unsubscribeList](#unsubscribelist)
 - [update](#update)
 - [updateBot](#updatebot)
+- [updateClientStatus](#updateclientstatus)
 - [updated](#updated)
 - [voteEnded](#voteended)
 - [voteSubmit](#votesubmit)
@@ -2965,6 +2971,156 @@ Possible Failed Reasons: `not_in_lobby`, `invalid_bot`, `internal_error`, `unaut
 
 ---
 
+## UpdateClientStatus
+
+Update the player's status
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateClientStatusRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/updateClientStatus" },
+        "data": {
+            "title": "LobbyUpdateClientStatusRequestData",
+            "type": "object",
+            "properties": {
+                "isReady": { "type": "boolean" },
+                "assetStatus": { "enum": ["missing", "downloading", "ready"] }
+            }
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "do",
+    "commandId": "lobby/updateClientStatus",
+    "data": {
+        "isReady": false,
+        "assetStatus": "missing"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateClientStatusRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/updateClientStatus";
+    data: LobbyUpdateClientStatusRequestData;
+}
+export interface LobbyUpdateClientStatusRequestData {
+    isReady?: boolean;
+    assetStatus?: "missing" | "downloading" | "ready";
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUpdateClientStatusResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUpdateClientStatusOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateClientStatus" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUpdateClientStatusFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/updateClientStatus" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "not_a_player",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "in esse est cillum irure",
+    "commandId": "lobby/updateClientStatus",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUpdateClientStatusOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/updateClientStatus";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `not_a_player`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## Updated
 
 Sent by the server whenever something in the lobby changes. Uses json patch (RFC-7386)
@@ -3057,7 +3213,15 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
-                                        "player": { "type": "string" }
+                                        "player": { "type": "string" },
+                                        "isReady": { "type": "boolean" },
+                                        "assetStatus": {
+                                            "enum": [
+                                                "missing",
+                                                "downloading",
+                                                "ready"
+                                            ]
+                                        }
                                     },
                                     "required": ["id"]
                                 },
@@ -3340,6 +3504,8 @@ export interface LobbyUpdatedEventData {
             allyTeam?: string;
             team?: string;
             player?: string;
+            isReady?: boolean;
+            assetStatus?: "missing" | "downloading" | "ready";
         } | null;
     };
     spectators?: {
