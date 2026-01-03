@@ -11,16 +11,7 @@
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "clan/delete" },
-        "data": {
-            "title": "ClanDeleteRequestData",
-            "type": "object",
-            "properties": {
-                "userId": { "$ref": "../../definitions/userId.json" },
-                "clanId": { "$ref": "../../definitions/clanId.json" }
-            },
-            "required": ["userId", "clanId"]
-        }
+        "commandId": { "const": "clan/delete" }
     },
-    "required": ["type", "messageId", "commandId", "data"]
+    "required": ["type", "messageId", "commandId"]
 }

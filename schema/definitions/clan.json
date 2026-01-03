@@ -6,6 +6,7 @@
         {
             "type": "object",
             "properties": {
+                "description": { "type": "string", "maxLength": 500 },
                 "membersCount": { "type": "number", "minimum": 0 },
                 "members": {
                     "type": "array",

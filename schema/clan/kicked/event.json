@@ -16,9 +16,11 @@
             "title": "ClanKickedEventData",
             "type": "object",
             "properties": {
-                "clanId": { "$ref": "../../definitions/clanId.json" }
+                "clanBaseData": {
+                    "$ref": "../../definitions/clanBaseData.json"
+                }
             },
-            "required": ["clanId"]
+            "required": ["clanBaseData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

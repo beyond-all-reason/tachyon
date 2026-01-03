@@ -29,13 +29,7 @@
                             "clan": {
                                 "anyOf": [
                                     {
-                                        "type": "object",
-                                        "properties": {
-                                            "clanBaseData": {
-                                                "$ref": "../../definitions/clanBaseData.json"
-                                            }
-                                        },
-                                        "required": ["clanBaseData"]
+                                        "$ref": "../../definitions/clanBaseData.json"
                                     },
                                     { "type": "null" }
                                 ]

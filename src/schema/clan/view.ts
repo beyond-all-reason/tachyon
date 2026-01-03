@@ -5,10 +5,10 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "user",
     target: "server",
-    description: "Get information about a clan.",
+    description: "Get detailed information about a clan.",
     request: {
         data: Type.Object({
-            clanId: Type.Ref("clanId"),
+            clan: Type.Ref("clan"),
         }),
     },
     response: [

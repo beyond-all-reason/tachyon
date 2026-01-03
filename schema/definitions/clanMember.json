@@ -3,9 +3,8 @@
     "title": "ClanMember",
     "type": "object",
     "properties": {
-        "user": { "$ref": "../definitions/user.json" },
-        "clanId": { "$ref": "../definitions/clanId.json" },
+        "userId": { "$ref": "../definitions/userId.json" },
         "role": { "$ref": "../definitions/clanRole.json" }
     },
-    "required": ["user", "clanId", "role"]
+    "required": ["userId", "role"]
 }

@@ -2,8 +2,7 @@ import { Type } from "@sinclair/typebox";
 
 export const clanMember = Type.Object(
     {
-        user: Type.Ref("user"),
-        clanId: Type.Ref("clanId"),
+        userId: Type.Ref("userId"),
         role: Type.Ref("clanRole"),
     },
     { $id: "clanMember" }

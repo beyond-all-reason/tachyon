@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "A player was kicked from a clan. Sent to the kicked player.",
     event: {
         data: Type.Object({
-            clanId: Type.Ref("clanId"),
+            clanBaseData: Type.Ref("clanBaseData"),
         }),
     },
 });

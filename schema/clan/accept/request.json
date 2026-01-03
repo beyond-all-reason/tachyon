@@ -15,7 +15,9 @@
         "data": {
             "title": "ClanAcceptRequestData",
             "type": "object",
-            "properties": { "clanId": { "type": "string" } },
+            "properties": {
+                "clanId": { "$ref": "../../definitions/clanId.json" }
+            },
             "required": ["clanId"]
         }
     },
