@@ -77,7 +77,15 @@
                                         },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
-                                        "player": { "type": "string" }
+                                        "player": { "type": "string" },
+                                        "isReady": { "type": "boolean" },
+                                        "assetStatus": {
+                                            "enum": [
+                                                "missing",
+                                                "downloading",
+                                                "ready"
+                                            ]
+                                        }
                                     },
                                     "required": ["id"]
                                 },
@@ -185,6 +193,51 @@
                                 }
                             },
                             "required": ["id", "startedAt"]
+                        },
+                        { "type": "null" }
+                    ]
+                },
+                "currentVote": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "id": { "type": "string" },
+                                "action": {
+                                    "anyOf": [
+                                        {
+                                            "$ref": "../../definitions/voteActions.json"
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                },
+                                "initiator": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
+                                "voters": {
+                                    "type": "object",
+                                    "patternProperties": {
+                                        "^(.*)$": {
+                                            "type": "object",
+                                            "properties": {
+                                                "vote": {
+                                                    "enum": [
+                                                        "pending",
+                                                        "yes",
+                                                        "no",
+                                                        "abstain"
+                                                    ]
+                                                }
+                                            },
+                                            "required": ["vote"]
+                                        }
+                                    }
+                                },
+                                "until": {
+                                    "$ref": "../../definitions/unixTime.json"
+                                }
+                            },
+                            "required": ["id"]
                         },
                         { "type": "null" }
                     ]

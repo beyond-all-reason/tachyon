@@ -95,13 +95,21 @@ in that spot and update its state through [lobby/updated](#updated).
 A member simply spectating and not waiting to play will have a null `joinQueuePosition`.
 To leave an ally team or the join queue and become a spectator, a user should use [lobby/spectate](#spectate).
 
+Clients can send a [lobby/updateClientStatus](#updateClientStatus) request to notify others if they are ready
+and if they need to download some assets, like engine, map or game. When a user becomes a player (at lobby creation,
+through `joinAllyTeam` or with the join queue), the server will automatically assign them a default status
+`{"isReady": false, "assetStatus": "ready"}`. If this is incorrect the client should send a request to correct it.
+
 
 ### Lobby updates
 
 Any member can update most (any?) property of the lobby. Updates are all or nothing, if updating a proprety
 is not possible (invalid or forbidden), then no update take place.
-The result of the updates is then transmitted to all members via `lobby/updated` events.
+The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 
+When an operation requires a vote, the vote data is also transmitted with [lobby/updated](#updated) events.
+And when the vote ends, a [lobby/voteEnded][#voteEnded] event is sent to all lobby members. This is to simplify
+client logic if they want to show a notification in addition to the updated state.
 
 ## List of all lobbies
 
