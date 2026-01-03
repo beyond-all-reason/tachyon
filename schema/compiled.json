@@ -91,13 +91,22 @@
             ]
         },
         "clanBaseData": {
-            "type": "object",
-            "properties": {
-                "clanId": { "$ref": "#/definitions/clanId" },
-                "name": { "type": "string", "maxLength": 30 },
-                "tag": { "type": "string", "minLength": 3, "maxLength": 6 }
-            },
-            "required": ["clanId", "name", "tag"]
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" },
+                        "name": { "type": "string", "maxLength": 30 },
+                        "tag": {
+                            "type": "string",
+                            "minLength": 3,
+                            "maxLength": 6
+                        }
+                    },
+                    "required": ["clanId", "name", "tag"]
+                },
+                { "type": "null" }
+            ]
         },
         "clanId": { "type": "string", "examples": ["12345"] },
         "clanMember": {
@@ -439,7 +448,7 @@
                         },
                         "clanInvites": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/clan" }
+                            "items": { "$ref": "#/definitions/clanBaseData" }
                         }
                     },
                     "required": [
@@ -513,12 +522,7 @@
                 "userId": { "$ref": "#/definitions/userId" },
                 "username": { "type": "string" },
                 "displayName": { "type": "string" },
-                "clan": {
-                    "anyOf": [
-                        { "$ref": "#/definitions/clanBaseData" },
-                        { "type": "null" }
-                    ]
-                },
+                "clanBaseData": { "$ref": "#/definitions/clanBaseData" },
                 "countryCode": { "type": "string" },
                 "status": { "enum": ["offline", "menu", "playing", "lobby"] },
                 "rating": {
@@ -545,7 +549,13 @@
                     "uniqueItems": true
                 }
             },
-            "required": ["userId", "username", "displayName", "clan", "status"]
+            "required": [
+                "userId",
+                "username",
+                "displayName",
+                "clanBaseData",
+                "status"
+            ]
         },
         "userId": { "type": "string", "examples": ["351"] }
     },
@@ -2486,8 +2496,10 @@
                 "data": {
                     "title": "ClanViewRequestData",
                     "type": "object",
-                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
-                    "required": ["clan"]
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -6300,13 +6312,8 @@
                                     },
                                     "username": { "type": "string" },
                                     "displayName": { "type": "string" },
-                                    "clan": {
-                                        "anyOf": [
-                                            {
-                                                "$ref": "#/definitions/clanBaseData"
-                                            },
-                                            { "type": "null" }
-                                        ]
+                                    "clanBaseData": {
+                                        "$ref": "#/definitions/clanBaseData"
                                     },
                                     "countryCode": { "type": "string" },
                                     "status": {

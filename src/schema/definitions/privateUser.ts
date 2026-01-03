@@ -24,7 +24,7 @@ export const privateUser = Type.Intersect(
             ignoreIds: Type.Array(Type.String()),
             currentBattle: Type.Optional(Type.Ref("privateBattle")),
             currentLobby: Nullable(Type.String()),
-            clanInvites: Type.Array(Type.Ref("clan")),
+            clanInvites: Type.Array(Type.Ref("clanBaseData")),
         }),
     ],
     { $id: "privateUser" }

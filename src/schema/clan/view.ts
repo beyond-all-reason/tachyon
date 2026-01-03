@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Get detailed information about a clan.",
     request: {
         data: Type.Object({
-            clan: Type.Ref("clan"),
+            clanId: Type.Ref("clanId"),
         }),
     },
     response: [
