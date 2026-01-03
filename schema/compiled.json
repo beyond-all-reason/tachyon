@@ -74,18 +74,30 @@
             "required": ["hostUserId", "aiShortName"]
         },
         "clan": {
+            "allOf": [
+                { "$ref": "#/definitions/clanBaseData" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "membersCount": { "type": "number", "minimum": 0 },
+                        "members": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/clanMember" }
+                        }
+                    },
+                    "required": ["membersCount", "members"]
+                }
+            ]
+        },
+        "clanBaseData": {
             "type": "object",
             "properties": {
                 "clanId": { "$ref": "#/definitions/clanId" },
-                "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
                 "name": { "type": "string", "maxLength": 30 },
-                "description": { "type": "string", "maxLength": 500 },
-                "clanMembers": {
-                    "type": "array",
-                    "items": { "$ref": "#/definitions/clanMember" }
-                }
+                "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
+                "description": { "type": "string", "maxLength": 500 }
             },
-            "required": ["clanId", "tag", "name", "clanMembers"]
+            "required": ["clanId", "name", "tag"]
         },
         "clanId": { "type": "string", "examples": ["12345"] },
         "clanMember": {
@@ -502,14 +514,19 @@
                 "userId": { "$ref": "#/definitions/userId" },
                 "username": { "type": "string" },
                 "displayName": { "type": "string" },
-                "clanId": {
-                    "anyOf": [{ "type": "string" }, { "type": "null" }]
-                },
-                "clanTag": {
-                    "anyOf": [{ "type": "string" }, { "type": "null" }]
-                },
-                "clanName": {
-                    "anyOf": [{ "type": "string" }, { "type": "null" }]
+                "clan": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "clanBaseData": {
+                                    "$ref": "#/definitions/clanBaseData"
+                                }
+                            },
+                            "required": ["clanBaseData"]
+                        },
+                        { "type": "null" }
+                    ]
                 },
                 "countryCode": { "type": "string" },
                 "status": { "enum": ["offline", "menu", "playing", "lobby"] },
@@ -537,15 +554,7 @@
                     "uniqueItems": true
                 }
             },
-            "required": [
-                "userId",
-                "username",
-                "displayName",
-                "clanId",
-                "clanTag",
-                "clanName",
-                "status"
-            ]
+            "required": ["userId", "username", "displayName", "clan", "status"]
         },
         "userId": { "type": "string", "examples": ["351"] }
     },
@@ -1726,11 +1735,8 @@
                 "data": {
                     "title": "ClanAcceptRequestData",
                     "type": "object",
-                    "properties": {
-                        "user": { "$ref": "#/definitions/user" },
-                        "clan": { "$ref": "#/definitions/clan" }
-                    },
-                    "required": ["user", "clan"]
+                    "properties": { "clanId": { "type": "string" } },
+                    "required": ["clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1798,10 +1804,9 @@
                     "title": "ClanCancelRequestData",
                     "type": "object",
                     "properties": {
-                        "user": { "$ref": "#/definitions/user" },
-                        "clan": { "$ref": "#/definitions/clan" }
+                        "userId": { "$ref": "#/definitions/userId" }
                     },
-                    "required": ["user", "clan"]
+                    "required": ["userId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1868,8 +1873,10 @@
                 "data": {
                     "title": "ClanCreateRequestData",
                     "type": "object",
-                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
-                    "required": ["clan"]
+                    "properties": {
+                        "clanBaseData": { "$ref": "#/definitions/clanBaseData" }
+                    },
+                    "required": ["clanBaseData"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -1937,10 +1944,9 @@
                     "title": "ClanDeclineRequestData",
                     "type": "object",
                     "properties": {
-                        "user": { "$ref": "#/definitions/user" },
-                        "clan": { "$ref": "#/definitions/clan" }
+                        "clanId": { "$ref": "#/definitions/clanId" }
                     },
-                    "required": ["user", "clan"]
+                    "required": ["clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2008,10 +2014,10 @@
                     "title": "ClanDeleteRequestData",
                     "type": "object",
                     "properties": {
-                        "user": { "$ref": "#/definitions/user" },
-                        "clan": { "$ref": "#/definitions/clan" }
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "clanId": { "$ref": "#/definitions/clanId" }
                     },
-                    "required": ["user", "clan"]
+                    "required": ["userId", "clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2078,8 +2084,10 @@
                 "data": {
                     "title": "ClanDeletedEventData",
                     "type": "object",
-                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
-                    "required": ["clan"]
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2100,10 +2108,9 @@
                     "title": "ClanInviteRequestData",
                     "type": "object",
                     "properties": {
-                        "user": { "$ref": "#/definitions/user" },
-                        "clan": { "$ref": "#/definitions/clan" }
+                        "userId": { "$ref": "#/definitions/userId" }
                     },
-                    "required": ["user", "clan"]
+                    "required": ["userId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2170,8 +2177,10 @@
                 "data": {
                     "title": "ClanInvitedEventData",
                     "type": "object",
-                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
-                    "required": ["clan"]
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2191,8 +2200,10 @@
                 "data": {
                     "title": "ClanKickRequestData",
                     "type": "object",
-                    "properties": { "user": { "$ref": "#/definitions/user" } },
-                    "required": ["user"]
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2259,8 +2270,10 @@
                 "data": {
                     "title": "ClanKickedEventData",
                     "type": "object",
-                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
-                    "required": ["clan"]
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2280,8 +2293,10 @@
                 "data": {
                     "title": "ClanLeaveRequestData",
                     "type": "object",
-                    "properties": { "user": { "$ref": "#/definitions/user" } },
-                    "required": ["user"]
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2589,7 +2604,9 @@
                             "properties": {
                                 "clans": {
                                     "type": "array",
-                                    "items": { "$ref": "#/definitions/clan" }
+                                    "items": {
+                                        "$ref": "#/definitions/clanBaseData"
+                                    }
                                 }
                             },
                             "required": ["clans"]
@@ -6301,21 +6318,17 @@
                                     },
                                     "username": { "type": "string" },
                                     "displayName": { "type": "string" },
-                                    "clanId": {
+                                    "clan": {
                                         "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "clanTag": {
-                                        "anyOf": [
-                                            { "type": "string" },
-                                            { "type": "null" }
-                                        ]
-                                    },
-                                    "clanName": {
-                                        "anyOf": [
-                                            { "type": "string" },
+                                            {
+                                                "type": "object",
+                                                "properties": {
+                                                    "clanBaseData": {
+                                                        "$ref": "#/definitions/clanBaseData"
+                                                    }
+                                                },
+                                                "required": ["clanBaseData"]
+                                            },
                                             { "type": "null" }
                                         ]
                                     },

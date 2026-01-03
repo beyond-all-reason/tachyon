@@ -8,8 +8,8 @@ export default defineEndpoint({
     description: "Delete your clan.",
     request: {
         data: Type.Object({
-            user: Type.Ref("user"),
-            clan: Type.Ref("clan"),
+            userId: Type.Ref("userId"),
+            clanId: Type.Ref("clanId"),
         }),
     },
     response: [{ status: "success" }],

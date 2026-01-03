@@ -15,8 +15,10 @@
         "data": {
             "title": "ClanInvitedEventData",
             "type": "object",
-            "properties": { "clan": { "$ref": "../../definitions/clan.json" } },
-            "required": ["clan"]
+            "properties": {
+                "clanId": { "$ref": "../../definitions/clanId.json" }
+            },
+            "required": ["clanId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

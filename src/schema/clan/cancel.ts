@@ -8,8 +8,7 @@ export default defineEndpoint({
     description: "Cancel an invite to your clan.",
     request: {
         data: Type.Object({
-            user: Type.Ref("user"),
-            clan: Type.Ref("clan"),
+            userId: Type.Ref("userId"),
         }),
     },
     response: [{ status: "success" }],

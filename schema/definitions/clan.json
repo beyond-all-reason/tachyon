@@ -1,16 +1,18 @@
 {
     "$id": "https://schema.beyondallreason.dev/tachyon/definitions/clan.json",
     "title": "Clan",
-    "type": "object",
-    "properties": {
-        "clanId": { "$ref": "../definitions/clanId.json" },
-        "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
-        "name": { "type": "string", "maxLength": 30 },
-        "description": { "type": "string", "maxLength": 500 },
-        "clanMembers": {
-            "type": "array",
-            "items": { "$ref": "../definitions/clanMember.json" }
+    "allOf": [
+        { "$ref": "../definitions/clanBaseData.json" },
+        {
+            "type": "object",
+            "properties": {
+                "membersCount": { "type": "number", "minimum": 0 },
+                "members": {
+                    "type": "array",
+                    "items": { "$ref": "../definitions/clanMember.json" }
+                }
+            },
+            "required": ["membersCount", "members"]
         }
-    },
-    "required": ["clanId", "tag", "name", "clanMembers"]
+    ]
 }

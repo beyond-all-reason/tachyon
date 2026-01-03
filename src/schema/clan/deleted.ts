@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "A clan was deleted. Sent to all clan members.",
     event: {
         data: Type.Object({
-            clan: Type.Ref("clan"),
+            clanId: Type.Ref("clanId"),
         }),
     },
 });

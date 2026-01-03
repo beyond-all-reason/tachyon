@@ -15,8 +15,10 @@
         "data": {
             "title": "ClanLeaveRequestData",
             "type": "object",
-            "properties": { "user": { "$ref": "../../definitions/user.json" } },
-            "required": ["user"]
+            "properties": {
+                "userId": { "$ref": "../../definitions/userId.json" }
+            },
+            "required": ["userId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

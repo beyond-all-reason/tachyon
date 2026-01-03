@@ -1,0 +1,12 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/clanBaseData.json",
+    "title": "ClanBaseData",
+    "type": "object",
+    "properties": {
+        "clanId": { "$ref": "../definitions/clanId.json" },
+        "name": { "type": "string", "maxLength": 30 },
+        "tag": { "type": "string", "minLength": 3, "maxLength": 6 },
+        "description": { "type": "string", "maxLength": 500 }
+    },
+    "required": ["clanId", "name", "tag"]
+}

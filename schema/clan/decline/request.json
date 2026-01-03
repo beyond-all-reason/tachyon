@@ -16,10 +16,9 @@
             "title": "ClanDeclineRequestData",
             "type": "object",
             "properties": {
-                "user": { "$ref": "../../definitions/user.json" },
-                "clan": { "$ref": "../../definitions/clan.json" }
+                "clanId": { "$ref": "../../definitions/clanId.json" }
             },
-            "required": ["user", "clan"]
+            "required": ["clanId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

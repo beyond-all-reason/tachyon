@@ -15,8 +15,12 @@
         "data": {
             "title": "ClanCreateRequestData",
             "type": "object",
-            "properties": { "clan": { "$ref": "../../definitions/clan.json" } },
-            "required": ["clan"]
+            "properties": {
+                "clanBaseData": {
+                    "$ref": "../../definitions/clanBaseData.json"
+                }
+            },
+            "required": ["clanBaseData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

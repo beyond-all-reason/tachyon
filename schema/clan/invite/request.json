@@ -16,10 +16,9 @@
             "title": "ClanInviteRequestData",
             "type": "object",
             "properties": {
-                "user": { "$ref": "../../definitions/user.json" },
-                "clan": { "$ref": "../../definitions/clan.json" }
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
-            "required": ["user", "clan"]
+            "required": ["userId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

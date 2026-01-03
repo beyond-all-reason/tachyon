@@ -1,8 +1,6 @@
-# Clan
+Clans are a permanent kind of [party](https://github.com/beyond-all-reason/tachyon/blob/master/docs/schema/party.md) with additional features.
 
-Clans are a permanent kind of party with additional features.
-
-A clan has a profil which includes several information like tag, name, description. The following use-case diagrams gives an overview about the topics which has to be handled with this schema:
+A clan has a profil which includes several information like tag, name, description.
 
 ### Manage clan
 
