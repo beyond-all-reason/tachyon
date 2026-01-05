@@ -145,15 +145,21 @@ export interface UserInfoRequestData {
     "status": "success",
     "data": {
         "userId": "351",
-        "username": "minim ad",
-        "displayName": "adipisicing",
+        "username": "enim ad in minim est",
+        "displayName": "culpa exercitation Lorem cillum fugiat",
         "clanBaseData": null,
-        "countryCode": "enim",
-        "status": "menu",
+        "countryCode": "incididunt dolore est enim",
+        "status": "offline",
         "rating": {
-            "value": 84891366.95861816
+            "value": -90001225.47149658
         },
-        "roles": []
+        "roles": [
+            "contributor",
+            "tournament_winner",
+            "admin",
+            "tournament_caster",
+            "moderator"
+        ]
     }
 }
 ```
@@ -162,11 +168,6 @@ export interface UserInfoRequestData {
 #### TypeScript Definition
 ```ts
 export type UserId = string;
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 
 export interface UserInfoOkResponse {
@@ -180,13 +181,18 @@ export interface UserInfoOkResponseData {
     userId: UserId;
     username: string;
     displayName: string;
-    clanBaseData: ClanBaseData;
+    clanBaseData: ClanBaseData | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -244,8 +250,8 @@ Sent by the server to inform the client of its own user state. This event should
     "data": {
         "user": {
             "userId": "351",
-            "username": "sunt ea ex minim",
-            "displayName": "Lorem consequat occaecat veniam est",
+            "username": "amet qui cillum occaecat",
+            "displayName": "Lorem pariatur anim minim in",
             "clanBaseData": {
                 "clanId": "12345",
                 "name": "in ut d",
@@ -393,7 +399,7 @@ export type PrivateUser = {
     userId: UserId;
     username: string;
     displayName: string;
-    clanBaseData: ClanBaseData;
+    clanBaseData: ClanBaseData | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
@@ -418,11 +424,6 @@ export type PrivateUser = {
     clanInvites: ClanBaseData[];
 };
 export type UserId = string;
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 export type PartyId = string;
 export type UnixTime = number;
@@ -435,6 +436,11 @@ export interface UserSelfEvent {
 }
 export interface UserSelfEventData {
     user: PrivateUser;
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 export interface PartyState {
     id: PartyId;
@@ -862,7 +868,10 @@ Sent by the server to inform the client of user state changes. User objects shou
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
                             "clanBaseData": {
-                                "$ref": "#/definitions/clanBaseData"
+                                "anyOf": [
+                                    { "$ref": "#/definitions/clanBaseData" },
+                                    { "type": "null" }
+                                ]
                             },
                             "countryCode": { "type": "string" },
                             "status": {
@@ -957,11 +966,6 @@ Sent by the server to inform the client of user state changes. User objects shou
 #### TypeScript Definition
 ```ts
 export type UserId = string;
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 
 export interface UserUpdatedEvent {
@@ -975,7 +979,7 @@ export interface UserUpdatedEventData {
         userId?: UserId;
         username?: string;
         displayName?: string;
-        clanBaseData?: ClanBaseData;
+        clanBaseData?: ClanBaseData | null;
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
         rating?: {
@@ -983,5 +987,10 @@ export interface UserUpdatedEventData {
         };
         roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
     }[];
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 ```

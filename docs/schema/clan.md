@@ -35,8 +35,10 @@ If the clan-leader leaves the clan and he is the last member the clan will be re
 - [kick](#kick)
 - [kicked](#kicked)
 - [leave](#leave)
+- [roleChanged](#rolechanged)
 - [setRole](#setrole)
 - [update](#update)
+- [updated](#updated)
 - [view](#view)
 - [viewList](#viewlist)
 ---
@@ -384,7 +386,11 @@ Create a clan.
     "messageId": "cillum Excepteur consectetur dolore commodo",
     "commandId": "clan/create",
     "data": {
-        "clanBaseData": null
+        "clanBaseData": {
+            "clanId": "12345",
+            "name": "id magna",
+            "tag": "enim"
+        }
     }
 }
 ```
@@ -392,11 +398,6 @@ Create a clan.
 
 #### TypeScript Definition
 ```ts
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 
 export interface ClanCreateRequest {
@@ -407,6 +408,11 @@ export interface ClanCreateRequest {
 }
 export interface ClanCreateRequestData {
     clanBaseData: ClanBaseData;
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 ```
 ### Response
@@ -1031,7 +1037,11 @@ A player has been invited to a clan. Sent to the invited player.
     "messageId": "minim Excepteur Duis",
     "commandId": "clan/invited",
     "data": {
-        "clanBaseData": null
+        "clanBaseData": {
+            "clanId": "12345",
+            "name": "Ut dolore nulla tempor",
+            "tag": "qui"
+        }
     }
 }
 ```
@@ -1039,11 +1049,6 @@ A player has been invited to a clan. Sent to the invited player.
 
 #### TypeScript Definition
 ```ts
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 
 export interface ClanInvitedEvent {
@@ -1054,6 +1059,11 @@ export interface ClanInvitedEvent {
 }
 export interface ClanInvitedEventData {
     clanBaseData: ClanBaseData;
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 ```
 ---
@@ -1257,8 +1267,8 @@ A player was kicked from a clan. Sent to the kicked player.
     "data": {
         "clanBaseData": {
             "clanId": "12345",
-            "name": "mollit anim",
-            "tag": "ea e"
+            "name": "labore irure ut",
+            "tag": "adipi"
         }
     }
 }
@@ -1267,11 +1277,6 @@ A player was kicked from a clan. Sent to the kicked player.
 
 #### TypeScript Definition
 ```ts
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 
 export interface ClanKickedEvent {
@@ -1282,6 +1287,11 @@ export interface ClanKickedEvent {
 }
 export interface ClanKickedEventData {
     clanBaseData: ClanBaseData;
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 ```
 ---
@@ -1430,6 +1440,83 @@ export interface ClanLeaveOkResponse {
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
+---
+
+## RoleChanged
+
+A clan member's role was changed. Sent to affected clan member.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "ClanRoleChangedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "clan/roleChanged" },
+        "data": {
+            "title": "ClanRoleChangedEventData",
+            "type": "object",
+            "properties": {
+                "userId": { "$ref": "#/definitions/userId" },
+                "newRole": { "$ref": "#/definitions/clanRole" }
+            },
+            "required": ["userId", "newRole"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "dolor ullamco sit eiusmod ex",
+    "commandId": "clan/roleChanged",
+    "data": {
+        "userId": "351",
+        "newRole": "leader"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+export type ClanRole = "member" | "coLeader" | "leader";
+
+export interface ClanRoleChangedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "clan/roleChanged";
+    data: ClanRoleChangedEventData;
+}
+export interface ClanRoleChangedEventData {
+    userId: UserId;
+    newRole: ClanRole;
+}
+```
 ---
 
 ## SetRole
@@ -1634,17 +1721,17 @@ Update your clan.
     "commandId": "clan/update",
     "data": {
         "clan": {
-            "description": "reprehenderit tempor",
-            "membersCount": 96739971.63772583,
+            "clanId": "12345",
+            "name": "re",
+            "tag": "qui do",
+            "description": "elit in",
+            "membersCount": 12336695.194244385,
             "members": [
                 {
                     "userId": "351",
-                    "role": "coLeader"
+                    "role": "leader"
                 }
-            ],
-            "clanId": "12345",
-            "name": "i",
-            "tag": "dolor"
+            ]
         }
     }
 }
@@ -1653,11 +1740,11 @@ Update your clan.
 
 #### TypeScript Definition
 ```ts
-export type Clan = ({
+export type Clan = {
     clanId: ClanId;
     name: string;
     tag: string;
-} | null) & {
+} & {
     description?: string;
     membersCount: number;
     members: ClanMember[];
@@ -1755,6 +1842,75 @@ export interface ClanUpdateOkResponse {
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
+---
+
+## Updated
+
+A clan was updated. Sent to all clan members.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "ClanUpdatedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "clan/updated" },
+        "data": {
+            "title": "ClanUpdatedEventData",
+            "type": "object",
+            "properties": { "changeDescription": { "type": "string" } },
+            "required": ["changeDescription"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "enim culpa mollit ipsum",
+    "commandId": "clan/updated",
+    "data": {
+        "changeDescription": "ut ea"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface ClanUpdatedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "clan/updated";
+    data: ClanUpdatedEventData;
+}
+export interface ClanUpdatedEventData {
+    changeDescription: string;
+}
+```
 ---
 
 ## View
@@ -1890,18 +2046,46 @@ export interface ClanViewRequestData {
     "messageId": "nisi est dolore sit",
     "commandId": "clan/view",
     "status": "success",
-    "data": null
+    "data": {
+        "clanId": "12345",
+        "name": "laboris consectetur cillum e",
+        "tag": "conse",
+        "description": "amet ullamco labore",
+        "membersCount": 23929101.22871399,
+        "members": [
+            {
+                "userId": "351",
+                "role": "member"
+            },
+            {
+                "userId": "351",
+                "role": "member"
+            },
+            {
+                "userId": "351",
+                "role": "member"
+            },
+            {
+                "userId": "351",
+                "role": "leader"
+            },
+            {
+                "userId": "351",
+                "role": "member"
+            }
+        ]
+    }
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type ClanViewOkResponseData = ({
+export type ClanViewOkResponseData = {
     clanId: ClanId;
     name: string;
     tag: string;
-} | null) & {
+} & {
     description?: string;
     membersCount: number;
     members: ClanMember[];
@@ -2055,15 +2239,23 @@ export interface ClanViewListRequest {
         "clansBaseData": [
             {
                 "clanId": "12345",
-                "name": "nulla dolor amet",
-                "tag": "sit d"
+                "name": "ex Duis do ",
+                "tag": "sit"
             },
-            null,
-            null,
             {
                 "clanId": "12345",
-                "name": "ex",
-                "tag": "et v"
+                "name": "null",
+                "tag": "qui "
+            },
+            {
+                "clanId": "12345",
+                "name": "sint irure labore",
+                "tag": "nost"
+            },
+            {
+                "clanId": "12345",
+                "name": "qui amet ad",
+                "tag": "Exce"
             }
         ]
     }
@@ -2073,11 +2265,6 @@ export interface ClanViewListRequest {
 
 #### TypeScript Definition
 ```ts
-export type ClanBaseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} | null;
 export type ClanId = string;
 
 export interface ClanViewListOkResponse {
@@ -2089,6 +2276,11 @@ export interface ClanViewListOkResponse {
 }
 export interface ClanViewListOkResponseData {
     clansBaseData: ClanBaseData[];
+}
+export interface ClanBaseData {
+    clanId: ClanId;
+    name: string;
+    tag: string;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`

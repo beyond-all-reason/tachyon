@@ -91,22 +91,13 @@
             ]
         },
         "clanBaseData": {
-            "anyOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "clanId": { "$ref": "#/definitions/clanId" },
-                        "name": { "type": "string", "maxLength": 30 },
-                        "tag": {
-                            "type": "string",
-                            "minLength": 3,
-                            "maxLength": 6
-                        }
-                    },
-                    "required": ["clanId", "name", "tag"]
-                },
-                { "type": "null" }
-            ]
+            "type": "object",
+            "properties": {
+                "clanId": { "$ref": "#/definitions/clanId" },
+                "name": { "type": "string", "maxLength": 30 },
+                "tag": { "type": "string", "minLength": 3, "maxLength": 6 }
+            },
+            "required": ["clanId", "name", "tag"]
         },
         "clanId": { "type": "string", "examples": ["12345"] },
         "clanMember": {
@@ -552,7 +543,12 @@
                 "userId": { "$ref": "#/definitions/userId" },
                 "username": { "type": "string" },
                 "displayName": { "type": "string" },
-                "clanBaseData": { "$ref": "#/definitions/clanBaseData" },
+                "clanBaseData": {
+                    "anyOf": [
+                        { "$ref": "#/definitions/clanBaseData" },
+                        { "type": "null" }
+                    ]
+                },
                 "countryCode": { "type": "string" },
                 "status": { "enum": ["offline", "menu", "playing", "lobby"] },
                 "rating": {
@@ -2390,6 +2386,30 @@
             ]
         },
         {
+            "title": "ClanRoleChangedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/roleChanged" },
+                "data": {
+                    "title": "ClanRoleChangedEventData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "newRole": { "$ref": "#/definitions/clanRole" }
+                    },
+                    "required": ["userId", "newRole"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "ClanSetRoleRequest",
             "tachyon": {
                 "source": "user",
@@ -2527,6 +2547,27 @@
                     ]
                 }
             ]
+        },
+        {
+            "title": "ClanUpdatedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/updated" },
+                "data": {
+                    "title": "ClanUpdatedEventData",
+                    "type": "object",
+                    "properties": { "changeDescription": { "type": "string" } },
+                    "required": ["changeDescription"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "ClanViewRequest",
@@ -6586,7 +6627,12 @@
                                     "username": { "type": "string" },
                                     "displayName": { "type": "string" },
                                     "clanBaseData": {
-                                        "$ref": "#/definitions/clanBaseData"
+                                        "anyOf": [
+                                            {
+                                                "$ref": "#/definitions/clanBaseData"
+                                            },
+                                            { "type": "null" }
+                                        ]
                                     },
                                     "countryCode": { "type": "string" },
                                     "status": {

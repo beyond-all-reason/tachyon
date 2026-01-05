@@ -277,7 +277,14 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
             throw new Error(`Definition schema $id does not match the name: ${definitionFile}`);
         }
         // We need to have ternary in mapper below because the schema might have been modified by us already.
-        mapRefs(schema, (ref) => `../definitions/${ref}.json`);
+        mapRefs(schema, (ref) => {
+            // but the ref may have already been "processed". This can happen when a definition
+            // embeds another definition
+            if (ref.endsWith(".json")) {
+                return ref.replace(/.*\/definitions\/(.*)\.json/, "../definitions/$1.json");
+            }
+            return `../definitions/${ref}.json`;
+        });
         definitionsMap[name] = schema;
 
         // We have to clone the schema because we modify it in place and it impacts later lookups

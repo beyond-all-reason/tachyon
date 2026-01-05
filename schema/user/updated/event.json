@@ -27,7 +27,12 @@
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
                             "clanBaseData": {
-                                "$ref": "../../definitions/clanBaseData.json"
+                                "anyOf": [
+                                    {
+                                        "$ref": "../../definitions/clanBaseData.json"
+                                    },
+                                    { "type": "null" }
+                                ]
                             },
                             "countryCode": { "type": "string" },
                             "status": {

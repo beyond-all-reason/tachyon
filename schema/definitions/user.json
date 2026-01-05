@@ -6,7 +6,12 @@
         "userId": { "$ref": "../definitions/userId.json" },
         "username": { "type": "string" },
         "displayName": { "type": "string" },
-        "clanBaseData": { "$ref": "../definitions/clanBaseData.json" },
+        "clanBaseData": {
+            "anyOf": [
+                { "$ref": "../definitions/clanBaseData.json" },
+                { "type": "null" }
+            ]
+        },
         "countryCode": { "type": "string" },
         "status": { "enum": ["offline", "menu", "playing", "lobby"] },
         "rating": {
