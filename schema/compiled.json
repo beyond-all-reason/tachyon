@@ -5204,7 +5204,7 @@
                     "required": ["reason"]
                 }
             },
-            "required": ["type", "messageId", "commandId"]
+            "required": ["type", "messageId", "commandId", "data"]
         },
         {
             "title": "SystemDisconnectResponse",

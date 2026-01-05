@@ -25,6 +25,8 @@ Fetch user info from the server.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/info/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserInfoRequest",
     "tachyon": {
         "source": "user",
@@ -39,7 +41,9 @@ Fetch user info from the server.
         "data": {
             "title": "UserInfoRequestData",
             "type": "object",
-            "properties": { "userId": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "userId": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["userId"]
         }
     },
@@ -85,6 +89,8 @@ export interface UserInfoRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/info/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserInfoResponse",
     "tachyon": {
         "source": "server",
@@ -101,7 +107,7 @@ export interface UserInfoRequestData {
                 "commandId": { "const": "user/info" },
                 "status": { "const": "success" },
                 "data": {
-                    "$ref": "#/definitions/user",
+                    "$ref": "../../definitions/user.json",
                     "title": "UserInfoOkResponseData"
                 }
             },
@@ -209,6 +215,8 @@ Sent by the server to inform the client of its own user state. This event should
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/self/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserSelfEvent",
     "tachyon": {
         "source": "server",
@@ -223,7 +231,9 @@ Sent by the server to inform the client of its own user state. This event should
         "data": {
             "title": "UserSelfEventData",
             "type": "object",
-            "properties": { "user": { "$ref": "#/definitions/privateUser" } },
+            "properties": {
+                "user": { "$ref": "../../definitions/privateUser.json" }
+            },
             "required": ["user"]
         }
     },
@@ -421,6 +431,8 @@ Ask the server to send updates about theses users. A maximum of 100 userIds can 
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/subscribeUpdates/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserSubscribeUpdatesRequest",
     "tachyon": {
         "source": "user",
@@ -438,7 +450,7 @@ Ask the server to send updates about theses users. A maximum of 100 userIds can 
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/userId" },
+                    "items": { "$ref": "../../definitions/userId.json" },
                     "minItems": 1,
                     "maxItems": 100
                 }
@@ -521,6 +533,8 @@ export interface UserSubscribeUpdatesRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/subscribeUpdates/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserSubscribeUpdatesResponse",
     "tachyon": {
         "source": "server",
@@ -608,6 +622,8 @@ Ask the server to stop sending user updates for the given set of userId. This sh
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/unsubscribeUpdates/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserUnsubscribeUpdatesRequest",
     "tachyon": {
         "source": "user",
@@ -625,7 +641,7 @@ Ask the server to stop sending user updates for the given set of userId. This sh
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/userId" },
+                    "items": { "$ref": "../../definitions/userId.json" },
                     "minItems": 1,
                     "maxItems": 100
                 }
@@ -692,6 +708,8 @@ export interface UserUnsubscribeUpdatesRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/unsubscribeUpdates/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserUnsubscribeUpdatesResponse",
     "tachyon": {
         "source": "server",
@@ -778,6 +796,8 @@ Sent by the server to inform the client of user state changes. User objects shou
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/user/updated/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "UserUpdatedEvent",
     "tachyon": {
         "source": "server",
@@ -798,7 +818,9 @@ Sent by the server to inform the client of user state changes. User objects shou
                     "items": {
                         "type": "object",
                         "properties": {
-                            "userId": { "$ref": "#/definitions/userId" },
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            },
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
                             "clanId": {

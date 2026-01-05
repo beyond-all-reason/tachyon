@@ -56,6 +56,8 @@ Cancel queueing for matchmaking.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/cancel/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingCancelRequest",
     "tachyon": {
         "source": "user",
@@ -101,6 +103,8 @@ export interface MatchmakingCancelRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/cancel/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingCancelResponse",
     "tachyon": {
         "source": "server",
@@ -188,6 +192,8 @@ Server may send this event at any point when the user is queuing to indicate tha
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/cancelled/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingCancelledEvent",
     "tachyon": {
         "source": "server",
@@ -267,6 +273,8 @@ Server should send this when there are enough queued players to form a valid bat
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/found/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingFoundEvent",
     "tachyon": {
         "source": "server",
@@ -341,6 +349,8 @@ Server should send this when players ready up using [ready](#ready).
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/foundUpdate/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingFoundUpdateEvent",
     "tachyon": {
         "source": "server",
@@ -410,6 +420,8 @@ Returns all available matchmaking playlists.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/list/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingListRequest",
     "tachyon": {
         "source": "user",
@@ -455,6 +467,8 @@ export interface MatchmakingListRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/list/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingListResponse",
     "tachyon": {
         "source": "server",
@@ -728,6 +742,8 @@ Sent when a found match gets disbanded because a client failed to ready up.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/lost/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingLostEvent",
     "tachyon": {
         "source": "server",
@@ -784,6 +800,8 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/queue/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingQueueRequest",
     "tachyon": {
         "source": "user",
@@ -879,6 +897,8 @@ export interface MatchmakingQueueRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/queue/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingQueueResponse",
     "tachyon": {
         "source": "server",
@@ -969,6 +989,8 @@ Contains some info about the state of the current queue.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/queueUpdate/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingQueueUpdateEvent",
     "tachyon": {
         "source": "server",
@@ -1038,6 +1060,8 @@ Indicate the player has been added to some queues by someone else. This happens 
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/queuesJoined/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingQueuesJoinedEvent",
     "tachyon": {
         "source": "server",
@@ -1119,6 +1143,8 @@ Clients should send this when they are ready to proceed with the found match. If
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/ready/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingReadyRequest",
     "tachyon": {
         "source": "user",
@@ -1164,6 +1190,8 @@ export interface MatchmakingReadyRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/matchmaking/ready/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MatchmakingReadyResponse",
     "tachyon": {
         "source": "server",

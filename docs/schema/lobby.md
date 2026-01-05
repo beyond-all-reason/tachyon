@@ -163,6 +163,8 @@ Add a bot to the specified ally team
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/addBot/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyAddBotRequest",
     "tachyon": {
         "source": "user",
@@ -252,6 +254,8 @@ export interface LobbyAddBotRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/addBot/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyAddBotResponse",
     "tachyon": {
         "source": "server",
@@ -358,6 +362,8 @@ Create a lobby
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/create/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyCreateRequest",
     "tachyon": {
         "source": "user",
@@ -375,7 +381,9 @@ Create a lobby
             "properties": {
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
-                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" }
+                "allyTeamConfig": {
+                    "$ref": "../../definitions/allyTeamConfig.json"
+                }
             },
             "required": ["name", "mapName", "allyTeamConfig"]
         }
@@ -476,6 +484,8 @@ export interface StartBox {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/create/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyCreateResponse",
     "tachyon": {
         "source": "server",
@@ -492,7 +502,7 @@ export interface StartBox {
                 "commandId": { "const": "lobby/create" },
                 "status": { "const": "success" },
                 "data": {
-                    "$ref": "#/definitions/lobbyDetails",
+                    "$ref": "../../definitions/lobbyDetails.json",
                     "title": "LobbyCreateOkResponseData"
                 }
             },
@@ -787,6 +797,8 @@ Join a lobby. On success, get the lobby state and will receive updated events as
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/join/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyJoinRequest",
     "tachyon": {
         "source": "user",
@@ -845,6 +857,8 @@ export interface LobbyJoinRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/join/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyJoinResponse",
     "tachyon": {
         "source": "server",
@@ -861,7 +875,7 @@ export interface LobbyJoinRequestData {
                 "commandId": { "const": "lobby/join" },
                 "status": { "const": "success" },
                 "data": {
-                    "$ref": "#/definitions/lobbyDetails",
+                    "$ref": "../../definitions/lobbyDetails.json",
                     "title": "LobbyJoinOkResponseData"
                 }
             },
@@ -1197,6 +1211,8 @@ Joins the given ally team in an empty team.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/joinAllyTeam/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyJoinAllyTeamRequest",
     "tachyon": {
         "source": "user",
@@ -1255,6 +1271,8 @@ export interface LobbyJoinAllyTeamRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/joinAllyTeam/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyJoinAllyTeamResponse",
     "tachyon": {
         "source": "server",
@@ -1343,6 +1361,8 @@ Joins the waiting queue to play. The server will automatically put the user in t
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/joinQueue/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyJoinQueueRequest",
     "tachyon": {
         "source": "user",
@@ -1388,6 +1408,8 @@ export interface LobbyJoinQueueRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/joinQueue/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyJoinQueueResponse",
     "tachyon": {
         "source": "server",
@@ -1475,6 +1497,8 @@ Leave the lobby, also unsubscribe from any update
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/leave/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyLeaveRequest",
     "tachyon": {
         "source": "user",
@@ -1520,6 +1544,8 @@ export interface LobbyLeaveRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/leave/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyLeaveResponse",
     "tachyon": {
         "source": "server",
@@ -1606,6 +1632,8 @@ Sent by the server when the player is removed from the lobby. Can be kicked/ban 
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/left/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyLeftEvent",
     "tachyon": {
         "source": "server",
@@ -1680,6 +1708,8 @@ Sent by the server to give the client the full list of all lobbies
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/listReset/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyListResetEvent",
     "tachyon": {
         "source": "server",
@@ -1698,7 +1728,9 @@ Sent by the server to give the client the full list of all lobbies
                 "lobbies": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": { "$ref": "#/definitions/lobbyOverview" }
+                        "^(.*)$": {
+                            "$ref": "../../definitions/lobbyOverview.json"
+                        }
                     }
                 }
             },
@@ -1783,6 +1815,8 @@ Sent by the server whenever some lobbies are added, removed or modified.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/listUpdated/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyListUpdatedEvent",
     "tachyon": {
         "source": "server",
@@ -1819,7 +1853,7 @@ Sent by the server whenever some lobbies are added, removed or modified.
                                                     "type": "object",
                                                     "properties": {
                                                         "startedAt": {
-                                                            "$ref": "#/definitions/unixTime"
+                                                            "$ref": "../../definitions/unixTime.json"
                                                         }
                                                     },
                                                     "required": ["startedAt"]
@@ -1919,6 +1953,8 @@ Remove the specified bot from the lobby
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/removeBot/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyRemoveBotRequest",
     "tachyon": {
         "source": "user",
@@ -1977,6 +2013,8 @@ export interface LobbyRemoveBotRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/removeBot/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyRemoveBotResponse",
     "tachyon": {
         "source": "server",
@@ -2065,6 +2103,8 @@ Move the client to the spectator queue. If already in spectator queue, has no ef
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/spectate/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbySpectateRequest",
     "tachyon": {
         "source": "user",
@@ -2110,6 +2150,8 @@ export interface LobbySpectateRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/spectate/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbySpectateResponse",
     "tachyon": {
         "source": "server",
@@ -2197,6 +2239,8 @@ Start the battle for the lobby. If this request succeed players will receive a b
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/startBattle/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyStartBattleRequest",
     "tachyon": {
         "source": "user",
@@ -2242,6 +2286,8 @@ export interface LobbyStartBattleRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/startBattle/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyStartBattleResponse",
     "tachyon": {
         "source": "server",
@@ -2328,6 +2374,8 @@ Ask the server to send updates about lobby list. Idempotent, subscribing multipl
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/subscribeList/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbySubscribeListRequest",
     "tachyon": {
         "source": "user",
@@ -2373,6 +2421,8 @@ export interface LobbySubscribeListRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/subscribeList/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbySubscribeListResponse",
     "tachyon": {
         "source": "server",
@@ -2459,6 +2509,8 @@ Ask the server to stop sending updates about lobby list. Idempotent, if not subs
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/unsubscribeList/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUnsubscribeListRequest",
     "tachyon": {
         "source": "user",
@@ -2504,6 +2556,8 @@ export interface LobbyUnsubscribeListRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/unsubscribeList/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUnsubscribeListResponse",
     "tachyon": {
         "source": "server",
@@ -2590,6 +2644,8 @@ Update some properties of the lobby the player is in.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/update/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdateRequest",
     "tachyon": {
         "source": "user",
@@ -2610,7 +2666,9 @@ Update some properties of the lobby the player is in.
                     "type": "string"
                 },
                 "mapName": { "type": "string" },
-                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" }
+                "allyTeamConfig": {
+                    "$ref": "../../definitions/allyTeamConfig.json"
+                }
             }
         }
     },
@@ -2718,6 +2776,8 @@ export interface StartBox {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/update/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdateResponse",
     "tachyon": {
         "source": "server",
@@ -2804,6 +2864,8 @@ Change a bot properties. Some properties like ID and allyTeam can't be changed.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateBot/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdateBotRequest",
     "tachyon": {
         "source": "user",
@@ -2899,6 +2961,8 @@ export interface LobbyUpdateBotRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateBot/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdateBotResponse",
     "tachyon": {
         "source": "server",
@@ -2987,6 +3051,8 @@ Update the player's status
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateClientStatus/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdateClientStatusRequest",
     "tachyon": {
         "source": "user",
@@ -3049,6 +3115,8 @@ export interface LobbyUpdateClientStatusRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updateClientStatus/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdateClientStatusResponse",
     "tachyon": {
         "source": "server",
@@ -3137,6 +3205,8 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/updated/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyUpdatedEvent",
     "tachyon": {
         "source": "server",
@@ -3167,7 +3237,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                     "type": "object",
                                     "properties": {
                                         "startBox": {
-                                            "$ref": "#/definitions/startBox"
+                                            "$ref": "../../definitions/startBox.json"
                                         },
                                         "maxTeams": {
                                             "type": "integer",
@@ -3209,7 +3279,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                     "type": "object",
                                     "properties": {
                                         "id": {
-                                            "$ref": "#/definitions/userId"
+                                            "$ref": "../../definitions/userId.json"
                                         },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
@@ -3239,7 +3309,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                     "type": "object",
                                     "properties": {
                                         "id": {
-                                            "$ref": "#/definitions/userId"
+                                            "$ref": "../../definitions/userId.json"
                                         },
                                         "joinQueuePosition": {
                                             "anyOf": [
@@ -3265,7 +3335,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                     "properties": {
                                         "id": { "type": "string" },
                                         "hostUserId": {
-                                            "$ref": "#/definitions/userId"
+                                            "$ref": "../../definitions/userId.json"
                                         },
                                         "allyTeam": { "type": "string" },
                                         "team": { "type": "string" },
@@ -3325,7 +3395,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                             "properties": {
                                 "id": { "type": "string" },
                                 "startedAt": {
-                                    "$ref": "#/definitions/unixTime"
+                                    "$ref": "../../definitions/unixTime.json"
                                 }
                             },
                             "required": ["id", "startedAt"]
@@ -3341,11 +3411,15 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                 "id": { "type": "string" },
                                 "action": {
                                     "anyOf": [
-                                        { "$ref": "#/definitions/voteActions" },
+                                        {
+                                            "$ref": "../../definitions/voteActions.json"
+                                        },
                                         { "type": "null" }
                                     ]
                                 },
-                                "initiator": { "$ref": "#/definitions/userId" },
+                                "initiator": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
                                 "voters": {
                                     "type": "object",
                                     "patternProperties": {
@@ -3365,7 +3439,9 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         }
                                     }
                                 },
-                                "until": { "$ref": "#/definitions/unixTime" }
+                                "until": {
+                                    "$ref": "../../definitions/unixTime.json"
+                                }
                             },
                             "required": ["id"]
                         },
@@ -3570,6 +3646,8 @@ To let clients know a vote has finished and its outcome
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/voteEnded/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyVoteEndedEvent",
     "tachyon": {
         "source": "server",
@@ -3644,6 +3722,8 @@ export interface LobbyVoteEndedEventData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/voteSubmit/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyVoteSubmitRequest",
     "tachyon": {
         "source": "user",
@@ -3707,6 +3787,8 @@ export interface LobbyVoteSubmitRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/lobby/voteSubmit/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "LobbyVoteSubmitResponse",
     "tachyon": {
         "source": "server",

@@ -21,6 +21,8 @@ When a user client receives this response it should launch the game (spring.exe)
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/battle/start/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "BattleStartRequest",
     "tachyon": {
         "source": "server",
@@ -33,7 +35,7 @@ When a user client receives this response it should launch the game (spring.exe)
         "messageId": { "type": "string" },
         "commandId": { "const": "battle/start" },
         "data": {
-            "$ref": "#/definitions/privateBattle",
+            "$ref": "../../definitions/privateBattle.json",
             "title": "BattleStartRequestData"
         }
     },
@@ -101,6 +103,8 @@ export interface BattleStartRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/battle/start/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "BattleStartResponse",
     "tachyon": {
         "source": "user",
