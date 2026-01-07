@@ -5,25 +5,48 @@
     "tachyon": {
         "source": "user",
         "target": "server",
-        "scopes": ["tachyon.lobby"]
+        "scopes": [
+            "tachyon.lobby"
+        ]
     },
     "type": "object",
     "properties": {
-        "type": { "const": "request" },
-        "messageId": { "type": "string" },
-        "commandId": { "const": "lobby/create" },
+        "type": {
+            "const": "request"
+        },
+        "messageId": {
+            "type": "string"
+        },
+        "commandId": {
+            "const": "lobby/create"
+        },
         "data": {
             "title": "LobbyCreateRequestData",
             "type": "object",
             "properties": {
-                "name": { "type": "string" },
-                "mapName": { "type": "string" },
+                "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 70
+                },
+                "mapName": {
+                    "type": "string"
+                },
                 "allyTeamConfig": {
                     "$ref": "../../definitions/allyTeamConfig.json"
                 }
             },
-            "required": ["name", "mapName", "allyTeamConfig"]
+            "required": [
+                "name",
+                "mapName",
+                "allyTeamConfig"
+            ]
         }
     },
-    "required": ["type", "messageId", "commandId", "data"]
+    "required": [
+        "type",
+        "messageId",
+        "commandId",
+        "data"
+    ]
 }

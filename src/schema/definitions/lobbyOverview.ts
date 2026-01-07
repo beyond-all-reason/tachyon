@@ -5,7 +5,7 @@ import { Nullable } from "@/typebox-utils";
 export const lobbyOverview = Type.Object(
     {
         id: Type.String(),
-        name: Type.String(),
+        name: Type.Ref("lobbyDetails#/properties/name"),
         playerCount: Type.Integer(),
         maxPlayerCount: Type.Integer(),
         mapName: Type.String(),
