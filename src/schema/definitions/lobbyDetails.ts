@@ -5,7 +5,7 @@ import { UnionEnum } from "@/union-enum";
 export const lobbyDetails = Type.Object(
     {
         id: Type.String(),
-        name: Type.String(),
+        name: Type.Ref("lobbyName"),
         mapName: Type.String(),
         engineVersion: Type.String(),
         gameVersion: Type.String(),

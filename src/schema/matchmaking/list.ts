@@ -19,7 +19,7 @@ export default defineEndpoint({
                                 description:
                                     "Opaque version string that uniquely identifies the properties of the queue with this id, including list of required assets versions",
                             }),
-                            name: Type.Ref("lobbyDetails#/properties/name"),
+                            name: Type.String(),
                             numOfTeams: Type.Integer(),
                             teamSize: Type.Integer(),
                             ranked: Type.Boolean(),

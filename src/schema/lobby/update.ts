@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Update some properties of the lobby the player is in.",
     request: {
         data: Type.Object({
-            name: Type.Optional(Type.Ref("lobbyDetails#/properties/name")),
+            name: Type.Optional(Type.Ref("lobbyName")),
             mapName: Type.Optional(Type.String()),
             allyTeamConfig: Type.Optional(Type.Ref("allyTeamConfig")),
         }),

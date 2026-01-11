@@ -5,11 +5,7 @@
     "type": "object",
     "properties": {
         "id": { "type": "string" },
-        "name": {
-            "type": "string",
-            "minLength": 1,
-            "maxLength": 70
-        },
+        "name": { "$ref": "../definitions/lobbyName.json" },
         "mapName": { "type": "string" },
         "engineVersion": { "type": "string" },
         "gameVersion": { "type": "string" },
