@@ -6,7 +6,12 @@
         "userId": { "$ref": "../definitions/userId.json" },
         "username": { "type": "string" },
         "displayName": { "type": "string" },
-        "clanId": { "anyOf": [{ "type": "string" }, { "type": "null" }] },
+        "clanBaseData": {
+            "anyOf": [
+                { "$ref": "../definitions/clanBaseData.json" },
+                { "type": "null" }
+            ]
+        },
         "countryCode": { "type": "string" },
         "status": { "enum": ["offline", "menu", "playing", "lobby"] },
         "rating": {
@@ -33,5 +38,5 @@
             "uniqueItems": true
         }
     },
-    "required": ["userId", "username", "displayName", "clanId", "status"]
+    "required": ["userId", "username", "displayName", "clanBaseData", "status"]
 }
