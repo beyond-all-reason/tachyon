@@ -1870,18 +1870,10 @@ One ore more clan properties were updated. Sent to all clan members.
             "title": "ClanUpdatedEventData",
             "type": "object",
             "properties": {
-                "updateTypes": {
-                    "type": "array",
-                    "items": {
-                        "anyOf": [
-                            { "const": "description" },
-                            { "const": "tag" },
-                            { "const": "name" }
-                        ]
-                    }
-                }
-            },
-            "required": ["updateTypes"]
+                "description": { "type": "string", "maxLength": 500 },
+                "name": { "type": "string", "maxLength": 30 },
+                "tag": { "type": "string", "minLength": 3, "maxLength": 6 }
+            }
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1899,7 +1891,9 @@ One ore more clan properties were updated. Sent to all clan members.
     "messageId": "enim culpa mollit ipsum",
     "commandId": "clan/updated",
     "data": {
-        "updateTypes": []
+        "description": "occaecat magna aute",
+        "name": "aliqua ea eu ullamco aute",
+        "tag": "null"
     }
 }
 ```
@@ -1914,7 +1908,9 @@ export interface ClanUpdatedEvent {
     data: ClanUpdatedEventData;
 }
 export interface ClanUpdatedEventData {
-    updateTypes: ("description" | "tag" | "name")[];
+    description?: string;
+    name?: string;
+    tag?: string;
 }
 ```
 ---

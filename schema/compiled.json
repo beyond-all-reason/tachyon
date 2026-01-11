@@ -2561,18 +2561,14 @@
                     "title": "ClanUpdatedEventData",
                     "type": "object",
                     "properties": {
-                        "updateTypes": {
-                            "type": "array",
-                            "items": {
-                                "anyOf": [
-                                    { "const": "description" },
-                                    { "const": "tag" },
-                                    { "const": "name" }
-                                ]
-                            }
+                        "description": { "type": "string", "maxLength": 500 },
+                        "name": { "type": "string", "maxLength": 30 },
+                        "tag": {
+                            "type": "string",
+                            "minLength": 3,
+                            "maxLength": 6
                         }
-                    },
-                    "required": ["updateTypes"]
+                    }
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
