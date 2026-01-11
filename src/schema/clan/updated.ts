@@ -10,9 +10,9 @@ export default defineEndpoint({
         data: Type.Object({
             updateTypes: Type.Array(
                 Type.Enum({
-                    Description: "description",
-                    Tag: "tag",
-                    Name: "name",
+                    description: "description",
+                    tag: "tag",
+                    name: "name",
                 })
             ),
         }),
