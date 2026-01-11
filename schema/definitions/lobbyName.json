@@ -1,0 +1,7 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/lobbyName.json",
+    "title": "LobbyName",
+    "description": "Name of a lobby",
+    "type": "string",
+    "maxLength": 70
+}
