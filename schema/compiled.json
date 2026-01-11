@@ -2330,10 +2330,7 @@
                 "data": {
                     "title": "ClanLeaveRequestData",
                     "type": "object",
-                    "properties": {
-                        "userId": { "$ref": "#/definitions/userId" }
-                    },
-                    "required": ["userId"]
+                    "properties": {}
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2563,8 +2560,19 @@
                 "data": {
                     "title": "ClanUpdatedEventData",
                     "type": "object",
-                    "properties": { "changeDescription": { "type": "string" } },
-                    "required": ["changeDescription"]
+                    "properties": {
+                        "updateTypes": {
+                            "type": "array",
+                            "items": {
+                                "anyOf": [
+                                    { "const": "description" },
+                                    { "const": "tag" },
+                                    { "const": "name" }
+                                ]
+                            }
+                        }
+                    },
+                    "required": ["updateTypes"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

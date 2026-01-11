@@ -5,10 +5,16 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "server",
     target: "user",
-    description: "A clan was updated. Sent to all clan members.",
+    description: "One ore more clan properties were updated. Sent to all clan members.",
     event: {
         data: Type.Object({
-            changeDescription: Type.String(),
+            updateTypes: Type.Array(
+                Type.Enum({
+                    Description: "description",
+                    Tag: "tag",
+                    Name: "name",
+                })
+            ),
         }),
     },
 });

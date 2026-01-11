@@ -7,9 +7,7 @@ export default defineEndpoint({
     target: "server",
     description: "Leave your clan.",
     request: {
-        data: Type.Object({
-            userId: Type.Ref("userId"),
-        }),
+        data: Type.Object({}),
     },
     response: [{ status: "success" }],
 });

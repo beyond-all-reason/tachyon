@@ -1326,8 +1326,7 @@ Leave your clan.
         "data": {
             "title": "ClanLeaveRequestData",
             "type": "object",
-            "properties": { "userId": { "$ref": "#/definitions/userId" } },
-            "required": ["userId"]
+            "properties": {}
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1345,7 +1344,7 @@ Leave your clan.
     "messageId": "fugiat consequat nulla Excepteur labore",
     "commandId": "clan/leave",
     "data": {
-        "userId": "351"
+        "magna4d3": 82327675.81939697
     }
 }
 ```
@@ -1353,17 +1352,13 @@ Leave your clan.
 
 #### TypeScript Definition
 ```ts
-export type UserId = string;
-
 export interface ClanLeaveRequest {
     type: "request";
     messageId: string;
     commandId: "clan/leave";
     data: ClanLeaveRequestData;
 }
-export interface ClanLeaveRequestData {
-    userId: UserId;
-}
+export interface ClanLeaveRequestData {}
 ```
 ### Response
 
@@ -1846,7 +1841,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 ## Updated
 
-A clan was updated. Sent to all clan members.
+One ore more clan properties were updated. Sent to all clan members.
 
 - Endpoint Type: **Event**
 - Source: **Server**
@@ -1874,8 +1869,19 @@ A clan was updated. Sent to all clan members.
         "data": {
             "title": "ClanUpdatedEventData",
             "type": "object",
-            "properties": { "changeDescription": { "type": "string" } },
-            "required": ["changeDescription"]
+            "properties": {
+                "updateTypes": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            { "const": "description" },
+                            { "const": "tag" },
+                            { "const": "name" }
+                        ]
+                    }
+                }
+            },
+            "required": ["updateTypes"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1893,7 +1899,7 @@ A clan was updated. Sent to all clan members.
     "messageId": "enim culpa mollit ipsum",
     "commandId": "clan/updated",
     "data": {
-        "changeDescription": "ut ea"
+        "updateTypes": []
     }
 }
 ```
@@ -1908,7 +1914,7 @@ export interface ClanUpdatedEvent {
     data: ClanUpdatedEventData;
 }
 export interface ClanUpdatedEventData {
-    changeDescription: string;
+    updateTypes: ("description" | "tag" | "name")[];
 }
 ```
 ---
