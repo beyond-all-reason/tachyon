@@ -17,7 +17,11 @@
             "type": "object",
             "properties": {
                 "clanBaseData": {
-                    "$ref": "../../definitions/clanBaseData.json"
+                    "target": "Omit",
+                    "parameters": [
+                        { "$ref": "../../definitions/clanBaseData.json" },
+                        { "const": "clanId" }
+                    ]
                 }
             },
             "required": ["clanBaseData"]

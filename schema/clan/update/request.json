@@ -15,7 +15,21 @@
         "data": {
             "title": "ClanUpdateRequestData",
             "type": "object",
-            "properties": { "clan": { "$ref": "../../definitions/clan.json" } },
+            "properties": {
+                "clan": {
+                    "target": "Omit",
+                    "parameters": [
+                        { "$ref": "../../definitions/clan.json" },
+                        {
+                            "anyOf": [
+                                { "const": "clanId" },
+                                { "const": "membersCount" },
+                                { "const": "members" }
+                            ]
+                        }
+                    ]
+                }
+            },
             "required": ["clan"]
         }
     },

@@ -1920,7 +1920,13 @@
                     "title": "ClanCreateRequestData",
                     "type": "object",
                     "properties": {
-                        "clanBaseData": { "$ref": "#/definitions/clanBaseData" }
+                        "clanBaseData": {
+                            "target": "Omit",
+                            "parameters": [
+                                { "$ref": "#/definitions/clanBaseData" },
+                                { "const": "clanId" }
+                            ]
+                        }
                     },
                     "required": ["clanBaseData"]
                 }
@@ -2492,7 +2498,21 @@
                 "data": {
                     "title": "ClanUpdateRequestData",
                     "type": "object",
-                    "properties": { "clan": { "$ref": "#/definitions/clan" } },
+                    "properties": {
+                        "clan": {
+                            "target": "Omit",
+                            "parameters": [
+                                { "$ref": "#/definitions/clan" },
+                                {
+                                    "anyOf": [
+                                        { "const": "clanId" },
+                                        { "const": "membersCount" },
+                                        { "const": "members" }
+                                    ]
+                                }
+                            ]
+                        }
+                    },
                     "required": ["clan"]
                 }
             },

@@ -7,7 +7,9 @@ export default defineEndpoint({
     target: "server",
     description: "Update your clan.",
     request: {
-        data: Type.Object({ clan: Type.Ref("clan") }),
+        data: Type.Object({
+            clan: Type.Omit(Type.Ref("clan"), ["clanId", "membersCount", "members"]),
+        }),
     },
     response: [{ status: "success" }],
 });

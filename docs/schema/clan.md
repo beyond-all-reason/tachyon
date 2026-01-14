@@ -366,7 +366,13 @@ Create a clan.
             "title": "ClanCreateRequestData",
             "type": "object",
             "properties": {
-                "clanBaseData": { "$ref": "#/definitions/clanBaseData" }
+                "clanBaseData": {
+                    "target": "Omit",
+                    "parameters": [
+                        { "$ref": "#/definitions/clanBaseData" },
+                        { "const": "clanId" }
+                    ]
+                }
             },
             "required": ["clanBaseData"]
         }
@@ -387,9 +393,15 @@ Create a clan.
     "commandId": "clan/create",
     "data": {
         "clanBaseData": {
-            "clanId": "12345",
-            "name": "id magna",
-            "tag": "enim"
+            "target": "Omit",
+            "parameters": [
+                {
+                    "clanId": "12345",
+                    "name": "id magna",
+                    "tag": "enim"
+                },
+                "clanId"
+            ]
         }
     }
 }
@@ -398,8 +410,6 @@ Create a clan.
 
 #### TypeScript Definition
 ```ts
-export type ClanId = string;
-
 export interface ClanCreateRequest {
     type: "request";
     messageId: string;
@@ -407,12 +417,9 @@ export interface ClanCreateRequest {
     data: ClanCreateRequestData;
 }
 export interface ClanCreateRequestData {
-    clanBaseData: ClanBaseData;
-}
-export interface ClanBaseData {
-    clanId: ClanId;
-    name: string;
-    tag: string;
+    clanBaseData: {
+        [k: string]: unknown;
+    };
 }
 ```
 ### Response
@@ -1696,7 +1703,21 @@ Update your clan.
         "data": {
             "title": "ClanUpdateRequestData",
             "type": "object",
-            "properties": { "clan": { "$ref": "#/definitions/clan" } },
+            "properties": {
+                "clan": {
+                    "target": "Omit",
+                    "parameters": [
+                        { "$ref": "#/definitions/clan" },
+                        {
+                            "anyOf": [
+                                { "const": "clanId" },
+                                { "const": "membersCount" },
+                                { "const": "members" }
+                            ]
+                        }
+                    ]
+                }
+            },
             "required": ["clan"]
         }
     },
@@ -1716,16 +1737,22 @@ Update your clan.
     "commandId": "clan/update",
     "data": {
         "clan": {
-            "clanId": "12345",
-            "name": "re",
-            "tag": "qui do",
-            "description": "elit in",
-            "membersCount": 12336695.194244385,
-            "members": [
+            "target": "Omit",
+            "parameters": [
                 {
-                    "userId": "351",
-                    "role": "leader"
-                }
+                    "clanId": "12345",
+                    "name": "re",
+                    "tag": "qui do",
+                    "description": "elit in",
+                    "membersCount": 12336695.194244385,
+                    "members": [
+                        {
+                            "userId": "351",
+                            "role": "leader"
+                        }
+                    ]
+                },
+                "membersCount"
             ]
         }
     }
@@ -1735,19 +1762,6 @@ Update your clan.
 
 #### TypeScript Definition
 ```ts
-export type Clan = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} & {
-    description?: string;
-    membersCount: number;
-    members: ClanMember[];
-};
-export type ClanId = string;
-export type UserId = string;
-export type ClanRole = "member" | "coLeader" | "leader";
-
 export interface ClanUpdateRequest {
     type: "request";
     messageId: string;
@@ -1755,11 +1769,9 @@ export interface ClanUpdateRequest {
     data: ClanUpdateRequestData;
 }
 export interface ClanUpdateRequestData {
-    clan: Clan;
-}
-export interface ClanMember {
-    userId: UserId;
-    role: ClanRole;
+    clan: {
+        [k: string]: unknown;
+    };
 }
 ```
 ### Response
