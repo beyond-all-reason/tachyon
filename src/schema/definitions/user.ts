@@ -8,7 +8,7 @@ export const user = Type.Object(
         userId: Type.Ref("userId"),
         username: Type.String(),
         displayName: Type.String(),
-        clanId: Nullable(Type.String()),
+        clanBaseData: Nullable(Type.Ref("clanBaseData")),
         countryCode: Type.Optional(Type.String()),
         status: UnionEnum(["offline", "menu", "playing", "lobby"]),
         rating: Type.Optional(
