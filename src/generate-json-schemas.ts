@@ -118,7 +118,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     commandId: Type.Literal(commandId),
                 };
                 if (schemaConfig.request.data) {
-                    props.data = schemaConfig.request.data;
+                    props.data = structuredClone(schemaConfig.request.data);
                     props.data.title ??= baseTypeName + "RequestData";
                 }
                 const requestSchema = Type.Object(props, {
@@ -174,7 +174,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                             };
                             const title = schema.title ?? baseTypeName + "OkResponse";
                             if (schema.data) {
-                                props.data = schema.data;
+                                props.data = structuredClone(schema.data);
                                 props.data.title ??= title + "Data";
                             }
                             return Type.Object(props, { title });
@@ -225,7 +225,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                     commandId: Type.Literal(commandId),
                 };
                 if (schemaConfig.event.data) {
-                    props.data = schemaConfig.event.data;
+                    props.data = structuredClone(schemaConfig.event.data);
                     props.data.title ??= baseTypeName + "EventData";
                 }
                 const eventSchema = Type.Object(props, {
@@ -312,7 +312,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
     const individualSchemas: TSchema[] = [];
 
     objectKeys(commandConfigs).forEach((commandId) => {
-        const commandConfig = commandConfigs[commandId];
+        const commandConfig = structuredClone(commandConfigs[commandId]);
         const [serviceId, endpointId] = commandId.split("/") as [string, string];
 
         if (commandConfig.type === "requestResponse") {

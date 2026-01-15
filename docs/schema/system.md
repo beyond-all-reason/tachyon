@@ -22,6 +22,8 @@ Ask the server to terminate the connection.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/system/disconnect/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "SystemDisconnectRequest",
     "tachyon": {
         "source": "user",
@@ -40,7 +42,7 @@ Ask the server to terminate the connection.
             "required": ["reason"]
         }
     },
-    "required": ["type", "messageId", "commandId"]
+    "required": ["type", "messageId", "commandId", "data"]
 }
 
 ```
@@ -52,10 +54,10 @@ Ask the server to terminate the connection.
 ```json
 {
     "type": "request",
-    "messageId": "amet aliqua Duis irure tempor",
+    "messageId": "mollit magna dolore",
     "commandId": "system/disconnect",
     "data": {
-        "reason": "laborum consequat irure ullamco"
+        "reason": "dolor non ullamco"
     }
 }
 ```
@@ -67,7 +69,7 @@ export interface SystemDisconnectRequest {
     type: "request";
     messageId: string;
     commandId: "system/disconnect";
-    data?: SystemDisconnectRequestData;
+    data: SystemDisconnectRequestData;
 }
 export interface SystemDisconnectRequestData {
     reason: string;
@@ -80,6 +82,8 @@ export interface SystemDisconnectRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/system/disconnect/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "SystemDisconnectResponse",
     "tachyon": {
         "source": "server",
@@ -166,6 +170,8 @@ Get server stats such as user count.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/system/serverStats/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "SystemServerStatsRequest",
     "tachyon": {
         "source": "user",
@@ -211,6 +217,8 @@ export interface SystemServerStatsRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/system/serverStats/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "SystemServerStatsResponse",
     "tachyon": {
         "source": "server",

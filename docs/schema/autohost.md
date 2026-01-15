@@ -76,6 +76,8 @@ Request to add a new player to the battle.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/addPlayer/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostAddPlayerRequest",
     "tachyon": {
         "source": "server",
@@ -92,7 +94,7 @@ Request to add a new player to the battle.
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "userId": { "$ref": "#/definitions/userId" },
+                "userId": { "$ref": "../../definitions/userId.json" },
                 "name": { "type": "string" },
                 "password": { "type": "string" }
             },
@@ -147,6 +149,8 @@ export interface AutohostAddPlayerRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/addPlayer/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostAddPlayerResponse",
     "tachyon": {
         "source": "autohost",
@@ -235,6 +239,8 @@ Return success instantly and autohost triggers the installation of the engine in
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/installEngine/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostInstallEngineRequest",
     "tachyon": {
         "source": "server",
@@ -299,6 +305,8 @@ export interface AutohostInstallEngineRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/installEngine/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostInstallEngineResponse",
     "tachyon": {
         "source": "autohost",
@@ -385,6 +393,8 @@ Kick a player from a battle.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/kickPlayer/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostKickPlayerRequest",
     "tachyon": {
         "source": "server",
@@ -401,7 +411,7 @@ Kick a player from a battle.
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "userId": { "$ref": "#/definitions/userId" }
+                "userId": { "$ref": "../../definitions/userId.json" }
             },
             "required": ["battleId", "userId"]
         }
@@ -450,6 +460,8 @@ export interface AutohostKickPlayerRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/kickPlayer/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostKickPlayerResponse",
     "tachyon": {
         "source": "autohost",
@@ -536,6 +548,8 @@ Request to kill a battle.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/kill/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostKillRequest",
     "tachyon": {
         "source": "server",
@@ -596,6 +610,8 @@ export interface AutohostKillRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/kill/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostKillResponse",
     "tachyon": {
         "source": "autohost",
@@ -682,6 +698,8 @@ Mute a player in a battle.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/mutePlayer/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostMutePlayerRequest",
     "tachyon": {
         "source": "server",
@@ -698,7 +716,7 @@ Mute a player in a battle.
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "userId": { "$ref": "#/definitions/userId" },
+                "userId": { "$ref": "../../definitions/userId.json" },
                 "chat": { "type": "boolean" },
                 "draw": { "type": "boolean" }
             },
@@ -753,6 +771,8 @@ export interface AutohostMutePlayerRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/mutePlayer/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostMutePlayerResponse",
     "tachyon": {
         "source": "autohost",
@@ -839,6 +859,8 @@ Send a custom command for the autohost to execute.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/sendCommand/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSendCommandRequest",
     "tachyon": {
         "source": "server",
@@ -907,6 +929,8 @@ export interface AutohostSendCommandRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/sendCommand/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSendCommandResponse",
     "tachyon": {
         "source": "autohost",
@@ -993,6 +1017,8 @@ Send a message for the autohost to display to players.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/sendMessage/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSendMessageRequest",
     "tachyon": {
         "source": "server",
@@ -1056,6 +1082,8 @@ export interface AutohostSendMessageRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/sendMessage/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSendMessageResponse",
     "tachyon": {
         "source": "autohost",
@@ -1142,6 +1170,8 @@ Force players to become spectators in a battle.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/specPlayers/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSpecPlayersRequest",
     "tachyon": {
         "source": "server",
@@ -1160,7 +1190,7 @@ Force players to become spectators in a battle.
                 "battleId": { "type": "string", "format": "uuid" },
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/userId" }
+                    "items": { "$ref": "../../definitions/userId.json" }
                 }
             },
             "required": ["battleId", "userIds"]
@@ -1215,6 +1245,8 @@ export interface AutohostSpecPlayersRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/specPlayers/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSpecPlayersResponse",
     "tachyon": {
         "source": "autohost",
@@ -1301,6 +1333,8 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/start/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostStartRequest",
     "tachyon": {
         "source": "server",
@@ -1332,15 +1366,17 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                     "pattern": "^[a-fA-F0-9]{128}$"
                 },
                 "startDelay": { "type": "integer" },
-                "startPosType": { "$ref": "#/definitions/startPosType" },
+                "startPosType": {
+                    "$ref": "../../definitions/startPosType.json"
+                },
                 "allyTeams": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/allyTeam" },
+                    "items": { "$ref": "../../definitions/allyTeam.json" },
                     "minItems": 1
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/player" }
+                    "items": { "$ref": "../../definitions/player.json" }
                 },
                 "mapOptions": {
                     "type": "object",
@@ -2170,6 +2206,8 @@ export interface StartBox {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/start/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostStartResponse",
     "tachyon": {
         "source": "autohost",
@@ -2292,6 +2330,8 @@ This event should be sent to the server on connection and whenever any of the st
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/status/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostStatusEvent",
     "tachyon": {
         "source": "autohost",
@@ -2386,6 +2426,8 @@ Ask the autohost to send us updates about its battles. Autohost will send all up
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/subscribeUpdates/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSubscribeUpdatesRequest",
     "tachyon": {
         "source": "server",
@@ -2400,7 +2442,9 @@ Ask the autohost to send us updates about its battles. Autohost will send all up
         "data": {
             "title": "AutohostSubscribeUpdatesRequestData",
             "type": "object",
-            "properties": { "since": { "$ref": "#/definitions/unixTime" } },
+            "properties": {
+                "since": { "$ref": "../../definitions/unixTime.json" }
+            },
             "required": ["since"]
         }
     },
@@ -2446,6 +2490,8 @@ export interface AutohostSubscribeUpdatesRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/subscribeUpdates/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostSubscribeUpdatesResponse",
     "tachyon": {
         "source": "autohost",
@@ -2532,6 +2578,8 @@ Inform the server of battle updates.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/autohost/update/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "AutohostUpdateEvent",
     "tachyon": {
         "source": "autohost",
@@ -2548,7 +2596,7 @@ Inform the server of battle updates.
             "type": "object",
             "properties": {
                 "battleId": { "type": "string", "format": "uuid" },
-                "time": { "$ref": "#/definitions/unixTime" },
+                "time": { "$ref": "../../definitions/unixTime.json" },
                 "update": {
                     "anyOf": [
                         {
@@ -2564,7 +2612,9 @@ Inform the server of battle updates.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "finished" },
-                                "userId": { "$ref": "#/definitions/userId" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
                                 "winningAllyTeams": {
                                     "description": "Ally team IDs",
                                     "type": "array",
@@ -2621,7 +2671,9 @@ Inform the server of battle updates.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player_joined" },
-                                "userId": { "$ref": "#/definitions/userId" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
                                 "playerNumber": {
                                     "description": "Player number in the game, can be useful for custom commands",
                                     "type": "integer"
@@ -2634,7 +2686,9 @@ Inform the server of battle updates.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player_left" },
-                                "userId": { "$ref": "#/definitions/userId" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
                                 "reason": {
                                     "enum": [
                                         "lost_connection",
@@ -2653,7 +2707,7 @@ Inform the server of battle updates.
                                     "properties": {
                                         "type": { "const": "player_chat" },
                                         "userId": {
-                                            "$ref": "#/definitions/userId"
+                                            "$ref": "../../definitions/userId.json"
                                         },
                                         "message": { "type": "string" },
                                         "destination": {
@@ -2676,12 +2730,12 @@ Inform the server of battle updates.
                                     "properties": {
                                         "type": { "const": "player_chat" },
                                         "userId": {
-                                            "$ref": "#/definitions/userId"
+                                            "$ref": "../../definitions/userId.json"
                                         },
                                         "message": { "type": "string" },
                                         "destination": { "const": "player" },
                                         "toUserId": {
-                                            "$ref": "#/definitions/userId"
+                                            "$ref": "../../definitions/userId.json"
                                         }
                                     },
                                     "required": [
@@ -2699,7 +2753,9 @@ Inform the server of battle updates.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player_defeated" },
-                                "userId": { "$ref": "#/definitions/userId" }
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
                             },
                             "required": ["type", "userId"]
                         },
@@ -2709,7 +2765,9 @@ Inform the server of battle updates.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "luamsg" },
-                                "userId": { "$ref": "#/definitions/userId" },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                },
                                 "script": { "enum": ["ui", "game", "rules"] },
                                 "uiMode": {
                                     "description": "Set when script is 'ui'",

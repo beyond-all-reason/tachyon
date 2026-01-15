@@ -42,6 +42,8 @@ Accept an incoming friend request
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/acceptRequest/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendAcceptRequestRequest",
     "tachyon": {
         "source": "user",
@@ -56,7 +58,9 @@ Accept an incoming friend request
         "data": {
             "title": "FriendAcceptRequestRequestData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -102,6 +106,8 @@ export interface FriendAcceptRequestRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/acceptRequest/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendAcceptRequestResponse",
     "tachyon": {
         "source": "server",
@@ -190,6 +196,8 @@ Cancel an invite sent to someone
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/cancelRequest/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendCancelRequestRequest",
     "tachyon": {
         "source": "user",
@@ -204,7 +212,7 @@ Cancel an invite sent to someone
         "data": {
             "title": "FriendCancelRequestRequestData",
             "type": "object",
-            "properties": { "to": { "$ref": "#/definitions/userId" } },
+            "properties": { "to": { "$ref": "../../definitions/userId.json" } },
             "required": ["to"]
         }
     },
@@ -250,6 +258,8 @@ export interface FriendCancelRequestRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/cancelRequest/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendCancelRequestResponse",
     "tachyon": {
         "source": "server",
@@ -337,6 +347,8 @@ Retrieve the status of your friendlist
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/list/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendListRequest",
     "tachyon": {
         "source": "user",
@@ -382,6 +394,8 @@ export interface FriendListRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/list/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendListResponse",
     "tachyon": {
         "source": "server",
@@ -407,10 +421,10 @@ export interface FriendListRequest {
                                 "type": "object",
                                 "properties": {
                                     "userId": {
-                                        "$ref": "#/definitions/userId"
+                                        "$ref": "../../definitions/userId.json"
                                     },
                                     "addedAt": {
-                                        "$ref": "#/definitions/unixTime"
+                                        "$ref": "../../definitions/unixTime.json"
                                     }
                                 },
                                 "required": ["userId", "addedAt"]
@@ -421,9 +435,11 @@ export interface FriendListRequest {
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "to": { "$ref": "#/definitions/userId" },
+                                    "to": {
+                                        "$ref": "../../definitions/userId.json"
+                                    },
                                     "sentAt": {
-                                        "$ref": "#/definitions/unixTime"
+                                        "$ref": "../../definitions/unixTime.json"
                                     }
                                 },
                                 "required": ["to", "sentAt"]
@@ -434,9 +450,11 @@ export interface FriendListRequest {
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "from": { "$ref": "#/definitions/userId" },
+                                    "from": {
+                                        "$ref": "../../definitions/userId.json"
+                                    },
                                     "sentAt": {
-                                        "$ref": "#/definitions/unixTime"
+                                        "$ref": "../../definitions/unixTime.json"
                                     }
                                 },
                                 "required": ["from", "sentAt"]
@@ -578,6 +596,8 @@ Reject a friend request
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/rejectRequest/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRejectRequestRequest",
     "tachyon": {
         "source": "user",
@@ -592,7 +612,9 @@ Reject a friend request
         "data": {
             "title": "FriendRejectRequestRequestData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -638,6 +660,8 @@ export interface FriendRejectRequestRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/rejectRequest/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRejectRequestResponse",
     "tachyon": {
         "source": "server",
@@ -726,6 +750,8 @@ Remove a player from your friendlist
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/remove/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRemoveRequest",
     "tachyon": {
         "source": "user",
@@ -740,7 +766,9 @@ Remove a player from your friendlist
         "data": {
             "title": "FriendRemoveRequestData",
             "type": "object",
-            "properties": { "userId": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "userId": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["userId"]
         }
     },
@@ -786,6 +814,8 @@ export interface FriendRemoveRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/remove/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRemoveResponse",
     "tachyon": {
         "source": "server",
@@ -874,6 +904,8 @@ Notify the player that they are no longer friend with a player. Typically, that 
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/removed/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRemovedEvent",
     "tachyon": {
         "source": "server",
@@ -888,7 +920,9 @@ Notify the player that they are no longer friend with a player. Typically, that 
         "data": {
             "title": "FriendRemovedEventData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -945,6 +979,8 @@ Notify the player that their friend request has been accepted
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/requestAccepted/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRequestAcceptedEvent",
     "tachyon": {
         "source": "server",
@@ -959,7 +995,9 @@ Notify the player that their friend request has been accepted
         "data": {
             "title": "FriendRequestAcceptedEventData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -1016,6 +1054,8 @@ Notify the player that a friend request they received is no longer valid
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/requestCancelled/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRequestCancelledEvent",
     "tachyon": {
         "source": "server",
@@ -1030,7 +1070,9 @@ Notify the player that a friend request they received is no longer valid
         "data": {
             "title": "FriendRequestCancelledEventData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -1087,6 +1129,8 @@ Notify the player that someone sent them a friend request
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/requestReceived/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRequestReceivedEvent",
     "tachyon": {
         "source": "server",
@@ -1101,7 +1145,9 @@ Notify the player that someone sent them a friend request
         "data": {
             "title": "FriendRequestReceivedEventData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -1158,6 +1204,8 @@ Notify the player that their friend request has been rejected
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/requestRejected/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendRequestRejectedEvent",
     "tachyon": {
         "source": "server",
@@ -1172,7 +1220,9 @@ Notify the player that their friend request has been rejected
         "data": {
             "title": "FriendRequestRejectedEventData",
             "type": "object",
-            "properties": { "from": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "from": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["from"]
         }
     },
@@ -1229,6 +1279,8 @@ Send a friend request to the target player
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/sendRequest/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendSendRequestRequest",
     "tachyon": {
         "source": "user",
@@ -1243,7 +1295,7 @@ Send a friend request to the target player
         "data": {
             "title": "FriendSendRequestRequestData",
             "type": "object",
-            "properties": { "to": { "$ref": "#/definitions/userId" } },
+            "properties": { "to": { "$ref": "../../definitions/userId.json" } },
             "required": ["to"]
         }
     },
@@ -1289,6 +1341,8 @@ export interface FriendSendRequestRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/friend/sendRequest/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "FriendSendRequestResponse",
     "tachyon": {
         "source": "server",

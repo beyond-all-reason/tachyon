@@ -64,6 +64,8 @@ Accept the invite to the party
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/acceptInvite/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyAcceptInviteRequest",
     "tachyon": {
         "source": "user",
@@ -78,7 +80,9 @@ Accept the invite to the party
         "data": {
             "title": "PartyAcceptInviteRequestData",
             "type": "object",
-            "properties": { "partyId": { "$ref": "#/definitions/partyId" } },
+            "properties": {
+                "partyId": { "$ref": "../../definitions/partyId.json" }
+            },
             "required": ["partyId"]
         }
     },
@@ -124,6 +128,8 @@ export interface PartyAcceptInviteRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/acceptInvite/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyAcceptInviteResponse",
     "tachyon": {
         "source": "server",
@@ -210,6 +216,8 @@ cancel a pending invite for the given player
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/cancelInvite/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyCancelInviteRequest",
     "tachyon": {
         "source": "user",
@@ -224,7 +232,9 @@ cancel a pending invite for the given player
         "data": {
             "title": "PartyCancelInviteRequestData",
             "type": "object",
-            "properties": { "userId": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "userId": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["userId"]
         }
     },
@@ -270,6 +280,8 @@ export interface PartyCancelInviteRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/cancelInvite/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyCancelInviteResponse",
     "tachyon": {
         "source": "server",
@@ -358,6 +370,8 @@ Create a party.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/create/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyCreateRequest",
     "tachyon": {
         "source": "user",
@@ -403,6 +417,8 @@ export interface PartyCreateRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/create/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyCreateResponse",
     "tachyon": {
         "source": "server",
@@ -422,7 +438,7 @@ export interface PartyCreateRequest {
                     "title": "PartyCreateOkResponseData",
                     "type": "object",
                     "properties": {
-                        "partyId": { "$ref": "#/definitions/partyId" }
+                        "partyId": { "$ref": "../../definitions/partyId.json" }
                     },
                     "required": ["partyId"]
                 }
@@ -506,6 +522,8 @@ Decline the invite to a party
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/declineInvite/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyDeclineInviteRequest",
     "tachyon": {
         "source": "user",
@@ -520,7 +538,9 @@ Decline the invite to a party
         "data": {
             "title": "PartyDeclineInviteRequestData",
             "type": "object",
-            "properties": { "partyId": { "$ref": "#/definitions/partyId" } },
+            "properties": {
+                "partyId": { "$ref": "../../definitions/partyId.json" }
+            },
             "required": ["partyId"]
         }
     },
@@ -566,6 +586,8 @@ export interface PartyDeclineInviteRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/declineInvite/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyDeclineInviteResponse",
     "tachyon": {
         "source": "server",
@@ -652,6 +674,8 @@ invite the target player to your current party
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/invite/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyInviteRequest",
     "tachyon": {
         "source": "user",
@@ -666,7 +690,9 @@ invite the target player to your current party
         "data": {
             "title": "PartyInviteRequestData",
             "type": "object",
-            "properties": { "userId": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "userId": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["userId"]
         }
     },
@@ -712,6 +738,8 @@ export interface PartyInviteRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/invite/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyInviteResponse",
     "tachyon": {
         "source": "server",
@@ -798,6 +826,8 @@ A player has been invited to the party. Sent to the invited player and all party
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/invited/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyInvitedEvent",
     "tachyon": {
         "source": "server",
@@ -812,7 +842,9 @@ A player has been invited to the party. Sent to the invited player and all party
         "data": {
             "title": "PartyInvitedEventData",
             "type": "object",
-            "properties": { "party": { "$ref": "#/definitions/partyState" } },
+            "properties": {
+                "party": { "$ref": "../../definitions/partyState.json" }
+            },
             "required": ["party"]
         }
     },
@@ -912,6 +944,8 @@ Kick the target player from the party
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/kickMember/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyKickMemberRequest",
     "tachyon": {
         "source": "user",
@@ -926,7 +960,9 @@ Kick the target player from the party
         "data": {
             "title": "PartyKickMemberRequestData",
             "type": "object",
-            "properties": { "userId": { "$ref": "#/definitions/userId" } },
+            "properties": {
+                "userId": { "$ref": "../../definitions/userId.json" }
+            },
             "required": ["userId"]
         }
     },
@@ -972,6 +1008,8 @@ export interface PartyKickMemberRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/kickMember/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyKickMemberResponse",
     "tachyon": {
         "source": "server",
@@ -1058,6 +1096,8 @@ Leave the party
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/leave/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyLeaveRequest",
     "tachyon": {
         "source": "user",
@@ -1103,6 +1143,8 @@ export interface PartyLeaveRequest {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/leave/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyLeaveResponse",
     "tachyon": {
         "source": "server",
@@ -1189,6 +1231,8 @@ Client has been removed from the party. Either kicked, the invite was cancelled 
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/removed/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyRemovedEvent",
     "tachyon": {
         "source": "server",
@@ -1203,7 +1247,9 @@ Client has been removed from the party. Either kicked, the invite was cancelled 
         "data": {
             "title": "PartyRemovedEventData",
             "type": "object",
-            "properties": { "partyId": { "$ref": "#/definitions/partyId" } },
+            "properties": {
+                "partyId": { "$ref": "../../definitions/partyId.json" }
+            },
             "required": ["partyId"]
         }
     },
@@ -1260,6 +1306,8 @@ New player joined the party (accepted an invite)
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/party/updated/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "PartyUpdatedEvent",
     "tachyon": {
         "source": "server",
@@ -1272,7 +1320,7 @@ New player joined the party (accepted an invite)
         "messageId": { "type": "string" },
         "commandId": { "const": "party/updated" },
         "data": {
-            "$ref": "#/definitions/partyState",
+            "$ref": "../../definitions/partyState.json",
             "title": "PartyUpdatedEventData"
         }
     },

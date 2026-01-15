@@ -55,6 +55,8 @@ Notify the player a message has been received
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/received/event.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MessagingReceivedEvent",
     "tachyon": {
         "source": "server",
@@ -77,7 +79,9 @@ Notify the player a message has been received
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player" },
-                                "userId": { "$ref": "#/definitions/userId" }
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
                             },
                             "required": ["type", "userId"]
                         },
@@ -85,18 +89,22 @@ Notify the player a message has been received
                             "type": "object",
                             "properties": {
                                 "type": { "const": "party" },
-                                "partyId": { "$ref": "#/definitions/partyId" },
-                                "userId": { "$ref": "#/definitions/userId" }
+                                "partyId": {
+                                    "$ref": "../../definitions/partyId.json"
+                                },
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
                             },
                             "required": ["type", "partyId", "userId"]
                         }
                     ]
                 },
                 "timestamp": {
-                    "$ref": "#/definitions/unixTime",
+                    "$ref": "../../definitions/unixTime.json",
                     "description": "time at which the message was received by the server"
                 },
-                "marker": { "$ref": "#/definitions/historyMarker" }
+                "marker": { "$ref": "../../definitions/historyMarker.json" }
             },
             "required": ["message", "source", "timestamp", "marker"]
         }
@@ -174,6 +182,8 @@ Send a simple message to the given target.
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/send/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MessagingSendRequest",
     "tachyon": {
         "source": "user",
@@ -195,7 +205,9 @@ Send a simple message to the given target.
                             "type": "object",
                             "properties": {
                                 "type": { "const": "player" },
-                                "userId": { "$ref": "#/definitions/userId" }
+                                "userId": {
+                                    "$ref": "../../definitions/userId.json"
+                                }
                             },
                             "required": ["type", "userId"]
                         },
@@ -264,6 +276,8 @@ export interface MessagingSendRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/send/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MessagingSendResponse",
     "tachyon": {
         "source": "server",
@@ -352,6 +366,8 @@ Ask the server to send events for relevant messages
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/subscribeReceived/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MessagingSubscribeReceivedRequest",
     "tachyon": {
         "source": "user",
@@ -384,7 +400,7 @@ Ask the server to send events for relevant messages
                             "properties": {
                                 "type": { "const": "marker" },
                                 "value": {
-                                    "$ref": "#/definitions/historyMarker"
+                                    "$ref": "../../definitions/historyMarker.json"
                                 }
                             },
                             "required": ["type", "value"]
@@ -448,6 +464,8 @@ export interface MessagingSubscribeReceivedRequestData {
 
 ```json
 {
+    "$id": "https://schema.beyondallreason.dev/tachyon/messaging/subscribeReceived/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
     "title": "MessagingSubscribeReceivedResponse",
     "tachyon": {
         "source": "server",
