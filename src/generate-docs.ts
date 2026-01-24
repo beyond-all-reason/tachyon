@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 
 import fs from "fs";
-import type { TObject, TSchema } from "typebox";
+import type { TSchema } from "typebox";
 
 // @ts-expect-error https://github.com/json-schema-faker/json-schema-faker/issues/800
 global.location = new URL(import.meta.url);
@@ -186,21 +186,7 @@ export async function generateCommandMarkdown(
 ${await stringifyJsonSchema(command.schema)}
 \`\`\`\n</details>\n\n`;
 
-    // TODO: make this cleaner once we update typescript with better inference
-    const failedReasons: string[] = [];
-    let coreSchema: TObject;
-    if (command.type === "response") {
-        failedReasons.push(
-            ...command.schema.anyOf
-                .map((e) => e.properties)
-                .filter((p) => "reason" in p)
-                .flatMap((p) => p.reason.enum)
-        );
-        coreSchema = command.schema.anyOf.find((res) => res.properties.status.const === "success")!;
-    } else {
-        coreSchema = command.schema;
-    }
-
+    let coreSchema = command.type === "response" ? command.schema.anyOf[0] : command.schema;
     coreSchema = setTSchemaOptions(coreSchema, { definitions });
 
     // This ensures the stability in generated outputs for given message independent from
@@ -244,8 +230,8 @@ ${typings.trim()}
 \`\`\`
 `;
 
-        if (failedReasons.length) {
-            markdown += `Possible Failed Reasons: ${failedReasons.map((r) => `\`${r}\``).join(", ")}\n\n`;
+        if (command.type === "response") {
+            markdown += `Possible Failed Reasons: ${command.schema.anyOf[1].properties.reason.enum.map((r) => `\`${r}\``).join(", ")}\n\n`;
         }
     } catch (err) {
         console.log(coreSchema);
