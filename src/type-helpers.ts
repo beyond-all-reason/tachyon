@@ -1,6 +1,5 @@
-// eslint-disable-next-line no-restricted-imports
+/* eslint-disable no-restricted-imports */
 import { tachyonMeta } from "../dist/index.js";
-// eslint-disable-next-line no-restricted-imports
 import { TachyonCommand } from "../dist/types.js";
 
 //--DIST-START--

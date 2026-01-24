@@ -3,8 +3,7 @@ import { createHash } from "node:crypto";
 import fs from "fs";
 import type { TObject, TSchema } from "typebox";
 
-// https://github.com/json-schema-faker/json-schema-faker/issues/800
-// @ts-ignore
+// @ts-expect-error https://github.com/json-schema-faker/json-schema-faker/issues/800
 global.location = new URL(import.meta.url);
 import { JSONSchemaFaker } from "json-schema-faker";
 import { compile } from "json-schema-to-typescript";
