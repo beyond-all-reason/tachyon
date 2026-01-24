@@ -2,7 +2,6 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { objectKeys } from "jaz-ts-utils";
 import Type, { type TSchema, type TSchemaOptions, type TUnion } from "typebox";
 import { pathToFileURL } from "url";
 
@@ -31,7 +30,7 @@ export type CommandConfig =
 
 const commandConfigs: TachyonConfig["commandConfigs"] = {};
 
-function capitalize(s: string): string {
+export function capitalize(s: string): string {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
@@ -307,9 +306,8 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
 
     const individualSchemas: TSchema[] = [];
 
-    objectKeys(commandConfigs).forEach((commandId) => {
-        const commandConfig = commandConfigs[commandId];
-        const [serviceId, endpointId] = commandId.split("/") as [string, string];
+    for (const commandConfig of Object.values(commandConfigs)) {
+        const [serviceId, endpointId] = commandConfig.commandId.split("/") as [string, string];
 
         if (commandConfig.type === "requestResponse") {
             schemaMeta.actors[commandConfig.config.source].request.send.push(
@@ -344,7 +342,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         } else {
             schemaMeta.serviceIds[serviceId].push(endpointId);
         }
-    });
+    }
 
     const dropIdSchema = (d: TSchema) =>
         setTSchemaOptions(d, { $id: undefined, $schema: undefined });
