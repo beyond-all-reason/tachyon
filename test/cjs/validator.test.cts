@@ -4,7 +4,7 @@ import assert from "node:assert";
 import { describe, test } from "node:test";
 
 import { MatchmakingQueueRequest, MatchmakingQueueResponse } from "../../dist/types";
-import * as validators from "../../dist/validators.js";
+import * as validators from "../../dist/validators.cjs";
 
 describe("request", () => {
     const validator = validators.matchmaking_queue_request;

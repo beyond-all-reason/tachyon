@@ -1,7 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { UnionEnum } from "@/union-enum";
 
 export default defineEndpoint({
     source: "server",
@@ -10,7 +9,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             id: Type.String(),
-            outcome: UnionEnum(["passed", "failed", "cancelled", "timeout"]),
+            outcome: Type.Enum(["passed", "failed", "cancelled", "timeout"]),
         }),
     },
 });

@@ -1,7 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { UnionEnum } from "@/union-enum";
 
 export default defineEndpoint({
     source: "user",
@@ -10,7 +9,7 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             isReady: Type.Optional(Type.Boolean()),
-            assetStatus: Type.Optional(UnionEnum(["missing", "downloading", "ready"])),
+            assetStatus: Type.Optional(Type.Enum(["missing", "downloading", "ready"])),
         }),
     },
     response: [

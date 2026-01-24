@@ -1,7 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { UnionEnum } from "@/union-enum";
 
 export default defineEndpoint({
     source: "autohost",
@@ -14,7 +13,7 @@ export default defineEndpoint({
             update: Type.Union([
                 Type.Object(
                     {
-                        type: Type.Const("start"),
+                        type: Type.Literal("start"),
                     },
                     {
                         description: "The battle has started.",
@@ -23,7 +22,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("finished"),
+                        type: Type.Literal("finished"),
                         userId: Type.Ref("userId"),
                         winningAllyTeams: Type.Array(Type.Integer(), {
                             minItems: 1,
@@ -38,7 +37,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("engine_message"),
+                        type: Type.Literal("engine_message"),
                         message: Type.String(),
                     },
                     {
@@ -49,7 +48,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("engine_warning"),
+                        type: Type.Literal("engine_warning"),
                         message: Type.String(),
                     },
                     {
@@ -59,7 +58,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("engine_quit"),
+                        type: Type.Literal("engine_quit"),
                     },
                     {
                         description:
@@ -69,7 +68,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("engine_crash"),
+                        type: Type.Literal("engine_crash"),
                         details: Type.Optional(
                             Type.String({ description: "Optional, short, details of the crash." })
                         ),
@@ -82,7 +81,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("player_joined"),
+                        type: Type.Literal("player_joined"),
                         userId: Type.Ref("userId"),
                         playerNumber: Type.Integer({
                             description:
@@ -95,9 +94,9 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("player_left"),
+                        type: Type.Literal("player_left"),
                         userId: Type.Ref("userId"),
-                        reason: UnionEnum(["lost_connection", "left", "kicked"]),
+                        reason: Type.Enum(["lost_connection", "left", "kicked"]),
                     },
                     {
                         title: "PlayerLeftUpdate",
@@ -106,16 +105,16 @@ export default defineEndpoint({
                 Type.Union(
                     [
                         Type.Object({
-                            type: Type.Const("player_chat"),
+                            type: Type.Literal("player_chat"),
                             userId: Type.Ref("userId"),
                             message: Type.String(),
-                            destination: UnionEnum(["allies", "all", "spectators"]),
+                            destination: Type.Enum(["allies", "all", "spectators"]),
                         }),
                         Type.Object({
-                            type: Type.Const("player_chat"),
+                            type: Type.Literal("player_chat"),
                             userId: Type.Ref("userId"),
                             message: Type.String(),
-                            destination: Type.Const("player"),
+                            destination: Type.Literal("player"),
                             toUserId: Type.Ref("userId"),
                         }),
                     ],
@@ -123,7 +122,7 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("player_defeated"),
+                        type: Type.Literal("player_defeated"),
                         userId: Type.Ref("userId"),
                     },
                     {
@@ -132,11 +131,11 @@ export default defineEndpoint({
                 ),
                 Type.Object(
                     {
-                        type: Type.Const("luamsg"),
+                        type: Type.Literal("luamsg"),
                         userId: Type.Ref("userId"),
-                        script: UnionEnum(["ui", "game", "rules"]),
+                        script: Type.Enum(["ui", "game", "rules"]),
                         uiMode: Type.Optional(
-                            UnionEnum(["all", "allies", "spectators"], {
+                            Type.Enum(["all", "allies", "spectators"], {
                                 description: "Set when script is 'ui'",
                             })
                         ),

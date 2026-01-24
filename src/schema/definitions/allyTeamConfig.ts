@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 export const allyTeamConfig = Type.Array(
     Type.Object(
