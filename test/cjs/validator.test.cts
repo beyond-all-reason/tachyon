@@ -39,7 +39,6 @@ describe("request", () => {
             commandId: "matchmaking/queue",
             messageId: "123",
             data: {
-                // @ts-expect-error
                 queues: [],
             },
         };
@@ -71,7 +70,7 @@ describe("response", () => {
         const command: MatchmakingQueueResponse = {
             type: "response",
             commandId: "matchmaking/queue",
-            // @ts-expect-error
+            // @ts-expect-error we expect the validator to catch error
             messageId: 123,
             status: "success",
         };
