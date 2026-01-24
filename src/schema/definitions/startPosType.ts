@@ -1,5 +1,5 @@
-import { UnionEnum } from "@/union-enum";
+import Type from "typebox";
 
-export const startPosType = UnionEnum(["fixed", "random", "ingame", "beforegame"], {
+export const startPosType = Type.Enum(["fixed", "random", "ingame", "beforegame"], {
     $id: "startPosType",
 });

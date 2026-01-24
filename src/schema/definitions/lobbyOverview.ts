@@ -1,6 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
-import { Nullable } from "@/typebox-utils";
+import { Nullable } from "@/typebox-utils.js";
 
 export const lobbyOverview = Type.Object(
     {

@@ -1,7 +1,7 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { Nullable } from "@/typebox-utils";
+import { Nullable } from "@/typebox-utils.js";
 
 export default defineEndpoint({
     source: "server",

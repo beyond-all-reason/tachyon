@@ -1,15 +1,15 @@
-import {
-    SchemaOptions,
-    Static,
-    TIntersect,
-    TObject,
-    TRef,
-    TSchema,
-    TUnion,
-} from "@sinclair/typebox";
 import { SetOptional } from "type-fest";
+import {
+    type Static,
+    type TIntersect,
+    type TObject,
+    type TRef,
+    type TSchema,
+    TSchemaOptions,
+    type TUnion,
+} from "typebox";
 
-import { TachyonActor } from "@/tachyon-constants";
+import { TachyonActor } from "@/tachyon-constants.js";
 
 export type EndpointConfig = {
     /** Where the command should be sent from */
@@ -56,16 +56,14 @@ export type ResponseSchema = Array<SuccessResponseSchema | FailedResponseSchema>
 
 export type SuccessResponseSchema = {
     status: "success";
-    title?: string;
 } & DataSchema;
 
 export type FailedResponseSchema = {
     status: "failed";
     reason: string;
-    description?: string;
 };
 
-export interface CustomSchemaOptions<T extends TSchema> extends SchemaOptions {
+export interface CustomSchemaOptions<T extends TSchema> extends TSchemaOptions {
     default?: Static<T>;
     examples?: T extends TSchema ? Static<T>[] : never;
 }

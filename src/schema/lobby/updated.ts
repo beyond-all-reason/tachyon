@@ -1,8 +1,7 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
-import { Nullable } from "@/typebox-utils";
-import { UnionEnum } from "@/union-enum";
+import { Nullable } from "@/typebox-utils.js";
 
 export default defineEndpoint({
     source: "server",
@@ -62,7 +61,7 @@ export default defineEndpoint({
                             player: Type.Optional(Type.String()),
                             isReady: Type.Optional(Type.Boolean()),
                             assetStatus: Type.Optional(
-                                UnionEnum(["missing", "downloading", "ready"])
+                                Type.Enum(["missing", "downloading", "ready"])
                             ),
                         })
                     )
@@ -130,7 +129,7 @@ export default defineEndpoint({
                             Type.Record(
                                 Type.String(),
                                 Type.Object({
-                                    vote: UnionEnum(["pending", "yes", "no", "abstain"]),
+                                    vote: Type.Enum(["pending", "yes", "no", "abstain"]),
                                 })
                             )
                         ),

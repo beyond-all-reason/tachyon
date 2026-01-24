@@ -16,49 +16,50 @@
     "test:esm": "node --import tsx/esm --test ./test/esm/**/*.mts",
     "prepublishOnly": "npm run build:clean && npm run test"
   },
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
-      },
-      "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      },
       "default": {
-        "types": "./dist/index.d.mts",
-        "default": "./dist/index.mjs"
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
       }
     },
     "./validators": {
       "import": {
-        "types": "./dist/validators.d.mts",
-        "default": "./dist/validators.mjs"
-      },
-      "require": {
         "types": "./dist/validators.d.ts",
         "default": "./dist/validators.js"
       },
+      "require": {
+        "types": "./dist/validators.d.cts",
+        "default": "./dist/validators.cjs"
+      },
       "default": {
-        "types": "./dist/validators.d.mts",
-        "default": "./dist/validators.mjs"
+        "types": "./dist/validators.d.ts",
+        "default": "./dist/validators.js"
       }
     },
     "./types": {
       "import": {
-        "types": "./dist/types.d.mts",
-        "default": "./dist/types.mjs"
-      },
-      "require": {
         "types": "./dist/types.d.ts",
         "default": "./dist/types.js"
       },
+      "require": {
+        "types": "./dist/types.d.cts",
+        "default": "./dist/types.cjs"
+      },
       "default": {
-        "types": "./dist/types.d.mts",
-        "default": "./dist/types.mjs"
+        "types": "./dist/types.d.ts",
+        "default": "./dist/types.js"
       }
     }
   },
@@ -80,7 +81,7 @@
     "ajv-formats": "^3.0.1"
   },
   "devDependencies": {
-    "@sinclair/typebox": "^0.34.38",
+    "typebox": "~1.0.78",
     "@types/node": "^22.13.0",
     "@typescript-eslint/eslint-plugin": "^7.13.0",
     "@typescript-eslint/parser": "^7.13.0",
