@@ -9,6 +9,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             userId: Type.Ref("userId"),
+            clanId: Type.Ref("clanId"),
             newRole: Type.Ref("clanRole"),
         }),
     },

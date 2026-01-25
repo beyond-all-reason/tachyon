@@ -8,10 +8,7 @@ export default defineEndpoint({
     description: "Create a clan.",
     request: {
         data: Type.Object({
-            clanBaseData: Type.Omit(
-                Type.Ref("clanBaseData"),
-                ["clanId"] // Exclude the clanId field explicitly
-            ),
+            clanBaseData: Type.Omit(Type.Ref("clanBaseData"), ["clanId"]),
         }),
     },
     response: [{ status: "success" }],
