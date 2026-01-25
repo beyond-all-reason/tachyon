@@ -4,8 +4,6 @@ export default defineEndpoint({
     source: "user",
     target: "server",
     description: "Leave your clan.",
-    request: {
-        data: {},
-    },
+    request: {},
     response: [{ status: "success" }],
 });
