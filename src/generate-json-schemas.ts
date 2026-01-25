@@ -2,20 +2,19 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { TProperties, TSchema, TUnion, Type } from "@sinclair/typebox";
-import { objectKeys } from "jaz-ts-utils";
+import Type, { type TSchema, type TSchemaOptions, type TUnion } from "typebox";
 import { pathToFileURL } from "url";
 
-import { FailedResponseSchema, SuccessResponseSchema } from "@/generator-helpers";
 import { EndpointConfig } from "@/generator-helpers.js";
-import { writeJsonSchema } from "@/json-schema-format";
-import { TachyonActor, TachyonMessageType } from "@/tachyon-constants";
-import { UnionEnum } from "@/union-enum";
+import { writeJsonSchema } from "@/json-schema-format.js";
+import { TachyonActor, TachyonMessageType } from "@/tachyon-constants.js";
 const schemaBaseUri = "https://schema.beyondallreason.dev/tachyon";
+
+export type CompiledSchema = TUnion<TSchema[]> & { definitions: { [key: string]: TSchema } };
 
 export type TachyonConfig = {
     commandConfigs: Record<`${string}/${string}`, CommandConfig>;
-    compiledSchema: TUnion<TSchema[]>;
+    compiledSchema: CompiledSchema;
     schemaMeta: SchemaMeta;
 };
 
@@ -25,34 +24,147 @@ type SchemaMeta = {
     failedReasons: Record<string, string[]>;
 };
 
-export type CommandConfig = {
-    commandId: `${string}/${string}`;
-    config: EndpointConfig;
-} & (
-    | {
-          type: "requestResponse";
-          schema: {
-              request: TSchema;
-              response: TSchema;
-          };
-          failedReasons: string[];
-      }
-    | {
-          type: "event";
-          schema: {
-              event: TSchema;
-          };
-      }
-);
+export type CommandConfig =
+    | ReturnType<typeof buildRequestResponseCommand>
+    | ReturnType<typeof buildEventCommand>;
 
 const commandConfigs: TachyonConfig["commandConfigs"] = {};
 
-function capitalize(s: string): string {
+export function capitalize(s: string): string {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+function buildRequestResponseCommand(
+    commandId: `${string}/${string}`,
+    baseTypeName: string,
+    schemaConfig: Extract<EndpointConfig, { request: unknown }>
+) {
+    let requestSchema = Type.Object(
+        {
+            type: Type.Literal("request"),
+            messageId: Type.String(),
+            commandId: Type.Literal(commandId),
+            ...(schemaConfig.request.data && {
+                data: setTSchemaOptions(schemaConfig.request.data, {
+                    title: baseTypeName + "RequestData",
+                }),
+            }),
+        },
+        {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            $id: `${schemaBaseUri}/${commandId}/request.json`,
+            title: baseTypeName + "Request",
+            tachyon: {
+                source: schemaConfig.source,
+                target: schemaConfig.target,
+                scopes: schemaConfig.scopes,
+            },
+        }
+    );
+    requestSchema = mapRefs(requestSchema, (ref) => `../../definitions/${ref}.json`);
+
+    const successResponses = schemaConfig.response.filter((schema) => schema.status == "success");
+    const failedResponses = schemaConfig.response.filter((schema) => schema.status == "failed");
+    if (successResponses.length === 0) {
+        throw new Error(`Endpoint ${commandId} does not have a success response`);
+    }
+    if (failedResponses.length === 0) {
+        throw new Error(`Endpoint ${commandId} does not have a failed response`);
+    }
+    if (successResponses.length != 1) {
+        throw new Error(`Endpoint ${commandId} must have exactly one success response`);
+    }
+    const successResponse = successResponses[0];
+
+    const failedReasons = failedResponses.map((schema) => schema.reason);
+    let responseSchema = Type.Union(
+        [
+            Type.Object(
+                {
+                    type: Type.Literal("response"),
+                    messageId: Type.String(),
+                    commandId: Type.Literal(commandId),
+                    status: Type.Literal(successResponse.status),
+                    ...(successResponse.data && {
+                        data: setTSchemaOptions(successResponse.data, {
+                            title: baseTypeName + "OkResponseData",
+                        }),
+                    }),
+                },
+                { title: baseTypeName + "OkResponse" }
+            ),
+            Type.Object(
+                {
+                    type: Type.Literal("response"),
+                    messageId: Type.String(),
+                    commandId: Type.Literal(commandId),
+                    status: Type.Literal("failed"),
+                    reason: Type.Enum(failedReasons),
+                    details: Type.Optional(Type.String()),
+                },
+                { title: baseTypeName + "FailResponse" }
+            ),
+        ] as const,
+        {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            $id: `${schemaBaseUri}/${commandId}/response.json`,
+            title: baseTypeName + "Response",
+            tachyon: {
+                source: schemaConfig.target,
+                target: schemaConfig.source,
+                scopes: schemaConfig.scopes,
+            },
+        }
+    );
+    responseSchema = mapRefs(responseSchema, (ref) => `../../definitions/${ref}.json`);
+
+    return Object.freeze({
+        type: "requestResponse" as const,
+        commandId,
+        config: schemaConfig,
+        schema: { request: requestSchema, response: responseSchema },
+        failedReasons,
+    });
+}
+
+function buildEventCommand(
+    commandId: `${string}/${string}`,
+    baseTypeName: string,
+    schemaConfig: Extract<EndpointConfig, { event: unknown }>
+) {
+    let eventSchema = Type.Object(
+        {
+            type: Type.Literal("event"),
+            messageId: Type.String(),
+            commandId: Type.Literal(commandId),
+            ...(schemaConfig.event.data && {
+                data: setTSchemaOptions(schemaConfig.event.data, {
+                    title: baseTypeName + "EventData",
+                }),
+            }),
+        },
+        {
+            $schema: "http://json-schema.org/draft-07/schema#",
+            $id: `${schemaBaseUri}/${commandId}/event.json`,
+            title: baseTypeName + "Event",
+            tachyon: {
+                source: schemaConfig.source,
+                target: schemaConfig.target,
+                scopes: schemaConfig.scopes,
+            },
+        }
+    );
+    eventSchema = mapRefs(eventSchema, (ref) => `../../definitions/${ref}.json`);
+    return Object.freeze({
+        commandId,
+        schema: { event: eventSchema },
+        config: schemaConfig,
+        type: "event" as const,
+    });
+}
+
 export async function generateJsonSchemas(): Promise<TachyonConfig> {
-    const serviceDirs = path.join(__dirname, "schema");
+    const serviceDirs = path.join(import.meta.dirname, "schema");
     const serviceHandlerDirs = (await fs.promises.readdir(serviceDirs)).sort();
 
     for (const serviceId of serviceHandlerDirs) {
@@ -110,150 +222,31 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
 
             const commandId = `${serviceId}/${endpointId}` as const;
             const baseTypeName = `${capitalize(serviceId)}${capitalize(endpointId)}`;
-
             if ("request" in schemaConfig) {
-                const props: TProperties = {
-                    type: Type.Literal("request"),
-                    messageId: Type.String(),
-                    commandId: Type.Literal(commandId),
-                };
-                if (schemaConfig.request.data) {
-                    props.data = schemaConfig.request.data;
-                    props.data.title ??= baseTypeName + "RequestData";
-                }
-                const requestSchema = Type.Object(props, {
-                    $schema: "http://json-schema.org/draft-07/schema#",
-                    $id: `${schemaBaseUri}/${commandId}/request.json`,
-                    title: baseTypeName + "Request",
-                    tachyon: {
-                        source: schemaConfig.source,
-                        target: schemaConfig.target,
-                        scopes: schemaConfig.scopes,
-                    },
-                });
-                mapRefs(requestSchema, (ref) => `../../definitions/${ref}.json`);
+                const config = buildRequestResponseCommand(commandId, baseTypeName, schemaConfig);
                 await writeJsonSchema(
                     `schema/${serviceId}/${endpointId}/request.json`,
-                    requestSchema
+                    config.schema.request
                 );
-
-                const successResponses = schemaConfig.response.filter(
-                    (schema) => schema.status == "success"
-                ) as SuccessResponseSchema[]; // Cast won't be necessary in typescript 5.5
-                const failedResponses = schemaConfig.response.filter(
-                    (schema) => schema.status == "failed"
-                ) as FailedResponseSchema[]; // Cast won't be necessary in typescript 5.5
-                if (successResponses.length === 0) {
-                    throw new Error(
-                        `Endpoint ${serviceId}/${endpointId} does not have a success response`
-                    );
-                }
-                if (failedResponses.length === 0) {
-                    throw new Error(
-                        `Endpoint ${serviceId}/${endpointId} does not have a failed response`
-                    );
-                }
-                if (
-                    successResponses.length > 1 &&
-                    successResponses.filter((s) => !s.title).length > 1
-                ) {
-                    throw new Error(
-                        `Endpoint ${serviceId}/${endpointId} has multiple success responses but not all have a title`
-                    );
-                }
-
-                const failedReasons = failedResponses.map((schema) => schema.reason);
-                const responseSchema = Type.Union(
-                    successResponses
-                        .map((schema) => {
-                            const props: TProperties = {
-                                type: Type.Literal("response"),
-                                messageId: Type.String(),
-                                commandId: Type.Literal(commandId),
-                                status: Type.Literal(schema.status),
-                            };
-                            const title = schema.title ?? baseTypeName + "OkResponse";
-                            if (schema.data) {
-                                props.data = schema.data;
-                                props.data.title ??= title + "Data";
-                            }
-                            return Type.Object(props, { title });
-                        })
-                        .concat([
-                            Type.Object(
-                                {
-                                    type: Type.Literal("response"),
-                                    messageId: Type.String(),
-                                    commandId: Type.Literal(commandId),
-                                    status: Type.Literal("failed"),
-                                    reason: UnionEnum(failedReasons),
-                                    details: Type.Optional(Type.String()),
-                                },
-                                { title: baseTypeName + "FailResponse" }
-                            ),
-                        ]),
-                    {
-                        $schema: "http://json-schema.org/draft-07/schema#",
-                        $id: `${schemaBaseUri}/${commandId}/response.json`,
-                        title: baseTypeName + "Response",
-                        tachyon: {
-                            source: schemaConfig.target,
-                            target: schemaConfig.source,
-                            scopes: schemaConfig.scopes,
-                        },
-                    }
-                );
-                mapRefs(responseSchema, (ref) => `../../definitions/${ref}.json`);
                 await writeJsonSchema(
                     `schema/${serviceId}/${endpointId}/response.json`,
-                    responseSchema
+                    config.schema.response
                 );
-
-                commandConfigs[commandId] = {
-                    commandId,
-                    schema: { request: requestSchema, response: responseSchema },
-                    config: schemaConfig,
-                    failedReasons,
-                    type: "requestResponse",
-                };
-            }
-
-            if ("event" in schemaConfig) {
-                const props: TProperties = {
-                    type: Type.Literal("event"),
-                    messageId: Type.String(),
-                    commandId: Type.Literal(commandId),
-                };
-                if (schemaConfig.event.data) {
-                    props.data = schemaConfig.event.data;
-                    props.data.title ??= baseTypeName + "EventData";
-                }
-                const eventSchema = Type.Object(props, {
-                    $schema: "http://json-schema.org/draft-07/schema#",
-                    $id: `${schemaBaseUri}/${commandId}/event.json`,
-                    title: baseTypeName + "Event",
-                    tachyon: {
-                        source: schemaConfig.source,
-                        target: schemaConfig.target,
-                        scopes: schemaConfig.scopes,
-                    },
-                });
-                mapRefs(eventSchema, (ref) => `../../definitions/${ref}.json`);
-                await writeJsonSchema(`schema/${serviceId}/${endpointId}/event.json`, eventSchema);
-
-                commandConfigs[commandId] = {
-                    commandId,
-                    schema: { event: eventSchema },
-                    config: schemaConfig,
-                    type: "event",
-                };
+                commandConfigs[commandId] = config;
+            } else if ("event" in schemaConfig) {
+                const config = buildEventCommand(commandId, baseTypeName, schemaConfig);
+                await writeJsonSchema(
+                    `schema/${serviceId}/${endpointId}/event.json`,
+                    config.schema.event
+                );
+                commandConfigs[commandId] = config;
             }
         }
     }
 
     await fs.promises.mkdir("schema/definitions", { recursive: true });
     const definitionsMap: Record<string, TSchema> = {};
-    const definitionsPath = path.join(__dirname, "schema", "definitions");
+    const definitionsPath = path.join(import.meta.dirname, "schema", "definitions");
     const definitionFiles = (await fs.promises.readdir(definitionsPath)).sort();
     for (const definitionFile of definitionFiles) {
         if (!definitionFile.endsWith(".ts")) {
@@ -269,7 +262,7 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
                 `Definition schema does not have the same name as the file: ${definitionFile}`
             );
         }
-        const schema = imports[key];
+        let schema = imports[key];
         if (!schema.$id) {
             throw new Error(`Definition schema does not have a $id field: ${definitionFile}`);
         }
@@ -277,14 +270,16 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
             throw new Error(`Definition schema $id does not match the name: ${definitionFile}`);
         }
         // We need to have ternary in mapper below because the schema might have been modified by us already.
-        mapRefs(schema, (ref) => `../definitions/${ref}.json`);
+        schema = mapRefs(schema, (ref) => `../definitions/${ref}.json`);
         definitionsMap[name] = schema;
 
-        // We have to clone the schema because we modify it in place and it impacts later lookups
-        const schemaClone = { ...schema };
-        schemaClone.$id = `${schemaBaseUri}/definitions/${name}.json`;
-        schemaClone.title ??= capitalize(name);
-        await writeJsonSchema(`schema/definitions/${name}.json`, schemaClone);
+        await writeJsonSchema(
+            `schema/definitions/${name}.json`,
+            setTSchemaOptions(schema, {
+                $id: `${schemaBaseUri}/definitions/${name}.json`,
+                title: capitalize(name),
+            })
+        );
     }
 
     const schemaMeta: SchemaMeta = {
@@ -311,9 +306,8 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
 
     const individualSchemas: TSchema[] = [];
 
-    objectKeys(commandConfigs).forEach((commandId) => {
-        const commandConfig = commandConfigs[commandId];
-        const [serviceId, endpointId] = commandId.split("/") as [string, string];
+    for (const commandConfig of Object.values(commandConfigs)) {
+        const [serviceId, endpointId] = commandConfig.commandId.split("/") as [string, string];
 
         if (commandConfig.type === "requestResponse") {
             schemaMeta.actors[commandConfig.config.source].request.send.push(
@@ -348,25 +342,20 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
         } else {
             schemaMeta.serviceIds[serviceId].push(endpointId);
         }
-    });
-
-    // Remove all $id and $schema fields in the sub-schemas of the combined schema
-    for (const def of Object.values(definitionsMap)) {
-        delete def.$id;
-        delete def.$schema;
-    }
-    for (const s of individualSchemas) {
-        delete s.$id;
-        delete s.$schema;
     }
 
-    const compiledSchema = Type.Union(individualSchemas, {
+    const dropIdSchema = (d: TSchema) =>
+        setTSchemaOptions(d, { $id: undefined, $schema: undefined });
+    for (const def in definitionsMap) {
+        definitionsMap[def] = dropIdSchema(definitionsMap[def]);
+    }
+    let compiledSchema = Type.Union(individualSchemas.map(dropIdSchema), {
         $schema: "http://json-schema.org/draft-07/schema#",
         $id: `${schemaBaseUri}/compiled.json`,
         title: "TachyonCommand",
-        definitions: definitionsMap,
-    });
-    mapRefs(compiledSchema, (ref) =>
+        definitions: Object.freeze(definitionsMap),
+    }) as CompiledSchema;
+    compiledSchema = mapRefs(compiledSchema, (ref) =>
         ref.replace(/.*\/definitions\/(.*)\.json/, "#/definitions/$1")
     );
     await writeJsonSchema("schema/compiled.json", compiledSchema);
@@ -374,13 +363,62 @@ export async function generateJsonSchemas(): Promise<TachyonConfig> {
     return { commandConfigs, compiledSchema, schemaMeta };
 }
 
-function mapRefs(schema: TSchema, f: (ref: string) => string) {
-    for (const key in schema) {
-        if (typeof schema[key] === "object") {
-            mapRefs(schema[key] as TSchema, f);
-        }
-        if (key === "$ref") {
-            schema.$ref = f(schema.$ref);
-        }
+/**
+ * Creates a shallow clone of given type objects.
+ *
+ * Because all type objects are frozen, also takes a modify function
+ * that allows to do whatever operations on new object before it's
+ * frozen. Assumptions is that type will be equivalent.
+ */
+function shallowCloneType<T extends TSchema>(
+    type: T,
+    modify: (o: Record<any, unknown>) => void
+): T {
+    const result = {} as Record<any, unknown>;
+    const descriptors = Object.getOwnPropertyDescriptors(type);
+    for (const [key, { enumerable, value }] of Object.entries(descriptors)) {
+        Object.defineProperty(result, key, {
+            value,
+            enumerable,
+            writable: true,
+            configurable: true,
+        });
     }
+    modify(result);
+    return Object.freeze(result);
+}
+
+/**
+ * Creates a copy of type object with new schema options set.
+ *
+ * Setting option to `undefined` will drop it from options.
+ */
+export function setTSchemaOptions<T extends TSchema>(schema: T, options: TSchemaOptions): T {
+    return shallowCloneType(schema, (o) => {
+        for (const [key, value] of Object.entries(options)) {
+            if (value === undefined) {
+                delete o[key];
+            } else {
+                o[key] = value;
+            }
+        }
+    });
+}
+
+/**
+ * Applies a function to all $refs recursively in a type returning new type.
+ */
+export function mapRefs<T extends TSchema>(schema: T, f: (ref: string) => string): T {
+    if (Array.isArray(schema)) {
+        return schema.map((e) => (Type.IsSchema(e) ? mapRefs(e, f) : e)) as unknown as T;
+    }
+    return shallowCloneType(schema, (o) => {
+        for (const k in o) {
+            if (Type.IsSchema(o[k])) {
+                o[k] = mapRefs(o[k], f);
+            } else if (k === "$ref" && typeof o[k] === "string") {
+                o[k] = f(o[k]);
+            }
+        }
+    });
 }

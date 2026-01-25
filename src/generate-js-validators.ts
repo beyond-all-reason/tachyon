@@ -1,11 +1,15 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import fs from "node:fs";
 import path from "node:path";
 
-import Ajv from "ajv";
-import standaloneCode from "ajv/dist/standalone";
-import addFormats from "ajv-formats";
+import { Ajv, type Plugin } from "ajv";
+import ajvStandaloneCode from "ajv/dist/standalone/index.js";
+import ajvFormats, { type FormatsPluginOptions } from "ajv-formats";
+// https://github.com/ajv-validator/ajv-formats/issues/85#issuecomment-2377962689
+const addFormats = ajvFormats as unknown as Plugin<FormatsPluginOptions>;
+const standaloneCode = ajvStandaloneCode as unknown as (
+    a: Ajv,
+    f: Record<string, string>
+) => string;
 
 export async function generateValidators() {
     const schemaMap: Record<string, string> = {};
@@ -99,7 +103,7 @@ function ucs2length(str) {
     moduleCode = moduleCode.replaceAll('require("ajv-formats/dist/formats").', "ajvFormats.");
     moduleCode = moduleCode.replaceAll('require("ajv/dist/runtime/equal").default', "runtimeEqual");
     moduleCode += "export const " + validator.replaceAll("exports.", "");
-    await fs.promises.writeFile("./dist/validators.mjs", moduleCode);
+    await fs.promises.writeFile("./dist/validators.js", moduleCode);
     process.stdout.write("✔️\n");
 
     // cjs
@@ -115,7 +119,7 @@ function ucs2length(str) {
     });
     addFormats(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap) + "exports." + validator;
-    await fs.promises.writeFile("./dist/validators.js", moduleCodeCjs);
+    await fs.promises.writeFile("./dist/validators.cjs", moduleCodeCjs);
     process.stdout.write("✔️\n");
 
     // types
@@ -133,7 +137,7 @@ function ucs2length(str) {
     types += "\n" + validatorType + "\n";
     types += `\nexport { validator, ${Object.keys(schemaMap).join(", ")} };`;
 
+    await fs.promises.writeFile("./dist/validators.d.cts", types.replace(".js", ".cjs"));
     await fs.promises.writeFile("./dist/validators.d.ts", types);
-    await fs.promises.writeFile("./dist/validators.d.mts", types.replace(".js", ".mjs"));
     process.stdout.write("✔️\n");
 }

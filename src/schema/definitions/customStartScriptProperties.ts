@@ -1,4 +1,4 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
 export const customStartScriptProperties = Type.Record(
     Type.String({ pattern: "^[a-zA-Z0-9_-]$" }),

@@ -192,7 +192,7 @@ Add a bot to the specified ally team
                 "version": { "type": "string" },
                 "options": {
                     "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                    "patternProperties": { "^.*$": { "type": "string" } }
                 }
             },
             "required": ["allyTeam", "shortName"]
@@ -733,7 +733,7 @@ export interface LobbyCreateOkResponseData {
     bots: {
         [k: string]: {
             id: string;
-            hostUserId: string;
+            hostUserId: UserId;
             allyTeam: string;
             team: string;
             player: string;
@@ -1143,7 +1143,7 @@ export interface LobbyJoinOkResponseData {
     bots: {
         [k: string]: {
             id: string;
-            hostUserId: string;
+            hostUserId: UserId;
             allyTeam: string;
             team: string;
             player: string;
@@ -1698,7 +1698,7 @@ Sent by the server to give the client the full list of all lobbies
                 "lobbies": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": { "$ref": "#/definitions/lobbyOverview" }
+                        "^.*$": { "$ref": "#/definitions/lobbyOverview" }
                     }
                 }
             },
@@ -1801,7 +1801,7 @@ Sent by the server whenever some lobbies are added, removed or modified.
                 "lobbies": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "anyOf": [
                                 {
                                     "type": "object",
@@ -2835,7 +2835,7 @@ Change a bot properties. Some properties like ID and allyTeam can't be changed.
                 "options": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "anyOf": [{ "type": "string" }, { "type": "null" }]
                         }
                     }
@@ -3160,7 +3160,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "anyOf": [
                                 {
                                     "description": "this represent an array, items should be sorted lexicographically on their keys",
@@ -3176,7 +3176,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         "teams": {
                                             "type": "object",
                                             "patternProperties": {
-                                                "^(.*)$": {
+                                                "^.*$": {
                                                     "anyOf": [
                                                         {
                                                             "type": "object",
@@ -3203,7 +3203,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "players": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "anyOf": [
                                 {
                                     "type": "object",
@@ -3233,7 +3233,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "spectators": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "anyOf": [
                                 {
                                     "type": "object",
@@ -3258,7 +3258,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "bots": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "anyOf": [
                                 {
                                     "type": "object",
@@ -3294,7 +3294,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                                 {
                                                     "type": "object",
                                                     "patternProperties": {
-                                                        "^(.*)$": {
+                                                        "^.*$": {
                                                             "anyOf": [
                                                                 {
                                                                     "type": "string"
@@ -3349,7 +3349,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                 "voters": {
                                     "type": "object",
                                     "patternProperties": {
-                                        "^(.*)$": {
+                                        "^.*$": {
                                             "type": "object",
                                             "properties": {
                                                 "vote": {

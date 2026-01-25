@@ -1,6 +1,5 @@
-// eslint-disable-next-line no-restricted-imports
+/* eslint-disable no-restricted-imports */
 import { tachyonMeta } from "../dist/index.js";
-// eslint-disable-next-line no-restricted-imports
 import { TachyonCommand } from "../dist/types.js";
 
 //--DIST-START--
@@ -41,7 +40,6 @@ export type GetFailedResponseReason<
     ? R
     : never;
 
-// TODO: move this to jaz-ts-utils
 type ExcludeEmptyArray<T> = T extends readonly unknown[]
     ? T["length"] extends 0
         ? never

@@ -3,7 +3,7 @@
 import assert from "node:assert";
 import { test } from "node:test";
 
-import { tachyonMeta } from "../../dist/index.js";
+import { tachyonMeta } from "../../dist/index.cjs";
 import packageJson from "../../package.json";
 
 test("version", () => {

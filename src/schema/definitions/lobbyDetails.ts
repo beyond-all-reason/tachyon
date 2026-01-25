@@ -1,6 +1,4 @@
-import { Type } from "@sinclair/typebox";
-
-import { UnionEnum } from "@/union-enum";
+import Type from "typebox";
 
 export const lobbyDetails = Type.Object(
     {
@@ -82,7 +80,7 @@ export const lobbyDetails = Type.Object(
                 initiator: Type.Ref("userId"),
                 voters: Type.Record(
                     Type.String(), // this is the userId
-                    Type.Object({ vote: UnionEnum(["pending", "yes", "no", "abstain"]) }),
+                    Type.Object({ vote: Type.Enum(["pending", "yes", "no", "abstain"]) }),
                     {
                         description:
                             "indexed by the userId. The initiator is also included in this object",

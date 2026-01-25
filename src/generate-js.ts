@@ -3,8 +3,8 @@ import fs from "node:fs/promises";
 import { build as tsupBuild } from "tsup";
 
 import { generateValidators as generateJsValidators } from "@/generate-js-validators.js";
-import { TachyonConfig } from "@/generate-json-schemas";
-import { generateTSDefs } from "@/generate-ts-defs";
+import { TachyonConfig } from "@/generate-json-schemas.js";
+import { generateTSDefs } from "@/generate-ts-defs.js";
 
 // eslint-disable-next-line no-restricted-imports
 import packageJson from "../package.json";

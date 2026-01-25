@@ -1344,17 +1344,17 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                 },
                 "mapOptions": {
                     "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                    "patternProperties": { "^.*$": { "type": "string" } }
                 },
                 "gameOptions": {
                     "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                    "patternProperties": { "^.*$": { "type": "string" } }
                 },
                 "restrictions": {
                     "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": { "type": "integer", "minimum": 0 }
+                        "^.*$": { "type": "integer", "minimum": 0 }
                     }
                 },
                 "luamsgRegexp": {

@@ -4,6 +4,7 @@
         "source.fixAll.eslint": "explicit"
     },
     "eslint.validate": ["typescript"],
+    "eslint.useFlatConfig": true,
     "[typescript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },

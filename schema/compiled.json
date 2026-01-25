@@ -65,7 +65,7 @@
                 "aiOptions": {
                     "description": "AI-specific options",
                     "type": "object",
-                    "patternProperties": { "^(.*)$": { "type": "string" } }
+                    "patternProperties": { "^.*$": { "type": "string" } }
                 },
                 "customProperties": {
                     "$ref": "#/definitions/customStartScriptProperties"
@@ -137,7 +137,7 @@
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "description": "this represent an array, items should be sorted lexicographically on their keys",
                             "type": "object",
                             "properties": {
@@ -148,7 +148,7 @@
                                 "teams": {
                                     "type": "object",
                                     "patternProperties": {
-                                        "^(.*)$": {
+                                        "^.*$": {
                                             "type": "object",
                                             "properties": {
                                                 "maxPlayers": {
@@ -168,7 +168,7 @@
                 "players": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "type": "object",
                             "properties": {
                                 "id": { "$ref": "#/definitions/userId" },
@@ -183,7 +183,7 @@
                 "spectators": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "type": "object",
                             "properties": {
                                 "id": { "$ref": "#/definitions/userId" },
@@ -196,7 +196,7 @@
                 "bots": {
                     "type": "object",
                     "patternProperties": {
-                        "^(.*)$": {
+                        "^.*$": {
                             "type": "object",
                             "properties": {
                                 "id": {
@@ -204,8 +204,7 @@
                                     "type": "string"
                                 },
                                 "hostUserId": {
-                                    "$ref": "#/definitions/userId",
-                                    "description": "which player will run the bot. It is the same as the player that added the bot."
+                                    "$ref": "#/definitions/userId"
                                 },
                                 "allyTeam": { "type": "string" },
                                 "team": { "type": "string" },
@@ -224,7 +223,7 @@
                                 "options": {
                                     "type": "object",
                                     "patternProperties": {
-                                        "^(.*)$": { "type": "string" }
+                                        "^.*$": { "type": "string" }
                                     }
                                 }
                             },
@@ -257,7 +256,7 @@
                             "description": "indexed by the userId. The initiator is also included in this object",
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "type": "object",
                                     "properties": {
                                         "vote": {
@@ -1231,20 +1230,20 @@
                         "mapOptions": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": { "type": "string" }
+                                "^.*$": { "type": "string" }
                             }
                         },
                         "gameOptions": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": { "type": "string" }
+                                "^.*$": { "type": "string" }
                             }
                         },
                         "restrictions": {
                             "description": "Mapping from unitDefId to the maximum number of units of that type that can be built.",
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": { "type": "integer", "minimum": 0 }
+                                "^.*$": { "type": "integer", "minimum": 0 }
                             }
                         },
                         "luamsgRegexp": {
@@ -3381,7 +3380,7 @@
                         "options": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": { "type": "string" }
+                                "^.*$": { "type": "string" }
                             }
                         }
                     },
@@ -3857,7 +3856,7 @@
                         "lobbies": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "$ref": "#/definitions/lobbyOverview"
                                 }
                             }
@@ -3887,7 +3886,7 @@
                         "lobbies": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "anyOf": [
                                         {
                                             "type": "object",
@@ -4364,7 +4363,7 @@
                         "options": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "anyOf": [
                                         { "type": "string" },
                                         { "type": "null" }
@@ -4525,7 +4524,7 @@
                         "allyTeamConfig": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "anyOf": [
                                         {
                                             "description": "this represent an array, items should be sorted lexicographically on their keys",
@@ -4541,7 +4540,7 @@
                                                 "teams": {
                                                     "type": "object",
                                                     "patternProperties": {
-                                                        "^(.*)$": {
+                                                        "^.*$": {
                                                             "anyOf": [
                                                                 {
                                                                     "type": "object",
@@ -4570,7 +4569,7 @@
                         "players": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "anyOf": [
                                         {
                                             "type": "object",
@@ -4604,7 +4603,7 @@
                         "spectators": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "anyOf": [
                                         {
                                             "type": "object",
@@ -4629,7 +4628,7 @@
                         "bots": {
                             "type": "object",
                             "patternProperties": {
-                                "^(.*)$": {
+                                "^.*$": {
                                     "anyOf": [
                                         {
                                             "type": "object",
@@ -4667,7 +4666,7 @@
                                                         {
                                                             "type": "object",
                                                             "patternProperties": {
-                                                                "^(.*)$": {
+                                                                "^.*$": {
                                                                     "anyOf": [
                                                                         {
                                                                             "type": "string"
@@ -4730,7 +4729,7 @@
                                         "voters": {
                                             "type": "object",
                                             "patternProperties": {
-                                                "^(.*)$": {
+                                                "^.*$": {
                                                     "type": "object",
                                                     "properties": {
                                                         "vote": {

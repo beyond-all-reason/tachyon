@@ -395,18 +395,7 @@ Sent by the server to inform the client of its own user state. This event should
 
 #### TypeScript Definition
 ```ts
-export type PrivateUser = {
-    userId: UserId;
-    username: string;
-    displayName: string;
-    clanBaseData: ClanBaseData | null;
-    countryCode?: string;
-    status: "offline" | "menu" | "playing" | "lobby";
-    rating?: {
-        value: number;
-    };
-    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
-} & {
+export type PrivateUser = User & {
     party: PartyState | null;
     invitedToParties: PartyState[];
     friendIds: string[];
@@ -437,10 +426,17 @@ export interface UserSelfEvent {
 export interface UserSelfEventData {
     user: PrivateUser;
 }
-export interface ClanBaseData {
-    clanId: ClanId;
-    name: string;
-    tag: string;
+export interface User {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanId: string | null;
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+    rating?: {
+        value: number;
+    };
+    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
 }
 export interface PartyState {
     id: PartyId;

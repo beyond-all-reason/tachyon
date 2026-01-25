@@ -1,7 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
-import { Nullable } from "@/typebox-utils";
-import { UnionEnum } from "@/union-enum";
+import { Nullable } from "@/typebox-utils.js";
 
 export const user = Type.Object(
     {
@@ -10,7 +9,7 @@ export const user = Type.Object(
         displayName: Type.String(),
         clanBaseData: Nullable(Type.Ref("clanBaseData")),
         countryCode: Type.Optional(Type.String()),
-        status: UnionEnum(["offline", "menu", "playing", "lobby"]),
+        status: Type.Enum(["offline", "menu", "playing", "lobby"]),
         rating: Type.Optional(
             Type.Object({
                 value: Type.Number({
@@ -20,7 +19,7 @@ export const user = Type.Object(
         ),
         roles: Type.Optional(
             Type.Array(
-                UnionEnum([
+                Type.Enum([
                     "contributor",
                     "admin",
                     "moderator",
