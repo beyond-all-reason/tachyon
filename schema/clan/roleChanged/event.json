@@ -17,9 +17,10 @@
             "type": "object",
             "properties": {
                 "userId": { "$ref": "../../definitions/userId.json" },
+                "clanId": { "$ref": "../../definitions/clanId.json" },
                 "newRole": { "$ref": "../../definitions/clanRole.json" }
             },
-            "required": ["userId", "newRole"]
+            "required": ["userId", "clanId", "newRole"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

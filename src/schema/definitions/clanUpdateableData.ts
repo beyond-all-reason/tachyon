@@ -1,6 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
-export const clan = Type.Intersect(
+export const clanUpdateableData = Type.Intersect(
     [
         Type.Ref("clanUpdateableBaseData"),
         Type.Object({

@@ -16,21 +16,11 @@
             "title": "ClanUpdateRequestData",
             "type": "object",
             "properties": {
-                "clan": {
-                    "target": "Omit",
-                    "parameters": [
-                        { "$ref": "../../definitions/clan.json" },
-                        {
-                            "anyOf": [
-                                { "const": "clanId" },
-                                { "const": "membersCount" },
-                                { "const": "members" }
-                            ]
-                        }
-                    ]
+                "clanUpdateableData": {
+                    "$ref": "../../definitions/clanUpdateableData.json"
                 }
             },
-            "required": ["clan"]
+            "required": ["clanUpdateableData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

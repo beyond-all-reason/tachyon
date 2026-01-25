@@ -366,15 +366,11 @@ Create a clan.
             "title": "ClanCreateRequestData",
             "type": "object",
             "properties": {
-                "clanBaseData": {
-                    "target": "Omit",
-                    "parameters": [
-                        { "$ref": "#/definitions/clanBaseData" },
-                        { "const": "clanId" }
-                    ]
+                "clanUpdateableBaseData": {
+                    "$ref": "#/definitions/clanUpdateableBaseData"
                 }
             },
-            "required": ["clanBaseData"]
+            "required": ["clanUpdateableBaseData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -392,16 +388,9 @@ Create a clan.
     "messageId": "cillum Excepteur consectetur dolore commodo",
     "commandId": "clan/create",
     "data": {
-        "clanBaseData": {
-            "target": "Omit",
-            "parameters": [
-                {
-                    "clanId": "12345",
-                    "name": "id magna",
-                    "tag": "enim"
-                },
-                "clanId"
-            ]
+        "clanUpdateableBaseData": {
+            "name": "nisi qui",
+            "tag": "inci"
         }
     }
 }
@@ -417,9 +406,11 @@ export interface ClanCreateRequest {
     data: ClanCreateRequestData;
 }
 export interface ClanCreateRequestData {
-    clanBaseData: {
-        [k: string]: unknown;
-    };
+    clanUpdateableBaseData: ClanUpdateableBaseData;
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
 ### Response
@@ -1024,9 +1015,11 @@ A player has been invited to a clan. Sent to the invited player.
             "title": "ClanInvitedEventData",
             "type": "object",
             "properties": {
-                "clanBaseData": { "$ref": "#/definitions/clanBaseData" }
+                "clanUpdateableBaseData": {
+                    "$ref": "#/definitions/clanUpdateableBaseData"
+                }
             },
-            "required": ["clanBaseData"]
+            "required": ["clanUpdateableBaseData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1044,10 +1037,9 @@ A player has been invited to a clan. Sent to the invited player.
     "messageId": "minim Excepteur Duis",
     "commandId": "clan/invited",
     "data": {
-        "clanBaseData": {
-            "clanId": "12345",
-            "name": "Ut dolore nulla tempor",
-            "tag": "qui"
+        "clanUpdateableBaseData": {
+            "name": "adipisicing",
+            "tag": "Except"
         }
     }
 }
@@ -1056,8 +1048,6 @@ A player has been invited to a clan. Sent to the invited player.
 
 #### TypeScript Definition
 ```ts
-export type ClanId = string;
-
 export interface ClanInvitedEvent {
     type: "event";
     messageId: string;
@@ -1065,10 +1055,9 @@ export interface ClanInvitedEvent {
     data: ClanInvitedEventData;
 }
 export interface ClanInvitedEventData {
-    clanBaseData: ClanBaseData;
+    clanUpdateableBaseData: ClanUpdateableBaseData;
 }
-export interface ClanBaseData {
-    clanId: ClanId;
+export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
 }
@@ -1251,10 +1240,8 @@ A player was kicked from a clan. Sent to the kicked player.
         "data": {
             "title": "ClanKickedEventData",
             "type": "object",
-            "properties": {
-                "clanBaseData": { "$ref": "#/definitions/clanBaseData" }
-            },
-            "required": ["clanBaseData"]
+            "properties": { "clanId": { "$ref": "#/definitions/clanId" } },
+            "required": ["clanId"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1272,11 +1259,7 @@ A player was kicked from a clan. Sent to the kicked player.
     "messageId": "exercitation nostrud",
     "commandId": "clan/kicked",
     "data": {
-        "clanBaseData": {
-            "clanId": "12345",
-            "name": "labore irure ut",
-            "tag": "adipi"
-        }
+        "clanId": "12345"
     }
 }
 ```
@@ -1293,12 +1276,7 @@ export interface ClanKickedEvent {
     data: ClanKickedEventData;
 }
 export interface ClanKickedEventData {
-    clanBaseData: ClanBaseData;
-}
-export interface ClanBaseData {
     clanId: ClanId;
-    name: string;
-    tag: string;
 }
 ```
 ---
@@ -1329,14 +1307,9 @@ Leave your clan.
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "clan/leave" },
-        "data": {
-            "title": "ClanLeaveRequestData",
-            "type": "object",
-            "properties": {}
-        }
+        "commandId": { "const": "clan/leave" }
     },
-    "required": ["type", "messageId", "commandId", "data"]
+    "required": ["type", "messageId", "commandId"]
 }
 
 ```
@@ -1349,10 +1322,7 @@ Leave your clan.
 {
     "type": "request",
     "messageId": "fugiat consequat nulla Excepteur labore",
-    "commandId": "clan/leave",
-    "data": {
-        "magna4d3": 82327675.81939697
-    }
+    "commandId": "clan/leave"
 }
 ```
 </details>
@@ -1363,9 +1333,7 @@ export interface ClanLeaveRequest {
     type: "request";
     messageId: string;
     commandId: "clan/leave";
-    data: ClanLeaveRequestData;
 }
-export interface ClanLeaveRequestData {}
 ```
 ### Response
 
@@ -1476,9 +1444,10 @@ A clan member's role was changed. Sent to affected clan member.
             "type": "object",
             "properties": {
                 "userId": { "$ref": "#/definitions/userId" },
+                "clanId": { "$ref": "#/definitions/clanId" },
                 "newRole": { "$ref": "#/definitions/clanRole" }
             },
-            "required": ["userId", "newRole"]
+            "required": ["userId", "clanId", "newRole"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1497,6 +1466,7 @@ A clan member's role was changed. Sent to affected clan member.
     "commandId": "clan/roleChanged",
     "data": {
         "userId": "351",
+        "clanId": "12345",
         "newRole": "leader"
     }
 }
@@ -1506,6 +1476,7 @@ A clan member's role was changed. Sent to affected clan member.
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type ClanId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
 
 export interface ClanRoleChangedEvent {
@@ -1516,6 +1487,7 @@ export interface ClanRoleChangedEvent {
 }
 export interface ClanRoleChangedEventData {
     userId: UserId;
+    clanId: ClanId;
     newRole: ClanRole;
 }
 ```
@@ -1553,9 +1525,10 @@ Set the target player's role in your clan.
             "type": "object",
             "properties": {
                 "userId": { "$ref": "#/definitions/userId" },
+                "clanId": { "$ref": "#/definitions/clanId" },
                 "targetRole": { "$ref": "#/definitions/clanRole" }
             },
-            "required": ["userId", "targetRole"]
+            "required": ["userId", "clanId", "targetRole"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1574,7 +1547,8 @@ Set the target player's role in your clan.
     "commandId": "clan/setRole",
     "data": {
         "userId": "351",
-        "targetRole": "coLeader"
+        "clanId": "12345",
+        "targetRole": "leader"
     }
 }
 ```
@@ -1583,6 +1557,7 @@ Set the target player's role in your clan.
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type ClanId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
 
 export interface ClanSetRoleRequest {
@@ -1593,6 +1568,7 @@ export interface ClanSetRoleRequest {
 }
 export interface ClanSetRoleRequestData {
     userId: UserId;
+    clanId: ClanId;
     targetRole: ClanRole;
 }
 ```
@@ -1704,21 +1680,11 @@ Update your clan.
             "title": "ClanUpdateRequestData",
             "type": "object",
             "properties": {
-                "clan": {
-                    "target": "Omit",
-                    "parameters": [
-                        { "$ref": "#/definitions/clan" },
-                        {
-                            "anyOf": [
-                                { "const": "clanId" },
-                                { "const": "membersCount" },
-                                { "const": "members" }
-                            ]
-                        }
-                    ]
+                "clanUpdateableData": {
+                    "$ref": "#/definitions/clanUpdateableData"
                 }
             },
-            "required": ["clan"]
+            "required": ["clanUpdateableData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1736,24 +1702,10 @@ Update your clan.
     "messageId": "proident incididunt",
     "commandId": "clan/update",
     "data": {
-        "clan": {
-            "target": "Omit",
-            "parameters": [
-                {
-                    "clanId": "12345",
-                    "name": "re",
-                    "tag": "qui do",
-                    "description": "elit in",
-                    "membersCount": 12336695.194244385,
-                    "members": [
-                        {
-                            "userId": "351",
-                            "role": "leader"
-                        }
-                    ]
-                },
-                "membersCount"
-            ]
+        "clanUpdateableData": {
+            "name": "sunt et voluptate nisi iru",
+            "tag": "in v",
+            "description": "minim aute qui mollit"
         }
     }
 }
@@ -1762,6 +1714,10 @@ Update your clan.
 
 #### TypeScript Definition
 ```ts
+export type ClanUpdateableData = ClanUpdateableBaseData & {
+    description?: string;
+};
+
 export interface ClanUpdateRequest {
     type: "request";
     messageId: string;
@@ -1769,9 +1725,11 @@ export interface ClanUpdateRequest {
     data: ClanUpdateRequestData;
 }
 export interface ClanUpdateRequestData {
-    clan: {
-        [k: string]: unknown;
-    };
+    clanUpdateableData: ClanUpdateableData;
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
 ### Response
@@ -1879,13 +1837,8 @@ One ore more clan properties were updated. Sent to all clan members.
         "messageId": { "type": "string" },
         "commandId": { "const": "clan/updated" },
         "data": {
-            "title": "ClanUpdatedEventData",
-            "type": "object",
-            "properties": {
-                "description": { "type": "string", "maxLength": 500 },
-                "name": { "type": "string", "maxLength": 30 },
-                "tag": { "type": "string", "minLength": 3, "maxLength": 6 }
-            }
+            "$ref": "#/definitions/clanUpdateableData",
+            "title": "ClanUpdatedEventData"
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1900,12 +1853,12 @@ One ore more clan properties were updated. Sent to all clan members.
 ```json
 {
     "type": "event",
-    "messageId": "enim culpa mollit ipsum",
+    "messageId": "qui",
     "commandId": "clan/updated",
     "data": {
-        "description": "occaecat magna aute",
-        "name": "aliqua ea eu ullamco aute",
-        "tag": "null"
+        "name": "pariatur ",
+        "tag": "vel",
+        "description": "tempor ex proident"
     }
 }
 ```
@@ -1913,16 +1866,19 @@ One ore more clan properties were updated. Sent to all clan members.
 
 #### TypeScript Definition
 ```ts
+export type ClanUpdatedEventData = ClanUpdateableBaseData & {
+    description?: string;
+};
+
 export interface ClanUpdatedEvent {
     type: "event";
     messageId: string;
     commandId: "clan/updated";
     data: ClanUpdatedEventData;
 }
-export interface ClanUpdatedEventData {
-    description?: string;
-    name?: string;
-    tag?: string;
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
 ---
@@ -2060,51 +2016,22 @@ export interface ClanViewRequestData {
     "messageId": "nisi est dolore sit",
     "commandId": "clan/view",
     "status": "success",
-    "data": {
-        "clanId": "12345",
-        "name": "laboris consectetur cillum e",
-        "tag": "conse",
-        "description": "amet ullamco labore",
-        "membersCount": 23929101.22871399,
-        "members": [
-            {
-                "userId": "351",
-                "role": "member"
-            },
-            {
-                "userId": "351",
-                "role": "member"
-            },
-            {
-                "userId": "351",
-                "role": "member"
-            },
-            {
-                "userId": "351",
-                "role": "leader"
-            },
-            {
-                "userId": "351",
-                "role": "member"
-            }
-        ]
-    }
+    "data": "12345"
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type ClanViewOkResponseData = {
-    clanId: ClanId;
-    name: string;
-    tag: string;
-} & {
-    description?: string;
-    membersCount: number;
-    members: ClanMember[];
-};
+export type ClanViewOkResponseData = ClanId &
+    ClanUpdateableData & {
+        membersCount: number;
+        members: ClanMember[];
+    };
 export type ClanId = string;
+export type ClanUpdateableData = ClanUpdateableBaseData & {
+    description?: string;
+};
 export type UserId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
 
@@ -2114,6 +2041,10 @@ export interface ClanViewOkResponse {
     commandId: "clan/view";
     status: "success";
     data: ClanViewOkResponseData;
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 export interface ClanMember {
     userId: UserId;
@@ -2204,12 +2135,14 @@ export interface ClanViewListRequest {
                     "title": "ClanViewListOkResponseData",
                     "type": "object",
                     "properties": {
-                        "clansBaseData": {
+                        "clanUpdateableBaseData": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/clanBaseData" }
+                            "items": {
+                                "$ref": "#/definitions/clanUpdateableBaseData"
+                            }
                         }
                     },
-                    "required": ["clansBaseData"]
+                    "required": ["clanUpdateableBaseData"]
                 }
             },
             "required": ["type", "messageId", "commandId", "status", "data"]
@@ -2250,26 +2183,22 @@ export interface ClanViewListRequest {
     "commandId": "clan/viewList",
     "status": "success",
     "data": {
-        "clansBaseData": [
+        "clanUpdateableBaseData": [
             {
-                "clanId": "12345",
-                "name": "ex Duis do ",
-                "tag": "sit"
+                "name": "esse ",
+                "tag": "Exc"
             },
             {
-                "clanId": "12345",
-                "name": "null",
-                "tag": "qui "
+                "name": "sunt officia Excepteur anim ",
+                "tag": "ad u"
             },
             {
-                "clanId": "12345",
-                "name": "sint irure labore",
-                "tag": "nost"
+                "name": "dolo",
+                "tag": "vel"
             },
             {
-                "clanId": "12345",
-                "name": "qui amet ad",
-                "tag": "Exce"
+                "name": "sit enim con",
+                "tag": "minim"
             }
         ]
     }
@@ -2279,8 +2208,6 @@ export interface ClanViewListRequest {
 
 #### TypeScript Definition
 ```ts
-export type ClanId = string;
-
 export interface ClanViewListOkResponse {
     type: "response";
     messageId: string;
@@ -2289,10 +2216,9 @@ export interface ClanViewListOkResponse {
     data: ClanViewListOkResponseData;
 }
 export interface ClanViewListOkResponseData {
-    clansBaseData: ClanBaseData[];
+    clanUpdateableBaseData: ClanUpdateableBaseData[];
 }
-export interface ClanBaseData {
-    clanId: ClanId;
+export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
 }

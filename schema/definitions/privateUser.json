@@ -48,7 +48,7 @@
                 },
                 "clanInvites": {
                     "type": "array",
-                    "items": { "$ref": "../definitions/clanBaseData.json" }
+                    "items": { "$ref": "../definitions/clanId.json" }
                 }
             },
             "required": [

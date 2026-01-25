@@ -1,3 +1,3 @@
-import { UnionEnum } from "@/union-enum";
+import Type, { Enum } from "typebox";
 
-export const clanRole = UnionEnum(["member", "coLeader", "leader"], { $id: "clanRole" });
+export const clanRole = Enum(["member", "coLeader", "leader"], { $id: "clanRole" });

@@ -16,15 +16,11 @@
             "title": "ClanCreateRequestData",
             "type": "object",
             "properties": {
-                "clanBaseData": {
-                    "target": "Omit",
-                    "parameters": [
-                        { "$ref": "../../definitions/clanBaseData.json" },
-                        { "const": "clanId" }
-                    ]
+                "clanUpdateableBaseData": {
+                    "$ref": "../../definitions/clanUpdateableBaseData.json"
                 }
             },
-            "required": ["clanBaseData"]
+            "required": ["clanUpdateableBaseData"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

@@ -29,7 +29,19 @@
                             "clanBaseData": {
                                 "anyOf": [
                                     {
-                                        "$ref": "../../definitions/clanBaseData.json"
+                                        "type": "object",
+                                        "properties": {
+                                            "clanId": {
+                                                "$ref": "../../definitions/clanId.json"
+                                            },
+                                            "clanUpdateableBaseData": {
+                                                "$ref": "../../definitions/clanUpdateableBaseData.json"
+                                            }
+                                        },
+                                        "required": [
+                                            "clanId",
+                                            "clanUpdateableBaseData"
+                                        ]
                                     },
                                     { "type": "null" }
                                 ]

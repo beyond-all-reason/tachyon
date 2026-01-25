@@ -1,6 +1,6 @@
-import { Type } from "@sinclair/typebox";
+import Type from "typebox";
 
-export const clanBaseData = Type.Object(
+export const clanUpdateableBaseData = Type.Object(
     {
         name: Type.String({ maxLength: 30 }),
         tag: Type.String({ minLength: 3, maxLength: 6 }),
