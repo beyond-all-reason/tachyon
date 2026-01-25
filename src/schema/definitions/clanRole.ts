@@ -1,10 +1,3 @@
-import { Type } from "@sinclair/typebox";
+import { UnionEnum } from "@/union-enum";
 
-export const clanRole = Type.Enum(
-    {
-        Member: "member",
-        CoLeader: "coLeader",
-        Leader: "leader",
-    },
-    { $id: "clanRole" }
-);
+export const clanRole = UnionEnum(["member", "coLeader", "leader"], { $id: "clanRole" });
