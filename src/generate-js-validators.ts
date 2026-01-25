@@ -111,7 +111,7 @@ function ucs2length(str) {
             esm: false,
         },
         keywords: ["tachyon"],
-        strict: false, // Disable strict mode to allow unknown keywords
+        strict: true,
     });
     addFormats(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap) + "exports." + validator;
