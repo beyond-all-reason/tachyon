@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Create a lobby",
     request: {
         data: Type.Object({
-            name: Type.String(),
+            name: Type.Ref("lobbyName"),
             mapName: Type.String(),
             allyTeamConfig: Type.Ref("allyTeamConfig"),
         }),
