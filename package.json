@@ -95,7 +95,7 @@
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
     "type-fest": "^4.41.0",
-    "typebox": "~1.0.78",
+    "typebox": "~1.0.80",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.53.1"
   }
