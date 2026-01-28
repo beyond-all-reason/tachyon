@@ -95,9 +95,10 @@
             "type": "object",
             "properties": {
                 "userId": { "$ref": "#/definitions/userId" },
-                "role": { "$ref": "#/definitions/clanRole" }
+                "role": { "$ref": "#/definitions/clanRole" },
+                "joinDate": { "type": "string" }
             },
-            "required": ["userId", "role"]
+            "required": ["userId", "role", "joinDate"]
         },
         "clanRole": { "enum": ["member", "coLeader", "leader"] },
         "clanUpdateableBaseData": {

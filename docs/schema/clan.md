@@ -2049,6 +2049,7 @@ export interface ClanUpdateableBaseData {
 export interface ClanMember {
     userId: UserId;
     role: ClanRole;
+    joinDate: string;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`

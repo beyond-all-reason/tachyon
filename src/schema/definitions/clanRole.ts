@@ -1,3 +1,3 @@
-import Type, { Enum } from "typebox";
+import { Enum } from "typebox";
 
 export const clanRole = Enum(["member", "coLeader", "leader"], { $id: "clanRole" });

@@ -4,7 +4,8 @@
     "type": "object",
     "properties": {
         "userId": { "$ref": "../definitions/userId.json" },
-        "role": { "$ref": "../definitions/clanRole.json" }
+        "role": { "$ref": "../definitions/clanRole.json" },
+        "joinDate": { "type": "string" }
     },
-    "required": ["userId", "role"]
+    "required": ["userId", "role", "joinDate"]
 }
