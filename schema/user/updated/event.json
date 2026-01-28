@@ -26,9 +26,23 @@
                             },
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
-                            "clanId": {
+                            "clanBaseData": {
                                 "anyOf": [
-                                    { "type": "string" },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "clanId": {
+                                                "$ref": "../../definitions/clanId.json"
+                                            },
+                                            "clanUpdateableBaseData": {
+                                                "$ref": "../../definitions/clanUpdateableBaseData.json"
+                                            }
+                                        },
+                                        "required": [
+                                            "clanId",
+                                            "clanUpdateableBaseData"
+                                        ]
+                                    },
                                     { "type": "null" }
                                 ]
                             },

@@ -1,0 +1,19 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/clan.json",
+    "title": "Clan",
+    "allOf": [
+        { "$ref": "../definitions/clanId.json" },
+        { "$ref": "../definitions/clanUpdateableData.json" },
+        {
+            "type": "object",
+            "properties": {
+                "membersCount": { "type": "number", "minimum": 0 },
+                "members": {
+                    "type": "array",
+                    "items": { "$ref": "../definitions/clanMember.json" }
+                }
+            },
+            "required": ["membersCount", "members"]
+        }
+    ]
+}
