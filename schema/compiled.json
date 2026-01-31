@@ -209,8 +209,7 @@
                                     "type": "string"
                                 },
                                 "hostUserId": {
-                                    "$ref": "#/definitions/userId",
-                                    "description": "which player will run the bot. It is the same as the player that added the bot."
+                                    "$ref": "#/definitions/userId"
                                 },
                                 "allyTeam": { "type": "string" },
                                 "team": { "type": "string" },
@@ -2698,14 +2697,26 @@
                             "title": "ClanViewListOkResponseData",
                             "type": "object",
                             "properties": {
-                                "clanUpdateableBaseData": {
+                                "clanList": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/definitions/clanUpdateableBaseData"
+                                        "type": "object",
+                                        "properties": {
+                                            "clanId": {
+                                                "$ref": "#/definitions/clanId"
+                                            },
+                                            "clanUpdateableBaseData": {
+                                                "$ref": "#/definitions/clanUpdateableBaseData"
+                                            }
+                                        },
+                                        "required": [
+                                            "clanId",
+                                            "clanUpdateableBaseData"
+                                        ]
                                     }
                                 }
                             },
-                            "required": ["clanUpdateableBaseData"]
+                            "required": ["clanList"]
                         }
                     },
                     "required": [
