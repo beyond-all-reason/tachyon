@@ -20,14 +20,23 @@
                     "title": "ClanViewListOkResponseData",
                     "type": "object",
                     "properties": {
-                        "clanUpdateableBaseData": {
+                        "clanList": {
                             "type": "array",
                             "items": {
-                                "$ref": "../../definitions/clanUpdateableBaseData.json"
+                                "type": "object",
+                                "properties": {
+                                    "clanId": {
+                                        "$ref": "../../definitions/clanId.json"
+                                    },
+                                    "clanUpdateableBaseData": {
+                                        "$ref": "../../definitions/clanUpdateableBaseData.json"
+                                    }
+                                },
+                                "required": ["clanId", "clanUpdateableBaseData"]
                             }
                         }
                     },
-                    "required": ["clanUpdateableBaseData"]
+                    "required": ["clanList"]
                 }
             },
             "required": ["type", "messageId", "commandId", "status", "data"]

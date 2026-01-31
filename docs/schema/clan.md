@@ -2136,14 +2136,23 @@ export interface ClanViewListRequest {
                     "title": "ClanViewListOkResponseData",
                     "type": "object",
                     "properties": {
-                        "clanUpdateableBaseData": {
+                        "clanList": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/clanUpdateableBaseData"
+                                "type": "object",
+                                "properties": {
+                                    "clanId": {
+                                        "$ref": "#/definitions/clanId"
+                                    },
+                                    "clanUpdateableBaseData": {
+                                        "$ref": "#/definitions/clanUpdateableBaseData"
+                                    }
+                                },
+                                "required": ["clanId", "clanUpdateableBaseData"]
                             }
                         }
                     },
-                    "required": ["clanUpdateableBaseData"]
+                    "required": ["clanList"]
                 }
             },
             "required": ["type", "messageId", "commandId", "status", "data"]
@@ -2184,22 +2193,34 @@ export interface ClanViewListRequest {
     "commandId": "clan/viewList",
     "status": "success",
     "data": {
-        "clanUpdateableBaseData": [
+        "clanList": [
             {
-                "name": "esse ",
-                "tag": "Exc"
+                "clanId": "12345",
+                "clanUpdateableBaseData": {
+                    "name": "pariatur nost",
+                    "tag": "ame"
+                }
             },
             {
-                "name": "sunt officia Excepteur anim ",
-                "tag": "ad u"
+                "clanId": "12345",
+                "clanUpdateableBaseData": {
+                    "name": "ex",
+                    "tag": "et v"
+                }
             },
             {
-                "name": "dolo",
-                "tag": "vel"
+                "clanId": "12345",
+                "clanUpdateableBaseData": {
+                    "name": "nulla id",
+                    "tag": "magna "
+                }
             },
             {
-                "name": "sit enim con",
-                "tag": "minim"
+                "clanId": "12345",
+                "clanUpdateableBaseData": {
+                    "name": "eiusmod voluptat",
+                    "tag": "dolor "
+                }
             }
         ]
     }
@@ -2209,6 +2230,8 @@ export interface ClanViewListRequest {
 
 #### TypeScript Definition
 ```ts
+export type ClanId = string;
+
 export interface ClanViewListOkResponse {
     type: "response";
     messageId: string;
@@ -2217,7 +2240,10 @@ export interface ClanViewListOkResponse {
     data: ClanViewListOkResponseData;
 }
 export interface ClanViewListOkResponseData {
-    clanUpdateableBaseData: ClanUpdateableBaseData[];
+    clanList: {
+        clanId: ClanId;
+        clanUpdateableBaseData: ClanUpdateableBaseData;
+    }[];
 }
 export interface ClanUpdateableBaseData {
     name: string;

@@ -11,7 +11,12 @@ export default defineEndpoint({
         {
             status: "success",
             data: Type.Object({
-                clanUpdateableBaseData: Type.Array(Type.Ref("clanUpdateableBaseData")),
+                clanList: Type.Array(
+                    Type.Object({
+                        clanId: Type.Ref("clanId"),
+                        clanUpdateableBaseData: Type.Ref("clanUpdateableBaseData"),
+                    })
+                ),
             }),
         },
     ],
