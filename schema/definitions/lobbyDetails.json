@@ -76,10 +76,7 @@
                             "description": "server assigned unique identifier for the bot",
                             "type": "string"
                         },
-                        "hostUserId": {
-                            "$ref": "../definitions/userId.json",
-                            "description": "which player will run the bot. It is the same as the player that added the bot."
-                        },
+                        "hostUserId": { "$ref": "../definitions/userId.json" },
                         "allyTeam": { "type": "string" },
                         "team": { "type": "string" },
                         "player": { "type": "string" },

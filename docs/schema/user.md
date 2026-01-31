@@ -147,7 +147,7 @@ export interface UserInfoRequestData {
         "userId": "351",
         "username": "enim ad in minim est",
         "displayName": "culpa exercitation Lorem cillum fugiat",
-        "clanId": null,
+        "clanBaseData": null,
         "countryCode": "incididunt dolore est enim",
         "status": "offline",
         "rating": {
@@ -168,6 +168,7 @@ export interface UserInfoRequestData {
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type ClanId = string;
 
 export interface UserInfoOkResponse {
     type: "response";
@@ -180,13 +181,20 @@ export interface UserInfoOkResponseData {
     userId: UserId;
     username: string;
     displayName: string;
-    clanId: string | null;
+    clanBaseData: {
+        clanId: ClanId;
+        clanUpdateableBaseData: ClanUpdateableBaseData;
+    } | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -246,48 +254,168 @@ Sent by the server to inform the client of its own user state. This event should
             "userId": "351",
             "username": "amet qui cillum occaecat",
             "displayName": "Lorem pariatur anim minim in",
-            "clanId": "culpa id",
-            "countryCode": "dolore veniam",
-            "status": "lobby",
-            "party": {
-                "id": "1882f6b2e3a4d14f24acb7aa",
-                "members": [
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    }
-                ],
-                "invited": [
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
-                    }
-                ]
+            "clanBaseData": {
+                "clanId": "12345",
+                "clanUpdateableBaseData": {
+                    "name": "laboris ",
+                    "tag": "minim "
+                }
             },
-            "invitedToParties": [],
+            "countryCode": "culpa nulla",
+            "status": "menu",
+            "party": null,
+            "invitedToParties": [
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                }
+            ],
             "friendIds": [
-                "sit cupidatat nisi irure",
-                "non ullamco dolor dolore elit",
-                "aliqua labore ipsum amet",
-                "elit do proident reprehenderit eiusmod"
+                "et exercitation elit anim aute",
+                "nostrud ut",
+                "laborum eu incididunt consequat sed",
+                "deserunt velit fugiat dolor irure",
+                "ipsum reprehenderit ex"
             ],
             "outgoingFriendRequest": [
-                {
-                    "to": {},
-                    "sentAt": {}
-                },
-                {
-                    "to": {},
-                    "sentAt": {}
-                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -309,25 +437,32 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": {},
                     "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
                 }
             ],
-            "ignoreIds": [],
+            "ignoreIds": [
+                "consectetur veniam Lorem"
+            ],
             "currentBattle": {
-                "username": "elit magna Excepteur et",
-                "password": "minim non sint",
-                "ip": "ad nostrud",
-                "port": -94831848.14453125,
+                "username": "eu",
+                "password": "Lorem irure culpa",
+                "ip": "Ut cillum voluptate sunt eiusmod",
+                "port": -50895655.155181885,
                 "engine": {
-                    "version": "irure"
+                    "version": "irure et"
                 },
                 "game": {
-                    "springName": "reprehenderit ad est"
+                    "springName": "exercitation"
                 },
                 "map": {
-                    "springName": "tempor irure Lorem"
+                    "springName": "qui esse enim"
                 }
             },
-            "currentLobby": null
+            "currentLobby": null,
+            "clanInvites": []
         }
     }
 }
@@ -351,8 +486,10 @@ export type PrivateUser = User & {
     ignoreIds: string[];
     currentBattle?: PrivateBattle;
     currentLobby: string | null;
+    clanInvites: ClanId[];
 };
 export type UserId = string;
+export type ClanId = string;
 export type PartyId = string;
 export type UnixTime = number;
 
@@ -369,13 +506,20 @@ export interface User {
     userId: UserId;
     username: string;
     displayName: string;
-    clanId: string | null;
+    clanBaseData: {
+        clanId: ClanId;
+        clanUpdateableBaseData: ClanUpdateableBaseData;
+    } | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 export interface PartyState {
     id: PartyId;
@@ -802,9 +946,23 @@ Sent by the server to inform the client of user state changes. User objects shou
                             "userId": { "$ref": "#/definitions/userId" },
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
-                            "clanId": {
+                            "clanBaseData": {
                                 "anyOf": [
-                                    { "type": "string" },
+                                    {
+                                        "type": "object",
+                                        "properties": {
+                                            "clanId": {
+                                                "$ref": "#/definitions/clanId"
+                                            },
+                                            "clanUpdateableBaseData": {
+                                                "$ref": "#/definitions/clanUpdateableBaseData"
+                                            }
+                                        },
+                                        "required": [
+                                            "clanId",
+                                            "clanUpdateableBaseData"
+                                        ]
+                                    },
                                     { "type": "null" }
                                 ]
                             },
@@ -901,6 +1059,7 @@ Sent by the server to inform the client of user state changes. User objects shou
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type ClanId = string;
 
 export interface UserUpdatedEvent {
     type: "event";
@@ -913,7 +1072,10 @@ export interface UserUpdatedEventData {
         userId?: UserId;
         username?: string;
         displayName?: string;
-        clanId?: string | null;
+        clanBaseData?: {
+            clanId: ClanId;
+            clanUpdateableBaseData: ClanUpdateableBaseData;
+        } | null;
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
         rating?: {
@@ -921,5 +1083,9 @@ export interface UserUpdatedEventData {
         };
         roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
     }[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
