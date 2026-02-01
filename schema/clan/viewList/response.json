@@ -23,16 +23,7 @@
                         "clanList": {
                             "type": "array",
                             "items": {
-                                "type": "object",
-                                "properties": {
-                                    "clanId": {
-                                        "$ref": "../../definitions/clanId.json"
-                                    },
-                                    "clanUpdateableBaseData": {
-                                        "$ref": "../../definitions/clanUpdateableBaseData.json"
-                                    }
-                                },
-                                "required": ["clanId", "clanUpdateableBaseData"]
+                                "$ref": "../../definitions/clanBaseData.json"
                             }
                         }
                     },

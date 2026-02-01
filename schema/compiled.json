@@ -75,8 +75,8 @@
         },
         "clan": {
             "allOf": [
-                { "$ref": "#/definitions/clanId" },
-                { "$ref": "#/definitions/clanUpdateableData" },
+                { "$ref": "#/definitions/clanBaseData" },
+                { "$ref": "#/definitions/clanUpdateableBaseData" },
                 {
                     "type": "object",
                     "properties": {
@@ -90,15 +90,21 @@
                 }
             ]
         },
+        "clanBaseData": {
+            "allOf": [
+                { "$ref": "#/definitions/clanId" },
+                { "$ref": "#/definitions/clanUpdateableBaseData" }
+            ]
+        },
         "clanId": { "type": "string", "examples": ["12345"] },
         "clanMember": {
             "type": "object",
             "properties": {
                 "userId": { "$ref": "#/definitions/userId" },
                 "role": { "$ref": "#/definitions/clanRole" },
-                "joinDate": { "type": "string" }
+                "joinedAt": { "$ref": "#/definitions/unixTime" }
             },
-            "required": ["userId", "role", "joinDate"]
+            "required": ["userId", "role", "joinedAt"]
         },
         "clanRole": { "enum": ["member", "coLeader", "leader"] },
         "clanUpdateableBaseData": {
@@ -2700,19 +2706,7 @@
                                 "clanList": {
                                     "type": "array",
                                     "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "clanId": {
-                                                "$ref": "#/definitions/clanId"
-                                            },
-                                            "clanUpdateableBaseData": {
-                                                "$ref": "#/definitions/clanUpdateableBaseData"
-                                            }
-                                        },
-                                        "required": [
-                                            "clanId",
-                                            "clanUpdateableBaseData"
-                                        ]
+                                        "$ref": "#/definitions/clanBaseData"
                                     }
                                 }
                             },

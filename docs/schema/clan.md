@@ -2023,17 +2023,16 @@ export interface ClanViewRequestData {
 
 #### TypeScript Definition
 ```ts
-export type ClanViewOkResponseData = ClanId &
-    ClanUpdateableData & {
+export type ClanViewOkResponseData = ClanBaseData &
+    ClanUpdateableBaseData & {
         membersCount: number;
         members: ClanMember[];
     };
+export type ClanBaseData = ClanId & ClanUpdateableBaseData;
 export type ClanId = string;
-export type ClanUpdateableData = ClanUpdateableBaseData & {
-    description?: string;
-};
 export type UserId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
+export type UnixTime = number;
 
 export interface ClanViewOkResponse {
     type: "response";
@@ -2049,7 +2048,7 @@ export interface ClanUpdateableBaseData {
 export interface ClanMember {
     userId: UserId;
     role: ClanRole;
-    joinDate: string;
+    joinedAt: UnixTime;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -2138,18 +2137,7 @@ export interface ClanViewListRequest {
                     "properties": {
                         "clanList": {
                             "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "clanId": {
-                                        "$ref": "#/definitions/clanId"
-                                    },
-                                    "clanUpdateableBaseData": {
-                                        "$ref": "#/definitions/clanUpdateableBaseData"
-                                    }
-                                },
-                                "required": ["clanId", "clanUpdateableBaseData"]
-                            }
+                            "items": { "$ref": "#/definitions/clanBaseData" }
                         }
                     },
                     "required": ["clanList"]
@@ -2194,34 +2182,10 @@ export interface ClanViewListRequest {
     "status": "success",
     "data": {
         "clanList": [
-            {
-                "clanId": "12345",
-                "clanUpdateableBaseData": {
-                    "name": "pariatur nost",
-                    "tag": "ame"
-                }
-            },
-            {
-                "clanId": "12345",
-                "clanUpdateableBaseData": {
-                    "name": "ex",
-                    "tag": "et v"
-                }
-            },
-            {
-                "clanId": "12345",
-                "clanUpdateableBaseData": {
-                    "name": "nulla id",
-                    "tag": "magna "
-                }
-            },
-            {
-                "clanId": "12345",
-                "clanUpdateableBaseData": {
-                    "name": "eiusmod voluptat",
-                    "tag": "dolor "
-                }
-            }
+            "12345",
+            "12345",
+            "12345",
+            "12345"
         ]
     }
 }
@@ -2230,6 +2194,7 @@ export interface ClanViewListRequest {
 
 #### TypeScript Definition
 ```ts
+export type ClanBaseData = ClanId & ClanUpdateableBaseData;
 export type ClanId = string;
 
 export interface ClanViewListOkResponse {
@@ -2240,10 +2205,7 @@ export interface ClanViewListOkResponse {
     data: ClanViewListOkResponseData;
 }
 export interface ClanViewListOkResponseData {
-    clanList: {
-        clanId: ClanId;
-        clanUpdateableBaseData: ClanUpdateableBaseData;
-    }[];
+    clanList: ClanBaseData[];
 }
 export interface ClanUpdateableBaseData {
     name: string;

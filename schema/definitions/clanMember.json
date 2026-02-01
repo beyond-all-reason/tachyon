@@ -5,7 +5,7 @@
     "properties": {
         "userId": { "$ref": "../definitions/userId.json" },
         "role": { "$ref": "../definitions/clanRole.json" },
-        "joinDate": { "type": "string" }
+        "joinedAt": { "$ref": "../definitions/unixTime.json" }
     },
-    "required": ["userId", "role", "joinDate"]
+    "required": ["userId", "role", "joinedAt"]
 }
