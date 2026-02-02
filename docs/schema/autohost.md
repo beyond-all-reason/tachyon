@@ -2518,7 +2518,7 @@ Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `c
 
 ## Update
 
-Inform the server of battle updates.
+Inform the server of battle updates. Each timestamp is guaranteed to be unique for a given autohost.
 
 - Endpoint Type: **Event**
 - Source: **Autohost**

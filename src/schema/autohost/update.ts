@@ -5,7 +5,8 @@ import { defineEndpoint } from "@/generator-helpers.js";
 export default defineEndpoint({
     source: "autohost",
     target: "server",
-    description: "Inform the server of battle updates.",
+    description:
+        "Inform the server of battle updates. Each timestamp is guaranteed to be unique for a given autohost.",
     event: {
         data: Type.Object({
             battleId: Type.String({ format: "uuid" }),
