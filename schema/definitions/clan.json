@@ -3,7 +3,6 @@
     "title": "Clan",
     "allOf": [
         { "$ref": "../definitions/clanBaseData.json" },
-        { "$ref": "../definitions/clanUpdateableBaseData.json" },
         {
             "type": "object",
             "properties": {

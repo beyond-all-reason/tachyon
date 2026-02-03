@@ -76,7 +76,6 @@
         "clan": {
             "allOf": [
                 { "$ref": "#/definitions/clanBaseData" },
-                { "$ref": "#/definitions/clanUpdateableBaseData" },
                 {
                     "type": "object",
                     "properties": {

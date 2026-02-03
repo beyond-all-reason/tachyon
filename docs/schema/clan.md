@@ -2023,11 +2023,10 @@ export interface ClanViewRequestData {
 
 #### TypeScript Definition
 ```ts
-export type ClanViewOkResponseData = ClanBaseData &
-    ClanUpdateableBaseData & {
-        membersCount: number;
-        members: ClanMember[];
-    };
+export type ClanViewOkResponseData = ClanBaseData & {
+    membersCount: number;
+    members: ClanMember[];
+};
 export type ClanBaseData = ClanId & ClanUpdateableBaseData;
 export type ClanId = string;
 export type UserId = string;
