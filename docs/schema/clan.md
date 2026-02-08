@@ -364,13 +364,7 @@ Create a clan.
         "commandId": { "const": "clan/create" },
         "data": {
             "title": "ClanCreateRequestData",
-            "type": "object",
-            "properties": {
-                "clanUpdateableBaseData": {
-                    "$ref": "#/definitions/clanUpdateableBaseData"
-                }
-            },
-            "required": ["clanUpdateableBaseData"]
+            "allOf": [{ "$ref": "#/definitions/clanUpdateableBaseData" }]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -385,13 +379,11 @@ Create a clan.
 ```json
 {
     "type": "request",
-    "messageId": "cillum Excepteur consectetur dolore commodo",
+    "messageId": "dolore commodo",
     "commandId": "clan/create",
     "data": {
-        "clanUpdateableBaseData": {
-            "name": "nisi qui",
-            "tag": "inci"
-        }
+        "name": "voluptate aute magna",
+        "tag": "lab"
     }
 }
 ```
@@ -399,14 +391,13 @@ Create a clan.
 
 #### TypeScript Definition
 ```ts
+export type ClanCreateRequestData = ClanUpdateableBaseData;
+
 export interface ClanCreateRequest {
     type: "request";
     messageId: string;
     commandId: "clan/create";
     data: ClanCreateRequestData;
-}
-export interface ClanCreateRequestData {
-    clanUpdateableBaseData: ClanUpdateableBaseData;
 }
 export interface ClanUpdateableBaseData {
     name: string;
@@ -1013,13 +1004,7 @@ A player has been invited to a clan. Sent to the invited player.
         "commandId": { "const": "clan/invited" },
         "data": {
             "title": "ClanInvitedEventData",
-            "type": "object",
-            "properties": {
-                "clanUpdateableBaseData": {
-                    "$ref": "#/definitions/clanUpdateableBaseData"
-                }
-            },
-            "required": ["clanUpdateableBaseData"]
+            "allOf": [{ "$ref": "#/definitions/clanUpdateableBaseData" }]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1034,13 +1019,11 @@ A player has been invited to a clan. Sent to the invited player.
 ```json
 {
     "type": "event",
-    "messageId": "minim Excepteur Duis",
+    "messageId": "cupidatat laboris sint",
     "commandId": "clan/invited",
     "data": {
-        "clanUpdateableBaseData": {
-            "name": "adipisicing",
-            "tag": "Except"
-        }
+        "name": "ad id consectet",
+        "tag": "inei"
     }
 }
 ```
@@ -1048,14 +1031,13 @@ A player has been invited to a clan. Sent to the invited player.
 
 #### TypeScript Definition
 ```ts
+export type ClanInvitedEventData = ClanUpdateableBaseData;
+
 export interface ClanInvitedEvent {
     type: "event";
     messageId: string;
     commandId: "clan/invited";
     data: ClanInvitedEventData;
-}
-export interface ClanInvitedEventData {
-    clanUpdateableBaseData: ClanUpdateableBaseData;
 }
 export interface ClanUpdateableBaseData {
     name: string;
@@ -1678,13 +1660,7 @@ Update your clan.
         "commandId": { "const": "clan/update" },
         "data": {
             "title": "ClanUpdateRequestData",
-            "type": "object",
-            "properties": {
-                "clanUpdateableData": {
-                    "$ref": "#/definitions/clanUpdateableData"
-                }
-            },
-            "required": ["clanUpdateableData"]
+            "allOf": [{ "$ref": "#/definitions/clanUpdateableData" }]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -1699,14 +1675,11 @@ Update your clan.
 ```json
 {
     "type": "request",
-    "messageId": "proident incididunt",
+    "messageId": "consequat labore proident dolor",
     "commandId": "clan/update",
     "data": {
-        "clanUpdateableData": {
-            "name": "sunt et voluptate nisi iru",
-            "tag": "in v",
-            "description": "minim aute qui mollit"
-        }
+        "name": "Excepteur laboris",
+        "tag": "labo"
     }
 }
 ```
@@ -1714,6 +1687,7 @@ Update your clan.
 
 #### TypeScript Definition
 ```ts
+export type ClanUpdateRequestData = ClanUpdateableData;
 export type ClanUpdateableData = ClanUpdateableBaseData & {
     description?: string;
 };
@@ -1723,9 +1697,6 @@ export interface ClanUpdateRequest {
     messageId: string;
     commandId: "clan/update";
     data: ClanUpdateRequestData;
-}
-export interface ClanUpdateRequestData {
-    clanUpdateableData: ClanUpdateableData;
 }
 export interface ClanUpdateableBaseData {
     name: string;

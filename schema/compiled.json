@@ -1941,13 +1941,9 @@
                 "commandId": { "const": "clan/create" },
                 "data": {
                     "title": "ClanCreateRequestData",
-                    "type": "object",
-                    "properties": {
-                        "clanUpdateableBaseData": {
-                            "$ref": "#/definitions/clanUpdateableBaseData"
-                        }
-                    },
-                    "required": ["clanUpdateableBaseData"]
+                    "allOf": [
+                        { "$ref": "#/definitions/clanUpdateableBaseData" }
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2238,13 +2234,9 @@
                 "commandId": { "const": "clan/invited" },
                 "data": {
                     "title": "ClanInvitedEventData",
-                    "type": "object",
-                    "properties": {
-                        "clanUpdateableBaseData": {
-                            "$ref": "#/definitions/clanUpdateableBaseData"
-                        }
-                    },
-                    "required": ["clanUpdateableBaseData"]
+                    "allOf": [
+                        { "$ref": "#/definitions/clanUpdateableBaseData" }
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -2515,13 +2507,7 @@
                 "commandId": { "const": "clan/update" },
                 "data": {
                     "title": "ClanUpdateRequestData",
-                    "type": "object",
-                    "properties": {
-                        "clanUpdateableData": {
-                            "$ref": "#/definitions/clanUpdateableData"
-                        }
-                    },
-                    "required": ["clanUpdateableData"]
+                    "allOf": [{ "$ref": "#/definitions/clanUpdateableData" }]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

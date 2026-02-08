@@ -7,8 +7,6 @@ export default defineEndpoint({
     target: "user",
     description: "A player has been invited to a clan. Sent to the invited player.",
     event: {
-        data: Type.Object({
-            clanUpdateableBaseData: Type.Ref("clanUpdateableBaseData"),
-        }),
+        data: Type.Intersect([Type.Ref("clanUpdateableBaseData")]),
     },
 });

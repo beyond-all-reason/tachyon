@@ -14,13 +14,7 @@
         "commandId": { "const": "clan/update" },
         "data": {
             "title": "ClanUpdateRequestData",
-            "type": "object",
-            "properties": {
-                "clanUpdateableData": {
-                    "$ref": "../../definitions/clanUpdateableData.json"
-                }
-            },
-            "required": ["clanUpdateableData"]
+            "allOf": [{ "$ref": "../../definitions/clanUpdateableData.json" }]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

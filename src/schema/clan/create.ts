@@ -7,9 +7,7 @@ export default defineEndpoint({
     target: "server",
     description: "Create a clan.",
     request: {
-        data: Type.Object({
-            clanUpdateableBaseData: Type.Ref("clanUpdateableBaseData"),
-        }),
+        data: Type.Intersect([Type.Ref("clanUpdateableBaseData")]),
     },
     response: [{ status: "success" }],
 });

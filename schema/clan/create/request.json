@@ -14,13 +14,9 @@
         "commandId": { "const": "clan/create" },
         "data": {
             "title": "ClanCreateRequestData",
-            "type": "object",
-            "properties": {
-                "clanUpdateableBaseData": {
-                    "$ref": "../../definitions/clanUpdateableBaseData.json"
-                }
-            },
-            "required": ["clanUpdateableBaseData"]
+            "allOf": [
+                { "$ref": "../../definitions/clanUpdateableBaseData.json" }
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
