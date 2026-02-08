@@ -79,13 +79,12 @@
                 {
                     "type": "object",
                     "properties": {
-                        "membersCount": { "type": "number", "minimum": 0 },
                         "members": {
                             "type": "array",
                             "items": { "$ref": "#/definitions/clanMember" }
                         }
                     },
-                    "required": ["membersCount", "members"]
+                    "required": ["members"]
                 }
             ]
         },
@@ -555,14 +554,20 @@
                 "clanBaseData": {
                     "anyOf": [
                         {
-                            "type": "object",
-                            "properties": {
-                                "clanId": { "$ref": "#/definitions/clanId" },
-                                "clanUpdateableBaseData": {
+                            "allOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "clanId": {
+                                            "$ref": "#/definitions/clanId"
+                                        }
+                                    },
+                                    "required": ["clanId"]
+                                },
+                                {
                                     "$ref": "#/definitions/clanUpdateableBaseData"
                                 }
-                            },
-                            "required": ["clanId", "clanUpdateableBaseData"]
+                            ]
                         },
                         { "type": "null" }
                     ]
@@ -6647,18 +6652,19 @@
                                     "clanBaseData": {
                                         "anyOf": [
                                             {
-                                                "type": "object",
-                                                "properties": {
-                                                    "clanId": {
-                                                        "$ref": "#/definitions/clanId"
+                                                "allOf": [
+                                                    {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "clanId": {
+                                                                "$ref": "#/definitions/clanId"
+                                                            }
+                                                        },
+                                                        "required": ["clanId"]
                                                     },
-                                                    "clanUpdateableBaseData": {
+                                                    {
                                                         "$ref": "#/definitions/clanUpdateableBaseData"
                                                     }
-                                                },
-                                                "required": [
-                                                    "clanId",
-                                                    "clanUpdateableBaseData"
                                                 ]
                                             },
                                             { "type": "null" }

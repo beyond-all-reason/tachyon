@@ -8,10 +8,12 @@ export const user = Type.Object(
         username: Type.String(),
         displayName: Type.String(),
         clanBaseData: Nullable(
-            Type.Object({
-                clanId: Type.Ref("clanId"),
-                clanUpdateableBaseData: Type.Ref("clanUpdateableBaseData"),
-            })
+            Type.Intersect([
+                Type.Object({
+                    clanId: Type.Ref("clanId"),
+                }),
+                Type.Ref("clanUpdateableBaseData"),
+            ])
         ),
         countryCode: Type.Optional(Type.String()),
         status: Type.Enum(["offline", "menu", "playing", "lobby"]),

@@ -6,13 +6,12 @@
         {
             "type": "object",
             "properties": {
-                "membersCount": { "type": "number", "minimum": 0 },
                 "members": {
                     "type": "array",
                     "items": { "$ref": "../definitions/clanMember.json" }
                 }
             },
-            "required": ["membersCount", "members"]
+            "required": ["members"]
         }
     ]
 }
