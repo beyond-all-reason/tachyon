@@ -71,7 +71,6 @@ export async function generateValidators() {
             esm: true,
         },
         keywords: ["tachyon"],
-        strict: false, // Disable strict mode to allow unknown keywords
     });
     addFormats(ajvEsm);
     let moduleCode = `"use strict"
@@ -115,7 +114,6 @@ function ucs2length(str) {
             esm: false,
         },
         keywords: ["tachyon"],
-        strict: true,
     });
     addFormats(ajvCjs);
     const moduleCodeCjs = standaloneCode(ajvCjs, schemaMap) + "exports." + validator;
