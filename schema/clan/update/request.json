@@ -13,8 +13,8 @@
         "messageId": { "type": "string" },
         "commandId": { "const": "clan/update" },
         "data": {
-            "title": "ClanUpdateRequestData",
-            "allOf": [{ "$ref": "../../definitions/clanUpdateableData.json" }]
+            "$ref": "../../definitions/clanUpdateableData.json",
+            "title": "ClanUpdateRequestData"
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

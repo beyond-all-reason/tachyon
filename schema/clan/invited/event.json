@@ -13,10 +13,8 @@
         "messageId": { "type": "string" },
         "commandId": { "const": "clan/invited" },
         "data": {
-            "title": "ClanInvitedEventData",
-            "allOf": [
-                { "$ref": "../../definitions/clanUpdateableBaseData.json" }
-            ]
+            "$ref": "../../definitions/clanUpdateableBaseData.json",
+            "title": "ClanInvitedEventData"
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
