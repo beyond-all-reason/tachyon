@@ -213,7 +213,8 @@
                                     "type": "string"
                                 },
                                 "hostUserId": {
-                                    "$ref": "#/definitions/userId"
+                                    "$ref": "#/definitions/userId",
+                                    "description": "which player will run the bot. It is the same as the player that added the bot."
                                 },
                                 "allyTeam": { "type": "string" },
                                 "team": { "type": "string" },

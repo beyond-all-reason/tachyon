@@ -733,7 +733,7 @@ export interface LobbyCreateOkResponseData {
     bots: {
         [k: string]: {
             id: string;
-            hostUserId: UserId;
+            hostUserId: string;
             allyTeam: string;
             team: string;
             player: string;
@@ -1143,7 +1143,7 @@ export interface LobbyJoinOkResponseData {
     bots: {
         [k: string]: {
             id: string;
-            hostUserId: UserId;
+            hostUserId: string;
             allyTeam: string;
             team: string;
             player: string;
