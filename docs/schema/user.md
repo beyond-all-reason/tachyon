@@ -147,7 +147,7 @@ export interface UserInfoRequestData {
         "userId": "351",
         "username": "enim ad in minim est",
         "displayName": "culpa exercitation Lorem cillum fugiat",
-        "clanId": null,
+        "clanBaseData": null,
         "countryCode": "incididunt dolore est enim",
         "status": "offline",
         "rating": {
@@ -168,6 +168,7 @@ export interface UserInfoRequestData {
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type ClanId = string;
 
 export interface UserInfoOkResponse {
     type: "response";
@@ -180,13 +181,21 @@ export interface UserInfoOkResponseData {
     userId: UserId;
     username: string;
     displayName: string;
-    clanId: string | null;
+    clanBaseData:
+        | ({
+              clanId: ClanId;
+          } & ClanUpdateableBaseData)
+        | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -246,40 +255,90 @@ Sent by the server to inform the client of its own user state. This event should
             "userId": "351",
             "username": "amet qui cillum occaecat",
             "displayName": "Lorem pariatur anim minim in",
-            "clanId": "culpa id",
-            "countryCode": "dolore veniam",
-            "status": "lobby",
-            "party": {
-                "id": "1882f6b2e3a4d14f24acb7aa",
-                "members": [
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    }
-                ],
-                "invited": [
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
-                    }
-                ]
+            "clanBaseData": {
+                "clanId": "12345",
+                "name": "in ut d",
+                "tag": "enim"
             },
-            "invitedToParties": [],
+            "countryCode": "consequat eu culpa voluptate Lorem",
+            "status": "menu",
+            "party": null,
+            "invitedToParties": [
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                }
+            ],
             "friendIds": [
-                "sit cupidatat nisi irure",
-                "non ullamco dolor dolore elit",
-                "aliqua labore ipsum amet",
-                "elit do proident reprehenderit eiusmod"
+                "mollit dolore in",
+                "Excepteur est",
+                "dolor Duis",
+                "elit veniam sed ad",
+                "dolore sunt"
             ],
             "outgoingFriendRequest": [
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -311,23 +370,26 @@ Sent by the server to inform the client of its own user state. This event should
                     "sentAt": {}
                 }
             ],
-            "ignoreIds": [],
+            "ignoreIds": [
+                "ad Ut"
+            ],
             "currentBattle": {
-                "username": "elit magna Excepteur et",
-                "password": "minim non sint",
-                "ip": "ad nostrud",
-                "port": -94831848.14453125,
+                "username": "consectetur veniam Lorem",
+                "password": "sunt incididunt nostrud fugiat cupidatat",
+                "ip": "cupidatat Lorem non ipsum occaecat",
+                "port": 67408597.46932983,
                 "engine": {
-                    "version": "irure"
+                    "version": "cupidatat Ut"
                 },
                 "game": {
-                    "springName": "reprehenderit ad est"
+                    "springName": "irure et"
                 },
                 "map": {
-                    "springName": "tempor irure Lorem"
+                    "springName": "exercitation"
                 }
             },
-            "currentLobby": null
+            "currentLobby": null,
+            "clanInvites": []
         }
     }
 }
@@ -351,8 +413,10 @@ export type PrivateUser = User & {
     ignoreIds: string[];
     currentBattle?: PrivateBattle;
     currentLobby: string | null;
+    clanInvites: ClanId[];
 };
 export type UserId = string;
+export type ClanId = string;
 export type PartyId = string;
 export type UnixTime = number;
 
@@ -369,13 +433,21 @@ export interface User {
     userId: UserId;
     username: string;
     displayName: string;
-    clanId: string | null;
+    clanBaseData:
+        | ({
+              clanId: ClanId;
+          } & ClanUpdateableBaseData)
+        | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 export interface PartyState {
     id: PartyId;
@@ -802,9 +874,24 @@ Sent by the server to inform the client of user state changes. User objects shou
                             "userId": { "$ref": "#/definitions/userId" },
                             "username": { "type": "string" },
                             "displayName": { "type": "string" },
-                            "clanId": {
+                            "clanBaseData": {
                                 "anyOf": [
-                                    { "type": "string" },
+                                    {
+                                        "allOf": [
+                                            {
+                                                "type": "object",
+                                                "properties": {
+                                                    "clanId": {
+                                                        "$ref": "#/definitions/clanId"
+                                                    }
+                                                },
+                                                "required": ["clanId"]
+                                            },
+                                            {
+                                                "$ref": "#/definitions/clanUpdateableBaseData"
+                                            }
+                                        ]
+                                    },
                                     { "type": "null" }
                                 ]
                             },
@@ -901,6 +988,7 @@ Sent by the server to inform the client of user state changes. User objects shou
 #### TypeScript Definition
 ```ts
 export type UserId = string;
+export type ClanId = string;
 
 export interface UserUpdatedEvent {
     type: "event";
@@ -913,7 +1001,11 @@ export interface UserUpdatedEventData {
         userId?: UserId;
         username?: string;
         displayName?: string;
-        clanId?: string | null;
+        clanBaseData?:
+            | ({
+                  clanId: ClanId;
+              } & ClanUpdateableBaseData)
+            | null;
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
         rating?: {
@@ -921,5 +1013,9 @@ export interface UserUpdatedEventData {
         };
         roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
     }[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
 }
 ```
