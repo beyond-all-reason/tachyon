@@ -1997,8 +1997,11 @@ export interface ClanViewRequestData {
 export type ClanViewOkResponseData = ClanBaseData & {
     members: ClanMember[];
 };
-export type ClanBaseData = ClanId & ClanUpdateableBaseData;
+export type ClanBaseData = ClanId & ClanUpdateableData;
 export type ClanId = string;
+export type ClanUpdateableData = ClanUpdateableBaseData & {
+    description?: string;
+};
 export type UserId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
 export type UnixTime = number;
@@ -2163,8 +2166,11 @@ export interface ClanViewListRequest {
 
 #### TypeScript Definition
 ```ts
-export type ClanBaseData = ClanId & ClanUpdateableBaseData;
+export type ClanBaseData = ClanId & ClanUpdateableData;
 export type ClanId = string;
+export type ClanUpdateableData = ClanUpdateableBaseData & {
+    description?: string;
+};
 
 export interface ClanViewListOkResponse {
     type: "response";

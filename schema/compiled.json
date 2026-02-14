@@ -91,7 +91,7 @@
         "clanBaseData": {
             "allOf": [
                 { "$ref": "#/definitions/clanId" },
-                { "$ref": "#/definitions/clanUpdateableBaseData" }
+                { "$ref": "#/definitions/clanUpdateableData" }
             ]
         },
         "clanId": { "type": "string", "examples": ["12345"] },

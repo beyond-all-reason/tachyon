@@ -3,6 +3,6 @@
     "title": "ClanBaseData",
     "allOf": [
         { "$ref": "../definitions/clanId.json" },
-        { "$ref": "../definitions/clanUpdateableBaseData.json" }
+        { "$ref": "../definitions/clanUpdateableData.json" }
     ]
 }
