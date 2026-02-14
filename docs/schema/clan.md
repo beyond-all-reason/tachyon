@@ -1994,11 +1994,14 @@ export interface ClanViewRequestData {
 
 #### TypeScript Definition
 ```ts
-export type ClanViewOkResponseData = ClanBaseData & {
-    members: ClanMember[];
-};
-export type ClanBaseData = ClanId & ClanUpdateableBaseData;
+export type ClanViewOkResponseData = ClanId &
+    ClanUpdateableData & {
+        members: ClanMember[];
+    };
 export type ClanId = string;
+export type ClanUpdateableData = ClanUpdateableBaseData & {
+    description?: string;
+};
 export type UserId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
 export type UnixTime = number;
