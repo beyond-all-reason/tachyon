@@ -16,10 +16,7 @@
             "title": "LobbyUpdateRequestData",
             "type": "object",
             "properties": {
-                "name": {
-                    "description": "to rename the lobby",
-                    "type": "string"
-                },
+                "name": { "$ref": "../../definitions/lobbyName.json" },
                 "mapName": { "type": "string" },
                 "allyTeamConfig": {
                     "$ref": "../../definitions/allyTeamConfig.json"

@@ -16,7 +16,7 @@
             "title": "LobbyCreateRequestData",
             "type": "object",
             "properties": {
-                "name": { "type": "string" },
+                "name": { "$ref": "../../definitions/lobbyName.json" },
                 "mapName": { "type": "string" },
                 "allyTeamConfig": {
                     "$ref": "../../definitions/allyTeamConfig.json"
