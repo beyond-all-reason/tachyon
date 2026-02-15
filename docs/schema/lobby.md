@@ -3510,7 +3510,17 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         }
                                     }
                                 },
-                                "until": { "$ref": "#/definitions/unixTime" }
+                                "until": { "$ref": "#/definitions/unixTime" },
+                                "quorum": {
+                                    "description": "this many player must vote for the vote to be valid at all.",
+                                    "type": "integer",
+                                    "minimum": 1
+                                },
+                                "majority": {
+                                    "description": "votes passes when number(yes) >= majority",
+                                    "type": "integer",
+                                    "minimum": 1
+                                }
                             },
                             "required": ["id"]
                         },
@@ -3688,6 +3698,8 @@ export interface LobbyUpdatedEventData {
             };
         };
         until?: UnixTime;
+        quorum?: number;
+        majority?: number;
     } | null;
 }
 export interface StartBox {

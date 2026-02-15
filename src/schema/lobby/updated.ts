@@ -134,6 +134,19 @@ export default defineEndpoint({
                             )
                         ),
                         until: Type.Optional(Type.Ref("unixTime")),
+                        quorum: Type.Optional(
+                            Type.Integer({
+                                minimum: 1,
+                                description:
+                                    "this many player must vote for the vote to be valid at all.",
+                            })
+                        ),
+                        majority: Type.Optional(
+                            Type.Integer({
+                                minimum: 1,
+                                description: "votes passes when number(yes) >= majority",
+                            })
+                        ),
                     })
                 )
             ),
