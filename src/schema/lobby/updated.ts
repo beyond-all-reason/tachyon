@@ -123,7 +123,7 @@ export default defineEndpoint({
                 Nullable(
                     Type.Object({
                         id: Type.String(),
-                        action: Type.Optional(Nullable(Type.Ref("voteActions"))),
+                        action: Type.Optional(Type.Ref("voteActions")),
                         initiator: Type.Optional(Type.Ref("userId")),
                         voters: Type.Optional(
                             Type.Record(

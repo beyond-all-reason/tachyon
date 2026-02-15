@@ -3488,10 +3488,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                             "properties": {
                                 "id": { "type": "string" },
                                 "action": {
-                                    "anyOf": [
-                                        { "$ref": "#/definitions/voteActions" },
-                                        { "type": "null" }
-                                    ]
+                                    "$ref": "#/definitions/voteActions"
                                 },
                                 "initiator": { "$ref": "#/definitions/userId" },
                                 "voters": {
@@ -3683,7 +3680,7 @@ export interface LobbyUpdatedEventData {
     } | null;
     currentVote?: {
         id: string;
-        action?: VoteActions | null;
+        action?: VoteActions;
         initiator?: UserId;
         voters?: {
             [k: string]: {
