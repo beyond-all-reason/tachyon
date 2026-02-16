@@ -75,7 +75,13 @@
         },
         "clan": {
             "allOf": [
-                { "$ref": "#/definitions/clanId" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
+                },
                 { "$ref": "#/definitions/clanUpdateableData" },
                 {
                     "type": "object",
@@ -91,7 +97,13 @@
         },
         "clanBaseData": {
             "allOf": [
-                { "$ref": "#/definitions/clanId" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
+                },
                 { "$ref": "#/definitions/clanUpdateableBaseData" }
             ]
         },

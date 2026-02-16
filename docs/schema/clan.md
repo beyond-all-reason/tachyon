@@ -1987,15 +1987,48 @@ export interface ClanViewRequestData {
     "messageId": "nisi est dolore sit",
     "commandId": "clan/view",
     "status": "success",
-    "data": "12345"
+    "data": {
+        "clanId": "12345",
+        "name": "fugiat tempor",
+        "tag": "paria",
+        "description": "dolor amet et laboris",
+        "members": [
+            {
+                "userId": "351",
+                "role": "leader",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "role": "leader",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "role": "coLeader",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "role": "member",
+                "joinedAt": 1705432698000000
+            },
+            {
+                "userId": "351",
+                "role": "coLeader",
+                "joinedAt": 1705432698000000
+            }
+        ]
+    }
 }
 ```
 </details>
 
 #### TypeScript Definition
 ```ts
-export type ClanViewOkResponseData = ClanId &
-    ClanUpdateableData & {
+export type ClanViewOkResponseData = {
+    clanId: ClanId;
+} & ClanUpdateableData & {
         members: ClanMember[];
     };
 export type ClanId = string;
@@ -2154,10 +2187,26 @@ export interface ClanViewListRequest {
     "status": "success",
     "data": {
         "clanList": [
-            "12345",
-            "12345",
-            "12345",
-            "12345"
+            {
+                "clanId": "12345",
+                "name": "nulla dolor amet",
+                "tag": "sit d"
+            },
+            {
+                "clanId": "12345",
+                "name": "non pariatur dolore",
+                "tag": "temp"
+            },
+            {
+                "clanId": "12345",
+                "name": "cillum occaeca",
+                "tag": "in e"
+            },
+            {
+                "clanId": "12345",
+                "name": "do officia dolo",
+                "tag": "eu id "
+            }
         ]
     }
 }
@@ -2166,7 +2215,9 @@ export interface ClanViewListRequest {
 
 #### TypeScript Definition
 ```ts
-export type ClanBaseData = ClanId & ClanUpdateableBaseData;
+export type ClanBaseData = {
+    clanId: ClanId;
+} & ClanUpdateableBaseData;
 export type ClanId = string;
 
 export interface ClanViewListOkResponse {
