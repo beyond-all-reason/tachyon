@@ -152,7 +152,7 @@
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
-                "name": { "type": "string" },
+                "name": { "$ref": "#/definitions/lobbyName" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
@@ -312,12 +312,17 @@
                 "bots"
             ]
         },
+        "lobbyName": {
+            "description": "Name of a lobby",
+            "type": "string",
+            "maxLength": 70
+        },
         "lobbyOverview": {
             "description": "Simplified view of a lobby for list display purposes.",
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
-                "name": { "type": "string" },
+                "name": { "$ref": "#/definitions/lobbyName" },
                 "playerCount": { "type": "integer" },
                 "maxPlayerCount": { "type": "integer" },
                 "mapName": { "type": "string" },
@@ -3467,7 +3472,7 @@
                     "title": "LobbyCreateRequestData",
                     "type": "object",
                     "properties": {
-                        "name": { "type": "string" },
+                        "name": { "$ref": "#/definitions/lobbyName" },
                         "mapName": { "type": "string" },
                         "allyTeamConfig": {
                             "$ref": "#/definitions/allyTeamConfig"
@@ -3888,7 +3893,9 @@
                                             "type": "object",
                                             "properties": {
                                                 "id": { "type": "string" },
-                                                "name": { "type": "string" },
+                                                "name": {
+                                                    "$ref": "#/definitions/lobbyName"
+                                                },
                                                 "playerCount": {
                                                     "type": "integer"
                                                 },
@@ -4267,10 +4274,7 @@
                     "title": "LobbyUpdateRequestData",
                     "type": "object",
                     "properties": {
-                        "name": {
-                            "description": "to rename the lobby",
-                            "type": "string"
-                        },
+                        "name": { "$ref": "#/definitions/lobbyName" },
                         "mapName": { "type": "string" },
                         "allyTeamConfig": {
                             "$ref": "#/definitions/allyTeamConfig"
@@ -4513,7 +4517,7 @@
                     "type": "object",
                     "properties": {
                         "id": { "type": "string" },
-                        "name": { "type": "string" },
+                        "name": { "$ref": "#/definitions/lobbyName" },
                         "mapName": { "type": "string" },
                         "engineVersion": { "type": "string" },
                         "gameVersion": { "type": "string" },

@@ -25,7 +25,9 @@
                                     "type": "object",
                                     "properties": {
                                         "id": { "type": "string" },
-                                        "name": { "type": "string" },
+                                        "name": {
+                                            "$ref": "../../definitions/lobbyName.json"
+                                        },
                                         "playerCount": { "type": "integer" },
                                         "maxPlayerCount": { "type": "integer" },
                                         "mapName": { "type": "string" },

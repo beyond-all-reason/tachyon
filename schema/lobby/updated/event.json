@@ -17,7 +17,7 @@
             "type": "object",
             "properties": {
                 "id": { "type": "string" },
-                "name": { "type": "string" },
+                "name": { "$ref": "../../definitions/lobbyName.json" },
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },

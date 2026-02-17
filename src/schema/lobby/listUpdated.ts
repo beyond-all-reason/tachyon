@@ -14,7 +14,7 @@ export default defineEndpoint({
                 Nullable(
                     Type.Object({
                         id: Type.String(),
-                        name: Type.Optional(Type.String()),
+                        name: Type.Optional(Type.Ref("lobbyName")),
                         playerCount: Type.Optional(Type.Integer()),
                         maxPlayerCount: Type.Optional(Type.Integer()),
                         mapName: Type.Optional(Type.String()),
