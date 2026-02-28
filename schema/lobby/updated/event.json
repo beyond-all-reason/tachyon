@@ -21,6 +21,28 @@
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
+                "gameOptions": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        { "type": "null" }
+                    ]
+                },
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
