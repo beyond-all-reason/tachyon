@@ -156,6 +156,17 @@
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
+                "gameOptions": {
+                    "description": "object indexed by the game option key",
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": { "value": { "type": "string" } },
+                            "required": ["value"]
+                        }
+                    }
+                },
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
@@ -306,6 +317,7 @@
                 "mapName",
                 "engineVersion",
                 "gameVersion",
+                "gameOptions",
                 "allyTeamConfig",
                 "players",
                 "spectators",
@@ -4274,6 +4286,18 @@
                         "mapName": { "type": "string" },
                         "allyTeamConfig": {
                             "$ref": "#/definitions/allyTeamConfig"
+                        },
+                        "gameOptions": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                }
+                            }
                         }
                     }
                 }
@@ -4517,6 +4541,30 @@
                         "mapName": { "type": "string" },
                         "engineVersion": { "type": "string" },
                         "gameVersion": { "type": "string" },
+                        "gameOptions": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "patternProperties": {
+                                        "^.*$": {
+                                            "anyOf": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "value": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": ["value"]
+                                                },
+                                                { "type": "null" }
+                                            ]
+                                        }
+                                    }
+                                },
+                                { "type": "null" }
+                            ]
+                        },
                         "allyTeamConfig": {
                             "type": "object",
                             "patternProperties": {

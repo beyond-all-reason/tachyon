@@ -18,6 +18,18 @@ export default defineEndpoint({
             mapName: Type.Optional(Type.String()),
             engineVersion: Type.Optional(Type.String()),
             gameVersion: Type.Optional(Type.String()),
+            gameOptions: Type.Optional(
+                Nullable(
+                    Type.Record(
+                        Type.String(),
+                        Nullable(
+                            Type.Object({
+                                value: Type.String(),
+                            })
+                        )
+                    )
+                )
+            ),
             allyTeamConfig: Type.Optional(
                 Type.Record(
                     Type.String(),
