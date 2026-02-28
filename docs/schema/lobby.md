@@ -539,119 +539,225 @@ export interface StartBox {
         "mapName": "in",
         "engineVersion": "laborum est cupidatat",
         "gameVersion": "sunt ut incididunt",
-        "allyTeamConfig": {
+        "gameOptions": {
             "'zA": {
+                "value": "minim nisi enim"
+            },
+            "%}": {
+                "value": "nostrud in"
+            }
+        },
+        "allyTeamConfig": {
+            "x2ZN": {
                 "startBox": {
-                    "top": 0.6702225208282471,
-                    "bottom": 0.08513057231903076,
-                    "left": 0.6979477405548096,
-                    "right": 0.39217686653137207
+                    "top": 0.8674272298812866,
+                    "bottom": 0.47726958990097046,
+                    "left": 0.24151653051376343,
+                    "right": 0.4318684935569763
                 },
-                "maxTeams": 49125404,
+                "maxTeams": 32104099,
                 "teams": {
-                    "&Z`y[~1<$\"": {
-                        "maxPlayers": 93489022
+                    "t]Lh2W": {
+                        "maxPlayers": 2924014
                     },
-                    "YJn&cu:{BT": {
-                        "maxPlayers": 94367475
+                    "a&e3V*4Y*": {
+                        "maxPlayers": 96686399
                     },
-                    "p>g": {
-                        "maxPlayers": 83924681
+                    "\\`": {
+                        "maxPlayers": 74825234
                     },
-                    "bVt55^^F+)": {
-                        "maxPlayers": 22539419
-                    },
-                    ";": {
-                        "maxPlayers": 86343200
+                    "nr'5GkU*j": {
+                        "maxPlayers": 70505518
                     }
                 }
             },
-            "%}": {
+            "R[Phwu": {
                 "startBox": {
-                    "top": 0.575905978679657,
-                    "bottom": 0.04219859838485718,
-                    "left": 0.48406165838241577,
-                    "right": 0.6355019807815552
+                    "top": 0.27469170093536377,
+                    "bottom": 0.04179549217224121,
+                    "left": 0.724711537361145,
+                    "right": 0.45840567350387573
                 },
-                "maxTeams": 31750095,
+                "maxTeams": 2853805,
                 "teams": {
+                    " v@\\\\u": {
+                        "maxPlayers": 23936612
+                    },
+                    "H_1": {
+                        "maxPlayers": 66725135
+                    },
                     "": {
-                        "maxPlayers": 58379370
+                        "maxPlayers": 11549086
                     },
-                    "Di#gQz": {
-                        "maxPlayers": 11101032
+                    ",^": {
+                        "maxPlayers": 50683952
+                    }
+                }
+            },
+            "z": {
+                "startBox": {
+                    "top": 0.6393119096755981,
+                    "bottom": 0.2894507050514221,
+                    "left": 0.25110602378845215,
+                    "right": 0.22938328981399536
+                },
+                "maxTeams": 32202626,
+                "teams": {
+                    "]Hjy]?S~": {
+                        "maxPlayers": 12079651
                     },
-                    "sK": {
-                        "maxPlayers": 32934458
+                    "s": {
+                        "maxPlayers": 75073350
+                    }
+                }
+            },
+            "WpE!$`@s3": {
+                "startBox": {
+                    "top": 0.15139025449752808,
+                    "bottom": 0.9339340925216675,
+                    "left": 0.42673277854919434,
+                    "right": 0.11471205949783325
+                },
+                "maxTeams": 90172995,
+                "teams": {
+                    ")-)t": {
+                        "maxPlayers": 92177070
+                    },
+                    "Rmw": {
+                        "maxPlayers": 32219673
+                    },
+                    "EL2m": {
+                        "maxPlayers": 55492896
+                    },
+                    "L]Y9(53": {
+                        "maxPlayers": 74231965
+                    },
+                    "(XK.GAq": {
+                        "maxPlayers": 78842342
                     }
                 }
             }
         },
         "players": {
-            "": {
+            "X3'K~0Gh": {
                 "id": "351",
-                "allyTeam": "aliquip deserunt non ad",
-                "team": "enim incididunt eu amet",
-                "player": "aliqua"
+                "allyTeam": "amet ad",
+                "team": "aliquip qui voluptate pariatur",
+                "player": "culpa Duis"
             },
-            ")=ZhY": {
+            "+A": {
                 "id": "351",
-                "allyTeam": "in",
-                "team": "dolor mollit quis",
-                "player": "laboris consectetur nulla"
+                "allyTeam": "magna",
+                "team": "non officia aute proident veniam",
+                "player": "Ut ut"
             },
-            "*7xwD}:?w\"": {
+            "E|uo": {
                 "id": "351",
-                "allyTeam": "non Lorem velit",
-                "team": "mollit Lorem",
-                "player": "labore voluptate"
+                "allyTeam": "laborum reprehenderit non eiusmod velit",
+                "team": "consectetur aliqua irure",
+                "player": "qui ea voluptate ullamco"
             }
         },
         "spectators": {
-            "p,D5.Teb": {
+            "M#)lTIo/*F": {
+                "id": "351",
+                "joinQueuePosition": -22744917.86956787
+            },
+            "z\":1": {
+                "id": "351",
+                "joinQueuePosition": -67783355.71289062
+            },
+            "RXh(/IX*;j": {
                 "id": "351"
             },
-            "hWMW": {
+            "|h=,9;e": {
                 "id": "351",
-                "joinQueuePosition": -56940078.73535156
-            },
-            "MJ6}R/~9w": {
-                "id": "351",
-                "joinQueuePosition": -90729725.36087036
+                "joinQueuePosition": 33159697.05581665
             }
         },
         "bots": {
-            "Y<o7D5hOp": {
-                "id": "aliqua ipsum officia ut",
+            "V2e>": {
+                "id": "consequat",
                 "hostUserId": "351",
-                "allyTeam": "est consequat in qui",
-                "team": "ex amet elit",
-                "player": "amet",
-                "name": "ipsum ex",
-                "shortName": "ut do c",
-                "version": "Ut ullamco culpa aliqua",
+                "allyTeam": "aute in labore non culpa",
+                "team": "nulla aute",
+                "player": "consequat mollit officia",
+                "name": "et",
+                "shortName": "in",
                 "options": {
-                    "R.q": "Lorem",
-                    "": "pariatur fugiat laboris",
-                    "|n": "velit voluptate laboris labore sint",
-                    "UUL=uo": "anim in aliquip aute dolor",
-                    "2FVIf": "anim aliqua veniam"
+                    "HL^5": "proident sint Duis occaecat enim",
+                    "4H69p;": "cillum",
+                    "A4);j@`3": "aliquip commodo magna",
+                    "F -(gkq": "elit adipisicing minim incididunt"
                 }
             },
-            "tl8<Sm": {
-                "id": "ut cillum",
+            "l?mWZ1Csok": {
+                "id": "culpa in dolor velit in",
                 "hostUserId": "351",
-                "allyTeam": "ut velit in Excepteur occaecat",
-                "team": "Duis velit",
-                "player": "consequat sunt enim ullamco amet",
-                "name": "consectet",
-                "shortName": "amet",
-                "version": "ipsum sunt ut esse",
+                "allyTeam": "aliquip id esse consectetur",
+                "team": "irure sunt veniam qui laboris",
+                "player": "sed eu officia",
+                "shortName": "dolore Excepteur",
+                "version": "Excepteur culpa sint"
+            },
+            "_5": {
+                "id": "officia minim non veniam",
+                "hostUserId": "351",
+                "allyTeam": "ullamco nulla dolore Ut aute",
+                "team": "consectetur",
+                "player": "cillum eiusmod velit qui",
+                "name": "occaecat veniam ",
+                "shortName": "qui",
+                "version": "consectetur proident nulla",
                 "options": {
-                    "3kG82": "occaecat officia",
-                    "Mg": "aliqua ut do",
-                    "b2,\\1UU": "qui Excepteur",
-                    "2XK!)K": "in do minim Ut"
+                    "hHb": "labore amet magna sed",
+                    "cDk_8(?Xw": "irure tempor culpa"
+                }
+            },
+            "J}YF:0=D[T": {
+                "id": "aliquip",
+                "hostUserId": "351",
+                "allyTeam": "in cupidatat magna",
+                "team": "cillum eu",
+                "player": "in",
+                "name": "velit ex elit Duis",
+                "shortName": "mollit mag",
+                "version": "nisi",
+                "options": {
+                    "+@+wrF,ci": "ipsum non ut ex sed",
+                    "O),1F": "aute nisi Lorem irure",
+                    "LOuMK[*G": "commodo",
+                    "%": "dolore enim qui quis"
+                }
+            },
+            "!n": {
+                "id": "voluptate aute minim commodo veniam",
+                "hostUserId": "351",
+                "allyTeam": "commodo dolore sit eu",
+                "team": "consectetur veniam nulla exercitation",
+                "player": "ea ipsum id laborum non",
+                "shortName": "eu fugiat",
+                "version": "aliqua",
+                "options": {
+                    "**fs-p2/iu": "sed nulla irure",
+                    "": "cupidatat non voluptate",
+                    "K<5Dv.vP^N": "eu commodo deserunt"
+                }
+            },
+            ")": {
+                "id": "Duis enim est",
+                "hostUserId": "351",
+                "allyTeam": "do amet",
+                "team": "est",
+                "player": "irure amet eiusmod nostrud culpa",
+                "name": "consequat",
+                "shortName": "",
+                "version": "sunt ut qui exercitation",
+                "options": {
+                    "": "consequat dolore dolore Ut",
+                    "d#b_>i]": "proident",
+                    "TAWsS^3Bl": "incididunt sunt minim mollit exercitation",
+                    "46^": "ut"
                 }
             }
         },
@@ -659,17 +765,26 @@ export interface StartBox {
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "sed ea occaecat Ut",
+            "id": "ut enim sunt laboris",
             "action": {
                 "type": "start"
             },
             "initiator": "351",
             "voters": {
-                "Ry;": {
+                " P_AI[*{V~": {
+                    "vote": "yes"
+                },
+                "0|": {
+                    "vote": "yes"
+                },
+                "f5pCF^/@E$": {
                     "vote": "pending"
                 },
-                "vR]g~&z<n": {
+                "wA7ENjFK4": {
                     "vote": "no"
+                },
+                "-": {
+                    "vote": "pending"
                 }
             },
             "until": 1705432698000000
@@ -705,6 +820,11 @@ export interface LobbyCreateOkResponseData {
     mapName: string;
     engineVersion: string;
     gameVersion: string;
+    gameOptions: {
+        [k: string]: {
+            value: string;
+        };
+    };
     allyTeamConfig: {
         [k: string]: {
             startBox: StartBox;
@@ -909,155 +1029,218 @@ export interface LobbyJoinRequestData {
         "mapName": "cupidatat fugiat",
         "engineVersion": "nostrud",
         "gameVersion": "consectetur nulla",
-        "allyTeamConfig": {
+        "gameOptions": {
             "W |:KuOk/x": {
-                "startBox": {
-                    "top": 0.9852176904678345,
-                    "bottom": 0.8239824771881104,
-                    "left": 0.1293366551399231,
-                    "right": 0.4055666923522949
-                },
-                "maxTeams": 37898821,
-                "teams": {
-                    "/#": {
-                        "maxPlayers": 10862983
-                    },
-                    "Tgi:=W1e[l": {
-                        "maxPlayers": 89296908
-                    },
-                    "k": {
-                        "maxPlayers": 52734781
-                    },
-                    ".?P!U,!?5'": {
-                        "maxPlayers": 3402854
-                    }
-                }
+                "value": "qui"
             },
             "hoF5u}Kzr": {
+                "value": "consectetur Ut"
+            },
+            "C": {
+                "value": "proident voluptate"
+            }
+        },
+        "allyTeamConfig": {
+            "T%N};": {
                 "startBox": {
-                    "top": 0.6892774701118469,
-                    "bottom": 0.8497186899185181,
-                    "left": 0.7103871703147888,
-                    "right": 0.9681347608566284
+                    "top": 0.06810969114303589,
+                    "bottom": 0.7387760877609253,
+                    "left": 0.026388883590698242,
+                    "right": 0.41297733783721924
                 },
-                "maxTeams": 96600134,
+                "maxTeams": 31297738,
                 "teams": {
-                    ")([kEBk": {
-                        "maxPlayers": 71045322
+                    "daw": {
+                        "maxPlayers": 47918571
                     },
-                    "'o%8'^": {
-                        "maxPlayers": 91175366
+                    "gp=2fFt": {
+                        "maxPlayers": 34433765
                     },
-                    ".dL{FOk": {
-                        "maxPlayers": 73071063
+                    "?+z@q-2?_X": {
+                        "maxPlayers": 54608632
                     },
-                    "Ao": {
-                        "maxPlayers": 1691151
+                    "f": {
+                        "maxPlayers": 43539256
+                    },
+                    "uYS\"k": {
+                        "maxPlayers": 3526336
+                    },
+                    "<": {
+                        "maxPlayers": 48291320
                     }
                 }
             },
-            "C": {
+            "jz<[_9": {
                 "startBox": {
-                    "top": 0.03288298845291138,
-                    "bottom": 0.4155328869819641,
-                    "left": 0.1541842818260193,
-                    "right": 0.964246928691864
+                    "top": 0.9298135042190552,
+                    "bottom": 0.4204244017601013,
+                    "left": 0.22601407766342163,
+                    "right": 0.9119211435317993
                 },
-                "maxTeams": 61257262,
+                "maxTeams": 53858555,
                 "teams": {
-                    "": {
-                        "maxPlayers": 23848182
+                    "7Tc": {
+                        "maxPlayers": 70803339
                     },
-                    "lTI2\\_;`#": {
-                        "maxPlayers": 91612584
+                    ",x,": {
+                        "maxPlayers": 74304987
                     },
-                    "Io6": {
-                        "maxPlayers": 79138524
+                    "9>$": {
+                        "maxPlayers": 69541634
+                    }
+                }
+            },
+            "_": {
+                "startBox": {
+                    "top": 0.05294007062911987,
+                    "bottom": 0.9955393075942993,
+                    "left": 0.3976755738258362,
+                    "right": 0.9982300996780396
+                },
+                "maxTeams": 20635689,
+                "teams": {
+                    "5": {
+                        "maxPlayers": 22144181
                     },
-                    "$IZK?A^": {
-                        "maxPlayers": 73491222
+                    "~c/=r": {
+                        "maxPlayers": 23137117
+                    },
+                    "puq#": {
+                        "maxPlayers": 48933906
+                    },
+                    "+Pm'~cRG": {
+                        "maxPlayers": 3654
+                    },
+                    ">+0.L4PWl\\": {
+                        "maxPlayers": 31355513
+                    },
+                    "Z(}EK": {
+                        "maxPlayers": 15722204
+                    }
+                }
+            },
+            "": {
+                "startBox": {
+                    "top": 0.4684702157974243,
+                    "bottom": 0.904325544834137,
+                    "left": 0.44047021865844727,
+                    "right": 0.6878980398178101
+                },
+                "maxTeams": 57786406,
+                "teams": {
+                    "ovAiZ6": {
+                        "maxPlayers": 10674501
+                    },
+                    "35Bf96m*6*": {
+                        "maxPlayers": 89962400
                     }
                 }
             }
         },
         "players": {
-            "": {
+            "@`!2}k#)": {
                 "id": "351",
-                "allyTeam": "nostrud labore aliquip ut",
-                "team": "eiusmod adipisicing",
-                "player": "Excepteur sint pariatur"
+                "allyTeam": "proident sint officia",
+                "team": "est ipsum Ut culpa nisi",
+                "player": "labore anim nisi enim"
+            },
+            "2}x&X!]": {
+                "id": "351",
+                "allyTeam": "voluptate cillum sunt cupidatat nisi",
+                "team": "est",
+                "player": "Ut nulla cupidatat in Lorem"
             }
         },
         "spectators": {
-            ".": {
-                "id": "351",
-                "joinQueuePosition": 95674633.97979736
-            },
-            "Wl\\kK": {
+            "oal7sj^g}": {
                 "id": "351"
+            },
+            "": {
+                "id": "351",
+                "joinQueuePosition": 22711586.952209473
             }
         },
         "bots": {
-            "": {
-                "id": "in velit",
+            "%46+]Z\\2{[": {
+                "id": "ut nisi amet exercitation ut",
                 "hostUserId": "351",
-                "allyTeam": "veniam",
-                "team": "nisi pariatur magna",
-                "player": "dolore sunt dolore velit",
-                "name": "si",
-                "shortName": "dolore fugiat u",
-                "version": "consectetur eiusmod est",
+                "allyTeam": "adipisicing aliqua dolore eu",
+                "team": "sed id voluptate consectetur ex",
+                "player": "voluptate",
+                "name": "minim",
+                "shortName": "sint sunt",
+                "version": "sit consequat",
                 "options": {
-                    "/~%4": "dolore adipisicing ad do",
-                    "Z\\2{[74": "do reprehenderit deserunt"
+                    "3Oo/": "irure fugiat non",
+                    "+[-7e": "quis et sunt cillum",
+                    "`m''@": "in"
                 }
             },
-            ";/.": {
-                "id": "Ut culpa laboris ex esse",
+            "cx$]w}": {
+                "id": "dolore deserunt",
                 "hostUserId": "351",
-                "allyTeam": "anim commodo",
-                "team": "Lorem cupidatat enim id",
-                "player": "dolor consequat",
-                "name": "ad Excepteur",
-                "shortName": "esse aliqua deser",
-                "version": "et Duis",
+                "allyTeam": "quis nulla ut cillum",
+                "team": "ex",
+                "player": "anim cupidatat",
+                "shortName": "ullamco ut in"
+            },
+            ",lWuW&": {
+                "id": "Excepteur ut minim",
+                "hostUserId": "351",
+                "allyTeam": "ea laboris",
+                "team": "veniam esse elit non Lorem",
+                "player": "ex veniam sed",
+                "name": "i",
+                "shortName": "esse nisi",
+                "version": "qui sed",
                 "options": {
-                    "tIG9t~": "voluptate minim enim eiusmod sint",
-                    "48.`M'Vz;": "veniam",
-                    "z+": "id",
-                    "e_8ld90": "Ut qui reprehenderit nostrud"
+                    ">T'QyxsR": "nostrud",
+                    "Z": "ex magna et"
                 }
             },
-            ";l!LuIaV": {
-                "id": "do proident",
+            "'a$L": {
+                "id": "consequat nisi sunt sit",
                 "hostUserId": "351",
-                "allyTeam": "Excepteur et do officia nisi",
-                "team": "in",
-                "player": "sunt eiusmod ex elit",
-                "name": "aliquip c",
-                "shortName": "in culpa Lor",
-                "version": "commodo ex deserunt dolore",
+                "allyTeam": "sed do",
+                "team": "deserunt id ex exercitation cillum",
+                "player": "quis proident",
+                "name": "dolor",
+                "shortName": "do",
+                "version": "tempor incididunt Ut reprehenderit dolore",
                 "options": {
-                    "3lk8;s!L": "in nostrud laboris ex esse",
-                    "tE9/": "culpa commodo nisi",
-                    "`)k_gP": "aliquip Ut Excepteur cillum ad",
-                    "Mx[9": "ad in laborum",
-                    "([\\rNq": "id voluptate sit ullamco"
+                    "(k:7`[^": "est Ut"
                 }
             },
-            "Q~`SovAi": {
-                "id": "ad sint sed incididunt enim",
+            "97qjD6": {
+                "id": "in",
                 "hostUserId": "351",
-                "allyTeam": "dolore dolore exercitation reprehenderit",
-                "team": "enim consectetur incididunt irure",
-                "player": "Ut",
-                "name": "voluptate",
-                "shortName": "laborum proident in ",
-                "version": "dolor",
+                "allyTeam": "laborum",
+                "team": "Ut laboris nostrud eu",
+                "player": "sit commodo adipisicing incididunt Excepteur",
+                "name": "in enim",
+                "shortName": "dolor r",
+                "version": "dolore consequat nulla",
                 "options": {
-                    "": "enim esse non",
-                    "t": "dolore Duis occaecat cupidatat non",
-                    "R`|B": "in"
+                    "i[": "ea ut",
+                    "q": "amet sint"
+                }
+            },
+            "L|~fAP": {
+                "id": "officia",
+                "hostUserId": "351",
+                "allyTeam": "Lorem mollit elit ipsum quis",
+                "team": "ipsum irure laboris labore non",
+                "player": "non ut id",
+                "name": "",
+                "shortName": "sed ea fugiat",
+                "version": "consequat reprehenderit dolor est deserunt",
+                "options": {
+                    "{U]%6Y_+M": "exercitation",
+                    "{*+E": "do in et",
+                    "T'0]": "anim",
+                    "IxT%{{K/r_": "sit consectetur dolore ad",
+                    "y|.s": "sed et ut sunt",
+                    "#kAm": "proident"
                 }
             }
         },
@@ -1065,21 +1248,20 @@ export interface LobbyJoinRequestData {
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "occaecat amet",
+            "id": "ut",
             "action": {
-                "type": "changeMap",
-                "newMapName": "in"
+                "type": "start"
             },
             "initiator": "351",
             "voters": {
-                "f^&=z\\": {
+                "^eh6G^K": {
                     "vote": "no"
                 },
-                "NB^}3R": {
-                    "vote": "yes"
+                "zRk{": {
+                    "vote": "abstain"
                 },
-                "KR(#.qkj<8": {
-                    "vote": "yes"
+                "": {
+                    "vote": "no"
                 }
             },
             "until": 1705432698000000
@@ -1115,6 +1297,11 @@ export interface LobbyJoinOkResponseData {
     mapName: string;
     engineVersion: string;
     gameVersion: string;
+    gameOptions: {
+        [k: string]: {
+            value: string;
+        };
+    };
     allyTeamConfig: {
         [k: string]: {
             startBox: StartBox;
@@ -2610,7 +2797,17 @@ Update some properties of the lobby the player is in.
                     "type": "string"
                 },
                 "mapName": { "type": "string" },
-                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" }
+                "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" },
+                "gameOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": { "value": { "type": "string" } },
+                            "required": ["value"]
+                        }
+                    }
+                }
             }
         }
     },
@@ -2629,55 +2826,20 @@ Update some properties of the lobby the player is in.
     "messageId": "ad cillum sed cupidatat",
     "commandId": "lobby/update",
     "data": {
-        "in70a": true,
+        "Excepteur_a_": true,
         "name": "minim magna eu mollit adipisicing",
-        "allyTeamConfig": [
-            {
-                "maxTeams": 60585350,
-                "startBox": {
-                    "top": 0.09639787673950195,
-                    "bottom": 0.5077924132347107,
-                    "left": 0.6672755479812622,
-                    "right": 0.24469232559204102
-                },
-                "teams": [
-                    {
-                        "maxPlayers": 81391311
-                    },
-                    {
-                        "maxPlayers": 85315747
-                    }
-                ]
+        "mapName": "dolor minim",
+        "gameOptions": {
+            "6gIY)a5~": {
+                "value": "incididunt"
             },
-            {
-                "maxTeams": 21366853,
-                "startBox": {
-                    "top": 0.9255445599555969,
-                    "bottom": 0.7585924863815308,
-                    "left": 0.18390631675720215,
-                    "right": 0.7069403529167175
-                },
-                "teams": [
-                    {
-                        "maxPlayers": 13284898
-                    }
-                ]
+            "lQSy": {
+                "value": "id et elit eiusmod"
             },
-            {
-                "maxTeams": 92354984,
-                "startBox": {
-                    "top": 0.6213186383247375,
-                    "bottom": 0.7227727770805359,
-                    "left": 0.7365755438804626,
-                    "right": 0.1030048131942749
-                },
-                "teams": [
-                    {
-                        "maxPlayers": 18122399
-                    }
-                ]
+            "V'Z{sQ6Zz,": {
+                "value": "quis non occaecat"
             }
-        ]
+        }
     }
 }
 ```
@@ -2703,6 +2865,11 @@ export interface LobbyUpdateRequestData {
     name?: string;
     mapName?: string;
     allyTeamConfig?: AllyTeamConfig;
+    gameOptions?: {
+        [k: string]: {
+            value: string;
+        };
+    };
 }
 export interface StartBox {
     top: number;
@@ -3157,6 +3324,28 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
+                "gameOptions": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        { "type": "null" }
+                    ]
+                },
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
@@ -3391,71 +3580,129 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "non",
-        "name": "aliquip culpa cillum mollit",
-        "mapName": "eiusmod",
+        "id": "velit deserunt officia magna elit",
+        "name": "voluptate",
+        "mapName": "pariatur laboris reprehenderit",
         "engineVersion": "in",
-        "gameVersion": "ullamco sint reprehenderit dolor amet",
+        "gameVersion": "deserunt",
+        "gameOptions": {
+            "=&rb59KVeh": {
+                "value": "incididunt"
+            },
+            "": {
+                "value": "elit qui sed"
+            },
+            ">/$h>C!Yk": {
+                "value": "tempor"
+            },
+            "68%d5|mbf_": null,
+            "C$3[t0UfeO": null
+        },
         "allyTeamConfig": {
-            "q(": null,
-            "": null
+            "rg?-u\\2:;": {
+                "startBox": {
+                    "top": 0.14310944080352783,
+                    "bottom": 0.5512962937355042,
+                    "left": 0.7086702585220337,
+                    "right": 0.668211042881012
+                },
+                "maxTeams": 64723152,
+                "teams": {
+                    "": {
+                        "ea_6d4": true,
+                        "Utd": 26831603
+                    },
+                    "~,W8&L": null,
+                    "/%0|<t+^": null
+                }
+            },
+            "z": {
+                "startBox": {
+                    "top": 0.8415210843086243,
+                    "bottom": 0.9448870420455933,
+                    "left": 0.8370957374572754,
+                    "right": 0.3442217707633972
+                },
+                "maxTeams": 36006624,
+                "teams": {
+                    ".#": {
+                        "adipisicing_c4a": true,
+                        "occaecat372": true,
+                        "maxPlayers": 12551547
+                    }
+                }
+            }
         },
         "players": {
-            "|-$!Sr>/": null
+            "": {
+                "id": "351",
+                "allyTeam": "ea deserunt",
+                "team": "sit laborum",
+                "player": "ut qui eiusmod",
+                "isReady": false,
+                "assetStatus": "missing"
+            }
         },
         "spectators": {
-            "}68%d5": {
-                "id": "351",
-                "joinQueuePosition": -81725800.03738403
-            },
-            "f_XxC$3": {
-                "id": "351",
-                "joinQueuePosition": 72971963.88244629
-            },
-            "0UfeO:bH)": {
+            "MCfc{F": {
                 "id": "351",
                 "joinQueuePosition": null
+            },
+            "6{I2T": {
+                "id": "351"
+            },
+            "X2,d9r(?": null,
+            "#FGk%I": null,
+            "WEJ.0--pA3": {
+                "id": "351"
             }
         },
         "bots": {
-            "jF[A|;Jh(": {
-                "id": "Ut",
-                "hostUserId": "351",
-                "allyTeam": "veniam sint qui",
-                "team": "irure magna consectetur",
-                "player": "ea in nulla",
-                "name": null,
-                "shortName": "occaecat quis irure Lorem Duis",
-                "version": null,
+            "@": {
+                "id": "in pariatur fugiat",
+                "shortName": "sint",
+                "version": "minim in est occaecat irure",
                 "options": null
             },
-            "/}3kum,Mh!": {
-                "id": "aute Duis commodo",
+            "5+*;<{<": null,
+            "": {
+                "id": "exercitation adipisicing Duis occaecat",
                 "hostUserId": "351",
-                "allyTeam": "laborum reprehenderit veniam nisi aute",
-                "team": "est nulla",
-                "player": "et",
-                "name": null,
-                "shortName": "commodo et incididunt",
-                "version": null,
+                "allyTeam": "dolore aliquip esse irure",
+                "team": "in dolor ut",
+                "player": "ullamco",
+                "name": "dolor aliquip esse sunt voluptate",
+                "shortName": "ad",
+                "version": "irure in",
                 "options": {
-                    "N}E#D": "tempor",
-                    "h+*": "labore"
-                }
-            },
-            "n": {
-                "id": "qui ad commodo voluptate aute",
-                "hostUserId": "351",
-                "player": "tempor",
-                "version": null,
-                "options": {
-                    "}c3": null
+                    "6])>": "eu adipisicing",
+                    "DRy<f|5X#q": null,
+                    ":&=C7Q": "amet qui anim non consequat"
                 }
             }
         },
-        "currentBattle": {
-            "id": "laborum ullamco",
-            "startedAt": 1705432698000000
+        "currentBattle": null,
+        "currentVote": {
+            "id": "Ut nostrud Duis elit occaecat",
+            "action": {
+                "type": "changeMap",
+                "newMapName": "laborum dolor anim aliqua eiusmod"
+            },
+            "voters": {
+                "~$6": {
+                    "vote": "no"
+                },
+                "|;oY": {
+                    "vote": "pending"
+                },
+                "b]f C8;": {
+                    "vote": "yes"
+                },
+                "7= 3n3PYv": {
+                    "vote": "abstain"
+                }
+            },
+            "until": 1705432698000000
         }
     }
 }
@@ -3487,6 +3734,11 @@ export interface LobbyUpdatedEventData {
     mapName?: string;
     engineVersion?: string;
     gameVersion?: string;
+    gameOptions?: {
+        [k: string]: {
+            value: string;
+        } | null;
+    } | null;
     allyTeamConfig?: {
         [k: string]: {
             startBox?: StartBox;

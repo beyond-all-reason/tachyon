@@ -11,6 +11,14 @@ export default defineEndpoint({
             name: Type.Optional(Type.String({ description: "to rename the lobby" })),
             mapName: Type.Optional(Type.String()),
             allyTeamConfig: Type.Optional(Type.Ref("allyTeamConfig")),
+            gameOptions: Type.Optional(
+                Type.Record(
+                    Type.String(),
+                    Type.Object({
+                        value: Type.String(),
+                    })
+                )
+            ),
         }),
     },
     response: [{ status: "success" }],
