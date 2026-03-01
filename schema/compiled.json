@@ -4451,7 +4451,7 @@
                     "properties": {
                         "isReady": { "type": "boolean" },
                         "assetStatus": {
-                            "enum": ["missing", "downloading", "ready"]
+                            "enum": ["missing", "downloading", "complete"]
                         }
                     }
                 }
@@ -4596,7 +4596,7 @@
                                                     "enum": [
                                                         "missing",
                                                         "downloading",
-                                                        "ready"
+                                                        "complete"
                                                     ]
                                                 }
                                             },

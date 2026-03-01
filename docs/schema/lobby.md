@@ -3009,7 +3009,9 @@ Update the player's status
             "type": "object",
             "properties": {
                 "isReady": { "type": "boolean" },
-                "assetStatus": { "enum": ["missing", "downloading", "ready"] }
+                "assetStatus": {
+                    "enum": ["missing", "downloading", "complete"]
+                }
             }
         }
     },
@@ -3045,7 +3047,7 @@ export interface LobbyUpdateClientStatusRequest {
 }
 export interface LobbyUpdateClientStatusRequestData {
     isReady?: boolean;
-    assetStatus?: "missing" | "downloading" | "ready";
+    assetStatus?: "missing" | "downloading" | "complete";
 }
 ```
 ### Response
@@ -3225,7 +3227,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                             "enum": [
                                                 "missing",
                                                 "downloading",
-                                                "ready"
+                                                "complete"
                                             ]
                                         }
                                     },
@@ -3511,7 +3513,7 @@ export interface LobbyUpdatedEventData {
             team?: string;
             player?: string;
             isReady?: boolean;
-            assetStatus?: "missing" | "downloading" | "ready";
+            assetStatus?: "missing" | "downloading" | "complete";
         } | null;
     };
     spectators?: {
