@@ -610,7 +610,7 @@ export interface StartBox {
                 "team": "ut esse ea qui Lorem",
                 "player": "qui eiusmod",
                 "isReady": true,
-                "assetStatus": "ready"
+                "assetStatus": "complete"
             }
         },
         "spectators": {
@@ -759,7 +759,7 @@ export interface LobbyCreateOkResponseData {
             team: string;
             player: string;
             isReady: boolean;
-            assetStatus: "missing" | "downloading" | "ready";
+            assetStatus: "missing" | "downloading" | "complete";
         };
     };
     spectators: {
@@ -1137,7 +1137,7 @@ export interface LobbyJoinOkResponseData {
             team: string;
             player: string;
             isReady: boolean;
-            assetStatus: "missing" | "downloading" | "ready";
+            assetStatus: "missing" | "downloading" | "complete";
         };
     };
     spectators: {
