@@ -102,7 +102,7 @@ To leave an ally team or the join queue and become a spectator, a user should us
 Clients can send a [lobby/updateClientStatus](#updateClientStatus) request to notify others if they are ready
 and if they need to download some assets, like engine, map or game. When a user becomes a player (at lobby creation,
 through `joinAllyTeam` or with the join queue), the server will automatically assign them a default status
-`{"isReady": false, "assetStatus": "ready"}`. If this is incorrect the client should send a request to correct it.
+`{"isReady": false, "assetStatus": "complete"}`. If this is incorrect the client should send a request to correct it.
 
 
 ### Lobby updates
