@@ -33,6 +33,8 @@ export const lobbyDetails = Type.Object(
                 allyTeam: Type.String(),
                 team: Type.String(),
                 player: Type.String(),
+                isReady: Type.Boolean(),
+                assetStatus: Type.Enum(["missing", "downloading", "complete"]),
             })
         ),
         spectators: Type.Record(

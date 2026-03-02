@@ -102,7 +102,7 @@ To leave an ally team or the join queue and become a spectator, a user should us
 Clients can send a [lobby/updateClientStatus](#updateClientStatus) request to notify others if they are ready
 and if they need to download some assets, like engine, map or game. When a user becomes a player (at lobby creation,
 through `joinAllyTeam` or with the join queue), the server will automatically assign them a default status
-`{"isReady": false, "assetStatus": "ready"}`. If this is incorrect the client should send a request to correct it.
+`{"isReady": false, "assetStatus": "complete"}`. If this is incorrect the client should send a request to correct it.
 
 
 ### Lobby updates
@@ -592,83 +592,119 @@ export interface StartBox {
                 "id": "351",
                 "allyTeam": "aliquip deserunt non ad",
                 "team": "enim incididunt eu amet",
-                "player": "aliqua"
+                "player": "aliqua",
+                "isReady": true,
+                "assetStatus": "missing"
             },
             ")=ZhY": {
                 "id": "351",
-                "allyTeam": "in",
-                "team": "dolor mollit quis",
-                "player": "laboris consectetur nulla"
+                "allyTeam": "laboris consectetur",
+                "team": "labore eu in dolor id",
+                "player": "minim consequat",
+                "isReady": true,
+                "assetStatus": "downloading"
             },
             "*7xwD}:?w\"": {
                 "id": "351",
-                "allyTeam": "non Lorem velit",
-                "team": "mollit Lorem",
-                "player": "labore voluptate"
+                "allyTeam": "elit",
+                "team": "ut esse ea qui Lorem",
+                "player": "qui eiusmod",
+                "isReady": true,
+                "assetStatus": "complete"
             }
         },
         "spectators": {
-            "p,D5.Teb": {
-                "id": "351"
-            },
-            "hWMW": {
+            "eb{fCh": {
                 "id": "351",
-                "joinQueuePosition": -56940078.73535156
+                "joinQueuePosition": 48708713.05465698
             },
-            "MJ6}R/~9w": {
+            "XqMJ6}": {
                 "id": "351",
-                "joinQueuePosition": -90729725.36087036
+                "joinQueuePosition": 86667513.84735107
+            },
+            "~": {
+                "id": "351",
+                "joinQueuePosition": -24201464.653015137
+            },
+            "E!(L0aIKUl": {
+                "id": "351",
+                "joinQueuePosition": 24405193.328857422
             }
         },
         "bots": {
-            "Y<o7D5hOp": {
-                "id": "aliqua ipsum officia ut",
+            "mtt#c": {
+                "id": "in sunt tempor Duis in",
                 "hostUserId": "351",
-                "allyTeam": "est consequat in qui",
-                "team": "ex amet elit",
-                "player": "amet",
-                "name": "ipsum ex",
-                "shortName": "ut do c",
-                "version": "Ut ullamco culpa aliqua",
+                "allyTeam": "nulla commodo Ut ullamco et",
+                "team": "do ex Duis ut",
+                "player": "labore elit",
+                "name": "mollit",
+                "shortName": "aute magna sunt",
+                "version": "in nisi dolore qui esse",
                 "options": {
-                    "R.q": "Lorem",
-                    "": "pariatur fugiat laboris",
-                    "|n": "velit voluptate laboris labore sint",
-                    "UUL=uo": "anim in aliquip aute dolor",
-                    "2FVIf": "anim aliqua veniam"
+                    "J2?3PI`;": "cillum",
+                    "nKT1@q": "irure aute id"
                 }
             },
-            "tl8<Sm": {
-                "id": "ut cillum",
+            "[oY": {
+                "id": "mollit qui",
                 "hostUserId": "351",
-                "allyTeam": "ut velit in Excepteur occaecat",
-                "team": "Duis velit",
-                "player": "consequat sunt enim ullamco amet",
-                "name": "consectet",
-                "shortName": "amet",
-                "version": "ipsum sunt ut esse",
+                "allyTeam": "in",
+                "team": "Ut commodo",
+                "player": "exercitation",
+                "name": "s",
+                "shortName": "dolor",
+                "version": "laborum amet",
                 "options": {
-                    "3kG82": "occaecat officia",
-                    "Mg": "aliqua ut do",
-                    "b2,\\1UU": "qui Excepteur",
-                    "2XK!)K": "in do minim Ut"
+                    "%q": "ullamco",
+                    "": "aliquip cupidatat"
                 }
+            },
+            "qE0Z": {
+                "id": "exercitation",
+                "hostUserId": "351",
+                "allyTeam": "quis",
+                "team": "anim ullamco labore",
+                "player": "quis ullamco",
+                "shortName": "nulla adipisici"
+            },
+            "CDz": {
+                "id": "quis anim",
+                "hostUserId": "351",
+                "allyTeam": "nulla sunt labore do fugiat",
+                "team": "ex sint Lorem",
+                "player": "Duis Ut",
+                "name": "sit occaecat lab",
+                "shortName": "paria",
+                "version": "officia quis adipisicing sed fugiat",
+                "options": {
+                    "": "fugiat incididunt Ut aliqua",
+                    "L||?.XchO": "ipsum id nulla eu"
+                }
+            },
+            "[XJ[EG": {
+                "id": "non dolore",
+                "hostUserId": "351",
+                "allyTeam": "in pariatur amet",
+                "team": "in eu",
+                "player": "magna sit commodo esse",
+                "shortName": "deserunt"
             }
         },
         "currentBattle": {
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "sed ea occaecat Ut",
+            "id": "cillum cupidatat sed",
             "action": {
                 "type": "start"
             },
             "initiator": "351",
             "voters": {
-                "Ry;": {
-                    "vote": "pending"
+                "y5gD'.{s-{": {
+                    "vote": "yes"
                 },
-                "vR]g~&z<n": {
+                "T": {
                     "vote": "no"
                 }
             },
@@ -722,6 +758,8 @@ export interface LobbyCreateOkResponseData {
             allyTeam: string;
             team: string;
             player: string;
+            isReady: boolean;
+            assetStatus: "missing" | "downloading" | "complete";
         };
     };
     spectators: {
@@ -985,79 +1023,48 @@ export interface LobbyJoinRequestData {
                 "id": "351",
                 "allyTeam": "nostrud labore aliquip ut",
                 "team": "eiusmod adipisicing",
-                "player": "Excepteur sint pariatur"
+                "player": "Excepteur sint pariatur",
+                "isReady": true,
+                "assetStatus": "downloading"
             }
         },
         "spectators": {
-            ".": {
+            "4PWl\\": {
                 "id": "351",
-                "joinQueuePosition": 95674633.97979736
+                "joinQueuePosition": 57781779.76608276
             },
-            "Wl\\kK": {
+            "(}EK|%": {
                 "id": "351"
+            },
+            "": {
+                "id": "351",
+                "joinQueuePosition": 4093289.375305176
+            },
+            "~U": {
+                "id": "351",
+                "joinQueuePosition": -28793942.92831421
+            },
+            "c F": {
+                "id": "351",
+                "joinQueuePosition": 97481536.86523438
             }
         },
         "bots": {
-            "": {
-                "id": "in velit",
+            "m*": {
+                "id": "consequat reprehenderit officia aute anim",
                 "hostUserId": "351",
-                "allyTeam": "veniam",
-                "team": "nisi pariatur magna",
-                "player": "dolore sunt dolore velit",
-                "name": "si",
-                "shortName": "dolore fugiat u",
-                "version": "consectetur eiusmod est",
+                "allyTeam": "velit",
+                "team": "quis ex nostrud sunt veniam",
+                "player": "pariatur est consequat",
+                "name": "dolor in",
+                "shortName": "tempor",
+                "version": "et ea sed in Ut",
                 "options": {
-                    "/~%4": "dolore adipisicing ad do",
-                    "Z\\2{[74": "do reprehenderit deserunt"
-                }
-            },
-            ";/.": {
-                "id": "Ut culpa laboris ex esse",
-                "hostUserId": "351",
-                "allyTeam": "anim commodo",
-                "team": "Lorem cupidatat enim id",
-                "player": "dolor consequat",
-                "name": "ad Excepteur",
-                "shortName": "esse aliqua deser",
-                "version": "et Duis",
-                "options": {
-                    "tIG9t~": "voluptate minim enim eiusmod sint",
-                    "48.`M'Vz;": "veniam",
-                    "z+": "id",
-                    "e_8ld90": "Ut qui reprehenderit nostrud"
-                }
-            },
-            ";l!LuIaV": {
-                "id": "do proident",
-                "hostUserId": "351",
-                "allyTeam": "Excepteur et do officia nisi",
-                "team": "in",
-                "player": "sunt eiusmod ex elit",
-                "name": "aliquip c",
-                "shortName": "in culpa Lor",
-                "version": "commodo ex deserunt dolore",
-                "options": {
-                    "3lk8;s!L": "in nostrud laboris ex esse",
-                    "tE9/": "culpa commodo nisi",
-                    "`)k_gP": "aliquip Ut Excepteur cillum ad",
-                    "Mx[9": "ad in laborum",
-                    "([\\rNq": "id voluptate sit ullamco"
-                }
-            },
-            "Q~`SovAi": {
-                "id": "ad sint sed incididunt enim",
-                "hostUserId": "351",
-                "allyTeam": "dolore dolore exercitation reprehenderit",
-                "team": "enim consectetur incididunt irure",
-                "player": "Ut",
-                "name": "voluptate",
-                "shortName": "laborum proident in ",
-                "version": "dolor",
-                "options": {
-                    "": "enim esse non",
-                    "t": "dolore Duis occaecat cupidatat non",
-                    "R`|B": "in"
+                    "[c": "est nostrud",
+                    "w}X,lWu": "in",
+                    "": "Duis fugiat enim est",
+                    "'a$L": "pariatur quis culpa",
+                    "7q": "irure est consectetur eiusmod"
                 }
             }
         },
@@ -1065,21 +1072,18 @@ export interface LobbyJoinRequestData {
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "occaecat amet",
+            "id": "aute veniam aliqua",
             "action": {
                 "type": "changeMap",
-                "newMapName": "in"
+                "newMapName": "occaecat officia in est ullamco"
             },
             "initiator": "351",
             "voters": {
-                "f^&=z\\": {
+                "-x%Mc!/`": {
                     "vote": "no"
                 },
-                "NB^}3R": {
-                    "vote": "yes"
-                },
-                "KR(#.qkj<8": {
-                    "vote": "yes"
+                "3Oo/": {
+                    "vote": "no"
                 }
             },
             "until": 1705432698000000
@@ -1132,6 +1136,8 @@ export interface LobbyJoinOkResponseData {
             allyTeam: string;
             team: string;
             player: string;
+            isReady: boolean;
+            assetStatus: "missing" | "downloading" | "complete";
         };
     };
     spectators: {
@@ -3003,7 +3009,9 @@ Update the player's status
             "type": "object",
             "properties": {
                 "isReady": { "type": "boolean" },
-                "assetStatus": { "enum": ["missing", "downloading", "ready"] }
+                "assetStatus": {
+                    "enum": ["missing", "downloading", "complete"]
+                }
             }
         }
     },
@@ -3039,7 +3047,7 @@ export interface LobbyUpdateClientStatusRequest {
 }
 export interface LobbyUpdateClientStatusRequestData {
     isReady?: boolean;
-    assetStatus?: "missing" | "downloading" | "ready";
+    assetStatus?: "missing" | "downloading" | "complete";
 }
 ```
 ### Response
@@ -3219,7 +3227,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                             "enum": [
                                                 "missing",
                                                 "downloading",
-                                                "ready"
+                                                "complete"
                                             ]
                                         }
                                     },
@@ -3505,7 +3513,7 @@ export interface LobbyUpdatedEventData {
             team?: string;
             player?: string;
             isReady?: boolean;
-            assetStatus?: "missing" | "downloading" | "ready";
+            assetStatus?: "missing" | "downloading" | "complete";
         } | null;
     };
     spectators?: {

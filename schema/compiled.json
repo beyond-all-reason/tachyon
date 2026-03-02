@@ -196,9 +196,24 @@
                                 "id": { "$ref": "#/definitions/userId" },
                                 "allyTeam": { "type": "string" },
                                 "team": { "type": "string" },
-                                "player": { "type": "string" }
+                                "player": { "type": "string" },
+                                "isReady": { "type": "boolean" },
+                                "assetStatus": {
+                                    "enum": [
+                                        "missing",
+                                        "downloading",
+                                        "complete"
+                                    ]
+                                }
                             },
-                            "required": ["id", "allyTeam", "team", "player"]
+                            "required": [
+                                "id",
+                                "allyTeam",
+                                "team",
+                                "player",
+                                "isReady",
+                                "assetStatus"
+                            ]
                         }
                     }
                 },
@@ -4440,7 +4455,7 @@
                     "properties": {
                         "isReady": { "type": "boolean" },
                         "assetStatus": {
-                            "enum": ["missing", "downloading", "ready"]
+                            "enum": ["missing", "downloading", "complete"]
                         }
                     }
                 }
@@ -4585,7 +4600,7 @@
                                                     "enum": [
                                                         "missing",
                                                         "downloading",
-                                                        "ready"
+                                                        "complete"
                                                     ]
                                                 }
                                             },
