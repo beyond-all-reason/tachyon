@@ -61,7 +61,7 @@ export default defineEndpoint({
                             player: Type.Optional(Type.String()),
                             isReady: Type.Optional(Type.Boolean()),
                             assetStatus: Type.Optional(
-                                Type.Enum(["missing", "downloading", "ready"])
+                                Type.Enum(["missing", "downloading", "complete"])
                             ),
                         })
                     )

@@ -9,7 +9,7 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             isReady: Type.Optional(Type.Boolean()),
-            assetStatus: Type.Optional(Type.Enum(["missing", "downloading", "ready"])),
+            assetStatus: Type.Optional(Type.Enum(["missing", "downloading", "complete"])),
         }),
     },
     response: [
