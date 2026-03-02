@@ -384,8 +384,8 @@ Create a clan.
     "data": {
         "name": "elit p",
         "tag": "veni",
-        "description": "qui commodo consequat",
-        "language": "velit laboris fugiat aliqua"
+        "language": "qui commodo consequat",
+        "description": "velit laboris fugiat aliqua"
     }
 }
 ```
@@ -395,7 +395,6 @@ Create a clan.
 ```ts
 export type ClanCreateRequestData = ClanUpdateableBaseData & {
     description?: string;
-    language: string;
 };
 
 export interface ClanCreateRequest {
@@ -407,6 +406,7 @@ export interface ClanCreateRequest {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ### Response
@@ -1028,7 +1028,8 @@ A player has been invited to a clan. Sent to the invited player.
     "commandId": "clan/invited",
     "data": {
         "name": "ad id consectet",
-        "tag": "ineius"
+        "tag": "ineius",
+        "language": "ea commodo aliquip sit voluptate"
     }
 }
 ```
@@ -1045,6 +1046,7 @@ export interface ClanInvitedEvent {
 export interface ClanInvitedEventData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ---
@@ -1693,7 +1695,6 @@ Update your clan.
 ```ts
 export type ClanUpdateRequestData = ClanUpdateableBaseData & {
     description?: string;
-    language: string;
 };
 
 export interface ClanUpdateRequest {
@@ -1705,6 +1706,7 @@ export interface ClanUpdateRequest {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ### Response
@@ -1833,8 +1835,8 @@ One ore more clan properties were updated. Sent to all clan members.
     "data": {
         "name": "pariatur ",
         "tag": "vel",
-        "description": "tempor ex proident",
-        "language": "nulla ex voluptate occaecat non"
+        "language": "tempor ex proident",
+        "description": "nulla ex voluptate occaecat non"
     }
 }
 ```
@@ -1844,7 +1846,6 @@ One ore more clan properties were updated. Sent to all clan members.
 ```ts
 export type ClanUpdatedEventData = ClanUpdateableBaseData & {
     description?: string;
-    language: string;
 };
 
 export interface ClanUpdatedEvent {
@@ -1856,6 +1857,7 @@ export interface ClanUpdatedEvent {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ---
@@ -1997,8 +1999,8 @@ export interface ClanViewRequestData {
         "clanId": "12345",
         "name": "fugiat tempor",
         "tag": "pariatur",
-        "description": "dolor amet et laboris",
-        "language": "anim laboris Excepteur",
+        "language": "dolor amet et laboris",
+        "description": "anim laboris Excepteur",
         "members": [
             {
                 "userId": "351",
@@ -2041,7 +2043,6 @@ export type ClanViewOkResponseData = {
 export type ClanId = string;
 export type ClanUpdateableData = ClanUpdateableBaseData & {
     description?: string;
-    language: string;
 };
 export type UserId = string;
 export type ClanRole = "member" | "coLeader" | "leader";
@@ -2057,6 +2058,7 @@ export interface ClanViewOkResponse {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 export interface ClanMember {
     userId: UserId;
@@ -2198,22 +2200,26 @@ export interface ClanViewListRequest {
             {
                 "clanId": "12345",
                 "name": "nulla dolor amet",
-                "tag": "sit dolo"
+                "tag": "sit dolo",
+                "language": "nisi adipisicing irure veniam"
             },
             {
                 "clanId": "12345",
-                "name": "non pariatur dolore",
-                "tag": "tempo"
+                "name": "tempor p",
+                "tag": "incididu",
+                "language": "consequat elit ullamco veniam non"
             },
             {
                 "clanId": "12345",
-                "name": "cillum occaeca",
-                "tag": "in eli"
+                "name": "esse",
+                "tag": "aute",
+                "language": "dolor laborum id"
             },
             {
                 "clanId": "12345",
-                "name": "do officia dolo",
-                "tag": "eu id dol"
+                "name": "quis nis",
+                "tag": "ad conse",
+                "language": "nisi reprehenderit in anim"
             }
         ]
     }
@@ -2241,6 +2247,7 @@ export interface ClanViewListOkResponseData {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`

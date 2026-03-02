@@ -122,9 +122,10 @@
             "type": "object",
             "properties": {
                 "name": { "type": "string", "maxLength": 30 },
-                "tag": { "type": "string", "minLength": 3, "maxLength": 10 }
+                "tag": { "type": "string", "minLength": 3, "maxLength": 10 },
+                "language": { "type": "string" }
             },
-            "required": ["name", "tag"]
+            "required": ["name", "tag", "language"]
         },
         "clanUpdateableData": {
             "allOf": [
@@ -132,10 +133,8 @@
                 {
                     "type": "object",
                     "properties": {
-                        "description": { "type": "string", "maxLength": 500 },
-                        "language": { "type": "string" }
-                    },
-                    "required": ["language"]
+                        "description": { "type": "string", "maxLength": 500 }
+                    }
                 }
             ]
         },

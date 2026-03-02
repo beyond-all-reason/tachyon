@@ -196,6 +196,7 @@ export interface UserInfoOkResponseData {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -258,91 +259,48 @@ Sent by the server to inform the client of its own user state. This event should
             "clanBaseData": {
                 "clanId": "12345",
                 "name": "in ut d",
-                "tag": "enim"
+                "tag": "enim",
+                "language": "consequat eu culpa voluptate Lorem"
             },
-            "countryCode": "consequat eu culpa voluptate Lorem",
-            "status": "menu",
-            "party": null,
-            "invitedToParties": [
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                }
-            ],
+            "countryCode": "adipisicing dolor sint eiusmod cillum",
+            "status": "offline",
+            "party": {
+                "id": "1882f6b2e3a4d14f24acb7aa",
+                "members": [
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    }
+                ],
+                "invited": [
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    }
+                ]
+            },
+            "invitedToParties": [],
             "friendIds": [
-                "mollit dolore in",
-                "Excepteur est",
-                "dolor Duis",
-                "elit veniam sed ad",
-                "dolore sunt"
+                "in adipisicing laborum quis exercitation",
+                "labore Lorem"
             ],
             "outgoingFriendRequest": [
-                {
-                    "to": {},
-                    "sentAt": {}
-                },
-                {
-                    "to": {},
-                    "sentAt": {}
-                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -368,27 +326,33 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": {},
                     "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
                 }
             ],
             "ignoreIds": [
-                "ad Ut"
+                "irure consequat dolore",
+                "deserunt esse",
+                "Ut magna"
             ],
             "currentBattle": {
-                "username": "consectetur veniam Lorem",
-                "password": "sunt incididunt nostrud fugiat cupidatat",
-                "ip": "cupidatat Lorem non ipsum occaecat",
-                "port": 67408597.46932983,
+                "username": "adipisicing deserunt minim enim exercitation",
+                "password": "mollit pariatur voluptate culpa",
+                "ip": "laboris",
+                "port": -47941315.17410278,
                 "engine": {
-                    "version": "cupidatat Ut"
+                    "version": "veniam nostrud ea dolore sed"
                 },
                 "game": {
-                    "springName": "irure et"
+                    "springName": "reprehenderit Excepteur Lorem"
                 },
                 "map": {
-                    "springName": "exercitation"
+                    "springName": "laboris consequat"
                 }
             },
-            "currentLobby": null,
+            "currentLobby": "officia exercitation nulla ex labore",
             "clanInvites": []
         }
     }
@@ -448,6 +412,7 @@ export interface User {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 export interface PartyState {
     id: PartyId;
@@ -1017,5 +982,6 @@ export interface UserUpdatedEventData {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
