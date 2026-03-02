@@ -122,7 +122,7 @@
             "type": "object",
             "properties": {
                 "name": { "type": "string", "maxLength": 30 },
-                "tag": { "type": "string", "minLength": 3, "maxLength": 6 }
+                "tag": { "type": "string", "minLength": 3, "maxLength": 10 }
             },
             "required": ["name", "tag"]
         },
@@ -132,8 +132,10 @@
                 {
                     "type": "object",
                     "properties": {
-                        "description": { "type": "string", "maxLength": 500 }
-                    }
+                        "description": { "type": "string", "maxLength": 500 },
+                        "language": { "type": "string" }
+                    },
+                    "required": ["language"]
                 }
             ]
         },

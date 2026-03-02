@@ -6,8 +6,10 @@
         {
             "type": "object",
             "properties": {
-                "description": { "type": "string", "maxLength": 500 }
-            }
+                "description": { "type": "string", "maxLength": 500 },
+                "language": { "type": "string" }
+            },
+            "required": ["language"]
         }
     ]
 }
