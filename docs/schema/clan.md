@@ -383,8 +383,9 @@ Create a clan.
     "commandId": "clan/create",
     "data": {
         "name": "elit p",
-        "tag": "ven",
-        "description": "qui commodo consequat"
+        "tag": "veni",
+        "language": "qui commodo consequat",
+        "description": "velit laboris fugiat aliqua"
     }
 }
 ```
@@ -405,6 +406,7 @@ export interface ClanCreateRequest {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ### Response
@@ -1026,7 +1028,8 @@ A player has been invited to a clan. Sent to the invited player.
     "commandId": "clan/invited",
     "data": {
         "name": "ad id consectet",
-        "tag": "inei"
+        "tag": "ineius",
+        "language": "ea commodo aliquip sit voluptate"
     }
 }
 ```
@@ -1043,6 +1046,7 @@ export interface ClanInvitedEvent {
 export interface ClanInvitedEventData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ---
@@ -1680,7 +1684,8 @@ Update your clan.
     "commandId": "clan/update",
     "data": {
         "name": "Excepteur laboris",
-        "tag": "labo"
+        "tag": "labore",
+        "language": "reprehenderit ad cillum velit"
     }
 }
 ```
@@ -1701,6 +1706,7 @@ export interface ClanUpdateRequest {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ### Response
@@ -1829,7 +1835,8 @@ One ore more clan properties were updated. Sent to all clan members.
     "data": {
         "name": "pariatur ",
         "tag": "vel",
-        "description": "tempor ex proident"
+        "language": "tempor ex proident",
+        "description": "nulla ex voluptate occaecat non"
     }
 }
 ```
@@ -1850,6 +1857,7 @@ export interface ClanUpdatedEvent {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 ---
@@ -1990,8 +1998,9 @@ export interface ClanViewRequestData {
     "data": {
         "clanId": "12345",
         "name": "fugiat tempor",
-        "tag": "paria",
-        "description": "dolor amet et laboris",
+        "tag": "pariatur",
+        "language": "dolor amet et laboris",
+        "description": "anim laboris Excepteur",
         "members": [
             {
                 "userId": "351",
@@ -2049,6 +2058,7 @@ export interface ClanViewOkResponse {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 export interface ClanMember {
     userId: UserId;
@@ -2190,22 +2200,26 @@ export interface ClanViewListRequest {
             {
                 "clanId": "12345",
                 "name": "nulla dolor amet",
-                "tag": "sit d"
+                "tag": "sit dolo",
+                "language": "nisi adipisicing irure veniam"
             },
             {
                 "clanId": "12345",
-                "name": "non pariatur dolore",
-                "tag": "temp"
+                "name": "tempor p",
+                "tag": "incididu",
+                "language": "consequat elit ullamco veniam non"
             },
             {
                 "clanId": "12345",
-                "name": "cillum occaeca",
-                "tag": "in e"
+                "name": "esse",
+                "tag": "aute",
+                "language": "dolor laborum id"
             },
             {
                 "clanId": "12345",
-                "name": "do officia dolo",
-                "tag": "eu id "
+                "name": "quis nis",
+                "tag": "ad conse",
+                "language": "nisi reprehenderit in anim"
             }
         ]
     }
@@ -2233,6 +2247,7 @@ export interface ClanViewListOkResponseData {
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
+    language: string;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
