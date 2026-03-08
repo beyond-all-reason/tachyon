@@ -70,6 +70,7 @@ export const lobbyDetails = Type.Object(
         currentBattle: Type.Optional(
             Type.Object(
                 {
+                    id: Type.String(),
                     startedAt: Type.Ref("unixTime"),
                 },
                 { description: "If a battle is currently happening, here are the info" }
