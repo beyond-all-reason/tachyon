@@ -23,6 +23,7 @@ export default defineEndpoint({
                         currentBattle: Type.Optional(
                             Nullable(
                                 Type.Object({
+                                    id: Type.String(),
                                     startedAt: Type.Ref("unixTime"),
                                 })
                             )
