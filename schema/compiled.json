@@ -3701,6 +3701,81 @@
             ]
         },
         {
+            "title": "LobbyJoinBattleRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinBattle" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "LobbyJoinBattleResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyJoinBattleOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinBattle" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "$ref": "#/definitions/privateBattle",
+                            "title": "LobbyJoinBattleOkResponseData"
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "LobbyJoinBattleFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinBattle" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_lobby",
+                                "no_battle",
+                                "battle_full",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyJoinQueueRequest",
             "tachyon": {
                 "source": "user",
