@@ -692,20 +692,22 @@ export interface StartBox {
             }
         },
         "currentBattle": {
+            "id": "incididunt et elit",
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "cillum cupidatat sed",
+            "id": "pariatur magna aliqua incididunt ex",
             "action": {
-                "type": "start"
+                "type": "changeMap",
+                "newMapName": "proident quis labore"
             },
             "initiator": "351",
             "voters": {
-                "y5gD'.{s-{": {
-                    "vote": "yes"
+                "n a_t+#": {
+                    "vote": "abstain"
                 },
-                "T": {
-                    "vote": "no"
+                "V-0)'rp": {
+                    "vote": "yes"
                 }
             },
             "until": 1705432698000000
@@ -784,6 +786,7 @@ export interface LobbyCreateOkResponseData {
         };
     };
     currentBattle?: {
+        id: string;
         startedAt: UnixTime;
     };
     currentVote?: {
@@ -1069,20 +1072,21 @@ export interface LobbyJoinRequestData {
             }
         },
         "currentBattle": {
+            "id": "in Duis ut",
             "startedAt": 1705432698000000
         },
         "currentVote": {
-            "id": "aute veniam aliqua",
+            "id": "nostrud Duis quis aute",
             "action": {
                 "type": "changeMap",
-                "newMapName": "occaecat officia in est ullamco"
+                "newMapName": "ea est"
             },
             "initiator": "351",
             "voters": {
-                "-x%Mc!/`": {
-                    "vote": "no"
+                "W_": {
+                    "vote": "abstain"
                 },
-                "3Oo/": {
+                "?-\"mSnfH": {
                     "vote": "no"
                 }
             },
@@ -1162,6 +1166,7 @@ export interface LobbyJoinOkResponseData {
         };
     };
     currentBattle?: {
+        id: string;
         startedAt: UnixTime;
     };
     currentVote?: {
