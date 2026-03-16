@@ -73,6 +73,24 @@
                                     ]
                                 },
                                 "uniqueItems": true
+                            },
+                            "stats": {
+                                "type": "object",
+                                "properties": {
+                                    "playerHours": { "type": "string" },
+                                    "spectatorHours": { "type": "string" },
+                                    "battleHistoryData": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "../../definitions/battleStat.json"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "playerHours",
+                                    "spectatorHours",
+                                    "battleHistoryData"
+                                ]
                             }
                         }
                     }

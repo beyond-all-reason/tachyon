@@ -1,0 +1,25 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/battleStat.json",
+    "title": "BattleStat",
+    "type": "object",
+    "properties": {
+        "map": { "type": "string" },
+        "playersCount": { "type": "integer" },
+        "type": { "enum": ["small_team", "large_team", "duel", "team", "ffa"] },
+        "outcome": { "enum": ["win", "loss"] },
+        "rating": { "type": "string" },
+        "ratingChange": { "type": "string" },
+        "duration": { "type": "string" },
+        "datetime": { "$ref": "../definitions/unixTime.json" }
+    },
+    "required": [
+        "map",
+        "playersCount",
+        "type",
+        "outcome",
+        "rating",
+        "ratingChange",
+        "duration",
+        "datetime"
+    ]
+}

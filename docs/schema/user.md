@@ -159,7 +159,63 @@ export interface UserInfoRequestData {
             "admin",
             "tournament_caster",
             "moderator"
-        ]
+        ],
+        "stats": {
+            "playerHours": "veniam aliquip dolor id",
+            "spectatorHours": "qui amet eu velit Ut",
+            "battleHistoryData": [
+                {
+                    "map": "laborum magna culpa",
+                    "playersCount": 17266131,
+                    "type": "large_team",
+                    "outcome": "loss",
+                    "rating": "enim incididunt esse nulla",
+                    "ratingChange": "reprehenderit exercitation qui culpa dolor",
+                    "duration": "qui amet culpa anim commodo",
+                    "datetime": 1705432698000000
+                },
+                {
+                    "map": "aute anim",
+                    "playersCount": 56474340,
+                    "type": "small_team",
+                    "outcome": "win",
+                    "rating": "et pariatur eiusmod",
+                    "ratingChange": "enim laborum",
+                    "duration": "ex",
+                    "datetime": 1705432698000000
+                },
+                {
+                    "map": "nulla aliquip in",
+                    "playersCount": -48054195,
+                    "type": "small_team",
+                    "outcome": "loss",
+                    "rating": "ea qui commodo et",
+                    "ratingChange": "deserunt",
+                    "duration": "qui in culpa",
+                    "datetime": 1705432698000000
+                },
+                {
+                    "map": "ut pariatur",
+                    "playersCount": 64595640,
+                    "type": "large_team",
+                    "outcome": "win",
+                    "rating": "reprehenderit mollit consequat pariatur",
+                    "ratingChange": "Excepteur laborum deserunt",
+                    "duration": "exercitation velit non commodo",
+                    "datetime": 1705432698000000
+                },
+                {
+                    "map": "ut tempor aute sit sed",
+                    "playersCount": -14115524,
+                    "type": "team",
+                    "outcome": "loss",
+                    "rating": "proident",
+                    "ratingChange": "exercitation eu eiusmod irure proident",
+                    "duration": "do",
+                    "datetime": 1705432698000000
+                }
+            ]
+        }
     }
 }
 ```
@@ -169,6 +225,7 @@ export interface UserInfoRequestData {
 ```ts
 export type UserId = string;
 export type ClanId = string;
+export type UnixTime = number;
 
 export interface UserInfoOkResponse {
     type: "response";
@@ -192,11 +249,26 @@ export interface UserInfoOkResponseData {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+    stats: {
+        playerHours: string;
+        spectatorHours: string;
+        battleHistoryData: BattleStat[];
+    };
 }
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
     language: string;
+}
+export interface BattleStat {
+    map: string;
+    playersCount: number;
+    type: "small_team" | "large_team" | "duel" | "team" | "ffa";
+    outcome: "win" | "loss";
+    rating: string;
+    ratingChange: string;
+    duration: string;
+    datetime: UnixTime;
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -264,43 +336,210 @@ Sent by the server to inform the client of its own user state. This event should
             },
             "countryCode": "adipisicing dolor sint eiusmod cillum",
             "status": "offline",
-            "party": {
-                "id": "1882f6b2e3a4d14f24acb7aa",
-                "members": [
+            "stats": {
+                "playerHours": "exercitation",
+                "spectatorHours": "sed culpa dolor fugiat",
+                "battleHistoryData": [
                     {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
+                        "map": "mollit deserunt sit",
+                        "playersCount": -63171661,
+                        "type": "ffa",
+                        "outcome": "loss",
+                        "rating": "occaecat nisi",
+                        "ratingChange": "fugiat",
+                        "duration": "ea",
+                        "datetime": 1705432698000000
                     },
                     {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
+                        "map": "sunt Lorem",
+                        "playersCount": 46614444,
+                        "type": "ffa",
+                        "outcome": "loss",
+                        "rating": "eu",
+                        "ratingChange": "Lorem irure culpa",
+                        "duration": "Ut cillum voluptate sunt eiusmod",
+                        "datetime": 1705432698000000
                     },
                     {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
+                        "map": "irure et",
+                        "playersCount": -53653670,
+                        "type": "duel",
+                        "outcome": "loss",
+                        "rating": "aliquip sunt nostrud eu",
+                        "ratingChange": "nulla exercitation voluptate ea",
+                        "duration": "irure dolore magna tempor dolor",
+                        "datetime": 1705432698000000
                     },
                     {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    }
-                ],
-                "invited": [
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
+                        "map": "nulla",
+                        "playersCount": 37461865,
+                        "type": "large_team",
+                        "outcome": "loss",
+                        "rating": "ipsum",
+                        "ratingChange": "cillum est voluptate",
+                        "duration": "Ut amet reprehenderit pariatur velit",
+                        "datetime": 1705432698000000
                     }
                 ]
             },
-            "invitedToParties": [],
+            "party": null,
+            "invitedToParties": [
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": []
+                },
+                {
+                    "id": "1882f6b2e3a4d14f24acb7aa",
+                    "members": [
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "joinedAt": 1705432698000000
+                        }
+                    ],
+                    "invited": [
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        },
+                        {
+                            "userId": "351",
+                            "invitedAt": 1705432698000000
+                        }
+                    ]
+                }
+            ],
             "friendIds": [
-                "in adipisicing laborum quis exercitation",
-                "labore Lorem"
+                "nostrud veniam",
+                "ipsum anim",
+                "magna qui ipsum sunt"
             ],
             "outgoingFriendRequest": [
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -318,41 +557,28 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": {},
                     "sentAt": {}
-                },
-                {
-                    "from": {},
-                    "sentAt": {}
-                },
-                {
-                    "from": {},
-                    "sentAt": {}
-                },
-                {
-                    "from": {},
-                    "sentAt": {}
                 }
             ],
             "ignoreIds": [
-                "irure consequat dolore",
-                "deserunt esse",
-                "Ut magna"
+                "dolor tempor sed Excepteur sit",
+                "ut amet eiusmod exercitation"
             ],
             "currentBattle": {
-                "username": "adipisicing deserunt minim enim exercitation",
-                "password": "mollit pariatur voluptate culpa",
-                "ip": "laboris",
-                "port": -47941315.17410278,
+                "username": "qui aute in nulla",
+                "password": "velit ut",
+                "ip": "aliqua laborum deserunt officia Excepteur",
+                "port": -19777429.10385132,
                 "engine": {
-                    "version": "veniam nostrud ea dolore sed"
+                    "version": "et consequat Excepteur aliqua culpa"
                 },
                 "game": {
-                    "springName": "reprehenderit Excepteur Lorem"
+                    "springName": "proident aliqua incididunt magna"
                 },
                 "map": {
-                    "springName": "laboris consequat"
+                    "springName": "dolor"
                 }
             },
-            "currentLobby": "officia exercitation nulla ex labore",
+            "currentLobby": null,
             "clanInvites": []
         }
     }
@@ -381,8 +607,8 @@ export type PrivateUser = User & {
 };
 export type UserId = string;
 export type ClanId = string;
-export type PartyId = string;
 export type UnixTime = number;
+export type PartyId = string;
 
 export interface UserSelfEvent {
     type: "event";
@@ -408,11 +634,26 @@ export interface User {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+    stats: {
+        playerHours: string;
+        spectatorHours: string;
+        battleHistoryData: BattleStat[];
+    };
 }
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
     language: string;
+}
+export interface BattleStat {
+    map: string;
+    playersCount: number;
+    type: "small_team" | "large_team" | "duel" | "team" | "ffa";
+    outcome: "win" | "loss";
+    rating: string;
+    ratingChange: string;
+    duration: string;
+    datetime: UnixTime;
 }
 export interface PartyState {
     id: PartyId;
@@ -886,6 +1127,24 @@ Sent by the server to inform the client of user state changes. User objects shou
                                     ]
                                 },
                                 "uniqueItems": true
+                            },
+                            "stats": {
+                                "type": "object",
+                                "properties": {
+                                    "playerHours": { "type": "string" },
+                                    "spectatorHours": { "type": "string" },
+                                    "battleHistoryData": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/definitions/battleStat"
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "playerHours",
+                                    "spectatorHours",
+                                    "battleHistoryData"
+                                ]
                             }
                         }
                     }
@@ -911,38 +1170,173 @@ Sent by the server to inform the client of user state changes. User objects shou
     "data": {
         "users": [
             {
-                "reprehenderit_1": -69989050,
-                "eiusmod_9_1": 27231049.53765869,
-                "exd": true,
-                "Excepteurc1": true,
-                "mollit_b": false,
-                "voluptate8a3": 84426176.54800415,
+                "minim_558": false,
                 "userId": "351",
-                "status": "lobby",
+                "username": "dolor dolore exercitation magna",
+                "displayName": "sit",
+                "clanBaseData": null,
+                "status": "playing",
                 "rating": {
-                    "value": -7566881.17980957
+                    "value": -23814177.51312256
+                },
+                "roles": [],
+                "stats": {
+                    "playerHours": "commodo culpa exercitation",
+                    "spectatorHours": "id",
+                    "battleHistoryData": [
+                        {
+                            "map": "deserunt consectetur ad et in",
+                            "playersCount": -9453177,
+                            "type": "ffa",
+                            "outcome": "win",
+                            "rating": "occaecat aliqua ea",
+                            "ratingChange": "officia et id in proident",
+                            "duration": "velit veniam consequat ea",
+                            "datetime": 1705432698000000
+                        }
+                    ]
                 }
             },
             {
-                "displayName": "dolore laboris non pariatur"
-            },
-            {
-                "do_afe": 77962529,
-                "cupidatat__6": 47290003.299713135,
-                "countryCode": "id",
-                "rating": {
-                    "value": 40300142.765045166
+                "do_373": "non et",
+                "userId": "351",
+                "displayName": "anim incididunt",
+                "clanBaseData": {
+                    "clanId": "12345",
+                    "name": "proident sed volu",
+                    "tag": "amet Duis",
+                    "language": "ad fugiat aliquip sit amet"
+                },
+                "countryCode": "quis dolor",
+                "status": "offline",
+                "stats": {
+                    "playerHours": "cillum elit esse est ullamco",
+                    "spectatorHours": "dolore minim proident",
+                    "battleHistoryData": [
+                        {
+                            "map": "ad aliquip aliqua est",
+                            "playersCount": -68954575,
+                            "type": "duel",
+                            "outcome": "win",
+                            "rating": "officia sit exercitation aliquip cillum",
+                            "ratingChange": "occaecat aute eu proident",
+                            "duration": "magna in nulla Excepteur",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "map": "commodo minim eu",
+                            "playersCount": 36049402,
+                            "type": "small_team",
+                            "outcome": "win",
+                            "rating": "sit amet sint Excepteur",
+                            "ratingChange": "deserunt",
+                            "duration": "officia velit eu",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "map": "consectetur nisi",
+                            "playersCount": 34012497,
+                            "type": "small_team",
+                            "outcome": "loss",
+                            "rating": "culpa dolor pariatur et enim",
+                            "ratingChange": "in reprehenderit Duis dolor",
+                            "duration": "nisi mollit commodo anim ad",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "map": "qui id",
+                            "playersCount": 71861375,
+                            "type": "ffa",
+                            "outcome": "loss",
+                            "rating": "pariatur deserunt nisi",
+                            "ratingChange": "cupidatat eiusmod elit",
+                            "duration": "veniam commodo",
+                            "datetime": 1705432698000000
+                        }
+                    ]
                 }
             },
             {
-                "adipisicing_8e1": 97860765,
-                "labore_3f7": -1436126.2321472168,
-                "nisie79": "nostrud Lorem laborum tempor magna",
-                "ipsum_286": "nulla quis anim esse",
+                "elit___": -83607685.56594849,
+                "et_ce1": false,
+                "nulla81": 77321827.41165161,
                 "userId": "351",
+                "username": "anim id esse elit sint",
+                "clanBaseData": {
+                    "clanId": "12345",
+                    "name": "veniam sunt",
+                    "tag": "velit",
+                    "language": "officia quis dolor"
+                },
+                "stats": {
+                    "playerHours": "enim non eiusmod",
+                    "spectatorHours": "laboris nisi",
+                    "battleHistoryData": [
+                        {
+                            "map": "amet cupidatat",
+                            "playersCount": 91334403,
+                            "type": "team",
+                            "outcome": "loss",
+                            "rating": "ipsum",
+                            "ratingChange": "est cupidatat irure",
+                            "duration": "velit ipsum fugiat Lorem",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "map": "magna Ut",
+                            "playersCount": 12737572,
+                            "type": "ffa",
+                            "outcome": "loss",
+                            "rating": "in",
+                            "ratingChange": "in cupidatat amet est",
+                            "duration": "culpa",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "map": "in aliquip veniam",
+                            "playersCount": -39328373,
+                            "type": "large_team",
+                            "outcome": "loss",
+                            "rating": "incididunt occaecat ea",
+                            "ratingChange": "anim nostrud cupidatat consequat proident",
+                            "duration": "enim voluptate ex",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "map": "aliquip reprehenderit id minim",
+                            "playersCount": 30297685,
+                            "type": "small_team",
+                            "outcome": "win",
+                            "rating": "do proident laboris ea",
+                            "ratingChange": "tempor in eu laboris",
+                            "duration": "amet cupidatat magna",
+                            "datetime": 1705432698000000
+                        }
+                    ]
+                }
+            },
+            {
+                "voluptate2da": -35856677,
+                "quis01": "mollit qui cillum occaecat",
+                "officia_192": false,
+                "incididuntcba": true,
+                "userId": "351",
+                "status": "offline",
+                "rating": {
+                    "value": -80462479.59136963
+                },
                 "roles": [
-                    "moderator"
-                ]
+                    "moderator",
+                    "contributor",
+                    "admin",
+                    "tournament_caster",
+                    "tournament_winner"
+                ],
+                "stats": {
+                    "playerHours": "aliquip Duis aliqua",
+                    "spectatorHours": "proident ullamco qui Duis culpa",
+                    "battleHistoryData": []
+                }
             }
         ]
     }
@@ -954,6 +1348,7 @@ Sent by the server to inform the client of user state changes. User objects shou
 ```ts
 export type UserId = string;
 export type ClanId = string;
+export type UnixTime = number;
 
 export interface UserUpdatedEvent {
     type: "event";
@@ -977,11 +1372,26 @@ export interface UserUpdatedEventData {
             value: number;
         };
         roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+        stats?: {
+            playerHours: string;
+            spectatorHours: string;
+            battleHistoryData: BattleStat[];
+        };
     }[];
 }
 export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
     language: string;
+}
+export interface BattleStat {
+    map: string;
+    playersCount: number;
+    type: "small_team" | "large_team" | "duel" | "team" | "ffa";
+    outcome: "win" | "loss";
+    rating: string;
+    ratingChange: string;
+    duration: string;
+    datetime: UnixTime;
 }
 ```

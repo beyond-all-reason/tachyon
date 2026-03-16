@@ -49,6 +49,31 @@
                 "required": ["maxTeams", "startBox", "teams"]
             }
         },
+        "battleStat": {
+            "type": "object",
+            "properties": {
+                "map": { "type": "string" },
+                "playersCount": { "type": "integer" },
+                "type": {
+                    "enum": ["small_team", "large_team", "duel", "team", "ffa"]
+                },
+                "outcome": { "enum": ["win", "loss"] },
+                "rating": { "type": "string" },
+                "ratingChange": { "type": "string" },
+                "duration": { "type": "string" },
+                "datetime": { "$ref": "#/definitions/unixTime" }
+            },
+            "required": [
+                "map",
+                "playersCount",
+                "type",
+                "outcome",
+                "rating",
+                "ratingChange",
+                "duration",
+                "datetime"
+            ]
+        },
         "bot": {
             "type": "object",
             "properties": {
@@ -627,6 +652,22 @@
                         ]
                     },
                     "uniqueItems": true
+                },
+                "stats": {
+                    "type": "object",
+                    "properties": {
+                        "playerHours": { "type": "string" },
+                        "spectatorHours": { "type": "string" },
+                        "battleHistoryData": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/battleStat" }
+                        }
+                    },
+                    "required": [
+                        "playerHours",
+                        "spectatorHours",
+                        "battleHistoryData"
+                    ]
                 }
             },
             "required": [
@@ -634,7 +675,8 @@
                 "username",
                 "displayName",
                 "clanBaseData",
-                "status"
+                "status",
+                "stats"
             ]
         },
         "userId": { "type": "string", "examples": ["351"] },
@@ -6714,6 +6756,26 @@
                                             ]
                                         },
                                         "uniqueItems": true
+                                    },
+                                    "stats": {
+                                        "type": "object",
+                                        "properties": {
+                                            "playerHours": { "type": "string" },
+                                            "spectatorHours": {
+                                                "type": "string"
+                                            },
+                                            "battleHistoryData": {
+                                                "type": "array",
+                                                "items": {
+                                                    "$ref": "#/definitions/battleStat"
+                                                }
+                                            }
+                                        },
+                                        "required": [
+                                            "playerHours",
+                                            "spectatorHours",
+                                            "battleHistoryData"
+                                        ]
                                     }
                                 }
                             }

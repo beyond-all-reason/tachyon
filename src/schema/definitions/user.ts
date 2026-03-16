@@ -36,6 +36,11 @@ export const user = Type.Object(
                 { uniqueItems: true }
             )
         ),
+        stats: Type.Object({
+            playerHours: Type.String(),
+            spectatorHours: Type.String(),
+            battleHistoryData: Type.Array(Type.Ref("battleStat")),
+        }),
     },
     { $id: "user" }
 );
