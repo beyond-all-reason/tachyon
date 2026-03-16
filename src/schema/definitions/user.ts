@@ -39,6 +39,7 @@ export const user = Type.Object(
         stats: Type.Object({
             playerHours: Type.String(),
             spectatorHours: Type.String(),
+            onlineHours: Type.String(),
             battleHistoryData: Type.Array(Type.Ref("battleStat")),
         }),
     },

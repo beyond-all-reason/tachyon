@@ -163,55 +163,39 @@ export interface UserInfoRequestData {
         "stats": {
             "playerHours": "veniam aliquip dolor id",
             "spectatorHours": "qui amet eu velit Ut",
+            "onlineHours": "velit aliquip in",
             "battleHistoryData": [
                 {
-                    "map": "laborum magna culpa",
-                    "playersCount": 17266131,
-                    "type": "large_team",
-                    "outcome": "loss",
-                    "rating": "enim incididunt esse nulla",
-                    "ratingChange": "reprehenderit exercitation qui culpa dolor",
-                    "duration": "qui amet culpa anim commodo",
-                    "datetime": 1705432698000000
-                },
-                {
-                    "map": "aute anim",
-                    "playersCount": 56474340,
+                    "matchId": "aute Ut",
+                    "map": "dolor ipsum laborum elit sint",
+                    "playersCount": -28253675,
                     "type": "small_team",
                     "outcome": "win",
-                    "rating": "et pariatur eiusmod",
-                    "ratingChange": "enim laborum",
-                    "duration": "ex",
+                    "rating": "qui amet culpa anim commodo",
+                    "ratingChange": "reprehenderit",
+                    "duration": "tempor ut",
                     "datetime": 1705432698000000
                 },
                 {
-                    "map": "nulla aliquip in",
-                    "playersCount": -48054195,
-                    "type": "small_team",
-                    "outcome": "loss",
-                    "rating": "ea qui commodo et",
-                    "ratingChange": "deserunt",
-                    "duration": "qui in culpa",
-                    "datetime": 1705432698000000
-                },
-                {
-                    "map": "ut pariatur",
-                    "playersCount": 64595640,
+                    "matchId": "elit irure adipisicing qui culpa",
+                    "map": "nulla dolor occaecat voluptate aliqua",
+                    "playersCount": 34942115,
                     "type": "large_team",
-                    "outcome": "win",
-                    "rating": "reprehenderit mollit consequat pariatur",
-                    "ratingChange": "Excepteur laborum deserunt",
-                    "duration": "exercitation velit non commodo",
+                    "outcome": "loss",
+                    "rating": "anim voluptate ad",
+                    "ratingChange": "incididunt minim occaecat proident",
+                    "duration": "enim",
                     "datetime": 1705432698000000
                 },
                 {
-                    "map": "ut tempor aute sit sed",
-                    "playersCount": -14115524,
-                    "type": "team",
-                    "outcome": "loss",
-                    "rating": "proident",
-                    "ratingChange": "exercitation eu eiusmod irure proident",
-                    "duration": "do",
+                    "matchId": "consectetur pariatur minim sit proident",
+                    "map": "laboris Ut",
+                    "playersCount": -43985558,
+                    "type": "ffa",
+                    "outcome": "win",
+                    "rating": "Duis do mollit nisi esse",
+                    "ratingChange": "proident nulla nostrud in qui",
+                    "duration": "reprehenderit",
                     "datetime": 1705432698000000
                 }
             ]
@@ -252,6 +236,7 @@ export interface UserInfoOkResponseData {
     stats: {
         playerHours: string;
         spectatorHours: string;
+        onlineHours: string;
         battleHistoryData: BattleStat[];
     };
 }
@@ -261,10 +246,11 @@ export interface ClanUpdateableBaseData {
     language: string;
 }
 export interface BattleStat {
+    matchId: string;
     map: string;
     playersCount: number;
     type: "small_team" | "large_team" | "duel" | "team" | "ffa";
-    outcome: "win" | "loss";
+    outcome: "win" | "loss" | "draw";
     rating: string;
     ratingChange: string;
     duration: string;
@@ -339,45 +325,61 @@ Sent by the server to inform the client of its own user state. This event should
             "stats": {
                 "playerHours": "exercitation",
                 "spectatorHours": "sed culpa dolor fugiat",
+                "onlineHours": "incididunt adipisicing ut dolore",
                 "battleHistoryData": [
                     {
-                        "map": "mollit deserunt sit",
-                        "playersCount": -63171661,
-                        "type": "ffa",
+                        "matchId": "consequat nulla quis incididunt ullamco",
+                        "map": "et",
+                        "playersCount": 66274691,
+                        "type": "team",
                         "outcome": "loss",
-                        "rating": "occaecat nisi",
-                        "ratingChange": "fugiat",
-                        "duration": "ea",
+                        "rating": "ea",
+                        "ratingChange": "Lorem minim",
+                        "duration": "sit ex",
                         "datetime": 1705432698000000
                     },
                     {
-                        "map": "sunt Lorem",
-                        "playersCount": 46614444,
-                        "type": "ffa",
-                        "outcome": "loss",
-                        "rating": "eu",
-                        "ratingChange": "Lorem irure culpa",
-                        "duration": "Ut cillum voluptate sunt eiusmod",
+                        "matchId": "veniam Lorem Ut nisi pariatur",
+                        "map": "reprehenderit commodo irure labore consectetur",
+                        "playersCount": 50636363,
+                        "type": "team",
+                        "outcome": "draw",
+                        "rating": "in in in dolor veniam",
+                        "ratingChange": "culpa velit reprehenderit adipisicing",
+                        "duration": "commodo voluptate sit non anim",
                         "datetime": 1705432698000000
                     },
                     {
-                        "map": "irure et",
-                        "playersCount": -53653670,
-                        "type": "duel",
-                        "outcome": "loss",
-                        "rating": "aliquip sunt nostrud eu",
-                        "ratingChange": "nulla exercitation voluptate ea",
-                        "duration": "irure dolore magna tempor dolor",
+                        "matchId": "in",
+                        "map": "culpa reprehenderit sunt fugiat ut",
+                        "playersCount": -45504678,
+                        "type": "team",
+                        "outcome": "draw",
+                        "rating": "dolore qui",
+                        "ratingChange": "in in ut",
+                        "duration": "aliqua veniam culpa Lorem ex",
                         "datetime": 1705432698000000
                     },
                     {
-                        "map": "nulla",
-                        "playersCount": 37461865,
+                        "matchId": "magna elit deserunt",
+                        "map": "do sed deserunt sunt proident",
+                        "playersCount": 73772848,
                         "type": "large_team",
-                        "outcome": "loss",
-                        "rating": "ipsum",
-                        "ratingChange": "cillum est voluptate",
-                        "duration": "Ut amet reprehenderit pariatur velit",
+                        "outcome": "draw",
+                        "rating": "tempor dolore in",
+                        "ratingChange": "sit Excepteur eiusmod tempor sunt",
+                        "duration": "est aliqua Duis",
+                        "datetime": 1705432698000000
+                    },
+                    {
+                        "matchId": "voluptate proident",
+                        "map": "ad consectetur dolor",
+                        "playersCount": 26491869,
+                        "type": "ffa",
+                        "outcome": "draw",
+                        "rating": "adipisicing",
+                        "ratingChange": "dolore sed laborum aliqua",
+                        "duration": "quis ad culpa enim magna",
                         "datetime": 1705432698000000
                     }
                 ]
@@ -387,94 +389,6 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "id": "1882f6b2e3a4d14f24acb7aa",
                     "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
                         {
                             "userId": "351",
                             "joinedAt": 1705432698000000
@@ -496,17 +410,9 @@ Sent by the server to inform the client of its own user state. This event should
                         {
                             "userId": "351",
                             "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
                         }
                     ],
                     "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
                         {
                             "userId": "351",
                             "invitedAt": 1705432698000000
@@ -527,9 +433,10 @@ Sent by the server to inform the client of its own user state. This event should
                 }
             ],
             "friendIds": [
-                "nostrud veniam",
-                "ipsum anim",
-                "magna qui ipsum sunt"
+                "labore ullamco qui quis in",
+                "culpa proident sunt non",
+                "cillum dolore sunt in dolor",
+                "nulla laboris non tempor"
             ],
             "outgoingFriendRequest": [
                 {
@@ -539,46 +446,26 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "to": {},
                     "sentAt": {}
-                },
-                {
-                    "to": {},
-                    "sentAt": {}
-                },
-                {
-                    "to": {},
-                    "sentAt": {}
-                },
-                {
-                    "to": {},
-                    "sentAt": {}
                 }
             ],
-            "incomingFriendRequest": [
-                {
-                    "from": {},
-                    "sentAt": {}
-                }
-            ],
-            "ignoreIds": [
-                "dolor tempor sed Excepteur sit",
-                "ut amet eiusmod exercitation"
-            ],
+            "incomingFriendRequest": [],
+            "ignoreIds": [],
             "currentBattle": {
-                "username": "qui aute in nulla",
-                "password": "velit ut",
-                "ip": "aliqua laborum deserunt officia Excepteur",
-                "port": -19777429.10385132,
+                "username": "in minim in reprehenderit",
+                "password": "quis commodo Duis",
+                "ip": "sint laboris sed cupidatat aliquip",
+                "port": 51559925.0793457,
                 "engine": {
-                    "version": "et consequat Excepteur aliqua culpa"
+                    "version": "enim dolor"
                 },
                 "game": {
-                    "springName": "proident aliqua incididunt magna"
+                    "springName": "aliqua dolor aute"
                 },
                 "map": {
-                    "springName": "dolor"
+                    "springName": "irure fugiat enim incididunt cupidatat"
                 }
             },
-            "currentLobby": null,
+            "currentLobby": "mollit aliquip tempor sit anim",
             "clanInvites": []
         }
     }
@@ -637,6 +524,7 @@ export interface User {
     stats: {
         playerHours: string;
         spectatorHours: string;
+        onlineHours: string;
         battleHistoryData: BattleStat[];
     };
 }
@@ -646,10 +534,11 @@ export interface ClanUpdateableBaseData {
     language: string;
 }
 export interface BattleStat {
+    matchId: string;
     map: string;
     playersCount: number;
     type: "small_team" | "large_team" | "duel" | "team" | "ffa";
-    outcome: "win" | "loss";
+    outcome: "win" | "loss" | "draw";
     rating: string;
     ratingChange: string;
     duration: string;
@@ -1133,6 +1022,7 @@ Sent by the server to inform the client of user state changes. User objects shou
                                 "properties": {
                                     "playerHours": { "type": "string" },
                                     "spectatorHours": { "type": "string" },
+                                    "onlineHours": { "type": "string" },
                                     "battleHistoryData": {
                                         "type": "array",
                                         "items": {
@@ -1143,6 +1033,7 @@ Sent by the server to inform the client of user state changes. User objects shou
                                 "required": [
                                     "playerHours",
                                     "spectatorHours",
+                                    "onlineHours",
                                     "battleHistoryData"
                                 ]
                             }
@@ -1183,159 +1074,238 @@ Sent by the server to inform the client of user state changes. User objects shou
                 "stats": {
                     "playerHours": "commodo culpa exercitation",
                     "spectatorHours": "id",
+                    "onlineHours": "sit ex labore qui",
                     "battleHistoryData": [
                         {
-                            "map": "deserunt consectetur ad et in",
-                            "playersCount": -9453177,
-                            "type": "ffa",
-                            "outcome": "win",
-                            "rating": "occaecat aliqua ea",
-                            "ratingChange": "officia et id in proident",
-                            "duration": "velit veniam consequat ea",
-                            "datetime": 1705432698000000
-                        }
-                    ]
-                }
-            },
-            {
-                "do_373": "non et",
-                "userId": "351",
-                "displayName": "anim incididunt",
-                "clanBaseData": {
-                    "clanId": "12345",
-                    "name": "proident sed volu",
-                    "tag": "amet Duis",
-                    "language": "ad fugiat aliquip sit amet"
-                },
-                "countryCode": "quis dolor",
-                "status": "offline",
-                "stats": {
-                    "playerHours": "cillum elit esse est ullamco",
-                    "spectatorHours": "dolore minim proident",
-                    "battleHistoryData": [
-                        {
-                            "map": "ad aliquip aliqua est",
-                            "playersCount": -68954575,
-                            "type": "duel",
-                            "outcome": "win",
-                            "rating": "officia sit exercitation aliquip cillum",
-                            "ratingChange": "occaecat aute eu proident",
-                            "duration": "magna in nulla Excepteur",
-                            "datetime": 1705432698000000
-                        },
-                        {
-                            "map": "commodo minim eu",
-                            "playersCount": 36049402,
-                            "type": "small_team",
-                            "outcome": "win",
-                            "rating": "sit amet sint Excepteur",
-                            "ratingChange": "deserunt",
-                            "duration": "officia velit eu",
-                            "datetime": 1705432698000000
-                        },
-                        {
-                            "map": "consectetur nisi",
-                            "playersCount": 34012497,
-                            "type": "small_team",
-                            "outcome": "loss",
-                            "rating": "culpa dolor pariatur et enim",
-                            "ratingChange": "in reprehenderit Duis dolor",
-                            "duration": "nisi mollit commodo anim ad",
-                            "datetime": 1705432698000000
-                        },
-                        {
-                            "map": "qui id",
-                            "playersCount": 71861375,
+                            "matchId": "quis nulla dolor laborum Ut",
+                            "map": "tempor magna non eiusmod velit",
+                            "playersCount": 89021290,
                             "type": "ffa",
                             "outcome": "loss",
-                            "rating": "pariatur deserunt nisi",
-                            "ratingChange": "cupidatat eiusmod elit",
-                            "duration": "veniam commodo",
+                            "rating": "velit veniam consequat ea",
+                            "ratingChange": "in exercitation nisi",
+                            "duration": "culpa officia est minim",
                             "datetime": 1705432698000000
-                        }
-                    ]
-                }
-            },
-            {
-                "elit___": -83607685.56594849,
-                "et_ce1": false,
-                "nulla81": 77321827.41165161,
-                "userId": "351",
-                "username": "anim id esse elit sint",
-                "clanBaseData": {
-                    "clanId": "12345",
-                    "name": "veniam sunt",
-                    "tag": "velit",
-                    "language": "officia quis dolor"
-                },
-                "stats": {
-                    "playerHours": "enim non eiusmod",
-                    "spectatorHours": "laboris nisi",
-                    "battleHistoryData": [
+                        },
                         {
-                            "map": "amet cupidatat",
-                            "playersCount": 91334403,
+                            "matchId": "dolore voluptate nulla",
+                            "map": "labore sed quis",
+                            "playersCount": 52067375,
                             "type": "team",
                             "outcome": "loss",
-                            "rating": "ipsum",
-                            "ratingChange": "est cupidatat irure",
-                            "duration": "velit ipsum fugiat Lorem",
+                            "rating": "nisi qui sed ut ullamco",
+                            "ratingChange": "amet eiusmod consectetur dolor culpa",
+                            "duration": "quis Ut",
                             "datetime": 1705432698000000
                         },
                         {
-                            "map": "magna Ut",
-                            "playersCount": 12737572,
-                            "type": "ffa",
-                            "outcome": "loss",
-                            "rating": "in",
-                            "ratingChange": "in cupidatat amet est",
-                            "duration": "culpa",
-                            "datetime": 1705432698000000
-                        },
-                        {
-                            "map": "in aliquip veniam",
-                            "playersCount": -39328373,
+                            "matchId": "esse cillum",
+                            "map": "commodo",
+                            "playersCount": 32410300,
                             "type": "large_team",
-                            "outcome": "loss",
-                            "rating": "incididunt occaecat ea",
-                            "ratingChange": "anim nostrud cupidatat consequat proident",
-                            "duration": "enim voluptate ex",
-                            "datetime": 1705432698000000
-                        },
-                        {
-                            "map": "aliquip reprehenderit id minim",
-                            "playersCount": 30297685,
-                            "type": "small_team",
                             "outcome": "win",
-                            "rating": "do proident laboris ea",
-                            "ratingChange": "tempor in eu laboris",
-                            "duration": "amet cupidatat magna",
+                            "rating": "fugiat eiusmod dolore cillum",
+                            "ratingChange": "in dolor tempor minim",
+                            "duration": "ipsum et",
                             "datetime": 1705432698000000
                         }
                     ]
                 }
             },
             {
-                "voluptate2da": -35856677,
-                "quis01": "mollit qui cillum occaecat",
-                "officia_192": false,
-                "incididuntcba": true,
+                "magna2b_": 16941154,
                 "userId": "351",
-                "status": "offline",
-                "rating": {
-                    "value": -80462479.59136963
+                "username": "in cupidatat non",
+                "displayName": "eu proident pariatur dolor",
+                "clanBaseData": {
+                    "clanId": "12345",
+                    "name": "commodo",
+                    "tag": "dolor ",
+                    "language": "sit nulla"
                 },
+                "countryCode": "sunt dolore labore",
+                "status": "playing",
+                "rating": {
+                    "value": -25645434.856414795
+                },
+                "roles": [],
+                "stats": {
+                    "playerHours": "in ex",
+                    "spectatorHours": "laboris",
+                    "onlineHours": "ea incididunt laboris",
+                    "battleHistoryData": [
+                        {
+                            "matchId": "labore id deserunt in velit",
+                            "map": "culpa adipisicing sint qui eiusmod",
+                            "playersCount": 64508486,
+                            "type": "small_team",
+                            "outcome": "loss",
+                            "rating": "fugiat in dolor",
+                            "ratingChange": "laboris magna",
+                            "duration": "est esse adipisicing",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "occaecat",
+                            "map": "velit ad aute",
+                            "playersCount": 78391207,
+                            "type": "small_team",
+                            "outcome": "draw",
+                            "rating": "in aute aliqua sunt",
+                            "ratingChange": "officia",
+                            "duration": "laboris veniam nostrud Excepteur",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "reprehenderit dolore voluptate in",
+                            "map": "sint dolor non",
+                            "playersCount": 50460887,
+                            "type": "duel",
+                            "outcome": "win",
+                            "rating": "magna veniam",
+                            "ratingChange": "nisi aute Ut exercitation culpa",
+                            "duration": "mollit Excepteur culpa ullamco",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "sunt reprehenderit cupidatat non",
+                            "map": "mollit ea enim elit",
+                            "playersCount": -75319720,
+                            "type": "ffa",
+                            "outcome": "win",
+                            "rating": "consectetur",
+                            "ratingChange": "aute",
+                            "duration": "officia veniam",
+                            "datetime": 1705432698000000
+                        }
+                    ]
+                }
+            },
+            {
+                "ipsum4": true,
+                "minim4": "proident eu",
+                "ut_b2": "amet laboris non est laborum",
+                "labore8": "sed",
+                "userId": "351",
+                "username": "eiusmod enim in aute dolor",
+                "displayName": "Ut irure sunt pariatur commodo",
+                "clanBaseData": null,
+                "countryCode": "ipsum minim aliquip esse",
                 "roles": [
                     "moderator",
-                    "contributor",
-                    "admin",
                     "tournament_caster",
-                    "tournament_winner"
+                    "tournament_winner",
+                    "contributor"
                 ],
                 "stats": {
-                    "playerHours": "aliquip Duis aliqua",
-                    "spectatorHours": "proident ullamco qui Duis culpa",
-                    "battleHistoryData": []
+                    "playerHours": "est id in ad",
+                    "spectatorHours": "exercitation",
+                    "onlineHours": "mollit veniam et",
+                    "battleHistoryData": [
+                        {
+                            "matchId": "laboris dolore mollit ex",
+                            "map": "labore Duis",
+                            "playersCount": -13101173,
+                            "type": "duel",
+                            "outcome": "loss",
+                            "rating": "sunt do velit nisi non",
+                            "ratingChange": "veniam exercitation nostrud officia in",
+                            "duration": "voluptate aute nulla occaecat",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "minim",
+                            "map": "labore Lorem occaecat reprehenderit",
+                            "playersCount": -17668796,
+                            "type": "team",
+                            "outcome": "win",
+                            "rating": "ea",
+                            "ratingChange": "et",
+                            "duration": "quis ea do fugiat ullamco",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "commodo magna quis",
+                            "map": "Duis ad adipisicing",
+                            "playersCount": -48486185,
+                            "type": "team",
+                            "outcome": "draw",
+                            "rating": "laboris nisi in",
+                            "ratingChange": "tempor elit",
+                            "duration": "non dolor",
+                            "datetime": 1705432698000000
+                        }
+                    ]
+                }
+            },
+            {
+                "userId": "351",
+                "username": "consectetur ipsum adipisicing laborum",
+                "clanBaseData": {
+                    "clanId": "12345",
+                    "name": "est magna veniam non Ut",
+                    "tag": "ullam",
+                    "language": "laboris magna"
+                },
+                "countryCode": "ut nisi officia",
+                "status": "menu",
+                "rating": {
+                    "value": -3350841.999053955
+                },
+                "roles": [
+                    "tournament_winner",
+                    "contributor"
+                ],
+                "stats": {
+                    "playerHours": "anim dolore sunt occaecat",
+                    "spectatorHours": "enim ea pariatur fugiat reprehenderit",
+                    "onlineHours": "ullamco adipisicing ut",
+                    "battleHistoryData": [
+                        {
+                            "matchId": "dolor fugiat",
+                            "map": "mollit",
+                            "playersCount": 70893264,
+                            "type": "team",
+                            "outcome": "draw",
+                            "rating": "ea mollit cupidatat magna",
+                            "ratingChange": "labore in dolore Ut",
+                            "duration": "pariatur adipisicing do",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "ut commodo do",
+                            "map": "ipsum aute sint veniam",
+                            "playersCount": -50100482,
+                            "type": "ffa",
+                            "outcome": "draw",
+                            "rating": "sed ad ullamco",
+                            "ratingChange": "velit magna",
+                            "duration": "nulla aute anim dolor",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "Ut sunt",
+                            "map": "dolor tempor",
+                            "playersCount": -50347364,
+                            "type": "duel",
+                            "outcome": "draw",
+                            "rating": "id",
+                            "ratingChange": "irure in ipsum laborum dolor",
+                            "duration": "nostrud",
+                            "datetime": 1705432698000000
+                        },
+                        {
+                            "matchId": "esse velit",
+                            "map": "Ut",
+                            "playersCount": -70839143,
+                            "type": "large_team",
+                            "outcome": "win",
+                            "rating": "labore dolor laborum",
+                            "ratingChange": "Excepteur reprehenderit fugiat",
+                            "duration": "exercitation cillum ullamco sint",
+                            "datetime": 1705432698000000
+                        }
+                    ]
                 }
             }
         ]
@@ -1375,6 +1345,7 @@ export interface UserUpdatedEventData {
         stats?: {
             playerHours: string;
             spectatorHours: string;
+            onlineHours: string;
             battleHistoryData: BattleStat[];
         };
     }[];
@@ -1385,10 +1356,11 @@ export interface ClanUpdateableBaseData {
     language: string;
 }
 export interface BattleStat {
+    matchId: string;
     map: string;
     playersCount: number;
     type: "small_team" | "large_team" | "duel" | "team" | "ffa";
-    outcome: "win" | "loss";
+    outcome: "win" | "loss" | "draw";
     rating: string;
     ratingChange: string;
     duration: string;

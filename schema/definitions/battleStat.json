@@ -3,16 +3,18 @@
     "title": "BattleStat",
     "type": "object",
     "properties": {
+        "matchId": { "type": "string" },
         "map": { "type": "string" },
         "playersCount": { "type": "integer" },
         "type": { "enum": ["small_team", "large_team", "duel", "team", "ffa"] },
-        "outcome": { "enum": ["win", "loss"] },
+        "outcome": { "enum": ["win", "loss", "draw"] },
         "rating": { "type": "string" },
         "ratingChange": { "type": "string" },
         "duration": { "type": "string" },
         "datetime": { "$ref": "../definitions/unixTime.json" }
     },
     "required": [
+        "matchId",
         "map",
         "playersCount",
         "type",

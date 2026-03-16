@@ -79,6 +79,7 @@
                                 "properties": {
                                     "playerHours": { "type": "string" },
                                     "spectatorHours": { "type": "string" },
+                                    "onlineHours": { "type": "string" },
                                     "battleHistoryData": {
                                         "type": "array",
                                         "items": {
@@ -89,6 +90,7 @@
                                 "required": [
                                     "playerHours",
                                     "spectatorHours",
+                                    "onlineHours",
                                     "battleHistoryData"
                                 ]
                             }
