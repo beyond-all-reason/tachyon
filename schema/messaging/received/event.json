@@ -41,6 +41,16 @@
                                 }
                             },
                             "required": ["type", "partyId", "userId"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "lobby" },
+                                "lobbyId": {
+                                    "$ref": "../../definitions/lobbyId.json"
+                                }
+                            },
+                            "required": ["type", "lobbyId"]
                         }
                     ]
                 },

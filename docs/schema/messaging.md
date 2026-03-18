@@ -89,6 +89,14 @@ Notify the player a message has been received
                                 "userId": { "$ref": "#/definitions/userId" }
                             },
                             "required": ["type", "partyId", "userId"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": { "const": "lobby" },
+                                "lobbyId": { "$ref": "#/definitions/lobbyId" }
+                            },
+                            "required": ["type", "lobbyId"]
                         }
                     ]
                 },
@@ -132,6 +140,7 @@ Notify the player a message has been received
 ```ts
 export type UserId = string;
 export type PartyId = string;
+export type LobbyId = string;
 export type HistoryMarker = string;
 
 export interface MessagingReceivedEvent {
@@ -151,6 +160,10 @@ export interface MessagingReceivedEventData {
               type: "party";
               partyId: PartyId;
               userId: UserId;
+          }
+        | {
+              type: "lobby";
+              lobbyId: LobbyId;
           };
     timestamp: number;
     marker: HistoryMarker;
@@ -203,6 +216,11 @@ Send a simple message to the given target.
                             "type": "object",
                             "properties": { "type": { "const": "party" } },
                             "required": ["type"]
+                        },
+                        {
+                            "type": "object",
+                            "properties": { "type": { "const": "lobby" } },
+                            "required": ["type"]
                         }
                     ]
                 },
@@ -253,6 +271,9 @@ export interface MessagingSendRequestData {
           }
         | {
               type: "party";
+          }
+        | {
+              type: "lobby";
           };
     message: string;
 }
