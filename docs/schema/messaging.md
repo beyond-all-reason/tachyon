@@ -94,9 +94,10 @@ Notify the player a message has been received
                             "type": "object",
                             "properties": {
                                 "type": { "const": "lobby" },
-                                "lobbyId": { "$ref": "#/definitions/lobbyId" }
+                                "lobbyId": { "$ref": "#/definitions/lobbyId" },
+                                "userId": { "$ref": "#/definitions/userId" }
                             },
-                            "required": ["type", "lobbyId"]
+                            "required": ["type", "lobbyId", "userId"]
                         }
                     ]
                 },
@@ -164,6 +165,7 @@ export interface MessagingReceivedEventData {
         | {
               type: "lobby";
               lobbyId: LobbyId;
+              userId: UserId;
           };
     timestamp: number;
     marker: HistoryMarker;

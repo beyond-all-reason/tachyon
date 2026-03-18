@@ -5472,9 +5472,12 @@
                                         "type": { "const": "lobby" },
                                         "lobbyId": {
                                             "$ref": "#/definitions/lobbyId"
+                                        },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
                                         }
                                     },
-                                    "required": ["type", "lobbyId"]
+                                    "required": ["type", "lobbyId", "userId"]
                                 }
                             ]
                         },

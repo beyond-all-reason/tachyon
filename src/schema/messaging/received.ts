@@ -22,6 +22,7 @@ export default defineEndpoint({
                 Type.Object({
                     type: Type.Literal("lobby"),
                     lobbyId: Type.Ref("lobbyId"),
+                    userId: Type.Ref("userId"),
                 }),
             ]),
             timestamp: Type.Ref("unixTime", {
