@@ -16,6 +16,9 @@ export default defineEndpoint({
                 Type.Object({
                     type: Type.Literal("party"),
                 }),
+                Type.Object({
+                    type: Type.Literal("lobby"),
+                }),
             ]),
             // somewhat arbitrary maxLength, but we need one
             message: Type.String({ maxLength: 512 }),
