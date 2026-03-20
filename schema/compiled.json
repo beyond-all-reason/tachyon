@@ -4798,12 +4798,7 @@
                                     "properties": {
                                         "id": { "type": "string" },
                                         "action": {
-                                            "anyOf": [
-                                                {
-                                                    "$ref": "#/definitions/voteActions"
-                                                },
-                                                { "type": "null" }
-                                            ]
+                                            "$ref": "#/definitions/voteActions"
                                         },
                                         "initiator": {
                                             "$ref": "#/definitions/userId"
@@ -4829,6 +4824,16 @@
                                         },
                                         "until": {
                                             "$ref": "#/definitions/unixTime"
+                                        },
+                                        "quorum": {
+                                            "description": "this many player must vote for the vote to be valid at all.",
+                                            "type": "integer",
+                                            "minimum": 1
+                                        },
+                                        "majority": {
+                                            "description": "votes passes when number(yes) >= majority",
+                                            "type": "integer",
+                                            "minimum": 1
                                         }
                                     },
                                     "required": ["id"]

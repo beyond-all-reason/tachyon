@@ -123,7 +123,7 @@ export default defineEndpoint({
                 Nullable(
                     Type.Object({
                         id: Type.String(),
-                        action: Type.Optional(Nullable(Type.Ref("voteActions"))),
+                        action: Type.Optional(Type.Ref("voteActions")),
                         initiator: Type.Optional(Type.Ref("userId")),
                         voters: Type.Optional(
                             Type.Record(
@@ -134,6 +134,19 @@ export default defineEndpoint({
                             )
                         ),
                         until: Type.Optional(Type.Ref("unixTime")),
+                        quorum: Type.Optional(
+                            Type.Integer({
+                                minimum: 1,
+                                description:
+                                    "this many player must vote for the vote to be valid at all.",
+                            })
+                        ),
+                        majority: Type.Optional(
+                            Type.Integer({
+                                minimum: 1,
+                                description: "votes passes when number(yes) >= majority",
+                            })
+                        ),
                     })
                 )
             ),
