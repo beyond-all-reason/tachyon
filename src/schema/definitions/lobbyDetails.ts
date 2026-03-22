@@ -92,6 +92,14 @@ export const lobbyDetails = Type.Object(
                 until: Type.Ref("unixTime"),
             })
         ),
+        voteHistory: Type.Optional(
+            Type.Array(
+                Type.Object({
+                    vote: Type.Ref("voteActions"),
+                    outcome: Type.Ref("voteOutcomes"),
+                })
+            )
+        ),
     },
     { description: "The full state of a lobby", $id: "lobbyDetails" }
 );

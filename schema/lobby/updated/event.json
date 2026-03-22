@@ -246,6 +246,26 @@
                         },
                         { "type": "null" }
                     ]
+                },
+                "voteHistory": {
+                    "anyOf": [
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "vote": {
+                                        "$ref": "../../definitions/voteActions.json"
+                                    },
+                                    "outcome": {
+                                        "$ref": "../../definitions/voteOutcomes.json"
+                                    }
+                                },
+                                "required": ["vote", "outcome"]
+                            }
+                        },
+                        { "type": "null" }
+                    ]
                 }
             },
             "required": ["id"]

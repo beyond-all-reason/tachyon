@@ -156,6 +156,17 @@
                 "until": { "$ref": "../definitions/unixTime.json" }
             },
             "required": ["id", "action", "initiator", "voters", "until"]
+        },
+        "voteHistory": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "vote": { "$ref": "../definitions/voteActions.json" },
+                    "outcome": { "$ref": "../definitions/voteOutcomes.json" }
+                },
+                "required": ["vote", "outcome"]
+            }
         }
     },
     "required": [

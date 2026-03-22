@@ -315,6 +315,17 @@
                         "until": { "$ref": "#/definitions/unixTime" }
                     },
                     "required": ["id", "action", "initiator", "voters", "until"]
+                },
+                "voteHistory": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "vote": { "$ref": "#/definitions/voteActions" },
+                            "outcome": { "$ref": "#/definitions/voteOutcomes" }
+                        },
+                        "required": ["vote", "outcome"]
+                    }
                 }
             },
             "required": [
@@ -658,7 +669,8 @@
                     "required": ["type", "newMapName"]
                 }
             ]
-        }
+        },
+        "voteOutcomes": { "enum": ["passed", "failed", "cancelled", "timeout"] }
     },
     "anyOf": [
         {
@@ -4840,6 +4852,26 @@
                                 },
                                 { "type": "null" }
                             ]
+                        },
+                        "voteHistory": {
+                            "anyOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "vote": {
+                                                "$ref": "#/definitions/voteActions"
+                                            },
+                                            "outcome": {
+                                                "$ref": "#/definitions/voteOutcomes"
+                                            }
+                                        },
+                                        "required": ["vote", "outcome"]
+                                    }
+                                },
+                                { "type": "null" }
+                            ]
                         }
                     },
                     "required": ["id"]
@@ -4864,9 +4896,7 @@
                     "type": "object",
                     "properties": {
                         "id": { "type": "string" },
-                        "outcome": {
-                            "enum": ["passed", "failed", "cancelled", "timeout"]
-                        }
+                        "outcome": { "$ref": "#/definitions/voteOutcomes" }
                     },
                     "required": ["id", "outcome"]
                 }

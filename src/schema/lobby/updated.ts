@@ -150,6 +150,16 @@ export default defineEndpoint({
                     })
                 )
             ),
+            voteHistory: Type.Optional(
+                Nullable(
+                    Type.Array(
+                        Type.Object({
+                            vote: Type.Ref("voteActions"),
+                            outcome: Type.Ref("voteOutcomes"),
+                        })
+                    )
+                )
+            ),
         }),
     },
 });
