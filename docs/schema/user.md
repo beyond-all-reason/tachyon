@@ -284,7 +284,12 @@ Sent by the server to inform the client of its own user state. This event should
                         "joinedAt": 1705432698000000
                     }
                 ],
+                "maxMembers": -28915560,
                 "invited": [
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    },
                     {
                         "userId": "351",
                         "invitedAt": 1705432698000000
@@ -297,10 +302,17 @@ Sent by the server to inform the client of its own user state. This event should
             },
             "invitedToParties": [],
             "friendIds": [
-                "in adipisicing laborum quis exercitation",
-                "labore Lorem"
+                "labore",
+                "dolore reprehenderit velit minim sunt",
+                "occaecat veniam",
+                "labore",
+                "Excepteur occaecat do esse mollit"
             ],
             "outgoingFriendRequest": [
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -322,37 +334,30 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": {},
                     "sentAt": {}
-                },
-                {
-                    "from": {},
-                    "sentAt": {}
-                },
-                {
-                    "from": {},
-                    "sentAt": {}
                 }
             ],
             "ignoreIds": [
-                "irure consequat dolore",
-                "deserunt esse",
-                "Ut magna"
+                "veniam elit",
+                "velit pariatur cillum officia qui",
+                "in amet occaecat nostrud",
+                "fugiat"
             ],
             "currentBattle": {
-                "username": "adipisicing deserunt minim enim exercitation",
-                "password": "mollit pariatur voluptate culpa",
-                "ip": "laboris",
-                "port": -47941315.17410278,
+                "username": "minim sed Lorem",
+                "password": "Duis",
+                "ip": "aliqua",
+                "port": 31484484.672546387,
                 "engine": {
-                    "version": "veniam nostrud ea dolore sed"
+                    "version": "anim aute"
                 },
                 "game": {
-                    "springName": "reprehenderit Excepteur Lorem"
+                    "springName": "exercitation ullamco"
                 },
                 "map": {
-                    "springName": "laboris consequat"
+                    "springName": "eiusmod consequat"
                 }
             },
-            "currentLobby": "officia exercitation nulla ex labore",
+            "currentLobby": "mollit enim tempor veniam",
             "clanInvites": []
         }
     }
@@ -420,6 +425,7 @@ export interface PartyState {
         userId: UserId;
         joinedAt: UnixTime;
     }[];
+    maxMembers: number;
     invited: {
         userId: UserId;
         invitedAt: UnixTime;

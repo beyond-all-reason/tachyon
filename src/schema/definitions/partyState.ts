@@ -9,6 +9,7 @@ export const partyState = Type.Object(
                 joinedAt: Type.Ref("unixTime"),
             })
         ),
+        maxMembers: Type.Integer(),
         invited: Type.Array(
             Type.Object({
                 userId: Type.Ref("userId"),

@@ -29,7 +29,6 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "not_in_party",
                         "invalid_invite",
                         "internal_error",
                         "unauthorized",

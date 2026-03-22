@@ -389,6 +389,7 @@
                         "required": ["userId", "joinedAt"]
                     }
                 },
+                "maxMembers": { "type": "integer" },
                 "invited": {
                     "type": "array",
                     "items": {
@@ -401,7 +402,7 @@
                     }
                 }
             },
-            "required": ["id", "members", "invited"]
+            "required": ["id", "members", "maxMembers", "invited"]
         },
         "player": {
             "type": "object",
@@ -5898,7 +5899,6 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
-                                "not_in_party",
                                 "invalid_invite",
                                 "internal_error",
                                 "unauthorized",

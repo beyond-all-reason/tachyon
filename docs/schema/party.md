@@ -10,6 +10,8 @@ together and during lobby balancing.
 A player can only be in at most one party at any given time.
 When the last member of a party leaves, the party is disbanded.
 
+Parties have a maximum player count of ``maxMembers``, defined by the Tachyon server. All current members and pending invitations count towards the limit. For example, a party of 2 members with 1 pending invite will not successfully send new invites if ``maxMembers`` is 3.
+
 Any change to the party member or the pending invites is propagated with a [party/updated](#updated) event sent
 to all connected members and invited players.
 
@@ -298,7 +300,6 @@ export interface PartyCancelInviteRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "not_in_party",
                         "invalid_invite",
                         "internal_error",
                         "unauthorized",
@@ -338,7 +339,7 @@ export interface PartyCancelInviteOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `not_in_party`, `invalid_invite`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_invite`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -847,11 +848,8 @@ A player has been invited to the party. Sent to the invited player and all party
                     "joinedAt": 1705432698000000
                 }
             ],
+            "maxMembers": 27296150,
             "invited": [
-                {
-                    "userId": "351",
-                    "invitedAt": 1705432698000000
-                },
                 {
                     "userId": "351",
                     "invitedAt": 1705432698000000
@@ -888,6 +886,7 @@ export interface PartyState {
         userId: UserId;
         joinedAt: UnixTime;
     }[];
+    maxMembers: number;
     invited: {
         userId: UserId;
         invitedAt: UnixTime;
@@ -1310,20 +1309,8 @@ New player joined the party (accepted an invite)
                 "joinedAt": 1705432698000000
             }
         ],
-        "invited": [
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            },
-            {
-                "userId": "351",
-                "invitedAt": 1705432698000000
-            }
-        ]
+        "maxMembers": 24012196,
+        "invited": []
     }
 }
 ```
@@ -1347,6 +1334,7 @@ export interface PartyUpdatedEventData {
         userId: UserId;
         joinedAt: UnixTime;
     }[];
+    maxMembers: number;
     invited: {
         userId: UserId;
         invitedAt: UnixTime;

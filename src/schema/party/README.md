@@ -6,6 +6,8 @@ together and during lobby balancing.
 A player can only be in at most one party at any given time.
 When the last member of a party leaves, the party is disbanded.
 
+Parties have a maximum player count of ``maxMembers``, defined by the Tachyon server. All current members and pending invitations count towards the limit. For example, a party of 2 members with 1 pending invite will not successfully send new invites if ``maxMembers`` is 3.
+
 Any change to the party member or the pending invites is propagated with a [party/updated](#updated) event sent
 to all connected members and invited players.
 
