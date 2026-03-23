@@ -389,7 +389,7 @@
                         "required": ["userId", "joinedAt"]
                     }
                 },
-                "maxMembers": { "type": "integer" },
+                "maxMembers": { "type": "integer", "minimum": 1 },
                 "invited": {
                     "type": "array",
                     "items": {
@@ -5899,6 +5899,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_party",
                                 "invalid_invite",
                                 "internal_error",
                                 "unauthorized",

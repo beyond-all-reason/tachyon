@@ -11,5 +11,9 @@ export default defineEndpoint({
             userId: Type.Ref("userId"),
         }),
     },
-    response: [{ status: "success" }, { status: "failed", reason: "invalid_invite" }],
+    response: [
+        { status: "success" },
+        { status: "failed", reason: "not_in_party" },
+        { status: "failed", reason: "invalid_invite" },
+    ],
 });

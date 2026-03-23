@@ -284,7 +284,7 @@ Sent by the server to inform the client of its own user state. This event should
                         "joinedAt": 1705432698000000
                     }
                 ],
-                "maxMembers": -28915560,
+                "maxMembers": 35542220,
                 "invited": [
                     {
                         "userId": "351",
