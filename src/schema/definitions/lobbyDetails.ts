@@ -93,10 +93,12 @@ export const lobbyDetails = Type.Object(
             })
         ),
         voteHistory: Type.Optional(
-            Type.Array(
+            Type.Record(
+                Type.String(), // Vote ID
                 Type.Object({
                     vote: Type.Ref("voteActions"),
                     outcome: Type.Ref("voteOutcomes"),
+                    finishedAt: Type.Ref("unixTime"),
                 })
             )
         ),

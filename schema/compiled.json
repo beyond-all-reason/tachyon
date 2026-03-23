@@ -317,14 +317,21 @@
                     "required": ["id", "action", "initiator", "voters", "until"]
                 },
                 "voteHistory": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "vote": { "$ref": "#/definitions/voteActions" },
-                            "outcome": { "$ref": "#/definitions/voteOutcomes" }
-                        },
-                        "required": ["vote", "outcome"]
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": {
+                                "vote": { "$ref": "#/definitions/voteActions" },
+                                "outcome": {
+                                    "$ref": "#/definitions/voteOutcomes"
+                                },
+                                "finishedAt": {
+                                    "$ref": "#/definitions/unixTime"
+                                }
+                            },
+                            "required": ["vote", "outcome", "finishedAt"]
+                        }
                     }
                 }
             },
@@ -4854,24 +4861,33 @@
                             ]
                         },
                         "voteHistory": {
-                            "anyOf": [
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "properties": {
-                                            "vote": {
-                                                "$ref": "#/definitions/voteActions"
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "vote": {
+                                                    "$ref": "#/definitions/voteActions"
+                                                },
+                                                "outcome": {
+                                                    "$ref": "#/definitions/voteOutcomes"
+                                                },
+                                                "finishedAt": {
+                                                    "$ref": "#/definitions/unixTime"
+                                                }
                                             },
-                                            "outcome": {
-                                                "$ref": "#/definitions/voteOutcomes"
-                                            }
+                                            "required": [
+                                                "vote",
+                                                "outcome",
+                                                "finishedAt"
+                                            ]
                                         },
-                                        "required": ["vote", "outcome"]
-                                    }
-                                },
-                                { "type": "null" }
-                            ]
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
                         }
                     },
                     "required": ["id"]

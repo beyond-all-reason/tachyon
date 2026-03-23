@@ -753,9 +753,12 @@ export interface LobbyCreateOkResponseData {
         until: UnixTime;
     };
     voteHistory?: {
-        vote: VoteActions;
-        outcome: VoteOutcomes;
-    }[];
+        [k: string]: {
+            vote: VoteActions;
+            outcome: VoteOutcomes;
+            finishedAt: UnixTime;
+        };
+    };
 }
 export interface StartBox {
     top: number;
@@ -1123,7 +1126,16 @@ export interface LobbyJoinRequestData {
             },
             "until": 1705432698000000
         },
-        "voteHistory": []
+        "voteHistory": {
+            "W,V%UhB": {
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            },
+            ")r": {
+                "outcome": "timeout",
+                "finishedAt": 1705432698000000
+            }
+        }
     }
 }
 ```
@@ -1214,9 +1226,12 @@ export interface LobbyJoinOkResponseData {
         until: UnixTime;
     };
     voteHistory?: {
-        vote: VoteActions;
-        outcome: VoteOutcomes;
-    }[];
+        [k: string]: {
+            vote: VoteActions;
+            outcome: VoteOutcomes;
+            finishedAt: UnixTime;
+        };
+    };
 }
 export interface StartBox {
     top: number;
@@ -3564,24 +3579,33 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                     ]
                 },
                 "voteHistory": {
-                    "anyOf": [
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "vote": {
-                                        "$ref": "#/definitions/voteActions"
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "vote": {
+                                            "$ref": "#/definitions/voteActions"
+                                        },
+                                        "outcome": {
+                                            "$ref": "#/definitions/voteOutcomes"
+                                        },
+                                        "finishedAt": {
+                                            "$ref": "#/definitions/unixTime"
+                                        }
                                     },
-                                    "outcome": {
-                                        "$ref": "#/definitions/voteOutcomes"
-                                    }
+                                    "required": [
+                                        "vote",
+                                        "outcome",
+                                        "finishedAt"
+                                    ]
                                 },
-                                "required": ["vote", "outcome"]
-                            }
-                        },
-                        { "type": "null" }
-                    ]
+                                { "type": "null" }
+                            ]
+                        }
+                    }
                 }
             },
             "required": ["id"]
@@ -3645,7 +3669,32 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
             "until": 1705432698000000,
             "majority": 51256347
         },
-        "voteHistory": null
+        "voteHistory": {
+            "M;r": null,
+            "AtpJH": null,
+            "?G": {
+                "vote": {
+                    "type": "start"
+                },
+                "outcome": "failed",
+                "finishedAt": 1705432698000000
+            },
+            "\"|ul;avgll": {
+                "vote": {
+                    "type": "changeMap",
+                    "newMapName": "do in Lorem amet Ut"
+                },
+                "outcome": "timeout",
+                "finishedAt": 1705432698000000
+            },
+            "uB": {
+                "vote": {
+                    "type": "start"
+                },
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            }
+        }
     }
 }
 ```
@@ -3736,12 +3785,13 @@ export interface LobbyUpdatedEventData {
         quorum?: number;
         majority?: number;
     } | null;
-    voteHistory?:
-        | {
-              vote: VoteActions;
-              outcome: VoteOutcomes;
-          }[]
-        | null;
+    voteHistory?: {
+        [k: string]: {
+            vote: VoteActions;
+            outcome: VoteOutcomes;
+            finishedAt: UnixTime;
+        } | null;
+    };
 }
 export interface StartBox {
     top: number;

@@ -158,14 +158,19 @@
             "required": ["id", "action", "initiator", "voters", "until"]
         },
         "voteHistory": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "vote": { "$ref": "../definitions/voteActions.json" },
-                    "outcome": { "$ref": "../definitions/voteOutcomes.json" }
-                },
-                "required": ["vote", "outcome"]
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "type": "object",
+                    "properties": {
+                        "vote": { "$ref": "../definitions/voteActions.json" },
+                        "outcome": {
+                            "$ref": "../definitions/voteOutcomes.json"
+                        },
+                        "finishedAt": { "$ref": "../definitions/unixTime.json" }
+                    },
+                    "required": ["vote", "outcome", "finishedAt"]
+                }
             }
         }
     },

@@ -248,24 +248,33 @@
                     ]
                 },
                 "voteHistory": {
-                    "anyOf": [
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "properties": {
-                                    "vote": {
-                                        "$ref": "../../definitions/voteActions.json"
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "vote": {
+                                            "$ref": "../../definitions/voteActions.json"
+                                        },
+                                        "outcome": {
+                                            "$ref": "../../definitions/voteOutcomes.json"
+                                        },
+                                        "finishedAt": {
+                                            "$ref": "../../definitions/unixTime.json"
+                                        }
                                     },
-                                    "outcome": {
-                                        "$ref": "../../definitions/voteOutcomes.json"
-                                    }
+                                    "required": [
+                                        "vote",
+                                        "outcome",
+                                        "finishedAt"
+                                    ]
                                 },
-                                "required": ["vote", "outcome"]
-                            }
-                        },
-                        { "type": "null" }
-                    ]
+                                { "type": "null" }
+                            ]
+                        }
+                    }
                 }
             },
             "required": ["id"]
