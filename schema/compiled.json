@@ -407,6 +407,7 @@
                         "required": ["userId", "joinedAt"]
                     }
                 },
+                "maxMembers": { "type": "integer", "minimum": 1 },
                 "invited": {
                     "type": "array",
                     "items": {
@@ -419,7 +420,7 @@
                     }
                 }
             },
-            "required": ["id", "members", "invited"]
+            "required": ["id", "members", "maxMembers", "invited"]
         },
         "player": {
             "type": "object",
