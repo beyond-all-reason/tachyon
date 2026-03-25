@@ -147,6 +147,7 @@ export interface ClanAcceptRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "invite_cancelled",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -185,7 +186,7 @@ export interface ClanAcceptOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invite_cancelled`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
