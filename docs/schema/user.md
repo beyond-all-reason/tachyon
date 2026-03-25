@@ -322,121 +322,49 @@ Sent by the server to inform the client of its own user state. This event should
             },
             "countryCode": "adipisicing dolor sint eiusmod cillum",
             "status": "offline",
-            "stats": {
-                "playerHours": "exercitation",
-                "spectatorHours": "sed culpa dolor fugiat",
-                "onlineHours": "incididunt adipisicing ut dolore",
-                "battleHistoryData": [
+            "party": {
+                "id": "1882f6b2e3a4d14f24acb7aa",
+                "members": [
                     {
-                        "matchId": "consequat nulla quis incididunt ullamco",
-                        "map": "et",
-                        "playersCount": 66274691,
-                        "type": "team",
-                        "outcome": "loss",
-                        "rating": "ea",
-                        "ratingChange": "Lorem minim",
-                        "duration": "sit ex",
-                        "datetime": 1705432698000000
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
                     },
                     {
-                        "matchId": "veniam Lorem Ut nisi pariatur",
-                        "map": "reprehenderit commodo irure labore consectetur",
-                        "playersCount": 50636363,
-                        "type": "team",
-                        "outcome": "draw",
-                        "rating": "in in in dolor veniam",
-                        "ratingChange": "culpa velit reprehenderit adipisicing",
-                        "duration": "commodo voluptate sit non anim",
-                        "datetime": 1705432698000000
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
                     },
                     {
-                        "matchId": "in",
-                        "map": "culpa reprehenderit sunt fugiat ut",
-                        "playersCount": -45504678,
-                        "type": "team",
-                        "outcome": "draw",
-                        "rating": "dolore qui",
-                        "ratingChange": "in in ut",
-                        "duration": "aliqua veniam culpa Lorem ex",
-                        "datetime": 1705432698000000
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
                     },
                     {
-                        "matchId": "magna elit deserunt",
-                        "map": "do sed deserunt sunt proident",
-                        "playersCount": 73772848,
-                        "type": "large_team",
-                        "outcome": "draw",
-                        "rating": "tempor dolore in",
-                        "ratingChange": "sit Excepteur eiusmod tempor sunt",
-                        "duration": "est aliqua Duis",
-                        "datetime": 1705432698000000
+                        "userId": "351",
+                        "joinedAt": 1705432698000000
+                    }
+                ],
+                "maxMembers": 35542220,
+                "invited": [
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
                     },
                     {
-                        "matchId": "voluptate proident",
-                        "map": "ad consectetur dolor",
-                        "playersCount": 26491869,
-                        "type": "ffa",
-                        "outcome": "draw",
-                        "rating": "adipisicing",
-                        "ratingChange": "dolore sed laborum aliqua",
-                        "duration": "quis ad culpa enim magna",
-                        "datetime": 1705432698000000
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
+                    },
+                    {
+                        "userId": "351",
+                        "invitedAt": 1705432698000000
                     }
                 ]
             },
-            "party": null,
-            "invitedToParties": [
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": []
-                },
-                {
-                    "id": "1882f6b2e3a4d14f24acb7aa",
-                    "members": [
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "joinedAt": 1705432698000000
-                        }
-                    ],
-                    "invited": [
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        },
-                        {
-                            "userId": "351",
-                            "invitedAt": 1705432698000000
-                        }
-                    ]
-                }
-            ],
+            "invitedToParties": [],
             "friendIds": [
-                "labore ullamco qui quis in",
-                "culpa proident sunt non",
-                "cillum dolore sunt in dolor",
-                "nulla laboris non tempor"
+                "labore",
+                "dolore reprehenderit velit minim sunt",
+                "occaecat veniam",
+                "labore",
+                "Excepteur occaecat do esse mollit"
             ],
             "outgoingFriendRequest": [
                 {
@@ -446,26 +374,48 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "to": {},
                     "sentAt": {}
+                },
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
+                {
+                    "to": {},
+                    "sentAt": {}
                 }
             ],
-            "incomingFriendRequest": [],
-            "ignoreIds": [],
+            "incomingFriendRequest": [
+                {
+                    "from": {},
+                    "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
+                }
+            ],
+            "ignoreIds": [
+                "veniam elit",
+                "velit pariatur cillum officia qui",
+                "in amet occaecat nostrud",
+                "fugiat"
+            ],
             "currentBattle": {
-                "username": "in minim in reprehenderit",
-                "password": "quis commodo Duis",
-                "ip": "sint laboris sed cupidatat aliquip",
-                "port": 51559925.0793457,
+                "username": "minim sed Lorem",
+                "password": "Duis",
+                "ip": "aliqua",
+                "port": 31484484.672546387,
                 "engine": {
-                    "version": "enim dolor"
+                    "version": "anim aute"
                 },
                 "game": {
-                    "springName": "aliqua dolor aute"
+                    "springName": "exercitation ullamco"
                 },
                 "map": {
-                    "springName": "irure fugiat enim incididunt cupidatat"
+                    "springName": "eiusmod consequat"
                 }
             },
-            "currentLobby": "mollit aliquip tempor sit anim",
+            "currentLobby": "mollit enim tempor veniam",
             "clanInvites": []
         }
     }
@@ -550,6 +500,7 @@ export interface PartyState {
         userId: UserId;
         joinedAt: UnixTime;
     }[];
+    maxMembers: number;
     invited: {
         userId: UserId;
         invitedAt: UnixTime;

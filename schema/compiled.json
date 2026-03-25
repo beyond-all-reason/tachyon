@@ -356,6 +356,10 @@
                 "bots"
             ]
         },
+        "lobbyId": {
+            "type": "string",
+            "examples": ["1882f6b2e3a4d14f24acb7aa"]
+        },
         "lobbyOverview": {
             "description": "Simplified view of a lobby for list display purposes.",
             "type": "object",
@@ -412,6 +416,7 @@
                         "required": ["userId", "joinedAt"]
                     }
                 },
+                "maxMembers": { "type": "integer", "minimum": 1 },
                 "invited": {
                     "type": "array",
                     "items": {
@@ -424,7 +429,7 @@
                     }
                 }
             },
-            "required": ["id", "members", "invited"]
+            "required": ["id", "members", "maxMembers", "invited"]
         },
         "player": {
             "type": "object",
@@ -3748,6 +3753,71 @@
             ]
         },
         {
+            "title": "LobbyJoinBattleRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinBattle" }
+            },
+            "required": ["type", "messageId", "commandId"]
+        },
+        {
+            "title": "LobbyJoinBattleResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyJoinBattleOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinBattle" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyJoinBattleFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/joinBattle" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_in_lobby",
+                                "no_battle",
+                                "battle_full",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyJoinQueueRequest",
             "tachyon": {
                 "source": "user",
@@ -4775,12 +4845,7 @@
                                     "properties": {
                                         "id": { "type": "string" },
                                         "action": {
-                                            "anyOf": [
-                                                {
-                                                    "$ref": "#/definitions/voteActions"
-                                                },
-                                                { "type": "null" }
-                                            ]
+                                            "$ref": "#/definitions/voteActions"
                                         },
                                         "initiator": {
                                             "$ref": "#/definitions/userId"
@@ -4806,6 +4871,16 @@
                                         },
                                         "until": {
                                             "$ref": "#/definitions/unixTime"
+                                        },
+                                        "quorum": {
+                                            "description": "this many player must vote for the vote to be valid at all.",
+                                            "type": "integer",
+                                            "minimum": 1
+                                        },
+                                        "majority": {
+                                            "description": "votes passes when number(yes) >= majority",
+                                            "type": "integer",
+                                            "minimum": 1
                                         }
                                     },
                                     "required": ["id"]
@@ -5507,6 +5582,19 @@
                                         }
                                     },
                                     "required": ["type", "partyId", "userId"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "lobby" },
+                                        "lobbyId": {
+                                            "$ref": "#/definitions/lobbyId"
+                                        },
+                                        "userId": {
+                                            "$ref": "#/definitions/userId"
+                                        }
+                                    },
+                                    "required": ["type", "lobbyId", "userId"]
                                 }
                             ]
                         },
@@ -5553,6 +5641,13 @@
                                     "type": "object",
                                     "properties": {
                                         "type": { "const": "party" }
+                                    },
+                                    "required": ["type"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "type": { "const": "lobby" }
                                     },
                                     "required": ["type"]
                                 }

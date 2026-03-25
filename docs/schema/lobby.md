@@ -129,6 +129,7 @@ In practice, this event should rarely be seen.
 - [create](#create)
 - [join](#join)
 - [joinAllyTeam](#joinallyteam)
+- [joinBattle](#joinbattle)
 - [joinQueue](#joinqueue)
 - [leave](#leave)
 - [left](#left)
@@ -1335,6 +1336,140 @@ export interface LobbyJoinAllyTeamOkResponse {
 }
 ```
 Possible Failed Reasons: `not_in_lobby`, `ally_team_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## JoinBattle
+
+Join the battle this lobby is currently playing (as a spectator). If the request success, the client should receive shortly after a battle/start request from the server with the data required to join the game.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyJoinBattleRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/joinBattle" }
+    },
+    "required": ["type", "messageId", "commandId"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "mollit cillum sed Duis Lorem",
+    "commandId": "lobby/joinBattle"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinBattleRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/joinBattle";
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyJoinBattleResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyJoinBattleOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinBattle" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyJoinBattleFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/joinBattle" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_in_lobby",
+                        "no_battle",
+                        "battle_full",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "mollit dolore",
+    "commandId": "lobby/joinBattle",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyJoinBattleOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/joinBattle";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_in_lobby`, `no_battle`, `battle_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -3353,10 +3488,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                             "properties": {
                                 "id": { "type": "string" },
                                 "action": {
-                                    "anyOf": [
-                                        { "$ref": "#/definitions/voteActions" },
-                                        { "type": "null" }
-                                    ]
+                                    "$ref": "#/definitions/voteActions"
                                 },
                                 "initiator": { "$ref": "#/definitions/userId" },
                                 "voters": {
@@ -3378,7 +3510,17 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                                         }
                                     }
                                 },
-                                "until": { "$ref": "#/definitions/unixTime" }
+                                "until": { "$ref": "#/definitions/unixTime" },
+                                "quorum": {
+                                    "description": "this many player must vote for the vote to be valid at all.",
+                                    "type": "integer",
+                                    "minimum": 1
+                                },
+                                "majority": {
+                                    "description": "votes passes when number(yes) >= majority",
+                                    "type": "integer",
+                                    "minimum": 1
+                                }
                             },
                             "required": ["id"]
                         },
@@ -3548,7 +3690,7 @@ export interface LobbyUpdatedEventData {
     } | null;
     currentVote?: {
         id: string;
-        action?: VoteActions | null;
+        action?: VoteActions;
         initiator?: UserId;
         voters?: {
             [k: string]: {
@@ -3556,6 +3698,8 @@ export interface LobbyUpdatedEventData {
             };
         };
         until?: UnixTime;
+        quorum?: number;
+        majority?: number;
     } | null;
 }
 export interface StartBox {
