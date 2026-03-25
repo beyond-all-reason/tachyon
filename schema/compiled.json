@@ -2575,6 +2575,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "incorrect_data",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",

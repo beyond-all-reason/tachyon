@@ -1746,6 +1746,7 @@ export interface ClanUpdateableBaseData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "incorrect_data",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1784,7 +1785,7 @@ export interface ClanUpdateOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `incorrect_data`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
