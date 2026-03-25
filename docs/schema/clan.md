@@ -40,6 +40,7 @@ If the clan-leader leaves the clan and he is the last member the clan will be re
 - [update](#update)
 - [updated](#updated)
 - [view](#view)
+- [viewInvites](#viewinvites)
 - [viewList](#viewlist)
 ---
 
@@ -2067,6 +2068,236 @@ export interface ClanMember {
     userId: UserId;
     role: ClanRole;
     joinedAt: UnixTime;
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## ViewInvites
+
+Get the list of invited users.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "ClanViewInvitesRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "clan/viewInvites" },
+        "data": {
+            "title": "ClanViewInvitesRequestData",
+            "type": "object",
+            "properties": { "clanId": { "$ref": "#/definitions/clanId" } },
+            "required": ["clanId"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "adipisicing",
+    "commandId": "clan/viewInvites",
+    "data": {
+        "clanId": "12345"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type ClanId = string;
+
+export interface ClanViewInvitesRequest {
+    type: "request";
+    messageId: string;
+    commandId: "clan/viewInvites";
+    data: ClanViewInvitesRequestData;
+}
+export interface ClanViewInvitesRequestData {
+    clanId: ClanId;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "ClanViewInvitesResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "ClanViewInvitesOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/viewInvites" },
+                "status": { "const": "success" },
+                "data": {
+                    "title": "ClanViewInvitesOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "users": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/user" }
+                        }
+                    },
+                    "required": ["users"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status", "data"]
+        },
+        {
+            "title": "ClanViewInvitesFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/viewInvites" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "proident incididunt aliquip ut ex",
+    "commandId": "clan/viewInvites",
+    "status": "success",
+    "data": {
+        "users": [
+            {
+                "userId": "351",
+                "username": "id pariatur qui",
+                "displayName": "aliqua Ut pariatur reprehenderit fugiat",
+                "clanBaseData": null,
+                "countryCode": "in amet magna",
+                "status": "lobby",
+                "rating": {
+                    "value": -22112441.062927246
+                },
+                "roles": []
+            },
+            {
+                "userId": "351",
+                "username": "culpa officia exercitation esse",
+                "displayName": "fugiat",
+                "clanBaseData": null,
+                "countryCode": "do sed nisi",
+                "status": "playing",
+                "rating": {
+                    "value": -90160834.78927612
+                },
+                "roles": [
+                    "moderator"
+                ]
+            },
+            {
+                "userId": "351",
+                "username": "consequat sunt veniam qui pariatur",
+                "displayName": "sint esse",
+                "clanBaseData": null,
+                "countryCode": "adipisicing et",
+                "status": "offline",
+                "rating": {
+                    "value": 92106473.44589233
+                },
+                "roles": [
+                    "tournament_winner",
+                    "moderator"
+                ]
+            }
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+export type ClanId = string;
+
+export interface ClanViewInvitesOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "clan/viewInvites";
+    status: "success";
+    data: ClanViewInvitesOkResponseData;
+}
+export interface ClanViewInvitesOkResponseData {
+    users: User[];
+}
+export interface User {
+    userId: UserId;
+    username: string;
+    displayName: string;
+    clanBaseData:
+        | ({
+              clanId: ClanId;
+          } & ClanUpdateableBaseData)
+        | null;
+    countryCode?: string;
+    status: "offline" | "menu" | "playing" | "lobby";
+    rating?: {
+        value: number;
+    };
+    roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
+}
+export interface ClanUpdateableBaseData {
+    name: string;
+    tag: string;
+    language: string;
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
