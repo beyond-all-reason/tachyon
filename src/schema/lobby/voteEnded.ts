@@ -9,7 +9,7 @@ export default defineEndpoint({
     event: {
         data: Type.Object({
             id: Type.String(),
-            outcome: Type.Enum(["passed", "failed", "cancelled", "timeout"]),
+            outcome: Type.Ref("voteOutcomes"),
         }),
     },
 });
