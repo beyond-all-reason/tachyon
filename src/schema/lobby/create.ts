@@ -11,6 +11,7 @@ export default defineEndpoint({
             name: Type.String(),
             mapName: Type.String(),
             allyTeamConfig: Type.Ref("allyTeamConfig"),
+            areBossesEnabled: Type.Boolean({ default: true }),
         }),
     },
     response: [
