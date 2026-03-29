@@ -7,6 +7,13 @@ export const lobbyDetails = Type.Object(
         mapName: Type.String(),
         engineVersion: Type.String(),
         gameVersion: Type.String(),
+        gameOptions: Type.Record(
+            Type.String(),
+            Type.Object({
+                value: Type.String(),
+            }),
+            { description: "object indexed by the game option key" }
+        ),
         allyTeamConfig: Type.Record(
             Type.String(),
             Type.Object(
