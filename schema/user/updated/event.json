@@ -44,13 +44,7 @@
                                                 "maxLength": 10
                                             },
                                             "language": { "type": "string" }
-                                        },
-                                        "required": [
-                                            "clanId",
-                                            "name",
-                                            "tag",
-                                            "language"
-                                        ]
+                                        }
                                     },
                                     { "type": "null" }
                                 ]

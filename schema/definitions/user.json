@@ -19,8 +19,7 @@
                             "maxLength": 10
                         },
                         "language": { "type": "string" }
-                    },
-                    "required": ["clanId", "name", "tag", "language"]
+                    }
                 },
                 { "type": "null" }
             ]
@@ -51,5 +50,5 @@
             "uniqueItems": true
         }
     },
-    "required": ["userId", "username", "displayName", "clanBaseData", "status"]
+    "required": ["userId", "username", "displayName", "status"]
 }
