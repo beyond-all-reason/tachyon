@@ -2,19 +2,19 @@ import Type from "typebox";
 
 import { Nullable } from "@/typebox-utils.js";
 
+const clanUpdate = Type.Object({
+    clanId: Type.Ref("clanId"),
+    name: Type.String({ maxLength: 30 }),
+    tag: Type.String({ minLength: 3, maxLength: 10 }),
+    language: Type.String(),
+});
+
 export const user = Type.Object(
     {
         userId: Type.Ref("userId"),
         username: Type.String(),
         displayName: Type.String(),
-        clanBaseData: Nullable(
-            Type.Intersect([
-                Type.Object({
-                    clanId: Type.Ref("clanId"),
-                }),
-                Type.Ref("clanUpdateableBaseData"),
-            ])
-        ),
+        clanBaseData: Nullable(clanUpdate),
         countryCode: Type.Optional(Type.String()),
         status: Type.Enum(["offline", "menu", "playing", "lobby"]),
         rating: Type.Optional(

@@ -181,22 +181,18 @@ export interface UserInfoOkResponseData {
     userId: UserId;
     username: string;
     displayName: string;
-    clanBaseData:
-        | ({
-              clanId: ClanId;
-          } & ClanUpdateableBaseData)
-        | null;
+    clanBaseData: {
+        clanId: ClanId;
+        name: string;
+        tag: string;
+        language: string;
+    } | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
-}
-export interface ClanUpdateableBaseData {
-    name: string;
-    tag: string;
-    language: string;
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
@@ -258,106 +254,89 @@ Sent by the server to inform the client of its own user state. This event should
             "displayName": "Lorem pariatur anim minim in",
             "clanBaseData": {
                 "clanId": "12345",
-                "name": "in ut d",
-                "tag": "enim",
-                "language": "consequat eu culpa voluptate Lorem"
+                "name": "qui et",
+                "tag": "cupidat",
+                "language": "commodo Ut eiusmod"
             },
-            "countryCode": "adipisicing dolor sint eiusmod cillum",
-            "status": "offline",
+            "countryCode": "esse irure",
+            "status": "playing",
             "party": {
                 "id": "1882f6b2e3a4d14f24acb7aa",
                 "members": [
                     {
                         "userId": "351",
                         "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "joinedAt": 1705432698000000
                     }
                 ],
-                "maxMembers": 35542220,
-                "invited": [
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
-                    },
-                    {
-                        "userId": "351",
-                        "invitedAt": 1705432698000000
-                    }
-                ]
+                "maxMembers": 4953480,
+                "invited": []
             },
             "invitedToParties": [],
-            "friendIds": [
-                "labore",
-                "dolore reprehenderit velit minim sunt",
-                "occaecat veniam",
-                "labore",
-                "Excepteur occaecat do esse mollit"
-            ],
+            "friendIds": [],
             "outgoingFriendRequest": [
                 {
-                    "to": {},
-                    "sentAt": {}
+                    "to": "351",
+                    "sentAt": 1705432698000000
                 },
                 {
-                    "to": {},
-                    "sentAt": {}
+                    "to": "351",
+                    "sentAt": 1705432698000000
                 },
                 {
-                    "to": {},
-                    "sentAt": {}
+                    "to": "351",
+                    "sentAt": 1705432698000000
                 },
                 {
-                    "to": {},
-                    "sentAt": {}
+                    "to": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "to": "351",
+                    "sentAt": 1705432698000000
                 }
             ],
             "incomingFriendRequest": [
                 {
-                    "from": {},
-                    "sentAt": {}
+                    "from": "351",
+                    "sentAt": 1705432698000000
                 },
                 {
-                    "from": {},
-                    "sentAt": {}
+                    "from": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
+                },
+                {
+                    "from": "351",
+                    "sentAt": 1705432698000000
                 }
             ],
             "ignoreIds": [
-                "veniam elit",
-                "velit pariatur cillum officia qui",
-                "in amet occaecat nostrud",
-                "fugiat"
+                "velit sit laboris nulla",
+                "exercitation"
             ],
             "currentBattle": {
-                "username": "minim sed Lorem",
-                "password": "Duis",
-                "ip": "aliqua",
-                "port": 31484484.672546387,
+                "username": "dolore",
+                "password": "sint",
+                "ip": "ad",
+                "port": -699353.2180786133,
                 "engine": {
-                    "version": "anim aute"
+                    "version": "Excepteur ea esse"
                 },
                 "game": {
-                    "springName": "exercitation ullamco"
+                    "springName": "labore ex nostrud aliquip dolore"
                 },
                 "map": {
-                    "springName": "eiusmod consequat"
+                    "springName": "Excepteur ad consectetur dolor velit"
                 }
             },
-            "currentLobby": "mollit enim tempor veniam",
+            "currentLobby": null,
             "clanInvites": []
         }
     }
@@ -402,22 +381,18 @@ export interface User {
     userId: UserId;
     username: string;
     displayName: string;
-    clanBaseData:
-        | ({
-              clanId: ClanId;
-          } & ClanUpdateableBaseData)
-        | null;
+    clanBaseData: {
+        clanId: ClanId;
+        name: string;
+        tag: string;
+        language: string;
+    } | null;
     countryCode?: string;
     status: "offline" | "menu" | "playing" | "lobby";
     rating?: {
         value: number;
     };
     roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
-}
-export interface ClanUpdateableBaseData {
-    name: string;
-    tag: string;
-    language: string;
 }
 export interface PartyState {
     id: PartyId;
@@ -848,19 +823,27 @@ Sent by the server to inform the client of user state changes. User objects shou
                             "clanBaseData": {
                                 "anyOf": [
                                     {
-                                        "allOf": [
-                                            {
-                                                "type": "object",
-                                                "properties": {
-                                                    "clanId": {
-                                                        "$ref": "#/definitions/clanId"
-                                                    }
-                                                },
-                                                "required": ["clanId"]
+                                        "type": "object",
+                                        "properties": {
+                                            "clanId": {
+                                                "$ref": "#/definitions/clanId"
                                             },
-                                            {
-                                                "$ref": "#/definitions/clanUpdateableBaseData"
-                                            }
+                                            "name": {
+                                                "type": "string",
+                                                "maxLength": 30
+                                            },
+                                            "tag": {
+                                                "type": "string",
+                                                "minLength": 3,
+                                                "maxLength": 10
+                                            },
+                                            "language": { "type": "string" }
+                                        },
+                                        "required": [
+                                            "clanId",
+                                            "name",
+                                            "tag",
+                                            "language"
                                         ]
                                     },
                                     { "type": "null" }
@@ -972,11 +955,12 @@ export interface UserUpdatedEventData {
         userId?: UserId;
         username?: string;
         displayName?: string;
-        clanBaseData?:
-            | ({
-                  clanId: ClanId;
-              } & ClanUpdateableBaseData)
-            | null;
+        clanBaseData?: {
+            clanId: ClanId;
+            name: string;
+            tag: string;
+            language: string;
+        } | null;
         countryCode?: string;
         status?: "offline" | "menu" | "playing" | "lobby";
         rating?: {
@@ -984,10 +968,5 @@ export interface UserUpdatedEventData {
         };
         roles?: ("contributor" | "admin" | "moderator" | "tournament_winner" | "tournament_caster")[];
     }[];
-}
-export interface ClanUpdateableBaseData {
-    name: string;
-    tag: string;
-    language: string;
 }
 ```

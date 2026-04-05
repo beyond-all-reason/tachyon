@@ -9,18 +9,18 @@
         "clanBaseData": {
             "anyOf": [
                 {
-                    "allOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "clanId": {
-                                    "$ref": "../definitions/clanId.json"
-                                }
-                            },
-                            "required": ["clanId"]
+                    "type": "object",
+                    "properties": {
+                        "clanId": { "$ref": "../definitions/clanId.json" },
+                        "name": { "type": "string", "maxLength": 30 },
+                        "tag": {
+                            "type": "string",
+                            "minLength": 3,
+                            "maxLength": 10
                         },
-                        { "$ref": "../definitions/clanUpdateableBaseData.json" }
-                    ]
+                        "language": { "type": "string" }
+                    },
+                    "required": ["clanId", "name", "tag", "language"]
                 },
                 { "type": "null" }
             ]
