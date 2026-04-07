@@ -620,20 +620,17 @@
                 "clanBaseData": {
                     "anyOf": [
                         {
-                            "allOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "clanId": {
-                                            "$ref": "#/definitions/clanId"
-                                        }
-                                    },
-                                    "required": ["clanId"]
+                            "type": "object",
+                            "properties": {
+                                "clanId": { "$ref": "#/definitions/clanId" },
+                                "name": { "type": "string", "maxLength": 30 },
+                                "tag": {
+                                    "type": "string",
+                                    "minLength": 3,
+                                    "maxLength": 10
                                 },
-                                {
-                                    "$ref": "#/definitions/clanUpdateableBaseData"
-                                }
-                            ]
+                                "language": { "type": "string" }
+                            }
                         },
                         { "type": "null" }
                     ]
@@ -664,13 +661,7 @@
                     "uniqueItems": true
                 }
             },
-            "required": [
-                "userId",
-                "username",
-                "displayName",
-                "clanBaseData",
-                "status"
-            ]
+            "required": ["userId", "username", "displayName", "status"]
         },
         "userId": { "type": "string", "examples": ["351"] },
         "voteActions": {
@@ -6854,20 +6845,24 @@
                                     "clanBaseData": {
                                         "anyOf": [
                                             {
-                                                "allOf": [
-                                                    {
-                                                        "type": "object",
-                                                        "properties": {
-                                                            "clanId": {
-                                                                "$ref": "#/definitions/clanId"
-                                                            }
-                                                        },
-                                                        "required": ["clanId"]
+                                                "type": "object",
+                                                "properties": {
+                                                    "clanId": {
+                                                        "$ref": "#/definitions/clanId"
                                                     },
-                                                    {
-                                                        "$ref": "#/definitions/clanUpdateableBaseData"
+                                                    "name": {
+                                                        "type": "string",
+                                                        "maxLength": 30
+                                                    },
+                                                    "tag": {
+                                                        "type": "string",
+                                                        "minLength": 3,
+                                                        "maxLength": 10
+                                                    },
+                                                    "language": {
+                                                        "type": "string"
                                                     }
-                                                ]
+                                                }
                                             },
                                             { "type": "null" }
                                         ]

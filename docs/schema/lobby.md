@@ -1138,14 +1138,24 @@ export interface LobbyJoinRequestData {
         },
         "voteHistory": {
             "6)2": {
+                "vote": {
+                    "type": "start"
+                },
                 "outcome": "passed",
                 "finishedAt": 1705432698000000
             },
             "El}oD.Z~m": {
-                "outcome": "timeout",
+                "vote": {
+                    "type": "start"
+                },
+                "outcome": "passed",
                 "finishedAt": 1705432698000000
             },
             "|P)@0s!/": {
+                "vote": {
+                    "type": "changeMap",
+                    "newMapName": "deserunt nisi"
+                },
                 "outcome": "cancelled",
                 "finishedAt": 1705432698000000
             }

@@ -29,20 +29,22 @@
                             "clanBaseData": {
                                 "anyOf": [
                                     {
-                                        "allOf": [
-                                            {
-                                                "type": "object",
-                                                "properties": {
-                                                    "clanId": {
-                                                        "$ref": "../../definitions/clanId.json"
-                                                    }
-                                                },
-                                                "required": ["clanId"]
+                                        "type": "object",
+                                        "properties": {
+                                            "clanId": {
+                                                "$ref": "../../definitions/clanId.json"
                                             },
-                                            {
-                                                "$ref": "../../definitions/clanUpdateableBaseData.json"
-                                            }
-                                        ]
+                                            "name": {
+                                                "type": "string",
+                                                "maxLength": 30
+                                            },
+                                            "tag": {
+                                                "type": "string",
+                                                "minLength": 3,
+                                                "maxLength": 10
+                                            },
+                                            "language": { "type": "string" }
+                                        }
                                     },
                                     { "type": "null" }
                                 ]
