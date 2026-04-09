@@ -49,6 +49,13 @@
                 }
             }
         },
+        "areBossesEnabled": { "type": "boolean" },
+        "bosses": {
+            "type": "object",
+            "patternProperties": {
+                "^.*$": { "type": "object", "properties": {} }
+            }
+        },
         "players": {
             "type": "object",
             "patternProperties": {
@@ -193,6 +200,8 @@
         "gameVersion",
         "gameOptions",
         "allyTeamConfig",
+        "areBossesEnabled",
+        "bosses",
         "players",
         "spectators",
         "bots"

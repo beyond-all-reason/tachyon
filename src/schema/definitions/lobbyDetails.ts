@@ -33,6 +33,8 @@ export const lobbyDetails = Type.Object(
                 }
             )
         ),
+        areBossesEnabled: Type.Boolean(),
+        bosses: Type.Record(Type.String(), Type.Object({})),
         players: Type.Record(
             Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
             Type.Object({

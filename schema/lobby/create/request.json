@@ -20,9 +20,15 @@
                 "mapName": { "type": "string" },
                 "allyTeamConfig": {
                     "$ref": "../../definitions/allyTeamConfig.json"
-                }
+                },
+                "areBossesEnabled": { "type": "boolean", "default": true }
             },
-            "required": ["name", "mapName", "allyTeamConfig"]
+            "required": [
+                "name",
+                "mapName",
+                "allyTeamConfig",
+                "areBossesEnabled"
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

@@ -61,6 +61,7 @@ export default defineEndpoint({
                     )
                 )
             ),
+            bosses: Type.Optional(Type.Record(Type.String(), Nullable(Type.Object({})))),
             players: Type.Optional(
                 Type.Record(
                     // this is a userId, but using Type.Ref("userId") leads to a schema with only: `not: {}`

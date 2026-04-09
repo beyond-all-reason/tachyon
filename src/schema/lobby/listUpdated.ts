@@ -20,6 +20,7 @@ export default defineEndpoint({
                         mapName: Type.Optional(Type.String()),
                         engineVersion: Type.Optional(Type.String()),
                         gameVersion: Type.Optional(Type.String()),
+                        areBossesEnabled: Type.Optional(Type.Boolean()),
                         currentBattle: Type.Optional(
                             Nullable(
                                 Type.Object({
