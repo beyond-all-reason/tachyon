@@ -3030,12 +3030,20 @@ Update some properties of the lobby the player is in.
                 "mapName": { "type": "string" },
                 "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" },
                 "gameOptions": {
+                    "description": "Set to null to remove a game option",
                     "type": "object",
                     "patternProperties": {
                         "^.*$": {
-                            "type": "object",
-                            "properties": { "value": { "type": "string" } },
-                            "required": ["value"]
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                },
+                                { "type": "null" }
+                            ]
                         }
                     }
                 }
@@ -3062,13 +3070,13 @@ Update some properties of the lobby the player is in.
         "mapName": "dolor minim",
         "gameOptions": {
             "6gIY)a5~": {
-                "value": "incididunt"
+                "value": "in"
             },
             "lQSy": {
-                "value": "id et elit eiusmod"
+                "value": "tempor esse"
             },
             "V'Z{sQ6Zz,": {
-                "value": "quis non occaecat"
+                "value": "fugiat aliqua est et in"
             }
         }
     }
@@ -3099,7 +3107,7 @@ export interface LobbyUpdateRequestData {
     gameOptions?: {
         [k: string]: {
             value: string;
-        };
+        } | null;
     };
 }
 export interface StartBox {

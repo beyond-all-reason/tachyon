@@ -4486,14 +4486,20 @@
                             "$ref": "#/definitions/allyTeamConfig"
                         },
                         "gameOptions": {
+                            "description": "Set to null to remove a game option",
                             "type": "object",
                             "patternProperties": {
                                 "^.*$": {
-                                    "type": "object",
-                                    "properties": {
-                                        "value": { "type": "string" }
-                                    },
-                                    "required": ["value"]
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
                                 }
                             }
                         }
