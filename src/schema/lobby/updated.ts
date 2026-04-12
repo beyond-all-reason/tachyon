@@ -19,14 +19,12 @@ export default defineEndpoint({
             engineVersion: Type.Optional(Type.String()),
             gameVersion: Type.Optional(Type.String()),
             gameOptions: Type.Optional(
-                Nullable(
-                    Type.Record(
-                        Type.String(),
-                        Nullable(
-                            Type.Object({
-                                value: Type.String(),
-                            })
-                        )
+                Type.Record(
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            value: Type.String(),
+                        })
                     )
                 )
             ),

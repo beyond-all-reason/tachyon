@@ -3566,26 +3566,21 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
                 "gameOptions": {
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "patternProperties": {
-                                "^.*$": {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "value": { "type": "string" }
-                                            },
-                                            "required": ["value"]
-                                        },
-                                        { "type": "null" }
-                                    ]
-                                }
-                            }
-                        },
-                        { "type": "null" }
-                    ]
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
                 },
                 "allyTeamConfig": {
                     "type": "object",
@@ -3872,37 +3867,70 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
         "name": "fugiat in pariatur ea",
         "engineVersion": "velit minim",
         "gameVersion": "est in",
-        "gameOptions": null,
-        "bosses": {
-            "H": null,
-            ":": {
-                "velit_": "esse ut sed enim",
-                "irure_b16": true,
-                "esse4__": 78540623.1880188
+        "gameOptions": {
+            "Dl)H(:&": {
+                "value": "minim"
             },
-            "jHIX": null,
-            "Kt/s:aUe": null
+            "IXjK": null,
+            "/s:aUe[){": {
+                "value": "qui ea ex"
+            },
+            "v_;*I": null,
+            "3\"bhr": {
+                "value": "Ut"
+            }
+        },
+        "bosses": {
+            "jb)g8": {
+                "doloreb2": "qui esse dolor Excepteur"
+            },
+            "Z>": {
+                "ut2": 14670825,
+                "mollit_28": 35658061,
+                "consectetur_0a": false,
+                "esse_859": -76915443
+            },
+            "EyX:NH*X,q": {
+                "non8": false
+            },
+            "zv[:": {
+                "occaecatda": -48554873.4664917
+            }
         },
         "currentVote": {
-            "id": "esse voluptate tempor culpa"
+            "id": "sunt aliquip ullamco magna",
+            "action": {
+                "type": "changeMap",
+                "newMapName": "laboris nulla reprehenderit"
+            },
+            "initiator": "351",
+            "voters": {
+                "Su": {
+                    "vote": "pending"
+                },
+                "3:lKCmAw^": {
+                    "vote": "yes"
+                }
+            },
+            "until": 1705432698000000,
+            "quorum": 62868834,
+            "majority": 95579953
         },
         "voteHistory": {
-            "Gc.kx@6S": {
-                "vote": {
-                    "type": "changeMap",
-                    "newMapName": "dolore cupidatat"
-                },
-                "outcome": "cancelled",
-                "finishedAt": 1705432698000000
-            },
-            "i 4~/#WTl": {
-                "vote": {
-                    "type": "changeMap",
-                    "newMapName": "aute"
-                },
+            "J<nvX7`*'": null,
+            "Oor'UO Y": null,
+            "ZFzozM}bH": {
                 "outcome": "passed",
                 "finishedAt": 1705432698000000
-            }
+            },
+            "": {
+                "vote": {
+                    "type": "start"
+                },
+                "outcome": "failed",
+                "finishedAt": 1705432698000000
+            },
+            "E^H:": null
         }
     }
 }
@@ -3939,7 +3967,7 @@ export interface LobbyUpdatedEventData {
         [k: string]: {
             value: string;
         } | null;
-    } | null;
+    };
     allyTeamConfig?: {
         [k: string]: {
             startBox?: StartBox;
