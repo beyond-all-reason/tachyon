@@ -21,7 +21,17 @@
                 "allyTeamConfig": {
                     "$ref": "../../definitions/allyTeamConfig.json"
                 },
-                "areBossesEnabled": { "type": "boolean", "default": true }
+                "areBossesEnabled": { "type": "boolean", "default": true },
+                "gameOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": { "value": { "type": "string" } },
+                            "required": ["value"]
+                        }
+                    }
+                }
             },
             "required": [
                 "name",

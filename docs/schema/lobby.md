@@ -533,7 +533,17 @@ Create a lobby
                 "name": { "type": "string" },
                 "mapName": { "type": "string" },
                 "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" },
-                "areBossesEnabled": { "type": "boolean", "default": true }
+                "areBossesEnabled": { "type": "boolean", "default": true },
+                "gameOptions": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": { "value": { "type": "string" } },
+                            "required": ["value"]
+                        }
+                    }
+                }
             },
             "required": [
                 "name",
@@ -558,48 +568,46 @@ Create a lobby
     "messageId": "exercitation",
     "commandId": "lobby/create",
     "data": {
-        "name": "laboris Duis",
-        "mapName": "pariatur sint sed",
+        "name": "anim est commodo voluptate",
+        "mapName": "ut occaecat minim",
         "allyTeamConfig": [
             {
-                "maxTeams": 10584546,
+                "maxTeams": 55784673,
                 "startBox": {
-                    "top": 0.2692078948020935,
-                    "bottom": 0.5980529189109802,
-                    "left": 0.83367520570755,
-                    "right": 0.38755643367767334
-                },
-                "teams": []
-            },
-            {
-                "maxTeams": 45991004,
-                "startBox": {
-                    "top": 0.47580695152282715,
-                    "bottom": 0.7716678380966187,
-                    "left": 0.9239792227745056,
-                    "right": 0.6328656673431396
+                    "top": 0.83367520570755,
+                    "bottom": 0.38755643367767334,
+                    "left": 0.10872387886047363,
+                    "right": 0.008953571319580078
                 },
                 "teams": [
                     {
-                        "maxPlayers": 94429130
-                    },
-                    {
-                        "maxPlayers": 43390680
+                        "maxPlayers": 72347010
                     }
                 ]
             },
             {
-                "maxTeams": 67363990,
+                "maxTeams": 92397923,
                 "startBox": {
-                    "top": 0.832726240158081,
-                    "bottom": 0.8541895151138306,
-                    "left": 0.6024702787399292,
-                    "right": 0.414419949054718
+                    "top": 0.7260354161262512,
+                    "bottom": 0.6565085649490356,
+                    "left": 0.9442912936210632,
+                    "right": 0.1183784008026123
                 },
                 "teams": []
             }
         ],
-        "areBossesEnabled": true
+        "areBossesEnabled": true,
+        "gameOptions": {
+            "oqY": {
+                "value": "nisi labore amet pariatur"
+            },
+            "~FSG": {
+                "value": "irure"
+            },
+            "": {
+                "value": "officia veniam dolor"
+            }
+        }
     }
 }
 ```
@@ -626,6 +634,11 @@ export interface LobbyCreateRequestData {
     mapName: string;
     allyTeamConfig: AllyTeamConfig;
     areBossesEnabled: boolean;
+    gameOptions?: {
+        [k: string]: {
+            value: string;
+        };
+    };
 }
 export interface StartBox {
     top: number;
@@ -3030,12 +3043,20 @@ Update some properties of the lobby the player is in.
                 "mapName": { "type": "string" },
                 "allyTeamConfig": { "$ref": "#/definitions/allyTeamConfig" },
                 "gameOptions": {
+                    "description": "Set to null to remove a game option",
                     "type": "object",
                     "patternProperties": {
                         "^.*$": {
-                            "type": "object",
-                            "properties": { "value": { "type": "string" } },
-                            "required": ["value"]
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                },
+                                { "type": "null" }
+                            ]
                         }
                     }
                 }
@@ -3062,13 +3083,13 @@ Update some properties of the lobby the player is in.
         "mapName": "dolor minim",
         "gameOptions": {
             "6gIY)a5~": {
-                "value": "incididunt"
+                "value": "in"
             },
             "lQSy": {
-                "value": "id et elit eiusmod"
+                "value": "tempor esse"
             },
             "V'Z{sQ6Zz,": {
-                "value": "quis non occaecat"
+                "value": "fugiat aliqua est et in"
             }
         }
     }
@@ -3099,7 +3120,7 @@ export interface LobbyUpdateRequestData {
     gameOptions?: {
         [k: string]: {
             value: string;
-        };
+        } | null;
     };
 }
 export interface StartBox {
@@ -3558,26 +3579,21 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
                 "gameOptions": {
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "patternProperties": {
-                                "^.*$": {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "value": { "type": "string" }
-                                            },
-                                            "required": ["value"]
-                                        },
-                                        { "type": "null" }
-                                    ]
-                                }
-                            }
-                        },
-                        { "type": "null" }
-                    ]
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
                 },
                 "allyTeamConfig": {
                     "type": "object",
@@ -3864,37 +3880,70 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
         "name": "fugiat in pariatur ea",
         "engineVersion": "velit minim",
         "gameVersion": "est in",
-        "gameOptions": null,
-        "bosses": {
-            "H": null,
-            ":": {
-                "velit_": "esse ut sed enim",
-                "irure_b16": true,
-                "esse4__": 78540623.1880188
+        "gameOptions": {
+            "Dl)H(:&": {
+                "value": "minim"
             },
-            "jHIX": null,
-            "Kt/s:aUe": null
+            "IXjK": null,
+            "/s:aUe[){": {
+                "value": "qui ea ex"
+            },
+            "v_;*I": null,
+            "3\"bhr": {
+                "value": "Ut"
+            }
+        },
+        "bosses": {
+            "jb)g8": {
+                "doloreb2": "qui esse dolor Excepteur"
+            },
+            "Z>": {
+                "ut2": 14670825,
+                "mollit_28": 35658061,
+                "consectetur_0a": false,
+                "esse_859": -76915443
+            },
+            "EyX:NH*X,q": {
+                "non8": false
+            },
+            "zv[:": {
+                "occaecatda": -48554873.4664917
+            }
         },
         "currentVote": {
-            "id": "esse voluptate tempor culpa"
+            "id": "sunt aliquip ullamco magna",
+            "action": {
+                "type": "changeMap",
+                "newMapName": "laboris nulla reprehenderit"
+            },
+            "initiator": "351",
+            "voters": {
+                "Su": {
+                    "vote": "pending"
+                },
+                "3:lKCmAw^": {
+                    "vote": "yes"
+                }
+            },
+            "until": 1705432698000000,
+            "quorum": 62868834,
+            "majority": 95579953
         },
         "voteHistory": {
-            "Gc.kx@6S": {
-                "vote": {
-                    "type": "changeMap",
-                    "newMapName": "dolore cupidatat"
-                },
-                "outcome": "cancelled",
-                "finishedAt": 1705432698000000
-            },
-            "i 4~/#WTl": {
-                "vote": {
-                    "type": "changeMap",
-                    "newMapName": "aute"
-                },
+            "J<nvX7`*'": null,
+            "Oor'UO Y": null,
+            "ZFzozM}bH": {
                 "outcome": "passed",
                 "finishedAt": 1705432698000000
-            }
+            },
+            "": {
+                "vote": {
+                    "type": "start"
+                },
+                "outcome": "failed",
+                "finishedAt": 1705432698000000
+            },
+            "E^H:": null
         }
     }
 }
@@ -3931,7 +3980,7 @@ export interface LobbyUpdatedEventData {
         [k: string]: {
             value: string;
         } | null;
-    } | null;
+    };
     allyTeamConfig?: {
         [k: string]: {
             startBox?: StartBox;

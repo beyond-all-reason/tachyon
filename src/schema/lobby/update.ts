@@ -1,6 +1,7 @@
 import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
+import { Nullable } from "@/typebox-utils.js";
 
 export default defineEndpoint({
     source: "user",
@@ -14,9 +15,12 @@ export default defineEndpoint({
             gameOptions: Type.Optional(
                 Type.Record(
                     Type.String(),
-                    Type.Object({
-                        value: Type.String(),
-                    })
+                    Nullable(
+                        Type.Object({
+                            value: Type.String(),
+                        })
+                    ),
+                    { description: "Set to null to remove a game option" }
                 )
             ),
         }),

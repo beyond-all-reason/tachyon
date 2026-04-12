@@ -3608,6 +3608,18 @@
                         "areBossesEnabled": {
                             "type": "boolean",
                             "default": true
+                        },
+                        "gameOptions": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                }
+                            }
                         }
                     },
                     "required": [
@@ -4486,14 +4498,20 @@
                             "$ref": "#/definitions/allyTeamConfig"
                         },
                         "gameOptions": {
+                            "description": "Set to null to remove a game option",
                             "type": "object",
                             "patternProperties": {
                                 "^.*$": {
-                                    "type": "object",
-                                    "properties": {
-                                        "value": { "type": "string" }
-                                    },
-                                    "required": ["value"]
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
                                 }
                             }
                         }
@@ -4740,28 +4758,21 @@
                         "engineVersion": { "type": "string" },
                         "gameVersion": { "type": "string" },
                         "gameOptions": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        "^.*$": {
-                                            "anyOf": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "value": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": ["value"]
-                                                },
-                                                { "type": "null" }
-                                            ]
-                                        }
-                                    }
-                                },
-                                { "type": "null" }
-                            ]
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
                         },
                         "allyTeamConfig": {
                             "type": "object",

@@ -22,26 +22,21 @@
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
                 "gameOptions": {
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "patternProperties": {
-                                "^.*$": {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "value": { "type": "string" }
-                                            },
-                                            "required": ["value"]
-                                        },
-                                        { "type": "null" }
-                                    ]
-                                }
-                            }
-                        },
-                        { "type": "null" }
-                    ]
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
                 },
                 "allyTeamConfig": {
                     "type": "object",
