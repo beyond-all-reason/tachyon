@@ -41,6 +41,18 @@
                             ]
                         }
                     }
+                },
+                "tags": {
+                    "description": "Set to null to remove a tag",
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                { "type": "object", "properties": {} },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
                 }
             }
         }

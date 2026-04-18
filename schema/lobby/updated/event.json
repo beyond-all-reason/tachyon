@@ -38,6 +38,17 @@
                         }
                     }
                 },
+                "tags": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [
+                                { "type": "object", "properties": {} },
+                                { "type": "null" }
+                            ]
+                        }
+                    }
+                },
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {

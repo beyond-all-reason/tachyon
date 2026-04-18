@@ -23,6 +23,11 @@ export default defineEndpoint({
                     { description: "Set to null to remove a game option" }
                 )
             ),
+            tags: Type.Optional(
+                Type.Record(Type.String(), Nullable(Type.Object({})), {
+                    description: "Set to null to remove a tag",
+                })
+            ),
         }),
     },
     response: [{ status: "success" }],
