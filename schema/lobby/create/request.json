@@ -33,12 +33,7 @@
                     }
                 }
             },
-            "required": [
-                "name",
-                "mapName",
-                "allyTeamConfig",
-                "areBossesEnabled"
-            ]
+            "required": ["name", "mapName", "allyTeamConfig"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
