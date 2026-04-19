@@ -20,6 +20,7 @@ export default defineEndpoint({
                     })
                 )
             ),
+            tags: Type.Optional(Type.Record(Type.String(), Type.Object({}))),
         }),
     },
     response: [

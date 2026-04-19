@@ -34,6 +34,20 @@
                                         "areBossesEnabled": {
                                             "type": "boolean"
                                         },
+                                        "tags": {
+                                            "type": "object",
+                                            "patternProperties": {
+                                                "^.*$": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {}
+                                                        },
+                                                        { "type": "null" }
+                                                    ]
+                                                }
+                                            }
+                                        },
                                         "currentBattle": {
                                             "anyOf": [
                                                 {

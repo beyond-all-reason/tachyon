@@ -28,6 +28,7 @@ export default defineEndpoint({
                     )
                 )
             ),
+            tags: Type.Optional(Type.Record(Type.String(), Nullable(Type.Object({})))),
             allyTeamConfig: Type.Optional(
                 Type.Record(
                     Type.String(),

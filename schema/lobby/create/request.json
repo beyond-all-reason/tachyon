@@ -31,6 +31,12 @@
                             "required": ["value"]
                         }
                     }
+                },
+                "tags": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": { "type": "object", "properties": {} }
+                    }
                 }
             },
             "required": ["name", "mapName", "allyTeamConfig"]
