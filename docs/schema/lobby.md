@@ -545,12 +545,7 @@ Create a lobby
                     }
                 }
             },
-            "required": [
-                "name",
-                "mapName",
-                "allyTeamConfig",
-                "areBossesEnabled"
-            ]
+            "required": ["name", "mapName", "allyTeamConfig"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -568,44 +563,25 @@ Create a lobby
     "messageId": "exercitation",
     "commandId": "lobby/create",
     "data": {
-        "name": "anim est commodo voluptate",
-        "mapName": "ut occaecat minim",
-        "allyTeamConfig": [
-            {
-                "maxTeams": 55784673,
-                "startBox": {
-                    "top": 0.83367520570755,
-                    "bottom": 0.38755643367767334,
-                    "left": 0.10872387886047363,
-                    "right": 0.008953571319580078
-                },
-                "teams": [
-                    {
-                        "maxPlayers": 72347010
-                    }
-                ]
-            },
-            {
-                "maxTeams": 92397923,
-                "startBox": {
-                    "top": 0.7260354161262512,
-                    "bottom": 0.6565085649490356,
-                    "left": 0.9442912936210632,
-                    "right": 0.1183784008026123
-                },
-                "teams": []
-            }
-        ],
+        "name": "est dolore Ut",
+        "mapName": "ut aute",
+        "allyTeamConfig": [],
         "areBossesEnabled": true,
         "gameOptions": {
-            "oqY": {
-                "value": "nisi labore amet pariatur"
+            "* :K": {
+                "value": "nostrud esse velit"
             },
-            "~FSG": {
-                "value": "irure"
+            "iw\\Nd": {
+                "value": "sit ipsum dolore proident"
+            },
+            "y+ I^y_": {
+                "value": "Excepteur dolor magna dolore eu"
+            },
+            "oqY": {
+                "value": "do dolor qui nulla ipsum"
             },
             "": {
-                "value": "officia veniam dolor"
+                "value": "aliquip consequat"
             }
         }
     }
@@ -633,7 +609,7 @@ export interface LobbyCreateRequestData {
     name: string;
     mapName: string;
     allyTeamConfig: AllyTeamConfig;
-    areBossesEnabled: boolean;
+    areBossesEnabled?: boolean;
     gameOptions?: {
         [k: string]: {
             value: string;
