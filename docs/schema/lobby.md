@@ -148,6 +148,7 @@ In practice, this event should rarely be seen.
 - [spectate](#spectate)
 - [startBattle](#startbattle)
 - [subscribeList](#subscribelist)
+- [unboss](#unboss)
 - [unsubscribeList](#unsubscribelist)
 - [update](#update)
 - [updateBot](#updatebot)
@@ -2941,6 +2942,153 @@ export interface LobbySubscribeListOkResponse {
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## Unboss
+
+Unboss the given user
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUnbossRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/unboss" },
+        "data": {
+            "title": "LobbyUnbossRequestData",
+            "description": "if userId isn't provided, defaults to the current user",
+            "type": "object",
+            "properties": { "userId": { "$ref": "#/definitions/userId" } }
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "in nostrud pariatur",
+    "commandId": "lobby/unboss",
+    "data": {
+        "userId": "351"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface LobbyUnbossRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/unboss";
+    data: LobbyUnbossRequestData;
+}
+export interface LobbyUnbossRequestData {
+    userId?: UserId;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyUnbossResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyUnbossOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/unboss" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyUnbossFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/unboss" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "not_a_boss",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "aute adipisicing Ut aliqua laboris",
+    "commandId": "lobby/unboss",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyUnbossOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/unboss";
+    status: "success";
+}
+```
+Possible Failed Reasons: `not_a_boss`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 

@@ -4429,6 +4429,77 @@
             ]
         },
         {
+            "title": "LobbyUnbossRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/unboss" },
+                "data": {
+                    "title": "LobbyUnbossRequestData",
+                    "description": "if userId isn't provided, defaults to the current user",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    }
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyUnbossResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyUnbossOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/unboss" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyUnbossFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/unboss" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_a_boss",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyUnsubscribeListRequest",
             "tachyon": {
                 "source": "user",
