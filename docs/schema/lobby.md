@@ -981,6 +981,10 @@ export type VoteActions =
     | {
           type: "changeMap";
           newMapName: string;
+      }
+    | {
+          type: "appointBoss";
+          bossId: UserId;
       };
 export type VoteOutcomes = "passed" | "failed" | "cancelled" | "timeout";
 
@@ -1434,6 +1438,10 @@ export type VoteActions =
     | {
           type: "changeMap";
           newMapName: string;
+      }
+    | {
+          type: "appointBoss";
+          bossId: UserId;
       };
 export type VoteOutcomes = "passed" | "failed" | "cancelled" | "timeout";
 
@@ -4309,8 +4317,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
         "voteHistory": {
             "td10uJ/?|": {
                 "vote": {
-                    "type": "changeMap",
-                    "newMapName": "aliquip sunt nisi proident ex"
+                    "type": "appointBoss"
                 },
                 "outcome": "failed",
                 "finishedAt": 1705432698000000
@@ -4333,6 +4340,10 @@ export type VoteActions =
     | {
           type: "changeMap";
           newMapName: string;
+      }
+    | {
+          type: "appointBoss";
+          bossId: UserId;
       };
 export type VoteOutcomes = "passed" | "failed" | "cancelled" | "timeout";
 

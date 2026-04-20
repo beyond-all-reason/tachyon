@@ -696,6 +696,14 @@
                         "newMapName": { "type": "string" }
                     },
                     "required": ["type", "newMapName"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "appointBoss" },
+                        "bossId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["type", "bossId"]
                 }
             ]
         },
