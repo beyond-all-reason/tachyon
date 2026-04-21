@@ -13,6 +13,7 @@ export const lobbyOverview = Type.Object(
         gameVersion: Type.String(),
         currentBattle: Nullable(
             Type.Object({
+                id: Type.String(),
                 startedAt: Type.Ref("unixTime"),
             })
         ),
