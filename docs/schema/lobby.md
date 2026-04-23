@@ -140,6 +140,7 @@ In practice, this event should rarely be seen.
 - [joinAllyTeam](#joinallyteam)
 - [joinBattle](#joinbattle)
 - [joinQueue](#joinqueue)
+- [kickban](#kickban)
 - [leave](#leave)
 - [left](#left)
 - [listReset](#listreset)
@@ -985,6 +986,11 @@ export type VoteActions =
     | {
           type: "appointBoss";
           bossId: UserId;
+      }
+    | {
+          type: "kickban";
+          userId: UserId;
+          banUntil?: UnixTime;
       };
 export type VoteOutcomes = "passed" | "failed" | "cancelled" | "timeout";
 
@@ -1193,6 +1199,7 @@ export interface LobbyJoinRequestData {
                 "reason": {
                     "enum": [
                         "lobby_full",
+                        "banned",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1442,6 +1449,11 @@ export type VoteActions =
     | {
           type: "appointBoss";
           bossId: UserId;
+      }
+    | {
+          type: "kickban";
+          userId: UserId;
+          banUntil?: UnixTime;
       };
 export type VoteOutcomes = "passed" | "failed" | "cancelled" | "timeout";
 
@@ -1539,7 +1551,7 @@ export interface StartBox {
     right: number;
 }
 ```
-Possible Failed Reasons: `lobby_full`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `lobby_full`, `banned`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1955,6 +1967,160 @@ Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `inva
 
 ---
 
+## Kickban
+
+Ban a user from a lobby (and kick them out)
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyKickbanRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/kickban" },
+        "data": {
+            "title": "LobbyKickbanRequestData",
+            "type": "object",
+            "properties": {
+                "userId": { "$ref": "#/definitions/userId" },
+                "banUntil": {
+                    "$ref": "#/definitions/unixTime",
+                    "description": "omit this field (or set it in the past) to merely kick the player"
+                }
+            },
+            "required": ["userId"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "non laborum officia dolore",
+    "commandId": "lobby/kickban",
+    "data": {
+        "userId": "351",
+        "banUntil": 1705432698000000
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface LobbyKickbanRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/kickban";
+    data: LobbyKickbanRequestData;
+}
+export interface LobbyKickbanRequestData {
+    userId: UserId;
+    banUntil?: number;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyKickbanResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyKickbanOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/kickban" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyKickbanFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/kickban" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "eiusmod tempor nostrud est consequat",
+    "commandId": "lobby/kickban",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyKickbanOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/kickban";
+    status: "success";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
 ## Leave
 
 Leave the lobby, also unsubscribe from any update
@@ -2117,8 +2283,12 @@ Sent by the server when the player is removed from the lobby. Can be kicked/ban 
             "title": "LobbyLeftEventData",
             "type": "object",
             "properties": {
-                "id": { "type": "string" },
-                "reason": { "type": "string" }
+                "id": { "description": "lobby id", "type": "string" },
+                "reason": { "type": "string" },
+                "bannedUntil": {
+                    "$ref": "#/definitions/unixTime",
+                    "description": "if this field is set, it means the client has been banned from this lobby until that timestamp."
+                }
             },
             "required": ["id", "reason"]
         }
@@ -2138,8 +2308,8 @@ Sent by the server when the player is removed from the lobby. Can be kicked/ban 
     "messageId": "est",
     "commandId": "lobby/left",
     "data": {
-        "id": "et pariatur proident",
-        "reason": "voluptate quis consectetur"
+        "id": "pariatur nulla id",
+        "reason": "irure sunt Lorem"
     }
 }
 ```
@@ -2156,6 +2326,7 @@ export interface LobbyLeftEvent {
 export interface LobbyLeftEventData {
     id: string;
     reason: string;
+    bannedUntil?: number;
 }
 ```
 ---
@@ -4317,9 +4488,9 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
         "voteHistory": {
             "td10uJ/?|": {
                 "vote": {
-                    "type": "appointBoss"
+                    "type": "kickban"
                 },
-                "outcome": "failed",
+                "outcome": "timeout",
                 "finishedAt": 1705432698000000
             },
             "_LiA[]:": null
@@ -4344,6 +4515,11 @@ export type VoteActions =
     | {
           type: "appointBoss";
           bossId: UserId;
+      }
+    | {
+          type: "kickban";
+          userId: UserId;
+          banUntil?: UnixTime;
       };
 export type VoteOutcomes = "passed" | "failed" | "cancelled" | "timeout";
 

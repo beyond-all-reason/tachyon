@@ -14,6 +14,7 @@ export default defineEndpoint({
     },
     response: [
         { status: "failed", reason: "lobby_full" },
+        { status: "failed", reason: "banned" },
         {
             status: "success",
             data: Type.Ref("lobbyDetails"),
