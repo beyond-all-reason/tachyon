@@ -16,8 +16,12 @@
             "title": "LobbyLeftEventData",
             "type": "object",
             "properties": {
-                "id": { "type": "string" },
-                "reason": { "type": "string" }
+                "id": { "description": "lobby id", "type": "string" },
+                "reason": { "type": "string" },
+                "bannedUntil": {
+                    "$ref": "../../definitions/unixTime.json",
+                    "description": "if this field is set, it means the client has been banned from this lobby until that timestamp."
+                }
             },
             "required": ["id", "reason"]
         }
