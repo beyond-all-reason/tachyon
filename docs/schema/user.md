@@ -3,6 +3,7 @@
 # User
 
 - [info](#info)
+- [report](#report)
 - [self](#self)
 - [subscribeUpdates](#subscribeupdates)
 - [unsubscribeUpdates](#unsubscribeupdates)
@@ -197,6 +198,164 @@ export interface ClanUpdateableBaseData {
     name: string;
     tag: string;
     language: string;
+}
+```
+Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
+---
+
+## Report
+
+Issue a single moderation report on one or more users.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserReportRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "user/report" },
+        "data": {
+            "title": "UserReportRequestData",
+            "type": "object",
+            "properties": {
+                "userIds": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/userId" }
+                },
+                "reason": { "$ref": "#/definitions/moderationType" },
+                "message": { "type": "string" }
+            },
+            "required": ["userIds", "reason"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "consequat",
+    "commandId": "user/report",
+    "data": {
+        "userIds": [],
+        "reason": "action"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+export type ModerationType = "chat" | "action";
+
+export interface UserReportRequest {
+    type: "request";
+    messageId: string;
+    commandId: "user/report";
+    data: UserReportRequestData;
+}
+export interface UserReportRequestData {
+    userIds: UserId[];
+    reason: ModerationType;
+    message?: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "UserReportResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "UserReportOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/report" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "UserReportFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/report" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "unknown_user",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "ea ut anim occaecat",
+    "commandId": "user/report",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface UserReportOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "user/report";
+    status: "success";
 }
 ```
 Possible Failed Reasons: `unknown_user`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`

@@ -409,6 +409,7 @@
                 "currentBattle"
             ]
         },
+        "moderationType": { "enum": ["chat", "action"] },
         "partyId": {
             "type": "string",
             "examples": ["1882f6b2e3a4d14f24acb7aa"]
@@ -6950,6 +6951,82 @@
                         "type": { "const": "response" },
                         "messageId": { "type": "string" },
                         "commandId": { "const": "user/info" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "unknown_user",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "UserReportRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/report" },
+                "data": {
+                    "title": "UserReportRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userIds": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/userId" }
+                        },
+                        "reason": { "$ref": "#/definitions/moderationType" },
+                        "message": { "type": "string" }
+                    },
+                    "required": ["userIds", "reason"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "UserReportResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "UserReportOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "user/report" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "UserReportFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "user/report" },
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
