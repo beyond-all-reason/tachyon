@@ -1,0 +1,25 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/viewInvites/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ClanViewInvitesRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "clan/viewInvites" },
+        "data": {
+            "title": "ClanViewInvitesRequestData",
+            "type": "object",
+            "properties": {
+                "clanId": { "$ref": "../../definitions/clanId.json" }
+            },
+            "required": ["clanId"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}

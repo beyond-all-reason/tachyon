@@ -1932,6 +1932,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "invite_cancelled",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -2068,6 +2069,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "incorrect_data",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -2630,6 +2632,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "incorrect_data",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -2726,6 +2729,93 @@
                         "type": { "const": "response" },
                         "messageId": { "type": "string" },
                         "commandId": { "const": "clan/view" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "ClanViewInvitesRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "clan/viewInvites" },
+                "data": {
+                    "title": "ClanViewInvitesRequestData",
+                    "type": "object",
+                    "properties": {
+                        "clanId": { "$ref": "#/definitions/clanId" }
+                    },
+                    "required": ["clanId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "ClanViewInvitesResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "ClanViewInvitesOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/viewInvites" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "title": "ClanViewInvitesOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "users": {
+                                    "type": "array",
+                                    "items": { "$ref": "#/definitions/user" }
+                                }
+                            },
+                            "required": ["users"]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "ClanViewInvitesFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "clan/viewInvites" },
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [

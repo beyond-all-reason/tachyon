@@ -1,7 +1,7 @@
 {
-    "$id": "https://schema.beyondallreason.dev/tachyon/clan/update/response.json",
+    "$id": "https://schema.beyondallreason.dev/tachyon/clan/viewInvites/response.json",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "title": "ClanUpdateResponse",
+    "title": "ClanViewInvitesResponse",
     "tachyon": {
         "source": "server",
         "target": "user",
@@ -9,27 +9,37 @@
     },
     "anyOf": [
         {
-            "title": "ClanUpdateOkResponse",
+            "title": "ClanViewInvitesOkResponse",
             "type": "object",
             "properties": {
                 "type": { "const": "response" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "clan/update" },
-                "status": { "const": "success" }
+                "commandId": { "const": "clan/viewInvites" },
+                "status": { "const": "success" },
+                "data": {
+                    "title": "ClanViewInvitesOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "users": {
+                            "type": "array",
+                            "items": { "$ref": "../../definitions/user.json" }
+                        }
+                    },
+                    "required": ["users"]
+                }
             },
-            "required": ["type", "messageId", "commandId", "status"]
+            "required": ["type", "messageId", "commandId", "status", "data"]
         },
         {
-            "title": "ClanUpdateFailResponse",
+            "title": "ClanViewInvitesFailResponse",
             "type": "object",
             "properties": {
                 "type": { "const": "response" },
                 "messageId": { "type": "string" },
-                "commandId": { "const": "clan/update" },
+                "commandId": { "const": "clan/viewInvites" },
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
-                        "incorrect_data",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
