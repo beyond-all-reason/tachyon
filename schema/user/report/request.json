@@ -20,7 +20,11 @@
                     "type": "array",
                     "items": { "$ref": "../../definitions/userId.json" }
                 },
-                "reason": { "$ref": "../../definitions/moderationType.json" },
+                "reason": {
+                    "type": "object",
+                    "properties": { "type": { "type": "string" } },
+                    "required": ["type"]
+                },
                 "message": { "type": "string" }
             },
             "required": ["userIds", "reason"]

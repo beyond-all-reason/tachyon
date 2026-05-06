@@ -1,5 +1,0 @@
-{
-    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/moderationType.json",
-    "title": "ModerationType",
-    "enum": ["chat", "action"]
-}

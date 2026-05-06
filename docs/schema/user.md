@@ -239,7 +239,11 @@ Issue a single moderation report on one or more users.
                     "type": "array",
                     "items": { "$ref": "#/definitions/userId" }
                 },
-                "reason": { "$ref": "#/definitions/moderationType" },
+                "reason": {
+                    "type": "object",
+                    "properties": { "type": { "type": "string" } },
+                    "required": ["type"]
+                },
                 "message": { "type": "string" }
             },
             "required": ["userIds", "reason"]
@@ -261,7 +265,9 @@ Issue a single moderation report on one or more users.
     "commandId": "user/report",
     "data": {
         "userIds": [],
-        "reason": "action"
+        "reason": {
+            "type": "incididunt dolor nisi sunt"
+        }
     }
 }
 ```
@@ -270,7 +276,6 @@ Issue a single moderation report on one or more users.
 #### TypeScript Definition
 ```ts
 export type UserId = string;
-export type ModerationType = "chat" | "action";
 
 export interface UserReportRequest {
     type: "request";
@@ -280,7 +285,9 @@ export interface UserReportRequest {
 }
 export interface UserReportRequestData {
     userIds: UserId[];
-    reason: ModerationType;
+    reason: {
+        type: string;
+    };
     message?: string;
 }
 ```

@@ -9,7 +9,7 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             userIds: Type.Array(Type.Ref("userId")),
-            reason: Type.Ref("moderationType"),
+            reason: Type.Object({ type: Type.String() }),
             message: Type.Optional(Type.String()),
         }),
     },

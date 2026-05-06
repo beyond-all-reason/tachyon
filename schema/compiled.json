@@ -409,7 +409,6 @@
                 "currentBattle"
             ]
         },
-        "moderationType": { "enum": ["chat", "action"] },
         "partyId": {
             "type": "string",
             "examples": ["1882f6b2e3a4d14f24acb7aa"]
@@ -6993,7 +6992,11 @@
                             "type": "array",
                             "items": { "$ref": "#/definitions/userId" }
                         },
-                        "reason": { "$ref": "#/definitions/moderationType" },
+                        "reason": {
+                            "type": "object",
+                            "properties": { "type": { "type": "string" } },
+                            "required": ["type"]
+                        },
                         "message": { "type": "string" }
                     },
                     "required": ["userIds", "reason"]
