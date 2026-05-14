@@ -8,19 +8,21 @@ export default defineEndpoint({
     description: "Sent to all players and spectators involved in a battle when it ends.",
     event: {
         data: Type.Object({
-            battleId: Type.String({ format: "uuid" }),
+            battleId: Type.String(),
             players: Type.Array(
                 Type.Object({
                     userId: Type.Ref("userId"),
                     allyTeamId: Type.String(),
+                    team: Type.String(),
+                    player: Type.String(),
                 })
             ),
-            spectators: Type.Array(Type.Ref("userId")),
-            winningAllyTeamIds: Type.Optional(
-                Type.Array(Type.String(), {
-                    description: "absent or empty array indicates a draw",
+            spectators: Type.Array(
+                Type.Object({
+                    userId: Type.Ref("userId"),
                 })
             ),
+            winningAllyTeamIds: Type.Array(Type.Integer()),
         }),
     },
 });

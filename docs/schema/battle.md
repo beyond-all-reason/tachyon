@@ -37,29 +37,41 @@ Sent to all players and spectators involved in a battle when it ends.
             "title": "BattleEndedEventData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "players": {
                     "type": "array",
                     "items": {
                         "type": "object",
                         "properties": {
                             "userId": { "$ref": "#/definitions/userId" },
-                            "allyTeamId": { "type": "string" }
+                            "allyTeamId": { "type": "string" },
+                            "team": { "type": "string" },
+                            "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeamId"]
+                        "required": ["userId", "allyTeamId", "team", "player"]
                     }
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/userId" }
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" }
+                        },
+                        "required": ["userId"]
+                    }
                 },
                 "winningAllyTeamIds": {
-                    "description": "absent or empty array indicates a draw",
                     "type": "array",
-                    "items": { "type": "string" }
+                    "items": { "type": "integer" }
                 }
             },
-            "required": ["battleId", "players", "spectators"]
+            "required": [
+                "battleId",
+                "players",
+                "spectators",
+                "winningAllyTeamIds"
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -77,21 +89,35 @@ Sent to all players and spectators involved in a battle when it ends.
     "messageId": "Duis ut sit laborum",
     "commandId": "battle/ended",
     "data": {
-        "battleId": "bfaf1909-9669-8a3b-faf2-45bc2968f87e",
+        "battleId": "Excepteur proident Lorem",
         "players": [
             {
                 "userId": "351",
-                "allyTeamId": "aute Excepteur quis"
+                "allyTeamId": "in",
+                "team": "aliqua",
+                "player": "do"
             },
             {
                 "userId": "351",
-                "allyTeamId": "sunt cupidatat commodo proident"
+                "allyTeamId": "deserunt ex non",
+                "team": "fugiat Excepteur esse mollit ad",
+                "player": "ex in"
             }
         ],
-        "spectators": [],
+        "spectators": [
+            {
+                "userId": "351"
+            },
+            {
+                "userId": "351"
+            },
+            {
+                "userId": "351"
+            }
+        ],
         "winningAllyTeamIds": [
-            "aute dolore ut Excepteur",
-            "fugiat minim aliqua nulla Lorem"
+            -87574387,
+            17768216
         ]
     }
 }
@@ -113,9 +139,13 @@ export interface BattleEndedEventData {
     players: {
         userId: UserId;
         allyTeamId: string;
+        team: string;
+        player: string;
     }[];
-    spectators: UserId[];
-    winningAllyTeamIds?: string[];
+    spectators: {
+        userId: UserId;
+    }[];
+    winningAllyTeamIds: number[];
 }
 ```
 ---

@@ -16,7 +16,7 @@
             "title": "BattleEndedEventData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "players": {
                     "type": "array",
                     "items": {
@@ -25,22 +25,36 @@
                             "userId": {
                                 "$ref": "../../definitions/userId.json"
                             },
-                            "allyTeamId": { "type": "string" }
+                            "allyTeamId": { "type": "string" },
+                            "team": { "type": "string" },
+                            "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeamId"]
+                        "required": ["userId", "allyTeamId", "team", "player"]
                     }
                 },
                 "spectators": {
                     "type": "array",
-                    "items": { "$ref": "../../definitions/userId.json" }
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": {
+                                "$ref": "../../definitions/userId.json"
+                            }
+                        },
+                        "required": ["userId"]
+                    }
                 },
                 "winningAllyTeamIds": {
-                    "description": "absent or empty array indicates a draw",
                     "type": "array",
-                    "items": { "type": "string" }
+                    "items": { "type": "integer" }
                 }
             },
-            "required": ["battleId", "players", "spectators"]
+            "required": [
+                "battleId",
+                "players",
+                "spectators",
+                "winningAllyTeamIds"
+            ]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
