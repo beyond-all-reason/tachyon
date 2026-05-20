@@ -49,7 +49,32 @@
                 ]
             },
             "uniqueItems": true
+        },
+        "stats": {
+            "type": "object",
+            "properties": {
+                "playerHours": { "type": "string" },
+                "spectatorHours": { "type": "string" },
+                "onlineHours": { "type": "string" },
+                "battleHistoryData": {
+                    "type": "array",
+                    "items": { "$ref": "../definitions/battleStat.json" }
+                }
+            },
+            "required": [
+                "playerHours",
+                "spectatorHours",
+                "onlineHours",
+                "battleHistoryData"
+            ]
         }
     },
-    "required": ["userId", "username", "displayName", "clanBaseData", "status"]
+    "required": [
+        "userId",
+        "username",
+        "displayName",
+        "clanBaseData",
+        "status",
+        "stats"
+    ]
 }
