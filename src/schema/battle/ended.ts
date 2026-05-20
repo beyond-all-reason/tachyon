@@ -12,7 +12,7 @@ export default defineEndpoint({
             players: Type.Array(
                 Type.Object({
                     userId: Type.Ref("userId"),
-                    allyTeamId: Type.String(),
+                    allyTeam: Type.String(),
                     team: Type.String(),
                     player: Type.String(),
                 })
@@ -22,7 +22,7 @@ export default defineEndpoint({
                     userId: Type.Ref("userId"),
                 })
             ),
-            winningAllyTeamIds: Type.Array(Type.Integer()),
+            winningAllyTeamIds: Type.Array(Type.String()),
         }),
     },
 });

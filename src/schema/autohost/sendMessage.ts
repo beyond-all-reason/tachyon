@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Send a message for the autohost to display to players.",
     request: {
         data: Type.Object({
-            battleId: Type.String({ format: "uuid" }),
+            battleId: Type.String(),
             message: Type.String({ maxLength: 127 }),
         }),
     },
