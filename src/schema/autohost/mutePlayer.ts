@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Mute a player in a battle.",
     request: {
         data: Type.Object({
-            battleId: Type.String({ format: "uuid" }),
+            battleId: Type.String(),
             userId: Type.Ref("userId"),
             chat: Type.Boolean(),
             draw: Type.Boolean(),

@@ -1815,6 +1815,68 @@
             "required": ["type", "messageId", "commandId", "data"]
         },
         {
+            "title": "BattleEndedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "battle/ended" },
+                "data": {
+                    "title": "BattleEndedEventData",
+                    "type": "object",
+                    "properties": {
+                        "battleId": { "type": "string" },
+                        "players": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "allyTeamId": { "type": "string" },
+                                    "team": { "type": "string" },
+                                    "player": { "type": "string" }
+                                },
+                                "required": [
+                                    "userId",
+                                    "allyTeamId",
+                                    "team",
+                                    "player"
+                                ]
+                            }
+                        },
+                        "spectators": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": { "$ref": "#/definitions/userId" }
+                                },
+                                "required": ["userId"]
+                            }
+                        },
+                        "winningAllyTeamIds": {
+                            "type": "array",
+                            "items": { "type": "integer" }
+                        }
+                    },
+                    "required": [
+                        "battleId",
+                        "players",
+                        "spectators",
+                        "winningAllyTeamIds"
+                    ]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
             "title": "BattleStartRequest",
             "tachyon": {
                 "source": "server",
