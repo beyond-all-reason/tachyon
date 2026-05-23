@@ -16,7 +16,7 @@
             "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "engineVersion": {
                     "type": "string",
                     "pattern": "^[0-9a-zA-Z .+-]+$"

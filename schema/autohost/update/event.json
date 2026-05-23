@@ -16,7 +16,7 @@
             "title": "AutohostUpdateEventData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "time": { "$ref": "../../definitions/unixTime.json" },
                 "update": {
                     "anyOf": [

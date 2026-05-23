@@ -16,7 +16,7 @@
             "title": "AutohostSendCommandRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "command": { "type": "string" },
                 "arguments": { "type": "array", "items": { "type": "string" } }
             },

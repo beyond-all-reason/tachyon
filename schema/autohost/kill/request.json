@@ -15,9 +15,7 @@
         "data": {
             "title": "AutohostKillRequestData",
             "type": "object",
-            "properties": {
-                "battleId": { "type": "string", "format": "uuid" }
-            },
+            "properties": { "battleId": { "type": "string" } },
             "required": ["battleId"]
         }
     },

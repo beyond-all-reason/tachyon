@@ -25,11 +25,11 @@
                             "userId": {
                                 "$ref": "../../definitions/userId.json"
                             },
-                            "allyTeamId": { "type": "string" },
+                            "allyTeam": { "type": "string" },
                             "team": { "type": "string" },
                             "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeamId", "team", "player"]
+                        "required": ["userId", "allyTeam", "team", "player"]
                     }
                 },
                 "spectators": {
@@ -46,7 +46,7 @@
                 },
                 "winningAllyTeamIds": {
                     "type": "array",
-                    "items": { "type": "integer" }
+                    "items": { "type": "string" }
                 }
             },
             "required": [

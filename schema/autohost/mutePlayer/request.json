@@ -16,7 +16,7 @@
             "title": "AutohostMutePlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userId": { "$ref": "../../definitions/userId.json" },
                 "chat": { "type": "boolean" },
                 "draw": { "type": "boolean" }

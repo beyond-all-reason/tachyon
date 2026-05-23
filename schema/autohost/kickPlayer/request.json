@@ -16,7 +16,7 @@
             "title": "AutohostKickPlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userId": { "$ref": "../../definitions/userId.json" }
             },
             "required": ["battleId", "userId"]

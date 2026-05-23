@@ -91,7 +91,7 @@ Request to add a new player to the battle.
             "title": "AutohostAddPlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userId": { "$ref": "#/definitions/userId" },
                 "name": { "type": "string" },
                 "password": { "type": "string" }
@@ -114,10 +114,10 @@ Request to add a new player to the battle.
     "messageId": "do labore velit",
     "commandId": "autohost/addPlayer",
     "data": {
-        "battleId": "66b4294f-6a36-98b4-80ab-ba20c5a9b023",
+        "battleId": "irure dolore commodo",
         "userId": "351",
-        "name": "ad",
-        "password": "in dolore qui reprehenderit occaecat"
+        "name": "laborum elit Duis amet tempor",
+        "password": "nostrud"
     }
 }
 ```
@@ -400,7 +400,7 @@ Kick a player from a battle.
             "title": "AutohostKickPlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userId": { "$ref": "#/definitions/userId" }
             },
             "required": ["battleId", "userId"]
@@ -421,7 +421,7 @@ Kick a player from a battle.
     "messageId": "Ut pariatur",
     "commandId": "autohost/kickPlayer",
     "data": {
-        "battleId": "853c948a-5bbb-4c62-508a-3dfd7d9e6547",
+        "battleId": "laboris dolor sunt",
         "userId": "351"
     }
 }
@@ -550,9 +550,7 @@ Request to kill a battle.
         "data": {
             "title": "AutohostKillRequestData",
             "type": "object",
-            "properties": {
-                "battleId": { "type": "string", "format": "uuid" }
-            },
+            "properties": { "battleId": { "type": "string" } },
             "required": ["battleId"]
         }
     },
@@ -571,7 +569,7 @@ Request to kill a battle.
     "messageId": "anim minim pariatur",
     "commandId": "autohost/kill",
     "data": {
-        "battleId": "68723178-2619-268c-de89-096ee25b0864"
+        "battleId": "eu nisi ea"
     }
 }
 ```
@@ -697,7 +695,7 @@ Mute a player in a battle.
             "title": "AutohostMutePlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userId": { "$ref": "#/definitions/userId" },
                 "chat": { "type": "boolean" },
                 "draw": { "type": "boolean" }
@@ -720,10 +718,10 @@ Mute a player in a battle.
     "messageId": "anim veniam esse",
     "commandId": "autohost/mutePlayer",
     "data": {
-        "battleId": "e9590648-b5c8-38f2-f397-9c90e64e46d2",
+        "battleId": "sed fugiat id ullamco aliqua",
         "userId": "351",
-        "chat": true,
-        "draw": false
+        "chat": false,
+        "draw": true
     }
 }
 ```
@@ -854,7 +852,7 @@ Send a custom command for the autohost to execute.
             "title": "AutohostSendCommandRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "command": { "type": "string" },
                 "arguments": { "type": "array", "items": { "type": "string" } }
             },
@@ -876,10 +874,13 @@ Send a custom command for the autohost to execute.
     "messageId": "laborum",
     "commandId": "autohost/sendCommand",
     "data": {
-        "battleId": "4052d53f-ba69-5da2-1e06-4b945a61e4e4",
-        "command": "in mollit",
+        "battleId": "Duis anim",
+        "command": "nisi culpa sint",
         "arguments": [
-            "tempor amet proident"
+            "Duis non eu minim fugiat",
+            "commodo",
+            "anim",
+            "mollit labore dolor Lorem"
         ]
     }
 }
@@ -1008,7 +1009,7 @@ Send a message for the autohost to display to players.
             "title": "AutohostSendMessageRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "message": { "type": "string", "maxLength": 127 }
             },
             "required": ["battleId", "message"]
@@ -1029,8 +1030,8 @@ Send a message for the autohost to display to players.
     "messageId": "reprehenderit sed",
     "commandId": "autohost/sendMessage",
     "data": {
-        "battleId": "4a26eb99-158d-cea3-c275-f8d512dfbc5d",
-        "message": "occaecat dolore"
+        "battleId": "Lorem ullamco",
+        "message": "laborum anim aute eiusmod reprehenderit"
     }
 }
 ```
@@ -1157,7 +1158,7 @@ Force players to become spectators in a battle.
             "title": "AutohostSpecPlayersRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userIds": {
                     "type": "array",
                     "items": { "$ref": "#/definitions/userId" }
@@ -1181,8 +1182,9 @@ Force players to become spectators in a battle.
     "messageId": "sed",
     "commandId": "autohost/specPlayers",
     "data": {
-        "battleId": "99a1a151-6db0-fc47-7473-2a67cd624a94",
+        "battleId": "sit Lorem nulla",
         "userIds": [
+            "351",
             "351",
             "351",
             "351",
@@ -1316,7 +1318,7 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
             "title": "AutohostStartRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "engineVersion": {
                     "type": "string",
                     "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -1388,12 +1390,12 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
     "messageId": "sint ex non",
     "commandId": "autohost/start",
     "data": {
-        "battleId": "4c9e363d-e213-f8ec-b003-30375e86dcd7",
-        "engineVersion": "C730C",
-        "gameName": "cupidatat esse veniam",
-        "mapName": "aliquip est in",
-        "startDelay": -36461103,
-        "startPosType": "ingame",
+        "battleId": "in exercitation",
+        "engineVersion": "ymGhYLaN",
+        "gameName": "sed ad",
+        "mapName": "elit",
+        "startDelay": 42893708,
+        "startPosType": "random",
         "allyTeams": [
             {
                 "teams": [
@@ -1401,677 +1403,545 @@ Tell the autohost client to launch the game server (spring-dedicated.exe or spri
                         "players": [
                             {
                                 "userId": "351",
-                                "name": "reprehenderit minim",
-                                "password": "dolore irure et esse",
+                                "name": "occaecat in incididunt ut",
+                                "password": "Lorem exercitation do occaecat incididunt",
+                                "rank": 36501575,
+                                "countryCode": "ea nisi non sint in",
                                 "customProperties": {
-                                    "4": "reprehenderit fugiat",
-                                    "n": "voluptate",
-                                    "Z": "cupidatat",
-                                    "N": "elit Duis Ut officia ut",
-                                    "t": "Lorem aliquip",
-                                    "U": "sit eiusmod ullamco"
+                                    "B": "irure",
+                                    "f": "elit incididunt"
                                 }
                             },
                             {
                                 "userId": "351",
-                                "name": "magna irure",
-                                "password": "veniam dolore",
-                                "rank": -67761314,
-                                "countryCode": "ut in do culpa nulla",
+                                "name": "voluptate laboris ad",
+                                "password": "fugiat ipsum",
+                                "rank": 80650330,
+                                "countryCode": "sed ullamco do minim Excepteur",
                                 "customProperties": {
-                                    "Y": "laborum Excepteur Lorem"
+                                    "Z": "fugiat proident consequat",
+                                    "e": "enim Excepteur",
+                                    "I": "dolor et in elit"
                                 }
                             }
                         ],
-                        "bots": [],
-                        "advantage": 89673966.06609696,
-                        "incomeMultiplier": 58906030.65490723,
-                        "faction": "velit voluptate aliquip cillum Ut",
+                        "advantage": 50448446.97038108,
+                        "faction": "id qui Excepteur dolore dolore",
                         "color": {
-                            "r": 0.6673920154571533,
-                            "g": 0.538798451423645,
-                            "b": 0.2185434103012085
-                        },
-                        "startPos": {
-                            "x": 43230844,
-                            "y": 2703130
+                            "r": 0.46691763401031494,
+                            "g": 0.1522008776664734,
+                            "b": 0.0705498456954956
                         },
                         "customProperties": {
-                            "H": "esse",
-                            "s": "Ut occaecat"
+                            "a": "irure fugiat sunt amet",
+                            "Q": "in"
                         }
                     },
                     {
-                        "eiusmod_8": -38074327,
-                        "sunt1f": 25348937,
-                        "cupidatat1a2": "tempor adipisicing",
+                        "ea5": "Lorem",
+                        "mollit11a": 5983793.73550415,
                         "players": [
                             {
                                 "userId": "351",
-                                "name": "est Ut Lorem tempor enim",
-                                "password": "consectetur Lorem officia pariatur dolor",
-                                "rank": 81763184,
-                                "countryCode": "sunt fugiat Lorem voluptate culpa"
-                            },
-                            {
-                                "userId": "351",
-                                "name": "ut cillum",
-                                "password": "exercitation",
-                                "rank": 9046686,
-                                "countryCode": "aute ad",
+                                "name": "laboris irure esse",
+                                "password": "nostrud enim et nulla",
+                                "rank": -3053331,
+                                "countryCode": "ea Lorem nisi magna",
                                 "customProperties": {
-                                    "8": "aute cillum dolore nisi deserunt",
-                                    "Z": "nisi laborum"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "in fugiat quis eu",
-                                "password": "irure cupidatat ut sunt velit",
-                                "rank": -42048907,
-                                "countryCode": "consectetur nostrud Ut in",
-                                "customProperties": {
-                                    "S": "magna ut",
-                                    "g": "in ex"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "ad commodo aliquip in",
-                                "password": "quis esse",
-                                "rank": -73497343,
-                                "countryCode": "sunt ut mollit consequat adipisicing",
-                                "customProperties": {
-                                    "2": "laboris ut id voluptate Excepteur",
-                                    "6": "ex Excepteur incididunt",
-                                    "v": "et ea laboris adipisicing dolor",
-                                    "j": "occaecat esse dolor",
-                                    "D": "labore Ut ex tempor"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "nostrud non in",
-                                "password": "magna Excepteur",
-                                "rank": 71094704,
-                                "countryCode": "Ut magna ipsum",
-                                "customProperties": {
-                                    "5": "deserunt dolore ullamco",
-                                    "Z": "proident dolor dolore consectetur culpa",
-                                    "K": "anim dolore Excepteur dolor"
+                                    "0": "amet fugiat",
+                                    "f": "Excepteur veniam nostrud amet aute",
+                                    "P": "Duis",
+                                    "S": "ut exercitation ullamco quis voluptate",
+                                    "y": "elit commodo incididunt dolore dolore",
+                                    "d": "nulla labore aute consectetur occaecat"
                                 }
                             }
-                        ],
+                        ]
+                    },
+                    {
+                        "est1": "non ea",
+                        "labore1": -19472551.345825195,
+                        "ad_c": false,
+                        "exercitationcd": 57240581.51245117,
+                        "officia_926": 61904549,
+                        "doe62": "quis in reprehenderit",
+                        "Ut08": "aute mollit",
                         "bots": [
                             {
-                                "hostUserId": "et dolor laboris ut",
-                                "name": "adipisicing Lorem ea",
-                                "aiShortName": "in",
-                                "aiVersion": "nostrud",
+                                "hostUserId": "Excepteur ut minim id voluptate",
+                                "name": "est in nostrud",
+                                "aiShortName": "in exercitation nostrud"
+                            },
+                            {
+                                "hostUserId": "aute dolore qui dolor sit",
+                                "name": "exercitation Lorem Duis pariatur deserunt",
+                                "aiShortName": "occaecat nostrud sunt enim elit",
+                                "aiVersion": "Lorem esse sint",
                                 "aiOptions": {
-                                    "m%LrM": "consequat culpa nisi voluptate reprehenderit",
-                                    "!c7C%": "eiusmod aliquip occaecat"
+                                    "": "non",
+                                    ":": "velit",
+                                    "vQyhX6k\\ZS": "enim et in"
                                 }
                             },
                             {
-                                "hostUserId": "tempor id ex",
-                                "name": "qui fugiat deserunt laboris sint",
-                                "aiShortName": "consectetur dolor",
-                                "aiVersion": "laborum et",
+                                "hostUserId": "ut magna enim consectetur",
+                                "name": "exercitation cillum dolor minim ex",
+                                "aiShortName": "adipisicing voluptate officia occaecat",
+                                "aiVersion": "enim ea in",
                                 "aiOptions": {
-                                    "": "laboris nulla",
-                                    "QUK~": "cupidatat aliquip deserunt incididunt eiusmod",
-                                    "Ut": "pariatur",
-                                    "_;(1;jaq": "consectetur labore"
+                                    "": "aliquip deserunt do elit",
+                                    "^d#e-1Qht>": "pariatur aute laboris velit ea",
+                                    "Jpnos)\"": "esse exercitation occaecat nisi eu",
+                                    ";F>5": "ut dolor qui adipisicing",
+                                    "&qz-vGVg": "fugiat incididunt"
                                 }
                             },
                             {
-                                "hostUserId": "laborum minim Excepteur officia",
-                                "name": "proident nostrud enim ullamco consequat",
-                                "aiShortName": "Duis sunt",
-                                "aiVersion": "non laborum consequat",
-                                "aiOptions": {
-                                    "O8`xZm^j?J": "quis esse magna eiusmod ullamco",
-                                    "/oP!": "ipsum"
-                                }
-                            },
-                            {
-                                "hostUserId": "ut minim et velit cillum",
-                                "aiShortName": "esse dolore"
+                                "hostUserId": "Lorem eu occaecat",
+                                "name": "voluptate non",
+                                "aiShortName": "nisi",
+                                "aiVersion": "in quis"
                             }
                         ],
-                        "advantage": 41728853.596670866,
-                        "incomeMultiplier": 30292522.90725708,
-                        "faction": "laboris magna deserunt ex",
-                        "color": {
-                            "r": 0.7708589434623718,
-                            "g": 0.9787599444389343,
-                            "b": 0.40771234035491943
-                        },
-                        "startPos": {
-                            "x": 78453732,
-                            "y": 719857
-                        },
+                        "advantage": 31558131.48721218,
+                        "incomeMultiplier": 43419730.66329956,
+                        "faction": "labore qui exercitation eiusmod nulla",
                         "customProperties": {
-                            "2": "cillum sed in"
-                        }
-                    },
-                    {
-                        "sint38e": -32484913,
-                        "ut1": -37943852,
-                        "nisi_2": 40031147.00317383,
-                        "amet1": 82158851,
-                        "aliquip_0_": "eu",
-                        "in_2": "dolore proident labore voluptate",
-                        "players": [
-                            {
-                                "userId": "351",
-                                "name": "irure",
-                                "password": "et sed nostrud sint anim",
-                                "rank": 87354160,
-                                "countryCode": "qui",
-                                "customProperties": {
-                                    "0": "Lorem quis deserunt ea amet",
-                                    "A": "sunt ullamco dolor nisi adipisicing",
-                                    "K": "esse ipsum labore et",
-                                    "f": "reprehenderit aliquip"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "reprehenderit Excepteur minim elit",
-                                "password": "fugiat ut nisi",
-                                "rank": -65287555,
-                                "countryCode": "anim laboris"
-                            }
-                        ],
-                        "bots": [],
-                        "faction": "culpa",
-                        "customProperties": {
-                            "r": "nisi irure",
-                            "q": "commodo",
-                            "g": "nulla in commodo minim culpa"
-                        }
-                    },
-                    {
-                        "players": [
-                            {
-                                "userId": "351",
-                                "name": "labore",
-                                "password": "aliquip eiusmod enim eu",
-                                "rank": 86998046,
-                                "countryCode": "in in minim",
-                                "customProperties": {
-                                    "8": "magna id labore",
-                                    "F": "in",
-                                    "b": "nostrud in",
-                                    "L": "cupidatat minim dolor",
-                                    "p": "sint",
-                                    "y": "sunt"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "irure est aliquip occaecat",
-                                "password": "nostrud consectetur Lorem",
-                                "rank": 80332888,
-                                "countryCode": "enim elit",
-                                "customProperties": {
-                                    "D": "irure minim ullamco",
-                                    "_": "dolore sunt aute qui",
-                                    "L": "ut Ut labore"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "magna",
-                                "password": "non",
-                                "countryCode": "tempor laboris Excepteur"
-                            },
-                            {
-                                "userId": "351",
-                                "name": "exercitation aliquip",
-                                "password": "pariatur qui",
-                                "rank": 69425679,
-                                "countryCode": "dolore fugiat magna",
-                                "customProperties": {
-                                    "v": "velit sit quis esse Duis",
-                                    "y": "Ut incididunt"
-                                }
-                            }
-                        ],
-                        "bots": [
-                            {
-                                "hostUserId": "ex sit Excepteur consequat",
-                                "name": "ipsum in elit dolor",
-                                "aiShortName": "laborum in",
-                                "aiVersion": "voluptate"
-                            },
-                            {
-                                "hostUserId": "velit Duis ex consectetur id",
-                                "name": "veniam aliquip dolor ut voluptate",
-                                "aiShortName": "anim exercitation Duis",
-                                "aiOptions": {
-                                    "N>9?S ": "aute labore",
-                                    "F|{OiNzMa": "non sed labore"
-                                }
-                            }
-                        ],
-                        "advantage": 18509935.517802,
-                        "incomeMultiplier": 74695497.75123596,
-                        "faction": "sit ipsum in",
-                        "color": {
-                            "r": 0.7969751358032227,
-                            "g": 0.9345782399177551,
-                            "b": 0.9266147613525391
-                        },
-                        "startPos": {
-                            "x": 39919460,
-                            "y": -93218935
-                        },
-                        "customProperties": {
-                            "c": "tempor",
-                            "f": "tempor in",
-                            "r": "labore"
+                            "u": "ullamco nulla ut"
                         }
                     }
                 ],
                 "startBox": {
-                    "top": 0.28107714653015137,
-                    "bottom": 0.7685254216194153,
-                    "left": 0.6288118958473206,
-                    "right": 0.8590249419212341
+                    "top": 0.8238168358802795,
+                    "bottom": 0.35973817110061646,
+                    "left": 0.6329572200775146,
+                    "right": 0.7333940267562866
                 },
                 "allies": [
-                    78389538,
-                    11048806,
-                    -1209486
+                    92635513,
+                    -15340543
                 ],
                 "customProperties": {
-                    "I": "pariatur",
-                    "w": "commodo",
-                    "T": "nisi sunt laboris Duis dolor",
-                    "d": "sed esse"
+                    "F": "aliquip voluptate quis",
+                    "m": "aliquip velit nulla anim enim",
+                    "z": "exercitation sit Excepteur pariatur"
                 }
             },
             {
                 "teams": [
                     {
-                        "enime_8": -45046056,
-                        "anim_25_": 65835285.18676758,
-                        "tempor_d89": "sunt deserunt Lorem pariatur",
+                        "bots": [],
+                        "advantage": 62393998.72367144,
+                        "incomeMultiplier": 28510475.158691406
+                    },
+                    {
+                        "veniam_2c8": "sunt laboris id nisi ullamco",
+                        "Excepteur2": -70928192.13867188,
                         "players": [
                             {
                                 "userId": "351",
-                                "name": "dolore",
-                                "password": "pariatur in magna",
-                                "rank": 61834610,
-                                "countryCode": "minim proident cillum dolore",
-                                "customProperties": {
-                                    "p": "minim eiusmod cupidatat",
-                                    "c": "reprehenderit do labore amet"
-                                }
+                                "name": "aliquip",
+                                "password": "aliquip esse",
+                                "rank": 68030334,
+                                "countryCode": "cillum"
                             },
                             {
                                 "userId": "351",
-                                "name": "ullamco ut reprehenderit esse nulla",
-                                "password": "reprehenderit sint commodo ut",
-                                "rank": 66087652,
-                                "countryCode": "exercitation et",
-                                "customProperties": {
-                                    "0": "enim magna et",
-                                    "W": "magna aliqua commodo",
-                                    "K": "dolor Ut enim ut"
-                                }
+                                "name": "sint",
+                                "password": "cupidatat anim voluptate",
+                                "rank": -91833401,
+                                "countryCode": "dolor et deserunt ad"
                             },
                             {
                                 "userId": "351",
-                                "name": "dolor elit cupidatat culpa",
-                                "password": "reprehenderit ipsum Lorem adipisicing deserunt",
-                                "rank": 37372768,
-                                "countryCode": "qui tempor",
-                                "customProperties": {
-                                    "2": "dolore ut dolor laboris in",
-                                    "i": "id Excepteur culpa aute",
-                                    "R": "magna anim id sint velit",
-                                    "-": "irure amet consectetur deserunt"
-                                }
+                                "name": "cupidatat qui",
+                                "password": "deserunt Excepteur cillum nisi"
                             },
                             {
                                 "userId": "351",
-                                "name": "sed quis Excepteur",
-                                "password": "ea aute Excepteur in esse",
-                                "countryCode": "voluptate esse non",
-                                "customProperties": {
-                                    "9": "in occaecat nulla cillum",
-                                    "z": "irure labore ea consectetur voluptate"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "quis ullamco exercitation dolore",
-                                "password": "est",
-                                "rank": -39389122,
-                                "countryCode": "velit voluptate cillum quis commodo",
-                                "customProperties": {
-                                    "r": "qui dolor exercitation incididunt",
-                                    "_": "consequat mollit enim"
-                                }
+                                "name": "dolore magna",
+                                "password": "incididunt fugiat"
                             }
                         ],
                         "bots": [
+                            {
+                                "hostUserId": "velit laborum dolore id",
+                                "name": "eiusmod anim consequat in ad",
+                                "aiShortName": "id",
+                                "aiVersion": "dolore officia mollit esse",
+                                "aiOptions": {
+                                    "8Q": "laboris anim",
+                                    "4|9rv]": "sint exercitation dolor ipsum"
+                                }
+                            },
+                            {
+                                "hostUserId": "Excepteur ut",
+                                "name": "do non elit",
+                                "aiShortName": "amet pariatur commodo irure",
+                                "aiVersion": "dolore"
+                            },
+                            {
+                                "hostUserId": "ipsum est qui",
+                                "name": "cillum dolor",
+                                "aiShortName": "quis ad in",
+                                "aiVersion": "proident aliquip",
+                                "aiOptions": {
+                                    "KJ:R)D": "nisi",
+                                    ".Vcr:#\\ev": "commodo irure",
+                                    "'": "Lorem velit dolore",
+                                    "7pP": "cillum do",
+                                    ".6": "exercitation"
+                                }
+                            }
+                        ],
+                        "advantage": 91320562.27587652,
+                        "color": {
+                            "r": 0.8799862861633301,
+                            "g": 0.18512696027755737,
+                            "b": 0.6217944622039795
+                        },
+                        "startPos": {
+                            "x": 90870941,
+                            "y": -49343312
+                        },
+                        "customProperties": {
+                            "8": "dolor veniam",
+                            "o": "eu sed qui ut voluptate",
+                            "-": "ut commodo"
+                        }
+                    },
+                    {
+                        "players": [
+                            {
+                                "userId": "351",
+                                "name": "enim",
+                                "password": "sunt laborum",
+                                "countryCode": "culpa qui Lorem"
+                            },
+                            {
+                                "userId": "351",
+                                "name": "do",
+                                "password": "veniam eu Duis",
+                                "countryCode": "esse ipsum"
+                            }
+                        ],
+                        "bots": [
+                            {
+                                "hostUserId": "cillum sed ad",
+                                "name": "nulla nostrud exercitation",
+                                "aiShortName": "labore amet elit nulla ut",
+                                "aiVersion": "non sed do in",
+                                "aiOptions": {
+                                    "B": "irure sit id"
+                                }
+                            },
+                            {
+                                "hostUserId": "Excepteur deserunt",
+                                "name": "enim",
+                                "aiShortName": "enim",
+                                "aiVersion": "sunt in",
+                                "aiOptions": {
+                                    "w:6": "anim laboris mollit",
+                                    "B`S": "Ut ut eu"
+                                }
+                            },
+                            {
+                                "hostUserId": "quis laboris ut tempor",
+                                "aiShortName": "sint ea",
+                                "aiOptions": {
+                                    "ZB-": "in est"
+                                }
+                            },
                             {
                                 "hostUserId": "commodo",
-                                "name": "ad velit aliqua",
-                                "aiShortName": "fugiat",
-                                "aiVersion": "magna esse",
+                                "name": "laboris Ut",
+                                "aiShortName": "dolor esse reprehenderit veniam",
+                                "aiVersion": "fugiat labore culpa",
                                 "aiOptions": {
-                                    "5q": "et mollit anim id Excepteur",
-                                    "NE7h4*": "Lorem elit id",
-                                    "+*": "Duis",
-                                    "fgWUu": "ullamco"
+                                    "Af@UmI|f": "sint do Ut exercitation",
+                                    "B1MHx:sP": "ipsum"
+                                }
+                            },
+                            {
+                                "hostUserId": "incididunt laborum occaecat in",
+                                "name": "sunt",
+                                "aiShortName": "voluptate nisi",
+                                "aiVersion": "ipsum",
+                                "aiOptions": {
+                                    "FkBt~.TSY": "in sint occaecat ex",
+                                    "`": "sunt ipsum"
                                 }
                             }
                         ],
-                        "incomeMultiplier": 50330251.45530701,
+                        "advantage": 69496851.85446864,
+                        "incomeMultiplier": 27090340.852737427,
+                        "faction": "ut laborum dolore",
+                        "color": {
+                            "r": 0.6955923438072205,
+                            "g": 0.8761151432991028,
+                            "b": 0.8513438701629639
+                        },
                         "startPos": {
-                            "x": 21252453,
-                            "y": -38358724
+                            "x": 19403923,
+                            "y": 69997204
                         },
                         "customProperties": {
-                            "3": "magna laborum",
-                            "t": "anim magna",
-                            "U": "esse sint aliqua labore",
-                            "x": "reprehenderit in proident anim ullamco",
-                            "o": "mollit fugiat aliqua ullamco",
-                            "L": "Ut"
+                            "I": "quis",
+                            "a": "aliquip",
+                            "_": "pariatur aute",
+                            "i": "et occaecat Ut"
                         }
                     },
                     {
-                        "Excepteur_06": 76332938,
-                        "velit03f": 17054271.697998047,
-                        "ipsumd4": 13666522,
-                        "culpa_11": -22290515.899658203,
-                        "laborum_5": true,
-                        "players": [
-                            {
-                                "userId": "351",
-                                "name": "sunt commodo",
-                                "password": "tempor",
-                                "rank": -43418074,
-                                "countryCode": "deserunt et ex sunt esse",
-                                "customProperties": {
-                                    "9": "labore aliqua magna",
-                                    "w": "Ut voluptate aliqua",
-                                    "g": "eu ea culpa tempor commodo",
-                                    "o": "sit",
-                                    "T": "ipsum",
-                                    "k": "eu veniam ad sit dolor"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "Ut",
-                                "password": "in Ut tempor sed sint",
-                                "rank": 97955394,
-                                "countryCode": "in cupidatat id dolore aliqua",
-                                "customProperties": {
-                                    "j": "Duis aliqua"
-                                }
-                            },
-                            {
-                                "userId": "351",
-                                "name": "aliqua nisi",
-                                "password": "nulla incididunt"
-                            },
-                            {
-                                "userId": "351",
-                                "name": "ut officia sunt",
-                                "password": "deserunt in culpa",
-                                "rank": 82602585
-                            }
-                        ],
-                        "faction": "velit magna adipisicing fugiat elit",
-                        "startPos": {
-                            "x": 30319691,
-                            "y": 39152897
-                        }
-                    },
-                    {
-                        "dolor_81": "aliqua",
-                        "cupidatatc_": -65298104.28619385,
-                        "laboris15c": true,
+                        "deserunt_5_": "ipsum reprehenderit",
+                        "deserunt7c8": -23472332.95440674,
+                        "velitec": true,
+                        "Excepteur_4": -97818398.47564697,
+                        "fugiata": -15203870,
+                        "et1": "eiusmod",
                         "bots": [
                             {
-                                "hostUserId": "cupidatat proident irure",
-                                "name": "eiusmod",
-                                "aiShortName": "cillum sed",
-                                "aiVersion": "elit",
+                                "hostUserId": "quis Lorem ea incididunt Excepteur",
+                                "name": "sint",
+                                "aiShortName": "do fugiat",
+                                "aiVersion": "non ipsum",
                                 "aiOptions": {
-                                    "d!QA >EHf*": "sed",
-                                    "E_": "id",
-                                    "%d4v-_IF": "Duis aute sit minim eiusmod"
+                                    "p": "minim ad ullamco adipisicing",
+                                    "k&j13p%": "ut",
+                                    ")Df~": "enim ullamco laboris consectetur",
+                                    "-1#.ad": "elit id sint amet"
                                 }
                             },
                             {
-                                "hostUserId": "deserunt sunt",
-                                "name": "consequat non",
-                                "aiShortName": "exercitation id",
-                                "aiVersion": "esse",
+                                "hostUserId": "ea sed eu elit Lorem",
+                                "name": "esse",
+                                "aiShortName": "in do eu",
+                                "aiVersion": "aute",
                                 "aiOptions": {
-                                    "-G,bV/xg+k": "amet reprehenderit ea sed qui",
-                                    "t*t^/FDlM": "anim cupidatat eu ad"
+                                    "-O+p3T": "consectetur in esse",
+                                    "P": "dolore magna consectetur velit",
+                                    "K<": "nostrud Ut incididunt consectetur sint",
+                                    ".>-?|": "minim do",
+                                    "s": "laboris do nostrud",
+                                    "lU\"Dq-M^}1": "ullamco Excepteur nisi est voluptate"
                                 }
+                            },
+                            {
+                                "hostUserId": "nostrud commodo consequat ea",
+                                "name": "do",
+                                "aiShortName": "labore in tempor nisi",
+                                "aiVersion": "nulla eiusmod"
+                            },
+                            {
+                                "hostUserId": "sint labore elit",
+                                "name": "amet pariatur exercitation Lorem consequat",
+                                "aiShortName": "non",
+                                "aiVersion": "ex non laboris Lorem"
+                            },
+                            {
+                                "hostUserId": "ea sit",
+                                "aiShortName": "officia Excepteur ut",
+                                "aiVersion": "commodo cillum laborum deserunt"
                             }
                         ],
-                        "advantage": 97354686.23377025,
-                        "incomeMultiplier": 97282755.37490845,
-                        "faction": "nulla elit aliquip dolor laboris",
                         "color": {
-                            "r": 0.19402176141738892,
-                            "g": 0.04647409915924072,
-                            "b": 0.0016859769821166992
+                            "r": 0.11609327793121338,
+                            "g": 0.44902563095092773,
+                            "b": 0.6314798593521118
                         },
                         "startPos": {
-                            "x": 30237568,
-                            "y": 94084394
+                            "x": -45151186,
+                            "y": -77344728
                         },
                         "customProperties": {
-                            "6": "id laborum veniam aliquip et",
-                            "F": "Ut incididunt sunt"
+                            "4": "do veniam dolore ut",
+                            "O": "elit dolor",
+                            "g": "nulla aute exercitation ut incididunt",
+                            "P": "enim anim Excepteur in Duis",
+                            "r": "sint esse"
                         }
-                    },
-                    {
-                        "magna_b": -19572138.786315918,
-                        "et__88": 58038759.23156738,
-                        "qui_f": true,
-                        "magna_87": -93291056.15615845,
-                        "ipsum7e0": "Duis",
-                        "ea__27": 73404645,
-                        "etaf": true,
-                        "advantage": 65392928.96949631
                     }
                 ],
                 "startBox": {
-                    "top": 0.10845679044723511,
-                    "bottom": 0.06546223163604736,
-                    "left": 0.34359389543533325,
-                    "right": 0.9827779531478882
+                    "top": 0.7144629955291748,
+                    "bottom": 0.9325921535491943,
+                    "left": 0.1038285493850708,
+                    "right": 0.021329224109649658
                 },
                 "allies": [
-                    -86199642,
-                    -20416617,
-                    74512136,
-                    66814030,
-                    -24815977
-                ]
+                    -27914357,
+                    79878450,
+                    -49803221
+                ],
+                "customProperties": {
+                    "9": "aliquip sint occaecat",
+                    "m": "deserunt esse Excepteur elit nisi",
+                    "h": "labore officia velit Ut eu"
+                }
             },
             {
                 "teams": [
                     {
-                        "eub71": "fugiat officia ipsum consequat enim",
-                        "quis1": 51666021.3470459,
-                        "players": [],
-                        "bots": [],
-                        "advantage": 95466273.97771877,
-                        "incomeMultiplier": 49550586.93885803,
-                        "faction": "consequat cupidatat eu",
+                        "players": [
+                            {
+                                "userId": "351",
+                                "name": "dolore magna anim",
+                                "password": "reprehenderit sit",
+                                "rank": 94428850,
+                                "countryCode": "sunt dolore ea"
+                            },
+                            {
+                                "userId": "351",
+                                "name": "minim",
+                                "password": "velit ea adipisicing",
+                                "rank": -20955253,
+                                "countryCode": "est in aliquip"
+                            },
+                            {
+                                "userId": "351",
+                                "name": "laboris labore deserunt dolor",
+                                "password": "officia exercitation sint",
+                                "rank": -94275380,
+                                "countryCode": "Duis proident"
+                            },
+                            {
+                                "userId": "351",
+                                "name": "proident quis incididunt eiusmod",
+                                "password": "irure",
+                                "rank": 50339222,
+                                "countryCode": "reprehenderit ex"
+                            },
+                            {
+                                "userId": "351",
+                                "name": "in",
+                                "password": "enim culpa dolor",
+                                "rank": 39291346,
+                                "countryCode": "consequat cupidatat"
+                            }
+                        ],
+                        "bots": [
+                            {
+                                "hostUserId": "incididunt Lorem esse sit",
+                                "aiShortName": "velit dolore",
+                                "aiVersion": "quis esse nostrud"
+                            },
+                            {
+                                "hostUserId": "aliquip labore est",
+                                "name": "sunt sint",
+                                "aiShortName": "Duis",
+                                "aiVersion": "Ut dolor id consectetur",
+                                "aiOptions": {
+                                    "-O1": "commodo veniam sed sit nostrud",
+                                    "; bF>~`": "do consectetur eiusmod",
+                                    "/Q*mTJt": "aliquip ea anim"
+                                }
+                            }
+                        ],
                         "color": {
-                            "r": 0.030131816864013672,
-                            "g": 0.4862546920776367,
-                            "b": 0.8999290466308594
-                        },
-                        "startPos": {
-                            "x": -37807942,
-                            "y": -63565481
+                            "r": 0.6052451133728027,
+                            "g": 0.24191826581954956,
+                            "b": 0.600779116153717
                         },
                         "customProperties": {
-                            "2": "proident laboris",
-                            "s": "consectetur sunt deserunt ea laborum",
-                            "f": "Excepteur"
+                            "n": "culpa proident esse eu",
+                            "G": "dolor officia in et cillum",
+                            "X": "quis in"
+                        }
+                    },
+                    {
+                        "players": [],
+                        "bots": [],
+                        "advantage": 56324904.720338285,
+                        "incomeMultiplier": 39450055.36079407,
+                        "faction": "reprehenderit eu in",
+                        "color": {
+                            "r": 0.4457169771194458,
+                            "g": 0.8894228339195251,
+                            "b": 0.060890913009643555
+                        },
+                        "startPos": {
+                            "x": 63525129,
+                            "y": 50827313
+                        },
+                        "customProperties": {
+                            "b": "commodo in do",
+                            "F": "incididunt laborum adipisicing elit sed"
+                        }
+                    },
+                    {
+                        "culpaf": 52901732,
+                        "in_8": 71142935.75286865,
+                        "commodo3_": "laborum mollit commodo consectetur Ut",
+                        "laborum8c3": -85200954,
+                        "Excepteur_7": "et",
+                        "reprehenderitcfe": false,
+                        "faction": "proident voluptate",
+                        "color": {
+                            "r": 0.7716793417930603,
+                            "g": 0.11285501718521118,
+                            "b": 0.05550551414489746
+                        }
+                    },
+                    {
+                        "ut_fbf": 68046343.3265686,
+                        "Ut4": true,
+                        "fugiat_16_": true,
+                        "et_f": 24627101.4213562,
+                        "faction": "Lorem sit ea dolor"
+                    },
+                    {
+                        "exercitation_b77": -34544873.23760986,
+                        "qui_": -68357087,
+                        "exercitation_6": "reprehenderit Ut ad id",
+                        "aliqua_0f": 43052065,
+                        "elit_382": -38661134.243011475,
+                        "players": [
+                            {
+                                "userId": "351",
+                                "name": "nulla",
+                                "password": "aliquip et dolor",
+                                "rank": -50772012,
+                                "countryCode": "ut esse eu nostrud"
+                            },
+                            {
+                                "userId": "351",
+                                "name": "eu ut culpa",
+                                "password": "ex et labore nulla proident",
+                                "rank": -60376907,
+                                "countryCode": "sed cillum in do aliquip"
+                            }
+                        ],
+                        "faction": "in eu irure exercitation",
+                        "color": {
+                            "r": 0.7918509244918823,
+                            "g": 0.7094137072563171,
+                            "b": 0.360107958316803
+                        },
+                        "startPos": {
+                            "x": -27424848,
+                            "y": -48745418
                         }
                     }
                 ],
                 "startBox": {
-                    "top": 0.5118542313575745,
-                    "bottom": 0.5133270621299744,
-                    "left": 0.45150935649871826,
-                    "right": 0.49201148748397827
+                    "top": 0.9834874868392944,
+                    "bottom": 0.9187695980072021,
+                    "left": 0.9328612685203552,
+                    "right": 0.11081290245056152
                 },
-                "customProperties": {
-                    "R": "nostrud",
-                    "C": "consectetur ut",
-                    "o": "deserunt veniam Ut amet"
-                }
-            },
-            {
-                "teams": [
-                    {
-                        "idb": false,
-                        "magnaedd": -65702235.69869995,
-                        "incf": -57787765,
-                        "quis2c7": false,
-                        "players": [],
-                        "color": {
-                            "r": 0.8442392349243164,
-                            "g": 0.9555021524429321,
-                            "b": 0.37365663051605225
-                        }
-                    },
-                    {
-                        "dolore_58f": "pariatur",
-                        "proident7": "irure sed anim",
-                        "Utad4": false,
-                        "adipisicing_5fd": false,
-                        "sunt_4": "exercitation ullamco Ut in enim",
-                        "eiusmod_8c": 55503582.95440674,
-                        "deserunt_c": 86534464,
-                        "pariatur44": "dolore est sed",
-                        "sit_807": -94358587.26501465,
-                        "sint__d": 72782969
-                    },
-                    {
-                        "players": [
-                            {
-                                "userId": "351",
-                                "name": "Excepteur laboris id ut non",
-                                "password": "consequat velit laborum",
-                                "rank": -376725,
-                                "countryCode": "aliquip sint ut",
-                                "customProperties": {
-                                    "7": "in quis cillum",
-                                    "r": "occaecat pariatur minim tempor",
-                                    "_": "qui velit aliquip",
-                                    "Q": "laboris ipsum",
-                                    "v": "reprehenderit"
-                                }
-                            }
-                        ],
-                        "incomeMultiplier": 19043487.310409546,
-                        "color": {
-                            "r": 0.10580366849899292,
-                            "g": 0.0897781252861023,
-                            "b": 0.4687536954879761
-                        },
-                        "customProperties": {
-                            "3": "sint labore esse",
-                            "7": "ea dolore nostrud"
-                        }
-                    },
-                    {
-                        "players": [
-                            {
-                                "userId": "351",
-                                "name": "ad",
-                                "password": "aliqua Ut non ipsum enim"
-                            }
-                        ],
-                        "bots": [],
-                        "advantage": 67751645.71938658,
-                        "incomeMultiplier": 69966411.59057617,
-                        "faction": "Lorem elit aute velit",
-                        "color": {
-                            "r": 0.5806702375411987,
-                            "g": 0.07415169477462769,
-                            "b": 0.8413802981376648
-                        },
-                        "startPos": {
-                            "x": 94017101,
-                            "y": 2833247
-                        },
-                        "customProperties": {
-                            "7": "id",
-                            "9": "amet pariatur",
-                            "R": "aliquip",
-                            "Y": "mollit voluptate",
-                            "H": "ea sed dolore ut"
-                        }
-                    }
-                ],
-                "customProperties": {
-                    "t": "dolore nostrud veniam laboris",
-                    "W": "culpa reprehenderit ea eu Ut",
-                    "b": "incididunt Ut pariatur eiusmod laborum"
-                }
+                "allies": [
+                    72092867
+                ]
             }
         ],
-        "spectators": [
-            {
-                "userId": {},
-                "name": "fugiat nulla aliqua",
-                "password": "id labore Duis sit non",
-                "rank": -86037589,
-                "countryCode": "dolore eiusmod reprehenderit"
-            },
-            {
-                "userId": {},
-                "name": "aliquip elit qui Duis officia",
-                "password": "deserunt laboris"
-            },
-            {
-                "userId": {},
-                "name": "Ut Duis Excepteur cupidatat",
-                "password": "irure mollit sit dolore",
-                "rank": 16520166,
-                "countryCode": "eiusmod ut"
-            },
-            {
-                "userId": {},
-                "name": "enim mollit anim adipisicing",
-                "password": "elit irure"
-            }
-        ],
+        "spectators": [],
         "gameOptions": {
-            "bJ&e@O_?": "exercitation",
-            "*S=c^50nV": "commodo minim occaecat cupidatat mollit",
-            "}R0-D2^'Lx": "fugiat magna aliquip et Lorem"
+            "o|9/w#{eV": "sunt",
+            "}5Z": "minim"
         },
         "restrictions": {
-            "._": 24568861,
-            "\\i&c.$%BR": 88750166,
-            "U}edobl": 90776211,
-            "nP7|.Nf": 21088242,
-            "$7<9": 84207023
+            "A.JiM": 76467061,
+            "Ucma": 22773426
         },
         "luamsgRegexp": ".+?"
     }
@@ -2547,7 +2417,7 @@ Inform the server of battle updates. Each timestamp is guaranteed to be unique f
             "title": "AutohostUpdateEventData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "time": { "$ref": "#/definitions/unixTime" },
                 "update": {
                     "anyOf": [
@@ -2744,10 +2614,14 @@ Inform the server of battle updates. Each timestamp is guaranteed to be unique f
     "messageId": "voluptate nulla veniam",
     "commandId": "autohost/update",
     "data": {
-        "battleId": "585472d0-6fc6-dd03-6c31-07c80e164f73",
+        "battleId": "fugiat anim",
         "time": 1705432698000000,
         "update": {
-            "type": "engine_quit"
+            "type": "player_chat",
+            "userId": "351",
+            "message": "et cupidatat",
+            "destination": "player",
+            "toUserId": "351"
         }
     }
 }

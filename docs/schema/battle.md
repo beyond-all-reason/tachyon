@@ -44,11 +44,11 @@ Sent to all players and spectators involved in a battle when it ends.
                         "type": "object",
                         "properties": {
                             "userId": { "$ref": "#/definitions/userId" },
-                            "allyTeamId": { "type": "string" },
+                            "allyTeam": { "type": "string" },
                             "team": { "type": "string" },
                             "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeamId", "team", "player"]
+                        "required": ["userId", "allyTeam", "team", "player"]
                     }
                 },
                 "spectators": {
@@ -63,7 +63,7 @@ Sent to all players and spectators involved in a battle when it ends.
                 },
                 "winningAllyTeamIds": {
                     "type": "array",
-                    "items": { "type": "integer" }
+                    "items": { "type": "string" }
                 }
             },
             "required": [
@@ -93,13 +93,13 @@ Sent to all players and spectators involved in a battle when it ends.
         "players": [
             {
                 "userId": "351",
-                "allyTeamId": "in",
+                "allyTeam": "in",
                 "team": "aliqua",
                 "player": "do"
             },
             {
                 "userId": "351",
-                "allyTeamId": "deserunt ex non",
+                "allyTeam": "deserunt ex non",
                 "team": "fugiat Excepteur esse mollit ad",
                 "player": "ex in"
             }
@@ -116,8 +116,8 @@ Sent to all players and spectators involved in a battle when it ends.
             }
         ],
         "winningAllyTeamIds": [
-            -87574387,
-            17768216
+            "in sit eu",
+            "ullamco"
         ]
     }
 }
@@ -138,14 +138,14 @@ export interface BattleEndedEventData {
     battleId: string;
     players: {
         userId: UserId;
-        allyTeamId: string;
+        allyTeam: string;
         team: string;
         player: string;
     }[];
     spectators: {
         userId: UserId;
     }[];
-    winningAllyTeamIds: number[];
+    winningAllyTeamIds: string[];
 }
 ```
 ---
