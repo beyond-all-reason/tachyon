@@ -735,7 +735,7 @@
                     "title": "AutohostAddPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userId": { "$ref": "#/definitions/userId" },
                         "name": { "type": "string" },
                         "password": { "type": "string" }
@@ -882,7 +882,7 @@
                     "title": "AutohostKickPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userId": { "$ref": "#/definitions/userId" }
                     },
                     "required": ["battleId", "userId"]
@@ -952,9 +952,7 @@
                 "data": {
                     "title": "AutohostKillRequestData",
                     "type": "object",
-                    "properties": {
-                        "battleId": { "type": "string", "format": "uuid" }
-                    },
+                    "properties": { "battleId": { "type": "string" } },
                     "required": ["battleId"]
                 }
             },
@@ -1023,7 +1021,7 @@
                     "title": "AutohostMutePlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userId": { "$ref": "#/definitions/userId" },
                         "chat": { "type": "boolean" },
                         "draw": { "type": "boolean" }
@@ -1096,7 +1094,7 @@
                     "title": "AutohostSendCommandRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "command": { "type": "string" },
                         "arguments": {
                             "type": "array",
@@ -1171,7 +1169,7 @@
                     "title": "AutohostSendMessageRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "message": { "type": "string", "maxLength": 127 }
                     },
                     "required": ["battleId", "message"]
@@ -1242,7 +1240,7 @@
                     "title": "AutohostSpecPlayersRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userIds": {
                             "type": "array",
                             "items": { "$ref": "#/definitions/userId" }
@@ -1316,7 +1314,7 @@
                     "title": "AutohostStartRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "engineVersion": {
                             "type": "string",
                             "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -1593,7 +1591,7 @@
                     "title": "AutohostUpdateEventData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "time": { "$ref": "#/definitions/unixTime" },
                         "update": {
                             "anyOf": [
@@ -1810,6 +1808,68 @@
                         }
                     },
                     "required": ["battleId", "time", "update"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "BattleEndedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "battle/ended" },
+                "data": {
+                    "title": "BattleEndedEventData",
+                    "type": "object",
+                    "properties": {
+                        "battleId": { "type": "string" },
+                        "players": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "allyTeam": { "type": "string" },
+                                    "team": { "type": "string" },
+                                    "player": { "type": "string" }
+                                },
+                                "required": [
+                                    "userId",
+                                    "allyTeam",
+                                    "team",
+                                    "player"
+                                ]
+                            }
+                        },
+                        "spectators": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": { "$ref": "#/definitions/userId" }
+                                },
+                                "required": ["userId"]
+                            }
+                        },
+                        "winningAllyTeamIds": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    },
+                    "required": [
+                        "battleId",
+                        "players",
+                        "spectators",
+                        "winningAllyTeamIds"
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Request to add a new player to the battle.",
     request: {
         data: Type.Object({
-            battleId: Type.String({ format: "uuid" }),
+            battleId: Type.String(),
             userId: Type.Ref("userId"),
             name: Type.String(),
             password: Type.String(),

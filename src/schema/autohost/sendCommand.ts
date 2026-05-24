@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Send a custom command for the autohost to execute.",
     request: {
         data: Type.Object({
-            battleId: Type.String({ format: "uuid" }),
+            battleId: Type.String(),
             command: Type.String(),
             arguments: Type.Optional(Type.Array(Type.String())),
         }),
