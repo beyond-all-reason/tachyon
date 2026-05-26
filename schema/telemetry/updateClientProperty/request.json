@@ -1,0 +1,38 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/telemetry/updateClientProperty/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "TelemetryUpdateClientPropertyRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "telemetry/updateClientProperty" },
+        "data": {
+            "title": "TelemetryUpdateClientPropertyRequestData",
+            "type": "object",
+            "properties": {
+                "propertyName": {
+                    "description": "Property key, e.g. 'window-mode', 'grid-keys'.",
+                    "type": "string",
+                    "maxLength": 128
+                },
+                "value": {
+                    "description": "Latest value, overwrites previous.",
+                    "type": "string",
+                    "maxLength": 512
+                },
+                "anonHash": {
+                    "description": "Unique install hash for unauthenticated users.",
+                    "type": "string"
+                }
+            },
+            "required": ["propertyName", "value"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}

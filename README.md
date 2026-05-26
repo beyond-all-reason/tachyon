@@ -101,6 +101,7 @@ Every event command contains these additional properties:
   - [messaging](docs/schema/messaging.md)
   - [party](docs/schema/party.md)
   - [system](docs/schema/system.md)
+  - [telemetry](docs/schema/telemetry.md)
   - [user](docs/schema/user.md)
 <!-- COMMAND_SCHEMA_PLACEHOLDER_END_DO_NOT_REMOVE -->
 

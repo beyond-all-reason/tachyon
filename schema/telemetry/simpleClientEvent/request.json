@@ -1,0 +1,29 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/telemetry/simpleClientEvent/request.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "TelemetrySimpleClientEventRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "telemetry/simpleClientEvent" },
+        "data": {
+            "title": "TelemetrySimpleClientEventRequestData",
+            "type": "object",
+            "properties": {
+                "eventName": { "type": "string", "maxLength": 128 },
+                "anonHash": {
+                    "description": "Unique install hash for unauthenticated users.",
+                    "type": "string"
+                }
+            },
+            "required": ["eventName"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}

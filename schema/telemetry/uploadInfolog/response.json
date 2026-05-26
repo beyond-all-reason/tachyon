@@ -1,0 +1,50 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/telemetry/uploadInfolog/response.json",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "TelemetryUploadInfologResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "TelemetryUploadInfologOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "telemetry/uploadInfolog" },
+                "status": { "const": "success" },
+                "data": {
+                    "title": "TelemetryUploadInfologOkResponseData",
+                    "type": "object",
+                    "properties": { "infoLogId": { "type": "integer" } },
+                    "required": ["infoLogId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status", "data"]
+        },
+        {
+            "title": "TelemetryUploadInfologFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "telemetry/uploadInfolog" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "payload_too_large",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}

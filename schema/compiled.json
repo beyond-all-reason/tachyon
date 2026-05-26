@@ -6952,6 +6952,352 @@
             ]
         },
         {
+            "title": "TelemetryComplexClientEventRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "telemetry/complexClientEvent" },
+                "data": {
+                    "title": "TelemetryComplexClientEventRequestData",
+                    "type": "object",
+                    "properties": {
+                        "eventName": { "type": "string", "maxLength": 128 },
+                        "eventData": {
+                            "description": "Arbitrary JSON payload, max 4096 bytes serialized.",
+                            "type": "object",
+                            "properties": {}
+                        },
+                        "anonHash": {
+                            "description": "Unique install hash for unauthenticated users.",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["eventName", "eventData"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "TelemetryComplexClientEventResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "TelemetryComplexClientEventOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": {
+                            "const": "telemetry/complexClientEvent"
+                        },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "TelemetryComplexClientEventFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": {
+                            "const": "telemetry/complexClientEvent"
+                        },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "TelemetrySimpleClientEventRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "telemetry/simpleClientEvent" },
+                "data": {
+                    "title": "TelemetrySimpleClientEventRequestData",
+                    "type": "object",
+                    "properties": {
+                        "eventName": { "type": "string", "maxLength": 128 },
+                        "anonHash": {
+                            "description": "Unique install hash for unauthenticated users.",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["eventName"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "TelemetrySimpleClientEventResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "TelemetrySimpleClientEventOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "telemetry/simpleClientEvent" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "TelemetrySimpleClientEventFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "telemetry/simpleClientEvent" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "TelemetryUpdateClientPropertyRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "telemetry/updateClientProperty" },
+                "data": {
+                    "title": "TelemetryUpdateClientPropertyRequestData",
+                    "type": "object",
+                    "properties": {
+                        "propertyName": {
+                            "description": "Property key, e.g. 'window-mode', 'grid-keys'.",
+                            "type": "string",
+                            "maxLength": 128
+                        },
+                        "value": {
+                            "description": "Latest value, overwrites previous.",
+                            "type": "string",
+                            "maxLength": 512
+                        },
+                        "anonHash": {
+                            "description": "Unique install hash for unauthenticated users.",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["propertyName", "value"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "TelemetryUpdateClientPropertyResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "TelemetryUpdateClientPropertyOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": {
+                            "const": "telemetry/updateClientProperty"
+                        },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "TelemetryUpdateClientPropertyFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": {
+                            "const": "telemetry/updateClientProperty"
+                        },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "TelemetryUploadInfologRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "telemetry/uploadInfolog" },
+                "data": {
+                    "title": "TelemetryUploadInfologRequestData",
+                    "type": "object",
+                    "properties": {
+                        "logType": {
+                            "description": "Type/category of the infolog, e.g. 'crash', 'replay-error'.",
+                            "type": "string",
+                            "maxLength": 64
+                        },
+                        "anonHash": {
+                            "description": "Unique install hash (used for both authed and anon users).",
+                            "type": "string"
+                        },
+                        "metadata": {
+                            "description": "Arbitrary metadata key-value pairs.",
+                            "type": "object",
+                            "properties": {}
+                        },
+                        "contents": {
+                            "description": "Base64-encoded, gzip-compressed log contents.",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["logType", "anonHash", "contents"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "TelemetryUploadInfologResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "TelemetryUploadInfologOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "telemetry/uploadInfolog" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "title": "TelemetryUploadInfologOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "infoLogId": { "type": "integer" }
+                            },
+                            "required": ["infoLogId"]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "TelemetryUploadInfologFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "telemetry/uploadInfolog" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "payload_too_large",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "UserInfoRequest",
             "tachyon": {
                 "source": "user",
