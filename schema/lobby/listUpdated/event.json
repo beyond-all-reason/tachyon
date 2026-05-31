@@ -31,6 +31,23 @@
                                         "mapName": { "type": "string" },
                                         "engineVersion": { "type": "string" },
                                         "gameVersion": { "type": "string" },
+                                        "areBossesEnabled": {
+                                            "type": "boolean"
+                                        },
+                                        "tags": {
+                                            "type": "object",
+                                            "patternProperties": {
+                                                "^.*$": {
+                                                    "anyOf": [
+                                                        {
+                                                            "type": "object",
+                                                            "properties": {}
+                                                        },
+                                                        { "type": "null" }
+                                                    ]
+                                                }
+                                            }
+                                        },
                                         "currentBattle": {
                                             "anyOf": [
                                                 {

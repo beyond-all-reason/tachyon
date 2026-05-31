@@ -34,6 +34,7 @@
                 "reason": {
                     "enum": [
                         "lobby_full",
+                        "banned",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

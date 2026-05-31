@@ -7,6 +7,13 @@ export const lobbyDetails = Type.Object(
         mapName: Type.String(),
         engineVersion: Type.String(),
         gameVersion: Type.String(),
+        gameOptions: Type.Record(
+            Type.String(),
+            Type.Object({
+                value: Type.String(),
+            }),
+            { description: "object indexed by the game option key" }
+        ),
         allyTeamConfig: Type.Record(
             Type.String(),
             Type.Object(
@@ -26,6 +33,8 @@ export const lobbyDetails = Type.Object(
                 }
             )
         ),
+        areBossesEnabled: Type.Boolean(),
+        bosses: Type.Record(Type.String(), Type.Object({})),
         players: Type.Record(
             Type.String(), // userId, using Type.Ref() generates a schema with only not: {}
             Type.Object({
@@ -91,6 +100,16 @@ export const lobbyDetails = Type.Object(
                 ),
                 until: Type.Ref("unixTime"),
             })
+        ),
+        voteHistory: Type.Optional(
+            Type.Record(
+                Type.String(), // Vote ID
+                Type.Object({
+                    vote: Type.Ref("voteActions"),
+                    outcome: Type.Ref("voteOutcomes"),
+                    finishedAt: Type.Ref("unixTime"),
+                })
+            )
         ),
     },
     { description: "The full state of a lobby", $id: "lobbyDetails" }

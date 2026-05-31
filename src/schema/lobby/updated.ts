@@ -18,6 +18,17 @@ export default defineEndpoint({
             mapName: Type.Optional(Type.String()),
             engineVersion: Type.Optional(Type.String()),
             gameVersion: Type.Optional(Type.String()),
+            gameOptions: Type.Optional(
+                Type.Record(
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            value: Type.String(),
+                        })
+                    )
+                )
+            ),
+            tags: Type.Optional(Type.Record(Type.String(), Nullable(Type.Object({})))),
             allyTeamConfig: Type.Optional(
                 Type.Record(
                     Type.String(),
@@ -49,6 +60,7 @@ export default defineEndpoint({
                     )
                 )
             ),
+            bosses: Type.Optional(Type.Record(Type.String(), Nullable(Type.Object({})))),
             players: Type.Optional(
                 Type.Record(
                     // this is a userId, but using Type.Ref("userId") leads to a schema with only: `not: {}`
@@ -148,6 +160,18 @@ export default defineEndpoint({
                             })
                         ),
                     })
+                )
+            ),
+            voteHistory: Type.Optional(
+                Type.Record(
+                    Type.String(), // Vote ID
+                    Nullable(
+                        Type.Object({
+                            vote: Type.Ref("voteActions"),
+                            outcome: Type.Ref("voteOutcomes"),
+                            finishedAt: Type.Ref("unixTime"),
+                        })
+                    )
                 )
             ),
         }),

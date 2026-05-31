@@ -16,7 +16,7 @@
             "title": "AutohostSendMessageRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "message": { "type": "string", "maxLength": 127 }
             },
             "required": ["battleId", "message"]

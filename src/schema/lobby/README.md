@@ -101,9 +101,17 @@ through `joinAllyTeam` or with the join queue), the server will automatically as
 `{"isReady": false, "assetStatus": "complete"}`. If this is incorrect the client should send a request to correct it.
 
 
+### Lobby bosses
+
+Lobbies can have "bosses", so that a player, or a group of friends, can setup a game just like they want
+with full control. When one or more boss are present in a lobby, some commands may be disabled for non-boss players.
+The creator of a lobby can choose to forbid bosses in the lobby to ensure all changes go through votes.
+This setting cannot be changed after creation.
+
+
 ### Lobby updates
 
-Any member can update most (any?) property of the lobby. Updates are all or nothing, if updating a proprety
+Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a proprety
 is not possible (invalid or forbidden), then no update take place.
 The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 

@@ -14,6 +14,23 @@
                 "newMapName": { "type": "string" }
             },
             "required": ["type", "newMapName"]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": { "const": "appointBoss" },
+                "bossId": { "$ref": "../definitions/userId.json" }
+            },
+            "required": ["type", "bossId"]
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": { "const": "kickban" },
+                "userId": { "$ref": "../definitions/userId.json" },
+                "banUntil": { "$ref": "../definitions/unixTime.json" }
+            },
+            "required": ["type", "userId"]
         }
     ]
 }

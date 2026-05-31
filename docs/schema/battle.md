@@ -2,7 +2,152 @@
 
 # Battle
 
+- [ended](#ended)
 - [start](#start)
+---
+
+## Ended
+
+Sent to all players and spectators involved in a battle when it ends.
+
+- Endpoint Type: **Event**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Event
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "BattleEndedEvent",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "event" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "battle/ended" },
+        "data": {
+            "title": "BattleEndedEventData",
+            "type": "object",
+            "properties": {
+                "battleId": { "type": "string" },
+                "players": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "allyTeam": { "type": "string" },
+                            "team": { "type": "string" },
+                            "player": { "type": "string" }
+                        },
+                        "required": ["userId", "allyTeam", "team", "player"]
+                    }
+                },
+                "spectators": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "userId": { "$ref": "#/definitions/userId" }
+                        },
+                        "required": ["userId"]
+                    }
+                },
+                "winningAllyTeamIds": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                }
+            },
+            "required": [
+                "battleId",
+                "players",
+                "spectators",
+                "winningAllyTeamIds"
+            ]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "event",
+    "messageId": "Duis ut sit laborum",
+    "commandId": "battle/ended",
+    "data": {
+        "battleId": "Excepteur proident Lorem",
+        "players": [
+            {
+                "userId": "351",
+                "allyTeam": "in",
+                "team": "aliqua",
+                "player": "do"
+            },
+            {
+                "userId": "351",
+                "allyTeam": "deserunt ex non",
+                "team": "fugiat Excepteur esse mollit ad",
+                "player": "ex in"
+            }
+        ],
+        "spectators": [
+            {
+                "userId": "351"
+            },
+            {
+                "userId": "351"
+            },
+            {
+                "userId": "351"
+            }
+        ],
+        "winningAllyTeamIds": [
+            "in sit eu",
+            "ullamco"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export type UserId = string;
+
+export interface BattleEndedEvent {
+    type: "event";
+    messageId: string;
+    commandId: "battle/ended";
+    data: BattleEndedEventData;
+}
+export interface BattleEndedEventData {
+    battleId: string;
+    players: {
+        userId: UserId;
+        allyTeam: string;
+        team: string;
+        player: string;
+    }[];
+    spectators: {
+        userId: UserId;
+    }[];
+    winningAllyTeamIds: string[];
+}
+```
 ---
 
 ## Start

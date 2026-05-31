@@ -16,7 +16,7 @@
             "title": "AutohostAddPlayerRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userId": { "$ref": "../../definitions/userId.json" },
                 "name": { "type": "string" },
                 "password": { "type": "string" }

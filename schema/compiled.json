@@ -157,6 +157,17 @@
                 "mapName": { "type": "string" },
                 "engineVersion": { "type": "string" },
                 "gameVersion": { "type": "string" },
+                "gameOptions": {
+                    "description": "object indexed by the game option key",
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": { "value": { "type": "string" } },
+                            "required": ["value"]
+                        }
+                    }
+                },
                 "allyTeamConfig": {
                     "type": "object",
                     "patternProperties": {
@@ -186,6 +197,13 @@
                             },
                             "required": ["startBox", "maxTeams", "teams"]
                         }
+                    }
+                },
+                "areBossesEnabled": { "type": "boolean" },
+                "bosses": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": { "type": "object", "properties": {} }
                     }
                 },
                 "players": {
@@ -315,6 +333,24 @@
                         "until": { "$ref": "#/definitions/unixTime" }
                     },
                     "required": ["id", "action", "initiator", "voters", "until"]
+                },
+                "voteHistory": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "type": "object",
+                            "properties": {
+                                "vote": { "$ref": "#/definitions/voteActions" },
+                                "outcome": {
+                                    "$ref": "#/definitions/voteOutcomes"
+                                },
+                                "finishedAt": {
+                                    "$ref": "#/definitions/unixTime"
+                                }
+                            },
+                            "required": ["vote", "outcome", "finishedAt"]
+                        }
+                    }
                 }
             },
             "required": [
@@ -323,7 +359,10 @@
                 "mapName",
                 "engineVersion",
                 "gameVersion",
+                "gameOptions",
                 "allyTeamConfig",
+                "areBossesEnabled",
+                "bosses",
                 "players",
                 "spectators",
                 "bots"
@@ -657,9 +696,27 @@
                         "newMapName": { "type": "string" }
                     },
                     "required": ["type", "newMapName"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "appointBoss" },
+                        "bossId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["type", "bossId"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "kickban" },
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "banUntil": { "$ref": "#/definitions/unixTime" }
+                    },
+                    "required": ["type", "userId"]
                 }
             ]
-        }
+        },
+        "voteOutcomes": { "enum": ["passed", "failed", "cancelled", "timeout"] }
     },
     "anyOf": [
         {
@@ -678,7 +735,7 @@
                     "title": "AutohostAddPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userId": { "$ref": "#/definitions/userId" },
                         "name": { "type": "string" },
                         "password": { "type": "string" }
@@ -825,7 +882,7 @@
                     "title": "AutohostKickPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userId": { "$ref": "#/definitions/userId" }
                     },
                     "required": ["battleId", "userId"]
@@ -895,9 +952,7 @@
                 "data": {
                     "title": "AutohostKillRequestData",
                     "type": "object",
-                    "properties": {
-                        "battleId": { "type": "string", "format": "uuid" }
-                    },
+                    "properties": { "battleId": { "type": "string" } },
                     "required": ["battleId"]
                 }
             },
@@ -966,7 +1021,7 @@
                     "title": "AutohostMutePlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userId": { "$ref": "#/definitions/userId" },
                         "chat": { "type": "boolean" },
                         "draw": { "type": "boolean" }
@@ -1039,7 +1094,7 @@
                     "title": "AutohostSendCommandRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "command": { "type": "string" },
                         "arguments": {
                             "type": "array",
@@ -1114,7 +1169,7 @@
                     "title": "AutohostSendMessageRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "message": { "type": "string", "maxLength": 127 }
                     },
                     "required": ["battleId", "message"]
@@ -1185,7 +1240,7 @@
                     "title": "AutohostSpecPlayersRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "userIds": {
                             "type": "array",
                             "items": { "$ref": "#/definitions/userId" }
@@ -1259,7 +1314,7 @@
                     "title": "AutohostStartRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "engineVersion": {
                             "type": "string",
                             "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -1536,7 +1591,7 @@
                     "title": "AutohostUpdateEventData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string", "format": "uuid" },
+                        "battleId": { "type": "string" },
                         "time": { "$ref": "#/definitions/unixTime" },
                         "update": {
                             "anyOf": [
@@ -1753,6 +1808,68 @@
                         }
                     },
                     "required": ["battleId", "time", "update"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "BattleEndedEvent",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "event" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "battle/ended" },
+                "data": {
+                    "title": "BattleEndedEventData",
+                    "type": "object",
+                    "properties": {
+                        "battleId": { "type": "string" },
+                        "players": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "allyTeam": { "type": "string" },
+                                    "team": { "type": "string" },
+                                    "player": { "type": "string" }
+                                },
+                                "required": [
+                                    "userId",
+                                    "allyTeam",
+                                    "team",
+                                    "player"
+                                ]
+                            }
+                        },
+                        "spectators": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "userId": { "$ref": "#/definitions/userId" }
+                                },
+                                "required": ["userId"]
+                            }
+                        },
+                        "winningAllyTeamIds": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    },
+                    "required": [
+                        "battleId",
+                        "players",
+                        "spectators",
+                        "winningAllyTeamIds"
+                    ]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
@@ -3564,6 +3681,77 @@
             ]
         },
         {
+            "title": "LobbyAppointBossRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/appointBoss" },
+                "data": {
+                    "title": "LobbyAppointBossRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyAppointBossResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyAppointBossOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/appointBoss" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyAppointBossFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/appointBoss" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "bosses_not_allowed",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyCreateRequest",
             "tachyon": {
                 "source": "user",
@@ -3583,6 +3771,28 @@
                         "mapName": { "type": "string" },
                         "allyTeamConfig": {
                             "$ref": "#/definitions/allyTeamConfig"
+                        },
+                        "areBossesEnabled": {
+                            "type": "boolean",
+                            "default": true
+                        },
+                        "gameOptions": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "type": "object",
+                                    "properties": {
+                                        "value": { "type": "string" }
+                                    },
+                                    "required": ["value"]
+                                }
+                            }
+                        },
+                        "tags": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": { "type": "object", "properties": {} }
+                            }
                         }
                     },
                     "required": ["name", "mapName", "allyTeamConfig"]
@@ -3708,6 +3918,7 @@
                         "reason": {
                             "enum": [
                                 "lobby_full",
+                                "banned",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -3925,6 +4136,80 @@
             ]
         },
         {
+            "title": "LobbyKickbanRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/kickban" },
+                "data": {
+                    "title": "LobbyKickbanRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" },
+                        "banUntil": {
+                            "$ref": "#/definitions/unixTime",
+                            "description": "omit this field (or set it in the past) to merely kick the player"
+                        }
+                    },
+                    "required": ["userId"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyKickbanResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyKickbanOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/kickban" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyKickbanFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/kickban" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyLeaveRequest",
             "tachyon": {
                 "source": "user",
@@ -4002,8 +4287,12 @@
                     "title": "LobbyLeftEventData",
                     "type": "object",
                     "properties": {
-                        "id": { "type": "string" },
-                        "reason": { "type": "string" }
+                        "id": { "description": "lobby id", "type": "string" },
+                        "reason": { "type": "string" },
+                        "bannedUntil": {
+                            "$ref": "#/definitions/unixTime",
+                            "description": "if this field is set, it means the client has been banned from this lobby until that timestamp."
+                        }
                     },
                     "required": ["id", "reason"]
                 }
@@ -4078,6 +4367,25 @@
                                                 },
                                                 "gameVersion": {
                                                     "type": "string"
+                                                },
+                                                "areBossesEnabled": {
+                                                    "type": "boolean"
+                                                },
+                                                "tags": {
+                                                    "type": "object",
+                                                    "patternProperties": {
+                                                        "^.*$": {
+                                                            "anyOf": [
+                                                                {
+                                                                    "type": "object",
+                                                                    "properties": {}
+                                                                },
+                                                                {
+                                                                    "type": "null"
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
                                                 },
                                                 "currentBattle": {
                                                     "anyOf": [
@@ -4367,6 +4675,77 @@
             ]
         },
         {
+            "title": "LobbyUnbossRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/unboss" },
+                "data": {
+                    "title": "LobbyUnbossRequestData",
+                    "description": "if userId isn't provided, defaults to the current user",
+                    "type": "object",
+                    "properties": {
+                        "userId": { "$ref": "#/definitions/userId" }
+                    }
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyUnbossResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyUnbossOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/unboss" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyUnbossFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/unboss" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "not_a_boss",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "LobbyUnsubscribeListRequest",
             "tachyon": {
                 "source": "user",
@@ -4451,6 +4830,36 @@
                         "mapName": { "type": "string" },
                         "allyTeamConfig": {
                             "$ref": "#/definitions/allyTeamConfig"
+                        },
+                        "gameOptions": {
+                            "description": "Set to null to remove a game option",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "tags": {
+                            "description": "Set to null to remove a tag",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "object", "properties": {} },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
                         }
                     }
                 }
@@ -4694,6 +5103,34 @@
                         "mapName": { "type": "string" },
                         "engineVersion": { "type": "string" },
                         "gameVersion": { "type": "string" },
+                        "gameOptions": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "value": { "type": "string" }
+                                            },
+                                            "required": ["value"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "tags": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "object", "properties": {} },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
                         "allyTeamConfig": {
                             "type": "object",
                             "patternProperties": {
@@ -4734,6 +5171,17 @@
                                             },
                                             "required": ["teams"]
                                         },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "bosses": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "object", "properties": {} },
                                         { "type": "null" }
                                     ]
                                 }
@@ -4931,6 +5379,35 @@
                                 },
                                 { "type": "null" }
                             ]
+                        },
+                        "voteHistory": {
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "vote": {
+                                                    "$ref": "#/definitions/voteActions"
+                                                },
+                                                "outcome": {
+                                                    "$ref": "#/definitions/voteOutcomes"
+                                                },
+                                                "finishedAt": {
+                                                    "$ref": "#/definitions/unixTime"
+                                                }
+                                            },
+                                            "required": [
+                                                "vote",
+                                                "outcome",
+                                                "finishedAt"
+                                            ]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
                         }
                     },
                     "required": ["id"]
@@ -4955,9 +5432,7 @@
                     "type": "object",
                     "properties": {
                         "id": { "type": "string" },
-                        "outcome": {
-                            "enum": ["passed", "failed", "cancelled", "timeout"]
-                        }
+                        "outcome": { "$ref": "#/definitions/voteOutcomes" }
                     },
                     "required": ["id", "outcome"]
                 }
@@ -6625,6 +7100,86 @@
                         "type": { "const": "response" },
                         "messageId": { "type": "string" },
                         "commandId": { "const": "user/info" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "unknown_user",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "UserReportRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "user/report" },
+                "data": {
+                    "title": "UserReportRequestData",
+                    "type": "object",
+                    "properties": {
+                        "userIds": {
+                            "type": "array",
+                            "items": { "$ref": "#/definitions/userId" }
+                        },
+                        "reason": {
+                            "type": "object",
+                            "properties": { "type": { "type": "string" } },
+                            "required": ["type"]
+                        },
+                        "message": { "type": "string" }
+                    },
+                    "required": ["userIds", "reason"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "UserReportResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "UserReportOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "user/report" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "UserReportFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "user/report" },
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [

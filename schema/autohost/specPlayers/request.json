@@ -16,7 +16,7 @@
             "title": "AutohostSpecPlayersRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string", "format": "uuid" },
+                "battleId": { "type": "string" },
                 "userIds": {
                     "type": "array",
                     "items": { "$ref": "../../definitions/userId.json" }

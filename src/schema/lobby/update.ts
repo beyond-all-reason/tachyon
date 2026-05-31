@@ -1,6 +1,7 @@
 import Type from "typebox";
 
 import { defineEndpoint } from "@/generator-helpers.js";
+import { Nullable } from "@/typebox-utils.js";
 
 export default defineEndpoint({
     source: "user",
@@ -11,6 +12,22 @@ export default defineEndpoint({
             name: Type.Optional(Type.String({ description: "to rename the lobby" })),
             mapName: Type.Optional(Type.String()),
             allyTeamConfig: Type.Optional(Type.Ref("allyTeamConfig")),
+            gameOptions: Type.Optional(
+                Type.Record(
+                    Type.String(),
+                    Nullable(
+                        Type.Object({
+                            value: Type.String(),
+                        })
+                    ),
+                    { description: "Set to null to remove a game option" }
+                )
+            ),
+            tags: Type.Optional(
+                Type.Record(Type.String(), Nullable(Type.Object({})), {
+                    description: "Set to null to remove a tag",
+                })
+            ),
         }),
     },
     response: [{ status: "success" }],
