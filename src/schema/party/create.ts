@@ -11,7 +11,7 @@ export default defineEndpoint({
         {
             status: "success",
             data: Type.Object({
-                partyId: Type.Ref("partyId"),
+                party: Type.Ref("partyState"),
             }),
         },
     ],
