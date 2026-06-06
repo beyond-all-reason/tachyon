@@ -6429,9 +6429,9 @@
                             "title": "PartyCreateOkResponseData",
                             "type": "object",
                             "properties": {
-                                "partyId": { "$ref": "#/definitions/partyId" }
+                                "party": { "$ref": "#/definitions/partyState" }
                             },
-                            "required": ["partyId"]
+                            "required": ["party"]
                         }
                     },
                     "required": [

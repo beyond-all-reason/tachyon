@@ -424,9 +424,9 @@ export interface PartyCreateRequest {
                     "title": "PartyCreateOkResponseData",
                     "type": "object",
                     "properties": {
-                        "partyId": { "$ref": "#/definitions/partyId" }
+                        "party": { "$ref": "#/definitions/partyState" }
                     },
-                    "required": ["partyId"]
+                    "required": ["party"]
                 }
             },
             "required": ["type", "messageId", "commandId", "status", "data"]
@@ -467,7 +467,29 @@ export interface PartyCreateRequest {
     "commandId": "party/create",
     "status": "success",
     "data": {
-        "partyId": "1882f6b2e3a4d14f24acb7aa"
+        "party": {
+            "id": "1882f6b2e3a4d14f24acb7aa",
+            "members": [],
+            "maxMembers": 86489904,
+            "invited": [
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                },
+                {
+                    "userId": "351",
+                    "invitedAt": 1705432698000000
+                }
+            ]
+        }
     }
 }
 ```
@@ -476,6 +498,8 @@ export interface PartyCreateRequest {
 #### TypeScript Definition
 ```ts
 export type PartyId = string;
+export type UserId = string;
+export type UnixTime = number;
 
 export interface PartyCreateOkResponse {
     type: "response";
@@ -485,7 +509,19 @@ export interface PartyCreateOkResponse {
     data: PartyCreateOkResponseData;
 }
 export interface PartyCreateOkResponseData {
-    partyId: PartyId;
+    party: PartyState;
+}
+export interface PartyState {
+    id: PartyId;
+    members: {
+        userId: UserId;
+        joinedAt: UnixTime;
+    }[];
+    maxMembers: number;
+    invited: {
+        userId: UserId;
+        invitedAt: UnixTime;
+    }[];
 }
 ```
 Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
