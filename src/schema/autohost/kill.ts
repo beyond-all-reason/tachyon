@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Request to kill a battle.",
     request: {
         data: Type.Object({
-            battleId: Type.String(),
+            battleId: Type.Ref("battleId"),
         }),
     },
     response: [

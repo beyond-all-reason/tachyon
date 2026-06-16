@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Force players to become spectators in a battle.",
     request: {
         data: Type.Object({
-            battleId: Type.String(),
+            battleId: Type.Ref("battleId"),
             userIds: Type.Array(Type.Ref("userId")),
         }),
     },
