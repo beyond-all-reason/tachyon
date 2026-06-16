@@ -9,7 +9,7 @@ export default defineEndpoint({
         "Tell the autohost client to launch the game server (spring-dedicated.exe or spring-headless.exe) with the given script data.",
     request: {
         data: Type.Object({
-            battleId: Type.String(),
+            battleId: Type.Ref("battleId"),
             engineVersion: Type.String({ pattern: "^[0-9a-zA-Z .+-]+$" }),
             gameName: Type.String(),
             mapName: Type.String(),

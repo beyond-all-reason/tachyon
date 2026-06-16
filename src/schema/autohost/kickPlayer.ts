@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Kick a player from a battle.",
     request: {
         data: Type.Object({
-            battleId: Type.String(),
+            battleId: Type.Ref("battleId"),
             userId: Type.Ref("userId"),
         }),
     },

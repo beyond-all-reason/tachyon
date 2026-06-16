@@ -16,7 +16,7 @@
             "title": "AutohostSendCommandRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "$ref": "../../definitions/battleId.json" },
                 "command": { "type": "string" },
                 "arguments": { "type": "array", "items": { "type": "string" } }
             },

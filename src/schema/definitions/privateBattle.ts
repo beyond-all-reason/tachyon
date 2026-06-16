@@ -4,7 +4,7 @@ export const privateBattle = Type.Object(
     {
         username: Type.String(),
         password: Type.String(),
-        ip: Type.String(),
+        ip: Type.Ref("battleId"),
         port: Type.Number(),
         engine: Type.Object({
             version: Type.String(),

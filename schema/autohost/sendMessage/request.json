@@ -16,7 +16,7 @@
             "title": "AutohostSendMessageRequestData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "$ref": "../../definitions/battleId.json" },
                 "message": { "type": "string", "maxLength": 127 }
             },
             "required": ["battleId", "message"]
