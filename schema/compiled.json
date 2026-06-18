@@ -3705,6 +3705,13 @@
                                 }
                             }
                         },
+                        "restrictions": {
+                            "description": "unit restrictions for the battle.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": { "type": "number" }
+                            }
+                        },
                         "tags": {
                             "type": "object",
                             "patternProperties": {
@@ -4766,6 +4773,18 @@
                                 }
                             }
                         },
+                        "restrictions": {
+                            "description": "unit restrictions for the battle. Set to null to remove.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "number" },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
                         "tags": {
                             "description": "Set to null to remove a tag",
                             "type": "object",
@@ -5032,6 +5051,18 @@
                                             },
                                             "required": ["value"]
                                         },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "restrictions": {
+                            "description": "unit restrictions for the battle. Set to null to remove.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "number" },
                                         { "type": "null" }
                                     ]
                                 }

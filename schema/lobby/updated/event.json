@@ -38,6 +38,15 @@
                         }
                     }
                 },
+                "restrictions": {
+                    "description": "unit restrictions for the battle. Set to null to remove.",
+                    "type": "object",
+                    "patternProperties": {
+                        "^.*$": {
+                            "anyOf": [{ "type": "number" }, { "type": "null" }]
+                        }
+                    }
+                },
                 "tags": {
                     "type": "object",
                     "patternProperties": {

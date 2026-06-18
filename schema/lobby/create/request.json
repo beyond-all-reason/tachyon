@@ -32,6 +32,11 @@
                         }
                     }
                 },
+                "restrictions": {
+                    "description": "unit restrictions for the battle.",
+                    "type": "object",
+                    "patternProperties": { "^.*$": { "type": "number" } }
+                },
                 "tags": {
                     "type": "object",
                     "patternProperties": {
