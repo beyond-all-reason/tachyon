@@ -23,6 +23,11 @@ export default defineEndpoint({
                     { description: "Set to null to remove a game option" }
                 )
             ),
+            restrictions: Type.Optional(
+                Type.Record(Type.String(), Nullable(Type.Number()), {
+                    description: "unit restrictions for the battle. Set to null to remove.",
+                })
+            ),
             tags: Type.Optional(
                 Type.Record(Type.String(), Nullable(Type.Object({})), {
                     description: "Set to null to remove a tag",

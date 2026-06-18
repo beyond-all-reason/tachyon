@@ -28,6 +28,11 @@ export default defineEndpoint({
                     )
                 )
             ),
+            restrictions: Type.Optional(
+                Type.Record(Type.String(), Nullable(Type.Number()), {
+                    description: "unit restrictions for the battle. Set to null to remove.",
+                })
+            ),
             tags: Type.Optional(Type.Record(Type.String(), Nullable(Type.Object({})))),
             allyTeamConfig: Type.Optional(
                 Type.Record(
