@@ -16,7 +16,7 @@
             "title": "BattleEndedEventData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "$ref": "../../definitions/battleId.json" },
                 "players": {
                     "type": "array",
                     "items": {

@@ -6,7 +6,7 @@
     "properties": {
         "username": { "type": "string" },
         "password": { "type": "string" },
-        "ip": { "type": "string" },
+        "ip": { "$ref": "../definitions/battleId.json" },
         "port": { "type": "number" },
         "engine": {
             "type": "object",

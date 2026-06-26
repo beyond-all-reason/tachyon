@@ -37,7 +37,7 @@ Sent to all players and spectators involved in a battle when it ends.
             "title": "BattleEndedEventData",
             "type": "object",
             "properties": {
-                "battleId": { "type": "string" },
+                "battleId": { "$ref": "#/definitions/battleId" },
                 "players": {
                     "type": "array",
                     "items": {
@@ -89,35 +89,46 @@ Sent to all players and spectators involved in a battle when it ends.
     "messageId": "Duis ut sit laborum",
     "commandId": "battle/ended",
     "data": {
-        "battleId": "Excepteur proident Lorem",
+        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
         "players": [
             {
                 "userId": "351",
-                "allyTeam": "in",
-                "team": "aliqua",
-                "player": "do"
+                "allyTeam": "qui Lorem dolore",
+                "team": "quis in incididunt magna esse",
+                "player": "nostrud veniam et mollit"
             },
             {
                 "userId": "351",
-                "allyTeam": "deserunt ex non",
-                "team": "fugiat Excepteur esse mollit ad",
-                "player": "ex in"
-            }
-        ],
-        "spectators": [
-            {
-                "userId": "351"
+                "allyTeam": "nostrud labore",
+                "team": "in sunt adipisicing nulla laborum",
+                "player": "aute amet incididunt"
             },
             {
-                "userId": "351"
+                "userId": "351",
+                "allyTeam": "nisi id",
+                "team": "ad reprehenderit tempor",
+                "player": "qui ea"
             },
             {
-                "userId": "351"
+                "userId": "351",
+                "allyTeam": "incididunt nisi ullamco do ut",
+                "team": "elit ullamco",
+                "player": "nisi dolore reprehenderit consectetur"
+            },
+            {
+                "userId": "351",
+                "allyTeam": "et non",
+                "team": "cupidatat elit ad cillum nulla",
+                "player": "exercitation"
             }
         ],
+        "spectators": [],
         "winningAllyTeamIds": [
-            "in sit eu",
-            "ullamco"
+            "quis nostrud",
+            "quis",
+            "amet Ut",
+            "aliquip cillum nostrud ut",
+            "eiusmod cillum Excepteur occaecat"
         ]
     }
 }
@@ -126,6 +137,7 @@ Sent to all players and spectators involved in a battle when it ends.
 
 #### TypeScript Definition
 ```ts
+export type BattleId = string;
 export type UserId = string;
 
 export interface BattleEndedEvent {
@@ -135,7 +147,7 @@ export interface BattleEndedEvent {
     data: BattleEndedEventData;
 }
 export interface BattleEndedEventData {
-    battleId: string;
+    battleId: BattleId;
     players: {
         userId: UserId;
         allyTeam: string;
@@ -197,18 +209,18 @@ When a user client receives this response it should launch the game (spring.exe)
     "messageId": "qui incididunt",
     "commandId": "battle/start",
     "data": {
-        "username": "anim",
-        "password": "dolore",
-        "ip": "ipsum magna exercitation esse dolore",
-        "port": 18847608.56628418,
+        "username": "enim id",
+        "password": "dolore adipisicing in",
+        "ip": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+        "port": -21385347.843170166,
         "engine": {
-            "version": "sit dolor"
+            "version": "velit eu"
         },
         "game": {
-            "springName": "ex id aliqua consectetur"
+            "springName": "id minim aute sed amet"
         },
         "map": {
-            "springName": "non deserunt velit"
+            "springName": "aliquip adipisicing elit"
         }
     }
 }
@@ -217,6 +229,8 @@ When a user client receives this response it should launch the game (spring.exe)
 
 #### TypeScript Definition
 ```ts
+export type BattleId = string;
+
 export interface BattleStartRequest {
     type: "request";
     messageId: string;
@@ -226,7 +240,7 @@ export interface BattleStartRequest {
 export interface BattleStartRequestData {
     username: string;
     password: string;
-    ip: string;
+    ip: BattleId;
     port: number;
     engine: {
         version: string;

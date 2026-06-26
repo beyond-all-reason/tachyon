@@ -49,6 +49,11 @@
                 "required": ["maxTeams", "startBox", "teams"]
             }
         },
+        "battleId": {
+            "type": "string",
+            "format": "uuid",
+            "examples": ["75bfc493-2b9d-495d-a453-06722fdca2ea"]
+        },
         "bot": {
             "type": "object",
             "properties": {
@@ -466,7 +471,7 @@
             "properties": {
                 "username": { "type": "string" },
                 "password": { "type": "string" },
-                "ip": { "type": "string" },
+                "ip": { "$ref": "#/definitions/battleId" },
                 "port": { "type": "number" },
                 "engine": {
                     "type": "object",
@@ -735,7 +740,7 @@
                     "title": "AutohostAddPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "userId": { "$ref": "#/definitions/userId" },
                         "name": { "type": "string" },
                         "password": { "type": "string" }
@@ -882,7 +887,7 @@
                     "title": "AutohostKickPlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "userId": { "$ref": "#/definitions/userId" }
                     },
                     "required": ["battleId", "userId"]
@@ -952,7 +957,9 @@
                 "data": {
                     "title": "AutohostKillRequestData",
                     "type": "object",
-                    "properties": { "battleId": { "type": "string" } },
+                    "properties": {
+                        "battleId": { "$ref": "#/definitions/battleId" }
+                    },
                     "required": ["battleId"]
                 }
             },
@@ -1021,7 +1028,7 @@
                     "title": "AutohostMutePlayerRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "userId": { "$ref": "#/definitions/userId" },
                         "chat": { "type": "boolean" },
                         "draw": { "type": "boolean" }
@@ -1094,7 +1101,7 @@
                     "title": "AutohostSendCommandRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "command": { "type": "string" },
                         "arguments": {
                             "type": "array",
@@ -1169,7 +1176,7 @@
                     "title": "AutohostSendMessageRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "message": { "type": "string", "maxLength": 127 }
                     },
                     "required": ["battleId", "message"]
@@ -1240,7 +1247,7 @@
                     "title": "AutohostSpecPlayersRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "userIds": {
                             "type": "array",
                             "items": { "$ref": "#/definitions/userId" }
@@ -1314,7 +1321,7 @@
                     "title": "AutohostStartRequestData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "engineVersion": {
                             "type": "string",
                             "pattern": "^[0-9a-zA-Z .+-]+$"
@@ -1591,7 +1598,7 @@
                     "title": "AutohostUpdateEventData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "time": { "$ref": "#/definitions/unixTime" },
                         "update": {
                             "anyOf": [
@@ -1828,7 +1835,7 @@
                     "title": "BattleEndedEventData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "type": "string" },
+                        "battleId": { "$ref": "#/definitions/battleId" },
                         "players": {
                             "type": "array",
                             "items": {

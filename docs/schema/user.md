@@ -509,22 +509,26 @@ Sent by the server to inform the client of its own user state. This event should
                 "fugiat"
             ],
             "currentBattle": {
-                "username": "minim sed Lorem",
-                "password": "Duis",
-                "ip": "aliqua",
-                "port": 31484484.672546387,
+                "username": "tempor",
+                "password": "pariatur ad exercitation nulla",
+                "ip": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+                "port": 18174040.3175354,
                 "engine": {
-                    "version": "anim aute"
+                    "version": "officia exercitation nulla ex labore"
                 },
                 "game": {
-                    "springName": "exercitation ullamco"
+                    "springName": "elit sunt"
                 },
                 "map": {
-                    "springName": "eiusmod consequat"
+                    "springName": "in labore est"
                 }
             },
-            "currentLobby": "mollit enim tempor veniam",
-            "clanInvites": []
+            "currentLobby": "do aute esse",
+            "clanInvites": [
+                "12345",
+                "12345",
+                "12345"
+            ]
         }
     }
 }
@@ -554,6 +558,7 @@ export type UserId = string;
 export type ClanId = string;
 export type PartyId = string;
 export type UnixTime = number;
+export type BattleId = string;
 
 export interface UserSelfEvent {
     type: "event";
@@ -600,7 +605,7 @@ export interface PartyState {
 export interface PrivateBattle {
     username: string;
     password: string;
-    ip: string;
+    ip: BattleId;
     port: number;
     engine: {
         version: string;

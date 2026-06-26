@@ -9,7 +9,7 @@ export default defineEndpoint({
         "Inform the server of battle updates. Each timestamp is guaranteed to be unique for a given autohost.",
     event: {
         data: Type.Object({
-            battleId: Type.String(),
+            battleId: Type.Ref("battleId"),
             time: Type.Ref("unixTime"),
             update: Type.Union([
                 Type.Object(
