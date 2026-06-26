@@ -25,11 +25,12 @@ The server may send [matchmaking/cancelled](#cancelled) event at any point after
 * `ready_timeout`: The player failed to accept a match within the given
   time window and is thus removed from the matchmaking system.
 
-When a player is in a party and a member of the party queues for matchmaking, all other member of the party will receive a [matchmaking/queuesJoined](#queuesJoined) event to let them know they are now in queue. This event is not sent to the player who originally joined the queues.
+When a player is in a party and a member of the party sends a [matchmaking/queue](#queue) request for matchmaking, all other members of the party will receive a [matchmaking/checkAssets](#checkAssets) request. The clients should send the response as soon as possible, ideally automatically upon receipt of this request. If any client's `assetStatus` response is `missing`, `downloading`, or if it times out without sending a response, the matchmaking `queue` request will fail. If all other party members reply with a `assetStatus: complete` response, matchmaking will proceed and all other members of the party will receive a [matchmaking/queuesJoined](#queuesJoined) event. The initiating client will _not_ receive the `matchmaking/queuesJoined` event, but should instead await the response for their initiating `matchmaking/queue` request.
 
 ---
 - [cancel](#cancel)
 - [cancelled](#cancelled)
+- [checkAssets](#checkassets)
 - [found](#found)
 - [foundUpdate](#foundupdate)
 - [list](#list)
@@ -249,6 +250,188 @@ export interface MatchmakingCancelledEventData {
     reason: "intentional" | "server_error" | "party_user_left" | "ready_timeout" | "version_changed";
 }
 ```
+---
+
+## CheckAssets
+
+When the client receives this request, it should send a response with the readiness state for the identified assets. The assets are included to ensure the client is aware of the list of assets even if they have not retrieved the queues before. Note that a 'success' response does _not_ mean that the assets are ready.
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **Server**
+- Target: **User**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MatchmakingCheckAssetsRequest",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "matchmaking/checkAssets" },
+        "data": {
+            "title": "MatchmakingCheckAssetsRequestData",
+            "type": "object",
+            "properties": {
+                "queueId": { "type": "string" },
+                "version": { "type": "string" },
+                "engines": { "type": "array", "items": { "type": "string" } },
+                "game": { "type": "string" },
+                "maps": { "type": "array", "items": { "type": "string" } }
+            },
+            "required": ["queueId", "version", "engines", "game", "maps"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "Ut qui in laboris veniam",
+    "commandId": "matchmaking/checkAssets",
+    "data": {
+        "queueId": "Ut ullamco aliqua eu",
+        "version": "eiusmod amet",
+        "engines": [
+            "ex",
+            "eiusmod sit ea ex ipsum",
+            "incididunt fugiat adipisicing in et"
+        ],
+        "game": "cillum Ut",
+        "maps": [
+            "sunt irure proident",
+            "aliquip nulla labore sed"
+        ]
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingCheckAssetsRequest {
+    type: "request";
+    messageId: string;
+    commandId: "matchmaking/checkAssets";
+    data: MatchmakingCheckAssetsRequestData;
+}
+export interface MatchmakingCheckAssetsRequestData {
+    queueId: string;
+    version: string;
+    engines: string[];
+    game: string;
+    maps: string[];
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "MatchmakingCheckAssetsResponse",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "MatchmakingCheckAssetsOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/checkAssets" },
+                "status": { "const": "success" },
+                "data": {
+                    "title": "MatchmakingCheckAssetsOkResponseData",
+                    "type": "object",
+                    "properties": {
+                        "assetStatus": {
+                            "enum": ["missing", "downloading", "complete"]
+                        }
+                    },
+                    "required": ["assetStatus"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "status", "data"]
+        },
+        {
+            "title": "MatchmakingCheckAssetsFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/checkAssets" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "elit deserunt tempor",
+    "commandId": "matchmaking/checkAssets",
+    "status": "success",
+    "data": {
+        "assetStatus": "complete"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface MatchmakingCheckAssetsOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "matchmaking/checkAssets";
+    status: "success";
+    data: MatchmakingCheckAssetsOkResponseData;
+}
+export interface MatchmakingCheckAssetsOkResponseData {
+    assetStatus: "missing" | "downloading" | "complete";
+}
+```
+Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## Found
