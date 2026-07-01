@@ -37,5 +37,6 @@ export default defineEndpoint({
         { status: "failed", reason: "already_queued" },
         { status: "failed", reason: "already_in_battle" },
         { status: "failed", reason: "version_mismatch" },
+        { status: "failed", reason: "party_missing_asset" },
     ],
 });

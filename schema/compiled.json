@@ -5954,6 +5954,7 @@
                                 "already_queued",
                                 "already_in_battle",
                                 "version_mismatch",
+                                "party_missing_asset",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",

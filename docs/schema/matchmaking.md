@@ -1094,6 +1094,7 @@ export interface MatchmakingQueueRequestData {
                         "already_queued",
                         "already_in_battle",
                         "version_mismatch",
+                        "party_missing_asset",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -1132,7 +1133,7 @@ export interface MatchmakingQueueOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_in_battle`, `version_mismatch`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_queue_specified`, `already_queued`, `already_in_battle`, `version_mismatch`, `party_missing_asset`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
