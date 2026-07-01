@@ -5522,6 +5522,112 @@
             "required": ["type", "messageId", "commandId", "data"]
         },
         {
+            "title": "MatchmakingCheckAssetsRequest",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "matchmaking/checkAssets" },
+                "data": {
+                    "title": "MatchmakingCheckAssetsRequestData",
+                    "type": "object",
+                    "properties": {
+                        "queueId": { "type": "string" },
+                        "version": { "type": "string" },
+                        "engines": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        },
+                        "game": { "type": "string" },
+                        "maps": {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    },
+                    "required": [
+                        "queueId",
+                        "version",
+                        "engines",
+                        "game",
+                        "maps"
+                    ]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "MatchmakingCheckAssetsResponse",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "MatchmakingCheckAssetsOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/checkAssets" },
+                        "status": { "const": "success" },
+                        "data": {
+                            "title": "MatchmakingCheckAssetsOkResponseData",
+                            "type": "object",
+                            "properties": {
+                                "assetStatus": {
+                                    "enum": [
+                                        "missing",
+                                        "downloading",
+                                        "complete"
+                                    ]
+                                }
+                            },
+                            "required": ["assetStatus"]
+                        }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "data"
+                    ]
+                },
+                {
+                    "title": "MatchmakingCheckAssetsFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "matchmaking/checkAssets" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
+        },
+        {
             "title": "MatchmakingFoundEvent",
             "tachyon": {
                 "source": "server",
@@ -5848,6 +5954,7 @@
                                 "already_queued",
                                 "already_in_battle",
                                 "version_mismatch",
+                                "party_missing_asset",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
