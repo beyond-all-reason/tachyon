@@ -528,7 +528,32 @@ Sent by the server to inform the client of its own user state. This event should
                 "12345",
                 "12345",
                 "12345"
-            ]
+            ],
+            "matchmaking": {
+                "state": "queuing",
+                "queues": [
+                    {
+                        "id": "est tempor cillum culpa",
+                        "version": "reprehenderit"
+                    },
+                    {
+                        "id": "amet ut aute reprehenderit veniam",
+                        "version": "culpa nisi reprehenderit laboris deserunt"
+                    },
+                    {
+                        "id": "magna aliqua nisi",
+                        "version": "nisi"
+                    },
+                    {
+                        "id": "pariatur consectetur officia dolore do",
+                        "version": "in laborum amet"
+                    },
+                    {
+                        "id": "est non exercitation",
+                        "version": "sint et"
+                    }
+                ]
+            }
         }
     }
 }
@@ -553,6 +578,36 @@ export type PrivateUser = User & {
     currentBattle?: PrivateBattle;
     currentLobby: string | null;
     clanInvites: ClanId[];
+    matchmaking:
+        | {
+              state: "no_matchmaking";
+          }
+        | {
+              state: "queuing";
+              queues: [
+                  {
+                      id: string;
+                      version: string;
+                  },
+                  ...{
+                      id: string;
+                      version: string;
+                  }[]
+              ];
+          }
+        | {
+              state: "found";
+              queue: {
+                  id: string;
+                  version: string;
+                  timeoutAt: UnixTime;
+                  hasAlreadyReadied: boolean;
+              };
+              otherQueues: {
+                  id: string;
+                  version: string;
+              }[];
+          };
 };
 export type UserId = string;
 export type ClanId = string;
