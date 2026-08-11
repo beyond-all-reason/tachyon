@@ -3725,6 +3725,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "bosses_not_allowed",
                                 "internal_error",
                                 "unauthorized",
@@ -3917,6 +3918,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "invalid_lobby_id",
                                 "lobby_full",
                                 "banned",
                                 "internal_error",
@@ -4191,6 +4193,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -4253,6 +4256,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -4594,6 +4598,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -4726,6 +4731,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "not_a_boss",
                                 "internal_error",
                                 "unauthorized",
@@ -5516,6 +5522,8 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "invalid_vote_id",
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",

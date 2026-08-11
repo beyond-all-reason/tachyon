@@ -11,5 +11,9 @@ export default defineEndpoint({
             vote: Type.Enum(["yes", "no", "abstain"]),
         }),
     },
-    response: [{ status: "success" }],
+    response: [
+        { status: "failed", reason: "invalid_vote_id" },
+        { status: "failed", reason: "not_in_lobby" },
+        { status: "success" },
+    ],
 });

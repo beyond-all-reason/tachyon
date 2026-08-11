@@ -33,6 +33,7 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "invalid_lobby_id",
                         "lobby_full",
                         "banned",
                         "internal_error",

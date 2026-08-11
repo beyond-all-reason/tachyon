@@ -29,6 +29,7 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "not_in_lobby",
                         "bosses_not_allowed",
                         "internal_error",
                         "unauthorized",

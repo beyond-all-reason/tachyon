@@ -458,6 +458,7 @@ export interface LobbyAppointBossRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "not_in_lobby",
                         "bosses_not_allowed",
                         "internal_error",
                         "unauthorized",
@@ -497,7 +498,7 @@ export interface LobbyAppointBossOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `bosses_not_allowed`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `not_in_lobby`, `bosses_not_allowed`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -1166,6 +1167,7 @@ export interface LobbyJoinRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "invalid_lobby_id",
                         "lobby_full",
                         "banned",
                         "internal_error",
@@ -1519,7 +1521,7 @@ export interface StartBox {
     right: number;
 }
 ```
-Possible Failed Reasons: `lobby_full`, `banned`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_lobby_id`, `lobby_full`, `banned`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2047,6 +2049,7 @@ export interface LobbyKickbanRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "not_in_lobby",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -2085,7 +2088,7 @@ export interface LobbyKickbanOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2178,6 +2181,7 @@ export interface LobbyLeaveRequest {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "not_in_lobby",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -2216,7 +2220,7 @@ export interface LobbyLeaveOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -2919,6 +2923,7 @@ export interface LobbyStartBattleRequest {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "not_in_lobby",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -2957,7 +2962,7 @@ export interface LobbyStartBattleOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -3196,6 +3201,7 @@ export interface LobbyUnbossRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "not_in_lobby",
                         "not_a_boss",
                         "internal_error",
                         "unauthorized",
@@ -3235,7 +3241,7 @@ export interface LobbyUnbossOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `not_a_boss`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `not_in_lobby`, `not_a_boss`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 
 ---
 
@@ -4712,6 +4718,8 @@ export interface LobbyVoteSubmitRequestData {
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "invalid_vote_id",
+                        "not_in_lobby",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",
@@ -4750,5 +4758,5 @@ export interface LobbyVoteSubmitOkResponse {
     status: "success";
 }
 ```
-Possible Failed Reasons: `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+Possible Failed Reasons: `invalid_vote_id`, `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
 

@@ -6,6 +6,7 @@ export default defineEndpoint({
     description: "Leave the lobby, also unsubscribe from any update",
     request: {},
     response: [
+        { status: "failed", reason: "not_in_lobby" },
         {
             status: "success",
         },
