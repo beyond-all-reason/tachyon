@@ -9,5 +9,11 @@ export default defineEndpoint({
     request: {
         data: Type.Ref("clanUpdateableData"),
     },
-    response: [{ status: "success" }],
+    response: [
+        { status: "success" },
+        {
+            status: "failed",
+            reason: "incorrect_data",
+        },
+    ],
 });
