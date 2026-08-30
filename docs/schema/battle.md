@@ -209,18 +209,22 @@ When a user client receives this response it should launch the game (spring.exe)
     "messageId": "qui incididunt",
     "commandId": "battle/start",
     "data": {
-        "username": "enim id",
-        "password": "dolore adipisicing in",
-        "ip": "75bfc493-2b9d-495d-a453-06722fdca2ea",
-        "port": -21385347.843170166,
+        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+        "username": "officia enim aliquip aute",
+        "password": "aliqua adipisicing dolore",
+        "ips": [
+            "129.211.80.128",
+            "983a:2b5c:c1a8:3205:e6bd:3dbe:9bdf:017f"
+        ],
+        "port": 46973,
         "engine": {
-            "version": "velit eu"
+            "version": "deserunt"
         },
         "game": {
-            "springName": "id minim aute sed amet"
+            "springName": "ipsum proident sit sunt"
         },
         "map": {
-            "springName": "aliquip adipisicing elit"
+            "springName": "voluptate"
         }
     }
 }
@@ -238,9 +242,10 @@ export interface BattleStartRequest {
     data: BattleStartRequestData;
 }
 export interface BattleStartRequestData {
+    battleId: BattleId;
     username: string;
     password: string;
-    ip: BattleId;
+    ips: string[];
     port: number;
     engine: {
         version: string;
