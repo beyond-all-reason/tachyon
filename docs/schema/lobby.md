@@ -1041,6 +1041,8 @@ export interface LobbyCreateOkResponseData {
             };
         };
         until: UnixTime;
+        quorum: number;
+        majority: number;
     };
     voteHistory?: {
         [k: string]: {
@@ -1387,15 +1389,29 @@ export interface LobbyJoinRequestData {
                     "vote": "abstain"
                 }
             },
-            "until": 1705432698000000
+            "until": 1705432698000000,
+            "quorum": 37093187,
+            "majority": 1118827
         },
         "voteHistory": {
-            "y%'+": {
+            "": {
                 "outcome": "failed",
                 "finishedAt": 1705432698000000
             },
-            "pD*Nl": {
-                "outcome": "failed",
+            "COpD*N": {
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            },
+            "}Dp@Q^i9": {
+                "outcome": "timeout",
+                "finishedAt": 1705432698000000
+            },
+            "`m2STs;\\k": {
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            },
+            "6\\-z`$+M{": {
+                "outcome": "passed",
                 "finishedAt": 1705432698000000
             }
         }
@@ -1505,6 +1521,8 @@ export interface LobbyJoinOkResponseData {
             };
         };
         until: UnixTime;
+        quorum: number;
+        majority: number;
     };
     voteHistory?: {
         [k: string]: {
@@ -4233,83 +4251,10 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                         { "type": "null" }
                     ]
                 },
-                "currentVote": {
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "id": { "type": "string" },
-                                "action": {
-                                    "$ref": "#/definitions/voteActions"
-                                },
-                                "initiator": { "$ref": "#/definitions/userId" },
-                                "voters": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        "^.*$": {
-                                            "type": "object",
-                                            "properties": {
-                                                "vote": {
-                                                    "enum": [
-                                                        "pending",
-                                                        "yes",
-                                                        "no",
-                                                        "abstain"
-                                                    ]
-                                                }
-                                            },
-                                            "required": ["vote"]
-                                        }
-                                    }
-                                },
-                                "until": { "$ref": "#/definitions/unixTime" },
-                                "quorum": {
-                                    "description": "this many player must vote for the vote to be valid at all.",
-                                    "type": "integer",
-                                    "minimum": 1
-                                },
-                                "majority": {
-                                    "description": "votes passes when number(yes) >= majority",
-                                    "type": "integer",
-                                    "minimum": 1
-                                }
-                            },
-                            "required": ["id"]
-                        },
-                        { "type": "null" }
-                    ]
-                },
-                "voteHistory": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^.*$": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "vote": {
-                                            "$ref": "#/definitions/voteActions"
-                                        },
-                                        "outcome": {
-                                            "$ref": "#/definitions/voteOutcomes"
-                                        },
-                                        "finishedAt": {
-                                            "$ref": "#/definitions/unixTime"
-                                        }
-                                    },
-                                    "required": [
-                                        "vote",
-                                        "outcome",
-                                        "finishedAt"
-                                    ]
-                                },
-                                { "type": "null" }
-                            ]
-                        }
-                    }
-                }
+                "currentVote": { "$ref": "#/definitions/currentVote" },
+                "voteHistory": { "$ref": "#/definitions/voteHistory" }
             },
-            "required": ["id"]
+            "required": ["id", "currentVote", "voteHistory"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -4327,85 +4272,50 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "mollit nisi",
-        "name": "voluptate exercitation quis consectetur",
-        "mapName": "voluptate magna labore incididunt",
-        "gameVersion": "adipisicing",
+        "id": "eu",
+        "name": "anim",
+        "engineVersion": "proident reprehenderit quis irure",
+        "gameVersion": "pariatur qui",
         "gameOptions": {
-            "(:&D": {
-                "value": "pariatur et labore"
+            ")H(:&DjH": {
+                "value": "minim sed"
             },
-            "XjKt": {
-                "value": "consequat id in ut"
-            }
-        },
-        "restrictions": {
-            ",Mh!.nL[": 58044695.85418701,
-            "9KGpD": 530219.0780639648
+            "Kt/s:aUe": null,
+            "){wKv_": null
         },
         "tags": {
-            "F": null,
-            "Ga&q).xzbu": null,
-            "@x0JIa=ux": {
-                "incididunt_98": -61195028
-            },
-            "5LT)": {
-                "proident62": false
+            "[t": null,
+            "eO:bH)%w": null,
+            "<b#p$(@`{": {
+                "in_7": 86254441.73812866
             }
         },
-        "allyTeamConfig": {
-            "%": {
-                "startBox": {
-                    "top": 0.09942054748535156,
-                    "bottom": 0.3059883713722229,
-                    "left": 0.05722612142562866,
-                    "right": 0.4723165035247803
-                },
-                "teams": {
-                    "k": {
-                        "ut2": -60310125.35095215,
-                        "mollit_28": -16639673.709869385,
-                        "consectetur_0a": 64013159.27505493,
-                        "esse_859": 71346879,
-                        "nona_": -69703328.60946655,
-                        "maxPlayers": 91535813
-                    },
-                    "SZ": null,
-                    "i 4~/#WTl": {
-                        "maxPlayers": 7063556
-                    },
-                    "J'7": {
-                        "maxPlayers": 34498334
-                    }
-                }
-            },
-            "t+^": null
-        },
-        "bosses": {
-            "+x-K0vzp": {
-                "velit9f": -22372890
+        "bots": {
+            "xuI5LT)ms": {
+                "id": "consectetur laboris elit aliqua",
+                "hostUserId": "351",
+                "allyTeam": "in et ad veniam labore",
+                "team": "dolor in cillum",
+                "player": "officia cillum ut elit labore",
+                "name": null,
+                "shortName": "sed dolore commodo dolor",
+                "version": null,
+                "options": null
             }
         },
-        "currentVote": {
-            "id": "eiusmod deserunt adipisicing dolore anim",
-            "until": 1705432698000000,
-            "majority": 14577044
-        },
+        "currentBattle": null,
+        "currentVote": null,
         "voteHistory": {
-            "7a*PE_": null,
-            "oac+L5'": null,
-            "IN`t@": null,
-            "@": {
+            "z\\": null,
+            "": {
                 "vote": {
-                    "type": "kickban",
-                    "userId": "351",
-                    "banUntil": 1705432698000000
+                    "type": "changeMap",
+                    "newMapName": "qui et voluptate sit magna"
                 },
                 "outcome": "failed",
                 "finishedAt": 1705432698000000
             },
-            "b5+*;<{<#%": null,
-            "9I$r4-4": null
+            "CRs": null
         }
     }
 }
@@ -4416,6 +4326,19 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type CurrentVote = {
+    id: string;
+    action: VoteActions;
+    initiator: UserId;
+    voters: {
+        [k: string]: {
+            vote: "pending" | "yes" | "no" | "abstain";
+        } | null;
+    };
+    until: UnixTime;
+    quorum: number;
+    majority: number;
+} | null;
 export type VoteActions =
     | {
           type: "start";
@@ -4507,32 +4430,21 @@ export interface LobbyUpdatedEventData {
         id: string;
         startedAt: UnixTime;
     } | null;
-    currentVote?: {
-        id: string;
-        action?: VoteActions;
-        initiator?: UserId;
-        voters?: {
-            [k: string]: {
-                vote: "pending" | "yes" | "no" | "abstain";
-            };
-        };
-        until?: UnixTime;
-        quorum?: number;
-        majority?: number;
-    } | null;
-    voteHistory?: {
-        [k: string]: {
-            vote: VoteActions;
-            outcome: VoteOutcomes;
-            finishedAt: UnixTime;
-        } | null;
-    };
+    currentVote: CurrentVote;
+    voteHistory: VoteHistory;
 }
 export interface StartBox {
     top: number;
     bottom: number;
     left: number;
     right: number;
+}
+export interface VoteHistory {
+    [k: string]: {
+        vote: VoteActions;
+        outcome: VoteOutcomes;
+        finishedAt: UnixTime;
+    } | null;
 }
 ```
 ---
