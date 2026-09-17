@@ -8,9 +8,12 @@ export default defineEndpoint({
     description: "Issue a single moderation report on one or more users.",
     request: {
         data: Type.Object({
-            userIds: Type.Array(Type.Ref("userId")),
+            userIds: Type.Array(Type.Ref("userId"), { minItems: 1 }),
             reason: Type.Object({ type: Type.String() }),
-            message: Type.Optional(Type.String()),
+            message: Type.Optional(Type.String({ maxLength: 255 })),
+            battleId: Type.Optional(
+                Type.Ref("battleId", { description: "the battle the report is about, if any" })
+            ),
         }),
     },
     response: [

@@ -237,14 +237,19 @@ Issue a single moderation report on one or more users.
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/userId" }
+                    "items": { "$ref": "#/definitions/userId" },
+                    "minItems": 1
                 },
                 "reason": {
                     "type": "object",
                     "properties": { "type": { "type": "string" } },
                     "required": ["type"]
                 },
-                "message": { "type": "string" }
+                "message": { "type": "string", "maxLength": 255 },
+                "battleId": {
+                    "$ref": "#/definitions/battleId",
+                    "description": "the battle the report is about, if any"
+                }
             },
             "required": ["userIds", "reason"]
         }
@@ -264,10 +269,17 @@ Issue a single moderation report on one or more users.
     "messageId": "consequat",
     "commandId": "user/report",
     "data": {
-        "userIds": [],
+        "userIds": [
+            "351",
+            "351",
+            "351",
+            "351"
+        ],
         "reason": {
-            "type": "incididunt dolor nisi sunt"
-        }
+            "type": "ut velit officia esse"
+        },
+        "message": "reprehenderit",
+        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea"
     }
 }
 ```
@@ -284,11 +296,12 @@ export interface UserReportRequest {
     data: UserReportRequestData;
 }
 export interface UserReportRequestData {
-    userIds: UserId[];
+    userIds: [UserId, ...UserId[]];
     reason: {
         type: string;
     };
     message?: string;
+    battleId?: string;
 }
 ```
 ### Response
