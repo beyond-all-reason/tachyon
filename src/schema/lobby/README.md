@@ -111,13 +111,22 @@ This setting cannot be changed after creation.
 
 ### Lobby updates
 
-Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a proprety
-is not possible (invalid or forbidden), then no update take place.
+Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a property
+is not possible (invalid or forbidden), then no update takes place.
 The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 
 When an operation requires a vote, the vote data is also transmitted with [lobby/updated](#updated) events.
 And when the vote ends, a [lobby/voteEnded](#voteEnded) event is sent to all lobby members. This is to simplify
 client logic if they want to show a notification in addition to the updated state.
+
+Members eligible to vote during an active vote will be populated in the `currentVote.voters`, along with their current vote.
+The protocol does not define who is eligible to vote, as it may vary on the server based on lobby settings such as Boss status.
+Well-behaved clients should prevent voting by the user if they are not in the `voters` list.
+
+Eligible members may use the `lobby/voteSubmit` request to send their vote to the server. Some members (vote initiators or
+bosses, for example) may be eligible to use the `lobby/voteCancel` request to intentially end a vote early. In such a case, 
+the `lobby/voteEnded` event will arrive with `outcome: "cancelled"`.
+
 
 ## List of all lobbies
 

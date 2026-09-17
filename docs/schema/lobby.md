@@ -115,13 +115,22 @@ This setting cannot be changed after creation.
 
 ### Lobby updates
 
-Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a proprety
-is not possible (invalid or forbidden), then no update take place.
+Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a property
+is not possible (invalid or forbidden), then no update takes place.
 The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 
 When an operation requires a vote, the vote data is also transmitted with [lobby/updated](#updated) events.
 And when the vote ends, a [lobby/voteEnded](#voteEnded) event is sent to all lobby members. This is to simplify
 client logic if they want to show a notification in addition to the updated state.
+
+Members eligible to vote during an active vote will be populated in the `currentVote.voters`, along with their current vote.
+The protocol does not define who is eligible to vote, as it may vary on the server based on lobby settings such as Boss status.
+Well-behaved clients should prevent voting by the user if they are not in the `voters` list.
+
+Eligible members may use the `lobby/voteSubmit` request to send their vote to the server. Some members (vote initiators or
+bosses, for example) may be eligible to use the `lobby/voteCancel` request to intentially end a vote early. In such a case, 
+the `lobby/voteEnded` event will arrive with `outcome: "cancelled"`.
+
 
 ## List of all lobbies
 
@@ -155,6 +164,7 @@ In practice, this event should rarely be seen.
 - [updateBot](#updatebot)
 - [updateClientStatus](#updateclientstatus)
 - [updated](#updated)
+- [voteCancel](#votecancel)
 - [voteEnded](#voteended)
 - [voteSubmit](#votesubmit)
 ---
@@ -4447,6 +4457,150 @@ export interface VoteHistory {
     } | null;
 }
 ```
+---
+
+## VoteCancel
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteCancelRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/voteCancel" },
+        "data": {
+            "title": "LobbyVoteCancelRequestData",
+            "type": "object",
+            "properties": { "id": { "type": "string" } },
+            "required": ["id"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ipsum",
+    "commandId": "lobby/voteCancel",
+    "data": {
+        "id": "proident pariatur id"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteCancelRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/voteCancel";
+    data: LobbyVoteCancelRequestData;
+}
+export interface LobbyVoteCancelRequestData {
+    id: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteCancelResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyVoteCancelOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteCancel" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyVoteCancelFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteCancel" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "invalid_vote_id",
+                        "not_in_lobby",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "culpa voluptate",
+    "commandId": "lobby/voteCancel",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteCancelOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/voteCancel";
+    status: "success";
+}
+```
+Possible Failed Reasons: `invalid_vote_id`, `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## VoteEnded
