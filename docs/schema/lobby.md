@@ -115,13 +115,22 @@ This setting cannot be changed after creation.
 
 ### Lobby updates
 
-Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a proprety
-is not possible (invalid or forbidden), then no update take place.
+Any member can update most (any?) property of the lobby unless bosses are present. Updates are all or nothing, if updating a property
+is not possible (invalid or forbidden), then no update takes place.
 The result of the updates is then transmitted to all members via [lobby/updated](#updated) events.
 
 When an operation requires a vote, the vote data is also transmitted with [lobby/updated](#updated) events.
 And when the vote ends, a [lobby/voteEnded](#voteEnded) event is sent to all lobby members. This is to simplify
 client logic if they want to show a notification in addition to the updated state.
+
+Members eligible to vote during an active vote will be populated in the `currentVote.voters`, along with their current vote.
+The protocol does not define who is eligible to vote, as it may vary on the server based on lobby settings such as Boss status.
+Well-behaved clients should prevent voting by the user if they are not in the `voters` list.
+
+Eligible members may use the `lobby/voteSubmit` request to send their vote to the server. Some members (vote initiators or
+bosses, for example) may be eligible to use the `lobby/voteCancel` request to intentially end a vote early. In such a case, 
+the `lobby/voteEnded` event will arrive with `outcome: "cancelled"`.
+
 
 ## List of all lobbies
 
@@ -155,6 +164,7 @@ In practice, this event should rarely be seen.
 - [updateBot](#updatebot)
 - [updateClientStatus](#updateclientstatus)
 - [updated](#updated)
+- [voteCancel](#votecancel)
 - [voteEnded](#voteended)
 - [voteSubmit](#votesubmit)
 ---
@@ -1041,6 +1051,8 @@ export interface LobbyCreateOkResponseData {
             };
         };
         until: UnixTime;
+        quorum: number;
+        majority: number;
     };
     voteHistory?: {
         [k: string]: {
@@ -1387,15 +1399,29 @@ export interface LobbyJoinRequestData {
                     "vote": "abstain"
                 }
             },
-            "until": 1705432698000000
+            "until": 1705432698000000,
+            "quorum": 37093187,
+            "majority": 1118827
         },
         "voteHistory": {
-            "y%'+": {
+            "": {
                 "outcome": "failed",
                 "finishedAt": 1705432698000000
             },
-            "pD*Nl": {
-                "outcome": "failed",
+            "COpD*N": {
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            },
+            "}Dp@Q^i9": {
+                "outcome": "timeout",
+                "finishedAt": 1705432698000000
+            },
+            "`m2STs;\\k": {
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            },
+            "6\\-z`$+M{": {
+                "outcome": "passed",
                 "finishedAt": 1705432698000000
             }
         }
@@ -1505,6 +1531,8 @@ export interface LobbyJoinOkResponseData {
             };
         };
         until: UnixTime;
+        quorum: number;
+        majority: number;
     };
     voteHistory?: {
         [k: string]: {
@@ -4233,83 +4261,10 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                         { "type": "null" }
                     ]
                 },
-                "currentVote": {
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "id": { "type": "string" },
-                                "action": {
-                                    "$ref": "#/definitions/voteActions"
-                                },
-                                "initiator": { "$ref": "#/definitions/userId" },
-                                "voters": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        "^.*$": {
-                                            "type": "object",
-                                            "properties": {
-                                                "vote": {
-                                                    "enum": [
-                                                        "pending",
-                                                        "yes",
-                                                        "no",
-                                                        "abstain"
-                                                    ]
-                                                }
-                                            },
-                                            "required": ["vote"]
-                                        }
-                                    }
-                                },
-                                "until": { "$ref": "#/definitions/unixTime" },
-                                "quorum": {
-                                    "description": "this many player must vote for the vote to be valid at all.",
-                                    "type": "integer",
-                                    "minimum": 1
-                                },
-                                "majority": {
-                                    "description": "votes passes when number(yes) >= majority",
-                                    "type": "integer",
-                                    "minimum": 1
-                                }
-                            },
-                            "required": ["id"]
-                        },
-                        { "type": "null" }
-                    ]
-                },
-                "voteHistory": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^.*$": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "vote": {
-                                            "$ref": "#/definitions/voteActions"
-                                        },
-                                        "outcome": {
-                                            "$ref": "#/definitions/voteOutcomes"
-                                        },
-                                        "finishedAt": {
-                                            "$ref": "#/definitions/unixTime"
-                                        }
-                                    },
-                                    "required": [
-                                        "vote",
-                                        "outcome",
-                                        "finishedAt"
-                                    ]
-                                },
-                                { "type": "null" }
-                            ]
-                        }
-                    }
-                }
+                "currentVote": { "$ref": "#/definitions/currentVote" },
+                "voteHistory": { "$ref": "#/definitions/voteHistory" }
             },
-            "required": ["id"]
+            "required": ["id", "currentVote", "voteHistory"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -4327,85 +4282,50 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "mollit nisi",
-        "name": "voluptate exercitation quis consectetur",
-        "mapName": "voluptate magna labore incididunt",
-        "gameVersion": "adipisicing",
+        "id": "eu",
+        "name": "anim",
+        "engineVersion": "proident reprehenderit quis irure",
+        "gameVersion": "pariatur qui",
         "gameOptions": {
-            "(:&D": {
-                "value": "pariatur et labore"
+            ")H(:&DjH": {
+                "value": "minim sed"
             },
-            "XjKt": {
-                "value": "consequat id in ut"
-            }
-        },
-        "restrictions": {
-            ",Mh!.nL[": 58044695.85418701,
-            "9KGpD": 530219.0780639648
+            "Kt/s:aUe": null,
+            "){wKv_": null
         },
         "tags": {
-            "F": null,
-            "Ga&q).xzbu": null,
-            "@x0JIa=ux": {
-                "incididunt_98": -61195028
-            },
-            "5LT)": {
-                "proident62": false
+            "[t": null,
+            "eO:bH)%w": null,
+            "<b#p$(@`{": {
+                "in_7": 86254441.73812866
             }
         },
-        "allyTeamConfig": {
-            "%": {
-                "startBox": {
-                    "top": 0.09942054748535156,
-                    "bottom": 0.3059883713722229,
-                    "left": 0.05722612142562866,
-                    "right": 0.4723165035247803
-                },
-                "teams": {
-                    "k": {
-                        "ut2": -60310125.35095215,
-                        "mollit_28": -16639673.709869385,
-                        "consectetur_0a": 64013159.27505493,
-                        "esse_859": 71346879,
-                        "nona_": -69703328.60946655,
-                        "maxPlayers": 91535813
-                    },
-                    "SZ": null,
-                    "i 4~/#WTl": {
-                        "maxPlayers": 7063556
-                    },
-                    "J'7": {
-                        "maxPlayers": 34498334
-                    }
-                }
-            },
-            "t+^": null
-        },
-        "bosses": {
-            "+x-K0vzp": {
-                "velit9f": -22372890
+        "bots": {
+            "xuI5LT)ms": {
+                "id": "consectetur laboris elit aliqua",
+                "hostUserId": "351",
+                "allyTeam": "in et ad veniam labore",
+                "team": "dolor in cillum",
+                "player": "officia cillum ut elit labore",
+                "name": null,
+                "shortName": "sed dolore commodo dolor",
+                "version": null,
+                "options": null
             }
         },
-        "currentVote": {
-            "id": "eiusmod deserunt adipisicing dolore anim",
-            "until": 1705432698000000,
-            "majority": 14577044
-        },
+        "currentBattle": null,
+        "currentVote": null,
         "voteHistory": {
-            "7a*PE_": null,
-            "oac+L5'": null,
-            "IN`t@": null,
-            "@": {
+            "z\\": null,
+            "": {
                 "vote": {
-                    "type": "kickban",
-                    "userId": "351",
-                    "banUntil": 1705432698000000
+                    "type": "changeMap",
+                    "newMapName": "qui et voluptate sit magna"
                 },
                 "outcome": "failed",
                 "finishedAt": 1705432698000000
             },
-            "b5+*;<{<#%": null,
-            "9I$r4-4": null
+            "CRs": null
         }
     }
 }
@@ -4416,6 +4336,19 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
 ```ts
 export type UserId = string;
 export type UnixTime = number;
+export type CurrentVote = {
+    id: string;
+    action: VoteActions;
+    initiator: UserId;
+    voters: {
+        [k: string]: {
+            vote: "pending" | "yes" | "no" | "abstain";
+        } | null;
+    };
+    until: UnixTime;
+    quorum: number;
+    majority: number;
+} | null;
 export type VoteActions =
     | {
           type: "start";
@@ -4507,26 +4440,8 @@ export interface LobbyUpdatedEventData {
         id: string;
         startedAt: UnixTime;
     } | null;
-    currentVote?: {
-        id: string;
-        action?: VoteActions;
-        initiator?: UserId;
-        voters?: {
-            [k: string]: {
-                vote: "pending" | "yes" | "no" | "abstain";
-            };
-        };
-        until?: UnixTime;
-        quorum?: number;
-        majority?: number;
-    } | null;
-    voteHistory?: {
-        [k: string]: {
-            vote: VoteActions;
-            outcome: VoteOutcomes;
-            finishedAt: UnixTime;
-        } | null;
-    };
+    currentVote: CurrentVote;
+    voteHistory: VoteHistory;
 }
 export interface StartBox {
     top: number;
@@ -4534,7 +4449,158 @@ export interface StartBox {
     left: number;
     right: number;
 }
+export interface VoteHistory {
+    [k: string]: {
+        vote: VoteActions;
+        outcome: VoteOutcomes;
+        finishedAt: UnixTime;
+    } | null;
+}
 ```
+---
+
+## VoteCancel
+
+- Endpoint Type: **Request** -> **Response**
+- Source: **User**
+- Target: **Server**
+- Required Scopes: `tachyon.lobby`
+
+### Request
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteCancelRequest",
+    "tachyon": {
+        "source": "user",
+        "target": "server",
+        "scopes": ["tachyon.lobby"]
+    },
+    "type": "object",
+    "properties": {
+        "type": { "const": "request" },
+        "messageId": { "type": "string" },
+        "commandId": { "const": "lobby/voteCancel" },
+        "data": {
+            "title": "LobbyVoteCancelRequestData",
+            "type": "object",
+            "properties": { "id": { "type": "string" } },
+            "required": ["id"]
+        }
+    },
+    "required": ["type", "messageId", "commandId", "data"]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "request",
+    "messageId": "ipsum",
+    "commandId": "lobby/voteCancel",
+    "data": {
+        "id": "proident pariatur id"
+    }
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteCancelRequest {
+    type: "request";
+    messageId: string;
+    commandId: "lobby/voteCancel";
+    data: LobbyVoteCancelRequestData;
+}
+export interface LobbyVoteCancelRequestData {
+    id: string;
+}
+```
+### Response
+
+<details>
+<summary>JSONSchema</summary>
+
+```json
+{
+    "title": "LobbyVoteCancelResponse",
+    "tachyon": {
+        "source": "server",
+        "target": "user",
+        "scopes": ["tachyon.lobby"]
+    },
+    "anyOf": [
+        {
+            "title": "LobbyVoteCancelOkResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteCancel" },
+                "status": { "const": "success" }
+            },
+            "required": ["type", "messageId", "commandId", "status"]
+        },
+        {
+            "title": "LobbyVoteCancelFailResponse",
+            "type": "object",
+            "properties": {
+                "type": { "const": "response" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteCancel" },
+                "status": { "const": "failed" },
+                "reason": {
+                    "enum": [
+                        "invalid_vote_id",
+                        "not_in_lobby",
+                        "internal_error",
+                        "unauthorized",
+                        "invalid_request",
+                        "command_unimplemented"
+                    ]
+                },
+                "details": { "type": "string" }
+            },
+            "required": ["type", "messageId", "commandId", "status", "reason"]
+        }
+    ]
+}
+
+```
+</details>
+
+<details>
+<summary>Example</summary>
+
+```json
+{
+    "type": "response",
+    "messageId": "culpa voluptate",
+    "commandId": "lobby/voteCancel",
+    "status": "success"
+}
+```
+</details>
+
+#### TypeScript Definition
+```ts
+export interface LobbyVoteCancelOkResponse {
+    type: "response";
+    messageId: string;
+    commandId: "lobby/voteCancel";
+    status: "success";
+}
+```
+Possible Failed Reasons: `invalid_vote_id`, `not_in_lobby`, `internal_error`, `unauthorized`, `invalid_request`, `command_unimplemented`
+
 ---
 
 ## VoteEnded
