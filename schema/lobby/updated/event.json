@@ -245,87 +245,10 @@
                         { "type": "null" }
                     ]
                 },
-                "currentVote": {
-                    "anyOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "id": { "type": "string" },
-                                "action": {
-                                    "$ref": "../../definitions/voteActions.json"
-                                },
-                                "initiator": {
-                                    "$ref": "../../definitions/userId.json"
-                                },
-                                "voters": {
-                                    "type": "object",
-                                    "patternProperties": {
-                                        "^.*$": {
-                                            "type": "object",
-                                            "properties": {
-                                                "vote": {
-                                                    "enum": [
-                                                        "pending",
-                                                        "yes",
-                                                        "no",
-                                                        "abstain"
-                                                    ]
-                                                }
-                                            },
-                                            "required": ["vote"]
-                                        }
-                                    }
-                                },
-                                "until": {
-                                    "$ref": "../../definitions/unixTime.json"
-                                },
-                                "quorum": {
-                                    "description": "this many player must vote for the vote to be valid at all.",
-                                    "type": "integer",
-                                    "minimum": 1
-                                },
-                                "majority": {
-                                    "description": "votes passes when number(yes) >= majority",
-                                    "type": "integer",
-                                    "minimum": 1
-                                }
-                            },
-                            "required": ["id"]
-                        },
-                        { "type": "null" }
-                    ]
-                },
-                "voteHistory": {
-                    "type": "object",
-                    "patternProperties": {
-                        "^.*$": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "vote": {
-                                            "$ref": "../../definitions/voteActions.json"
-                                        },
-                                        "outcome": {
-                                            "$ref": "../../definitions/voteOutcomes.json"
-                                        },
-                                        "finishedAt": {
-                                            "$ref": "../../definitions/unixTime.json"
-                                        }
-                                    },
-                                    "required": [
-                                        "vote",
-                                        "outcome",
-                                        "finishedAt"
-                                    ]
-                                },
-                                { "type": "null" }
-                            ]
-                        }
-                    }
-                }
+                "currentVote": { "$ref": "../../definitions/currentVote.json" },
+                "voteHistory": { "$ref": "../../definitions/voteHistory.json" }
             },
-            "required": ["id"]
+            "required": ["id", "currentVote", "voteHistory"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
