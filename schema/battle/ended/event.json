@@ -25,11 +25,12 @@
                             "userId": {
                                 "$ref": "../../definitions/userId.json"
                             },
+                            "name": { "type": "string" },
                             "allyTeam": { "type": "string" },
                             "team": { "type": "string" },
                             "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeam", "team", "player"]
+                        "required": ["name", "allyTeam", "team", "player"]
                     }
                 },
                 "spectators": {
@@ -39,9 +40,10 @@
                         "properties": {
                             "userId": {
                                 "$ref": "../../definitions/userId.json"
-                            }
+                            },
+                            "name": { "type": "string" }
                         },
-                        "required": ["userId"]
+                        "required": ["userId", "name"]
                     }
                 },
                 "winningAllyTeamIds": {

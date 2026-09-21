@@ -44,11 +44,12 @@ Sent to all players and spectators involved in a battle when it ends.
                         "type": "object",
                         "properties": {
                             "userId": { "$ref": "#/definitions/userId" },
+                            "name": { "type": "string" },
                             "allyTeam": { "type": "string" },
                             "team": { "type": "string" },
                             "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeam", "team", "player"]
+                        "required": ["name", "allyTeam", "team", "player"]
                     }
                 },
                 "spectators": {
@@ -56,9 +57,10 @@ Sent to all players and spectators involved in a battle when it ends.
                     "items": {
                         "type": "object",
                         "properties": {
-                            "userId": { "$ref": "#/definitions/userId" }
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "name": { "type": "string" }
                         },
-                        "required": ["userId"]
+                        "required": ["userId", "name"]
                     }
                 },
                 "winningAllyTeamIds": {
@@ -93,42 +95,62 @@ Sent to all players and spectators involved in a battle when it ends.
         "players": [
             {
                 "userId": "351",
-                "allyTeam": "qui Lorem dolore",
-                "team": "quis in incididunt magna esse",
-                "player": "nostrud veniam et mollit"
+                "name": "proident labore adipisicing Lorem",
+                "allyTeam": "dolore",
+                "team": "irure ut dolore",
+                "player": "incididunt cupidatat quis"
             },
             {
                 "userId": "351",
-                "allyTeam": "nostrud labore",
-                "team": "in sunt adipisicing nulla laborum",
-                "player": "aute amet incididunt"
+                "name": "ullamco eiusmod laborum",
+                "allyTeam": "anim reprehenderit ullamco",
+                "team": "enim non adipisicing anim commodo",
+                "player": "eiusmod"
             },
             {
                 "userId": "351",
-                "allyTeam": "nisi id",
-                "team": "ad reprehenderit tempor",
-                "player": "qui ea"
+                "name": "ullamco",
+                "allyTeam": "sint nisi",
+                "team": "deserunt",
+                "player": "in cillum"
             },
             {
                 "userId": "351",
-                "allyTeam": "incididunt nisi ullamco do ut",
-                "team": "elit ullamco",
-                "player": "nisi dolore reprehenderit consectetur"
+                "name": "mollit adipisicing",
+                "allyTeam": "fugiat",
+                "team": "minim Ut aute officia reprehenderit",
+                "player": "commodo ullamco incididunt exercitation est"
             },
             {
                 "userId": "351",
-                "allyTeam": "et non",
-                "team": "cupidatat elit ad cillum nulla",
-                "player": "exercitation"
+                "name": "in velit voluptate occaecat et",
+                "allyTeam": "id dolore dolore irure magna",
+                "team": "Duis",
+                "player": "laboris id Duis laborum"
             }
         ],
-        "spectators": [],
+        "spectators": [
+            {
+                "userId": "351",
+                "name": "enim est sunt"
+            },
+            {
+                "userId": "351",
+                "name": "velit dolore fugiat cupidatat minim"
+            },
+            {
+                "userId": "351",
+                "name": "dolore voluptate et pariatur"
+            },
+            {
+                "userId": "351",
+                "name": "voluptate est irure"
+            }
+        ],
         "winningAllyTeamIds": [
-            "quis nostrud",
-            "quis",
-            "amet Ut",
-            "aliquip cillum nostrud ut",
-            "eiusmod cillum Excepteur occaecat"
+            "eu adipisicing in fugiat aute",
+            "eu dolor enim laboris",
+            "laborum ut amet adipisicing pariatur"
         ]
     }
 }
@@ -149,13 +171,15 @@ export interface BattleEndedEvent {
 export interface BattleEndedEventData {
     battleId: BattleId;
     players: {
-        userId: UserId;
+        userId?: UserId;
+        name: string;
         allyTeam: string;
         team: string;
         player: string;
     }[];
     spectators: {
         userId: UserId;
+        name: string;
     }[];
     winningAllyTeamIds: string[];
 }
