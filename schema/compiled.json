@@ -179,14 +179,15 @@
                         },
                         "until": { "$ref": "#/definitions/unixTime" },
                         "quorum": {
-                            "description": "this many player must vote for the vote to be valid at all.",
+                            "description": "this many player must vote for the vote to be valid at all",
                             "type": "integer",
                             "minimum": 1
                         },
                         "majority": {
-                            "description": "votes passes when number(yes) >= majority",
-                            "type": "integer",
-                            "minimum": 1
+                            "description": "percentage of yes votes out of non abstaining votes required for the vote to pass",
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
                         }
                     },
                     "required": [
@@ -396,14 +397,15 @@
                         },
                         "until": { "$ref": "#/definitions/unixTime" },
                         "quorum": {
-                            "description": "this many player must vote for the vote to be valid at all.",
+                            "description": "this many player must vote for the vote to be valid at all",
                             "type": "integer",
                             "minimum": 1
                         },
                         "majority": {
-                            "description": "votes passes when number(yes) >= majority",
-                            "type": "integer",
-                            "minimum": 1
+                            "description": "percentage of yes votes out of non abstaining votes required for the vote to pass",
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
                         }
                     },
                     "required": [

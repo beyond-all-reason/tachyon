@@ -1401,7 +1401,7 @@ export interface LobbyJoinRequestData {
             },
             "until": 1705432698000000,
             "quorum": 37093187,
-            "majority": 1118827
+            "majority": 0.011188268661499023
         },
         "voteHistory": {
             "": {
