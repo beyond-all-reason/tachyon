@@ -2038,12 +2038,13 @@
                                     "userId": {
                                         "$ref": "#/definitions/userId"
                                     },
+                                    "name": { "type": "string" },
                                     "allyTeam": { "type": "string" },
                                     "team": { "type": "string" },
                                     "player": { "type": "string" }
                                 },
                                 "required": [
-                                    "userId",
+                                    "name",
                                     "allyTeam",
                                     "team",
                                     "player"
@@ -2055,9 +2056,12 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "userId": { "$ref": "#/definitions/userId" }
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "name": { "type": "string" }
                                 },
-                                "required": ["userId"]
+                                "required": ["userId", "name"]
                             }
                         },
                         "winningAllyTeamIds": {

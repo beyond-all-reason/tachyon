@@ -11,7 +11,8 @@ export default defineEndpoint({
             battleId: Type.Ref("battleId"),
             players: Type.Array(
                 Type.Object({
-                    userId: Type.Ref("userId"),
+                    userId: Type.Optional(Type.Ref("userId")),
+                    name: Type.String(),
                     allyTeam: Type.String(),
                     team: Type.String(),
                     player: Type.String(),
@@ -20,6 +21,7 @@ export default defineEndpoint({
             spectators: Type.Array(
                 Type.Object({
                     userId: Type.Ref("userId"),
+                    name: Type.String(),
                 })
             ),
             winningAllyTeamIds: Type.Array(Type.String()),
