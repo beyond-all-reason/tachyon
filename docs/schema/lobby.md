@@ -4264,7 +4264,7 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
                 "currentVote": { "$ref": "#/definitions/currentVote" },
                 "voteHistory": { "$ref": "#/definitions/voteHistory" }
             },
-            "required": ["id", "currentVote", "voteHistory"]
+            "required": ["id"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]
@@ -4282,50 +4282,100 @@ Sent by the server whenever something in the lobby changes. Uses json patch (RFC
     "messageId": "laboris ipsum ea ut sit",
     "commandId": "lobby/updated",
     "data": {
-        "id": "eu",
-        "name": "anim",
-        "engineVersion": "proident reprehenderit quis irure",
-        "gameVersion": "pariatur qui",
+        "id": "veniam Excepteur ut quis eu",
+        "name": "in esse dolor ullamco",
+        "mapName": "voluptate eu",
+        "gameVersion": "anim pariatur adipisicing",
         "gameOptions": {
-            ")H(:&DjH": {
+            "&Dj": null,
+            "jKt/s:": null,
+            "Ue[){wK": {
                 "value": "minim sed"
-            },
-            "Kt/s:aUe": null,
-            "){wKv_": null
+            }
+        },
+        "restrictions": {
+            "$3[t": null,
+            "eO:bH)%w": null,
+            "<b#p$(@`{": 92908334.73205566,
+            "<Mr<'4RP": null
         },
         "tags": {
-            "[t": null,
-            "eO:bH)%w": null,
-            "<b#p$(@`{": {
-                "in_7": 86254441.73812866
+            "A|;Jh(": {
+                "pariatura1": "sed dolore commodo dolor",
+                "ipsum7": "eu consectetur ex labore",
+                "minim2": -34537101,
+                "exercitation_8e5": 76990020,
+                "veniam707": -98919653.89251709
             }
         },
-        "bots": {
-            "xuI5LT)ms": {
-                "id": "consectetur laboris elit aliqua",
-                "hostUserId": "351",
-                "allyTeam": "in et ad veniam labore",
-                "team": "dolor in cillum",
-                "player": "officia cillum ut elit labore",
-                "name": null,
-                "shortName": "sed dolore commodo dolor",
-                "version": null,
-                "options": null
-            }
-        },
-        "currentBattle": null,
-        "currentVote": null,
-        "voteHistory": {
-            "z\\": null,
-            "": {
-                "vote": {
-                    "type": "changeMap",
-                    "newMapName": "qui et voluptate sit magna"
+        "allyTeamConfig": {
+            "KB1K33tv`X": {
+                "startBox": {
+                    "top": 0.6559750437736511,
+                    "bottom": 0.3290979266166687,
+                    "left": 0.14947843551635742,
+                    "right": 0.9321290254592896
                 },
-                "outcome": "failed",
-                "finishedAt": 1705432698000000
+                "maxTeams": 16243941,
+                "teams": {
+                    "G%ph": {
+                        "aliqua_a": -40005505.084991455,
+                        "consequat_a_a": true,
+                        "ex_80e": "dolore Ut laborum est",
+                        "dolor9": false,
+                        "cupidatat_748": true,
+                        "maxPlayers": 43663621
+                    },
+                    "": {
+                        "Duis9": "sint voluptate in magna aliquip"
+                    },
+                    "[FQ-(": null
+                }
+            }
+        },
+        "bosses": {
+            ">3k": {
+                "enimd": "veniam ad in",
+                "sed_0": -78432334,
+                "consequat_6": true
             },
-            "CRs": null
+            "CYZ;bdg8": null,
+            "#Z3H": {
+                "aliquipfc": 8458578,
+                "proident_9": false,
+                "consequat_f_": 64002251.625061035,
+                "do_3fa": -35210847.85461426,
+                "reprehenderitd": "in commodo"
+            }
+        },
+        "currentVote": {
+            "id": "Duis irure",
+            "action": {
+                "type": "appointBoss",
+                "bossId": "351"
+            },
+            "initiator": "351",
+            "voters": {
+                ".;g*g": null,
+                "mZp": {
+                    "vote": "abstain"
+                },
+                "Ny\"": {
+                    "vote": "pending"
+                }
+            },
+            "until": 1705432698000000,
+            "quorum": 49417419,
+            "majority": 0.4312328100204468
+        },
+        "voteHistory": {
+            "yVqQ@": {
+                "vote": {
+                    "type": "kickban"
+                },
+                "outcome": "cancelled",
+                "finishedAt": 1705432698000000
+            }
         }
     }
 }
@@ -4440,8 +4490,8 @@ export interface LobbyUpdatedEventData {
         id: string;
         startedAt: UnixTime;
     } | null;
-    currentVote: CurrentVote;
-    voteHistory: VoteHistory;
+    currentVote?: CurrentVote;
+    voteHistory?: VoteHistory;
 }
 export interface StartBox {
     top: number;
