@@ -49,7 +49,30 @@ Sent to all players and spectators involved in a battle when it ends.
                             "team": { "type": "string" },
                             "player": { "type": "string" }
                         },
-                        "required": ["name", "allyTeam", "team", "player"]
+                        "required": [
+                            "userId",
+                            "name",
+                            "allyTeam",
+                            "team",
+                            "player"
+                        ]
+                    }
+                },
+                "bots": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "shortName": {
+                                "description": "Short name of the bot. Used to uniquely identify which bot to run",
+                                "type": "string",
+                                "maxLength": 20
+                            },
+                            "allyTeam": { "type": "string" },
+                            "team": { "type": "string" },
+                            "player": { "type": "string" }
+                        },
+                        "required": ["shortName", "allyTeam", "team", "player"]
                     }
                 },
                 "spectators": {
@@ -71,6 +94,7 @@ Sent to all players and spectators involved in a battle when it ends.
             "required": [
                 "battleId",
                 "players",
+                "bots",
                 "spectators",
                 "winningAllyTeamIds"
             ]
@@ -95,62 +119,62 @@ Sent to all players and spectators involved in a battle when it ends.
         "players": [
             {
                 "userId": "351",
-                "name": "proident labore adipisicing Lorem",
+                "name": "qui Lorem dolore",
+                "allyTeam": "quis in incididunt magna esse",
+                "team": "nostrud veniam et mollit",
+                "player": "labore veniam occaecat mollit"
+            },
+            {
+                "userId": "351",
+                "name": "in sunt adipisicing nulla laborum",
+                "allyTeam": "aute amet incididunt",
+                "team": "voluptate",
+                "player": "sint"
+            },
+            {
+                "userId": "351",
+                "name": "qui ea",
+                "allyTeam": "exercitation eiusmod",
+                "team": "dolor sunt adipisicing in",
+                "player": "irure enim do officia et"
+            },
+            {
+                "userId": "351",
+                "name": "fugiat aliquip minim",
+                "allyTeam": "ex velit Ut ullamco",
+                "team": "adipisicing et sed sunt aute",
+                "player": "occaecat laboris Ut non nulla"
+            },
+            {
+                "userId": "351",
+                "name": "eiusmod anim",
+                "allyTeam": "sunt dolore in",
+                "team": "tempor ullamco enim officia",
+                "player": "nostrud in consequat Lorem nulla"
+            }
+        ],
+        "bots": [
+            {
+                "shortName": "eu mollit",
+                "allyTeam": "sed reprehenderit dolor officia",
+                "team": "sed ea nulla ullamco eiusmod",
+                "player": "officia ullamco esse"
+            },
+            {
+                "shortName": "laboris",
                 "allyTeam": "dolore",
-                "team": "irure ut dolore",
-                "player": "incididunt cupidatat quis"
-            },
-            {
-                "userId": "351",
-                "name": "ullamco eiusmod laborum",
-                "allyTeam": "anim reprehenderit ullamco",
-                "team": "enim non adipisicing anim commodo",
-                "player": "eiusmod"
-            },
-            {
-                "userId": "351",
-                "name": "ullamco",
-                "allyTeam": "sint nisi",
-                "team": "deserunt",
-                "player": "in cillum"
-            },
-            {
-                "userId": "351",
-                "name": "mollit adipisicing",
-                "allyTeam": "fugiat",
-                "team": "minim Ut aute officia reprehenderit",
-                "player": "commodo ullamco incididunt exercitation est"
-            },
-            {
-                "userId": "351",
-                "name": "in velit voluptate occaecat et",
-                "allyTeam": "id dolore dolore irure magna",
-                "team": "Duis",
-                "player": "laboris id Duis laborum"
+                "team": "in proident",
+                "player": "non ut dolor voluptate"
             }
         ],
         "spectators": [
             {
                 "userId": "351",
-                "name": "enim est sunt"
-            },
-            {
-                "userId": "351",
-                "name": "velit dolore fugiat cupidatat minim"
-            },
-            {
-                "userId": "351",
-                "name": "dolore voluptate et pariatur"
-            },
-            {
-                "userId": "351",
-                "name": "voluptate est irure"
+                "name": "ullamco"
             }
         ],
         "winningAllyTeamIds": [
-            "eu adipisicing in fugiat aute",
-            "eu dolor enim laboris",
-            "laborum ut amet adipisicing pariatur"
+            "et dolore dolor ipsum"
         ]
     }
 }
@@ -171,8 +195,14 @@ export interface BattleEndedEvent {
 export interface BattleEndedEventData {
     battleId: BattleId;
     players: {
-        userId?: UserId;
+        userId: UserId;
         name: string;
+        allyTeam: string;
+        team: string;
+        player: string;
+    }[];
+    bots: {
+        shortName: string;
         allyTeam: string;
         team: string;
         player: string;
