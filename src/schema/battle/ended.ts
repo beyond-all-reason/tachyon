@@ -12,6 +12,19 @@ export default defineEndpoint({
             players: Type.Array(
                 Type.Object({
                     userId: Type.Ref("userId"),
+                    name: Type.String(),
+                    allyTeam: Type.String(),
+                    team: Type.String(),
+                    player: Type.String(),
+                })
+            ),
+            bots: Type.Array(
+                Type.Object({
+                    shortName: Type.String({
+                        maxLength: 20,
+                        description:
+                            "Short name of the bot. Used to uniquely identify which bot to run",
+                    }),
                     allyTeam: Type.String(),
                     team: Type.String(),
                     player: Type.String(),
@@ -20,6 +33,7 @@ export default defineEndpoint({
             spectators: Type.Array(
                 Type.Object({
                     userId: Type.Ref("userId"),
+                    name: Type.String(),
                 })
             ),
             winningAllyTeamIds: Type.Array(Type.String()),

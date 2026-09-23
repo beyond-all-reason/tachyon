@@ -29,6 +29,8 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "invalid_vote_id",
+                        "not_in_lobby",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

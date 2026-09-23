@@ -11,5 +11,9 @@ export default defineEndpoint({
             userId: Type.Ref("userId"),
         }),
     },
-    response: [{ status: "failed", reason: "bosses_not_allowed" }, { status: "success" }],
+    response: [
+        { status: "failed", reason: "not_in_lobby" },
+        { status: "failed", reason: "bosses_not_allowed" },
+        { status: "success" },
+    ],
 });

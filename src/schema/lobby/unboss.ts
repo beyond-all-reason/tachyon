@@ -14,5 +14,9 @@ export default defineEndpoint({
             { description: "if userId isn't provided, defaults to the current user" }
         ),
     },
-    response: [{ status: "failed", reason: "not_a_boss" }, { status: "success" }],
+    response: [
+        { status: "failed", reason: "not_in_lobby" },
+        { status: "failed", reason: "not_a_boss" },
+        { status: "success" },
+    ],
 });

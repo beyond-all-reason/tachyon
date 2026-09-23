@@ -44,11 +44,35 @@ Sent to all players and spectators involved in a battle when it ends.
                         "type": "object",
                         "properties": {
                             "userId": { "$ref": "#/definitions/userId" },
+                            "name": { "type": "string" },
                             "allyTeam": { "type": "string" },
                             "team": { "type": "string" },
                             "player": { "type": "string" }
                         },
-                        "required": ["userId", "allyTeam", "team", "player"]
+                        "required": [
+                            "userId",
+                            "name",
+                            "allyTeam",
+                            "team",
+                            "player"
+                        ]
+                    }
+                },
+                "bots": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "shortName": {
+                                "description": "Short name of the bot. Used to uniquely identify which bot to run",
+                                "type": "string",
+                                "maxLength": 20
+                            },
+                            "allyTeam": { "type": "string" },
+                            "team": { "type": "string" },
+                            "player": { "type": "string" }
+                        },
+                        "required": ["shortName", "allyTeam", "team", "player"]
                     }
                 },
                 "spectators": {
@@ -56,9 +80,10 @@ Sent to all players and spectators involved in a battle when it ends.
                     "items": {
                         "type": "object",
                         "properties": {
-                            "userId": { "$ref": "#/definitions/userId" }
+                            "userId": { "$ref": "#/definitions/userId" },
+                            "name": { "type": "string" }
                         },
-                        "required": ["userId"]
+                        "required": ["userId", "name"]
                     }
                 },
                 "winningAllyTeamIds": {
@@ -69,6 +94,7 @@ Sent to all players and spectators involved in a battle when it ends.
             "required": [
                 "battleId",
                 "players",
+                "bots",
                 "spectators",
                 "winningAllyTeamIds"
             ]
@@ -93,42 +119,62 @@ Sent to all players and spectators involved in a battle when it ends.
         "players": [
             {
                 "userId": "351",
-                "allyTeam": "qui Lorem dolore",
-                "team": "quis in incididunt magna esse",
-                "player": "nostrud veniam et mollit"
+                "name": "qui Lorem dolore",
+                "allyTeam": "quis in incididunt magna esse",
+                "team": "nostrud veniam et mollit",
+                "player": "labore veniam occaecat mollit"
             },
             {
                 "userId": "351",
-                "allyTeam": "nostrud labore",
-                "team": "in sunt adipisicing nulla laborum",
-                "player": "aute amet incididunt"
+                "name": "in sunt adipisicing nulla laborum",
+                "allyTeam": "aute amet incididunt",
+                "team": "voluptate",
+                "player": "sint"
             },
             {
                 "userId": "351",
-                "allyTeam": "nisi id",
-                "team": "ad reprehenderit tempor",
-                "player": "qui ea"
+                "name": "qui ea",
+                "allyTeam": "exercitation eiusmod",
+                "team": "dolor sunt adipisicing in",
+                "player": "irure enim do officia et"
             },
             {
                 "userId": "351",
-                "allyTeam": "incididunt nisi ullamco do ut",
-                "team": "elit ullamco",
-                "player": "nisi dolore reprehenderit consectetur"
+                "name": "fugiat aliquip minim",
+                "allyTeam": "ex velit Ut ullamco",
+                "team": "adipisicing et sed sunt aute",
+                "player": "occaecat laboris Ut non nulla"
             },
             {
                 "userId": "351",
-                "allyTeam": "et non",
-                "team": "cupidatat elit ad cillum nulla",
-                "player": "exercitation"
+                "name": "eiusmod anim",
+                "allyTeam": "sunt dolore in",
+                "team": "tempor ullamco enim officia",
+                "player": "nostrud in consequat Lorem nulla"
             }
         ],
-        "spectators": [],
+        "bots": [
+            {
+                "shortName": "eu mollit",
+                "allyTeam": "sed reprehenderit dolor officia",
+                "team": "sed ea nulla ullamco eiusmod",
+                "player": "officia ullamco esse"
+            },
+            {
+                "shortName": "laboris",
+                "allyTeam": "dolore",
+                "team": "in proident",
+                "player": "non ut dolor voluptate"
+            }
+        ],
+        "spectators": [
+            {
+                "userId": "351",
+                "name": "ullamco"
+            }
+        ],
         "winningAllyTeamIds": [
-            "quis nostrud",
-            "quis",
-            "amet Ut",
-            "aliquip cillum nostrud ut",
-            "eiusmod cillum Excepteur occaecat"
+            "et dolore dolor ipsum"
         ]
     }
 }
@@ -150,12 +196,20 @@ export interface BattleEndedEventData {
     battleId: BattleId;
     players: {
         userId: UserId;
+        name: string;
+        allyTeam: string;
+        team: string;
+        player: string;
+    }[];
+    bots: {
+        shortName: string;
         allyTeam: string;
         team: string;
         player: string;
     }[];
     spectators: {
         userId: UserId;
+        name: string;
     }[];
     winningAllyTeamIds: string[];
 }
@@ -209,18 +263,22 @@ When a user client receives this response it should launch the game (spring.exe)
     "messageId": "qui incididunt",
     "commandId": "battle/start",
     "data": {
-        "username": "enim id",
-        "password": "dolore adipisicing in",
-        "ip": "75bfc493-2b9d-495d-a453-06722fdca2ea",
-        "port": -21385347.843170166,
+        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+        "username": "officia enim aliquip aute",
+        "password": "aliqua adipisicing dolore",
+        "ips": [
+            "129.211.80.128",
+            "983a:2b5c:c1a8:3205:e6bd:3dbe:9bdf:017f"
+        ],
+        "port": 46973,
         "engine": {
-            "version": "velit eu"
+            "version": "deserunt"
         },
         "game": {
-            "springName": "id minim aute sed amet"
+            "springName": "ipsum proident sit sunt"
         },
         "map": {
-            "springName": "aliquip adipisicing elit"
+            "springName": "voluptate"
         }
     }
 }
@@ -238,9 +296,10 @@ export interface BattleStartRequest {
     data: BattleStartRequestData;
 }
 export interface BattleStartRequestData {
+    battleId: BattleId;
     username: string;
     password: string;
-    ip: BattleId;
+    ips: string[];
     port: number;
     engine: {
         version: string;

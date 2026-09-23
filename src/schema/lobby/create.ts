@@ -20,6 +20,11 @@ export default defineEndpoint({
                     })
                 )
             ),
+            restrictions: Type.Optional(
+                Type.Record(Type.String(), Type.Number(), {
+                    description: "unit restrictions for the battle.",
+                })
+            ),
             tags: Type.Optional(Type.Record(Type.String(), Type.Object({}))),
         }),
     },

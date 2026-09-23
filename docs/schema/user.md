@@ -237,14 +237,19 @@ Issue a single moderation report on one or more users.
             "properties": {
                 "userIds": {
                     "type": "array",
-                    "items": { "$ref": "#/definitions/userId" }
+                    "items": { "$ref": "#/definitions/userId" },
+                    "minItems": 1
                 },
                 "reason": {
                     "type": "object",
                     "properties": { "type": { "type": "string" } },
                     "required": ["type"]
                 },
-                "message": { "type": "string" }
+                "message": { "type": "string", "maxLength": 255 },
+                "battleId": {
+                    "$ref": "#/definitions/battleId",
+                    "description": "the battle the report is about, if any"
+                }
             },
             "required": ["userIds", "reason"]
         }
@@ -264,10 +269,17 @@ Issue a single moderation report on one or more users.
     "messageId": "consequat",
     "commandId": "user/report",
     "data": {
-        "userIds": [],
+        "userIds": [
+            "351",
+            "351",
+            "351",
+            "351"
+        ],
         "reason": {
-            "type": "incididunt dolor nisi sunt"
-        }
+            "type": "ut velit officia esse"
+        },
+        "message": "reprehenderit",
+        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea"
     }
 }
 ```
@@ -284,11 +296,12 @@ export interface UserReportRequest {
     data: UserReportRequestData;
 }
 export interface UserReportRequestData {
-    userIds: UserId[];
+    userIds: [UserId, ...UserId[]];
     reason: {
         type: string;
     };
     message?: string;
+    battleId?: string;
 }
 ```
 ### Response
@@ -467,14 +480,12 @@ Sent by the server to inform the client of its own user state. This event should
                 ]
             },
             "invitedToParties": [],
-            "friendIds": [
-                "labore",
-                "dolore reprehenderit velit minim sunt",
-                "occaecat veniam",
-                "labore",
-                "Excepteur occaecat do esse mollit"
-            ],
+            "friendIds": [],
             "outgoingFriendRequest": [
+                {
+                    "to": {},
+                    "sentAt": {}
+                },
                 {
                     "to": {},
                     "sentAt": {}
@@ -500,35 +511,51 @@ Sent by the server to inform the client of its own user state. This event should
                 {
                     "from": {},
                     "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
+                },
+                {
+                    "from": {},
+                    "sentAt": {}
                 }
             ],
-            "ignoreIds": [
-                "veniam elit",
-                "velit pariatur cillum officia qui",
-                "in amet occaecat nostrud",
-                "fugiat"
-            ],
+            "ignoreIds": [],
             "currentBattle": {
-                "username": "tempor",
-                "password": "pariatur ad exercitation nulla",
-                "ip": "75bfc493-2b9d-495d-a453-06722fdca2ea",
-                "port": 18174040.3175354,
+                "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+                "username": "amet nulla",
+                "password": "quis eiusmod in ut veniam",
+                "ips": [
+                    "38c9:73c9:bfd1:63bc:f84a:6005:cd0c:8549",
+                    "15.28.128.124",
+                    "44.32.74.70"
+                ],
+                "port": 19974,
                 "engine": {
-                    "version": "officia exercitation nulla ex labore"
+                    "version": "deserunt esse"
                 },
                 "game": {
-                    "springName": "elit sunt"
+                    "springName": "labore in"
                 },
                 "map": {
-                    "springName": "in labore est"
+                    "springName": "quis in veniam sed"
                 }
             },
-            "currentLobby": "do aute esse",
+            "currentLobby": null,
             "clanInvites": [
                 "12345",
                 "12345",
+                "12345",
                 "12345"
-            ]
+            ],
+            "matchmaking": {
+                "state": "no_matchmaking"
+            }
         }
     }
 }
@@ -540,7 +567,7 @@ Sent by the server to inform the client of its own user state. This event should
 export type PrivateUser = User & {
     party: PartyState | null;
     invitedToParties: PartyState[];
-    friendIds: string[];
+    friendIds: UserId[];
     outgoingFriendRequest: {
         to: UserId;
         sentAt: UnixTime;
@@ -549,16 +576,47 @@ export type PrivateUser = User & {
         from: UserId;
         sentAt: UnixTime;
     }[];
-    ignoreIds: string[];
+    ignoreIds: UserId[];
     currentBattle?: PrivateBattle;
-    currentLobby: string | null;
+    currentLobby: LobbyId | null;
     clanInvites: ClanId[];
+    matchmaking:
+        | {
+              state: "no_matchmaking";
+          }
+        | {
+              state: "queuing";
+              queues: [
+                  {
+                      id: string;
+                      version: string;
+                  },
+                  ...{
+                      id: string;
+                      version: string;
+                  }[]
+              ];
+          }
+        | {
+              state: "found";
+              queue: {
+                  id: string;
+                  version: string;
+                  timeoutAt: UnixTime;
+                  hasAlreadyReadied: boolean;
+              };
+              otherQueues: {
+                  id: string;
+                  version: string;
+              }[];
+          };
 };
 export type UserId = string;
 export type ClanId = string;
 export type PartyId = string;
 export type UnixTime = number;
 export type BattleId = string;
+export type LobbyId = string;
 
 export interface UserSelfEvent {
     type: "event";
@@ -603,9 +661,10 @@ export interface PartyState {
     }[];
 }
 export interface PrivateBattle {
+    battleId: BattleId;
     username: string;
     password: string;
-    ip: BattleId;
+    ips: string[];
     port: number;
     engine: {
         version: string;

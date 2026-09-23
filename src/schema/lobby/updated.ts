@@ -28,6 +28,11 @@ export default defineEndpoint({
                     )
                 )
             ),
+            restrictions: Type.Optional(
+                Type.Record(Type.String(), Nullable(Type.Number()), {
+                    description: "unit restrictions for the battle. Set to null to remove.",
+                })
+            ),
             tags: Type.Optional(Type.Record(Type.String(), Nullable(Type.Object({})))),
             allyTeamConfig: Type.Optional(
                 Type.Record(
@@ -131,49 +136,8 @@ export default defineEndpoint({
                     )
                 )
             ),
-            currentVote: Type.Optional(
-                Nullable(
-                    Type.Object({
-                        id: Type.String(),
-                        action: Type.Optional(Type.Ref("voteActions")),
-                        initiator: Type.Optional(Type.Ref("userId")),
-                        voters: Type.Optional(
-                            Type.Record(
-                                Type.String(),
-                                Type.Object({
-                                    vote: Type.Enum(["pending", "yes", "no", "abstain"]),
-                                })
-                            )
-                        ),
-                        until: Type.Optional(Type.Ref("unixTime")),
-                        quorum: Type.Optional(
-                            Type.Integer({
-                                minimum: 1,
-                                description:
-                                    "this many player must vote for the vote to be valid at all.",
-                            })
-                        ),
-                        majority: Type.Optional(
-                            Type.Integer({
-                                minimum: 1,
-                                description: "votes passes when number(yes) >= majority",
-                            })
-                        ),
-                    })
-                )
-            ),
-            voteHistory: Type.Optional(
-                Type.Record(
-                    Type.String(), // Vote ID
-                    Nullable(
-                        Type.Object({
-                            vote: Type.Ref("voteActions"),
-                            outcome: Type.Ref("voteOutcomes"),
-                            finishedAt: Type.Ref("unixTime"),
-                        })
-                    )
-                )
-            ),
+            currentVote: Type.Optional(Type.Ref("currentVote")),
+            voteHistory: Type.Optional(Type.Ref("voteHistory")),
         }),
     },
 });

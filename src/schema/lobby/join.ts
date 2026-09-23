@@ -13,6 +13,7 @@ export default defineEndpoint({
         }),
     },
     response: [
+        { status: "failed", reason: "invalid_lobby_id" },
         { status: "failed", reason: "lobby_full" },
         { status: "failed", reason: "banned" },
         {

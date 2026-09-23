@@ -44,7 +44,7 @@ OAuth2 allows clients to specify the scope of requested access, see [Section 3.3
 Client Authentication
 ---------------------
 
-Extending [Section 2.3 of RFC 6749], for all "public clients", the sever *must not* require any client authentication. 
+Extending [Section 2.3 of RFC 6749], for all "public clients", the server *must not* require any client authentication. 
 
 Client Registration
 -------------------
@@ -57,8 +57,8 @@ Servers should provide the generic public client registration. Different lobby i
 
 - `client_id`: `generic_lobby`
 - `client_name`: "Generic Lobby Client"
-- `redirect_uris`: `httpL://localhost/oauth2callback`
-  - Reminder that servera must validate the redirect URI following [Section 7.3 of RFC 8252]
+- `redirect_uris`: `http://localhost/oauth2callback`
+  - Reminder that servers must validate the redirect URI following [Section 7.3 of RFC 8252]
 - `token_endpoint_auth_method`: `none`
 - `grant_types`: `authorization_code`, `refresh_token`
 - `response_types`: `code`
@@ -115,7 +115,7 @@ sequenceDiagram
    
    Server ->> Client: Provides Auth Code to Loopback Server
    Note over Client: Stops Loopback Server
-   Client ->> Server: Requests Access Token (GET /token)
+   Client ->> Server: Requests Access Token (POST /token)
    Server ->> Client: Provides Access Token
 ```
 
@@ -144,9 +144,15 @@ sequenceDiagram
 
    `http://127.0.0.1:37589/oauth2callback?code={authorization_code}`
 
-10. Client receives the authorization code and calls the token endpoint to exchange it for the access token:
+10. Client receives the authorization code and calls the token endpoint to exchange it for the access token. As required by [Section 4.1.3 of RFC 6749], this is a POST with the parameters in an `application/x-www-form-urlencoded` body, not in the query string:
 
-    `https://tachyon-server.example.com/oauth2/token?grant_type=authorization_code&code={authorization_code}&redirect_uri=http%3A%2F%2F127.0.0.1%3A37589%2Foauth2callback&client_id={client_id}&code_verifier={code_verifier}`
+    ```ini
+    client_id={client_id}
+    grant_type=authorization_code
+    code={authorization_code}
+    code_verifier={code_verifier}
+    redirect_uri=http://127.0.0.1:37589/oauth2callback
+    ```
 
 11. Server validates the authorization code and PKCE code verifier, then returns the access token and refresh token.
 
@@ -169,7 +175,7 @@ sequenceDiagram
    Client ->> Steam: Request a Steam Auth Session Ticket
    Note left of Steam: No user prompt is required<br>when user is logged into Steam
    Steam ->> Client: Provides Session Ticket
-   Client ->> Server: Requests Access Token Using Session Ticket (GET /token)
+   Client ->> Server: Requests Access Token Using Session Ticket (POST /token)
    Server ->> Steam: Session Ticket Verification Request
    Steam ->> Server: Session Ticket Verification Response
    Server ->> Client: Provides Access Token
@@ -211,6 +217,7 @@ Servers may also implement alternative authorization flows for Bots. One example
 [Section 2.3 of RFC 6749]: https://tools.ietf.org/html/rfc6749#section-2.3
 [Section 3.3 of RFC 6749]: https://tools.ietf.org/html/rfc6749#section-3.3
 [Section 4.1 of RFC 6749]: https://tools.ietf.org/html/rfc6749#section-4.1
+[Section 4.1.3 of RFC 6749]: https://tools.ietf.org/html/rfc6749#section-4.1.3
 [Section 4.4 of RFC 6749]: https://tools.ietf.org/html/rfc6749#section-4.4
 <!-- RFC 6750 - The OAuth 2.0 Authorization Framework: Bearer Token Usage -->
 [RFC 6750]: https://tools.ietf.org/html/rfc6750

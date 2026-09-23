@@ -2,10 +2,13 @@ import Type from "typebox";
 
 export const privateBattle = Type.Object(
     {
+        battleId: Type.Ref("battleId"),
         username: Type.String(),
         password: Type.String(),
-        ip: Type.Ref("battleId"),
-        port: Type.Number(),
+        ips: Type.Array(
+            Type.Union([Type.String({ format: "ipv4" }), Type.String({ format: "ipv6" })])
+        ),
+        port: Type.Integer({ minimum: 1024, maximum: 65535 }),
         engine: Type.Object({
             version: Type.String(),
         }),

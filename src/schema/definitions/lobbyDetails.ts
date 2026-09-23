@@ -99,6 +99,16 @@ export const lobbyDetails = Type.Object(
                     }
                 ),
                 until: Type.Ref("unixTime"),
+                quorum: Type.Integer({
+                    minimum: 1,
+                    description: "this many player must vote for the vote to be valid at all",
+                }),
+                majority: Type.Number({
+                    minimum: 0,
+                    maximum: 1,
+                    description:
+                        "percentage of yes votes out of non abstaining votes required for the vote to pass",
+                }),
             })
         ),
         voteHistory: Type.Optional(

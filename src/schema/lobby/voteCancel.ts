@@ -8,7 +8,6 @@ export default defineEndpoint({
     request: {
         data: Type.Object({
             id: Type.String(),
-            vote: Type.Enum(["yes", "no", "abstain"]),
         }),
     },
     response: [

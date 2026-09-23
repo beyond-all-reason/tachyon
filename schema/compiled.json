@@ -143,6 +143,66 @@
                 }
             ]
         },
+        "currentVote": {
+            "description": "The current vote in progress, if any",
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "id": { "type": "string" },
+                        "action": { "$ref": "#/definitions/voteActions" },
+                        "initiator": { "$ref": "#/definitions/userId" },
+                        "voters": {
+                            "description": "indexed by the userId. The initiator is also included in this object",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "vote": {
+                                                    "enum": [
+                                                        "pending",
+                                                        "yes",
+                                                        "no",
+                                                        "abstain"
+                                                    ]
+                                                }
+                                            },
+                                            "required": ["vote"]
+                                        },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "until": { "$ref": "#/definitions/unixTime" },
+                        "quorum": {
+                            "description": "this many player must vote for the vote to be valid at all",
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "majority": {
+                            "description": "percentage of yes votes out of non abstaining votes required for the vote to pass",
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "action",
+                        "initiator",
+                        "voters",
+                        "until",
+                        "quorum",
+                        "majority"
+                    ]
+                },
+                { "type": "null" }
+            ]
+        },
         "customStartScriptProperties": {
             "description": "Additional custom properties to set in engine StartScript for this object, must not collide with existing properties",
             "type": "object",
@@ -335,9 +395,28 @@
                                 }
                             }
                         },
-                        "until": { "$ref": "#/definitions/unixTime" }
+                        "until": { "$ref": "#/definitions/unixTime" },
+                        "quorum": {
+                            "description": "this many player must vote for the vote to be valid at all",
+                            "type": "integer",
+                            "minimum": 1
+                        },
+                        "majority": {
+                            "description": "percentage of yes votes out of non abstaining votes required for the vote to pass",
+                            "type": "number",
+                            "minimum": 0,
+                            "maximum": 1
+                        }
                     },
-                    "required": ["id", "action", "initiator", "voters", "until"]
+                    "required": [
+                        "id",
+                        "action",
+                        "initiator",
+                        "voters",
+                        "until",
+                        "quorum",
+                        "majority"
+                    ]
                 },
                 "voteHistory": {
                     "type": "object",
@@ -469,10 +548,23 @@
             "description": "Battle informations including secrets to pass to spring for joining the game server. Don't expose secrets to other players.",
             "type": "object",
             "properties": {
+                "battleId": { "$ref": "#/definitions/battleId" },
                 "username": { "type": "string" },
                 "password": { "type": "string" },
-                "ip": { "$ref": "#/definitions/battleId" },
-                "port": { "type": "number" },
+                "ips": {
+                    "type": "array",
+                    "items": {
+                        "anyOf": [
+                            { "type": "string", "format": "ipv4" },
+                            { "type": "string", "format": "ipv6" }
+                        ]
+                    }
+                },
+                "port": {
+                    "type": "integer",
+                    "minimum": 1024,
+                    "maximum": 65535
+                },
                 "engine": {
                     "type": "object",
                     "properties": { "version": { "type": "string" } },
@@ -490,9 +582,10 @@
                 }
             },
             "required": [
+                "battleId",
                 "username",
                 "password",
-                "ip",
+                "ips",
                 "port",
                 "engine",
                 "game",
@@ -517,7 +610,7 @@
                         },
                         "friendIds": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": { "$ref": "#/definitions/userId" }
                         },
                         "outgoingFriendRequest": {
                             "type": "array",
@@ -547,17 +640,95 @@
                         },
                         "ignoreIds": {
                             "type": "array",
-                            "items": { "type": "string" }
+                            "items": { "$ref": "#/definitions/userId" }
                         },
                         "currentBattle": {
                             "$ref": "#/definitions/privateBattle"
                         },
                         "currentLobby": {
-                            "anyOf": [{ "type": "string" }, { "type": "null" }]
+                            "anyOf": [
+                                { "$ref": "#/definitions/lobbyId" },
+                                { "type": "null" }
+                            ]
                         },
                         "clanInvites": {
                             "type": "array",
                             "items": { "$ref": "#/definitions/clanId" }
+                        },
+                        "matchmaking": {
+                            "anyOf": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "state": { "const": "no_matchmaking" }
+                                    },
+                                    "required": ["state"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "state": { "const": "queuing" },
+                                        "queues": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": { "type": "string" },
+                                                    "version": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": ["id", "version"]
+                                            },
+                                            "minItems": 1
+                                        }
+                                    },
+                                    "required": ["state", "queues"]
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "state": { "const": "found" },
+                                        "queue": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": { "type": "string" },
+                                                "version": { "type": "string" },
+                                                "timeoutAt": {
+                                                    "$ref": "#/definitions/unixTime"
+                                                },
+                                                "hasAlreadyReadied": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "version",
+                                                "timeoutAt",
+                                                "hasAlreadyReadied"
+                                            ]
+                                        },
+                                        "otherQueues": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": { "type": "string" },
+                                                    "version": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "required": ["id", "version"]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "state",
+                                        "queue",
+                                        "otherQueues"
+                                    ]
+                                }
+                            ]
                         }
                     },
                     "required": [
@@ -568,7 +739,8 @@
                         "incomingFriendRequest",
                         "ignoreIds",
                         "currentLobby",
-                        "clanInvites"
+                        "clanInvites",
+                        "matchmaking"
                     ]
                 }
             ]
@@ -720,6 +892,30 @@
                     "required": ["type", "userId"]
                 }
             ]
+        },
+        "voteHistory": {
+            "description": "History of votes keyed by vote ID",
+            "type": "object",
+            "patternProperties": {
+                "^.*$": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "vote": { "$ref": "#/definitions/voteActions" },
+                                "outcome": {
+                                    "$ref": "#/definitions/voteOutcomes"
+                                },
+                                "finishedAt": {
+                                    "$ref": "#/definitions/unixTime"
+                                }
+                            },
+                            "required": ["vote", "outcome", "finishedAt"]
+                        },
+                        { "type": "null" }
+                    ]
+                }
+            }
         },
         "voteOutcomes": { "enum": ["passed", "failed", "cancelled", "timeout"] }
     },
@@ -1844,12 +2040,36 @@
                                     "userId": {
                                         "$ref": "#/definitions/userId"
                                     },
+                                    "name": { "type": "string" },
                                     "allyTeam": { "type": "string" },
                                     "team": { "type": "string" },
                                     "player": { "type": "string" }
                                 },
                                 "required": [
                                     "userId",
+                                    "name",
+                                    "allyTeam",
+                                    "team",
+                                    "player"
+                                ]
+                            }
+                        },
+                        "bots": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "shortName": {
+                                        "description": "Short name of the bot. Used to uniquely identify which bot to run",
+                                        "type": "string",
+                                        "maxLength": 20
+                                    },
+                                    "allyTeam": { "type": "string" },
+                                    "team": { "type": "string" },
+                                    "player": { "type": "string" }
+                                },
+                                "required": [
+                                    "shortName",
                                     "allyTeam",
                                     "team",
                                     "player"
@@ -1861,9 +2081,12 @@
                             "items": {
                                 "type": "object",
                                 "properties": {
-                                    "userId": { "$ref": "#/definitions/userId" }
+                                    "userId": {
+                                        "$ref": "#/definitions/userId"
+                                    },
+                                    "name": { "type": "string" }
                                 },
-                                "required": ["userId"]
+                                "required": ["userId", "name"]
                             }
                         },
                         "winningAllyTeamIds": {
@@ -1874,6 +2097,7 @@
                     "required": [
                         "battleId",
                         "players",
+                        "bots",
                         "spectators",
                         "winningAllyTeamIds"
                     ]
@@ -3649,6 +3873,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "bosses_not_allowed",
                                 "internal_error",
                                 "unauthorized",
@@ -3703,6 +3928,13 @@
                                     },
                                     "required": ["value"]
                                 }
+                            }
+                        },
+                        "restrictions": {
+                            "description": "unit restrictions for the battle.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": { "type": "number" }
                             }
                         },
                         "tags": {
@@ -3834,6 +4066,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "invalid_lobby_id",
                                 "lobby_full",
                                 "banned",
                                 "internal_error",
@@ -4108,6 +4341,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -4170,6 +4404,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -4511,6 +4746,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -4643,6 +4879,7 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "not_in_lobby",
                                 "not_a_boss",
                                 "internal_error",
                                 "unauthorized",
@@ -4761,6 +4998,18 @@
                                             },
                                             "required": ["value"]
                                         },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
+                        "restrictions": {
+                            "description": "unit restrictions for the battle. Set to null to remove.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "number" },
                                         { "type": "null" }
                                     ]
                                 }
@@ -5037,6 +5286,18 @@
                                 }
                             }
                         },
+                        "restrictions": {
+                            "description": "unit restrictions for the battle. Set to null to remove.",
+                            "type": "object",
+                            "patternProperties": {
+                                "^.*$": {
+                                    "anyOf": [
+                                        { "type": "number" },
+                                        { "type": "null" }
+                                    ]
+                                }
+                            }
+                        },
                         "tags": {
                             "type": "object",
                             "patternProperties": {
@@ -5247,90 +5508,83 @@
                                 { "type": "null" }
                             ]
                         },
-                        "currentVote": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "id": { "type": "string" },
-                                        "action": {
-                                            "$ref": "#/definitions/voteActions"
-                                        },
-                                        "initiator": {
-                                            "$ref": "#/definitions/userId"
-                                        },
-                                        "voters": {
-                                            "type": "object",
-                                            "patternProperties": {
-                                                "^.*$": {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "vote": {
-                                                            "enum": [
-                                                                "pending",
-                                                                "yes",
-                                                                "no",
-                                                                "abstain"
-                                                            ]
-                                                        }
-                                                    },
-                                                    "required": ["vote"]
-                                                }
-                                            }
-                                        },
-                                        "until": {
-                                            "$ref": "#/definitions/unixTime"
-                                        },
-                                        "quorum": {
-                                            "description": "this many player must vote for the vote to be valid at all.",
-                                            "type": "integer",
-                                            "minimum": 1
-                                        },
-                                        "majority": {
-                                            "description": "votes passes when number(yes) >= majority",
-                                            "type": "integer",
-                                            "minimum": 1
-                                        }
-                                    },
-                                    "required": ["id"]
-                                },
-                                { "type": "null" }
-                            ]
-                        },
-                        "voteHistory": {
-                            "type": "object",
-                            "patternProperties": {
-                                "^.*$": {
-                                    "anyOf": [
-                                        {
-                                            "type": "object",
-                                            "properties": {
-                                                "vote": {
-                                                    "$ref": "#/definitions/voteActions"
-                                                },
-                                                "outcome": {
-                                                    "$ref": "#/definitions/voteOutcomes"
-                                                },
-                                                "finishedAt": {
-                                                    "$ref": "#/definitions/unixTime"
-                                                }
-                                            },
-                                            "required": [
-                                                "vote",
-                                                "outcome",
-                                                "finishedAt"
-                                            ]
-                                        },
-                                        { "type": "null" }
-                                    ]
-                                }
-                            }
-                        }
+                        "currentVote": { "$ref": "#/definitions/currentVote" },
+                        "voteHistory": { "$ref": "#/definitions/voteHistory" }
                     },
                     "required": ["id"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyVoteCancelRequest",
+            "tachyon": {
+                "source": "user",
+                "target": "server",
+                "scopes": ["tachyon.lobby"]
+            },
+            "type": "object",
+            "properties": {
+                "type": { "const": "request" },
+                "messageId": { "type": "string" },
+                "commandId": { "const": "lobby/voteCancel" },
+                "data": {
+                    "title": "LobbyVoteCancelRequestData",
+                    "type": "object",
+                    "properties": { "id": { "type": "string" } },
+                    "required": ["id"]
+                }
+            },
+            "required": ["type", "messageId", "commandId", "data"]
+        },
+        {
+            "title": "LobbyVoteCancelResponse",
+            "tachyon": {
+                "source": "server",
+                "target": "user",
+                "scopes": ["tachyon.lobby"]
+            },
+            "anyOf": [
+                {
+                    "title": "LobbyVoteCancelOkResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/voteCancel" },
+                        "status": { "const": "success" }
+                    },
+                    "required": ["type", "messageId", "commandId", "status"]
+                },
+                {
+                    "title": "LobbyVoteCancelFailResponse",
+                    "type": "object",
+                    "properties": {
+                        "type": { "const": "response" },
+                        "messageId": { "type": "string" },
+                        "commandId": { "const": "lobby/voteCancel" },
+                        "status": { "const": "failed" },
+                        "reason": {
+                            "enum": [
+                                "invalid_vote_id",
+                                "not_in_lobby",
+                                "internal_error",
+                                "unauthorized",
+                                "invalid_request",
+                                "command_unimplemented"
+                            ]
+                        },
+                        "details": { "type": "string" }
+                    },
+                    "required": [
+                        "type",
+                        "messageId",
+                        "commandId",
+                        "status",
+                        "reason"
+                    ]
+                }
+            ]
         },
         {
             "title": "LobbyVoteEndedEvent",
@@ -5409,6 +5663,8 @@
                         "status": { "const": "failed" },
                         "reason": {
                             "enum": [
+                                "invalid_vote_id",
+                                "not_in_lobby",
                                 "internal_error",
                                 "unauthorized",
                                 "invalid_request",
@@ -7164,14 +7420,19 @@
                     "properties": {
                         "userIds": {
                             "type": "array",
-                            "items": { "$ref": "#/definitions/userId" }
+                            "items": { "$ref": "#/definitions/userId" },
+                            "minItems": 1
                         },
                         "reason": {
                             "type": "object",
                             "properties": { "type": { "type": "string" } },
                             "required": ["type"]
                         },
-                        "message": { "type": "string" }
+                        "message": { "type": "string", "maxLength": 255 },
+                        "battleId": {
+                            "$ref": "#/definitions/battleId",
+                            "description": "the battle the report is about, if any"
+                        }
                     },
                     "required": ["userIds", "reason"]
                 }

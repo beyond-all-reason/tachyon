@@ -7,6 +7,7 @@ export default defineEndpoint({
         "Start the battle for the lobby. If this request succeed players will receive a battle/start request.",
     request: {},
     response: [
+        { status: "failed", reason: "not_in_lobby" },
         {
             status: "success",
         },

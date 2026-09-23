@@ -17,5 +17,5 @@ export default defineEndpoint({
             ),
         }),
     },
-    response: [{ status: "success" }],
+    response: [{ status: "failed", reason: "not_in_lobby" }, { status: "success" }],
 });
