@@ -3,7 +3,12 @@
 import assert from "node:assert";
 import { describe, test } from "node:test";
 
-import { MatchmakingQueueRequest, MatchmakingQueueResponse } from "../../dist/types";
+import {
+    BattleEndedEvent,
+    MatchmakingQueueRequest,
+    MatchmakingQueueResponse,
+    UserReportRequest,
+} from "../../dist/types";
 import * as validators from "../../dist/validators.js";
 
 describe("request", () => {
@@ -78,5 +83,62 @@ describe("response", () => {
         const isValid = validator(command);
 
         assert.equal(isValid, false);
+    });
+});
+
+describe("battle/ended", () => {
+    const validator = validators.battle_ended_event;
+
+    test("identifies the match", () => {
+        const event: BattleEndedEvent = {
+            type: "event",
+            commandId: "battle/ended",
+            messageId: "123",
+            data: {
+                matchId: "48213",
+                players: [],
+                bots: [],
+                spectators: [],
+                winningAllyTeamIds: [],
+            },
+        };
+
+        assert.equal(validator(event), true);
+    });
+
+    test("requires a matchId", () => {
+        const event = {
+            type: "event",
+            commandId: "battle/ended",
+            messageId: "123",
+            data: {
+                battleId: "75bfc493-2b9d-495d-a453-06722fdca2ea",
+                players: [],
+                bots: [],
+                spectators: [],
+                winningAllyTeamIds: [],
+            },
+        };
+
+        assert.equal(validator(event), false);
+    });
+});
+
+describe("user/report", () => {
+    const validator = validators.user_report_request;
+
+    test("can name the match", () => {
+        const request: UserReportRequest = {
+            type: "request",
+            commandId: "user/report",
+            messageId: "123",
+            data: {
+                userIds: ["351"],
+                reason: { type: "chat" },
+                matchId: "48213",
+            },
+        };
+
+        assert.equal(validator(request), true);
     });
 });

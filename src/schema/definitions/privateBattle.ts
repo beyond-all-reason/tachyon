@@ -2,7 +2,7 @@ import Type from "typebox";
 
 export const privateBattle = Type.Object(
     {
-        battleId: Type.Ref("battleId"),
+        matchId: Type.Ref("matchId"),
         username: Type.String(),
         password: Type.String(),
         ips: Type.Array(

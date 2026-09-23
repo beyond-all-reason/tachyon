@@ -493,6 +493,7 @@
                 "currentBattle"
             ]
         },
+        "matchId": { "type": "string", "examples": ["48213"] },
         "partyId": {
             "type": "string",
             "examples": ["1882f6b2e3a4d14f24acb7aa"]
@@ -548,7 +549,7 @@
             "description": "Battle informations including secrets to pass to spring for joining the game server. Don't expose secrets to other players.",
             "type": "object",
             "properties": {
-                "battleId": { "$ref": "#/definitions/battleId" },
+                "matchId": { "$ref": "#/definitions/matchId" },
                 "username": { "type": "string" },
                 "password": { "type": "string" },
                 "ips": {
@@ -582,7 +583,7 @@
                 }
             },
             "required": [
-                "battleId",
+                "matchId",
                 "username",
                 "password",
                 "ips",
@@ -2031,7 +2032,7 @@
                     "title": "BattleEndedEventData",
                     "type": "object",
                     "properties": {
-                        "battleId": { "$ref": "#/definitions/battleId" },
+                        "matchId": { "$ref": "#/definitions/matchId" },
                         "players": {
                             "type": "array",
                             "items": {
@@ -2095,7 +2096,7 @@
                         }
                     },
                     "required": [
-                        "battleId",
+                        "matchId",
                         "players",
                         "bots",
                         "spectators",
@@ -7429,9 +7430,9 @@
                             "required": ["type"]
                         },
                         "message": { "type": "string", "maxLength": 255 },
-                        "battleId": {
-                            "$ref": "#/definitions/battleId",
-                            "description": "the battle the report is about, if any"
+                        "matchId": {
+                            "$ref": "#/definitions/matchId",
+                            "description": "the match the report is about, if any"
                         }
                     },
                     "required": ["userIds", "reason"]

@@ -11,8 +11,8 @@ export default defineEndpoint({
             userIds: Type.Array(Type.Ref("userId"), { minItems: 1 }),
             reason: Type.Object({ type: Type.String() }),
             message: Type.Optional(Type.String({ maxLength: 255 })),
-            battleId: Type.Optional(
-                Type.Ref("battleId", { description: "the battle the report is about, if any" })
+            matchId: Type.Optional(
+                Type.Ref("matchId", { description: "the match the report is about, if any" })
             ),
         }),
     },

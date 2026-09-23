@@ -246,9 +246,9 @@ Issue a single moderation report on one or more users.
                     "required": ["type"]
                 },
                 "message": { "type": "string", "maxLength": 255 },
-                "battleId": {
-                    "$ref": "#/definitions/battleId",
-                    "description": "the battle the report is about, if any"
+                "matchId": {
+                    "$ref": "#/definitions/matchId",
+                    "description": "the match the report is about, if any"
                 }
             },
             "required": ["userIds", "reason"]
@@ -279,7 +279,7 @@ Issue a single moderation report on one or more users.
             "type": "ut velit officia esse"
         },
         "message": "reprehenderit",
-        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea"
+        "matchId": "48213"
     }
 }
 ```
@@ -301,7 +301,7 @@ export interface UserReportRequestData {
         type: string;
     };
     message?: string;
-    battleId?: string;
+    matchId?: string;
 }
 ```
 ### Response
@@ -527,7 +527,7 @@ Sent by the server to inform the client of its own user state. This event should
             ],
             "ignoreIds": [],
             "currentBattle": {
-                "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+                "matchId": "48213",
                 "username": "amet nulla",
                 "password": "quis eiusmod in ut veniam",
                 "ips": [
@@ -615,7 +615,7 @@ export type UserId = string;
 export type ClanId = string;
 export type PartyId = string;
 export type UnixTime = number;
-export type BattleId = string;
+export type MatchId = string;
 export type LobbyId = string;
 
 export interface UserSelfEvent {
@@ -661,7 +661,7 @@ export interface PartyState {
     }[];
 }
 export interface PrivateBattle {
-    battleId: BattleId;
+    matchId: MatchId;
     username: string;
     password: string;
     ips: string[];

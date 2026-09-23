@@ -8,7 +8,7 @@ export default defineEndpoint({
     description: "Sent to all players and spectators involved in a battle when it ends.",
     event: {
         data: Type.Object({
-            battleId: Type.Ref("battleId"),
+            matchId: Type.Ref("matchId"),
             players: Type.Array(
                 Type.Object({
                     userId: Type.Ref("userId"),

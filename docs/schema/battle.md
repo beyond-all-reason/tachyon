@@ -37,7 +37,7 @@ Sent to all players and spectators involved in a battle when it ends.
             "title": "BattleEndedEventData",
             "type": "object",
             "properties": {
-                "battleId": { "$ref": "#/definitions/battleId" },
+                "matchId": { "$ref": "#/definitions/matchId" },
                 "players": {
                     "type": "array",
                     "items": {
@@ -92,7 +92,7 @@ Sent to all players and spectators involved in a battle when it ends.
                 }
             },
             "required": [
-                "battleId",
+                "matchId",
                 "players",
                 "bots",
                 "spectators",
@@ -115,7 +115,7 @@ Sent to all players and spectators involved in a battle when it ends.
     "messageId": "Duis ut sit laborum",
     "commandId": "battle/ended",
     "data": {
-        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+        "matchId": "48213",
         "players": [
             {
                 "userId": "351",
@@ -183,7 +183,7 @@ Sent to all players and spectators involved in a battle when it ends.
 
 #### TypeScript Definition
 ```ts
-export type BattleId = string;
+export type MatchId = string;
 export type UserId = string;
 
 export interface BattleEndedEvent {
@@ -193,7 +193,7 @@ export interface BattleEndedEvent {
     data: BattleEndedEventData;
 }
 export interface BattleEndedEventData {
-    battleId: BattleId;
+    matchId: MatchId;
     players: {
         userId: UserId;
         name: string;
@@ -263,7 +263,7 @@ When a user client receives this response it should launch the game (spring.exe)
     "messageId": "qui incididunt",
     "commandId": "battle/start",
     "data": {
-        "battleId": "75bfc493-2b9d-495d-a453-06722fdca2ea",
+        "matchId": "48213",
         "username": "officia enim aliquip aute",
         "password": "aliqua adipisicing dolore",
         "ips": [
@@ -287,7 +287,7 @@ When a user client receives this response it should launch the game (spring.exe)
 
 #### TypeScript Definition
 ```ts
-export type BattleId = string;
+export type MatchId = string;
 
 export interface BattleStartRequest {
     type: "request";
@@ -296,7 +296,7 @@ export interface BattleStartRequest {
     data: BattleStartRequestData;
 }
 export interface BattleStartRequestData {
-    battleId: BattleId;
+    matchId: MatchId;
     username: string;
     password: string;
     ips: string[];

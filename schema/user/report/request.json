@@ -27,9 +27,9 @@
                     "required": ["type"]
                 },
                 "message": { "type": "string", "maxLength": 255 },
-                "battleId": {
-                    "$ref": "../../definitions/battleId.json",
-                    "description": "the battle the report is about, if any"
+                "matchId": {
+                    "$ref": "../../definitions/matchId.json",
+                    "description": "the match the report is about, if any"
                 }
             },
             "required": ["userIds", "reason"]
