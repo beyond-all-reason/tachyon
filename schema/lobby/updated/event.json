@@ -248,7 +248,7 @@
                 "currentVote": { "$ref": "../../definitions/currentVote.json" },
                 "voteHistory": { "$ref": "../../definitions/voteHistory.json" }
             },
-            "required": ["id", "currentVote", "voteHistory"]
+            "required": ["id"]
         }
     },
     "required": ["type", "messageId", "commandId", "data"]

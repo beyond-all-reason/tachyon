@@ -5511,7 +5511,7 @@
                         "currentVote": { "$ref": "#/definitions/currentVote" },
                         "voteHistory": { "$ref": "#/definitions/voteHistory" }
                     },
-                    "required": ["id", "currentVote", "voteHistory"]
+                    "required": ["id"]
                 }
             },
             "required": ["type", "messageId", "commandId", "data"]

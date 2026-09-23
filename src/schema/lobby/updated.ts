@@ -136,8 +136,8 @@ export default defineEndpoint({
                     )
                 )
             ),
-            currentVote: Type.Ref("currentVote"),
-            voteHistory: Type.Ref("voteHistory"),
+            currentVote: Type.Optional(Type.Ref("currentVote")),
+            voteHistory: Type.Optional(Type.Ref("voteHistory")),
         }),
     },
 });
