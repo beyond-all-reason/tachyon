@@ -29,6 +29,7 @@
                 "status": { "const": "failed" },
                 "reason": {
                     "enum": [
+                        "invite_cancelled",
                         "internal_error",
                         "unauthorized",
                         "invalid_request",

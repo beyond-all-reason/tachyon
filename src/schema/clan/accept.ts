@@ -11,5 +11,11 @@ export default defineEndpoint({
             clanId: Type.Ref("clanId"),
         }),
     },
-    response: [{ status: "success" }],
+    response: [
+        { status: "success" },
+        {
+            status: "failed",
+            reason: "invite_cancelled",
+        },
+    ],
 });
