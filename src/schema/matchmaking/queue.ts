@@ -16,6 +16,12 @@ export default defineEndpoint({
                     }),
                     { minItems: 1 }
                 ),
+                region: Type.Optional(
+                    Type.String({
+                        description:
+                            "preferred region to play in. How it is used is implementation defined.",
+                    })
+                ),
             },
             {
                 examples: [

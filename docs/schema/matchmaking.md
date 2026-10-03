@@ -993,6 +993,10 @@ Queue up for matchmaking. Should cancel the previous queue if already in one.
                         "required": ["id", "version"]
                     },
                     "minItems": 1
+                },
+                "region": {
+                    "description": "preferred region to play in. How it is used is implementation defined.",
+                    "type": "string"
                 }
             },
             "required": ["queues"],
@@ -1053,6 +1057,7 @@ export interface MatchmakingQueueRequestData {
             version: string;
         }[]
     ];
+    region?: string;
 }
 ```
 ### Response

@@ -2118,14 +2118,21 @@ This event should be sent to the server on connection and whenever any of the st
                     "description": "List of available engine versions on autohost",
                     "type": "array",
                     "items": { "type": "string" }
-                }
+                },
+                "location": { "$ref": "#/definitions/location" }
             },
-            "required": ["maxBattles", "currentBattles", "availableEngines"],
+            "required": [
+                "maxBattles",
+                "currentBattles",
+                "availableEngines",
+                "location"
+            ],
             "examples": [
                 {
                     "maxBattles": 10,
                     "currentBattles": 5,
-                    "availableEngines": ["2025.01.5"]
+                    "availableEngines": ["2025.01.5"],
+                    "location": { "region": "europe-west" }
                 }
             ]
         }
@@ -2149,7 +2156,10 @@ This event should be sent to the server on connection and whenever any of the st
         "currentBattles": 5,
         "availableEngines": [
             "2025.01.5"
-        ]
+        ],
+        "location": {
+            "region": "europe-west"
+        }
     }
 }
 ```
@@ -2167,6 +2177,10 @@ export interface AutohostStatusEventData {
     maxBattles: number;
     currentBattles: number;
     availableEngines: string[];
+    location: Location;
+}
+export interface Location {
+    region: string;
 }
 ```
 ---
