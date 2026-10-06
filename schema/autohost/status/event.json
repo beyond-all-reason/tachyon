@@ -26,14 +26,21 @@
                     "description": "List of available engine versions on autohost",
                     "type": "array",
                     "items": { "type": "string" }
-                }
+                },
+                "location": { "$ref": "../../definitions/location.json" }
             },
-            "required": ["maxBattles", "currentBattles", "availableEngines"],
+            "required": [
+                "maxBattles",
+                "currentBattles",
+                "availableEngines",
+                "location"
+            ],
             "examples": [
                 {
                     "maxBattles": 10,
                     "currentBattles": 5,
-                    "availableEngines": ["2025.01.5"]
+                    "availableEngines": ["2025.01.5"],
+                    "location": { "region": "europe-west" }
                 }
             ]
         }

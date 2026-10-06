@@ -1,0 +1,17 @@
+{
+    "$id": "https://schema.beyondallreason.dev/tachyon/definitions/location.json",
+    "title": "Location",
+    "type": "object",
+    "properties": {
+        "region": {
+            "type": "string",
+            "examples": [
+                "europe-west",
+                "northamerica-east",
+                "australia-outback",
+                "test"
+            ]
+        }
+    },
+    "required": ["region"]
+}

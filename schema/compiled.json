@@ -493,6 +493,21 @@
                 "currentBattle"
             ]
         },
+        "location": {
+            "type": "object",
+            "properties": {
+                "region": {
+                    "type": "string",
+                    "examples": [
+                        "europe-west",
+                        "northamerica-east",
+                        "australia-outback",
+                        "test"
+                    ]
+                }
+            },
+            "required": ["region"]
+        },
         "partyId": {
             "type": "string",
             "examples": ["1882f6b2e3a4d14f24acb7aa"]
@@ -1690,18 +1705,21 @@
                             "description": "List of available engine versions on autohost",
                             "type": "array",
                             "items": { "type": "string" }
-                        }
+                        },
+                        "location": { "$ref": "#/definitions/location" }
                     },
                     "required": [
                         "maxBattles",
                         "currentBattles",
-                        "availableEngines"
+                        "availableEngines",
+                        "location"
                     ],
                     "examples": [
                         {
                             "maxBattles": 10,
                             "currentBattles": 5,
-                            "availableEngines": ["2025.01.5"]
+                            "availableEngines": ["2025.01.5"],
+                            "location": { "region": "europe-west" }
                         }
                     ]
                 }
@@ -6160,6 +6178,10 @@
                                 "required": ["id", "version"]
                             },
                             "minItems": 1
+                        },
+                        "region": {
+                            "description": "preferred region to play in. How it is used is implementation defined.",
+                            "type": "string"
                         }
                     },
                     "required": ["queues"],

@@ -19,6 +19,7 @@ export default defineEndpoint({
                 availableEngines: Type.Array(Type.String(), {
                     description: "List of available engine versions on autohost",
                 }),
+                location: Type.Ref("location"),
             },
             {
                 examples: [
@@ -26,6 +27,7 @@ export default defineEndpoint({
                         maxBattles: 10,
                         currentBattles: 5,
                         availableEngines: ["2025.01.5"],
+                        location: { region: "europe-west" },
                     },
                 ],
             }

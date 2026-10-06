@@ -27,6 +27,10 @@
                         "required": ["id", "version"]
                     },
                     "minItems": 1
+                },
+                "region": {
+                    "description": "preferred region to play in. How it is used is implementation defined.",
+                    "type": "string"
                 }
             },
             "required": ["queues"],
