@@ -3,6 +3,7 @@ import {
     type Static,
     type TIntersect,
     type TObject,
+    type TOptional,
     type TRef,
     type TSchema,
     TSchemaOptions,
@@ -49,7 +50,7 @@ export type EndpointConfig = {
 );
 
 export type DataSchema = {
-    data?: TObject | TUnion | TIntersect | TRef;
+    data?: TObject | TUnion | TIntersect | TRef | TOptional;
 };
 
 export type ResponseSchema = Array<SuccessResponseSchema | FailedResponseSchema>;

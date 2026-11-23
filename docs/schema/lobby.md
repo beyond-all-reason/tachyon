@@ -2996,7 +2996,7 @@ Possible Failed Reasons: `not_in_lobby`, `internal_error`, `unauthorized`, `inva
 
 ## SubscribeList
 
-Ask the server to send updates about lobby list. Idempotent, subscribing multiple time has no effect.
+Ask the server to send updates about lobby list, can be filtered. Subscribing again with the same filters has no effect. Subscribing again with different filters replaces the current ones, and the server sends a lobby/listReset event with the lobbies matching the new filters.
 
 - Endpoint Type: **Request** -> **Response**
 - Source: **User**
@@ -3020,7 +3020,98 @@ Ask the server to send updates about lobby list. Idempotent, subscribing multipl
     "properties": {
         "type": { "const": "request" },
         "messageId": { "type": "string" },
-        "commandId": { "const": "lobby/subscribeList" }
+        "commandId": { "const": "lobby/subscribeList" },
+        "data": {
+            "title": "LobbySubscribeListRequestData",
+            "type": "object",
+            "properties": {
+                "filters": {
+                    "type": "object",
+                    "properties": {
+                        "hasFriend": {
+                            "description": "At least one of the user's friends is a member (player or spectator) of the lobby",
+                            "type": "boolean"
+                        },
+                        "hasPartyMember": {
+                            "description": "At least one member of the user's party is a member (player or spectator) of the lobby",
+                            "type": "boolean"
+                        },
+                        "mapNames": {
+                            "type": "array",
+                            "items": {
+                                "description": "Map name to include",
+                                "type": "string"
+                            }
+                        },
+                        "playerCount": {
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "description": "Minimum player count, inclusive",
+                                    "type": "number",
+                                    "minimum": 0
+                                },
+                                "max": {
+                                    "description": "Maximum player count, inclusive",
+                                    "type": "number",
+                                    "minimum": 1
+                                }
+                            }
+                        },
+                        "allyTeams": {
+                            "type": "object",
+                            "properties": {
+                                "min": {
+                                    "description": "Minimum number of AllyTeams, inclusive",
+                                    "type": "number",
+                                    "minimum": 1
+                                },
+                                "max": {
+                                    "description": "Maximum number of AllyTeams, inclusive",
+                                    "type": "number",
+                                    "minimum": 1
+                                }
+                            }
+                        },
+                        "name": {
+                            "description": "The lobby name must contain this string, case insensitive",
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 100
+                        },
+                        "tags": {
+                            "type": "array",
+                            "items": {
+                                "description": "Lobbies contain at least one of these tags",
+                                "type": "string"
+                            }
+                        },
+                        "isBattleInProgress": {
+                            "description": "A battle is currently running",
+                            "type": "boolean"
+                        },
+                        "areBossesEnabled": {
+                            "description": "Lobby bosses are enabled",
+                            "type": "boolean"
+                        },
+                        "engineVersions": {
+                            "type": "array",
+                            "items": {
+                                "description": "Engine version to include",
+                                "type": "string"
+                            }
+                        },
+                        "gameVersions": {
+                            "type": "array",
+                            "items": {
+                                "description": "Game version to include",
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
     "required": ["type", "messageId", "commandId"]
 }
@@ -3034,8 +3125,25 @@ Ask the server to send updates about lobby list. Idempotent, subscribing multipl
 ```json
 {
     "type": "request",
-    "messageId": "incididunt deserunt ullamco culpa nulla",
-    "commandId": "lobby/subscribeList"
+    "messageId": "ut",
+    "commandId": "lobby/subscribeList",
+    "data": {
+        "nulla8": false,
+        "filters": {
+            "exercitation_b8": "qui nulla veniam sit",
+            "dolord05": 75130796.43249512,
+            "adipisicing560": -30533672,
+            "mollit58": false,
+            "magna_c2_": 70490324.4972229,
+            "ut55": 21876227.855682373,
+            "officia89": 26397645.473480225,
+            "dolor_3": -9295619,
+            "ex730": false,
+            "Duis_": "laborum labore",
+            "dolor_6": 21414399.14703369,
+            "areBossesEnabled": true
+        }
+    }
 }
 ```
 </details>
@@ -3046,6 +3154,28 @@ export interface LobbySubscribeListRequest {
     type: "request";
     messageId: string;
     commandId: "lobby/subscribeList";
+    data?: LobbySubscribeListRequestData;
+}
+export interface LobbySubscribeListRequestData {
+    filters?: {
+        hasFriend?: boolean;
+        hasPartyMember?: boolean;
+        mapNames?: string[];
+        playerCount?: {
+            min?: number;
+            max?: number;
+        };
+        allyTeams?: {
+            min?: number;
+            max?: number;
+        };
+        name?: string;
+        tags?: string[];
+        isBattleInProgress?: boolean;
+        areBossesEnabled?: boolean;
+        engineVersions?: string[];
+        gameVersions?: string[];
+    };
 }
 ```
 ### Response
